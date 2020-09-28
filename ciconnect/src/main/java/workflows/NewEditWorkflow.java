@@ -7,8 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,10 +48,12 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private Schedule schedule;
 
     public NewEditWorkflow(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.schedule = new Schedule(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -153,8 +158,28 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * @return new GenericWorkflow page object
      */
     public Schedule clickSaveButton() {
+        int expectedRows = getNumberOfRows();
         pageUtils.waitForElementAndClick(saveButton);
+        waitForExpectedRowCount(expectedRows);
         return new Schedule(driver);
+    }
+
+    /**
+     * Get number of rows in Schedule tab table
+     *
+     * @return numRows  - number of rows in table
+     */
+    public int getNumberOfRows() {
+        return schedule.getNumberOfRows();
+    }
+
+    /**
+     * Wait for expected row count
+     *
+     * @param expectedRows - integer value expected rows
+     */
+    public void waitForExpectedRowCount(int expectedRows) {
+        schedule.waitForExpectedRowCount(expectedRows);
     }
 
 }

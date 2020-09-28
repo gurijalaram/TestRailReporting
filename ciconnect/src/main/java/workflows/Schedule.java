@@ -7,7 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,10 +32,10 @@ public class Schedule extends LoadableComponent<Schedule> {
     @FindBy(css = "div#root_pagemashupcontainer-1_button-37 > button")
     private WebElement deleteWorkflow;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-38 > button")
+    @FindBy(css = "div#root_pagemashupcontainer-1_button-97 > button")
     private WebElement invokeWorkflow;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-97 > button")
+    @FindBy(css = "div#root_pagemashupcontainer-1_button-38 > button")
     private WebElement refreshScheduleList;
 
     @FindBy(css = "div.objbox tr")
@@ -78,6 +80,9 @@ public class Schedule extends LoadableComponent<Schedule> {
     @FindBy(css = "div#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-of-type(1)")
     private WebElement firstPageBtn;
 
+    @FindBy(css = "div#confirmButtons > a > span")
+    private WebElement confirmDeleteBtn;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -121,26 +126,42 @@ public class Schedule extends LoadableComponent<Schedule> {
     /**
      * Select workflow in table
      *
-     * @param workflowName  - name of workflow to select
+     * @param workflowName - name of workflow to select
      * @return new Schedule page object
      */
     public Schedule selectWorkflow(String workflowName) {
         ArrayList<String> workflowNames = new ArrayList<String>();
         int numRows = getNumberOfRows();
         int rowsPerPage = getRowsPerPage();
-        int nextClicksAllPages = numRows / rowsPerPage;
+        int nextClicksAllPages = 0;
 
-        for (int i = 0; i < nextClicksAllPages; i++) {
+        if (numRows % rowsPerPage == 0) {
+            nextClicksAllPages = (numRows / rowsPerPage) - 1;
+        } else {
+            nextClicksAllPages = numRows / rowsPerPage;
+        }
+
+        for (int i = 0; i <= nextClicksAllPages; i++) {
             List<WebElement> workflowNamesElements = driver.findElements(By.cssSelector(
                 "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
             for (WebElement workflowNamesElement : workflowNamesElements) {
                 workflowNames.add(workflowNamesElement.getText());
             }
-            pageUtils.waitForElementAndClick(enabledNextBtn);
+            if (workflowNames.indexOf(workflowName) != -1) {
+                break;
+            } else {
+                pageUtils.waitForElementAndClick(enabledNextBtn);
+            }
         }
 
         int workflowIndex = workflowNames.indexOf(workflowName);
-        int nextClicks = workflowIndex / rowsPerPage;
+        int nextClicks = 0;
+
+        if (workflowIndex % rowsPerPage == 0) {
+            nextClicks = workflowIndex / rowsPerPage - 1;
+        } else {
+            nextClicks = workflowIndex / rowsPerPage;
+        }
 
         pageUtils.waitForElementAndClick(firstPageBtn);
 
@@ -148,7 +169,7 @@ public class Schedule extends LoadableComponent<Schedule> {
             pageUtils.waitForElementAndClick(enabledNextBtn);
         }
 
-        int rowOnPage = workflowIndex % rowsPerPage;
+        int rowOnPage = ((workflowIndex + 1) % rowsPerPage) + 1;
         WebElement elementToClick = driver.findElement(By.cssSelector(String.format(
             "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr:nth-of-type(%s) > td:nth-of-type(1)", rowOnPage)));
 
@@ -171,7 +192,7 @@ public class Schedule extends LoadableComponent<Schedule> {
     /**
      * Get number of rows per page
      *
-     * @return numRowsPerPage   -
+     * @return numRowsPerPage   - Integer value number of rows per page
      */
     public int getRowsPerPage() {
         pageUtils.waitForElementToAppear(rowsPerPageText);
@@ -180,8 +201,75 @@ public class Schedule extends LoadableComponent<Schedule> {
         return numRowsPerPage;
     }
 
+    /**
+     * Click delete button
+     *
+     * @return new Schedule page object
+     */
     public Schedule clickDeleteBtn() {
         pageUtils.waitForElementAndClick(deleteWorkflow);
         return new Schedule(driver);
+    }
+
+    /**
+     * Click confirm delete button
+     *
+     * @return new Schedule page object
+     */
+    public Schedule clickConfirmDeleteBtn() {
+        pageUtils.waitForElementAndClick(confirmDeleteBtn);
+        return new Schedule(driver);
+    }
+
+    /**
+     * Click refresh button
+     *
+     * @return new Schedule page object
+     */
+    public Schedule clickRefreshBtn() {
+        pageUtils.waitForElementAndClick(refreshScheduleList);
+        return new Schedule(driver);
+    }
+
+    /**
+     * Wait until paginator displays expected row count
+     *
+     * @param expectedRows - integer value expected rows
+     */
+    public void waitForExpectedRowCount(int expectedRows) {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath(String.format(
+            "//div[@id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container']//div[contains(text(), 'of %s')]", expectedRows)))));
+    }
+
+    public boolean isWorkflowInTable(String workflowName) {
+        pageUtils.waitForElementAndClick(firstPageBtn);
+
+        ArrayList<String> workflowNames = new ArrayList<String>();
+        int numRows = getNumberOfRows();
+        int rowsPerPage = getRowsPerPage();
+        int nextClicksAllPages = 0;
+
+        if (numRows % rowsPerPage == 0) {
+            nextClicksAllPages = (numRows / rowsPerPage) - 1;
+        } else {
+            nextClicksAllPages = numRows / rowsPerPage;
+        }
+
+        for (int i = 0; i <= nextClicksAllPages; i++) {
+            List<WebElement> workflowNamesElements = driver.findElements(By.cssSelector(
+                "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
+            for (WebElement workflowNamesElement : workflowNamesElements) {
+                workflowNames.add(workflowNamesElement.getText());
+            }
+            if (workflowNames.indexOf(workflowName) != -1) {
+                return true;
+            } else if (i == nextClicksAllPages && workflowNames.indexOf(workflowName) == -1) {return false;}
+
+            else {
+                pageUtils.waitForElementAndClick(enabledNextBtn);
+            }
+        }
+        return false;
     }
 }

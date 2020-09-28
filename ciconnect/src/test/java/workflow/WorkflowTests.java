@@ -1,5 +1,8 @@
 package workflow;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -21,7 +24,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    public void testSimpleEndtoEnd() throws InterruptedException {
+    public void testSimpleEndToEnd() throws InterruptedException {
         String workflowName = new GenerateStringUtil().generateScenarioName();
 
         schedule = new LoginPage(driver)
@@ -37,6 +40,9 @@ public class WorkflowTests extends TestBase {
             .clickCostingInputsNextBtn()
             .clickSaveButton()
             .selectWorkflow(workflowName)
-            .clickDeleteBtn();
+            .clickDeleteBtn()
+            .clickConfirmDeleteBtn();
+
+        assertThat(schedule.isWorkflowInTable(workflowName), is(false));
     }
 }
