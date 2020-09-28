@@ -68,8 +68,8 @@ public class GuidancePage extends EvaluatePanelToolbar {
     public GuidancePage selectIssueTypeAndGCD(String issueTypeDropdown, String issueType, String gcd) {
         collapseIssueDropdown();
         selectIssue(issueTypeDropdown);
-        findIssueType(issueType).click();
-        findGCD(gcd).click();
+        pageUtils.waitForElementAndClick(findIssueType(issueType));
+        pageUtils.waitForElementAndClick(findGCD(gcd));
         pageUtils.scrollUp(guidanceTableScroller, 2);
         return this;
     }
@@ -141,7 +141,7 @@ public class GuidancePage extends EvaluatePanelToolbar {
      * @return gcd as a webelement
      */
     private WebElement findGCD(String gcdType) {
-        By gcd = By.xpath("//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcdType + "')]/ancestor::tr");
+        By gcd = By.xpath("//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcdType + "')]");
         return pageUtils.scrollToElement(gcd, detailsTableScroller, Constants.ARROW_DOWN);
     }
 
