@@ -1155,6 +1155,8 @@ public class GenericReportPage extends ReportsPageHeader {
         } catch (AssertionError e) {
             assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
         }
+
+        pageUtils.waitFor(2000);
         for (int i = 0; i < 2; i++) {
             pageUtils.actionClick(machiningDtcBubbleThree);
         }
