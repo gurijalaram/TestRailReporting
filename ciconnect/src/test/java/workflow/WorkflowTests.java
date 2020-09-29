@@ -1,12 +1,15 @@
 package workflow;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.web.driver.TestBase;
 
 import enums.ConnectorsEnum;
+import io.qameta.allure.Description;
 import login.LoginPage;
 import org.junit.Test;
 import workflows.GenericWorkflow;
@@ -24,11 +27,13 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    public void testSimpleEndToEnd() throws InterruptedException {
+    @TestRail(testCaseId = {"3588"})
+    @Description("Test the creation and deletion of a workflow and that appropriate error message is displayed")
+    public void testDeleteWorkflow() throws InterruptedException {
         String workflowName = new GenerateStringUtil().generateScenarioName();
 
         schedule = new LoginPage(driver)
-            .login("qa-automation-02@apriori.com", "TrumpetSnakeFridgeToasty18!")
+            .login()
             .clickScheduleTab()
             .clickNewWorkflowBtn()
             .inputWorkflowName(workflowName)
@@ -40,8 +45,11 @@ public class WorkflowTests extends TestBase {
             .clickCostingInputsNextBtn()
             .clickSaveButton()
             .selectWorkflow(workflowName)
-            .clickDeleteBtn()
-            .clickConfirmDeleteBtn();
+            .clickDeleteBtn();
+
+        assertThat(schedule.getDeleteConfirmationText(), equalTo("Do you really want to delete this workflow? This action cannot be undone."));
+
+        schedule.clickConfirmDeleteBtn();
 
         assertThat(schedule.isWorkflowInTable(workflowName), is(false));
     }

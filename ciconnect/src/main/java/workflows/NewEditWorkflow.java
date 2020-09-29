@@ -65,7 +65,6 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     @Override
     protected void isLoaded() {
-        //pageUtils.waitForElementToAppear(nextBtn);
     }
 
     /**
@@ -110,9 +109,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * @param connectorName - Name of connector to be selected
      * @return NewEditWorkflow page object
      */
-    public NewEditWorkflow selectConnector(String connectorName) throws InterruptedException {
-        Thread.sleep(1000);
-
+    public NewEditWorkflow selectConnector(String connectorName) {
         pageUtils.waitForElementAndClick(connectorDropdown);
 
         By connectorToClick = By.xpath(String.format("//div[contains(text(), '%s')]", connectorName));

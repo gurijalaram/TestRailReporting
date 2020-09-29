@@ -60,8 +60,11 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(id = "toolbar_logo_link")
     private WebElement pageTitle;
 
-    @FindBy(css = "div[id^='CIC_HelpDropDown_MU-BMController-'][id$='_link-40'] > a > span > span > span")
+    @FindBy(css = "div[id^='CIC_HelpDropDown_MU-BMController-'][id$='_button-43'] > button > span:nth-of-type(3)")
     private WebElement aboutAPrioriLink;
+
+    @FindBy(css = "div#CIC_HelpDropDown_MU-BMController-1_navigation-42-popup_label-261 > span")
+    private WebElement cicVersionText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -81,8 +84,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(settingsBtn);
-        pageUtils.waitForElementToAppear(userInfoDropdown);
     }
 
     /**
@@ -196,10 +197,19 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     /**
      * Open costing service settings modal
      *
-     * @return CostingServiceSettitng page object
+     * @return CostingServiceSettings page object
      */
     public CostingServiceSettings openCostingServiceSettings() {
         pageUtils.waitForElementAndClick(settingsBtn);
         return new CostingServiceSettings(driver);
+    }
+
+    /**
+     * Get cic version text
+     *
+     * @return String
+     */
+    public String getCicVersionText() {
+        return pageUtils.waitForElementToAppear(cicVersionText).getText();
     }
 }

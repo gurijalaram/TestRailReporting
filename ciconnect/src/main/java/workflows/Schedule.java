@@ -83,6 +83,9 @@ public class Schedule extends LoadableComponent<Schedule> {
     @FindBy(css = "div#confirmButtons > a > span")
     private WebElement confirmDeleteBtn;
 
+    @FindBy(css = "div#confirmBox > div:nth-of-type(2) > p")
+    private WebElement confirmDeletionText;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -130,10 +133,10 @@ public class Schedule extends LoadableComponent<Schedule> {
      * @return new Schedule page object
      */
     public Schedule selectWorkflow(String workflowName) {
-        ArrayList<String> workflowNames = new ArrayList<String>();
+        ArrayList<String> workflowNames = new ArrayList<>();
         int numRows = getNumberOfRows();
         int rowsPerPage = getRowsPerPage();
-        int nextClicksAllPages = 0;
+        int nextClicksAllPages;
 
         if (numRows % rowsPerPage == 0) {
             nextClicksAllPages = (numRows / rowsPerPage) - 1;
@@ -149,13 +152,15 @@ public class Schedule extends LoadableComponent<Schedule> {
             }
             if (workflowNames.indexOf(workflowName) != -1) {
                 break;
+            } else if (i == nextClicksAllPages && workflowNames.indexOf(workflowName) == -1) {
+                break;
             } else {
                 pageUtils.waitForElementAndClick(enabledNextBtn);
             }
         }
 
         int workflowIndex = workflowNames.indexOf(workflowName);
-        int nextClicks = 0;
+        int nextClicks;
 
         if (workflowIndex % rowsPerPage == 0) {
             nextClicks = workflowIndex / rowsPerPage - 1;
@@ -237,18 +242,24 @@ public class Schedule extends LoadableComponent<Schedule> {
      * @param expectedRows - integer value expected rows
      */
     public void waitForExpectedRowCount(int expectedRows) {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath(String.format(
             "//div[@id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container']//div[contains(text(), 'of %s')]", expectedRows)))));
     }
 
+    /**
+     * Check whether a workflow is present in Schedule list
+     *
+     * @param workflowName - name of workflow to check for
+     * @return - boolean
+     */
     public boolean isWorkflowInTable(String workflowName) {
         pageUtils.waitForElementAndClick(firstPageBtn);
 
-        ArrayList<String> workflowNames = new ArrayList<String>();
+        ArrayList<String> workflowNames = new ArrayList<>();
         int numRows = getNumberOfRows();
         int rowsPerPage = getRowsPerPage();
-        int nextClicksAllPages = 0;
+        int nextClicksAllPages;
 
         if (numRows % rowsPerPage == 0) {
             nextClicksAllPages = (numRows / rowsPerPage) - 1;
@@ -264,12 +275,22 @@ public class Schedule extends LoadableComponent<Schedule> {
             }
             if (workflowNames.indexOf(workflowName) != -1) {
                 return true;
-            } else if (i == nextClicksAllPages && workflowNames.indexOf(workflowName) == -1) {return false;}
-
-            else {
+            } else if (i == nextClicksAllPages && workflowNames.indexOf(workflowName) == -1) {
+                return false;
+            } else {
                 pageUtils.waitForElementAndClick(enabledNextBtn);
             }
         }
         return false;
+    }
+
+    /**
+     * Get delete confirmation text
+     *
+     * @return String - delete confirmation text
+     */
+    public String getDeleteConfirmationText() {
+        pageUtils.waitForElementToAppear(confirmDeletionText);
+        return confirmDeletionText.getText();
     }
 }

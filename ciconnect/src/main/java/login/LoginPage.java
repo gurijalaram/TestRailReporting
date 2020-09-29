@@ -59,20 +59,23 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     protected void isLoaded() throws Error {
     }
 
-    public GenericWorkflow login(WebDriver driver) {
-        if (url == null || url.isEmpty()) {
-            url = "https://" + Constants.CIC_USERNAME + ":" + Constants.CIC_PASSWORD + "@" + loginPageURL;
-            driver.get(url);
-        }
-
-        return new GenericWorkflow(driver);
-    }
-
+    /**
+     * Login to CI Connect
+     *
+     * @param email - user email address
+     * @param userPassword - user password
+     * @return new page object
+     */
     public GenericWorkflow login(String email, String userPassword) {
         executeLogin(email, userPassword);
         return new GenericWorkflow(driver);
     }
 
+    /**
+     * Login to CI Connect with passed in user (from CSV file)
+     *
+     * @return new page object
+     */
     public GenericWorkflow login() {
         UserCredentials userCredentials;
 
@@ -81,7 +84,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         } else {
             userCredentials = UserUtil.getUser();
         }
-        System.out.println(userCredentials.getUsername() + "," + userCredentials.getPassword());
 
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new GenericWorkflow(driver);
@@ -131,5 +133,4 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         submitLogin();
         return new GenericWorkflow(driver);
     }
-
 }
