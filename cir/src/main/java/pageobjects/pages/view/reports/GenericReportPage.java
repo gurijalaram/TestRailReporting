@@ -17,6 +17,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -1156,9 +1157,8 @@ public class GenericReportPage extends ReportsPageHeader {
             assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
         }
 
-        pageUtils.waitFor(30000);
         for (int i = 0; i < 2; i++) {
-            pageUtils.actionClick(machiningDtcBubbleThree);
+            pageUtils.mouseMoveWithOffsetsAndClick(machiningDtcBubbleThree, 0, -40);
         }
 
         switchTab();
