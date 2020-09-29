@@ -314,7 +314,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1710")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {
