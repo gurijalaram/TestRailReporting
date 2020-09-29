@@ -1,4 +1,4 @@
-package com.apriori.nts.tests.utils;
+package com.apriori.cds.tests.utils;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
