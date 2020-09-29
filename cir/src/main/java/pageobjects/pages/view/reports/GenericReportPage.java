@@ -1163,6 +1163,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         switchTab();
         pageUtils.waitForElementToAppear(upperTitle);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
         return partName;
     }
