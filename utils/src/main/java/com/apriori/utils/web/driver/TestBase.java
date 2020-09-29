@@ -72,6 +72,7 @@ public class TestBase extends TestHelper {
             //MaximizeBrowserOnUnix.maximizeOnUnixSystems(driver);
         } else {
             driver.manage().window().setSize(new Dimension(1920,1080));
+            driver.manage().window().maximize();
         }
 
         TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
