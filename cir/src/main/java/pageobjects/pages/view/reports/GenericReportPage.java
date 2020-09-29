@@ -1148,11 +1148,11 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = getPartNameDtcReports();
 
-        /*try {
+        try {
             assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
         } catch (AssertionError e) {
             assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
-        }*/
+        }
 
         pageUtils.actionClick(machiningDtcBubbleTwo);
 
