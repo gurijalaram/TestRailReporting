@@ -273,7 +273,11 @@ public class MachiningDtcReportTests extends TestBase {
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        String partName = genericReportPage.getPartNameAndClickBubbleTwice();
+        genericReportPage.hoverMachiningBubbleTwice();
+        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
+        genericReportPage.ensureCorrectMachiningBubbleWasHovered();
+        genericReportPage.clickMachiningBubbleAndSwitchTab();
 
         assertThat(
                 genericReportPage.getUpperTitleText(),

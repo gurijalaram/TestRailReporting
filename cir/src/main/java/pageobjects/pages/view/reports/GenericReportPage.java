@@ -1135,32 +1135,32 @@ public class GenericReportPage extends ReportsPageHeader {
         }
     }
 
-    /**
-     * Gets Part Name and Clicks Bubble to Navigate to DTC Part Summary Report
-     * @return String
-     */
-    public String getPartNameAndClickBubbleTwice() {
+    public void hoverMachiningBubbleTwice() {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
+    }
 
-        setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
-        String partName = getPartNameDtcReports();
-
+    public void ensureCorrectMachiningBubbleWasHovered() {
         try {
             assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
         } catch (AssertionError e) {
             assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
         }
+    }
 
+    /**
+     * Gets Part Name and Clicks Bubble to Navigate to DTC Part Summary Report
+     * @return String
+     */
+    public void clickMachiningBubbleAndSwitchTab() {
         pageUtils.actionClick(machiningDtcBubbleTwo);
 
         switchTab();
         pageUtils.waitForElementToAppear(upperTitle);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
-        return partName;
     }
 
     /**
