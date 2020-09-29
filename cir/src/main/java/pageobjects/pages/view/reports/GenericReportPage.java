@@ -66,11 +66,8 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[45][local-name() = 'path']")
-    private WebElement machiningDtcBubbleTwo;
-
     @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(45)")
-    private WebElement machiningDtcBubbleThree;
+    private WebElement machiningDtcBubbleTwo;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
     private WebElement plasticDtcBubble;
@@ -1129,12 +1126,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers over bubble in DTC Reports
      */
     public void hoverPartNameBubbleDtcReports() {
-        //WebElement elementToUse = bubbleMap.get(this.reportName);
-        pageUtils.waitForElementToAppear(machiningDtcBubbleThree);
-        Actions builder = new Actions(driver).moveToElement(machiningDtcBubbleThree);
+        WebElement elementToUse = bubbleMap.get(this.reportName);
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.build().perform();
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
-            machiningDtcBubbleThree.click();
+            elementToUse.click();
         }
     }
 
@@ -1143,7 +1140,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getPartNameAndClickBubbleTwice() {
-        pageUtils.waitForElementToAppear(machiningDtcBubbleThree);
+        pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
@@ -1157,9 +1154,8 @@ public class GenericReportPage extends ReportsPageHeader {
             assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
         }
 
-        //for (int i = 0; i < 2; i++) {
-        pageUtils.mouseMoveWithOffsetsAndClick(machiningDtcBubbleThree, 0, -40);
-        //}
+        //pageUtils.mouseMoveWithOffsetsAndClick(machiningDtcBubbleTwo, 0, -40);
+        pageUtils.actionClick(machiningDtcBubbleTwo);
 
         switchTab();
         pageUtils.waitForElementToAppear(upperTitle);
