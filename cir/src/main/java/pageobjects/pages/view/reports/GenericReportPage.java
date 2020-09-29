@@ -1135,6 +1135,9 @@ public class GenericReportPage extends ReportsPageHeader {
         }
     }
 
+    /**
+     * Hovers over Machining DTC Bubble twice
+     */
     public void hoverMachiningBubbleTwice() {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
@@ -1142,6 +1145,9 @@ public class GenericReportPage extends ReportsPageHeader {
         hoverPartNameBubbleDtcReports();
     }
 
+    /**
+     * Ensures correct Machining DTC Bubble was hovered
+     */
     public void ensureCorrectMachiningBubbleWasHovered() {
         try {
             assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
@@ -1151,8 +1157,7 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets Part Name and Clicks Bubble to Navigate to DTC Part Summary Report
-     * @return String
+     * Clicks bubble to get to DTC Part Summary and Switches tab
      */
     public void clickMachiningBubbleAndSwitchTab() {
         pageUtils.actionClick(machiningDtcBubbleTwo);
