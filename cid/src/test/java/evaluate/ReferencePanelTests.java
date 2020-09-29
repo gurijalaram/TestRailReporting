@@ -35,7 +35,9 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate the compare panel updates the comparison details to the previous iteration of the scenario")
     public void referenceUpdates() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("powderMetal.stp");
+       final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"powderMetal.stp");
 
         loginPage = new CidLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
@@ -61,7 +63,9 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
     public void referencePublicIteration() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
+       final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -96,7 +100,9 @@ public class ReferencePanelTests extends TestBase {
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
+       final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
