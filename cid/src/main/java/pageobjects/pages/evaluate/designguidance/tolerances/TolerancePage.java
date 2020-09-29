@@ -111,7 +111,7 @@ public class TolerancePage extends EvaluatePanelToolbar {
      */
     public boolean isToleranceCount(String toleranceType, String text) {
         pageUtils.waitForElementAndClick(findToleranceType(toleranceType));
-        return pageUtils.checkElementAttribute(findToleranceType(toleranceType), "outerText", text);
+        return pageUtils.checkElementAttribute(findToleranceType(toleranceType), "textContent", text);
     }
 
     /**
