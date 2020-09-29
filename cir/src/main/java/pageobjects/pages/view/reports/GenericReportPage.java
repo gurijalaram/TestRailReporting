@@ -1150,9 +1150,15 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void ensureCorrectMachiningBubbleWasHovered() {
         try {
-            assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
+            assertThat(
+                    partNameDtcReports.getAttribute("textContent"),
+                    is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
+            );
         } catch (AssertionError e) {
-            assertThat(partNameDtcReports.getAttribute("textContent"), is(equalTo("PMI_SYMMETRYCREO (Initial) ")));
+            assertThat(
+                    partNameDtcReports.getAttribute("textContent"),
+                    is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
+            );
         }
     }
 
