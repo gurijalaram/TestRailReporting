@@ -120,7 +120,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     public String getThreadHeader() {
         By threadHeader = By.cssSelector("div[data-ap-comp='dtcInvestigationTableExt'] .v-grid-header");
         pageUtils.waitForElementToAppear(threadHeader);
-        return driver.findElement(threadHeader).getAttribute("outerText");
+        return driver.findElement(threadHeader).getAttribute("textContent");
     }
 
     /**

@@ -461,7 +461,7 @@ public class EvaluatePage extends EvaluateHeader {
     public String getWarningsCount() {
         By warnings = By.cssSelector("td[data-ap-field='failuresWarningsCount']");
         pageUtils.waitForElementToAppear(warnings);
-        return driver.findElement(warnings).getAttribute("outerText");
+        return driver.findElement(warnings).getAttribute("textContent");
     }
 
     /**
@@ -472,7 +472,7 @@ public class EvaluatePage extends EvaluateHeader {
     public String getGuidanceIssuesCount() {
         By guidanceIssues = By.cssSelector("td[data-ap-field='dtcMessagesCount']");
         pageUtils.waitForElementToAppear(guidanceIssues);
-        return driver.findElement(guidanceIssues).getAttribute("outerText");
+        return driver.findElement(guidanceIssues).getAttribute("textContent");
     }
 
     /**
@@ -483,7 +483,7 @@ public class EvaluatePage extends EvaluateHeader {
     public String getGcdTolerancesCount() {
         By gcdTolerancesCount = By.cssSelector("td[data-ap-field='gcdWithTolerancesCount']");
         pageUtils.waitForElementToAppear(gcdTolerancesCount);
-        return driver.findElement(gcdTolerancesCount).getAttribute("outerText");
+        return driver.findElement(gcdTolerancesCount).getAttribute("textContent");
     }
 
     /**
