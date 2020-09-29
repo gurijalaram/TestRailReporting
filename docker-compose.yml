@@ -3,6 +3,8 @@ services:
   selenium-hub:
     image: selenium/hub:latest
     container_name: selenium-hub
+    environment:
+      - GRID_TIMEOUT=2
     ports:
       - "4444:4444"
 

@@ -1,9 +1,9 @@
-package com.apriori.nts.tests.suite;
+package com.apriori.cds.tests.suite;
 
-import com.apriori.nts.tests.CdsApplications;
-import com.apriori.nts.tests.CdsCustomers;
-import com.apriori.nts.tests.CdsRoles;
-import com.apriori.nts.tests.CdsUsers;
+import com.apriori.cds.tests.CdsApplications;
+import com.apriori.cds.tests.CdsCustomers;
+import com.apriori.cds.tests.CdsRoles;
+import com.apriori.cds.tests.CdsUsers;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
