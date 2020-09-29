@@ -17,16 +17,14 @@ import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcDetailsReportTests extends TestBase {
 
-    private ReportAvailabilityTests reportAvailabilityTests;
+    private CommonReportTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
 
@@ -38,7 +36,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "2024")
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName()
@@ -49,7 +47,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3415")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
     }
 
@@ -57,7 +55,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3416")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
     }
 

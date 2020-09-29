@@ -16,7 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
@@ -27,7 +27,7 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
-    private ReportAvailabilityTests reportAvailabilityTests;
+    private CommonReportTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
 
@@ -39,7 +39,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName()
@@ -50,7 +50,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
     }
 
@@ -58,7 +58,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
     }
 

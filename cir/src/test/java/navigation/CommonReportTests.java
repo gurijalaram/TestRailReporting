@@ -1,27 +1,32 @@
 package navigation;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
 import pageobjects.header.ReportsPageHeader;
 import pageobjects.pages.library.LibraryPage;
 import pageobjects.pages.login.ReportsLoginPage;
+import pageobjects.pages.userguides.CirUserGuidePage;
 import pageobjects.pages.view.ViewSearchResultsPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 
-public class ReportAvailabilityTests extends TestBase {
+public class CommonReportTests extends TestBase {
 
     private ViewSearchResultsPage viewSearchResultsPage;
     private GenericReportPage genericReportPage;
     private ReportsPageHeader reportsPageHeader;
+    private CirUserGuidePage cirUserGuide;
     private LibraryPage libraryPage;
     private WebDriver driver;
 
-    public ReportAvailabilityTests(WebDriver driver) {
+    public CommonReportTests(WebDriver driver) {
         super();
         this.driver = driver;
     }
@@ -64,5 +69,27 @@ public class ReportAvailabilityTests extends TestBase {
         assertThat(viewSearchResultsPage.getReportName(reportName),
                 is(equalTo(reportName))
         );
+    }
+
+    /**
+     * Generic test for user guide navigation
+     * @param reportName - String
+     * @param exportSetName - String
+     * @throws Exception
+     */
+    public void testReportsUserGuideNavigation(String reportName, String exportSetName) throws Exception {
+        cirUserGuide = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSetName)
+                .clickOk()
+                .navigateToReportUserGuide()
+                .switchTab()
+                .switchToIFrameUserGuide("page_iframe");
+
+        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
+        assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
+        assertThat(cirUserGuide.getTabCount(), is(2));
     }
 }

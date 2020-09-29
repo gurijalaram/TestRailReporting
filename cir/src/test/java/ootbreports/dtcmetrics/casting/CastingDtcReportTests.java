@@ -1,9 +1,11 @@
 package ootbreports.dtcmetrics.casting;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -17,7 +19,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.EvaluatePage;
@@ -32,8 +34,8 @@ import java.math.BigDecimal;
 
 public class CastingDtcReportTests extends TestBase {
 
-    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
 
     public CastingDtcReportTests() {
@@ -45,8 +47,8 @@ public class CastingDtcReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.CASTING_DTC.getReportName()
         );
@@ -56,16 +58,16 @@ public class CastingDtcReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC.getReportName());
     }
 
     @Test
@@ -306,6 +308,18 @@ public class CastingDtcReportTests extends TestBase {
     public void testChartToolTips() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcChartTooltips(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1710")
+    @Description("Verify links to help files function correctly")
+    public void testLinkToReportsUserGuide() throws Exception {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportsUserGuideNavigation(
                 ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );

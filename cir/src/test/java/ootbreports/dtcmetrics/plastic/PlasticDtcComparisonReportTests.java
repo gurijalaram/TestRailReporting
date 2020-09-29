@@ -11,12 +11,12 @@ import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
 import org.junit.Test;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
 
-    private ReportAvailabilityTests reportAvailabilityTests;
+    private CommonReportTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
 
     public PlasticDtcComparisonReportTests() {
@@ -27,7 +27,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
@@ -38,7 +38,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityByLibrary(
                 ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
         );
@@ -48,7 +48,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
+        reportAvailabilityTests = new CommonReportTests(driver);
         reportAvailabilityTests.testReportAvailabilityBySearch(
                 ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
         );
