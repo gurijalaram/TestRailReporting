@@ -8,18 +8,38 @@
 ## List of special modules that are not included into a common build
  - **database** module location "../db"
 
-## Building the project (you will need this for the very first time):
-1. Open Terminal to root `build` directory
-2. Right click `build.gradle` and `Import Gradle project`
+## Building the project
+- to build without tests, add to the end of the Gradle build command: `-x test` e.g. `gradle clean build -x test`
 
-## Building all modules (include special modules):
-1. Open Terminal to root `build` directory
-2. Run `gradle clean build -x test -Dall`
+ - ### You will need this for the very first time:
+    - Open Terminal to root `build` directory
+    - Right click `build.gradle` and `Import Gradle project`
 
-## Building all microservices 
-1. Open Terminal to root `build` directory
-2. Run `gradle --continue :microservices:ats:build :microservices:cds:build :microservices:cis:build :microservices:edc:build :microservices:fms:build`
+ - ### Building all modules (include special modules):
+    - Open Terminal to root `build` directory
+    - Run `gradle clean build -Dall`
 
+- ### Building specific module:
+    - Open Terminal to root `build` directory
+    - Run `gradle :<module name>:<build command>` e.g. `gradle :web:cia:build`
+ 
+- ### Building specific configuration (set of modules)
+    - Open Terminal to root `build` directory
+    - Run `gradle -Dconf=<configuration name> clean build`
+    
+    ### Possible configurations
+    - #### All web modules
+         - Open Terminal to root `build` directory
+         - Run `gradle -Dconf=web clean build`
+            
+    - #### All microservices (new approach)
+        - Open Terminal to root `build` directory
+        - Run `gradle -Dconf=microservices clean build`
+    
+    - #### All microservices (old approach) 
+        - Open Terminal to root `build` directory
+        - Run `gradle --continue :microservices:ats:build :microservices:cds:build :microservices:cis:build :microservices:edc:build :microservices:fms:build`
+     
 
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
