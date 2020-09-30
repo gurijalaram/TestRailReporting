@@ -1,5 +1,6 @@
 package pageobjects.pages.view.reports;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -365,10 +366,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(
-                driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)))
-        ).click().perform();
+        pageUtils.waitForSteadinessOfElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
+        pageUtils.waitForElementAndClick(driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet))));
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }
 
@@ -565,9 +565,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of Generic Report Page object
      */
     public GenericReportPage clickOk() {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(okButton).click();
-        actions.perform();
+        pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementToAppear(upperTitle);
         return this;
     }
@@ -607,7 +605,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
         pageUtils.checkElementAttribute(exportSetList, "childElementCount", expectedCount);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", getCountOfExportSets());
+        pageUtils.checkElementAttribute(availableExportSets, "title", "Available: 0");
+        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: 0");
         return this;
     }
 
@@ -816,13 +815,24 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectRollup(String rollupName) {
-        rollupDropdown.click();
+        pageUtils.waitForElementAndClick(rollupDropdown);
         if (!rollupDropdown.getAttribute("title").equals(rollupName)) {
             driver.findElement(
                     By.xpath(String.format("//li[@title='%s']", rollupName)))
                     .click();
+        } else {
+            pageUtils.waitForElementAndClick(rollupDropdown);
         }
         return this;
+    }
+
+    /**
+     * Gets selected rollup from dropdown
+     * @return String
+     */
+    public String getSelectedRollup() {
+        pageUtils.waitForElementToAppear(rollupDropdown);
+        return rollupDropdown.getAttribute("title");
     }
 
     /**

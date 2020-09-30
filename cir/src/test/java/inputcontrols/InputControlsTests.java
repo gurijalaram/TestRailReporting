@@ -12,6 +12,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
@@ -102,8 +103,11 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectRollup(rollupName)
-                .clickApply()
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+
+        assertThat(genericReportPage.getSelectedRollup(), is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
+
+        genericReportPage.clickApply()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         assertThat(genericReportPage.getDisplayedRollup(),
@@ -181,7 +185,11 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectRollup(rollupName)
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+
+        assertThat(genericReportPage.getSelectedRollup(), is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
+
+        genericReportPage.selectRollup(rollupName)
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
@@ -263,7 +271,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(exportSet)
-                .ensureCorrectRollupIsSelected(rollupName)
+                //.ensureCorrectRollupIsSelected(rollupName)
                 .clickOk();
 
         assertThat(genericReportPage.getDisplayedRollup(),
@@ -324,7 +332,8 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSet)
                 .selectMassMetric(massMetric)
-                .clickOk();
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         assertThat(genericReportPage.getMassMetricValueFromAboveChart(), containsString(massMetric));
         if (!reportName.contains("Comparison") && !reportName.contains("Details")) {

@@ -109,7 +109,7 @@ public class MachiningDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
-                RollupEnum.DTC_MACHINING_DATASET.getRollupName()
+                RollupEnum.ROLL_UP_A.getRollupName()
         );
     }
 
