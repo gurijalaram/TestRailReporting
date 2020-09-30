@@ -155,6 +155,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * @return new GenericWorkflow page object
      */
     public Schedule clickSaveButton() {
+
         int expectedRows = getNumberOfRows();
         pageUtils.waitForElementAndClick(saveButton);
         waitForExpectedRowCount(expectedRows);
