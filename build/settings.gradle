@@ -14,16 +14,13 @@ project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 
 
-
 final String[] microservicesModules = ["ats", "cds", "cis", "edc", "fms", "nts"]
 final String[] webModules = ["cas", "cia", "ciconnect", "cid", "cidapp", "cir"]
-final String[] myOwn = [":web:cas", ":microservices:ats"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
         put("microservices", microservicesModules)
         put("web", webModules)
-        put("myOwn", myOwn)
     }
 }
 
@@ -31,20 +28,14 @@ final String configuration = System.getProperty("conf");
 
 if (configuration != null) {
     final String[] buildModules = buildConfigurations.get(configuration);
-    String includePath;
-    String filePath;
 
     for (int i = 0; i < buildModules.length; i++) {
         final String moduleName = buildModules[i];
+
         println("Building module: " + moduleName)
-
-        if(moduleName.contains(':')){
-            includeProject(moduleName, ".." + moduleName.replace(':', '/'))
-        } else {
-            includeProject(String.format(":%s:%s", configuration, moduleName), String.format("../%s/%s", configuration, moduleName))
-        }
-
+        includeProject(String.format(":%s:%s", configuration, moduleName), String.format("../%s/%s", configuration, moduleName))
     }
+
 } else {
 
     //Microservices
@@ -86,8 +77,6 @@ if (configuration != null) {
 
 
 void includeProject(final String includePath, final String filePath) {
-    println("Include path: " + includePath)
-    println("File path: " + filePath)
     include(includePath)
     project(includePath).projectDir = file(filePath)
 }

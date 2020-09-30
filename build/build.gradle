@@ -12,27 +12,25 @@ allprojects {
     version = '0.0.1-SNAPSHOT'
 }
 
-String buildResources = 'build/resources'
 
 //use this template to copy specific files into modules
-if(project.findProject(":cia")) {
-    findModuleToCopyRes(":cia", "../utils/src/main/resources/cas-int", buildResources)
-}
+
+findModuleAndCopyRes(project(":utils").projectDir.path + "/src/main/resources/cas-int", "/resources", ":web:cas")
+
 ///////////////////////////////////////////////////////
 
-void findModuleToCopyRes(String moduleName, String fromDir, String toDir) {
-    if( findProject(moduleName) != null) {
+void findModuleAndCopyRes( String fromDir, String toDir, String moduleName ) {
+    if (findProject(moduleName) != null) {
         project(moduleName) {
-            copyResources(fromDir, toDir)
+                    copyResources(fromDir, buildDir.path  + toDir)
         }
     }
-
 }
 
-void copyResources(String fromDir, String toDir )  {
+void copyResources(String fromDir, String toDir) {
     println 'Copying from dir: ' + fromDir + ' to dir: ' + toDir
     copy {
-        from (fromDir)
+        from(fromDir)
         into(toDir)
     }
 }
@@ -100,7 +98,7 @@ subprojects {
         }
 
         from sourceSets.test.output
-        from { configurations.runtimeClasspath.findAll{ !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
+        from { configurations.runtimeClasspath.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
         with jar
     }
