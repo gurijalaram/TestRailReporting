@@ -168,8 +168,8 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
             .filter(label -> routingLabels.get(label).getText().equals(process))
             .findFirst().getAsInt() + 1;
 
-        WebElement chart = driver.findElement(By.cssSelector("g.highcharts-series rect:nth-of-type(\n" + position));
-        pageUtils.actionClick(chart);
+        By chart = By.cssSelector(String.format("g.highcharts-series rect:nth-of-type(%s", position));
+        pageUtils.actionClick(driver.findElement(chart));
         return this;
     }
 
