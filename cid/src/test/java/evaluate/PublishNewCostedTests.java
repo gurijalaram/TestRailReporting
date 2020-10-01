@@ -42,7 +42,7 @@ public class PublishNewCostedTests extends TestBase {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "testpart-4";
-        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".prt");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, partName + ".prt");
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -63,7 +63,7 @@ public class PublishNewCostedTests extends TestBase {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "testpart-4";
-        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".prt");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, partName + ".prt");
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())

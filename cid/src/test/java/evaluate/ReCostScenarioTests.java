@@ -37,16 +37,17 @@ public class ReCostScenarioTests extends TestBase {
     @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Case_011_-_Team_350385.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Case_011_-_Team_350385.prt.1");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -55,16 +56,17 @@ public class ReCostScenarioTests extends TestBase {
     @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("case_002_00400016-003M10_A.STP");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_002_00400016-003M10_A.STP");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -73,16 +75,17 @@ public class ReCostScenarioTests extends TestBase {
     @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("14100640.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "14100640.stp");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -91,17 +94,17 @@ public class ReCostScenarioTests extends TestBase {
     @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-
-        resourceFile = FileResourceUtil.getResourceAsFile("case_010_lam_15-435508-00.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_010_lam_15-435508-00.prt.1");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -110,17 +113,17 @@ public class ReCostScenarioTests extends TestBase {
     @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-
-        resourceFile = FileResourceUtil.getResourceAsFile("case_066_SpaceX_00128711-001_A.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_066_SpaceX_00128711-001_A.stp");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
@@ -129,17 +132,17 @@ public class ReCostScenarioTests extends TestBase {
     @TestRail(testCaseId = {"578", "584", "598"})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-
-        resourceFile = FileResourceUtil.getResourceAsFile("case_007_SpaceX_00088481-001_C.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_007_SpaceX_00088481-001_C.stp");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }

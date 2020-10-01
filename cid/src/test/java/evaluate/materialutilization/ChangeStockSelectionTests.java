@@ -44,26 +44,27 @@ public class ChangeStockSelectionTests extends TestBase {
     @TestRail(testCaseId = {"960", "1617", "1618", "1619", "873"})
     @Description("Test making changes to the Material Stock in Sheet Metal, the change is respected and the scenario can be re-cost")
     public void changeStockSelectionTestSheetMetal() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
 
         loginPage = new CidLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openMaterialUtilization()
-            .goToStockTab()
-            .editStock()
-            .selectStock("4.00  mm x 1500 mm x 3000 mm")
-            .apply();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openMaterialUtilization()
+                .goToStockTab()
+                .editStock()
+                .selectStock("4.00  mm x 1500 mm x 3000 mm")
+                .apply();
 
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
 
         stockPage.closePanel()
-            .costScenario()
-            .openMaterialUtilization()
-            .goToStockTab();
+                .costScenario()
+                .openMaterialUtilization()
+                .goToStockTab();
 
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
     }
@@ -73,28 +74,30 @@ public class ChangeStockSelectionTests extends TestBase {
     @Description("Test inappropriate stock cannot be selected")
     public void inappropriateStockSelectionTest() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         selectStockPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario()
-            .openMaterialUtilization()
-            .goToStockTab()
-            .editStock();
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openMaterialUtilization()
+                .goToStockTab()
+                .editStock();
 
         assertThat(selectStockPage.getStockStatus("3.80  mm x 1219 mm x 3048 mm"), is(containsString("muted")));
 
         stockPage = selectStockPage.cancel()
-            .closePanel()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(scenarioName, "bracket_basic")
-            .openMaterialUtilization()
-            .goToStockTab();
+                .closePanel()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .openScenario(scenarioName, "bracket_basic")
+                .openMaterialUtilization()
+                .goToStockTab();
 
         assertThat(stockPage.isEditButtonEnabled(), is(false));
     }

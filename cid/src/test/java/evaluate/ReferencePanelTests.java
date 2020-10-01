@@ -34,23 +34,22 @@ public class ReferencePanelTests extends TestBase {
     @TestRail(testCaseId = {"355"})
     @Description("Validate the compare panel updates the comparison details to the previous iteration of the scenario")
     public void referenceUpdates() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-       final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"powderMetal.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "powderMetal.stp");
 
         loginPage = new CidLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_GERMANY.getVpe())
-            .enterAnnualVolume("2600")
-            .enterAnnualYears("3")
-            .costScenario(2)
-            .openReferenceCompare();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_GERMANY.getVpe())
+                .enterAnnualVolume("2600")
+                .enterAnnualYears("3")
+                .costScenario(2)
+                .openReferenceCompare();
 
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.POWDER_METAL.getProcessGroup()));
         assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
@@ -62,32 +61,31 @@ resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"powderMetal.stp
     @TestRail(testCaseId = {"356", "354", "957"})
     @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
     public void referencePublicIteration() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-       final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"MultiUpload.stp");
+        resourceFile =FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(scenarioName, "MultiUpload")
-            .editScenario(EvaluatePage.class);
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .openScenario(scenarioName, "MultiUpload")
+                .editScenario(EvaluatePage.class);
 
         evaluatePage = new EvaluatePage(driver);
         referenceComparePage = evaluatePage
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
-            .costScenario(2)
-            .openReferenceCompare()
-            .selectDropdown()
-            .selectDropdownScenario(WorkspaceEnum.PUBLIC.name(), scenarioName);
+                .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
+                .costScenario(2)
+                .openReferenceCompare()
+                .selectDropdown()
+                .selectDropdownScenario(WorkspaceEnum.PUBLIC.name(), scenarioName);
 
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()));
         assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
@@ -99,19 +97,18 @@ resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"MultiUpload.stp
     @TestRail(testCaseId = {"358"})
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-       final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"MultiUpload.stp");
+        resourceFile =FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openReferenceCompare();
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .openReferenceCompare();
 
         evaluatePage = new EvaluatePage(driver);
         evaluatePage.collapseReferenceCompare();
@@ -128,41 +125,41 @@ resourceFile \= FileResourceUtil\.getCloudFile(processGroupEnum,"MultiUpload.stp
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String scenarioName3 = new GenerateStringUtil().generateScenarioName();
         String componentName = "Rapid Prototyping";
-        resourceFile = FileResourceUtil.getResourceAsFile("Rapid Prototyping.stp");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.RAPID_PROTOTYPING, "Rapid Prototyping.stp");
 
         loginPage = new CidLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .createNewScenario()
-            .enterScenarioName(scenarioName2)
-            .save()
-            .selectExploreButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(componentName, scenarioName2, "Save As", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace())
-            .openScenario(scenarioName2, componentName)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
-            .costScenario(2)
-            .createNewScenario()
-            .enterScenarioName(scenarioName3)
-            .save()
-            .selectExploreButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(componentName, scenarioName3, "Save As", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .openScenario(scenarioName3, componentName)
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
-            .costScenario()
-            .openReferenceCompare()
-            .selectDropdown()
-            .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .createNewScenario()
+                .enterScenarioName(scenarioName2)
+                .save()
+                .selectExploreButton()
+                .openJobQueue()
+                .checkJobQueueActionStatus(componentName, scenarioName2, "Save As", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace())
+                .openScenario(scenarioName2, componentName)
+                .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
+                .costScenario(2)
+                .createNewScenario()
+                .enterScenarioName(scenarioName3)
+                .save()
+                .selectExploreButton()
+                .openJobQueue()
+                .checkJobQueueActionStatus(componentName, scenarioName3, "Save As", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+                .openScenario(scenarioName3, componentName)
+                .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+                .costScenario()
+                .openReferenceCompare()
+                .selectDropdown()
+                .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
 
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()));
         assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));

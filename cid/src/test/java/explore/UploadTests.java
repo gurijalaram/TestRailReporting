@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -45,7 +46,7 @@ public class UploadTests extends TestBase {
     @Description("Nothing uploaded or translated if user select a file but then cancels the new component dialog")
     public void cancelUpload() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Piston_assembly.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);

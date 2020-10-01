@@ -49,18 +49,20 @@ public class DecimalPlaceTests extends TestBase {
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.SIX.getDecimalPlaces())
-            .save(ExplorePage.class)
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .costScenario();
+                .openSettings()
+                .changeDecimalPlaces(DecimalPlaceEnum.SIX.getDecimalPlaces())
+                .save(ExplorePage.class)
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.getFinishMass(), closeTo(5.309458, 1));
         assertThat(evaluatePage.getUtilization(), closeTo(81.163688, 1));
@@ -71,8 +73,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), closeTo(431.200988, 50));
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
-            .save(EvaluatePage.class);
+                .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
+                .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5"), is(true));
         assertThat(evaluatePage.isUtilization("81"), is(true));
@@ -83,8 +85,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat((int) evaluatePage.getCapitalInvestment(), is(431));
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
-            .save(EvaluatePage.class);
+                .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
+                .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5.3095"), is(true));
         assertThat(evaluatePage.isUtilization("81.1637"), is(true));
@@ -111,8 +113,8 @@ public class DecimalPlaceTests extends TestBase {
 
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.ONE.getDecimalPlaces())
-            .save(EvaluatePage.class);
+                .changeDecimalPlaces(DecimalPlaceEnum.ONE.getDecimalPlaces())
+                .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5.3"), is(true));
         assertThat(evaluatePage.isUtilization("81.2"), is(true));
@@ -138,8 +140,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getPiecePartCost(), closeTo(20.1, 1));
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
-            .save(EvaluatePage.class);
+                .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
+                .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5.30946"), is(true));
         assertThat(evaluatePage.isUtilization("81.16369"), is(true));
@@ -150,7 +152,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), closeTo(431.20099, 1));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
-            .costScenario();
+                .costScenario();
 
         assertThat(evaluatePage.isFinishMass("5.30946"), is(true));
         assertThat(evaluatePage.isUtilization("81.16369"), is(true));

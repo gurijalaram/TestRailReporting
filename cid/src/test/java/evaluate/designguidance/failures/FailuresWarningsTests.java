@@ -52,24 +52,25 @@ public class FailuresWarningsTests extends TestBase {
     @TestRail(testCaseId = {"1592", "1059", "1831", "1791"})
     @Description("Ensure that 'Failures/ Warnings tab includes: Messaging")
     public void failedCostingMessaging() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(5)
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Failed GCDs", "Curved Walls", "CurvedWall:100");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario(5)
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Failed GCDs", "Curved Walls", "CurvedWall:100");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in)"));
 
@@ -82,23 +83,24 @@ public class FailuresWarningsTests extends TestBase {
     @TestRail(testCaseId = {"1592", "3830"})
     @Description("Ensure that 'Failures/ Warnings tab includes: - Issue type & count")
     public void failedCostingCount() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab();
 
         assertThat(guidancePage.getGuidanceCell("Failed GCDs", "Count"), is(equalTo("3")));
         assertThat(guidancePage.getGuidanceCell("Not Supported GCDs", "Count"), is(equalTo("1")));

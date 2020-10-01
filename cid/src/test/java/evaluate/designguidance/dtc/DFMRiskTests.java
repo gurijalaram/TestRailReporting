@@ -130,9 +130,7 @@ public class DFMRiskTests extends TestBase {
     @TestRail(testCaseId = {"3849"})
     @Description("Validate DFM Risk - Low for Sand Casting")
     public void sandCastLowDFM() {
-
-        //TODO z: test part is not find
-        resourceFile = FileResourceUtil.getResourceAsFile("casting_q5_thinvalve.prt");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_SAND, "casting_q5_thinvalve.prt");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 

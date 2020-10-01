@@ -42,7 +42,7 @@ public class GeometryTests extends TestBase {
     @Description("Validate the user can open the Analysis Properties dialogue box for a specific GCD selected from the geometry tab")
     public void propertiesRouting() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Case_001_-_Rockwell_2075-0243G.stp");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Case_001_-_Rockwell_2075-0243G.stp");
 
         loginPage = new CidLoginPage(driver);
         geometryPage = loginPage.login(UserUtil.getUser())
