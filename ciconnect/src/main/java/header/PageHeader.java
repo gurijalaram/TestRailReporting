@@ -60,10 +60,10 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(id = "toolbar_logo_link")
     private WebElement pageTitle;
 
-    @FindBy(css = "div[id^='CIC_HelpDropDown_MU-BMController-'][id$='_button-43'] > button > span:nth-of-type(3)")
+    @FindBy(xpath = "//span[text() = 'About Cost Insight Connect']")
     private WebElement aboutAPrioriLink;
 
-    @FindBy(css = "div#CIC_HelpDropDown_MU-BMController-1_navigation-42-popup_label-261 > span")
+    @FindBy(xpath = "//span[contains(text(), 'Cost Insight Connect |')]")
     private WebElement cicVersionText;
 
     private WebDriver driver;

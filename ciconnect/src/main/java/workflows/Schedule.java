@@ -71,6 +71,9 @@ public class Schedule extends LoadableComponent<Schedule> {
     @FindBy(css = "img[src='../Common/thingworx/widgets/gridadvanced/imgs/dhxgrid_material/ar_right.gif']")
     private WebElement enabledNextBtn;
 
+    @FindBy(xpath = "//div[@id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-bottom-container']//img[contains(@src, 'ar_right') and not(contains(@src, 'abs'))]")
+    private WebElement nextBtn;
+
     @FindBy(css = "div#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-of-type(4)")
     private WebElement numRowsText;
 
@@ -133,55 +136,40 @@ public class Schedule extends LoadableComponent<Schedule> {
      * @return new Schedule page object
      */
     public Schedule selectWorkflow(String workflowName) {
-        ArrayList<String> workflowNames = new ArrayList<>();
-        int numRows = getNumberOfRows();
-        int rowsPerPage = getRowsPerPage();
-        int nextClicksAllPages;
+        String nextBtnImgSrc = nextBtn.getAttribute("src");
 
-        if (numRows % rowsPerPage == 0) {
-            nextClicksAllPages = (numRows / rowsPerPage) - 1;
-        } else {
-            nextClicksAllPages = numRows / rowsPerPage;
+        List<WebElement> workflowNamesElements = driver.findElements(By.cssSelector(
+            "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
+        for (WebElement workflowNamesElement : workflowNamesElements) {
+            if (workflowNamesElement.getText().equals(workflowName)) {
+                pageUtils.waitForElementAndClick(pageUtils.scrollWithJavaScript(driver.findElement(By.xpath(String.format(
+                    "//div[@id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced']//td[.='%s']", workflowName))), true));
+            }
         }
 
-        for (int i = 0; i <= nextClicksAllPages; i++) {
-            List<WebElement> workflowNamesElements = driver.findElements(By.cssSelector(
+        while (!nextBtnImgSrc.contains("dis")) {
+            pageUtils.waitForElementAndClick(nextBtn);
+
+            workflowNamesElements = driver.findElements(By.cssSelector(
                 "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
             for (WebElement workflowNamesElement : workflowNamesElements) {
-                workflowNames.add(workflowNamesElement.getText());
+                if (workflowNamesElement.getText().equals(workflowName)) {
+                    pageUtils.waitForElementAndClick(pageUtils.scrollWithJavaScript(driver.findElement(By.xpath(String.format(
+                        "//div[@id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced']//td[.='%s']", workflowName))), true));
+                }
             }
-            if (workflowNames.indexOf(workflowName) != -1) {
-                break;
-            } else if (i == nextClicksAllPages && workflowNames.indexOf(workflowName) == -1) {
-                break;
-            } else {
-                pageUtils.waitForElementAndClick(enabledNextBtn);
-            }
+            nextBtnImgSrc = nextBtn.getAttribute("src");
         }
-
-        int workflowIndex = workflowNames.indexOf(workflowName);
-        int nextClicks;
-
-        if (workflowIndex % rowsPerPage == 0) {
-            nextClicks = workflowIndex / rowsPerPage - 1;
-        } else {
-            nextClicks = workflowIndex / rowsPerPage;
-        }
-
-        pageUtils.waitForElementAndClick(firstPageBtn);
-
-        for (int i = 0; i < nextClicks; i++) {
-            pageUtils.waitForElementAndClick(enabledNextBtn);
-        }
-
-        int rowOnPage = ((workflowIndex + 1) % rowsPerPage) + 1;
-        WebElement elementToClick = driver.findElement(By.cssSelector(String.format(
-            "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr:nth-of-type(%s) > td:nth-of-type(1)", rowOnPage)));
-
-        pageUtils.waitForElementAndClick(elementToClick);
-
         return new Schedule(driver);
     }
+
+
+
+    /*
+    - find element by xpath using simple locator .='someElement' using page utils jscript scroll
+    - if the element doesn't exist then click next using img=src locator
+    - finally if element doesn't exist then selenium will throw no such element exception
+     */
 
     /**
      * Get total number of rows in table
@@ -254,32 +242,27 @@ public class Schedule extends LoadableComponent<Schedule> {
      * @return - boolean
      */
     public boolean isWorkflowInTable(String workflowName) {
-        pageUtils.waitForElementAndClick(firstPageBtn);
+        String nextBtnImgSrc = nextBtn.getAttribute("src");
 
-        ArrayList<String> workflowNames = new ArrayList<>();
-        int numRows = getNumberOfRows();
-        int rowsPerPage = getRowsPerPage();
-        int nextClicksAllPages;
-
-        if (numRows % rowsPerPage == 0) {
-            nextClicksAllPages = (numRows / rowsPerPage) - 1;
-        } else {
-            nextClicksAllPages = numRows / rowsPerPage;
+        List<WebElement> workflowNamesElements = driver.findElements(By.cssSelector(
+            "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
+        for (WebElement workflowNamesElement : workflowNamesElements) {
+            if (workflowNamesElement.getText().equals(workflowName)) {
+                return true;
+            }
         }
 
-        for (int i = 0; i <= nextClicksAllPages; i++) {
-            List<WebElement> workflowNamesElements = driver.findElements(By.cssSelector(
+        while (!nextBtnImgSrc.contains("dis")) {
+            pageUtils.waitForElementAndClick(nextBtn);
+
+            workflowNamesElements = driver.findElements(By.cssSelector(
                 "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
             for (WebElement workflowNamesElement : workflowNamesElements) {
-                workflowNames.add(workflowNamesElement.getText());
+                if (workflowNamesElement.getText().equals(workflowName)) {
+                    return true;
+                }
             }
-            if (workflowNames.indexOf(workflowName) != -1) {
-                return true;
-            } else if (i == nextClicksAllPages && workflowNames.indexOf(workflowName) == -1) {
-                return false;
-            } else {
-                pageUtils.waitForElementAndClick(enabledNextBtn);
-            }
+            nextBtnImgSrc = nextBtn.getAttribute("src");
         }
         return false;
     }

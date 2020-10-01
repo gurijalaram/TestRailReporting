@@ -19,7 +19,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
     private final Logger logger = LoggerFactory.getLogger(Schedule.class);
 
-    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-92'] > button") //> span:nth-of-type(3)
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-92'] > button")
     private WebElement detailsNextBtn;
 
     @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-104'] > button > span:nth-of-type(3)")
@@ -68,7 +68,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
     }
 
     /**
-     * Click Next btn on Details tab of New Edit Workflow Modal
+     * Click Next button on Details tab of New Edit Workflow Modal
      */
     public NewEditWorkflow clickDetailsNextBtn() {
         pageUtils.waitForElementAndClick(detailsNextBtn);
@@ -76,7 +76,7 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
     }
 
     /**
-     * Click Next btn on Query tab of New Edit Workflow Modal
+     * Click Next button on Query tab of New Edit Workflow Modal
      */
     public NewEditWorkflow clickQueryNextBtn() {
         pageUtils.waitForElementAndClick(queryNextBtn);
@@ -124,11 +124,11 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * @param fieldName  - Field name, CI Connect field to be used in query
      * @return NewEditWorkflow page object
      */
-    public NewEditWorkflow selectQueryCIConnectField(Integer ruleNumber, String fieldName) {
-        pageUtils.waitForElementToAppear(By.xpath(String.format(
-            "//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString())));
-        Select queryField = new Select(driver.findElement(By.xpath(String.format(
-            "//select[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_filter']", ruleNumber.toString()))));
+    public NewEditWorkflow selectQueryCIConnectField(int ruleNumber, String fieldName) {
+        pageUtils.waitForElementToAppear(By.cssSelector(String.format(
+            "select[name*='rule_%s_filter']", ruleNumber)));
+        Select queryField = new Select(driver.findElement(By.cssSelector(String.format(
+            "select[name*='rule_%s_filter']", ruleNumber))));
         queryField.selectByVisibleText(fieldName);
         return new NewEditWorkflow(driver);
     }
@@ -140,9 +140,9 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * @param ruleArgument - argument to be entered
      * @return NewEditWorkflow page object
      */
-    public NewEditWorkflow enterQueryArgument(Integer ruleNumber, String ruleArgument) {
-        WebElement inputField = driver.findElement(By.xpath(String.format(
-            "//input[@name='root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_%s_value_0']", ruleNumber.toString())));
+    public NewEditWorkflow enterQueryArgument(int ruleNumber, String ruleArgument) {
+        WebElement inputField = driver.findElement(By.cssSelector(String.format(
+            "input[name*='rule_%s_value_0']", ruleNumber)));
         pageUtils.waitForElementAndClick(inputField);
         pageUtils.clearInput(inputField);
         inputField.sendKeys(ruleArgument);
