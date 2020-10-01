@@ -23,16 +23,16 @@ public class Schedule extends LoadableComponent<Schedule> {
 
     private final Logger logger = LoggerFactory.getLogger(Schedule.class);
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-35 > button")
+    @FindBy(xpath = "//span[.='New']")
     private WebElement newWorkflowBtn;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-36 > button")
+    @FindBy(xpath = "//span[.='Edit']")
     private WebElement editWorkflow;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-37 > button")
+    @FindBy(xpath = "//span[.='Delete']")
     private WebElement deleteWorkflow;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-97 > button")
+    @FindBy(xpath = "//span[.='Invoke']")
     private WebElement invokeWorkflow;
 
     @FindBy(css = "div#root_pagemashupcontainer-1_button-38 > button")
@@ -130,14 +130,11 @@ public class Schedule extends LoadableComponent<Schedule> {
     }
 
     /**
-     * Select workflow in table
+     * Click workflow with specified name on current page of table
      *
-     * @param workflowName - name of workflow to select
-     * @return new Schedule page object
+     * @param workflowName - name of workflow to click
      */
-    public Schedule selectWorkflow(String workflowName) {
-        String nextBtnImgSrc = nextBtn.getAttribute("src");
-
+    public void clickWorkflowIfOnPage(String workflowName) {
         List<WebElement> workflowNamesElements = driver.findElements(By.cssSelector(
             "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
         for (WebElement workflowNamesElement : workflowNamesElements) {
@@ -146,30 +143,28 @@ public class Schedule extends LoadableComponent<Schedule> {
                     "//div[@id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced']//td[.='%s']", workflowName))), true));
             }
         }
+    }
+
+
+    /**
+     * Select workflow in table
+     *
+     * @param workflowName - name of workflow to select
+     * @return new Schedule page object
+     */
+    public Schedule selectWorkflow(String workflowName) {
+        String nextBtnImgSrc = nextBtn.getAttribute("src");
+
+        clickWorkflowIfOnPage(workflowName);
 
         while (!nextBtnImgSrc.contains("dis")) {
             pageUtils.waitForElementAndClick(nextBtn);
 
-            workflowNamesElements = driver.findElements(By.cssSelector(
-                "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] > div:nth-of-type(2) > table > tbody > tr > td:nth-of-type(1)"));
-            for (WebElement workflowNamesElement : workflowNamesElements) {
-                if (workflowNamesElement.getText().equals(workflowName)) {
-                    pageUtils.waitForElementAndClick(pageUtils.scrollWithJavaScript(driver.findElement(By.xpath(String.format(
-                        "//div[@id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced']//td[.='%s']", workflowName))), true));
-                }
-            }
+            clickWorkflowIfOnPage(workflowName);
             nextBtnImgSrc = nextBtn.getAttribute("src");
         }
         return new Schedule(driver);
     }
-
-
-
-    /*
-    - find element by xpath using simple locator .='someElement' using page utils jscript scroll
-    - if the element doesn't exist then click next using img=src locator
-    - finally if element doesn't exist then selenium will throw no such element exception
-     */
 
     /**
      * Get total number of rows in table
