@@ -60,18 +60,19 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Test to check edit thread button is disabled")
     public void threadButtonDisabled() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap noDraft.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap noDraft.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getEditButton().isEnabled(), is(false));
     }
@@ -81,23 +82,24 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"28", "1631"})
     @Description("C28 Test to check thread length persist")
     public void editThread() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap noDraft.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap noDraft.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Simple Holes", "SimpleHole:1")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("0.28")
-            .apply(InvestigationPage.class)
-            .selectEditButton();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Simple Holes", "SimpleHole:1")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("0.28")
+                .apply(InvestigationPage.class)
+                .selectEditButton();
 
         assertThat(threadingPage.isThreadLength("0.28"), is(true));
     }
@@ -105,30 +107,31 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Test to verify costed thread")
     public void selectScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:1")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("0.28")
-            .apply(InvestigationPage.class);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:1")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("0.28")
+                .apply(InvestigationPage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
         threadingPage = designGuidancePage.closePanel()
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:1");
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:1");
 
         assertThat(threadingPage.isThreadLength("0.28"), is(true));
     }
@@ -138,22 +141,23 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Simple Holes", "SimpleHole:1")
-            .selectThreadDropdown("No")
-            .apply(InvestigationPage.class)
-            .selectEditButton();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Simple Holes", "SimpleHole:1")
+                .selectThreadDropdown("No")
+                .apply(InvestigationPage.class)
+                .selectEditButton();
 
         assertThat(threadingPage.isThreadingStatus("No"), is(true));
     }
@@ -162,28 +166,29 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"3847"})
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario(3);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario(3);
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         threadingPage = evaluatePage.openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:1")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("0.64")
-            .apply(InvestigationPage.class)
-            .selectEditButton();
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:1")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("0.64")
+                .apply(InvestigationPage.class)
+                .selectEditButton();
 
         assertThat(threadingPage.isThreadLength("0.64"), is(true));
     }
@@ -191,27 +196,28 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Testing warning message displayed when thread length is removed")
     public void costedThreadLengthRemoved() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:24")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("0.25")
-            .apply(InvestigationPage.class)
-            .selectEditButton();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:24")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("0.25")
+                .apply(InvestigationPage.class)
+                .selectEditButton();
 
         assertThat(threadingPage.isThreadLength("0.25"), is(true));
         warningPage = threadingPage.removeThreadLength()
-            .apply(WarningPage.class);
+                .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
@@ -221,26 +227,27 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"32", "33"})
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     public void changeThreadValueCancel() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Simple Holes", "SimpleHole:1")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("0.26")
-            .apply(InvestigationPage.class)
-            .selectEditButton()
-            .enterThreadLength("1.70")
-            .cancel()
-            .selectEditButton();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Simple Holes", "SimpleHole:1")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("0.26")
+                .apply(InvestigationPage.class)
+                .selectEditButton()
+                .enterThreadLength("1.70")
+                .cancel()
+                .selectEditButton();
 
         assertThat(threadingPage.isThreadLength("0.26"), is(true));
     }
@@ -249,22 +256,23 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"32", "34"})
     @Description("Testing that adding text values in the thread length shows a warning message")
     public void junkValuesCharTest() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         warningPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:1")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("apriori")
-            .apply(WarningPage.class);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:1")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("apriori")
+                .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
@@ -272,22 +280,23 @@ public class ThreadTests extends TestBase {
     @Test
     @Description("Testing that adding no value in the thread shows a warning message")
     public void junkValueTest() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         warningPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:1")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("")
-            .apply(WarningPage.class);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:1")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("")
+                .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
@@ -296,22 +305,23 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"35"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         warningPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:25")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("0")
-            .apply(WarningPage.class);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:25")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("0")
+                .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
@@ -321,22 +331,23 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"30"})
     @Description("Testing a public thread cannot be edited")
     public void cannotEditPublicThread() {
-
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getResourceAsFile("CurvedWall.CATPart");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openScenario(testScenarioName, "CurvedWall")
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .openScenario(testScenarioName, "CurvedWall")
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getEditButton().isEnabled(), is(false));
     }
@@ -345,35 +356,36 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"38", "40", "43", "584", "598"})
     @Description("Testing thread length persist when attributes are changed")
     public void maintainingThreadChangeAttributes() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:26")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("4.85")
-            .apply(InvestigationPage.class);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:26")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("4.85")
+                .apply(InvestigationPage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
         threadingPage = designGuidancePage.closePanel()
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
-            .apply()
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:26");
+                .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
+                .openMaterialCompositionTable()
+                .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
+                .apply()
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:26");
 
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
@@ -383,23 +395,24 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"267", "268", "39", "294", "285"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openSettings()
-            .selectUnits(UnitsEnum.CUSTOM.getUnits())
-            .selectSystem(MetricEnum.ENGLISH.getMetricUnit())
-            .selectLength(LengthEnum.INCHES.getLength())
-            .save(EvaluatePage.class)
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openSettings()
+                .selectUnits(UnitsEnum.CUSTOM.getUnits())
+                .selectSystem(MetricEnum.ENGLISH.getMetricUnit())
+                .selectLength(LengthEnum.INCHES.getLength())
+                .save(EvaluatePage.class)
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getThreadHeader(), containsString("(in)"));
     }
@@ -409,22 +422,23 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"42"})
     @Description("Testing thread units persist when changed to millimetres")
     public void validateThreadUnitsMM() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openSettings()
-            .selectSystem(MetricEnum.METRIC.getMetricUnit())
-            .selectLength(LengthEnum.MILLIMETER.getLength())
-            .save(EvaluatePage.class)
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openSettings()
+                .selectSystem(MetricEnum.METRIC.getMetricUnit())
+                .selectLength(LengthEnum.MILLIMETER.getLength())
+                .save(EvaluatePage.class)
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading");
 
         assertThat(investigationPage.getThreadHeader(), containsString("(mm)"));
 
@@ -438,33 +452,34 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"37", "41"})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("M3CapScrew.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "M3CapScrew.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:1")
-            .selectThreadDropdown("Yes")
-            .enterThreadLength("4.85")
-            .apply(InvestigationPage.class);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:1")
+                .selectThreadDropdown("Yes")
+                .enterThreadLength("4.85")
+                .apply(InvestigationPage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
         threadingPage = designGuidancePage.closePanel()
-            .openSecondaryProcess()
-            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
-            .apply()
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Curved Walls", "CurvedWall:1");
+                .openSecondaryProcess()
+                .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+                .apply()
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Curved Walls", "CurvedWall:1");
 
         assertThat(threadingPage.isThreadLength("4.85"), is(true));
     }
@@ -474,19 +489,20 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("CatiaPMIThreads.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CatiaPMIThreads.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Simple Holes", "SimpleHole:1");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Simple Holes", "SimpleHole:1");
 
         assertThat(threadingPage.isThreadLength("10.00"), is(true));
     }
@@ -496,19 +512,20 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("100plusThreads.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "100plusThreads.prt");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Simple Holes", "SimpleHole:15");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Simple Holes", "SimpleHole:15");
 
         assertThat(threadingPage.isThreadLength("15.00"), is(true));
     }
@@ -518,19 +535,20 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"44", "1632"})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("CREO-PMI-Threads.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CREO-PMI-Threads.prt.1");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .editThread("Simple Holes", "SimpleHole:13");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .editThread("Simple Holes", "SimpleHole:13");
 
         assertThat(threadingPage.isThreadLength("4.06"), is(true));
     }
@@ -539,35 +557,36 @@ public class ThreadTests extends TestBase {
     @TestRail(testCaseId = {"64"})
     @Description("Validate thread filter behaves correctly in Investigation tab.")
     public void threadFilter() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("CREO-PMI-Threads.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CREO-PMI-Threads.prt.1");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .selectFilterDropdown("Threaded in CAD")
-            .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .selectFilterDropdown("Threaded in CAD")
+                .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
 
         assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("CAD", "4.06"));
 
         investigationPage.selectEditButton()
-            .enterThreadLength("7")
-            .apply(InvestigationPage.class);
+                .enterThreadLength("7")
+                .apply(InvestigationPage.class);
 
         designGuidancePage = new DesignGuidancePage(driver);
         investigationPage = designGuidancePage.closePanel()
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Threading")
-            .selectFilterDropdown("Overridden GCDs")
-            .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Threading")
+                .selectFilterDropdown("Overridden GCDs")
+                .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
 
         assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("Manual", "7.00"));
     }
