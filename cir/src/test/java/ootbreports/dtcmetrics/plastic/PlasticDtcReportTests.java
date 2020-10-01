@@ -102,7 +102,10 @@ public class PlasticDtcReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
 
-        assertThat(genericReportPage.getSelectedRollup(), is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
+        assertThat(
+                genericReportPage.getSelectedRollup(RollupEnum.ROLL_UP_A.getRollupName()),
+                is(equalTo(RollupEnum.ROLL_UP_A.getRollupName()))
+        );
 
         genericReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickOk()

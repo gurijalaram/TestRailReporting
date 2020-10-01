@@ -1,6 +1,5 @@
 package pageobjects.pages.view.reports;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -215,7 +214,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement rollupDropdown;
 
     @FindBy(xpath = "//div[@id='rollup']//div[@class='jr-mSingleselect-search jr jr-isOpen']/input")
-    private WebElement rollupSearch;
+    private WebElement rollupSearchInput;
 
     @FindBy(xpath = "//div[@id='rollup']//a/span[2]")
     private WebElement rollupSelected;
@@ -316,6 +315,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Component Select']//input")
     private WebElement componentSelectSearchInput;
 
+    @FindBy(xpath = "//*[@id='reportViewer']/div[10]/div/div/div/ul")
+    private WebElement componentSelectUnorderedList;
+
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement dtcPartSummaryProcessGroupValue;
 
@@ -366,9 +368,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
-        pageUtils.waitForSteadinessOfElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
-        pageUtils.waitForElementAndClick(driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet))));
+        By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementAndClick(driver.findElement(locator));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        //pageUtils.waitFor(1000);
         return this;
     }
 
@@ -408,10 +412,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of current page object
      */
     public GenericReportPage setProcessGroup(String processGroupOption) {
-        pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);;
-        WebElement element = driver.findElement(By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption)));
-        Actions builder = new Actions(driver);
-        builder.moveToElement(element).click().perform();
+        pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
+        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementAndClick(driver.findElement(locator));
         return this;
     }
 
@@ -792,6 +797,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage invertExportSetSelection(String exportSetName) {
         int expected = getAvailableExportSetCount() - getSelectedExportSetCount();
         pageUtils.waitForElementAndClick(exportSetInvert);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
         WebElement exportSet = driver.findElement(By.xpath(String.format("//li[@title='%s']", exportSetName)));
         pageUtils.checkElementAttribute(exportSet, "class", "jr-isSelected");
@@ -815,13 +821,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectRollup(String rollupName) {
-        pageUtils.waitForElementAndClick(rollupDropdown);
         if (!rollupDropdown.getAttribute("title").equals(rollupName)) {
-            driver.findElement(
-                    By.xpath(String.format("//li[@title='%s']", rollupName)))
-                    .click();
-        } else {
             pageUtils.waitForElementAndClick(rollupDropdown);
+            pageUtils.waitForElementAndClick(rollupSearchInput);
+            rollupSearchInput.sendKeys(rollupName);
+            By rollupLocator = By.xpath(String.format("//li[@title='%s']", rollupName));
+            pageUtils.waitForElementToAppear(rollupLocator);
+            pageUtils.waitForElementAndClick(rollupLocator);
         }
         return this;
     }
@@ -830,20 +836,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets selected rollup from dropdown
      * @return String
      */
-    public String getSelectedRollup() {
-        pageUtils.waitForElementToAppear(rollupDropdown);
-        return rollupDropdown.getAttribute("title");
-    }
-
-    /**
-     * Ensure that correct rollup is selected
-     * @return current page object
-     */
-    public GenericReportPage ensureCorrectRollupIsSelected(String rollupName) {
-        pageUtils.waitForElementAndClick(rollupDropdown);
-        By locator = By.xpath(String.format("//li[@title='%s']", rollupName));
-        pageUtils.waitForElementToAppear(driver.findElement(locator));
-        return this;
+    public String getSelectedRollup(String rollupName) {
+        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//span[.='* Rollup']")), true);
+        By rollUp = By.cssSelector(String.format("a[title='%s']", rollupName));
+        pageUtils.waitForElementToAppear(rollUp);
+        return driver.findElement(rollUp).getAttribute("title");
     }
 
     /**
@@ -853,20 +850,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     private String removeTimeFromDate(String dateToSubstring) {
         return dateToSubstring.substring(0, 10);
-    }
-
-    /**
-     * Gets current date in correct format
-     *
-     * @return String
-     */
-    private String getDate(boolean getCurrent) {
-        DateTimeFormatter formatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return getCurrent ? formatter
-            .format(LocalDateTime.now(ZoneOffset.UTC).withNano(0))
-            : formatter
-            .format(LocalDateTime.now(ZoneOffset.UTC).plusDays(2).withNano(0));
     }
 
     private String getCurrentDate() {
@@ -1123,11 +1106,11 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage selectComponent(String partName) {
         pageUtils.waitForElementAndClick(componentSelectDropdown);
-        pageUtils.waitForElementAndClick(
-                driver.findElement(
-                        By.xpath(String.format("//a[contains(text(), '%s')]", partName))
-                )
-        );
+        pageUtils.waitForElementAndClick(componentSelectSearchInput);
+        componentSelectSearchInput.sendKeys(partName);
+        By componentToSelectLocator = By.xpath(String.format("//a[contains(text(), '%s')]", partName));
+        pageUtils.waitForElementToAppear(componentToSelectLocator);
+        pageUtils.waitForElementAndClick(componentToSelectLocator);
         return this;
     }
 

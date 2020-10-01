@@ -105,7 +105,7 @@ public class InputControlsTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
 
-        assertThat(genericReportPage.getSelectedRollup(), is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
+        assertThat(genericReportPage.getSelectedRollup(rollupName), is(RollupEnum.ROLL_UP_A.getRollupName()));
 
         genericReportPage.clickApply()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -185,9 +185,9 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName());
 
-        assertThat(genericReportPage.getSelectedRollup(), is(equalTo(RollupEnum.ROLL_UP_A.getRollupName())));
+        assertThat(genericReportPage.getSelectedRollup(rollupName), is(equalTo(rollupName)));
 
         genericReportPage.selectRollup(rollupName)
                 .clickOk()
@@ -216,7 +216,7 @@ public class InputControlsTests extends TestBase {
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount() - 1)));
 
-        genericReportPage.invertExportSetSelection(exportSetName);
+        genericReportPage.invertExportSetSelection(ExportSetEnum.CASTING_DTC.getExportSetName());
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(1)));
 
