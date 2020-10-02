@@ -100,7 +100,7 @@ public class NavBarTests extends TestBase {
             .login()
             .navigateToAboutAPriori();
 
-        assertThat(pageHeader.getCicVersionText(), startsWith("Cost Insight Connect Version"));
+        assertThat(pageHeader.getCicVersionText(), startsWith("Cost Insight Connect"));
     }
 
     @Test
