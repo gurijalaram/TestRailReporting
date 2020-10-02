@@ -372,7 +372,6 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(driver.findElement(locator));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        //pageUtils.waitFor(1000);
         return this;
     }
 
@@ -609,9 +608,18 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
-        pageUtils.checkElementAttribute(exportSetList, "childElementCount", expectedCount);
-        pageUtils.checkElementAttribute(availableExportSets, "title", "Available: 0");
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: 0");
+        By availableLocator = By.xpath(
+                String.format(
+                        "(//div[@id='exportSetName']/div/div/div/div/div)[1]/span[@title='Available: %s']",
+                        expectedCount)
+        );
+        pageUtils.waitForElementToAppear(availableLocator);
+        By selectedLocator = By.xpath(
+                String.format(
+                        "(//div[@id='exportSetName']/div/div/div/div/div)[2]/span[@title='Selected: %s']",
+                        expectedCount)
+        );
+        pageUtils.waitForElementToAppear(selectedLocator);
         return this;
     }
 
