@@ -24,7 +24,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     @FindBy(css = ".table.table-striped")
     private WebElement jobQueueTable;
 
-    @FindBy(css = "a[data-ap-comp='jobQueue']")
+    @FindBy(css = "a[data-ap-comp='jobQueue'] .button-text")
     private WebElement jobQueueButton;
 
     @FindBy(xpath = "//div[@class='popover-content']//div[@class='gwt-Label']/ancestor::tr")
