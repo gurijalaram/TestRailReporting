@@ -1147,8 +1147,9 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Ensures correct Machining DTC Bubble was hovered
      */
-    public void ensureCorrectMachiningBubbleWasHovered() {
-        try {
+    public String ensureCorrectMachiningBubbleWasHovered() {
+        return partNameDtcReports.getAttribute("textContent");
+        /*try {
             assertThat(
                     partNameDtcReports.getAttribute("textContent"),
                     is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
@@ -1158,7 +1159,7 @@ public class GenericReportPage extends ReportsPageHeader {
                     partNameDtcReports.getAttribute("textContent"),
                     is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
             );
-        }
+        }*/
     }
 
     /**

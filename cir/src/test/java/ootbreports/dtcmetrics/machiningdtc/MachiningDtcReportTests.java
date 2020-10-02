@@ -19,11 +19,13 @@ import com.apriori.utils.web.driver.TestBase;
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcReportTests extends TestBase {
 
@@ -260,6 +262,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2039")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
@@ -274,7 +277,18 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.hoverMachiningBubbleTwice();
         genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
-        genericReportPage.ensureCorrectMachiningBubbleWasHovered();
+        //genericReportPage.ensureCorrectMachiningBubbleWasHovered();
+        try {
+            assertThat(
+                    genericReportPage.ensureCorrectMachiningBubbleWasHovered(),
+                    is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
+            );
+        } catch (AssertionError e) {
+            assertThat(
+                    genericReportPage.ensureCorrectMachiningBubbleWasHovered(),
+                    is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
+            );
+        }
         genericReportPage.clickMachiningBubbleAndSwitchTab();
 
         assertThat(
