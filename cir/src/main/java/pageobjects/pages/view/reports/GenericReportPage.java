@@ -1145,24 +1145,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Ensures correct Machining DTC Bubble was hovered
-     */
-    public String ensureCorrectMachiningBubbleWasHovered() {
-        return partNameDtcReports.getAttribute("textContent");
-        /*try {
-            assertThat(
-                    partNameDtcReports.getAttribute("textContent"),
-                    is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
-            );
-        } catch (AssertionError e) {
-            assertThat(
-                    partNameDtcReports.getAttribute("textContent"),
-                    is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
-            );
-        }*/
-    }
-
-    /**
      * Clicks bubble to get to DTC Part Summary and Switches tab
      */
     public void clickMachiningBubbleAndSwitchTab() {
