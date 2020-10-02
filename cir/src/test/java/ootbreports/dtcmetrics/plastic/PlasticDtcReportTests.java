@@ -19,13 +19,11 @@ import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.ReportAvailabilityTests;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import pageobjects.pages.view.reports.PlasticDtcReportPage;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
 
