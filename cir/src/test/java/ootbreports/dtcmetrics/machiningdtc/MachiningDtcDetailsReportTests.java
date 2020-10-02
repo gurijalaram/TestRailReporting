@@ -173,4 +173,37 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreLow() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                "Low"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreMedium() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                "Medium"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreHigh() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                "High"
+        );
+    }
 }

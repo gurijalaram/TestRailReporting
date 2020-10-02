@@ -268,4 +268,37 @@ public class PlasticDtcReportTests extends TestBase {
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreLow() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                "Low"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreMedium() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                "Medium"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreHigh() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                "High"
+        );
+    }
 }

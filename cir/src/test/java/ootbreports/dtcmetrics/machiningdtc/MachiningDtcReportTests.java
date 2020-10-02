@@ -249,4 +249,37 @@ public class MachiningDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsMachining();
     }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreLow() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                "Low"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreMedium() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                "Medium"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreHigh() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScore(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                "High"
+        );
+    }
 }

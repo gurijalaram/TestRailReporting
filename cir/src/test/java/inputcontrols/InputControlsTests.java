@@ -366,6 +366,24 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
+     * Generic test for DTC Score Input Control
+     * @param reportName - String
+     */
+    public void testDtcScore(String reportName, String dtcScore) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                // set dtc score here - use Ciene's technique for dropdown
+                .clickOk();
+
+        // hover over a bubble
+        // get part name
+        // ensure it is correct DTC Score
+    }
+
+    /**
      * Generic test for process group input control with two process groups (Casting DTC)
      */
     public void testTwoProcessGroupsCasting() {
