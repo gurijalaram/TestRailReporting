@@ -794,13 +794,10 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage invertExportSetSelection(String exportSetName) {
+    public GenericReportPage invertExportSetSelection() {
         int expected = getAvailableExportSetCount() - getSelectedExportSetCount();
         pageUtils.waitForElementAndClick(exportSetInvert);
-        //pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
-        //WebElement exportSet = driver.findElement(By.xpath(String.format("//li[@title='%s']", exportSetName)));
-        //pageUtils.checkElementAttribute(exportSet, "class", "jr-isSelected");
         return this;
     }
 

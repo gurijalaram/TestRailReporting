@@ -212,7 +212,7 @@ public class InputControlsTests extends TestBase {
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount() - 1)));
 
-        genericReportPage.invertExportSetSelection(ExportSetEnum.CASTING_DTC.getExportSetName());
+        genericReportPage.invertExportSetSelection();
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(1)));
 
