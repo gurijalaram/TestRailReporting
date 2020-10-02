@@ -278,7 +278,11 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         //genericReportPage.ensureCorrectMachiningBubbleWasHovered();
-        try {
+        assertThat(
+                genericReportPage.ensureCorrectMachiningBubbleWasHovered(),
+                is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
+        );
+        /*try {
             assertThat(
                     genericReportPage.ensureCorrectMachiningBubbleWasHovered(),
                     is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
@@ -288,7 +292,7 @@ public class MachiningDtcReportTests extends TestBase {
                     genericReportPage.ensureCorrectMachiningBubbleWasHovered(),
                     is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
             );
-        }
+        }*/
         genericReportPage.clickMachiningBubbleAndSwitchTab();
 
         assertThat(
