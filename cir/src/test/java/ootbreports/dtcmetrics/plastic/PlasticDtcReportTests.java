@@ -82,7 +82,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1365")
     @Description("Verify rollup dropdown input control functions correctly")
-    public void testRollupDropdownInputControlsFunctionsProperly() {
+    public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
@@ -146,7 +146,6 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1346")
     @Description("Test Plastic DTC Export Set Selection")
     public void testPlasticDtcExportSetSelection() {
@@ -197,6 +196,7 @@ public class PlasticDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 RollupEnum.ROLL_UP_A.getRollupName()
         );
     }

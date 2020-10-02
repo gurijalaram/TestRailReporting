@@ -97,15 +97,15 @@ public class InputControlsTests extends TestBase {
      * @param reportName - report to use
      * @param rollupName - rollup to use
      */
-    public void testApplyButton(String reportName, String rollupName) {
+    public void testApplyButton(String reportName, String exportSetName, String rollupName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+                .selectExportSet(exportSetName);
 
-        assertThat(genericReportPage.getSelectedRollup(rollupName), is(RollupEnum.ROLL_UP_A.getRollupName()));
+        assertThat(genericReportPage.getSelectedRollup(rollupName), is(rollupName));
 
         genericReportPage.clickApply()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -185,11 +185,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName());
-
-        assertThat(genericReportPage.getSelectedRollup(rollupName), is(equalTo(rollupName)));
-
-        genericReportPage.selectRollup(rollupName)
+                .selectRollup(rollupName)
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
