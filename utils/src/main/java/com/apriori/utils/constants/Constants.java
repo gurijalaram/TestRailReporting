@@ -20,7 +20,7 @@ public class Constants {
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cic-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
 
     public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
     public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
@@ -79,9 +79,6 @@ public class Constants {
     public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
-
-    public static String CIC_USERNAME = "kpatel@apriori.com";
-    public static String CIC_PASSWORD = "NewPassword1234";
 
     public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
