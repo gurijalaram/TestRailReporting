@@ -125,10 +125,10 @@ public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
      * @return NewEditWorkflow page object
      */
     public NewEditWorkflow selectQueryCIConnectField(int ruleNumber, String fieldName) {
-        pageUtils.waitForElementToAppear(By.cssSelector(String.format(
+        WebElement ciConnectField = driver.findElement(By.cssSelector(String.format(
             "select[name*='rule_%s_filter']", ruleNumber)));
-        Select queryField = new Select(driver.findElement(By.cssSelector(String.format(
-            "select[name*='rule_%s_filter']", ruleNumber))));
+        pageUtils.waitForElementToAppear(ciConnectField);
+        Select queryField = new Select(ciConnectField);
         queryField.selectByVisibleText(fieldName);
         return new NewEditWorkflow(driver);
     }
