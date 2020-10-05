@@ -26,4 +26,13 @@ public class GenerateStringUtil {
     public String generateComparisonName() {
         return "AutoComparison" + new Random().nextInt(1000) + "-" + System.nanoTime();
     }
+
+    /**
+     * Generates CIC workflow name and adds random number and nano time
+     *
+     * @return string
+     */
+    public String generateWorkflowName() {
+        return "AutoWorkflow" + new Random().nextInt(1000) + "-" + System.nanoTime();
+    }
 }

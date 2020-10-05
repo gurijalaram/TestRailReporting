@@ -4,6 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.utils.TestRail;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import cicuserguide.CicUserGuide;
@@ -32,27 +35,30 @@ public class NavBarTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"3653"})
     public void testNavigateToUsersTab() {
         userList = new LoginPage(driver)
-            .login(driver)
+            .login()
             .clickUsersMenu();
 
         assertThat(userList.getUsersText(), equalTo("Users"));
     }
 
     @Test
+    @TestRail(testCaseId = {"3654"})
     public void testNavigateToConnectorsTab() {
         connectorList = new LoginPage(driver)
-            .login(driver)
+            .login()
             .clickConnectorsMenu();
 
         assertThat(connectorList.getConnectorText(), equalTo("Connectors"));
     }
 
     @Test
+    @TestRail(testCaseId = {"3652"})
     public void testNavigateToWorkflowsTab() {
         schedule = new LoginPage(driver)
-            .login(driver)
+            .login()
             .clickConnectorsMenu()
             .clickWorkflowMenu();
 
@@ -60,20 +66,26 @@ public class NavBarTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"3659"})
     public void testUserDropDownInfo() {
+        UserCredentials userCredentials;
+        userCredentials = UserUtil.getUser();
+        String userName = userCredentials.getUsername();
+        String password = userCredentials.getPassword();
+
         pageHeader = new LoginPage(driver)
-            .login(driver)
+            .login(userName, password)
             .expandUserInfoDropdown();
 
-        assertThat(pageHeader.getCurrentUser(), equalTo("Kunal Patel"));
-        assertThat(pageHeader.getLoginID(), equalTo("kpatel@apriori.com"));
+        assertThat(pageHeader.getLoginID(), equalTo(userName));
         assertThat(pageHeader.getCurrentCompany(), equalTo("aPriori Internal"));
     }
 
     @Test
+    @TestRail(testCaseId = {"3655"})
     public void testCicUserGuideNavigation() throws Exception {
         cicUserGuide = new LoginPage(driver)
-            .login(driver)
+            .login()
             .navigateToCicUserGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -82,19 +94,20 @@ public class NavBarTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"3656"})
     public void testAboutAPrioriLinkNavigation() {
-        cicUserGuide = new LoginPage(driver)
-            .login(driver)
-            .navigateToAboutAPriori()
-            .switchTab();
+        pageHeader = new LoginPage(driver)
+            .login()
+            .navigateToAboutAPriori();
 
-        assertThat(cicUserGuide.getURL(), startsWith("https://www.apriori.com/about-us/"));
+        assertThat(pageHeader.getCicVersionText(), startsWith("Cost Insight Connect"));
     }
 
     @Test
+    @TestRail(testCaseId = {"4002"})
     public void testNavigateToCostingServiceSettings() {
         costingServiceSettings = new LoginPage(driver)
-            .login(driver)
+            .login()
             .openCostingServiceSettings();
 
         assertThat(costingServiceSettings.getCostingServiceSettingsText(), equalTo("Costing Service Settings"));
