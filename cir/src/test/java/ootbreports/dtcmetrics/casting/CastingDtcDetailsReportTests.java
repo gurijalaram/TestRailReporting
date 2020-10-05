@@ -230,8 +230,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScore(
+        inputControlsTests.testDtcScoreCore(
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
                 "Low"
         );
     }
@@ -241,8 +242,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScore(
+        inputControlsTests.testDtcScoreCore(
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
                 "Medium"
         );
     }
@@ -252,8 +254,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScore(
+        inputControlsTests.testDtcScoreCore(
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
                 "High"
         );
     }

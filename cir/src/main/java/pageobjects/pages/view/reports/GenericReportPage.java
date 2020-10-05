@@ -38,11 +38,12 @@ import java.util.Map;
 public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
+    private Map<String, WebElement> fbcElementMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
     private Map<String, WebElement> bubbleMap = new HashMap<>();
-    private Map<String, WebElement> fbcElementMap = new HashMap<>();
     private String reportName = "";
 
     @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
@@ -53,6 +54,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[18][local-name() = 'path']")
     private WebElement castingDtcBubbleTwo;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[8][local-name() = 'path']")
+    private WebElement dtcScoreMediumBubble;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[5][local-name() = 'path']")
+    private WebElement dtcScoreHighBubble;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[54][local-name() = 'path']")
     private WebElement processGroupBubbleOne;
@@ -333,6 +340,15 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
     private WebElement componentCostReportPartNumber;
 
+    @FindBy(xpath = "//span[contains(text(), '* DTC Score')]/..//li[@title='Deselect All']/a")
+    private WebElement dtcScoreDeselectAllButton;
+
+    @FindBy(xpath = "(//*[local-name() = 'tspan'])[9]")
+    private WebElement dtcScoreValueOnBubble;
+
+    @FindBy(xpath = "//span[contains(text(), 'DTC Score:')]/../following-sibling::td[2]")
+    private WebElement dtcScoreValueAboveChart;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -342,11 +358,12 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseDtcScoreBubbleMap();
         initialiseAssemblyHashMap();
+        initialiseFbcElementMap();
         initialiseCurrencyMap();
         initialisePartNameMap();
         initialiseBubbleMap();
-        initialiseFbcElementMap();
     }
 
     @Override
@@ -1089,6 +1106,17 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Hover DTC Score bubble
+     * @param dtcScore String
+     */
+    public void hoverBubbleDtcScoreDtcReports(String dtcScore) {
+        WebElement elementToUse = dtcScoreBubbleMap.get(dtcScore);
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
+        builder.perform();
+    }
+
+    /**
      * Hovers bubble one for process group test
      */
     public void hoverProcessGroupBubbleOne() {
@@ -1144,6 +1172,15 @@ public class GenericReportPage extends ReportsPageHeader {
         WebElement elementToUse = partNameMap.get(this.reportName);
         pageUtils.waitForElementToAppear(elementToUse);
         return elementToUse.getText();
+    }
+
+    /**
+     * Gets DTC Score from Bubble in DTC Reports
+     * @return String
+     */
+    public String getDtcScoreDtcReports() {
+        pageUtils.waitForElementToAppear(dtcScoreValueOnBubble);
+        return dtcScoreValueOnBubble.getAttribute("textContent");
     }
 
     /**
@@ -1317,9 +1354,40 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets count of export sets visible
+     * @return String
      */
     public String getExportSetOptionCount() {
         return exportSetList.getAttribute("childElementCount");
+    }
+
+    /**
+     * Sets DTC Score Input Control
+     * @return Instance of current page object
+     */
+    public GenericReportPage setDtcScore(String dtcScoreOption) {
+        pageUtils.waitForElementAndClick(dtcScoreDeselectAllButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
+        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementAndClick(driver.findElement(locator));
+        return this;
+    }
+
+    /**
+     * Gets DTC Score value from above chart
+     * @return String
+     */
+    public String getDtcScoreAboveChart() {
+        pageUtils.waitForElementToAppear(dtcScoreValueAboveChart);
+        return dtcScoreValueAboveChart.getText();
+    }
+
+    /**
+     * Waits for no bubble report to load
+     */
+    public void waitForNoBubbleReportToLoad() {
+        By loc = By.xpath("(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[6]");
+        pageUtils.waitForElementToAppear(loc);
     }
 
     /**
@@ -1368,6 +1436,15 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcBubble);
         bubbleMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcBubble);
         bubbleMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), castingDtcBubbleTwo);
+    }
+
+    /**
+     * Initialise DTC Score bubble map
+     */
+    private void initialiseDtcScoreBubbleMap() {
+        dtcScoreBubbleMap.put("Low", castingDtcBubbleTwo);
+        dtcScoreBubbleMap.put("Medium", dtcScoreMediumBubble);
+        dtcScoreBubbleMap.put("High", dtcScoreHighBubble);
     }
 
     /**

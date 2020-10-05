@@ -7,6 +7,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
+import com.apriori.apibase.services.cis.objects.Report;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -14,11 +16,14 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class InputControlsTests extends TestBase {
 
@@ -366,24 +371,6 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for DTC Score Input Control
-     * @param reportName - String
-     */
-    public void testDtcScore(String reportName, String dtcScore) {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, GenericReportPage.class)
-                .waitForInputControlsLoad()
-                // set dtc score here - use Ciene's technique for dropdown
-                .clickOk();
-
-        // hover over a bubble
-        // get part name
-        // ensure it is correct DTC Score
-    }
-
-    /**
      * Generic test for process group input control with two process groups (Casting DTC)
      */
     public void testTwoProcessGroupsCasting() {
@@ -419,6 +406,28 @@ public class InputControlsTests extends TestBase {
         String partName = genericReportPage.getPartNameDtcReports();
 
         navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.STOCK_MACHINING.getProcessGroup());
+    }
+
+    /**
+     * Generic test for DTC Score Input Control
+     * @param reportName - String
+     */
+    public void testDtcScoreCore(String reportName, String exportSet, String dtcScore) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSet)
+                .setDtcScore(dtcScore)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
+            dtcScorePlasticAssertions(reportName, dtcScore);
+        } else {
+            dtcScoreCastingMachiningAssertions(reportName, dtcScore);
+        }
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
@@ -459,5 +468,29 @@ public class InputControlsTests extends TestBase {
                 genericReportPage.getProcessGroupValueDtc(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()),
                 is(equalTo(processGroupName))
         );
+    }
+
+    private void dtcScoreCastingMachiningAssertions(String reportName, String dtcScore) {
+        genericReportPage.hoverBubbleDtcScoreDtcReports(dtcScore);
+
+        String dtcScoreValue = genericReportPage.getDtcScoreDtcReports().replace(" ", "");
+
+        assertThat(dtcScore, is(equalTo(genericReportPage.getDtcScoreAboveChart())));
+        assertThat(dtcScore, is(equalTo(dtcScoreValue)));
+    }
+
+    private void dtcScorePlasticAssertions(String reportName, String dtcScore) {
+        if (dtcScore.equals("Low")) {
+            genericReportPage.setReportName(reportName);
+            genericReportPage.hoverPartNameBubbleDtcReports();
+        } else {
+            genericReportPage.waitForNoBubbleReportToLoad();
+            By locator = By.xpath("//*[@class='highcharts-series-group']//*[local-name() = 'path']");
+            List<WebElement> elements = driver.findElements(locator);
+            int bubbleListSize = elements.size();
+            assertThat(bubbleListSize, is(equalTo(6)));
+        }
+
+        assertThat(dtcScore, is(equalTo(genericReportPage.getDtcScoreAboveChart())));
     }
 }

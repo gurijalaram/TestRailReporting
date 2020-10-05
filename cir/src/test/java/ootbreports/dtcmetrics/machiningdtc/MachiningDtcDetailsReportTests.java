@@ -179,8 +179,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScore(
+        inputControlsTests.testDtcScoreCore(
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 "Low"
         );
     }
@@ -190,8 +191,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScore(
+        inputControlsTests.testDtcScoreCore(
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 "Medium"
         );
     }
@@ -201,8 +203,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScore(
+        inputControlsTests.testDtcScoreCore(
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 "High"
         );
     }
