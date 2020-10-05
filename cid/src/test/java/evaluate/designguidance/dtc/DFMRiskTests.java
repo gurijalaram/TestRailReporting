@@ -1,5 +1,9 @@
 package evaluate.designguidance.dtc;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -8,6 +12,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -16,10 +21,6 @@ import pageobjects.pages.login.CidLoginPage;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 public class DFMRiskTests extends TestBase {
 

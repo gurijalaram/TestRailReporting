@@ -248,7 +248,7 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupMachiningGageParts() {
 
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "GagePart_Case_011_gundrillgagepart-01.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -265,7 +265,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -360,8 +360,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Partially Automated Machining")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPartiallyAutomatedMachining() {
-
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "14100640.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -378,7 +377,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -389,8 +388,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Perimeter Milling")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPerimeterMilling() {
-
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "14100640.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -407,7 +405,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -418,8 +416,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Pocket Recognition - shared walls")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPocketRecognitionSharedWalls() {
-
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_066_SpaceX_00128711-001_A.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -436,7 +433,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -447,8 +444,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Rough Milling")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupRoughMilling() {
-
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "16-340053-00-04.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -465,7 +461,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -476,8 +472,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Slot Examples")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupSlotExamples() {
-
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_007_SpaceX_00088481-001_C.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -494,7 +489,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -505,8 +500,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Turning")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupTurning() {
-
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_002_006-8611543_prt.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -523,7 +517,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -534,8 +528,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Blow Molding")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupBlowMolding() {
-
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "225_gasket-1-solid1.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -552,7 +545,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -563,8 +556,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Powder Metal")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupPowderMetal() {
-
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_31_test_part_6_small.prt.2");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -581,7 +573,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -593,7 +585,7 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591", "3836"})
     public void testProcessGroupRollBending() {
 
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "AGCO _ 71421375.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -603,7 +595,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
@@ -616,7 +608,7 @@ public class ProcessGroupsTests extends TestBase {
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupTransferDie() {
 
-        final ProcessGroupEnum processGroupEnum;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_011_CENA-009-A1-LH-Rear-Body-Mount.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -633,7 +625,7 @@ public class ProcessGroupsTests extends TestBase {
 
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.editScenario(EvaluatePage.class)
-                .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));

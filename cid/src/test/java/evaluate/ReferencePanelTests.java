@@ -63,7 +63,7 @@ public class ReferencePanelTests extends TestBase {
     public void referencePublicIteration() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile =FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -99,7 +99,7 @@ public class ReferencePanelTests extends TestBase {
     public void expandCollapseReferencePanel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile =FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
