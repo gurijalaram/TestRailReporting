@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.navtoolbars.ExploreBar;
+import pageobjects.navtoolbars.ExploreToolbar;
 import pageobjects.navtoolbars.MainNavBar;
 
 /**
@@ -32,13 +32,13 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private MainNavBar mainNavBar;
-    private ExploreBar exploreBar;
+    private ExploreToolbar exploreToolbar;
 
     public ExplorePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.mainNavBar = new MainNavBar(driver);
-        this.exploreBar = new ExploreBar(driver);
+        this.exploreToolbar = new ExploreToolbar(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();

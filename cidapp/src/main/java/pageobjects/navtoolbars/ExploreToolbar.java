@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class ExploreBar extends LoadableComponent<ExploreBar> {
+public class ExploreToolbar extends LoadableComponent<ExploreToolbar> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExploreBar.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ExploreToolbar.class);
 
     @FindBy(xpath = "//button[.='New']")
     private WebElement newButton;
@@ -36,7 +36,7 @@ public class ExploreBar extends LoadableComponent<ExploreBar> {
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    public ExploreBar(WebDriver driver) {
+    public ExploreToolbar(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
