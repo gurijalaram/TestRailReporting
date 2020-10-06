@@ -142,6 +142,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
+
     @Test
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
