@@ -19,7 +19,6 @@ import com.apriori.utils.web.driver.TestBase;
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;

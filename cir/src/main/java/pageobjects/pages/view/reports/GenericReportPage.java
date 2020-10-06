@@ -1,9 +1,5 @@
 package pageobjects.pages.view.reports;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -722,21 +718,6 @@ public class GenericReportPage extends ReportsPageHeader {
         if (datePickerDiv.getAttribute("style").contains("display: block;")) {
             datePickerCloseButton.click();
             pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
-        }
-
-        return this;
-    }
-
-    /**
-     * Ensures latest date is set to today
-     *
-     * @return current page object
-     */
-    public GenericReportPage ensureDatesAreCorrect() {
-        for (int i = 0; i < 2; i++) {
-            String dateToUse = i == 0 ? getCurrentDate() : getDateTwoDaysAfterCurrent();
-            WebElement dateElementToUse = i == 0 ? earliestExportDateInput : latestExportDateInput;
-            assertThat(dateElementToUse.getAttribute("value").contains(removeTimeFromDate(dateToUse)), is(true));
         }
 
         return this;

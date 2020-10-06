@@ -44,7 +44,6 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
                 .setExportDateUsingInput(false, "")
-                .ensureDatesAreCorrect()
                 .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
@@ -65,7 +64,6 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
-                .ensureDatesAreCorrect()
                 .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
