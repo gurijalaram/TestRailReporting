@@ -23,6 +23,7 @@ import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InputControlsTests extends TestBase {
@@ -437,6 +438,23 @@ public class InputControlsTests extends TestBase {
         dtcScoreTestCore(reportName, exportSet, dtcScore);
 
         assertThat(genericReportPage.getDtcScoreAboveChart(), is(equalTo(dtcScore)));
+    }
+
+    /**
+     * Generic tet for DTC Score Input Control - details reports
+     * @param reportName - String
+     * @param exportSet - String
+     * @param dtcScore - String
+     */
+    public void testDtcScoreDetailsReports(String reportName, String exportSet, String dtcScore) {
+        dtcScoreTestCore(reportName, exportSet, dtcScore);
+
+        assertThat(genericReportPage.getDtcScoreAboveChart(), is(equalTo(dtcScore)));
+
+        ArrayList<String> valuesToCheck = genericReportPage.getDtcScoreValuesDtcDetailsReports(reportName);
+        for (String value : valuesToCheck) {
+            assertThat(value, is(equalTo(dtcScore)));
+        }
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {

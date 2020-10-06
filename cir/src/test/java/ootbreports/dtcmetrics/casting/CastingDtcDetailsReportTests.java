@@ -8,6 +8,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -24,6 +25,7 @@ import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
@@ -227,38 +229,41 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScoreMainReports(
+        inputControlsTests.testDtcScoreDetailsReports(
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
-                "Low"
+                DtcScoreEnum.LOW.getDtcScoreName()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScoreMainReports(
+        inputControlsTests.testDtcScoreDetailsReports(
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
-                "Medium"
+                DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScoreMainReports(
+        inputControlsTests.testDtcScoreDetailsReports(
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
-                "High"
+                DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 }

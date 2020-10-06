@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.header.ReportsPageHeader;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -1385,6 +1386,24 @@ public class GenericReportPage extends ReportsPageHeader {
     public void waitForNoBubbleReportToLoad() {
         By loc = By.xpath("(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[6]");
         pageUtils.waitForElementToAppear(loc);
+    }
+
+    /**
+     * Gets all DTC Score Values on screen in details reports
+     * @return ArrayList of String values
+     */
+    public ArrayList<String> getDtcScoreValuesDtcDetailsReports(String reportName) {
+        String columnIndex = reportName.equals(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()) ? "23" : "26";
+        ArrayList<WebElement> elementArrayList = new ArrayList<>(driver.findElements(
+                By.cssSelector(String.format("table.jrPage tbody tr td:nth-of-type(%s) span", columnIndex))));
+        ArrayList<String> valuesToReturn = new ArrayList<>();
+
+        for (WebElement element : elementArrayList) {
+            if (!element.getText().equals("DTC Score")) {
+                valuesToReturn.add(element.getText());
+            }
+        }
+        return valuesToReturn;
     }
 
     /**
