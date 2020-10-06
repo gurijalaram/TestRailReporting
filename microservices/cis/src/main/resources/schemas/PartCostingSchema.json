@@ -53,8 +53,14 @@
         "cycleTime": {
           "type": "number"
         },
+        "description": {
+          "type": "string"
+        },
         "dfmRisk": {
           "type": "string"
+        },
+        "dfmScore": {
+          "type": "number"
         },
         "directOverheadCost": {
           "type": "number"
@@ -187,6 +193,9 @@
         },
         "roughMass": {
           "type": "number"
+        },
+        "scenarioName": {
+          "type": "string"
         },
         "scrapMass": {
           "type": "number"

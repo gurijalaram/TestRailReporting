@@ -9,6 +9,8 @@ public enum ReportNamesEnum {
     CASTING_DTC("Casting DTC"),
     CASTING_DTC_COMPARISON("Casting DTC Comparison"),
     CASTING_DTC_DETAILS("Casting DTC Details"),
+    COMPONENT_COST_INTERNAL_USE("Component Cost Internal Use"),
+    DTC_PART_SUMMARY("DTC Part Summary"),
     MACHINING_DTC("Machining DTC"),
     MACHINING_DTC_DETAILS("Machining DTC Details"),
     MACHINING_DTC_COMPARISON("Machining DTC Comparison"),

@@ -12,6 +12,29 @@ allprojects {
     version = '0.0.1-SNAPSHOT'
 }
 
+
+//use this template to copy specific files into modules
+
+findModuleAndCopyRes(project(":utils").projectDir.path + "/src/main/resources/cas-int", "/resources", ":web:cas")
+
+///////////////////////////////////////////////////////
+
+void findModuleAndCopyRes( String fromDir, String toDir, String moduleName ) {
+    if (findProject(moduleName) != null) {
+        project(moduleName) {
+                    copyResources(fromDir, buildDir.path  + toDir)
+        }
+    }
+}
+
+void copyResources(String fromDir, String toDir) {
+    println 'Copying from dir: ' + fromDir + ' to dir: ' + toDir
+    copy {
+        from(fromDir)
+        into(toDir)
+    }
+}
+
 subprojects {
 
     apply plugin: 'java'
@@ -75,7 +98,7 @@ subprojects {
         }
 
         from sourceSets.test.output
-        from { configurations.runtimeClasspath.findAll{ !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
+        from { configurations.runtimeClasspath.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
         with jar
     }
@@ -134,17 +157,20 @@ subprojects {
         implementation 'com.amazonaws:aws-java-sdk-s3:1.11.861'
         implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
         implementation 'org.seleniumhq.selenium:selenium-server:3.141.59'
-        implementation 'junit:junit:4.12'
+        implementation 'junit:junit:4.13'
         implementation 'ch.qos.logback:logback-classic:1.2.3'
         implementation 'ch.qos.logback:logback-core:1.2.3'
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
         implementation 'com.github.fge:jackson-coreutils:1.8'
         implementation 'com.github.fge:json-schema-validator:2.2.6'
-        implementation 'org.skyscreamer:jsonassert:1.2.3'
+        implementation 'org.skyscreamer:jsonassert:1.4.0'
         implementation 'com.googlecode.json-simple:json-simple:1.1.1'
         implementation 'com.github.fge:json-schema-core:1.2.5'
+        //tried to update io.rest-assured:json-schema-validator to 4.3.0 but this is causing errors when running api tests.
+        //this should be updated and comment deleted as soon as we can
         implementation 'io.rest-assured:json-schema-validator:3.2.0'
-        implementation 'commons-io:commons-io:1.3.2'
+        implementation 'io.rest-assured:rest-assured:4.3.0'
+        implementation 'commons-io:commons-io:2.7'
         implementation 'commons-lang:commons-lang:2.6'
         implementation 'commons-cli:commons-cli:1.4'
         implementation 'org.apache.commons:commons-collections4:4.1'
@@ -153,15 +179,13 @@ subprojects {
         implementation 'io.qameta.allure:allure-junit4:2.13.0'
         implementation 'io.qameta.allure:allure-java-commons:2.13.0'
         implementation 'io.qameta.allure:allure-gradle:2.8.1'
-        implementation 'io.qameta.allure:allure-junit4:2.13.1'
-        implementation 'io.rest-assured:rest-assured:3.2.0'
-        implementation 'io.rest-assured:json-schema-validator:3.2.0'
-        implementation 'org.jsoup:jsoup:1.12.1'
-        implementation 'io.github.bonigarcia:webdrivermanager:3.8.1'
+        implementation 'io.qameta.allure:allure-junit4:2.13.5'
+        implementation 'org.jsoup:jsoup:1.12.2'
+        implementation 'io.github.bonigarcia:webdrivermanager:4.2.1'
         implementation 'com.google.code.gson:gson:2.8.2'
         implementation 'com.thomasjensen.checkstyle.addons:checkstyle-addons:6.0.0'
-        implementation 'com.puppycrawl.tools:checkstyle:8.24'
-        implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8'
+        implementation 'com.puppycrawl.tools:checkstyle:8.36.1'
+        implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0'
         implementation 'commons-validator:commons-validator:1.6'
         implementation 'com.sun.mail:javax.mail:1.6.2'
         implementation 'javax.activation:activation:1.1.1'

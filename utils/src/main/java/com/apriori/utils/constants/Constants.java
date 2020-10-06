@@ -1,5 +1,7 @@
 package com.apriori.utils.constants;
 
+import com.apriori.utils.enums.ProcessGroupEnum;
+
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
@@ -45,13 +47,24 @@ public class Constants {
     public static final String SAVED_CONFIG_NAME = "Saved Config";
     public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
     public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
-    public static final String REPORTING_HELP_URL = "http://help.jaspersoft.com/Default";
+    public static final String REPORTING_HELP_URL = "https://help.jaspersoft.com/Default";
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
     public static final String DTC_METRICS_FOLDER = "DTC Metrics";
     public static final String GENERAL_FOLDER = "General";
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
+    public static final String ASSEMBLY_STRING = "[assembly]";
+    public static final String CASTING_DIE_SAND_NAME = String.format(
+            "%s, %s",
+            ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
+            ProcessGroupEnum.CASTING_SAND.getProcessGroup()
+    );
+    public static final String STOCK_MACHINING_TWO_MODEL_NAME = String.format(
+            "%s, %s",
+            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
+            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
+    );
 
     public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";
@@ -66,9 +79,6 @@ public class Constants {
     public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
-
-    public static String CIC_USERNAME = "kpatel@apriori.com";
-    public static String CIC_PASSWORD = "NewPassword1234";
 
     public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
@@ -131,6 +141,7 @@ public class Constants {
     public static final String cirURL = getBaseUrl() + constantsInit.cirURL();
     public static final String ciaURL = getBaseUrl() + constantsInit.ciaURL();
     public static final String cicURL = constantsInit.cicURL();
+    public static final String cidAppURL = getBaseUrl();
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 

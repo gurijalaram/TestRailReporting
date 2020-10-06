@@ -76,9 +76,7 @@ public class DriverFactory {
                     }
                     break;
                 case GRID:
-                    // docker.internal is used for running on docker local, the ip is used for running on docker jenkins
-                    String serverAddress = testType.equals(TestType.UI) ? "172.17.0.1" : "host.docker.internal";
-                    driver = getQADriver(("http://").concat(serverAddress).concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
+                    driver = getQADriver(("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale);
                     break;
                 case EXPORT:
                     throw new InvalidParameterException("Use QA mode with EXPORT type instead: " + testMode);
@@ -114,7 +112,7 @@ public class DriverFactory {
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxProfile fp = new FirefoxProfile();
-                System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getBinaryPath());
+                System.setProperty(GeckoDriverService.GECKO_DRIVER_EXE_PROPERTY, WebDriverManager.firefoxdriver().getDownloadedDriverPath());
                 fp.setPreference("browser.search.geoip.url", "http://127.0.0.1");
                 fp.setPreference("browser.download.folderList", 2);
                 fp.setPreference("browser.download.manager.showWhenStarting", false);
@@ -141,6 +139,11 @@ public class DriverFactory {
                 dc.setVersion("11");
                 result = new InternetExplorerDriver(dc);
                 break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                result = new EdgeDriver(dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
+                break;
             default:
             case "chrome":
                 WebDriverManager.chromedriver().setup();
@@ -154,10 +157,6 @@ public class DriverFactory {
                 result = new ChromeDriver(dc);
                 logger_DriverFactory.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                 break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                result = new EdgeDriver(dc);
-                logger_DriverFactory.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
         }
         return result;
     }
@@ -217,6 +216,11 @@ public class DriverFactory {
                 dc.setCapability(ChromeOptions.CAPABILITY, options);
                 dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
+                result = new RemoteWebDriver(new URL(server), dc);
+                logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
+                break;
+            case "edge":
+                dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
                 result = new RemoteWebDriver(new URL(server), dc);
                 logger_DriverFactory.info("Full list of Capabilities: " + (result).getCapabilities().toString());
                 break;
