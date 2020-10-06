@@ -91,6 +91,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
                 RollupEnum.UC_CASTING_DTC_ALL.getRollupName()
         );
     }

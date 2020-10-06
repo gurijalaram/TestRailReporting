@@ -101,14 +101,17 @@ public class InputControlsTests extends TestBase {
      * @param reportName - report to use
      * @param rollupName - rollup to use
      */
-    public void testApplyButton(String reportName, String rollupName) {
+    public void testApplyButton(String reportName, String exportSetName, String rollupName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectRollup(rollupName)
-                .clickApply()
+                .selectExportSet(exportSetName);
+
+        assertThat(genericReportPage.getSelectedRollup(rollupName), is(rollupName));
+
+        genericReportPage.clickApply()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         assertThat(genericReportPage.getDisplayedRollup(),
@@ -209,7 +212,7 @@ public class InputControlsTests extends TestBase {
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount())));
 
-        genericReportPage.deselectExportSet(exportSetName);
+        genericReportPage.deselectExportSet();
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(genericReportPage.getAvailableExportSetCount() - 1)));
 
@@ -268,7 +271,6 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(exportSet)
-                .ensureCorrectRollupIsSelected(rollupName)
                 .clickOk();
 
         assertThat(genericReportPage.getDisplayedRollup(),
@@ -329,7 +331,8 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSet)
                 .selectMassMetric(massMetric)
-                .clickOk();
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         assertThat(genericReportPage.getMassMetricValueFromAboveChart(), containsString(massMetric));
         if (!reportName.contains("Comparison") && !reportName.contains("Details")) {
