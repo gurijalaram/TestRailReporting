@@ -81,9 +81,6 @@ public class Constants {
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
-    public static String CIC_USERNAME = "kpatel@apriori.com";
-    public static String CIC_PASSWORD = "NewPassword1234";
-
     public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
     private static String serviceHost;
