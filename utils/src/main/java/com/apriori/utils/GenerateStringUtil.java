@@ -41,5 +41,7 @@ public class GenerateStringUtil {
      *
      * @return string
      */
-    public String generateEmail() { return "fakeuser" + new Random().nextInt(1000) + "@apriori.com";}
+    public String generateEmail() {
+        return "fakeuser" + new Random().nextInt(1000) + "@apriori.com";
+    }
 }
