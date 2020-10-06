@@ -87,7 +87,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Category(OnPremTest.class)
     @TestRail(testCaseId = "1365")
     @Description("Verify rollup dropdown input control functions correctly")
-    public void testRollupDropdownInputControlsFunctionsProperly() {
+    public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
@@ -103,29 +103,35 @@ public class PlasticDtcReportTests extends TestBase {
         BigDecimal gbpAnnualSpend;
         BigDecimal usdAnnualSpend;
 
-        plasticDtcReportPage = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), PlasticDtcReportPage.class)
                 .waitForInputControlsLoad()
-                .selectRollup(RollupEnum.ROLL_UP_A.getRollupName())
-                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+
+        assertThat(
+                genericReportPage.getSelectedRollup(RollupEnum.ROLL_UP_A.getRollupName()),
+                is(equalTo(RollupEnum.ROLL_UP_A.getRollupName()))
+        );
+
+        genericReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
-        plasticDtcReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
-        plasticDtcReportPage.hoverPartNameBubbleDtcReports();
-        usdAnnualSpend = plasticDtcReportPage.getAnnualSpendFromBubbleTooltip();
+        genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        usdAnnualSpend = genericReportPage.getAnnualSpendFromBubbleTooltip();
 
-        plasticDtcReportPage.clickInputControlsButton()
+        genericReportPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), PlasticDtcReportPage.class);
 
-        plasticDtcReportPage.hoverPartNameBubbleDtcReports();
-        gbpAnnualSpend = plasticDtcReportPage.getAnnualSpendFromBubbleTooltip();
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        gbpAnnualSpend = genericReportPage.getAnnualSpendFromBubbleTooltip();
 
-        assertThat(plasticDtcReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpAnnualSpend, is(not(usdAnnualSpend)));
     }
 
@@ -167,6 +173,7 @@ public class PlasticDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), GenericReportPage.class)
+            .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk();
@@ -199,6 +206,7 @@ public class PlasticDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 RollupEnum.ROLL_UP_A.getRollupName()
         );
     }
