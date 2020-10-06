@@ -97,6 +97,7 @@ public class CastingDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
                 ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
                 RollupEnum.UC_CASTING_DTC_ALL.getRollupName()
         );
     }
@@ -194,17 +195,6 @@ public class CastingDtcReportTests extends TestBase {
         inputControlsTests.testCurrencyCode(
                 ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
-        );
-    }
-
-    @Test
-    @TestRail(testCaseId = "1694")
-    @Description("Verify Roll-up input control functions correctly")
-    public void testRollupDropdown() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testRollupDropdown(
-                ReportNamesEnum.CASTING_DTC.getReportName(),
-                RollupEnum.ROLL_UP_A.getRollupName()
         );
     }
 
