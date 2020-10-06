@@ -61,6 +61,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 RollupEnum.ROLL_UP_A.getRollupName()
         );
     }
