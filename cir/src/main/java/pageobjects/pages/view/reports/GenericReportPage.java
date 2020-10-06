@@ -608,17 +608,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
-        By availableLocator = By.xpath(
-                String.format(
-                        "(//div[@id='exportSetName']/div/div/div/div/div)[1]/span[@title='Available: %s']",
-                        expectedCount)
-        );
+        String genericLocator = "(//div[@id='exportSetName']/div/div/div/div/div)[%s]/span[@title='%s']";
+
+        By availableLocator = By.xpath(String.format(genericLocator, "1", "Available: " + expectedCount));
         pageUtils.waitForElementToAppear(availableLocator);
-        By selectedLocator = By.xpath(
-                String.format(
-                        "(//div[@id='exportSetName']/div/div/div/div/div)[2]/span[@title='Selected: %s']",
-                        expectedCount)
-        );
+
+        By selectedLocator = By.xpath(String.format(genericLocator, "2", "Selected: " + expectedCount));
         pageUtils.waitForElementToAppear(selectedLocator);
         return this;
     }
