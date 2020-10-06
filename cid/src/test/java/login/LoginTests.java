@@ -65,7 +65,7 @@ public class LoginTests extends TestBase {
     public void testIncorrectEmail() {
 
         loginPage = new CidLoginPage(driver);
-        loginPage = loginPage.failedLoginAs("jacky348@apriori.com", UserUtil.getUser().getPassword());
+        loginPage = loginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), UserUtil.getUser().getPassword());
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
@@ -75,7 +75,7 @@ public class LoginTests extends TestBase {
     public void testIncorrectEmailPassword() {
 
         loginPage = new CidLoginPage(driver);
-        loginPage = loginPage.failedLoginAs("fakeuser@apriori.com", "fakePassword");
+        loginPage = loginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
