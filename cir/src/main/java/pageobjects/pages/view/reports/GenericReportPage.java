@@ -8,6 +8,7 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
@@ -1359,11 +1360,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of current page object
      */
     public GenericReportPage setDtcScore(String dtcScoreOption) {
-        pageUtils.waitForElementAndClick(dtcScoreDeselectAllButton);
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
-        pageUtils.waitForSteadinessOfElement(locator);
-        pageUtils.waitForElementAndClick(driver.findElement(locator));
+        if (!dtcScoreOption.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
+            pageUtils.waitForElementAndClick(dtcScoreDeselectAllButton);
+            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+            By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
+            pageUtils.waitForSteadinessOfElement(locator);
+            pageUtils.waitForElementAndClick(driver.findElement(locator));
+        }
         return this;
     }
 

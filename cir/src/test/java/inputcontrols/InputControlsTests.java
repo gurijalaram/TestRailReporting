@@ -412,25 +412,31 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for DTC Score Input Control
+     * Generic test for DTC Score Input Control - main reports
      * @param reportName - String
+     * @param exportSet - String
+     * @param dtcScore - String
      */
-    public void testDtcScoreCore(String reportName, String exportSet, String dtcScore) {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(exportSet)
-                .setDtcScore(dtcScore)
-                .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+    public void testDtcScoreMainReports(String reportName, String exportSet, String dtcScore) {
+        dtcScoreTestCore(reportName, exportSet, dtcScore);
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             dtcScorePlasticAssertions(reportName, dtcScore);
         } else {
-            dtcScoreCastingMachiningAssertions(reportName, dtcScore);
+            dtcScoreCastingMachiningAssertions(dtcScore);
         }
+    }
+
+    /**
+     * Generic test for DTC Score Input Control - comparison reports
+     * @param reportName - String
+     * @param exportSet - String
+     * @param dtcScore - String
+     */
+    public void testDtcScoreComparisonReports(String reportName, String exportSet, String dtcScore) {
+        dtcScoreTestCore(reportName, exportSet, dtcScore);
+
+        assertThat(genericReportPage.getDtcScoreAboveChart(), is(equalTo(dtcScore)));
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
@@ -473,7 +479,19 @@ public class InputControlsTests extends TestBase {
         );
     }
 
-    private void dtcScoreCastingMachiningAssertions(String reportName, String dtcScore) {
+    private void dtcScoreTestCore(String reportName, String exportSet, String dtcScore) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSet)
+                .setDtcScore(dtcScore)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+    }
+
+    private void dtcScoreCastingMachiningAssertions(String dtcScore) {
         genericReportPage.hoverBubbleDtcScoreDtcReports(dtcScore);
 
         String dtcScoreValue = genericReportPage.getDtcScoreDtcReports().replace(" ", "");
