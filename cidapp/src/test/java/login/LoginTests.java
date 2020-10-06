@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -54,7 +55,7 @@ public class LoginTests extends TestBase {
     public void testIncorrectEmail() {
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage = loginPage.failedLoginAs("jacky348@apriori.com", UserUtil.getUser().getPassword());
+        loginPage = loginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), UserUtil.getUser().getPassword());
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
@@ -65,7 +66,7 @@ public class LoginTests extends TestBase {
     public void testIncorrectEmailPassword() {
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage = loginPage.failedLoginAs("fakeuser@apriori.com", "fakePassword");
+        loginPage = loginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
