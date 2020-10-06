@@ -113,9 +113,9 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
      *
      * @return CicUserGuide page object
      */
-    public CicUserGuide navigateToAboutAPriori() {
+    public PageHeader navigateToAboutAPriori() {
         pageHeader.navigateToAboutAPriori();
-        return new CicUserGuide(driver);
+        return new PageHeader(driver);
     }
 
     /**
