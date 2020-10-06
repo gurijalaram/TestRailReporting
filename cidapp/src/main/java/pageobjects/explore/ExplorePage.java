@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.navtoolbars.ExploreToolbar;
@@ -16,7 +15,7 @@ import pageobjects.navtoolbars.MainNavBar;
  * @author cfrith
  */
 
-public class ExplorePage extends LoadableComponent<ExplorePage> {
+public class ExplorePage extends ExploreToolbar {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
 
@@ -35,22 +34,11 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
     private ExploreToolbar exploreToolbar;
 
     public ExplorePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.mainNavBar = new MainNavBar(driver);
-        this.exploreToolbar = new ExploreToolbar(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(filtersButton);
     }
 

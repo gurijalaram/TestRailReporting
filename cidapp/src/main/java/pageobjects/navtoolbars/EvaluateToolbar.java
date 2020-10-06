@@ -29,6 +29,7 @@ public class EvaluateToolbar extends ExploreToolbar{
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        pageUtils.waitForElementAppear(costButton);
     }
 
     /**

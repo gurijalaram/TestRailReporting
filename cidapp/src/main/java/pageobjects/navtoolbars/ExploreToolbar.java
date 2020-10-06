@@ -42,6 +42,8 @@ public class ExploreToolbar extends LoadableComponent<ExploreToolbar> {
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
+        pageUtils.waitForElementAppear(newButton);
+        pageUtils.waitForElementAppear(publishButton);
     }
 
     @Override
