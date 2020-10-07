@@ -645,7 +645,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "1921")
-    @Description("Export Set search function works")
+    @Description("Export Set search function works (plus other filters)")
     public void testExportSetSearch() {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -657,5 +657,38 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(genericReportPage.getExportSetOptionCount(), is(equalTo("1")));
         assertThat(genericReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL.getExportSetName()), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testCreatedByFilterSearch() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCreatedByFilterSearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+    }
+
+    @Test
+    @Issue("AP-64112")
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testCreatedByFilterOperation() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCreatedByFilterOperation(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testCreatedByFilterButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCreatedByFilterSearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testLastModifiedFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testLastModifiedByFilter(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
     }
 }

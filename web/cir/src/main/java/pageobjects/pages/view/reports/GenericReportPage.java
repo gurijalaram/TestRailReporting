@@ -354,6 +354,21 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'DTC Score:')]/../following-sibling::td[2]")
     private WebElement dtcScoreValueAboveChart;
 
+    @FindBy(xpath = "//div[@title='Created By']//input[@placeholder='Search list...']")
+    private WebElement createdBySearchInput;
+
+    @FindBy(xpath = "//div[@title='Created By']//li[@title='Select All']/a")
+    private WebElement createdBySelectAllButton;
+
+    @FindBy(xpath = "//div[@title='Created By']//li[@title='Deselect All']/a")
+    private WebElement createdByDeselectAllButton;
+
+    @FindBy(xpath = "//div[@title='Created By']//li[@title='Invert']/a")
+    private WebElement createdByInvertButton;
+
+    @FindBy(xpath = "(//div[@title='Created By']//ul)[1]")
+    private WebElement createdByListElement;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -1404,6 +1419,51 @@ public class GenericReportPage extends ReportsPageHeader {
             }
         }
         return valuesToReturn;
+    }
+
+    /**
+     * Search for name in created by input control
+     * @param name String
+     */
+    public void searchForCreatedByName(String name) {
+        pageUtils.waitForElementAndClick(createdBySearchInput);
+        createdBySearchInput.clear();
+        createdBySearchInput.sendKeys(name);
+        if (name.equals("fakename")) {
+            By locator = By.xpath("//div[@title='Created By']/div[1]/div/div[2]/div[2]/div/div[@style='height: 1px']");
+            pageUtils.waitForElementToAppear(locator);
+        }
+    }
+
+    /**
+     * Checks if created by option is visible and enabled
+     * @param name String
+     * @return boolean
+     */
+    public boolean isCreatedByOptionVisible(String name) {
+        By locator = By.xpath(String.format("//div[@title='Created By']//li[@title='%s']/div/a", name));
+        pageUtils.waitForElementToAppear(locator);
+        WebElement optionElement = driver.findElement(locator);
+        return optionElement.isEnabled() && optionElement.isEnabled();
+    }
+
+    /**
+     * Selects one of the names in created by list
+     * @param name String
+     */
+    public void selectCreatedByName(String name) {
+        By locator = By.xpath(String.format("//div[@title='Created By']//li[@title='%s']/div/a", name));
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForElementAndClick(locator);
+    }
+
+    /**
+     * Gets count of created by list items
+     * @return String
+     */
+    public String getCountOfCreatedByListItems() {
+        pageUtils.waitForElementToAppear(createdByListElement);
+        return createdByListElement.getAttribute("childElementCount");
     }
 
     /**

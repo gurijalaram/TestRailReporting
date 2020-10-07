@@ -457,6 +457,70 @@ public class InputControlsTests extends TestBase {
         }
     }
 
+    /**
+     * Generic test for created by filter search
+     * @param reportName String
+     * @param createdByName String
+     */
+    public void testCreatedByFilterSearch(String reportName, String createdByName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        genericReportPage.searchForCreatedByName(createdByName);
+        assertThat(genericReportPage.isCreatedByOptionVisible(createdByName), is(true));
+
+        genericReportPage.searchForCreatedByName("fakename");
+        assertThat(genericReportPage.getCountOfCreatedByListItems(), is(equalTo("0")));
+    }
+
+    /**
+     * Generic test for created by filter operation
+     * @param reportName String
+     * @param createdByName String
+     */
+    public void testCreatedByFilterOperation(String reportName, String createdByName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        genericReportPage.selectCreatedByName(createdByName);
+
+        // assert export sets have filtered and last modified by is down to zero available when bug is fixed
+    }
+
+    /**
+     * Generic test for created by filter buttons
+     * @param reportName String
+     * @param createdByName String
+     */
+    public void testCreatedByFilterButtons(String reportName, String createdByName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        // test buttons (check all three buttons)
+    }
+
+    /**
+     * Generic test for created by filter
+     * @param reportName String
+     * @param createdByName String
+     */
+    public void testLastModifiedByFilter(String reportName, String createdByName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        // test search (search for what is there, check appears, search for not there, check list is empty)
+        // test filter filters (click specified option, ensure export sets are filtered)
+        // test buttons (check all three buttons)
+    }
+
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
