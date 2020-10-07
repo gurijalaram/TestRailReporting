@@ -71,9 +71,10 @@ pipeline {
                         testSuite = params.OTHER_TEST
                     }
 
-                    folder = "web"
                     if (params.TEST_TYPE == "apitests" || "cia") {
                         folder = "microservices"
+                    } else {
+                        folder = "web"
                     }
 
                     echo "${javaOpts}"
