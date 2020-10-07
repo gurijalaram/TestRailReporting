@@ -28,8 +28,8 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcReportTests extends TestBase {
 
-    private CommonReportTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
 
     public MachiningDtcReportTests() {
@@ -41,8 +41,8 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "2024")
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.MACHINING_DTC.getReportName()
         );
@@ -52,16 +52,16 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3415")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "3416")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test

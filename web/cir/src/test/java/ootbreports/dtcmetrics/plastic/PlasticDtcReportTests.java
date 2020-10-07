@@ -28,8 +28,7 @@ import pageobjects.pages.view.reports.PlasticDtcReportPage;
 import java.math.BigDecimal;
 
 public class PlasticDtcReportTests extends TestBase {
-
-    private PlasticDtcReportPage plasticDtcReportPage;
+    
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;

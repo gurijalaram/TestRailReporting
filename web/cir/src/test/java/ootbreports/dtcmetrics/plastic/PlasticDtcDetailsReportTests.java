@@ -16,8 +16,8 @@ import org.junit.Test;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
 
-    private CommonReportTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
 
     public PlasticDtcDetailsReportTests() {
         super();
@@ -27,8 +27,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         );
@@ -38,8 +38,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         );
     }
@@ -48,8 +48,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         );
     }

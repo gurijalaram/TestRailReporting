@@ -24,8 +24,8 @@ import pageobjects.pages.view.reports.GenericReportPage;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
-    private CommonReportTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
 
     public MachiningDtcComparisonReportTests() {
@@ -36,8 +36,8 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "2024")
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName()
         );
@@ -47,16 +47,16 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "3415")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "3416")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
     }
 
     @Test

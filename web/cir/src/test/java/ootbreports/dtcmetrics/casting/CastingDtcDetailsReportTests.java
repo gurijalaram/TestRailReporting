@@ -27,7 +27,7 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
-    private CommonReportTests reportAvailabilityTests;
+    private CommonReportTests commonReportTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
 
@@ -39,8 +39,8 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName()
         );
@@ -50,16 +50,16 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new CommonReportTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
