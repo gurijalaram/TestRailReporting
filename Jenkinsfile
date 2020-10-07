@@ -6,6 +6,7 @@ def url
 def threadCount
 def browser
 def testSuite
+def folder = "web"
 
 pipeline {
     parameters {
@@ -81,7 +82,7 @@ pipeline {
                     docker build \
                         --build-arg MODULE=${TEST_TYPE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
-                        --build-arg FOLDER=web \
+                        --build-arg FOLDER=${folder} \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
