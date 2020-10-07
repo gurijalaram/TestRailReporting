@@ -71,11 +71,11 @@ pipeline {
                         testSuite = params.OTHER_TEST
                     }
 
+                    folder = "web"
                     if (TEST_TYPE == "apitests" || "cia") {
                         folder = "microservices"
-                    } else {
-                        folder = "cid"
                     }
+
                     echo "${javaOpts}"
                 }
             }
@@ -87,7 +87,7 @@ pipeline {
                     docker build \
                         --build-arg MODULE=${TEST_TYPE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
-                        --build-arg FOLDER=${folder}
+                        --build-arg FOLDER=${folder} \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
