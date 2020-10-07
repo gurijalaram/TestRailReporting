@@ -72,7 +72,7 @@ pipeline {
                     }
 
                     folder = "web"
-                    if (TEST_TYPE == "apitests" || "cia") {
+                    if (params.TEST_TYPE == "apitests" || "cia") {
                         folder = "microservices"
                     }
 
