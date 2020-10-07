@@ -48,4 +48,5 @@ RUN gradle clean fatJar
 # App image.
 FROM runtime AS final
 ARG MODULE
+ARG FOLDER
 COPY --from=sdk automation-workspace/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./automation-tests.jar
