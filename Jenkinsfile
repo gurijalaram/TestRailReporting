@@ -6,6 +6,7 @@ def url
 def threadCount
 def browser
 def testSuite
+def type
 def folder
 
 pipeline {
@@ -71,7 +72,8 @@ pipeline {
                         testSuite = params.OTHER_TEST
                     }
 
-                    if (params.TEST_TYPE == "apitests" || "cia") {
+                    type = params.TEST_TYPE
+                    if (type == "apitests") {
                         folder = "microservices"
                     } else {
                         folder = "web"
