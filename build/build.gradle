@@ -151,6 +151,10 @@ subprojects {
         systemProperties(System.getProperties())
     }
 
+    task folderName {
+        print("${project.parent.name}")
+    }
+
     //declare all dependencies
     dependencies {
         implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
