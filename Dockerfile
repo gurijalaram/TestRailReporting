@@ -2,6 +2,7 @@
 FROM openjdk:8-jre-stretch AS runtime
 ARG MODULE
 ARG TEST_MODE
+ARG FOLDER
 WORKDIR /app
 
 USER root
@@ -47,4 +48,4 @@ RUN gradle clean fatJar
 # App image.
 FROM runtime AS final
 ARG MODULE
-COPY --from=sdk automation-workspace/web/$MODULE/build/libs/automation-qa*.jar automation-workspace/microservices/$MODULE/build/libs/automation-qa*.jar ./automation-tests.jar/
+COPY --from=sdk automation-workspace/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./automation-tests.jar
