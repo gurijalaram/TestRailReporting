@@ -141,7 +141,7 @@ public class DriverFactory {
                 result = new InternetExplorerDriver(dc);
                 break;
             case "edge":
-                WebDriverManager.edgedriver().version("83.0.478.64").setup();
+                WebDriverManager.edgedriver().browserVersion("83.0.478.64").setup();
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
                 result = new EdgeDriver(edgeOptions);
