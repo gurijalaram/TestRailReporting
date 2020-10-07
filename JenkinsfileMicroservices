@@ -44,7 +44,7 @@ pipeline {
                     docker build \
                         --build-arg MODULE=${MODULE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
-                        --build-arg FOLDER="microservices" \
+                        --build-arg FOLDER='microservices' \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \

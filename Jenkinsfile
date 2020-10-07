@@ -81,7 +81,7 @@ pipeline {
                     docker build \
                         --build-arg MODULE=${TEST_TYPE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
-                        --build-arg FOLDER="web" \
+                        --build-arg FOLDER='web' \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
