@@ -12,6 +12,29 @@ allprojects {
     version = '0.0.1-SNAPSHOT'
 }
 
+
+//use this template to copy specific files into modules
+
+findModuleAndCopyRes(project(":utils").projectDir.path + "/src/main/resources/cas-int", "/resources", ":web:cas")
+
+///////////////////////////////////////////////////////
+
+void findModuleAndCopyRes( String fromDir, String toDir, String moduleName ) {
+    if (findProject(moduleName) != null) {
+        project(moduleName) {
+                    copyResources(fromDir, buildDir.path  + toDir)
+        }
+    }
+}
+
+void copyResources(String fromDir, String toDir) {
+    println 'Copying from dir: ' + fromDir + ' to dir: ' + toDir
+    copy {
+        from(fromDir)
+        into(toDir)
+    }
+}
+
 subprojects {
 
     apply plugin: 'java'
@@ -75,7 +98,7 @@ subprojects {
         }
 
         from sourceSets.test.output
-        from { configurations.runtimeClasspath.findAll{ !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
+        from { configurations.runtimeClasspath.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
         with jar
     }
