@@ -6,8 +6,6 @@ def url
 def threadCount
 def browser
 def testSuite
-def type
-def folder
 
 pipeline {
     parameters {
@@ -72,13 +70,6 @@ pipeline {
                         testSuite = params.OTHER_TEST
                     }
 
-                    type = params.TEST_TYPE
-                    if (type == "apitests") {
-                        folder = "microservices"
-                    } else {
-                        folder = "web"
-                    }
-
                     echo "${javaOpts}"
                 }
             }
@@ -90,7 +81,7 @@ pipeline {
                     docker build \
                         --build-arg MODULE=${TEST_TYPE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
-                        --build-arg FOLDER=${folder} \
+                        --build-arg FOLDER="web" \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
