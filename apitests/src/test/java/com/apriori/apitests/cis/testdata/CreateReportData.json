@@ -1,7 +1,0 @@
-{
-  "externalId": "Auto-Report-%s",
-  "reportFormat": "pdf",
-  "reportType": "DTC Part Summary",
-  "roundToNearest": true,
-  "partIdentities": []
-}
