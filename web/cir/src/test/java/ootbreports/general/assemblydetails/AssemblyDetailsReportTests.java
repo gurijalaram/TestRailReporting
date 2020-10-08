@@ -678,7 +678,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCreatedByFilterButtons(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+        inputControlsTests.testCreatedByFilterButtons(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test

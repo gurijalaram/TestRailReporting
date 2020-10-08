@@ -493,44 +493,43 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for created by filter buttons
      * @param reportName String
-     * @param createdByName String
      */
-    public void testCreatedByFilterButtons(String reportName, String createdByName) {
+    public void testCreatedByFilterButtons(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        genericReportPage.clickCreatedByButton("Select All");
-        String availableCount = genericReportPage.getCountOfCreatedByUsers("createdBy", "Available");
-        genericReportPage.waitForCorrectExportSetListCount("createdBy", availableCount);
-        genericReportPage.waitForCorrectAvailableSelectedCount(
-                "lastModifiedBy", "Available: ", "0");
+        ArrayList<String> buttonNames = new ArrayList<String>() {
+            {
+                add("Select All");
+                add("Deselect All");
+                add("Invert");
+            }};
 
-        assertThat(availableCount,
-                is(equalTo(genericReportPage.getCountOfCreatedByUsers("createdBy", "Selected"))));
-        assertThat(genericReportPage.getCountOfCreatedByUsers("lastModifiedBy", "Available"),
-                is(equalTo("0")));
+        String expectedAvailableCount = "";
+        String expectedSelectedCount = "";
 
-        genericReportPage.clickCreatedByButton("Deselect All");
-        genericReportPage.waitForCorrectAvailableSelectedCount("createdBy", "Selected: ", "0");
-        genericReportPage.waitForCorrectAvailableSelectedCount(
-                "lastModifiedBy", "Available: ", "1");
+        for (String buttonName : buttonNames) {
+            genericReportPage.clickCreatedByButton(buttonName);
 
-        assertThat(genericReportPage.getCountOfCreatedByUsers("createdBy", "Selected"),
-                is(equalTo("0")));
-        assertThat(genericReportPage.getCountOfCreatedByUsers("lastModifiedBy", "Available"),
-                is(equalTo("1")));
+            if (!buttonName.equals("Deselect All")) {
+                expectedAvailableCount = "0";
+                expectedSelectedCount = genericReportPage.getCountOfCreatedByUsers("createdBy", "Available");
+            } else {
+                expectedAvailableCount = "1";
+                expectedSelectedCount = "0";
+            }
 
-        genericReportPage.clickCreatedByButton("Invert");
-        genericReportPage.waitForCorrectExportSetListCount("createdBy", availableCount);
-        genericReportPage.waitForCorrectAvailableSelectedCount(
-                "lastModifiedBy", "Available: ", "0");
+            genericReportPage.waitForCorrectAvailableSelectedCount("createdBy", "Selected: ", expectedSelectedCount);
+            genericReportPage.waitForCorrectAvailableSelectedCount(
+                    "lastModifiedBy", "Available: ", expectedAvailableCount);
 
-        assertThat(availableCount,
-                is(equalTo(genericReportPage.getCountOfCreatedByUsers("createdBy", "Selected"))));
-        assertThat(genericReportPage.getCountOfCreatedByUsers("lastModifiedBy", "Available"),
-                is(equalTo("0")));
+            assertThat(expectedSelectedCount,
+                    is(equalTo(genericReportPage.getCountOfCreatedByUsers("createdBy", "Selected"))));
+            assertThat(genericReportPage.getCountOfCreatedByUsers("lastModifiedBy", "Available"),
+                    is(equalTo(expectedAvailableCount)));
+        }
     }
 
     /**
