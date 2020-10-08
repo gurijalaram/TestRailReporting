@@ -35,12 +35,11 @@ import java.util.Map;
 public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private Map<String, WebElement> tooltipElementMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
     private Map<String, WebElement> bubbleMap = new HashMap<>();
-    private Map<String, WebElement> fbcElementMap = new HashMap<>();
-    private Map<String, WebElement> tooltipElementMap = new HashMap<>();
     private String reportName = "";
 
     @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
@@ -66,9 +65,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
     private WebElement plasticDtcBubble;
-
-    @FindBy(xpath = "//*[text()='Fully Burdened Cost : ']/following-sibling::*[1]")
-    private WebElement tooltipFbcElement;
 
     @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name() = 'text' and position()=2]")
     private WebElement partNameCastingDtcComparisonReport;
@@ -247,12 +243,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[1]")
     private WebElement partNameDtcReports;
 
-    @FindBy(xpath = "(//*[@style='font-weight:bold'])[3]")
-    private WebElement fbcDtcReports;
-
-    @FindBy(xpath = "(//*[@style='font-weight:bold'])[5]")
-    private WebElement annualSpendDtcReports;
-
     @FindBy(id = "jr-ui-datepicker-div")
     private WebElement datePickerDiv;
 
@@ -325,8 +315,20 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[local-name() = 'g' and @data-z-index='8']")
     private WebElement dtcTooltipElement;
 
-    @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[1]")
-    private WebElement tooltipPartNameValue;
+    @FindBy(xpath = "//span[contains(text(), '3570824')]")
+    private WebElement componentLinkAssemblyDetails;
+
+    @FindBy(xpath = "//span[contains(text(), 'SUB-SUB-ASM')]")
+    private WebElement assemblyLinkAssemblyDetails;
+
+    @FindBy(xpath = "//span[contains(text(), 'Component Cost')]")
+    private WebElement componentCostReportTitle;
+
+    @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
+    private WebElement componentCostReportPartNumber;
+
+    @FindBy(xpath = "//span[@class='_jrHyperLink Reference']")
+    private WebElement dtcPartSummaryPartName;
 
     @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[2]")
     private WebElement tooltipFinishMassName;
@@ -352,21 +354,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[9]")
     private WebElement tooltipAnnualSpendValue;
 
-    @FindBy(xpath = "//span[contains(text(), '3570824')]")
-    private WebElement componentLinkAssemblyDetails;
-
-    @FindBy(xpath = "//span[contains(text(), 'SUB-SUB-ASM')]")
-    private WebElement assemblyLinkAssemblyDetails;
-
-    @FindBy(xpath = "//span[contains(text(), 'Component Cost')]")
-    private WebElement componentCostReportTitle;
-
-    @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
-    private WebElement componentCostReportPartNumber;
-
-    @FindBy(xpath = "//span[@class='_jrHyperLink Reference']")
-    private WebElement dtcPartSummaryPartName;
-
     @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[7]/*[local-name()='rect'])[14]")
     private WebElement machiningDtcComparisonBar;
 
@@ -389,7 +376,6 @@ public class GenericReportPage extends ReportsPageHeader {
         initialiseCurrencyMap();
         initialisePartNameMap();
         initialiseBubbleMap();
-        initialiseFbcElementMap();
         initialiseTooltipElementMap();
     }
 
@@ -1068,7 +1054,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return BigDecimal value
      */
     public BigDecimal getFBCValueFromBubbleTooltip() {
-        WebElement elementToUse = fbcElementMap.get(this.reportName);
+        WebElement elementToUse = tooltipElementMap.get("Fbc Value");
         pageUtils.waitForElementToAppear(elementToUse);
 
         return new BigDecimal(
@@ -1082,8 +1068,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return BigDecimal value
      */
     public BigDecimal getAnnualSpendFromBubbleTooltip() {
-        pageUtils.waitForElementToAppear(annualSpendDtcReports);
-        return new BigDecimal(annualSpendDtcReports.getText().replace(",", ""));
+        WebElement elementToUse = tooltipElementMap.get("Annual Spend Value");
+        pageUtils.waitForElementToAppear(elementToUse);
+        return new BigDecimal(elementToUse.getText().replace(",", ""));
     }
 
     /**
@@ -1191,22 +1178,6 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(componentToSelectLocator);
         pageUtils.waitForElementAndClick(componentToSelectLocator);
         return this;
-    }
-
-    /**
-     * Gets Process Group Value from DTC Part Summary Report
-     * @return - String
-     */
-    public String dtcPartSummaryGetProcessGroup() {
-        return dtcPartSummaryProcessGroupValue.getText();
-    }
-
-    /**
-     * Gets FBC from Plastic DTC Report
-     * @return BigDecimal
-     */
-    public BigDecimal getFbcPlasticDtc() {
-        return new BigDecimal(fbcDtcReports.getText());
     }
 
     /**
@@ -1487,15 +1458,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Initialise Fbc element map
-     */
-    private void initialiseFbcElementMap() {
-        fbcElementMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), tooltipFbcElement);
-        fbcElementMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), tooltipFbcElement);
-        fbcElementMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), fbcDtcReports);
-    }
-
-    /**
      * Initialises tool tip element map
      */
     private void initialiseTooltipElementMap() {
@@ -1503,9 +1465,9 @@ public class GenericReportPage extends ReportsPageHeader {
         tooltipElementMap.put("Finish Mass Value", tooltipFinishMassValue);
         tooltipElementMap.put("Fbc Name", tooltipFbcName);
         tooltipElementMap.put("Fbc Value", tooltipFbcValue);
-        tooltipElementMap.put("DTC Score Name", tooltipFinishMassName);
-        tooltipElementMap.put("DTC Score Value", tooltipFinishMassName);
-        tooltipElementMap.put("Annual Spend Name", tooltipFinishMassName);
-        tooltipElementMap.put("Annual Spend Value", tooltipFinishMassName);
+        tooltipElementMap.put("DTC Score Name", tooltipDtcScoreName);
+        tooltipElementMap.put("DTC Score Value", tooltipDtcScoreValue);
+        tooltipElementMap.put("Annual Spend Name", tooltipAnnualSpendName);
+        tooltipElementMap.put("Annual Spend Value", tooltipAnnualSpendValue);
     }
 }

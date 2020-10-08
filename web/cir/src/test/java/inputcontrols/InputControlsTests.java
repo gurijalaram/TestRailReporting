@@ -414,7 +414,6 @@ public class InputControlsTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .waitForInputControlsLoad()
                 .selectExportSet(exportSet)
                 .clickOk();
 
