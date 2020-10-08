@@ -3,6 +3,7 @@ def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format("yyyyMMddHHmmss")
 def javaOpts = ""
 def testSuite
+def folder = "microservices"
 
 pipeline {
     agent {
@@ -44,6 +45,7 @@ pipeline {
                     docker build \
                         --build-arg MODULE=${MODULE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
+                        --build-arg FOLDER=${folder} \
                         --no-cache \
                         --tag ${buildInfo.name}-build-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
