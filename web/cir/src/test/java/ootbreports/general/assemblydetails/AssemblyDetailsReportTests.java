@@ -674,7 +674,11 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterOperation() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCreatedByFilterOperation(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+        inputControlsTests.testListFilterOperation(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "Created By",
+                "[Null]"
+        );
     }
 
     @Test
@@ -702,7 +706,11 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterOperation() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testLastModifiedByFilter(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+        inputControlsTests.testListFilterOperation(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "Last Modified By",
+                "[Null]"
+        );
     }
 
     @Test

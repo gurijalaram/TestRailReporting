@@ -1444,6 +1444,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Search for name in created by input control
+     * @param listName String
      * @param inputString String
      */
     public void searchListForName(String listName, String inputString) {
@@ -1461,6 +1462,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Checks if created by option is visible and enabled
+     * @param listName String
      * @param inputString String
      * @return boolean
      */
@@ -1473,16 +1475,18 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Selects one of the names in created by list
-     * @param name String
+     * @param listName String
+     * @param nameToSelect String
      */
-    public void selectCreatedByName(String name) {
-        By locator = By.xpath(String.format("//div[@title='Created By']//li[@title='%s']/div/a", name));
+    public void selectCreatedByName(String listName, String nameToSelect) {
+        By locator = By.xpath(String.format("//div[@title='%s']//li[@title='%s']/div/a", listName, nameToSelect));
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForElementAndClick(locator);
     }
 
     /**
      * Gets count of created by list items
+     * @param listName String
      * @return String
      */
     public String getCountOfListItems(String listName) {

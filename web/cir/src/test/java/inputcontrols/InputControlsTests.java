@@ -477,15 +477,15 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for created by filter operation
      * @param reportName String
-     * @param createdByName String
+     * @param nameToSelect String
      */
-    public void testCreatedByFilterOperation(String reportName, String createdByName) {
+    public void testListFilterOperation(String reportName, String listName, String nameToSelect) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        genericReportPage.selectCreatedByName(createdByName);
+        genericReportPage.selectCreatedByName(listName, nameToSelect);
 
         // assert export sets have filtered and last modified by is down to zero available when bug is fixed
     }
