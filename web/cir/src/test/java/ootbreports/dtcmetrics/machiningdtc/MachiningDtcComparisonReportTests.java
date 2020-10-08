@@ -58,10 +58,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
-                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
     }
 
     @Test

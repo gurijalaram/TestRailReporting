@@ -151,10 +151,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Test Plastic DTC Export Set Selection")
     public void testPlasticDtcExportSetSelection() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.PLASTIC_DTC.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.PLASTIC_DTC.getReportName());
     }
 
     @Test

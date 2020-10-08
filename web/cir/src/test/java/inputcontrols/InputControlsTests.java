@@ -51,7 +51,7 @@ public class InputControlsTests extends TestBase {
         genericReportPage.setExportDateUsingInput(true, "")
                 .setExportDateUsingInput(false, "")
                 .ensureDatesAreCorrect()
-                .waitForCorrectExportSetListCount("0");
+                .waitForCorrectExportSetListCount("exportSetName", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -72,7 +72,7 @@ public class InputControlsTests extends TestBase {
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
                 .ensureDatesAreCorrect()
-                .waitForCorrectExportSetListCount("0");
+                .waitForCorrectExportSetListCount("exportSetName", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -201,9 +201,8 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for export set selection
      * @param reportName - report to use
-     * @param exportSetName - export set to use
      */
-    public void testExportSetSelection(String reportName, String exportSetName) {
+    public void testExportSetSelection(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
@@ -502,7 +501,36 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        // test buttons (check all three buttons)
+        genericReportPage.clickCreatedByButton("Select All");
+        String availableCount = genericReportPage.getCountOfCreatedByUsers("createdBy", "Available");
+        genericReportPage.waitForCorrectExportSetListCount("createdBy", availableCount);
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                "lastModifiedBy", "Available: ", "0");
+
+        assertThat(availableCount,
+                is(equalTo(genericReportPage.getCountOfCreatedByUsers("createdBy", "Selected"))));
+        assertThat(genericReportPage.getCountOfCreatedByUsers("lastModifiedBy", "Available"),
+                is(equalTo("0")));
+
+        genericReportPage.clickCreatedByButton("Deselect All");
+        genericReportPage.waitForCorrectAvailableSelectedCount("createdBy", "Selected: ", "0");
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                "lastModifiedBy", "Available: ", "1");
+
+        assertThat(genericReportPage.getCountOfCreatedByUsers("createdBy", "Selected"),
+                is(equalTo("0")));
+        assertThat(genericReportPage.getCountOfCreatedByUsers("lastModifiedBy", "Available"),
+                is(equalTo("1")));
+
+        genericReportPage.clickCreatedByButton("Invert");
+        genericReportPage.waitForCorrectExportSetListCount("createdBy", availableCount);
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                "lastModifiedBy", "Available: ", "0");
+
+        assertThat(availableCount,
+                is(equalTo(genericReportPage.getCountOfCreatedByUsers("createdBy", "Selected"))));
+        assertThat(genericReportPage.getCountOfCreatedByUsers("lastModifiedBy", "Available"),
+                is(equalTo("0")));
     }
 
     /**

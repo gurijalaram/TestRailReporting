@@ -641,13 +641,13 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
-        String genericLocator = "(//div[@id='exportSetName']/div/div/div/div/div)[%s]/span[@title='%s']";
+    public GenericReportPage waitForCorrectExportSetListCount(String listName, String expectedCount) {
+        String genericLocator = "(//div[@id='%s']/div/div/div/div/div)[%s]/span[@title='%s']";
 
-        By availableLocator = By.xpath(String.format(genericLocator, "1", "Available: " + expectedCount));
+        By availableLocator = By.xpath(String.format(genericLocator, listName, "1", "Available: " + expectedCount));
         pageUtils.waitForElementToAppear(availableLocator);
 
-        By selectedLocator = By.xpath(String.format(genericLocator, "2", "Selected: " + expectedCount));
+        By selectedLocator = By.xpath(String.format(genericLocator, listName, "2", "Selected: " + expectedCount));
         pageUtils.waitForElementToAppear(selectedLocator);
         return this;
     }
@@ -790,6 +790,36 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCountOfExportSets() {
         return availableExportSets.getText().substring(11);
+    }
+
+    /**
+     * Gets number of currently available created by users
+     *
+     * @return String - count of created by users
+     */
+    public String getCountOfCreatedByUsers(String listName, String option) {
+        String divSelection = option.equals("Available") ? "1" : "2";
+        int substringVal = divSelection.equals("1") ? 11 : 10;
+        return driver.findElement(By.xpath(
+                String.format("(//div[@id='%s']/div/div/div/div/div)[%s]/span", listName, divSelection)))
+                .getText().substring(substringVal);
+    }
+
+    /**
+     * Waits for correct available or selected count in any input controls list
+     * @param listName - String
+     * @param option - String
+     * @param expectedCount - String
+     */
+    public void waitForCorrectAvailableSelectedCount(String listName, String option, String expectedCount) {
+        String divSelection = option.equals("Available: ") ? "1" : "2";
+        By locator = By.xpath(String.format(
+                "(//div[@id='%s']/div/div/div/div/div)[%s]/span[@title='%s']",
+                listName,
+                divSelection,
+                option + expectedCount
+        ));
+        pageUtils.waitForElementToAppear(locator);
     }
 
     /**
@@ -1464,6 +1494,21 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getCountOfCreatedByListItems() {
         pageUtils.waitForElementToAppear(createdByListElement);
         return createdByListElement.getAttribute("childElementCount");
+    }
+
+    /**
+     * Clicks Select All option for Created By List
+     */
+    public void clickCreatedByButton(String buttonName) {
+        By buttonLocator = By.xpath(String.format("//div[@title='Created By']//li[@title='%s']/a", buttonName));
+        pageUtils.waitForElementAndClick(buttonLocator);
+    }
+
+    /**
+     * Clicks Select All option for Created By List
+     */
+    public void clickDeselectAllCreatedBy() {
+        pageUtils.waitForElementAndClick(createdByDeselectAllButton);
     }
 
     /**

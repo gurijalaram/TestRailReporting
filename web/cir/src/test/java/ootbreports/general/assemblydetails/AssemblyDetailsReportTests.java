@@ -612,10 +612,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                ExportSetEnum.TOP_LEVEL.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
@@ -681,7 +678,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCreatedByFilterSearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+        inputControlsTests.testCreatedByFilterButtons(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
     }
 
     @Test

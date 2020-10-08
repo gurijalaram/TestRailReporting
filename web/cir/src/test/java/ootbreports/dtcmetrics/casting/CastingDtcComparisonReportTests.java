@@ -69,10 +69,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcComparisonExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
     }
 
     @Test
