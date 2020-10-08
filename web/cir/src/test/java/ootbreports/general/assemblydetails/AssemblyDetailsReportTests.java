@@ -661,7 +661,11 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCreatedByFilterSearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "Created By",
+                "[Null]"
+        );
     }
 
     @Test
@@ -685,6 +689,26 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "Last Modified By",
+                "[Null]"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testLastModifiedFilterOperation() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testLastModifiedByFilter(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testLastModifiedFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testLastModifiedByFilter(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
     }

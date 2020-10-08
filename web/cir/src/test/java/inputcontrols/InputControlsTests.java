@@ -459,19 +459,19 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for created by filter search
      * @param reportName String
-     * @param createdByName String
+     * @param inputString String
      */
-    public void testCreatedByFilterSearch(String reportName, String createdByName) {
+    public void testListFilterSearch(String reportName, String listName, String inputString) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        genericReportPage.searchForCreatedByName(createdByName);
-        assertThat(genericReportPage.isCreatedByOptionVisible(createdByName), is(true));
+        genericReportPage.searchListForName(listName, inputString);
+        assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
 
-        genericReportPage.searchForCreatedByName("fakename");
-        assertThat(genericReportPage.getCountOfCreatedByListItems(), is(equalTo("0")));
+        genericReportPage.searchListForName(listName, "fakename");
+        assertThat(genericReportPage.getCountOfListItems(listName), is(equalTo("0")));
     }
 
     /**

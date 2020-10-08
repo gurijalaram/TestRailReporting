@@ -357,15 +357,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@title='Created By']//input[@placeholder='Search list...']")
     private WebElement createdBySearchInput;
 
-    @FindBy(xpath = "//div[@title='Created By']//li[@title='Select All']/a")
-    private WebElement createdBySelectAllButton;
-
-    @FindBy(xpath = "//div[@title='Created By']//li[@title='Deselect All']/a")
-    private WebElement createdByDeselectAllButton;
-
-    @FindBy(xpath = "//div[@title='Created By']//li[@title='Invert']/a")
-    private WebElement createdByInvertButton;
-
     @FindBy(xpath = "(//div[@title='Created By']//ul)[1]")
     private WebElement createdByListElement;
 
@@ -1453,25 +1444,28 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Search for name in created by input control
-     * @param name String
+     * @param inputString String
      */
-    public void searchForCreatedByName(String name) {
-        pageUtils.waitForElementAndClick(createdBySearchInput);
-        createdBySearchInput.clear();
-        createdBySearchInput.sendKeys(name);
-        if (name.equals("fakename")) {
-            By locator = By.xpath("//div[@title='Created By']/div[1]/div/div[2]/div[2]/div/div[@style='height: 1px']");
+    public void searchListForName(String listName, String inputString) {
+        WebElement currentSearchInput = driver.findElement(By.xpath(
+                String.format("//div[@title='%s']//input[@placeholder='Search list...']", listName)));
+        pageUtils.waitForElementAndClick(currentSearchInput);
+        currentSearchInput.clear();
+        currentSearchInput.sendKeys(inputString);
+        if (inputString.equals("fakename")) {
+            By locator = By.xpath(String.format(
+                    "//div[@title='%s']/div[1]/div/div[2]/div[2]/div/div[@style='height: 1px']", listName));
             pageUtils.waitForElementToAppear(locator);
         }
     }
 
     /**
      * Checks if created by option is visible and enabled
-     * @param name String
+     * @param inputString String
      * @return boolean
      */
-    public boolean isCreatedByOptionVisible(String name) {
-        By locator = By.xpath(String.format("//div[@title='Created By']//li[@title='%s']/div/a", name));
+    public boolean isListOptionVisible(String listName, String inputString) {
+        By locator = By.xpath(String.format("//div[@title='%s']//li[@title='%s']/div/a", listName, inputString));
         pageUtils.waitForElementToAppear(locator);
         WebElement optionElement = driver.findElement(locator);
         return optionElement.isEnabled() && optionElement.isEnabled();
@@ -1491,9 +1485,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets count of created by list items
      * @return String
      */
-    public String getCountOfCreatedByListItems() {
-        pageUtils.waitForElementToAppear(createdByListElement);
-        return createdByListElement.getAttribute("childElementCount");
+    public String getCountOfListItems(String listName) {
+        WebElement currentListElement =
+                driver.findElement(By.xpath(String.format("(//div[@title='%s']//ul)[1]", listName)));
+        pageUtils.waitForElementToAppear(currentListElement);
+        return currentListElement.getAttribute("childElementCount");
     }
 
     /**
@@ -1502,13 +1498,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public void clickCreatedByButton(String buttonName) {
         By buttonLocator = By.xpath(String.format("//div[@title='Created By']//li[@title='%s']/a", buttonName));
         pageUtils.waitForElementAndClick(buttonLocator);
-    }
-
-    /**
-     * Clicks Select All option for Created By List
-     */
-    public void clickDeselectAllCreatedBy() {
-        pageUtils.waitForElementAndClick(createdByDeselectAllButton);
     }
 
     /**
