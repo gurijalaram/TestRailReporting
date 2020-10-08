@@ -1054,7 +1054,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return BigDecimal value
      */
     public BigDecimal getFBCValueFromBubbleTooltip() {
-        WebElement elementToUse = tooltipElementMap.get("Fbc Value");
+        WebElement elementToUse = tooltipElementMap.get("FBC Value");
         pageUtils.waitForElementToAppear(elementToUse);
 
         return new BigDecimal(
@@ -1463,8 +1463,8 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseTooltipElementMap() {
         tooltipElementMap.put("Finish Mass Name", tooltipFinishMassName);
         tooltipElementMap.put("Finish Mass Value", tooltipFinishMassValue);
-        tooltipElementMap.put("Fbc Name", tooltipFbcName);
-        tooltipElementMap.put("Fbc Value", tooltipFbcValue);
+        tooltipElementMap.put("FBC Name", tooltipFbcName);
+        tooltipElementMap.put("FBC Value", tooltipFbcValue);
         tooltipElementMap.put("DTC Score Name", tooltipDtcScoreName);
         tooltipElementMap.put("DTC Score Value", tooltipDtcScoreValue);
         tooltipElementMap.put("Annual Spend Name", tooltipAnnualSpendName);

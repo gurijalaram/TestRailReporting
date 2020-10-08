@@ -421,14 +421,14 @@ public class InputControlsTests extends TestBase {
         genericReportPage.hoverPartNameBubbleDtcReports();
 
         assertThat(genericReportPage.isTooltipDisplayed(), is(true));
-        assertThat(genericReportPage.isTooltipElementVisible("Finish Mass Name"), is(true));
-        assertThat(genericReportPage.isTooltipElementVisible("Finish Mass Value"), is(true));
-        assertThat(genericReportPage.isTooltipElementVisible("Fbc Name"), is(true));
-        assertThat(genericReportPage.isTooltipElementVisible("Fbc Value"), is(true));
-        assertThat(genericReportPage.isTooltipElementVisible("DTC Score Name"), is(true));
-        assertThat(genericReportPage.isTooltipElementVisible("DTC Score Value"), is(true));
-        assertThat(genericReportPage.isTooltipElementVisible("Annual Spend Name"), is(true));
-        assertThat(genericReportPage.isTooltipElementVisible("Annual Spend Value"), is(true));
+        assertIsTooltipElementVisible("Finish Mass Name");
+        assertIsTooltipElementVisible("Finish Mass Value");
+        assertIsTooltipElementVisible("FBC Name");
+        assertIsTooltipElementVisible("FBC Value");
+        assertIsTooltipElementVisible("DTC Score Name");
+        assertIsTooltipElementVisible("DTC Score Value");
+        assertIsTooltipElementVisible("Annual Spend Name");
+        assertIsTooltipElementVisible("Annual Spend Value");
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
@@ -469,5 +469,9 @@ public class InputControlsTests extends TestBase {
                 genericReportPage.getProcessGroupValueDtc(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()),
                 is(equalTo(processGroupName))
         );
+    }
+
+    private void assertIsTooltipElementVisible(String tooltipKey) {
+        assertThat(genericReportPage.isTooltipElementVisible(tooltipKey), is(true));
     }
 }
