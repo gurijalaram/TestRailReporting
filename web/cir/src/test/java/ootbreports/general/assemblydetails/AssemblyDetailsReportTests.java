@@ -29,7 +29,6 @@ import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -663,8 +662,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Created By",
-                "[Null]"
+                "Created By"
         );
     }
 
@@ -676,8 +674,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterOperation(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Created By",
-                "[Null]"
+                "Created By"
         );
     }
 
@@ -686,7 +683,10 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCreatedByFilterButtons(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "Created By"
+        );
     }
 
     @Test
@@ -696,8 +696,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Last Modified By",
-                "[Null]"
+                "Last Modified By"
         );
     }
 
@@ -708,8 +707,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterOperation(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Last Modified By",
-                "[Null]"
+                "Last Modified By"
         );
     }
 
@@ -718,6 +716,20 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testLastModifiedByFilter(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), "[Null]");
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "Last Modified By"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testAssemblyNumberSearchCriteria() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testAssemblyNumberSearchCriteria(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
+        );
     }
 }

@@ -4,11 +4,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
-import com.apriori.apibase.services.cis.objects.Report;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -459,13 +458,15 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for created by filter search
      * @param reportName String
-     * @param inputString String
+     * @param listName String
      */
-    public void testListFilterSearch(String reportName, String listName, String inputString) {
+    public void testListFilterSearch(String reportName, String listName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
+
+        String inputString = "QA Automation Account 01";
 
         genericReportPage.searchListForName(listName, inputString);
         assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
@@ -477,14 +478,15 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for created by filter operation
      * @param reportName String
-     * @param nameToSelect String
+     * @param listName String
      */
-    public void testListFilterOperation(String reportName, String listName, String nameToSelect) {
+    public void testListFilterOperation(String reportName, String listName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
+        String nameToSelect = "QA Automation Account 01";
         genericReportPage.selectCreatedByName(listName, nameToSelect);
 
         // assert export sets have filtered and last modified by is down to zero available when bug is fixed
@@ -494,7 +496,7 @@ public class InputControlsTests extends TestBase {
      * Generic test for created by filter buttons
      * @param reportName String
      */
-    public void testCreatedByFilterButtons(String reportName) {
+    public void testListFilterButtons(String reportName, String listName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
@@ -507,45 +509,42 @@ public class InputControlsTests extends TestBase {
                 add("Invert");
             }};
 
-        String expectedAvailableCount = "";
-        String expectedSelectedCount = "";
+        String availableValue = genericReportPage.getCountOfListUsers(listName, "Available");
+        String selectedInitialValue = genericReportPage.getCountOfListUsers(listName, "Selected");
 
         for (String buttonName : buttonNames) {
-            genericReportPage.clickCreatedByButton(buttonName);
+            genericReportPage.clickListPanelButton(listName, buttonName);
 
-            if (!buttonName.equals("Deselect All")) {
-                expectedAvailableCount = "0";
-                expectedSelectedCount = genericReportPage.getCountOfCreatedByUsers("createdBy", "Available");
+            if (buttonName.equals("Select All") || buttonName.equals("Invert")) {
+                genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", availableValue);
+                assertThat(genericReportPage.getCountOfListUsers(listName, "Selected"), is(equalTo(availableValue)));
             } else {
-                expectedAvailableCount = "1";
-                expectedSelectedCount = "0";
+                genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", selectedInitialValue);
+                assertThat(genericReportPage.getCountOfListUsers(listName, "Selected"),
+                        is(equalTo(selectedInitialValue)));
             }
-
-            genericReportPage.waitForCorrectAvailableSelectedCount("createdBy", "Selected: ", expectedSelectedCount);
-            genericReportPage.waitForCorrectAvailableSelectedCount(
-                    "lastModifiedBy", "Available: ", expectedAvailableCount);
-
-            assertThat(expectedSelectedCount,
-                    is(equalTo(genericReportPage.getCountOfCreatedByUsers("createdBy", "Selected"))));
-            assertThat(genericReportPage.getCountOfCreatedByUsers("lastModifiedBy", "Available"),
-                    is(equalTo(expectedAvailableCount)));
         }
     }
 
     /**
-     * Generic test for created by filter
+     * Generic test for assembly number search criteria
      * @param reportName String
-     * @param createdByName String
+     * @param assemblySearchInput String
      */
-    public void testLastModifiedByFilter(String reportName, String createdByName) {
+    public void testAssemblyNumberSearchCriteria(String reportName, String assemblySearchInput) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        // test search (search for what is there, check appears, search for not there, check list is empty)
-        // test filter filters (click specified option, ensure export sets are filtered)
-        // test buttons (check all three buttons)
+        genericReportPage.inputAssemblyNumberSearchCriteria(assemblySearchInput);
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(), startsWith(assemblySearchInput));
+
+        genericReportPage.inputAssemblyNumberSearchCriteria("");
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(), is(equalTo("")));
+        assertThat(genericReportPage.isAssemblyNumberSearchErrorVisible(), is(equalTo(true)));
+        assertThat(genericReportPage.getAssemblyNumberSearchErrorText(),
+                is(equalTo("This field is mandatory so you must enter data.")));
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {

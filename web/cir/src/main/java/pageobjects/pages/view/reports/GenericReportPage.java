@@ -360,6 +360,12 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@title='Created By']//ul)[1]")
     private WebElement createdByListElement;
 
+    @FindBy(css = "div[id='assemblyNumber'] input")
+    private WebElement assemblyNumberSearchCriteria;
+
+    @FindBy(css = "label[title='Assembly Select'] span[class='warning']")
+    private WebElement assemblyNumberSearchCriteriaError;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -788,12 +794,12 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return String - count of created by users
      */
-    public String getCountOfCreatedByUsers(String listName, String option) {
+    public String getCountOfListUsers(String listName, String option) {
         String divSelection = option.equals("Available") ? "1" : "2";
         int substringVal = divSelection.equals("1") ? 11 : 10;
-        return driver.findElement(By.xpath(
-                String.format("(//div[@id='%s']/div/div/div/div/div)[%s]/span", listName, divSelection)))
-                .getText().substring(substringVal);
+        By locator = By.xpath(String.format("(//div[@title='%s']/div/div/div/div)[%s]/span", listName, divSelection));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText().substring(substringVal);
     }
 
     /**
@@ -805,7 +811,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public void waitForCorrectAvailableSelectedCount(String listName, String option, String expectedCount) {
         String divSelection = option.equals("Available: ") ? "1" : "2";
         By locator = By.xpath(String.format(
-                "(//div[@id='%s']/div/div/div/div/div)[%s]/span[@title='%s']",
+                "(//div[@title='%s']/div/div/div/div)[%s]/span[@title='%s']",
                 listName,
                 divSelection,
                 option + expectedCount
@@ -1499,9 +1505,52 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Clicks Select All option for Created By List
      */
-    public void clickCreatedByButton(String buttonName) {
-        By buttonLocator = By.xpath(String.format("//div[@title='Created By']//li[@title='%s']/a", buttonName));
+    public void clickListPanelButton(String listName, String buttonName) {
+        By buttonLocator = By.xpath(String.format("//div[@title='%s']//li[@title='%s']/a", listName, buttonName));
         pageUtils.waitForElementAndClick(buttonLocator);
+    }
+
+    /**
+     * Inputs search query into Assembly Number Search Criteria
+     */
+    public void inputAssemblyNumberSearchCriteria(String inputString) {
+        inputString = inputString.isEmpty() ? "random" : inputString;
+        pageUtils.waitForElementAndClick(assemblyNumberSearchCriteria);
+        assemblyNumberSearchCriteria.clear();
+        assemblyNumberSearchCriteria.sendKeys(inputString);
+        assemblyNumberSearchCriteria.sendKeys(Keys.ENTER);
+        String dropdownText = inputString.equals("random") ? "" : inputString;
+        By locator = By.xpath(String.format("//label[@title='Assembly Select']//a[contains(@title, '%s')]", dropdownText));
+        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//label[@title='Assembly Select']//a")), true);
+        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementToAppear(locator);
+    }
+
+    /**
+     * Gets currently selected assembly
+     * @return String
+     */
+    public String getCurrentlySelectedAssembly() {
+        pageUtils.waitForElementToAppear(currentAssemblyElement);
+        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Assembly Select']/div/div/div/a"));
+        return currentAssemblyElement.getAttribute("title");
+    }
+
+    /**
+     * Gets Assembly Number Search Error visibility
+     * @return boolean
+     */
+    public boolean isAssemblyNumberSearchErrorVisible() {
+        return pageUtils.isElementDisplayed(assemblyNumberSearchCriteriaError) &&
+                pageUtils.isElementEnabled(assemblyNumberSearchCriteriaError);
+    }
+
+    /**
+     * Gets Assembly Number Search Error text
+     * @return String
+     */
+    public String getAssemblyNumberSearchErrorText() {
+        return assemblyNumberSearchCriteriaError.getText();
     }
 
     /**
