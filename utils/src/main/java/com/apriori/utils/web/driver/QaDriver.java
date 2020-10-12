@@ -2,6 +2,7 @@ package com.apriori.utils.web.driver;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -28,6 +29,7 @@ public class QaDriver {
 
     private static final Logger LOGGER_QA_DRIVER = LoggerFactory.getLogger(QaDriver.class);
 
+    private RemoteWebDriver result;
     private String server;
     private String browser;
     private Proxy proxy;
@@ -49,7 +51,6 @@ public class QaDriver {
 
         String uuid = StringUtils.isEmpty(System.getProperty("uuid")) ? "ParallelTestsRun" : System.getProperty("uuid");
 
-        RemoteWebDriver result;
         DesiredCapabilities dc = new DesiredCapabilities();
 
         if (downloadPath != null) {
@@ -66,39 +67,43 @@ public class QaDriver {
         setDriverBrowserLogging(dc);
         dc.setCapability("uuid", uuid.toLowerCase());
 
-        switch (browser) {
-            case "firefox":
-                FirefoxProfile fp = new FirefoxProfile();
-                dc.setCapability(FirefoxDriver.PROFILE, fp);
-                dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
-                result = new RemoteWebDriver(new URL(server), dc);
-                LOGGER_QA_DRIVER.info("Full list of Capabilities: " + result.getCapabilities().toString());
-                break;
-            case "iexplorer11":
-                dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
-                dc.setVersion("11");
-                result = new RemoteWebDriver(new URL(server), dc);
-                break;
-            case "chrome":
-                LOGGER_QA_DRIVER.info("Starting ChromeDriver........ ");
-                ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
-                options.addArguments("--no-sandbox");
+        try {
+            switch (browser) {
+                case "firefox":
+                    FirefoxProfile fp = new FirefoxProfile();
+                    dc.setCapability(FirefoxDriver.PROFILE, fp);
+                    dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
+                    result = new RemoteWebDriver(new URL(server), dc);
+                    LOGGER_QA_DRIVER.info("Full list of Capabilities: " + result.getCapabilities().toString());
+                    break;
+                case "iexplorer11":
+                    dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
+                    dc.setVersion("11");
+                    result = new RemoteWebDriver(new URL(server), dc);
+                    break;
+                case "chrome":
+                    LOGGER_QA_DRIVER.info("Starting ChromeDriver........ ");
+                    ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
+                    options.addArguments("--no-sandbox");
 
-                dc.setCapability(ChromeOptions.CAPABILITY, options);
-                dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-                dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
-                result = new RemoteWebDriver(new URL(server), dc);
-                LOGGER_QA_DRIVER.info("Full list of Capabilities: " + (result).getCapabilities().toString());
-                break;
-            case "edge":
-                dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
-                result = new RemoteWebDriver(new URL(server), dc);
-                LOGGER_QA_DRIVER.info("Full list of Capabilities: " + (result).getCapabilities().toString());
-                break;
-            default:
-                throw new InvalidParameterException("Unexpected browser type: " + browser);
+                    dc.setCapability(ChromeOptions.CAPABILITY, options);
+                    dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                    dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
+                    result = new RemoteWebDriver(new URL(server), dc);
+                    LOGGER_QA_DRIVER.info("Full list of Capabilities: " + (result).getCapabilities().toString());
+                    break;
+                case "edge":
+                    dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
+                    result = new RemoteWebDriver(new URL(server), dc);
+                    LOGGER_QA_DRIVER.info("Full list of Capabilities: " + (result).getCapabilities().toString());
+                    break;
+                default:
+                    throw new InvalidParameterException("Unexpected browser type: " + browser);
+            }
+            result.setFileDetector(new LocalFileDetector());
+        } catch (WebDriverException e) {
+            e.printStackTrace();
         }
-        result.setFileDetector(new LocalFileDetector());
         return result;
     }
 

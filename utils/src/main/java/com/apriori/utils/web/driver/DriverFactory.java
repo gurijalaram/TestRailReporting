@@ -3,7 +3,6 @@ package com.apriori.utils.web.driver;
 import com.apriori.utils.reader.BaseReader;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -69,7 +68,7 @@ public class DriverFactory {
                     throw new InvalidParameterException("Unexpected test mode: " + testMode);
             }
         } catch (MalformedURLException e) {
-            Assert.fail(e.getMessage());
+            e.printStackTrace();
         }
         return driver;
     }
