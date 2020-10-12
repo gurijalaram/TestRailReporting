@@ -15,11 +15,13 @@ import ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
+        AssemblyDetailsReportTests.class,
         CastingDtcReportTests.class
 })
 
