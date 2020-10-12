@@ -750,10 +750,10 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         Map<String, String> reportsValues = new HashMap<>();
         reportsValues.put("Part Name", assemblyDetailsReportPage.getRowFivePartName());
-        reportsValues.put("Cycle Time", assemblyDetailsReportPage.getValueFromTable("Cycle Time"));
-        reportsValues.put("Piece Part Cost", assemblyDetailsReportPage.getValueFromTable("Piece Part Cost"));
-        reportsValues.put("Fully Burdened Cost", assemblyDetailsReportPage.getValueFromTable("Fully Burdened Cost"));
-        reportsValues.put("Capital Investments", assemblyDetailsReportPage.getValueFromTable("Capital Investments"));
+        reportsValues.put("Cycle Time", assemblyDetailsReportPage.getFiguresFromTable("Cycle Time"));
+        reportsValues.put("Piece Part Cost", assemblyDetailsReportPage.getFiguresFromTable("Piece Part Cost"));
+        reportsValues.put("Fully Burdened Cost", assemblyDetailsReportPage.getFiguresFromTable("Fully Burdened Cost"));
+        reportsValues.put("Capital Investments", assemblyDetailsReportPage.getFiguresFromTable("Capital Investments"));
 
         assemblyDetailsReportPage.openNewTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)

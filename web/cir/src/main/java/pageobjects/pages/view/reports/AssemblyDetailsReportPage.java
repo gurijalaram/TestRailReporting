@@ -275,7 +275,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * @param valueName String
      * @return String
      */
-    public String getValueFromTable(String valueName) {
+    public String getFiguresFromTable(String valueName) {
         By locator = By.xpath(
                 String.format(
                         "(//table)[7]/tbody/tr[11]/td[%s]",
@@ -509,6 +509,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         }
         return finalValues;
     }
+
     /**
      * Checks if value of current cell is a valid one
      *
