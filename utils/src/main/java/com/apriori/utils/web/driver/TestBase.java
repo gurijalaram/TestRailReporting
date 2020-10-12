@@ -74,11 +74,9 @@ public class TestBase extends TestHelper {
             driver.manage().window().setSize(new Dimension(1920,1080));
             driver.manage().window().maximize();
         }
-
         TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
         driver.manage().deleteAllCookies();
         TestHelper.logger.debug("Browser window size: " + driver.manage().window().getSize());
-
 
         MDC.put("methodName", this.getClass().getSimpleName() + "." + name.getMethodName());
         if (type.equals(TestType.EXPORT)) {
