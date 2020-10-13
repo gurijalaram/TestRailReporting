@@ -35,10 +35,10 @@ public class LocalDriver {
     private String locale;
 
     public LocalDriver(String browser, Proxy proxy, String downloadPath, String locale) {
-    this.browser = browser;
-    this.proxy = proxy;
-    this.downloadPath = downloadPath;
-    this.locale = locale;
+        this.browser = browser;
+        this.proxy = proxy;
+        this.downloadPath = downloadPath;
+        this.locale = locale;
     }
 
     public WebDriver getLocalDriver() {
