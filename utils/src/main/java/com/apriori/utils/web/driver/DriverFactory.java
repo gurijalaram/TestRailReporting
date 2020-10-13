@@ -66,7 +66,7 @@ public class DriverFactory {
                         serverBuilder.append(":").append(seleniumPort);
                     }
                     serverBuilder.append(seleniumPrefix);
-
+d
                     server = serverBuilder.toString();
 
                     if (testType.equals(TestType.EXPORT)) {
