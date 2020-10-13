@@ -14,6 +14,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -24,18 +25,22 @@ import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.ComponentsPage;
+import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.OnPremTest;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AssemblyDetailsReportTests extends TestBase {
 
@@ -290,8 +295,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-                assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
-                assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
+            assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
+            assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
@@ -628,10 +633,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                ExportSetEnum.TOP_LEVEL.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
@@ -663,7 +665,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Category(OnPremTest.class)
     @TestRail(testCaseId = "1921")
-    @Description("Export Set search function works")
+    @Description("Export Set search function works (plus other filters)")
     public void testExportSetSearch() {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -675,5 +677,125 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(genericReportPage.getExportSetOptionCount(), is(equalTo("1")));
         assertThat(genericReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL.getExportSetName()), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testCreatedByFilterSearch() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @Issue("AP-64112")
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testCreatedByFilterOperation() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterOperation(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testCreatedByFilterButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testLastModifiedFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testLastModifiedFilterOperation() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterOperation(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testLastModifiedFilterButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1921")
+    @Description("Export set search function works (plus other filters)")
+    public void testAssemblyNumberSearchCriteria() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testAssemblyNumberSearchCriteria(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1924")
+    @Description("Verify report figures from CI Design")
+    public void testDataIntegrity() {
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .clickOk().waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        Map<String, String> reportsValues = new HashMap<>();
+        reportsValues.put("Part Name", assemblyDetailsReportPage.getRowFivePartName());
+        reportsValues.put("Cycle Time", assemblyDetailsReportPage.getFiguresFromTable("Cycle Time"));
+        reportsValues.put("Piece Part Cost", assemblyDetailsReportPage.getFiguresFromTable("Piece Part Cost"));
+        reportsValues.put("Fully Burdened Cost", assemblyDetailsReportPage.getFiguresFromTable("Fully Burdened Cost"));
+        reportsValues.put("Capital Investments", assemblyDetailsReportPage.getFiguresFromTable("Capital Investments"));
+
+        assemblyDetailsReportPage.openNewTabAndFocus(1);
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filter()
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setRowOne("Part Name", "Contains", reportsValues.get("Part Name"))
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario();
+
+        Map<String, String> cidValues = new HashMap<>();
+        cidValues.put("Cycle Time", String.valueOf(evaluatePage.getCycleTimeCount()));
+        cidValues.put("Piece Part Cost", String.valueOf(evaluatePage.getPartCost()));
+        cidValues.put("Fully Burdened Cost", String.valueOf(evaluatePage.getBurdenedCost()));
+        cidValues.put("Capital Investments", String.valueOf(evaluatePage.getCapitalInvestment()));
+
+        assertThat(reportsValues.get("Cycle Time"), is(equalTo(cidValues.get("Cycle Time"))));
+        assertThat(reportsValues.get("Piece Part Cost"), is(cidValues.get("Piece Part Cost")));
+        assertThat(reportsValues.get("Fully Burdened Cost"), is(cidValues.get("Fully Burdened Cost")));
+        assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));
     }
 }

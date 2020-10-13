@@ -5,6 +5,7 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
@@ -35,6 +36,7 @@ import java.util.Map;
 public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
     private Map<String, WebElement> tooltipElementMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
@@ -50,6 +52,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[18][local-name() = 'path']")
     private WebElement castingDtcBubbleTwo;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[8][local-name() = 'path']")
+    private WebElement dtcScoreMediumBubble;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[5][local-name() = 'path']")
+    private WebElement dtcScoreHighBubble;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[54][local-name() = 'path']")
     private WebElement processGroupBubbleOne;
@@ -327,6 +335,27 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
     private WebElement componentCostReportPartNumber;
 
+    @FindBy(xpath = "//span[contains(text(), '* DTC Score')]/..//li[@title='Deselect All']/a")
+    private WebElement dtcScoreDeselectAllButton;
+
+    @FindBy(xpath = "(//*[local-name() = 'tspan'])[9]")
+    private WebElement dtcScoreValueOnBubble;
+
+    @FindBy(xpath = "//span[contains(text(), 'DTC Score:')]/../following-sibling::td[2]")
+    private WebElement dtcScoreValueAboveChart;
+
+    @FindBy(xpath = "//div[@title='Created By']//input[@placeholder='Search list...']")
+    private WebElement createdBySearchInput;
+
+    @FindBy(xpath = "(//div[@title='Created By']//ul)[1]")
+    private WebElement createdByListElement;
+
+    @FindBy(css = "div[id='assemblyNumber'] input")
+    private WebElement assemblyNumberSearchCriteria;
+
+    @FindBy(css = "label[title='Assembly Select'] span[class='warning']")
+    private WebElement assemblyNumberSearchCriteriaError;
+
     @FindBy(xpath = "//span[@class='_jrHyperLink Reference']")
     private WebElement dtcPartSummaryPartName;
 
@@ -372,11 +401,12 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseTooltipElementMap();
+        initialiseDtcScoreBubbleMap();
         initialiseAssemblyHashMap();
         initialiseCurrencyMap();
         initialisePartNameMap();
         initialiseBubbleMap();
-        initialiseTooltipElementMap();
     }
 
     @Override
@@ -633,13 +663,14 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return current page object
      */
-    public GenericReportPage waitForCorrectExportSetListCount(String expectedCount) {
-        String genericLocator = "(//div[@id='exportSetName']/div/div/div/div/div)[%s]/span[@title='%s']";
+    public GenericReportPage waitForCorrectExportSetListCount(String listName, String expectedCount) {
+        //String genericLocator = "(//div[@id='%s']/div/div/div/div/div)[%s]/span[@title='%s']";
+        String genericLocator = "//div[@title='%s']//span[@title='%s']";
 
-        By availableLocator = By.xpath(String.format(genericLocator, "1", "Available: " + expectedCount));
+        By availableLocator = By.xpath(String.format(genericLocator, listName, "Available: " + expectedCount));
         pageUtils.waitForElementToAppear(availableLocator);
 
-        By selectedLocator = By.xpath(String.format(genericLocator, "2", "Selected: " + expectedCount));
+        By selectedLocator = By.xpath(String.format(genericLocator, listName, "Selected: " + expectedCount));
         pageUtils.waitForElementToAppear(selectedLocator);
         return this;
     }
@@ -767,6 +798,33 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCountOfExportSets() {
         return availableExportSets.getText().substring(11);
+    }
+
+    /**
+     * Gets number of currently available created by users
+     *
+     * @return String - count of created by users
+     */
+    public String getCountOfListUsers(String listName, String option) {
+        int substringVal = option.equals("Available") ? 11 : 10;
+        By locator = By.xpath(String.format("//div[@title='%s']//span[contains(@title, '%s')]", listName, option));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText().substring(substringVal);
+    }
+
+    /**
+     * Waits for correct available or selected count in any input controls list
+     * @param listName - String
+     * @param option - String
+     * @param expectedCount - String
+     */
+    public void waitForCorrectAvailableSelectedCount(String listName, String option, String expectedCount) {
+        By locator = By.xpath(String.format(
+                "//div[@title='%s']//span[@title='%s']",
+                listName,
+                option + expectedCount
+        ));
+        pageUtils.waitForElementToAppear(locator);
     }
 
     /**
@@ -1095,6 +1153,17 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Hover DTC Score bubble
+     * @param dtcScore String
+     */
+    public void hoverBubbleDtcScoreDtcReports(String dtcScore) {
+        WebElement elementToUse = dtcScoreBubbleMap.get(dtcScore);
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
+        builder.perform();
+    }
+
+    /**
      * Hovers over Machining DTC Bubble twice
      */
     public void hoverMachiningBubbleTwice() {
@@ -1188,6 +1257,15 @@ public class GenericReportPage extends ReportsPageHeader {
         WebElement elementToUse = partNameMap.get(this.reportName);
         pageUtils.waitForElementToAppear(elementToUse);
         return elementToUse.getText();
+    }
+
+    /**
+     * Gets DTC Score from Bubble in DTC Reports
+     * @return String
+     */
+    public String getDtcScoreDtcReports() {
+        pageUtils.waitForElementToAppear(dtcScoreValueOnBubble);
+        return dtcScoreValueOnBubble.getAttribute("textContent");
     }
 
     /**
@@ -1376,9 +1454,165 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets count of export sets visible
+     * @return String
      */
     public String getExportSetOptionCount() {
         return exportSetList.getAttribute("childElementCount");
+    }
+
+    /**
+     * Sets DTC Score Input Control
+     * @return Instance of current page object
+     */
+    public GenericReportPage setDtcScore(String dtcScoreOption) {
+        if (!dtcScoreOption.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
+            pageUtils.waitForElementAndClick(dtcScoreDeselectAllButton);
+            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+            By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
+            pageUtils.waitForSteadinessOfElement(locator);
+            pageUtils.waitForElementAndClick(driver.findElement(locator));
+        }
+        return this;
+    }
+
+    /**
+     * Gets DTC Score value from above chart
+     * @return String
+     */
+    public String getDtcScoreAboveChart() {
+        pageUtils.waitForElementToAppear(dtcScoreValueAboveChart);
+        return dtcScoreValueAboveChart.getText();
+    }
+
+    /**
+     * Waits for no bubble report to load
+     */
+    public void waitForNoBubbleReportToLoad() {
+        By loc = By.xpath("(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[6]");
+        pageUtils.waitForElementToAppear(loc);
+    }
+
+    /**
+     * Gets all DTC Score Values on screen in details reports
+     * @return ArrayList of String values
+     */
+    public ArrayList<String> getDtcScoreValuesDtcDetailsReports(String reportName) {
+        String columnIndex = reportName.equals(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()) ? "23" : "26";
+        ArrayList<WebElement> elementArrayList = new ArrayList<>(driver.findElements(
+                By.cssSelector(String.format("table.jrPage tbody tr td:nth-of-type(%s) span", columnIndex))));
+        ArrayList<String> valuesToReturn = new ArrayList<>();
+
+        for (WebElement element : elementArrayList) {
+            if (!element.getText().equals("DTC Score")) {
+                valuesToReturn.add(element.getText());
+            }
+        }
+        return valuesToReturn;
+    }
+
+    /**
+     * Search for name in created by input control
+     * @param listName String
+     * @param inputString String
+     */
+    public void searchListForName(String listName, String inputString) {
+        WebElement currentSearchInput = driver.findElement(By.xpath(
+                String.format("//div[@title='%s']//input[@placeholder='Search list...']", listName)));
+        pageUtils.waitForElementAndClick(currentSearchInput);
+        currentSearchInput.clear();
+        currentSearchInput.sendKeys(inputString);
+        if (inputString.equals("fakename")) {
+            By locator = By.xpath(String.format(
+                    "//div[@title='%s']/div[1]/div/div[2]/div[2]/div/div[@style='height: 1px']", listName));
+            pageUtils.waitForElementToAppear(locator);
+        }
+    }
+
+    /**
+     * Checks if created by option is visible and enabled
+     * @param listName String
+     * @param inputString String
+     * @return boolean
+     */
+    public boolean isListOptionVisible(String listName, String inputString) {
+        By locator = By.xpath(String.format("//div[@title='%s']//li[@title='%s']/div/a", listName, inputString));
+        pageUtils.waitForElementToAppear(locator);
+        WebElement optionElement = driver.findElement(locator);
+        return optionElement.isEnabled() && optionElement.isEnabled();
+    }
+
+    /**
+     * Selects one of the names in created by list
+     * @param listName String
+     * @param nameToSelect String
+     */
+    public void selectCreatedByName(String listName, String nameToSelect) {
+        By locator = By.xpath(String.format("//div[@title='%s']//li[@title='%s']/div/a", listName, nameToSelect));
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForElementAndClick(locator);
+    }
+
+    /**
+     * Gets count of created by list items
+     * @param listName String
+     * @return String
+     */
+    public String getCountOfListItems(String listName) {
+        WebElement currentListElement =
+                driver.findElement(By.xpath(String.format("(//div[@title='%s']//ul)[1]", listName)));
+        pageUtils.waitForElementToAppear(currentListElement);
+        return currentListElement.getAttribute("childElementCount");
+    }
+
+    /**
+     * Clicks Select All option for Created By List
+     */
+    public void clickListPanelButton(String listName, String buttonName) {
+        By buttonLocator = By.xpath(String.format("//div[@title='%s']//li[@title='%s']/a", listName, buttonName));
+        pageUtils.waitForElementAndClick(buttonLocator);
+    }
+
+    /**
+     * Inputs search query into Assembly Number Search Criteria
+     */
+    public void inputAssemblyNumberSearchCriteria(String inputString) {
+        inputString = inputString.isEmpty() ? "random" : inputString;
+        pageUtils.waitForElementAndClick(assemblyNumberSearchCriteria);
+        assemblyNumberSearchCriteria.clear();
+        assemblyNumberSearchCriteria.sendKeys(inputString);
+        assemblyNumberSearchCriteria.sendKeys(Keys.ENTER);
+        String dropdownText = inputString.equals("random") ? "" : inputString;
+        By locator = By.xpath(String.format("//label[@title='Assembly Select']//a[contains(@title, '%s')]", dropdownText));
+        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//label[@title='Assembly Select']//a")), true);
+        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementToAppear(locator);
+    }
+
+    /**
+     * Gets currently selected assembly
+     * @return String
+     */
+    public String getCurrentlySelectedAssembly() {
+        pageUtils.waitForElementToAppear(currentAssemblyElement);
+        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Assembly Select']/div/div/div/a"));
+        return currentAssemblyElement.getAttribute("title");
+    }
+
+    /**
+     * Gets Assembly Number Search Error visibility
+     * @return boolean
+     */
+    public boolean isAssemblyNumberSearchErrorVisible() {
+        return pageUtils.isElementDisplayed(assemblyNumberSearchCriteriaError) &&
+                pageUtils.isElementEnabled(assemblyNumberSearchCriteriaError);
+    }
+
+    /**
+     * Gets Assembly Number Search Error text
+     * @return String
+     */
+    public String getAssemblyNumberSearchErrorText() {
+        return assemblyNumberSearchCriteriaError.getText();
     }
 
     /**
@@ -1455,6 +1689,15 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcBubble);
         bubbleMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcBubble);
         bubbleMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), castingDtcBubbleTwo);
+    }
+
+    /**
+     * Initialise DTC Score bubble map
+     */
+    private void initialiseDtcScoreBubbleMap() {
+        dtcScoreBubbleMap.put("Low", castingDtcBubbleTwo);
+        dtcScoreBubbleMap.put("Medium", dtcScoreMediumBubble);
+        dtcScoreBubbleMap.put("High", dtcScoreHighBubble);
     }
 
     /**

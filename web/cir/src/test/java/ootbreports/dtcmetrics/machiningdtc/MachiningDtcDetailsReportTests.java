@@ -9,6 +9,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -70,10 +71,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
-                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -203,6 +201,42 @@ public class MachiningDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreLow() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                DtcScoreEnum.LOW.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreMedium() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                DtcScoreEnum.MEDIUM.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreHigh() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+    }
+
+    @Test
     @TestRail(testCaseId = "2039")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
