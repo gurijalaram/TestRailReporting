@@ -3,6 +3,7 @@ package ootbreports.dtcmetrics.plastic;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -141,6 +142,54 @@ public class PlasticDtcComparisonReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreLow() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreComparisonReports(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                DtcScoreEnum.LOW.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreMedium() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreComparisonReports(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                DtcScoreEnum.MEDIUM.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreHigh() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreComparisonReports(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreAll() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreComparisonReports(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                DtcScoreEnum.ALL.getDtcScoreName()
         );
     }
 }

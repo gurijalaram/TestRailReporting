@@ -2,6 +2,7 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import ootbreports.dtcmetrics.casting.CastingDtcReportTests;
 import ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
