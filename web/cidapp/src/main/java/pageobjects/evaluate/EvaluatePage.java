@@ -153,6 +153,6 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         productionLifeInput.clear();
         productionLifeInput.sendKeys(Keys.DELETE);
         productionLifeInput.sendKeys(productionLife);
-        return this;
+        return this
     }
 }
