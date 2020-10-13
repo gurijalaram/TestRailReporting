@@ -44,6 +44,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
+    @FindBy(xpath = "//span[contains(text(), '0200613')]")
+    private WebElement partNameRowFive;
+
     List<BigDecimal> refinedQuantities = new ArrayList<>();
     private Map<String, String> genericColumnMap = new HashMap<>();
     private Map<String, String> topLevelRowMap = new HashMap<>();
@@ -132,6 +135,157 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return assemblyDetailsReport.select(cssSelector).stream().filter(element -> isValueValid(element.text())).map(element -> new BigDecimal(element.text().replace(".", ""))).collect(Collectors.toCollection(ArrayList::new));
     }
 
+
+    /**
+     * Gets expected Cycle Time grand total
+     *
+     * @param assemblyType
+     * @param columnName
+     * @return BigDecimal
+     */
+    public BigDecimal getExpectedCTGrandTotal(String assemblyType, String columnName) {
+        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
+        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        List<BigDecimal> trimmedValueList;
+
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
+            trimmedValueList = checkCTSubAssemblyValues(assemblyType, allValues);
+        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            trimmedValueList = checkCTSubSubAsmValues(assemblyType, levels, allValues);
+        } else {
+            trimmedValueList = checkCTTopLevelValues(assemblyType, levels, allValues);
+        }
+
+        return trimmedValueList
+            .stream()
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    /**
+     * Gets expected Fully Burdened Cost/Piece Part Cost grand total
+     *
+     * @return BigDecimal
+     */
+    public BigDecimal getExpectedFbcPpcGrandTotal(String assemblyType, String columnName) {
+        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
+        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        List<BigDecimal> quantityList = checkQuantityList(assemblyType);
+
+        List<BigDecimal> trimmedValueList = checkPPCValues(assemblyType, levels, allValues, quantityList);
+        List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
+
+        return finalValues
+            .stream()
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    /**
+     * Gets expected Capital Investment grand total
+     *
+     * @return BigDecimal
+     */
+    public BigDecimal getExpectedCIGrandTotal(String assemblyType, String columnName) {
+        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
+        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
+        List<BigDecimal> trimmedValueList;
+
+        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
+            trimmedValueList = checkCISubAssemblyValues(assemblyType, levels, allValues);
+        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            trimmedValueList = checkCISubSubAsmValues(assemblyType, levels, allValues);
+        } else {
+            trimmedValueList = checkCITopLevelValues(assemblyType, levels, allValues);
+        }
+
+        return trimmedValueList
+            .stream()
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+
+    /**
+     * Gets current currency setting
+     *
+     * @return String
+     */
+    public String getCurrentCurrency() {
+        return currentCurrency.getText();
+    }
+
+
+    /**
+     * Ensures two values are almost near (within 0.03)
+     *
+     * @param valueOne
+     * @param valueTwo
+     * @return boolean
+     */
+    public boolean areValuesAlmostEqual(BigDecimal valueOne, BigDecimal valueTwo) {
+        BigDecimal largerValue = valueOne.max(valueTwo);
+        BigDecimal smallerValue = valueOne.min(valueTwo);
+        BigDecimal difference = largerValue.subtract(smallerValue);
+        return difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0;
+    }
+
+    /**
+     * Gets sub total of values to add
+     *
+     * @param assemblyType
+     * @param column
+     * @return Array List of BigDecimals
+     */
+    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
+        ArrayList<BigDecimal> returnValues = new ArrayList<>();
+
+        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
+        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
+        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
+        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
+
+        returnValues.add(expectedTotal);
+        returnValues.add(actualTotal);
+        return returnValues;
+    }
+
+    /**
+     * Ensures filtering worked correctly
+     *
+     * @return int size of element list
+     */
+    public int getAmountOfTopLevelExportSets() {
+        List<WebElement> list =
+                driver.findElements(
+                By.xpath(
+                "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"
+                ));
+        return list.size();
+    }
+
+    /**
+     * Gets part name from row five
+     * @return String
+     */
+    public String getRowFivePartName() {
+        pageUtils.waitForElementToAppear(partNameRowFive);
+        return partNameRowFive.getText();
+    }
+
+    /**
+     * Gets one particular value from table row five
+     * @param valueName String
+     * @return String
+     */
+    public String getFiguresFromTable(String valueName) {
+        By locator = By.xpath(
+                String.format(
+                        "(//table)[7]/tbody/tr[11]/td[%s]",
+                        genericColumnMap.get(valueName).substring(13, 15))
+        );
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForSteadinessOfElement(locator);
+        return driver.findElement(locator).getText();
+    }
+
     /**
      * Gets all part numbers
      *
@@ -201,72 +355,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         }
 
         return values;
-    }
-
-    /**
-     * Gets expected Cycle Time grand total
-     *
-     * @param assemblyType
-     * @param columnName
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedCTGrandTotal(String assemblyType, String columnName) {
-        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
-        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> trimmedValueList;
-
-        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
-            trimmedValueList = checkCTSubAssemblyValues(assemblyType, allValues);
-        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
-            trimmedValueList = checkCTSubSubAsmValues(assemblyType, levels, allValues);
-        } else {
-            trimmedValueList = checkCTTopLevelValues(assemblyType, levels, allValues);
-        }
-
-        return trimmedValueList
-            .stream()
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    /**
-     * Gets expected Fully Burdened Cost/Piece Part Cost grand total
-     *
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedFbcPpcGrandTotal(String assemblyType, String columnName) {
-        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
-        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> quantityList = checkQuantityList(assemblyType);
-
-        List<BigDecimal> trimmedValueList = checkPPCValues(assemblyType, levels, allValues, quantityList);
-        List<BigDecimal> finalValues = applyQuantities(trimmedValueList);
-
-        return finalValues
-            .stream()
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    /**
-     * Gets expected Capital Investment grand total
-     *
-     * @return BigDecimal
-     */
-    public BigDecimal getExpectedCIGrandTotal(String assemblyType, String columnName) {
-        List<BigDecimal> allValues = getColumnValuesForSum(assemblyType, columnName);
-        ArrayList<BigDecimal> levels = getLevelValues(assemblyType);
-        List<BigDecimal> trimmedValueList;
-
-        if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
-            trimmedValueList = checkCISubAssemblyValues(assemblyType, levels, allValues);
-        } else if (assemblyType.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
-            trimmedValueList = checkCISubSubAsmValues(assemblyType, levels, allValues);
-        } else {
-            trimmedValueList = checkCITopLevelValues(assemblyType, levels, allValues);
-        }
-
-        return trimmedValueList
-            .stream()
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     /**
@@ -423,15 +511,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets current currency setting
-     *
-     * @return String
-     */
-    public String getCurrentCurrency() {
-        return currentCurrency.getText();
-    }
-
-    /**
      * Checks if value of current cell is a valid one
      *
      * @param valueToCheck
@@ -443,54 +522,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             returnValue = true;
         }
         return returnValue;
-    }
-
-    /**
-     * Ensures two values are almost near (within 0.03)
-     *
-     * @param valueOne
-     * @param valueTwo
-     * @return boolean
-     */
-    public boolean areValuesAlmostEqual(BigDecimal valueOne, BigDecimal valueTwo) {
-        BigDecimal largerValue = valueOne.max(valueTwo);
-        BigDecimal smallerValue = valueOne.min(valueTwo);
-        BigDecimal difference = largerValue.subtract(smallerValue);
-        return difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0;
-    }
-
-    /**
-     * Gets sub total of values to add
-     *
-     * @param assemblyType
-     * @param column
-     * @return Array List of BigDecimals
-     */
-    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
-        ArrayList<BigDecimal> returnValues = new ArrayList<>();
-
-        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
-        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
-        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
-        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
-
-        returnValues.add(expectedTotal);
-        returnValues.add(actualTotal);
-        return returnValues;
-    }
-
-    /**
-     * Ensures filtering worked correctly
-     *
-     * @return int size of element list
-     */
-    public int getAmountOfTopLevelExportSets() {
-        List<WebElement> list =
-                driver.findElements(
-                By.xpath(
-                "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"
-                ));
-        return list.size();
     }
 
     /**

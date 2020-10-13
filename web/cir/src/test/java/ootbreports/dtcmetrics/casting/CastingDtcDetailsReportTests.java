@@ -8,6 +8,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -16,7 +17,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
@@ -27,7 +28,7 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
-    private ReportAvailabilityTests reportAvailabilityTests;
+    private CommonReportTests commonReportTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
 
@@ -39,8 +40,8 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName()
         );
@@ -50,16 +51,16 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -67,10 +68,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcDetailsExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -223,6 +221,42 @@ public class CastingDtcDetailsReportTests extends TestBase {
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreLow() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                DtcScoreEnum.LOW.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreMedium() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                DtcScoreEnum.MEDIUM.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreHigh() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 }
