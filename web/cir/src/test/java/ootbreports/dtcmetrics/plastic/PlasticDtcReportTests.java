@@ -296,6 +296,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1709")
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
@@ -307,6 +308,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1380")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {
