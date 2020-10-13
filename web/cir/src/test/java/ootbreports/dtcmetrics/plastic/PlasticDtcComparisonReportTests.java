@@ -159,6 +159,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -171,6 +172,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -183,6 +185,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -195,6 +198,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreAll() {

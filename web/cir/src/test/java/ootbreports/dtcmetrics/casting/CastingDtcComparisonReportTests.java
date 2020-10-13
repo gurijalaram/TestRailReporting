@@ -241,6 +241,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -253,6 +254,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -265,6 +267,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -277,6 +280,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1972")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreAll() {

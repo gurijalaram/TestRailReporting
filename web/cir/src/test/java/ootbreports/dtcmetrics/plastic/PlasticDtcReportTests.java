@@ -331,6 +331,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -343,6 +344,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1380")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {

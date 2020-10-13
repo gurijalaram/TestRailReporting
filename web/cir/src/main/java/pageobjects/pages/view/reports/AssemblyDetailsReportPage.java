@@ -6,6 +6,7 @@ import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.junit.internal.Checks;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -232,26 +233,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets sub total of values to add
-     *
-     * @param assemblyType
-     * @param column
-     * @return Array List of BigDecimals
-     */
-    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
-        ArrayList<BigDecimal> returnValues = new ArrayList<>();
-
-        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
-        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
-        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
-        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
-
-        returnValues.add(expectedTotal);
-        returnValues.add(actualTotal);
-        return returnValues;
-    }
-
-    /**
      * Ensures filtering worked correctly
      *
      * @return int size of element list
@@ -288,6 +269,50 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForSteadinessOfElement(locator);
         return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Gets sub total of values to add
+     *
+     * @param assemblyType
+     * @param column
+     * @return Array List of BigDecimals
+     */
+    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
+        ArrayList<BigDecimal> returnValues = new ArrayList<>();
+
+        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
+        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
+        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
+        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
+
+        returnValues.add(expectedTotal);
+        returnValues.add(actualTotal);
+        return returnValues;
+    }
+
+    /**
+     * Sets export set filter date using date picker
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage setEarliestExportDateToTwoMonthsAgoPicker() {
+        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
+        Select monthDropdown = new Select(datePickerMonthSelect);
+        Select yearDropdown = new Select(datePickerYearSelect);
+
+        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
+        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
+        datePickerTriggerBtn.click();
+        return this;
+    }
+
+    /**
+     * Ensures date has changed, before proceeding with test
+     * @return current page object
+     */
+    public AssemblyDetailsReportPage ensureExportSetHasChanged() {
+        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
+        return this;
     }
 
     /**
@@ -528,77 +553,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return returnValue;
     }
 
-    /**
-     * Ensures two values are almost near (within 0.03)
-     *
-     * @param valueOne
-     * @param valueTwo
-     * @return boolean
-     */
-    public boolean areValuesAlmostEqual(BigDecimal valueOne, BigDecimal valueTwo) {
-        BigDecimal largerValue = valueOne.max(valueTwo);
-        BigDecimal smallerValue = valueOne.min(valueTwo);
-        BigDecimal difference = largerValue.subtract(smallerValue);
-        return difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0;
-    }
-
-    /**
-     * Gets sub total of values to add
-     *
-     * @param assemblyType
-     * @param column
-     * @return Array List of BigDecimals
-     */
-    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
-        ArrayList<BigDecimal> returnValues = new ArrayList<>();
-
-        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
-        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
-        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
-        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
-
-        returnValues.add(expectedTotal);
-        returnValues.add(actualTotal);
-        return returnValues;
-    }
-
-    /**
-     * Sets export set filter date using date picker
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage setEarliestExportDateToTwoMonthsAgoPicker() {
-        pageUtils.waitForElementAndClick(datePickerTriggerBtn);
-        Select monthDropdown = new Select(datePickerMonthSelect);
-        Select yearDropdown = new Select(datePickerYearSelect);
-
-        monthDropdown.selectByIndex(Integer.parseInt(getDateTwoMonthsAgo().substring(5, 7)) - 1);
-        yearDropdown.selectByValue(getDateTwoMonthsAgo().substring(0, 4));
-        datePickerTriggerBtn.click();
-        return this;
-    }
-
-    /**
-     * Ensures date has changed, before proceeding with test
-     * @return current page object
-     */
-    public AssemblyDetailsReportPage ensureExportSetHasChanged() {
-        pageUtils.checkElementAttribute(latestExportDateInput, "value", getDateTwoMonthsAgo().substring(0, 10));
-        return this;
-    }
-
-    /**
-     * Ensures filtering worked correctly
-     *
-     * @return int size of element list
-     */
-    public int getAmountOfTopLevelExportSets() {
-        List<WebElement> list =
-                driver.findElements(
-                By.xpath(
-                "//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"
-                ));
-        return list.size();
-    }
 
     /**
      * Gets date from two months ago

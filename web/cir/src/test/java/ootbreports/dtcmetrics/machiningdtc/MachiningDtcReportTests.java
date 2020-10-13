@@ -293,6 +293,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3029")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -305,6 +306,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3029")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -317,6 +319,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "2039")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {

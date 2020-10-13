@@ -331,6 +331,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -343,6 +344,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -355,6 +357,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1710")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {

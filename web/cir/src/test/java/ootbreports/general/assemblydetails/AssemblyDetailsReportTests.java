@@ -680,6 +680,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterSearch() {
@@ -691,6 +692,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @Issue("AP-64112")
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
@@ -703,6 +705,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterButtons() {
@@ -714,6 +717,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilter() {
@@ -725,6 +729,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterOperation() {
@@ -736,6 +741,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterButtons() {
@@ -747,6 +753,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testAssemblyNumberSearchCriteria() {
@@ -758,7 +765,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1924")
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
