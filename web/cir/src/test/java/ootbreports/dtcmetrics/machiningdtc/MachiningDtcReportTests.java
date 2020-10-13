@@ -84,7 +84,6 @@ public class MachiningDtcReportTests extends TestBase {
         inputControlsTests.testExportSetFilterInvalidCharacters(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
-    
     @Test
     @TestRail(testCaseId = "3565")
     @Description("Verify that earliest and latest export date fields function correctly using input field")
