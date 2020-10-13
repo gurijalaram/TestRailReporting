@@ -11,15 +11,15 @@ import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
 
-    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
 
     public PlasticDtcDetailsReportTests() {
         super();
@@ -30,8 +30,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         );
@@ -42,8 +42,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         );
     }
@@ -53,8 +53,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         );
     }

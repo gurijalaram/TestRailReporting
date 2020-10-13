@@ -44,7 +44,6 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
                 .setExportDateUsingInput(false, "")
-                .ensureDatesAreCorrect()
                 .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
@@ -65,7 +64,6 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
-                .ensureDatesAreCorrect()
                 .waitForCorrectExportSetListCount("0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
@@ -379,9 +377,9 @@ public class InputControlsTests extends TestBase {
         );
 
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
-        genericReportPage.hoverProcessGroupBubbleOne();
+        genericReportPage.hoverProcessGroupBubble(true);
         String partName = genericReportPage.getPartNameDtcReports();
-        genericReportPage.hoverProcessGroupBubbleTwo();
+        genericReportPage.hoverProcessGroupBubble(false);
         String partNameTwo = genericReportPage.getPartNameDtcReports();
 
         navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
@@ -404,6 +402,33 @@ public class InputControlsTests extends TestBase {
         String partName = genericReportPage.getPartNameDtcReports();
 
         navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.STOCK_MACHINING.getProcessGroup());
+    }
+
+    /**
+     * Generic test for chart tooltips on DTC Reports
+     * @param reportName - String
+     * @param exportSet - String
+     */
+    public void testDtcChartTooltips(String reportName, String exportSet) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet)
+                .clickOk();
+
+        genericReportPage.setReportName(reportName);
+        genericReportPage.hoverPartNameBubbleDtcReports();
+
+        assertThat(genericReportPage.isTooltipDisplayed(), is(true));
+        assertIsTooltipElementVisible("Finish Mass Name");
+        assertIsTooltipElementVisible("Finish Mass Value");
+        assertIsTooltipElementVisible("FBC Name");
+        assertIsTooltipElementVisible("FBC Value");
+        assertIsTooltipElementVisible("DTC Score Name");
+        assertIsTooltipElementVisible("DTC Score Value");
+        assertIsTooltipElementVisible("Annual Spend Name");
+        assertIsTooltipElementVisible("Annual Spend Value");
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
@@ -444,5 +469,9 @@ public class InputControlsTests extends TestBase {
                 genericReportPage.getProcessGroupValueDtc(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()),
                 is(equalTo(processGroupName))
         );
+    }
+
+    private void assertIsTooltipElementVisible(String tooltipKey) {
+        assertThat(genericReportPage.isTooltipElementVisible(tooltipKey), is(true));
     }
 }
