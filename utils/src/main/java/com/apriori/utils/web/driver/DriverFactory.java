@@ -67,7 +67,7 @@ public class DriverFactory {
                     }
                     serverBuilder.append(seleniumPrefix);
 
-                    server = serverBuilder.toString()
+                    server = serverBuilder.toString();
 
                     if (testType.equals(TestType.EXPORT)) {
                         driver = getQADriver(server, browser, proxy, downloadPath, remoteDownloadPath, locale);
