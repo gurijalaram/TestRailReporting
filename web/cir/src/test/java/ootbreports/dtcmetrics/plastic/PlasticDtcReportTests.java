@@ -18,7 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
 import org.junit.Test;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
@@ -29,10 +29,9 @@ import pageobjects.pages.view.reports.PlasticDtcReportPage;
 import java.math.BigDecimal;
 
 public class PlasticDtcReportTests extends TestBase {
-
-    private ReportAvailabilityTests reportAvailabilityTests;
-    private PlasticDtcReportPage plasticDtcReportPage;
+    
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
 
     public PlasticDtcReportTests() {
@@ -43,8 +42,8 @@ public class PlasticDtcReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.PLASTIC_DTC.getReportName()
         );
@@ -54,8 +53,8 @@ public class PlasticDtcReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(
                 ReportNamesEnum.PLASTIC_DTC.getReportName()
         );
     }
@@ -64,8 +63,8 @@ public class PlasticDtcReportTests extends TestBase {
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(
                 ReportNamesEnum.PLASTIC_DTC.getReportName()
         );
     }
@@ -284,6 +283,16 @@ public class PlasticDtcReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 DtcScoreEnum.LOW.getDtcScoreName()
+	}
+
+	@Test
+    @TestRail(testCaseId = "1709")
+    @Description("Validate chart tool-tips")
+    public void testChartToolTips() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcChartTooltips(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
 
@@ -308,6 +317,17 @@ public class PlasticDtcReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 DtcScoreEnum.HIGH.getDtcScoreName()
+		);
+	}
+
+	@Test
+    @TestRail(testCaseId = "1380")
+    @Description("Verify links to help files function correctly")
+    public void testLinkToReportsUserGuide() throws Exception {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportsUserGuideNavigation(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
 }

@@ -55,6 +55,7 @@ public class Constants {
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
     public static final String ASSEMBLY_STRING = "[assembly]";
+    public static final String PART_NAME_EXPECTED_MACHINING_DTC = "PMI_SYMMETRYCREO (Initial)";
     public static final String CASTING_DIE_SAND_NAME = String.format(
             "%s, %s",
             ProcessGroupEnum.CASTING_DIE.getProcessGroup(),

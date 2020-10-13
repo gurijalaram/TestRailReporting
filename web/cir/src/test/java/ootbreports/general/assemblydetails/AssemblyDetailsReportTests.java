@@ -20,7 +20,7 @@ import com.apriori.utils.web.driver.TestBase;
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.ComponentsPage;
@@ -43,8 +43,10 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     private AssemblyDetailsReportPage assemblyDetailsReportPage;
     private ReportAvailabilityTests reportAvailabilityTests;
+    private AssemblyDetailsReportPage assemblyDetailsReport;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
+    private CommonReportTests commonReportTests;
     private String assemblyType = "";
 
     public AssemblyDetailsReportTests() {
@@ -56,8 +58,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostA4() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.GENERAL_FOLDER,
                 ReportNamesEnum.ASSEMBLY_COST_A4.getReportName()
         );
@@ -68,8 +70,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostLetter() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.GENERAL_FOLDER,
                 ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName()
         );
@@ -80,8 +82,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyDetails() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.GENERAL_FOLDER,
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
         );
@@ -92,8 +94,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuComponentCost() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.GENERAL_FOLDER,
                 ReportNamesEnum.COMPONENT_COST.getReportName()
         );
@@ -104,8 +106,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuScenarioComparison() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.GENERAL_FOLDER,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
         );
@@ -116,8 +118,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyCostA4() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
     }
 
     @Test
@@ -125,8 +127,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyCostLetter() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
     }
 
     @Test
@@ -134,8 +136,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
@@ -143,8 +145,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryComponentCost() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.COMPONENT_COST.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.COMPONENT_COST.getReportName());
     }
 
     @Test
@@ -152,48 +154,48 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryScenarioComparison() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyCostA4() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyCostLetter() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyDetails() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchComponentCost() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchScenarioComparison() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
     }
 
     @Test
