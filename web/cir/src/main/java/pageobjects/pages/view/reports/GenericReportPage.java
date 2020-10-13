@@ -664,7 +664,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String listName, String expectedCount) {
-        //String genericLocator = "(//div[@id='%s']/div/div/div/div/div)[%s]/span[@title='%s']";
         String genericLocator = "//div[@title='%s']//span[@title='%s']";
 
         By availableLocator = By.xpath(String.format(genericLocator, listName, "Available: " + expectedCount));

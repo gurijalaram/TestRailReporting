@@ -572,6 +572,27 @@ public class InputControlsTests extends TestBase {
         assertIsTooltipElementVisible("Annual Spend Value");
     }
 
+    /**
+     * Generic test for invalid export set filter inputs
+     * @param reportName - String
+     * @param invalidDateInput - String
+     */
+    public void testInvalidExportSetFilterDateInputs(String reportName, String invalidDateInput) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
+
+        genericReportPage.setExportDateUsingInput(true, invalidDateInput)
+                .setExportDateUsingInput(false, invalidDateInput)
+                .waitForCorrectExportSetListCount("exportSetName", "0");
+
+        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
+    }
+
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
