@@ -664,12 +664,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String listName, String expectedCount) {
-        String genericLocator = "(//div[@id='%s']/div/div/div/div/div)[%s]/span[@title='%s']";
+        //String genericLocator = "(//div[@id='%s']/div/div/div/div/div)[%s]/span[@title='%s']";
+        String genericLocator = "//div[@title='%s']//span[@title='%s']";
 
-        By availableLocator = By.xpath(String.format(genericLocator, listName, "1", "Available: " + expectedCount));
+        By availableLocator = By.xpath(String.format(genericLocator, listName, "Available: " + expectedCount));
         pageUtils.waitForElementToAppear(availableLocator);
 
-        By selectedLocator = By.xpath(String.format(genericLocator, listName, "2", "Selected: " + expectedCount));
+        By selectedLocator = By.xpath(String.format(genericLocator, listName, "Selected: " + expectedCount));
         pageUtils.waitForElementToAppear(selectedLocator);
         return this;
     }
@@ -805,9 +806,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String - count of created by users
      */
     public String getCountOfListUsers(String listName, String option) {
-        String divSelection = option.equals("Available") ? "1" : "2";
-        int substringVal = divSelection.equals("1") ? 11 : 10;
-        By locator = By.xpath(String.format("(//div[@title='%s']/div/div/div/div)[%s]/span", listName, divSelection));
+        int substringVal = option.equals("Available") ? 11 : 10;
+        By locator = By.xpath(String.format("//div[@title='%s']//span[contains(@title, '%s')]", listName, option));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText().substring(substringVal);
     }
@@ -819,11 +819,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param expectedCount - String
      */
     public void waitForCorrectAvailableSelectedCount(String listName, String option, String expectedCount) {
-        String divSelection = option.equals("Available: ") ? "1" : "2";
         By locator = By.xpath(String.format(
-                "(//div[@title='%s']/div/div/div/div)[%s]/span[@title='%s']",
+                "//div[@title='%s']//span[@title='%s']",
                 listName,
-                divSelection,
                 option + expectedCount
         ));
         pageUtils.waitForElementToAppear(locator);

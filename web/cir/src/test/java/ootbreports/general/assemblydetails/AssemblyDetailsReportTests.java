@@ -14,6 +14,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -30,6 +31,7 @@ import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -665,7 +667,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Created By"
+                ListNameEnum.CREATED_BY.getListName()
         );
     }
 
@@ -677,7 +679,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterOperation(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Created By"
+                ListNameEnum.CREATED_BY.getListName()
         );
     }
 
@@ -688,18 +690,19 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Created By"
+                ListNameEnum.CREATED_BY.getListName()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilter() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Last Modified By"
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
     }
 
@@ -710,18 +713,19 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterOperation(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Last Modified By"
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
                 ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-                "Last Modified By"
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
     }
 
@@ -737,6 +741,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1924")
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {

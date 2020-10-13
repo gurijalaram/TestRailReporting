@@ -44,7 +44,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
-    @FindBy(xpath = "(//table)[7]/tbody/tr[11]/td[5]/span")
+    @FindBy(xpath = "(//span[@class='_jrHyperLink ReportExecution'])[4]/span")
     private WebElement partNameRowFive;
 
     List<BigDecimal> refinedQuantities = new ArrayList<>();
