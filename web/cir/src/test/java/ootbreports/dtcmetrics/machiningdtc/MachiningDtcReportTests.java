@@ -293,7 +293,7 @@ public class MachiningDtcReportTests extends TestBase {
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 DtcScoreEnum.HIGH.getDtcScoreName()
         );
-	}
+    }
 
     @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2039")

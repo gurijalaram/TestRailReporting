@@ -283,9 +283,10 @@ public class PlasticDtcReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 DtcScoreEnum.LOW.getDtcScoreName()
-	}
+        );
+    }
 
-	@Test
+    @Test
     @TestRail(testCaseId = "1709")
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
@@ -317,10 +318,10 @@ public class PlasticDtcReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 DtcScoreEnum.HIGH.getDtcScoreName()
-		);
-	}
+        );
+    }
 
-	@Test
+    @Test
     @TestRail(testCaseId = "1380")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {

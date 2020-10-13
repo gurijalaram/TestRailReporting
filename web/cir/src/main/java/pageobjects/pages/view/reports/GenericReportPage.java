@@ -37,7 +37,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
-    private Map<String, WebElement> fbcElementMap = new HashMap<>();
     private Map<String, WebElement> tooltipElementMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
@@ -402,10 +401,9 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-		initialiseTooltipElementMap();
+        initialiseTooltipElementMap();
         initialiseDtcScoreBubbleMap();
         initialiseAssemblyHashMap();
-        initialiseFbcElementMap();
         initialiseCurrencyMap();
         initialisePartNameMap();
         initialiseBubbleMap();
@@ -1617,9 +1615,9 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getAssemblyNumberSearchErrorText() {
         return assemblyNumberSearchCriteriaError.getText();
-	}
-	
-	/**
+    }
+
+    /**
      * Gets Part Name value from DTC Part Summary report
      * @return String
      */

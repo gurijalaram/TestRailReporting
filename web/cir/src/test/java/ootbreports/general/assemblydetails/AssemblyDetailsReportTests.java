@@ -42,8 +42,6 @@ import java.util.Map;
 public class AssemblyDetailsReportTests extends TestBase {
 
     private AssemblyDetailsReportPage assemblyDetailsReportPage;
-    private ReportAvailabilityTests reportAvailabilityTests;
-    private AssemblyDetailsReportPage assemblyDetailsReport;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;

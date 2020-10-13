@@ -230,9 +230,9 @@ public class MachiningDtcComparisonReportTests extends TestBase {
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
                 DtcScoreEnum.ALL.getDtcScoreName()
         );
-	}
+    }
 
-	@Test
+    @Test
     @TestRail(testCaseId = "2039")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {

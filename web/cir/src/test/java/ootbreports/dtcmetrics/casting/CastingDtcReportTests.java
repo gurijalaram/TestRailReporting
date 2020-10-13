@@ -286,8 +286,9 @@ public class CastingDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsCasting();
     }
-	
-	@TestRail(testCaseId = "1709")
+
+    @Test
+    @TestRail(testCaseId = "1709")
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
         inputControlsTests = new InputControlsTests(driver);
@@ -306,8 +307,8 @@ public class CastingDtcReportTests extends TestBase {
                 ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
                 DtcScoreEnum.LOW.getDtcScoreName()
-		);
-	}
+        );
+    }
 
     @Test
     @TestRail(testCaseId = "1372")
@@ -330,9 +331,10 @@ public class CastingDtcReportTests extends TestBase {
                 ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
                 DtcScoreEnum.HIGH.getDtcScoreName()
-		);
-	}
-	
+        );
+    }
+
+    @Test
     @TestRail(testCaseId = "1710")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {

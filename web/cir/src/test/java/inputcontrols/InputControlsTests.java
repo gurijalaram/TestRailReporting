@@ -49,7 +49,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
                 .setExportDateUsingInput(false, "")
-                .waitForCorrectExportSetListCount("0");
+                .waitForCorrectExportSetListCount("exportSetName", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -69,7 +69,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
-                .waitForCorrectExportSetListCount("0");
+                .waitForCorrectExportSetListCount("exportSetName", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -543,9 +543,9 @@ public class InputControlsTests extends TestBase {
         assertThat(genericReportPage.isAssemblyNumberSearchErrorVisible(), is(equalTo(true)));
         assertThat(genericReportPage.getAssemblyNumberSearchErrorText(),
                 is(equalTo("This field is mandatory so you must enter data.")));
-	}
+    }
 
-	/**
+    /**
      * Generic test for chart tooltips on DTC Reports
      * @param reportName - String
      * @param exportSet - String
@@ -646,8 +646,8 @@ public class InputControlsTests extends TestBase {
         }
 
         assertThat(dtcScore, is(equalTo(genericReportPage.getDtcScoreAboveChart())));
-	}
-	
+    }
+
     private void assertIsTooltipElementVisible(String tooltipKey) {
         assertThat(genericReportPage.isTooltipElementVisible(tooltipKey), is(true));
     }
