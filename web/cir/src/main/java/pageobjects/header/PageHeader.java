@@ -256,15 +256,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
-     * Navigate to Reports from Admin
-     *
-     * @return Reports Page page object model
-     */
-    public CreateReportPage navigateToReports() {
-        return navigateToPage(reportsMenuOption, CreateReportPage.class);
-    }
-
-    /**
      * Navigates to Reports User Guide
      *
      * @return Home Page page object model
