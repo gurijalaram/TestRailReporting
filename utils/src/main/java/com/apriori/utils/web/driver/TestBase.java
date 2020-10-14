@@ -99,7 +99,7 @@ public class TestBase extends TestHelper {
 
     private String getBrowserType(String browserProperty) {
         if (browserProperty == null || browserProperty.isEmpty()) {
-            return "chrome";
+            return BrowserTypes.CHROME.value();
         }
         return StringUtils.lowerCase(browserProperty);
     }

@@ -57,12 +57,12 @@ public class DriverFactory {
                     }
                     break;
                 case GRID:
-                    driver = new QaDriver(("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), browser, proxy, null, null, locale).getQADriver();
+                    driver = new ChromeServiceQa(("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), browser, proxy, null, null).startService();
                     break;
                 case EXPORT:
                     throw new InvalidParameterException("Use QA mode with EXPORT type instead: " + testMode);
                 case LOCAL:
-                    driver = new LocalDriver(browser, proxy, downloadPath, locale).getLocalDriver();
+                    driver = new ChromeServiceLocal(browser, proxy, downloadPath, locale).startService();
                     break;
                 default:
                     throw new InvalidParameterException("Unexpected test mode: " + testMode);
