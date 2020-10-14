@@ -11,9 +11,11 @@ import java.util.HashMap;
 
 public class ChromeDriverOptions {
 
-    String downloadPath;
-    String locale;
+    private ChromeOptions options = new ChromeOptions();
+    private HashMap<String, Object> chromePrefs = new HashMap<>();
     private boolean headless = false;
+    private String downloadPath;
+    private String locale;
 
     public ChromeDriverOptions(String downloadPath, String locale) {
         this.downloadPath = downloadPath;
@@ -21,7 +23,7 @@ public class ChromeDriverOptions {
     }
 
     public ChromeOptions getChromeOptions() {
-        HashMap<String, Object> chromePrefs = new HashMap<>();
+
         // Set Custom Download Dir for downloads in chrome
         if (downloadPath != null) {
             chromePrefs.put("download.default_directory", downloadPath);
@@ -30,7 +32,6 @@ public class ChromeDriverOptions {
         chromePrefs.put("download.prompt_for_download", false);
         chromePrefs.put("download.directory_upgrade", true);
 
-        ChromeOptions options = new ChromeOptions();
         options.addArguments("--allow-outdated-plugins");
         if (!StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"))) {
             options.addArguments("--ignore-certificate-errors");
