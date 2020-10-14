@@ -57,13 +57,13 @@ public class DriverFactory {
             case GRID:
                 setBrowserQa(browser, ("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), proxy, null, null);
                 break;
-            case EXPORT:
-                throw new InvalidParameterException("Use QA mode with EXPORT type instead: " + testMode);
             case LOCAL:
                 setBrowserLocal(browser, proxy, downloadPath, locale);
                 break;
+            case EXPORT:
+                throw new InvalidParameterException(String.format("Use QA mode with EXPORT type instead of '%s' ", testMode));
             default:
-                throw new InvalidParameterException("Unexpected test mode: " + testMode);
+                throw new InvalidParameterException(String.format("Received unexpected test mode '%s' ", testMode));
         }
         return driver;
     }
