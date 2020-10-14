@@ -11,6 +11,7 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -590,7 +591,8 @@ public class InputControlsTests extends TestBase {
                 .setExportDateUsingInput(false, invalidDate)
                 .clickUseLatestExportDropdownTwice();
 
-        if (valueToInvalidate.equals("MM") || valueToInvalidate.equals("dd")) {
+        if (valueToInvalidate.equals(DateElementsEnum.MONTH.getDateElement()) ||
+                valueToInvalidate.equals(DateElementsEnum.DAY.getDateElement())) {
             assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(true), is(true));
             assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(false), is(true));
             assertThat(genericReportPage.getExportSetErrorText(true).isEmpty(), is(false));

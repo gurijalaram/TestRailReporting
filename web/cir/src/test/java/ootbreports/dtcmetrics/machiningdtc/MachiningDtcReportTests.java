@@ -10,8 +10,10 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -30,6 +32,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class MachiningDtcReportTests extends TestBase {
 
@@ -330,62 +333,69 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3572")
     @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
     public void testInvalidHourValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testInvalidExportSetFilterDateInputs(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
-                "HH"
+                DateElementsEnum.HOUR.getDateElement()
         );
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3573")
     @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
     public void testInvalidMinuteValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testInvalidExportSetFilterDateInputs(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
-                "mm"
+                DateElementsEnum.MINUTE.getDateElement()
         );
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3575")
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
     public void testInvalidYearValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testInvalidExportSetFilterDateInputs(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
-                "yyyy"
+                DateElementsEnum.YEAR.getDateElement()
         );
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3576")
     @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
     public void testInvalidMonthValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testInvalidExportSetFilterDateInputs(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
-                "MM"
+                DateElementsEnum.MONTH.getDateElement()
         );
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3577")
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
     public void testInvalidDayValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testInvalidExportSetFilterDateInputs(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
-                "dd"
+                DateElementsEnum.DAY.getDateElement()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3031")
+    @Description("Verify Select Parts list controls function correctly")
+    public void testPartListInputControls() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ListNameEnum.PARTS.getListName()
         );
     }
 }

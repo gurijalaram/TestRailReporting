@@ -3,7 +3,8 @@ package com.apriori.utils.enums.reports;
 public enum ListNameEnum {
     CREATED_BY("Created By"),
     LAST_MODIFIED_BY("Last Modified By"),
-    PARTS("Select Parts ");
+    PARTS("Select Parts "),
+    PARTS_NO_SPACE("Select Parts");
 
     private String listName;
 
@@ -12,7 +13,7 @@ public enum ListNameEnum {
     }
 
     /**
-     * Gets export set name
+     * Gets List name
      *
      * @return String
      */
