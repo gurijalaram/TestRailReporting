@@ -9,6 +9,7 @@ import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
+import org.checkerframework.checker.units.qual.A;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.header.ReportsPageHeader;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -257,7 +259,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//button[contains(text(), 'Close')]")
     private WebElement datePickerCloseButton;
 
-    @FindBy(xpath = "//div[@id='useLatestExport']//a")
+    @FindBy(xpath = "//a[@title='Scenario']")
     private WebElement useLatestExportDropdown;
 
     @FindBy(xpath = "//div[@id='earliestExportDate']//div")
@@ -695,7 +697,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Click Use Latest Scenario dropdown twice to remove focus from date
      * @return Generic Report Page instance
      */
-    public GenericReportPage clickScenarioDropdownTwice() {
+    public GenericReportPage clickUseLatestExportDropdownTwice() {
         pageUtils.waitForElementAndClick(useLatestExportDropdown);
         useLatestExportDropdown.click();
         return this;
@@ -909,6 +911,42 @@ public class GenericReportPage extends ReportsPageHeader {
         By rollUp = By.cssSelector(String.format("a[title='%s']", rollupName));
         pageUtils.waitForElementToAppear(rollUp);
         return driver.findElement(rollUp).getAttribute("title");
+    }
+
+    /**
+     * Gets invalid date
+     * @param datePartToInvalidate String
+     * @return String
+     */
+    public String getInvalidDate(String datePartToInvalidate) {
+        String currentDate = getCurrentDate();
+        Map<String, String> invalidDates = new HashMap<>();
+        invalidDates.put("yyyy", String.valueOf(LocalDateTime.now().plusYears(1).getYear()));
+        invalidDates.put("MM", "13");
+        invalidDates.put("dd", "32");
+        invalidDates.put("HH", "25");
+        invalidDates.put("mm", "65");
+
+        String newVal = "";
+        switch (datePartToInvalidate) {
+            case "yyyy":
+                newVal = currentDate.substring(0, 4);
+                break;
+            case "MM":
+                newVal = currentDate.substring(5, 7);
+                break;
+            case "dd":
+                newVal = currentDate.substring(8, 10);
+                break;
+            case "HH":
+                newVal = currentDate.substring(11, 13);
+                break;
+            case "mm":
+                newVal = currentDate.substring(14, 16);
+                break;
+        }
+
+        return currentDate.replace(newVal, invalidDates.get(datePartToInvalidate));
     }
 
     /**

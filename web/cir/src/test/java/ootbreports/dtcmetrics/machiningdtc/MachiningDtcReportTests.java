@@ -330,47 +330,62 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3572")
     @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
     public void testInvalidHourValueExportSetFilter() {
-        InputControlsTests inputControlsTests = new InputControlsTests(driver);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String dateInput = formatter.format(LocalDateTime.now(ZoneOffset.UTC).withNano(0));
-        String dayVal = dateInput.substring(8, 10);
-        String invalidValue = dateInput.replace(dayVal, "32");
-
+        inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testInvalidExportSetFilterDateInputs(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
-                invalidValue
+                "HH"
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3573")
     @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
     public void testInvalidMinuteValueExportSetFilter() {
-
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                "mm"
+        );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3575")
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
     public void testInvalidYearValueExportSetFilter() {
-
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                "yyyy"
+        );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3576")
     @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
     public void testInvalidMonthValueExportSetFilter() {
-
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                "MM"
+        );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3577")
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
     public void testInvalidDayValueExportSetFilter() {
-
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                "dd"
+        );
     }
 }

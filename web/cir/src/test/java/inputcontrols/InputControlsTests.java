@@ -86,7 +86,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .setExportDateUsingInput(true, "?")
                 .setExportDateUsingInput(false, "?")
-                .clickScenarioDropdownTwice();
+                .clickUseLatestExportDropdownTwice();
 
         assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(true), is(true));
         assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(false), is(true));
@@ -575,22 +575,31 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for invalid export set filter inputs
      * @param reportName - String
-     * @param invalidDateInput - String
+     * @param valueToInvalidate - String
      */
-    public void testInvalidExportSetFilterDateInputs(String reportName, String invalidDateInput) {
+    public void testInvalidExportSetFilterDateInputs(String reportName, String valueToInvalidate) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
+        String invalidDate = genericReportPage.getInvalidDate(valueToInvalidate);
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
 
-        genericReportPage.setExportDateUsingInput(true, invalidDateInput)
-                .setExportDateUsingInput(false, invalidDateInput)
-                .waitForCorrectExportSetListCount("exportSetName", "0");
+        genericReportPage.setExportDateUsingInput(true, invalidDate)
+                .setExportDateUsingInput(false, invalidDate)
+                .clickUseLatestExportDropdownTwice();
 
-        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
-        assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
+        if (valueToInvalidate.equals("MM") || valueToInvalidate.equals("dd")) {
+            assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(true), is(true));
+            assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(false), is(true));
+            assertThat(genericReportPage.getExportSetErrorText(true).isEmpty(), is(false));
+            assertThat(genericReportPage.getExportSetErrorText(false).isEmpty(), is(false));
+        } else {
+            genericReportPage.waitForCorrectExportSetListCount("Single export set selection.", "0");
+            assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+            assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
+        }
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
