@@ -436,6 +436,19 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Inputs Minimum Annual Spend
+     * @return current page object
+     */
+    public GenericReportPage inputMinimumAnnualSpend() {
+        By locator = By.xpath("//label[@title='Minimum Annual Spend']/input");
+        pageUtils.waitForElementAndClick(locator);
+        WebElement minimumAnnualSpend = driver.findElement(locator);
+        pageUtils.clearInput(driver.findElement(locator));
+        minimumAnnualSpend.sendKeys("123456");
+        return this;
+    }
+
+    /**
      * Get Export Set name
      * @return current page object
      */

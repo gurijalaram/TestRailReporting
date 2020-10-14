@@ -397,4 +397,15 @@ public class MachiningDtcReportTests extends TestBase {
                 ListNameEnum.PARTS.getListName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "3027")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpend(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
+    }
 }

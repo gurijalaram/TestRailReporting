@@ -271,4 +271,14 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 DtcScoreEnum.ALL.getDtcScoreName()
         );
     }
+    @Test
+    @TestRail(testCaseId = "1700")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpend(
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
 }

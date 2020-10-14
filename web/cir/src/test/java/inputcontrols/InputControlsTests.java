@@ -604,6 +604,19 @@ public class InputControlsTests extends TestBase {
         }
     }
 
+    /**
+     * Generic test for Minimum Annual Spend
+     */
+    public void testMinimumAnnualSpend(String reportName, String exportSet) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet)
+                .inputMinimumAnnualSpend()
+                .clickOk();
+    }
+
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()

@@ -345,4 +345,15 @@ public class PlasticDtcReportTests extends TestBase {
                 ListNameEnum.PARTS.getListName()
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "1371")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpend(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
 }
