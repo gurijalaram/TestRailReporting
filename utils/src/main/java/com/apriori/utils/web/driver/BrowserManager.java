@@ -9,6 +9,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.io.File;
 import java.util.logging.Level;
 
+/**
+ * @author cfrith
+ */
+
 public abstract class BrowserManager implements BrowserDriver {
 
     private DesiredCapabilities dc;

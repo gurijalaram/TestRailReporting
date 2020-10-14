@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.MalformedURLException;
 import java.security.InvalidParameterException;
 
 public class DriverFactory {
@@ -24,53 +23,66 @@ public class DriverFactory {
     }
 
     private WebDriver createDriver(TestMode testMode, TestType testType, String browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
-        try {
-            switch (testMode) {
-                case QA:
-                    LOGGER_DRIVER_FACTORY.debug("Getting host and port from properties file");
-                    BaseReader propertiesReader = new BaseReader("seleniumconfig.properties");
-                    String seleniumProtocol = propertiesReader.getProperties().getProperty("protocol");
-                    String seleniumPort = propertiesReader.getProperties().getProperty("port");
-                    String seleniumHost = propertiesReader.getProperties().getProperty("host");
-                    String seleniumPrefix = propertiesReader.getProperties().getProperty("prefix");
-                    if (StringUtils.isNotEmpty(System.getProperty("selenium.port"))) {
-                        seleniumPort = System.getProperty("selenium.port");
-                    }
-                    if (StringUtils.isNotEmpty(System.getProperty("selenium.host"))) {
-                        seleniumHost = System.getProperty("selenium.host");
-                    }
-                    LOGGER_DRIVER_FACTORY.debug("Starting driver on " + seleniumHost + ":" + seleniumPort);
+        switch (testMode) {
+            case QA:
+                LOGGER_DRIVER_FACTORY.debug("Getting host and port from properties file");
+                BaseReader propertiesReader = new BaseReader("seleniumconfig.properties");
+                String seleniumProtocol = propertiesReader.getProperties().getProperty("protocol");
+                String seleniumPort = propertiesReader.getProperties().getProperty("port");
+                String seleniumHost = propertiesReader.getProperties().getProperty("host");
+                String seleniumPrefix = propertiesReader.getProperties().getProperty("prefix");
+                if (StringUtils.isNotEmpty(System.getProperty("selenium.port"))) {
+                    seleniumPort = System.getProperty("selenium.port");
+                }
+                if (StringUtils.isNotEmpty(System.getProperty("selenium.host"))) {
+                    seleniumHost = System.getProperty("selenium.host");
+                }
+                LOGGER_DRIVER_FACTORY.debug("Starting driver on " + seleniumHost + ":" + seleniumPort);
 
-                    StringBuilder serverBuilder = new StringBuilder(seleniumProtocol + "://" + seleniumHost);
+                StringBuilder serverBuilder = new StringBuilder(seleniumProtocol + "://" + seleniumHost);
 
-                    if (seleniumPort != null && !seleniumPort.isEmpty()) {
-                        serverBuilder.append(":").append(seleniumPort);
-                    }
-                    serverBuilder.append(seleniumPrefix);
+                if (seleniumPort != null && !seleniumPort.isEmpty()) {
+                    serverBuilder.append(":").append(seleniumPort);
+                }
+                serverBuilder.append(seleniumPrefix);
 
-                    server = serverBuilder.toString();
+                server = serverBuilder.toString();
 
-                    if (testType.equals(TestType.EXPORT)) {
-                        driver = new QaDriver(server, browser, proxy, downloadPath, remoteDownloadPath, locale).getQADriver();
-                    } else {
-                        driver = new QaDriver(server.concat("/wd/hub"), browser, proxy, null, null, locale).getQADriver();
-                    }
-                    break;
-                case GRID:
-                    driver = new ChromeServiceQa(("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), browser, proxy, null, null).startService();
-                    break;
-                case EXPORT:
-                    throw new InvalidParameterException("Use QA mode with EXPORT type instead: " + testMode);
-                case LOCAL:
-                    driver = new ChromeServiceLocal(browser, proxy, downloadPath, locale).startService();
-                    break;
-                default:
-                    throw new InvalidParameterException("Unexpected test mode: " + testMode);
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+                if (testType.equals(TestType.EXPORT)) {
+                    driver = setBrowserQa(browser, server, proxy, downloadPath, locale);
+                } else {
+                    driver = setBrowserQa(browser, server.concat("/wd/hub"), proxy, null, locale);
+                }
+                break;
+            case GRID:
+                setBrowserQa(browser, ("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), proxy, null, null);
+                break;
+            case EXPORT:
+                throw new InvalidParameterException("Use QA mode with EXPORT type instead: " + testMode);
+            case LOCAL:
+                setBrowserLocal(browser, proxy, downloadPath, locale);
+                break;
+            default:
+                throw new InvalidParameterException("Unexpected test mode: " + testMode);
         }
         return driver;
+    }
+
+    private WebDriver setBrowserQa(String browser, String server, Proxy proxy, String downloadPath, String locale) {
+        switch (browser) {
+            case "chrome":
+                driver = new ChromeServiceQa(server, proxy, downloadPath, locale).startService();
+                break;
+        }
+        return driver;
+    }
+
+    private void setBrowserLocal(String browser, Proxy proxy, String downloadPath, String locale) {
+        switch (browser) {
+            case "chrome":
+                driver = new ChromeServiceLocal(proxy, downloadPath, locale).startService();
+                break;
+        }
     }
 
     public WebDriver getDriver() {

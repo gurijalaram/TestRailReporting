@@ -14,6 +14,10 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * @author cfrith
+ */
+
 public class ChromeServiceQa extends BrowserManager{
 
     private static final Logger CHROME_SERVICE_QA_LOGGER = LoggerFactory.getLogger(LocalDriver.class);

@@ -12,6 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+/**
+ * @author cfrith
+ */
+
 public class ChromeServiceLocal extends BrowserManager {
 
     private static final Logger CHROME_SERVICE_LOCAL_LOGGER = LoggerFactory.getLogger(LocalDriver.class);

@@ -1,5 +1,9 @@
 package com.apriori.utils.web.driver;
 
+/**
+ * @author cfrith
+ */
+
 public enum  BrowserTypes {
 
     CHROME("chrome"),
