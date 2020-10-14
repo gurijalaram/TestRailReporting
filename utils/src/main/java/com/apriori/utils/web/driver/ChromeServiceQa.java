@@ -21,14 +21,12 @@ public class ChromeServiceQa extends BrowserManager{
     private RemoteWebDriver result;
     private DesiredCapabilities dc = new DesiredCapabilities();
     private String server;
-    private String browser;
     private Proxy proxy;
     private String downloadPath;
     private String locale;
 
-    public ChromeServiceQa(String server, String browser, Proxy proxy, String downloadPath, String locale) {
+    public ChromeServiceQa(String server, Proxy proxy, String downloadPath, String locale) {
         this.server = server;
-        this.browser = browser;
         this.proxy = proxy;
         this.downloadPath = downloadPath;
         this.locale = locale;

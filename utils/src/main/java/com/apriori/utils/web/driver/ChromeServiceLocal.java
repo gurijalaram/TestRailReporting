@@ -18,13 +18,11 @@ public class ChromeServiceLocal extends BrowserManager {
 
     private WebDriver result;
     private DesiredCapabilities dc = new DesiredCapabilities();
-    private String browser;
     private Proxy proxy;
     private String downloadPath;
     private String locale;
 
-    public ChromeServiceLocal(String browser, Proxy proxy, String downloadPath, String locale) {
-        this.browser = browser;
+    public ChromeServiceLocal(Proxy proxy, String downloadPath, String locale) {
         this.proxy = proxy;
         this.downloadPath = downloadPath;
         this.locale = locale;
