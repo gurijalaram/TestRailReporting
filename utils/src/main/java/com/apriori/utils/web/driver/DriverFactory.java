@@ -49,16 +49,16 @@ public class DriverFactory {
                 server = serverBuilder.toString();
 
                 if (testType.equals(TestType.EXPORT)) {
-                    driver = setBrowserQa(browser, server, proxy, downloadPath, remoteDownloadPath, locale);
+                    driver = setQaBrowser(browser, server, proxy, downloadPath, remoteDownloadPath, locale);
                 } else {
-                    driver = setBrowserQa(browser, server.concat("/wd/hub"), proxy, null, null, locale);
+                    driver = setQaBrowser(browser, server.concat("/wd/hub"), proxy, null, null, locale);
                 }
                 break;
             case GRID:
-                setBrowserQa(browser, ("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), proxy, null, null, locale);
+                setQaBrowser(browser, ("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), proxy, null, null, locale);
                 break;
             case LOCAL:
-                setBrowserLocal(browser, proxy, downloadPath, locale);
+                setLocalBrowser(browser, proxy, downloadPath, locale);
                 break;
             case EXPORT:
                 throw new InvalidParameterException(String.format("Use QA mode with EXPORT type instead of '%s' ", testMode));
@@ -68,7 +68,7 @@ public class DriverFactory {
         return driver;
     }
 
-    private WebDriver setBrowserQa(String browser, String server, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
+    private WebDriver setQaBrowser(String browser, String server, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         switch (browser) {
             case "chrome":
                 driver = new ChromeServiceQa(server, proxy, downloadPath, remoteDownloadPath, locale).startService();
@@ -77,7 +77,7 @@ public class DriverFactory {
         return driver;
     }
 
-    private void setBrowserLocal(String browser, Proxy proxy, String downloadPath, String locale) {
+    private void setLocalBrowser(String browser, Proxy proxy, String downloadPath, String locale) {
         switch (browser) {
             case "chrome":
                 driver = new ChromeServiceLocal(proxy, downloadPath, locale).startService();
