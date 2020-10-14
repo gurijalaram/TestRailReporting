@@ -49,13 +49,13 @@ public class DriverFactory {
                 server = serverBuilder.toString();
 
                 if (testType.equals(TestType.EXPORT)) {
-                    driver = setBrowserQa(browser, server, proxy, downloadPath, locale);
+                    driver = setBrowserQa(browser, server, proxy, downloadPath, remoteDownloadPath, locale);
                 } else {
-                    driver = setBrowserQa(browser, server.concat("/wd/hub"), proxy, null, locale);
+                    driver = setBrowserQa(browser, server.concat("/wd/hub"), proxy, null, null, locale);
                 }
                 break;
             case GRID:
-                setBrowserQa(browser, ("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), proxy, null, null);
+                setBrowserQa(browser, ("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), proxy, null, null, locale);
                 break;
             case LOCAL:
                 setBrowserLocal(browser, proxy, downloadPath, locale);
@@ -68,10 +68,10 @@ public class DriverFactory {
         return driver;
     }
 
-    private WebDriver setBrowserQa(String browser, String server, Proxy proxy, String downloadPath, String locale) {
+    private WebDriver setBrowserQa(String browser, String server, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         switch (browser) {
             case "chrome":
-                driver = new ChromeServiceQa(server, proxy, downloadPath, locale).startService();
+                driver = new ChromeServiceQa(server, proxy, downloadPath, remoteDownloadPath, locale).startService();
                 break;
         }
         return driver;

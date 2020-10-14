@@ -26,12 +26,14 @@ public class ChromeServiceQa extends BrowserManager{
     private DesiredCapabilities dc = new DesiredCapabilities();
     private String server;
     private Proxy proxy;
+    private String remoteDownloadPath;
     private String downloadPath;
     private String locale;
 
-    public ChromeServiceQa(String server, Proxy proxy, String downloadPath, String locale) {
+    public ChromeServiceQa(String server, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         this.server = server;
         this.proxy = proxy;
+        this.remoteDownloadPath = remoteDownloadPath;
         this.downloadPath = downloadPath;
         this.locale = locale;
     }
@@ -50,7 +52,7 @@ public class ChromeServiceQa extends BrowserManager{
         try {
             CHROME_SERVICE_QA_LOGGER.info("Starting ChromeDriver........ ");
 
-            ChromeOptions options = new ChromeDriverOptions(downloadPath, locale).getChromeOptions();
+            ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
             dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
             dc.setCapability(ChromeOptions.CAPABILITY, options);
             dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
