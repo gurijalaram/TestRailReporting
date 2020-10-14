@@ -336,7 +336,6 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1374")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {

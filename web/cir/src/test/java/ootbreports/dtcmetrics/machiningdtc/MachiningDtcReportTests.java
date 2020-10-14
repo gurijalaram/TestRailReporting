@@ -388,7 +388,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3031")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
