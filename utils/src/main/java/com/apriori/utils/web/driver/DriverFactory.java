@@ -14,6 +14,9 @@ public class DriverFactory {
 
     private static final Logger LOGGER_DRIVER_FACTORY = LoggerFactory.getLogger(DriverFactory.class);
 
+    BaseReader propertiesReader = new BaseReader("seleniumconfig.properties");
+    String seleniumProtocol = propertiesReader.getProperties().getProperty("protocol");
+    String seleniumPrefix = propertiesReader.getProperties().getProperty("prefix");
     private WebDriver driver;
     private String server = null;
     private boolean headless = false;
@@ -26,17 +29,10 @@ public class DriverFactory {
         switch (testMode) {
             case QA:
                 LOGGER_DRIVER_FACTORY.debug("Getting host and port from properties file");
-                BaseReader propertiesReader = new BaseReader("seleniumconfig.properties");
-                String seleniumProtocol = propertiesReader.getProperties().getProperty("protocol");
-                String seleniumPort = propertiesReader.getProperties().getProperty("port");
-                String seleniumHost = propertiesReader.getProperties().getProperty("host");
-                String seleniumPrefix = propertiesReader.getProperties().getProperty("prefix");
-                if (StringUtils.isNotEmpty(System.getProperty("selenium.port"))) {
-                    seleniumPort = System.getProperty("selenium.port");
-                }
-                if (StringUtils.isNotEmpty(System.getProperty("selenium.host"))) {
-                    seleniumHost = System.getProperty("selenium.host");
-                }
+
+                String seleniumPort = StringUtils.isNotEmpty(System.getProperty("selenium.port")) ? System.getProperty("selenium.port") : propertiesReader.getProperties().getProperty("port");
+                String seleniumHost = StringUtils.isNotEmpty(System.getProperty("selenium.host")) ? System.getProperty("selenium.host") : propertiesReader.getProperties().getProperty("host");
+
                 LOGGER_DRIVER_FACTORY.debug("Starting driver on " + seleniumHost + ":" + seleniumPort);
 
                 StringBuilder serverBuilder = new StringBuilder(seleniumProtocol + "://" + seleniumHost);
@@ -44,15 +40,10 @@ public class DriverFactory {
                 if (seleniumPort != null && !seleniumPort.isEmpty()) {
                     serverBuilder.append(":").append(seleniumPort);
                 }
+
                 serverBuilder.append(seleniumPrefix);
-
                 server = serverBuilder.toString();
-
-                if (testType.equals(TestType.EXPORT)) {
-                    driver = setQaBrowser(browser, server, proxy, downloadPath, remoteDownloadPath, locale);
-                } else {
-                    driver = setQaBrowser(browser, server.concat("/wd/hub"), proxy, null, null, locale);
-                }
+                driver = testType.equals(TestType.EXPORT) ? setQaBrowser(browser, server, proxy, downloadPath, remoteDownloadPath, locale) : setQaBrowser(browser, server.concat("/wd/hub"), proxy, null, null, locale);
                 break;
             case GRID:
                 setQaBrowser(browser, ("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), proxy, null, null, locale);
