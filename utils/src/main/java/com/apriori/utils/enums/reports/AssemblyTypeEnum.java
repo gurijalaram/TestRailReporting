@@ -11,6 +11,11 @@ public enum AssemblyTypeEnum {
         this.assemblyType = assemblyType;
     }
 
+    /**
+     * Gets assembly type name
+     *
+     * @return String
+     */
     public String getAssemblyType() {
         return assemblyType;
     }
