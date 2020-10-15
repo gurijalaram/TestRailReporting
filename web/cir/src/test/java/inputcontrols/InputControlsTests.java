@@ -16,10 +16,12 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pageobjects.pages.login.ReportsLoginPage;
+import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 
 import java.math.BigDecimal;
@@ -615,6 +617,19 @@ public class InputControlsTests extends TestBase {
                 .selectExportSet(exportSet)
                 .inputMinimumAnnualSpend()
                 .clickOk();
+
+        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(), is(equalTo(new BigDecimal("6631000"))));
+
+        if (!reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
+            genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+            genericReportPage.hoverPartNameBubbleDtcReports();
+            BigDecimal annualSpendValue = genericReportPage.getAnnualSpendFromBubbleTooltip();
+
+            assertThat(
+                    annualSpendValue.compareTo(new BigDecimal("6631000")),
+                    is(equalTo(1))
+            );
+        }
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {

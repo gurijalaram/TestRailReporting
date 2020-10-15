@@ -9,7 +9,6 @@ import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
-import org.checkerframework.checker.units.qual.A;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.header.ReportsPageHeader;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -394,6 +392,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//table/tbody/tr[13]/td[2]")
     private WebElement machiningDtcDetailsPartNameLink;
 
+    @FindBy(xpath = "//span[contains(text(), 'Minimum Annual Spend:')]/../following-sibling::td[2]/span")
+    private WebElement minimumAnnualSpend;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -444,7 +445,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(locator);
         WebElement minimumAnnualSpend = driver.findElement(locator);
         pageUtils.clearInput(driver.findElement(locator));
-        minimumAnnualSpend.sendKeys("123456");
+        minimumAnnualSpend.sendKeys("6631000");
         return this;
     }
 
@@ -1179,6 +1180,15 @@ public class GenericReportPage extends ReportsPageHeader {
         WebElement elementToUse = tooltipElementMap.get("Annual Spend Value");
         pageUtils.waitForElementToAppear(elementToUse);
         return new BigDecimal(elementToUse.getText().replace(",", ""));
+    }
+
+    /**
+     * Get Minimum Annual Spend value
+     * @return BigDecimal
+     */
+    public BigDecimal getMinimumAnnualSpendFromAboveChart() {
+        pageUtils.waitForElementToAppear(minimumAnnualSpend);
+        return new BigDecimal(minimumAnnualSpend.getText().replace(",", ""));
     }
 
     /**
