@@ -610,13 +610,7 @@ public class InputControlsTests extends TestBase {
      * Generic test for Minimum Annual Spend
      */
     public void testMinimumAnnualSpend(String reportName, String exportSet) {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(exportSet)
-                .inputMinimumAnnualSpend()
-                .clickOk();
+        testMinimumAnnualSpendCore(reportName, exportSet);
 
         assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(), is(equalTo(new BigDecimal("6631000"))));
 
@@ -630,6 +624,70 @@ public class InputControlsTests extends TestBase {
                     is(equalTo(1))
             );
         }
+    }
+
+    /**
+     * Generic test for Minimum Annual Spend Details Reports
+     * @param reportName String
+     * @param exportSet String
+     */
+    public void testMinimumAnnualSpendDetailsReports(String reportName, String exportSet) {
+        testMinimumAnnualSpendCore(reportName, exportSet);
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName())) {
+            genericReportPage.waitForReportToLoad();
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+        } else {
+            BigDecimal valueForAssert = new BigDecimal("6631000.00");
+            assertThat(
+                    genericReportPage.getMinimumAnnualSpendFromAboveChart(),
+                    is(equalTo(valueForAssert))
+            );
+            assertThat(
+                    genericReportPage.getAnnualSpendValueDetailsReports().compareTo(valueForAssert),
+                    is(equalTo(1))
+            );
+        }
+    }
+
+    /**
+     * Generic test for Minimum Annual Spend Comparison Reports
+     * @param reportName String
+     * @param exportSet String
+     */
+    public void testMinimumAnnualSpendComparisonReports(String reportName, String exportSet) {
+        //testMinimumAnnualSpendCore(reportName, exportSet);
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet)
+                //.inputMinimumAnnualSpend()
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        Integer initialChartCount = genericReportPage.getCountOfChartElements();
+        genericReportPage.clickInputControlsButton()
+                .inputMinimumAnnualSpend()
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
+
+        } else {
+            assertThat(genericReportPage.getCountOfChartElements().compareTo(initialChartCount), is(equalTo(-1)));
+        }
+    }
+
+    private void testMinimumAnnualSpendCore(String reportName, String exportSet) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet)
+                .inputMinimumAnnualSpend()
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {

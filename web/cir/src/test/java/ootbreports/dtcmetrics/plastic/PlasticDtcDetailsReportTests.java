@@ -186,8 +186,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinimumAnnualSpend(
-                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+        inputControlsTests.testMinimumAnnualSpendDetailsReports(
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }

@@ -276,7 +276,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinimumAnnualSpend(
+        inputControlsTests.testMinimumAnnualSpendComparisonReports(
                 ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );

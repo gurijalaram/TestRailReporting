@@ -317,7 +317,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement dtcPartSummaryProcessGroupValue;
 
-    @FindBy(xpath = "(//div[@id='reportContainer']/table/tbody/tr[@style='height:20px'])[1]//span")
+    @FindBy(xpath = "//span[contains(text(), 'No data available')]")
     private WebElement noDataAvailableElement;
 
     @FindBy(xpath = "//*[local-name() = 'g' and @data-z-index='8']")
@@ -394,6 +394,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//span[contains(text(), 'Minimum Annual Spend:')]/../following-sibling::td[2]/span")
     private WebElement minimumAnnualSpend;
+
+    @FindBy(xpath = "//tr[13]/td[20]/span")
+    private WebElement annualSpendDetailsValue;
+
+    @FindBy(xpath = "(//*[@class='highcharts-root'])[1]//*[contains(@class, 'highcharts-xaxis-labels')]")
+    private WebElement chartCountElement;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -783,6 +789,13 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(currentCurrency);
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Wait for report to load
+     */
+    public void waitForReportToLoad() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
     }
 
     /**
@@ -1689,6 +1702,25 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getUpperTitleText() {
         return upperTitle.getText();
+    }
+
+    /**
+     * Gets Annual Spend value from Details reports
+     * @return BigDecimal
+     */
+    public BigDecimal getAnnualSpendValueDetailsReports() {
+        pageUtils.waitForElementToAppear(annualSpendDetailsValue);
+        return new BigDecimal(annualSpendDetailsValue.getText().replace(",", ""));
+    }
+
+    /**
+     * Gets count of chart elements on comparison reports
+     * @return String
+     */
+    public Integer getCountOfChartElements() {
+        pageUtils.waitForElementToAppear(chartCountElement);
+        pageUtils.waitFor(1000);
+        return Integer.parseInt(chartCountElement.getAttribute("childElementCount"));
     }
 
     /**

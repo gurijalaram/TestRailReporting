@@ -258,7 +258,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinimumAnnualSpend(
+        inputControlsTests.testMinimumAnnualSpendDetailsReports(
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
