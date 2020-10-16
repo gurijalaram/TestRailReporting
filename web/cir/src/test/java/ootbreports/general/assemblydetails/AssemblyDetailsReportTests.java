@@ -739,7 +739,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1924")
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
