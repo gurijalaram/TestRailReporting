@@ -11,7 +11,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public interface BrowserDriver {
 
     WebDriver startService();
+
     void logInfo(DesiredCapabilities dc);
+
     void setDownloadFolder(String downloadPath);
+
     void setProxy(Proxy proxy);
 }
