@@ -16,12 +16,10 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pageobjects.pages.login.ReportsLoginPage;
-import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 
 import java.math.BigDecimal;

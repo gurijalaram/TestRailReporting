@@ -25,7 +25,6 @@ import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
@@ -272,6 +271,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 DtcScoreEnum.ALL.getDtcScoreName()
         );
     }
+
     @Test
     @TestRail(testCaseId = "1700")
     @Description("Verify Minimum Annual Spend input control functions correctly")

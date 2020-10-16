@@ -972,6 +972,8 @@ public class GenericReportPage extends ReportsPageHeader {
             case "mm":
                 newVal = currentDate.substring(14, 16);
                 break;
+            default:
+                newVal = "";
         }
 
         return currentDate.replace(newVal, invalidDates.get(datePartToInvalidate));
@@ -1719,9 +1721,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public Integer getCountOfChartElements() {
+        waitForReportToLoad();
         pageUtils.waitForElementToAppear(costMetricElementAboveChart);
-        pageUtils.waitForElementNotDisplayed(inputControlsDiv, 1);
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(chartCountElement);
         return Integer.parseInt(chartCountElement.getAttribute("childElementCount"));
     }
