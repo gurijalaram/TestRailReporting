@@ -13,6 +13,10 @@ public enum DateElementsEnum {
         this.dateElement = dateElement;
     }
 
+    /**
+     * Gets date element as string
+     * @return String
+     */
     public String getDateElement() {
         return this.dateElement;
     }
