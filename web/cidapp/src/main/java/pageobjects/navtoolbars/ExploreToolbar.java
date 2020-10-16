@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class ExploreBar extends LoadableComponent<ExploreBar> {
+public class ExploreToolbar extends MainNavBar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExploreBar.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ExploreToolbar.class);
 
     @FindBy(xpath = "//button[.='New']")
     private WebElement newButton;
@@ -36,22 +35,14 @@ public class ExploreBar extends LoadableComponent<ExploreBar> {
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    public ExploreBar(WebDriver driver) {
+    public ExploreToolbar(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(newButton);
+        pageUtils.waitForElementAppear(publishButton);
         pageUtils.waitForElementAppear(actionsButton);
     }
 

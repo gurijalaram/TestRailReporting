@@ -10,7 +10,9 @@ public enum CostingLabelEnum {
     UNCOSTED_CHANGES("Uncosted\n" + "Changes"),
     COSTING_IN_PROGRESS("Costing in\n" + "Progress"),
     SAVING_NEW_SCENARIO("Saving New\n" + "Scenario"),
-    TRANSLATING("Translating");
+    TRANSLATING("Translating"),
+    UP_TO_DATE("Up To Date"),
+    FETCHING("Fetching");
 
     private final String costingText;
 
