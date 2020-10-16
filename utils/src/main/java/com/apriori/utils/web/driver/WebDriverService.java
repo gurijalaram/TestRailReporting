@@ -22,7 +22,7 @@ import java.security.InvalidParameterException;
 
 public class WebDriverService extends BrowserManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LocalDriver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverService.class);
 
     private WebDriver result;
     private DesiredCapabilities dc = new DesiredCapabilities();

@@ -24,7 +24,7 @@ import java.security.InvalidParameterException;
 
 public class RemoteWebDriverService extends BrowserManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LocalDriver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RemoteWebDriverService.class);
 
     private RemoteWebDriver result;
     private DesiredCapabilities dc = new DesiredCapabilities();
