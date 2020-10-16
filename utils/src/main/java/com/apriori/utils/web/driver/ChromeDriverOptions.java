@@ -2,6 +2,7 @@ package com.apriori.utils.web.driver;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.HashMap;
 
@@ -12,6 +13,7 @@ import java.util.HashMap;
 public class ChromeDriverOptions {
 
     private ChromeOptions options = new ChromeOptions();
+    private DesiredCapabilities dc = new DesiredCapabilities();
     private HashMap<String, Object> chromePrefs = new HashMap<>();
     private boolean headless = false;
     private String downloadPath;

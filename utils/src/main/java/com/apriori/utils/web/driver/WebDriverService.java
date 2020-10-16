@@ -5,12 +5,16 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.security.InvalidParameterException;
 
 /**
  * @author cfrith
@@ -54,6 +58,29 @@ public class WebDriverService extends BrowserManager {
                     result = new ChromeDriver(dc);
                     LOGGER.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                     break;
+
+                case "firefox":
+                    WebDriverManager.firefoxdriver().setup();
+
+                    DesiredCapabilities firefoxOptions = new FirefoxOptions(downloadPath, locale).getFirefoxOptions();
+                    result = new FirefoxDriver(firefoxOptions);
+                    LOGGER.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
+                    break;
+
+                case "edge":
+                    WebDriverManager.edgedriver().setup();
+                    result = new EdgeDriver();
+                    LOGGER.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
+                    break;
+
+                case "iexplorer":
+                    WebDriverManager.iedriver().setup();
+                    result = new InternetExplorerDriver();
+                    LOGGER.info("Full list of Capabilities: " + ((InternetExplorerDriver) result).getCapabilities().toString());
+                    break;
+
+                default:
+                    throw new InvalidParameterException(String.format("Unexpected browser type: '%s' ", browser));
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
