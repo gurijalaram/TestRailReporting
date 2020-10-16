@@ -795,6 +795,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Wait for report to load
      */
     public void waitForReportToLoad() {
+        pageUtils.waitForElementNotDisplayed(inputControlsDiv, 1);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
     }
 
@@ -1718,8 +1719,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public Integer getCountOfChartElements() {
+        pageUtils.waitForElementToAppear(costMetricElementAboveChart);
+        pageUtils.waitForElementNotDisplayed(inputControlsDiv, 1);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(chartCountElement);
-        pageUtils.waitFor(1000);
         return Integer.parseInt(chartCountElement.getAttribute("childElementCount"));
     }
 

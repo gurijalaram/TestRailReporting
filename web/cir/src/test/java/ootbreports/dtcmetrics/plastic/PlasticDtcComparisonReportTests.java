@@ -14,6 +14,8 @@ import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
 
@@ -194,12 +196,13 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1371")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinimumAnnualSpend(
-                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+        inputControlsTests.testMinimumAnnualSpendComparisonReports(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }

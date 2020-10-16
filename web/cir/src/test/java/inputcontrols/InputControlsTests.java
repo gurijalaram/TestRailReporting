@@ -610,7 +610,7 @@ public class InputControlsTests extends TestBase {
      * Generic test for Minimum Annual Spend
      */
     public void testMinimumAnnualSpend(String reportName, String exportSet) {
-        testMinimumAnnualSpendCore(reportName, exportSet);
+        testMinimumAnnualSpendCore(reportName, exportSet, true);
 
         assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(), is(equalTo(new BigDecimal("6631000"))));
 
@@ -632,7 +632,7 @@ public class InputControlsTests extends TestBase {
      * @param exportSet String
      */
     public void testMinimumAnnualSpendDetailsReports(String reportName, String exportSet) {
-        testMinimumAnnualSpendCore(reportName, exportSet);
+        testMinimumAnnualSpendCore(reportName, exportSet, true);
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName())) {
             genericReportPage.waitForReportToLoad();
@@ -656,15 +656,7 @@ public class InputControlsTests extends TestBase {
      * @param exportSet String
      */
     public void testMinimumAnnualSpendComparisonReports(String reportName, String exportSet) {
-        //testMinimumAnnualSpendCore(reportName, exportSet);
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(exportSet)
-                //.inputMinimumAnnualSpend()
-                .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+        testMinimumAnnualSpendCore(reportName, exportSet, false);
 
         Integer initialChartCount = genericReportPage.getCountOfChartElements();
         genericReportPage.clickInputControlsButton()
@@ -673,20 +665,25 @@ public class InputControlsTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
-
+            genericReportPage.waitForReportToLoad();
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
         } else {
             assertThat(genericReportPage.getCountOfChartElements().compareTo(initialChartCount), is(equalTo(-1)));
         }
     }
 
-    private void testMinimumAnnualSpendCore(String reportName, String exportSet) {
+    private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(exportSet)
-                .inputMinimumAnnualSpend()
-                .clickOk()
+                .selectExportSet(exportSet);
+
+        if (setMinimumAnnualSpend) {
+            genericReportPage.inputMinimumAnnualSpend();
+        }
+
+        genericReportPage.clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
     }
 

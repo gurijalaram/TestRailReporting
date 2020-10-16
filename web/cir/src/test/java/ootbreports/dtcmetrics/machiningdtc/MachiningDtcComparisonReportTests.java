@@ -268,11 +268,12 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3027")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinimumAnnualSpend(
+        inputControlsTests.testMinimumAnnualSpendComparisonReports(
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );

@@ -14,6 +14,8 @@ import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
 
@@ -182,6 +184,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1371")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
