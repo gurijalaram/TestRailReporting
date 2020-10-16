@@ -28,14 +28,14 @@ public class RemoteWebDriverService extends BrowserManager {
 
     private RemoteWebDriver result;
     private DesiredCapabilities dc = new DesiredCapabilities();
-    private String browser;
+    private BrowserTypes browser;
     private String server;
     private Proxy proxy;
     private String remoteDownloadPath;
     private String downloadPath;
     private String locale;
 
-    public RemoteWebDriverService(String browser, String server, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
+    public RemoteWebDriverService(BrowserTypes browser, String server, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         this.browser = browser;
         this.server = server;
         this.proxy = proxy;
@@ -57,7 +57,7 @@ public class RemoteWebDriverService extends BrowserManager {
 
         try {
             switch (browser) {
-                case "chrome":
+                case CHROME:
                     LOGGER.info("Starting ChromeDriver........ ");
 
                     ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
@@ -66,7 +66,7 @@ public class RemoteWebDriverService extends BrowserManager {
                     dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                     break;
 
-                case "firefox":
+                case FIREFOX:
                     LOGGER.info("Starting GeckoDriver........ ");
 
                     FirefoxProfile fp = new FirefoxProfile();
@@ -74,16 +74,10 @@ public class RemoteWebDriverService extends BrowserManager {
                     dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
                     break;
 
-                case "edge":
+                case EDGE:
                     LOGGER.info("Starting EdgeDriver........ ");
 
                     dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
-                    break;
-
-                case "iexplorer":
-                    LOGGER.info("Starting InternetExplorer Driver........ ");
-
-                    dc.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
                     break;
 
                 default:

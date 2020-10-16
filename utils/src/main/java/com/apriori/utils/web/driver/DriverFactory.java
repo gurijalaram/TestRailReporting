@@ -23,13 +23,13 @@ public class DriverFactory {
     private DesiredCapabilities dc = new DesiredCapabilities();
     private boolean headless = false;
 
-    public DriverFactory(TestMode testMode, TestType testType, String browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
+    public DriverFactory(TestMode testMode, TestType testType, BrowserTypes browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         this.driver = createDriver(testMode, testType, browser, proxy, downloadPath, remoteDownloadPath, locale);
     }
 
-    private WebDriver createDriver(TestMode testMode, TestType testType, String browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
+    private WebDriver createDriver(TestMode testMode, TestType testType, BrowserTypes browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         switch (testMode) {
-            case QA:
+            case GRID:
                 LOGGER.debug("Getting host and port from properties file");
 
                 String seleniumPort = StringUtils.isNotEmpty(System.getProperty("selenium.port")) ? System.getProperty("selenium.port") : propertiesReader.getProperties().getProperty("port");
@@ -46,16 +46,14 @@ public class DriverFactory {
                 serverBuilder.append(seleniumPrefix);
                 server = serverBuilder.toString();
                 driver = testType.equals(TestType.EXPORT) ? new WebDriverService(browser, proxy, downloadPath, locale).startService()
-                    : new RemoteWebDriverService(browser, server.concat("/wd/hub"), proxy, null, null, locale).startService();
+                    : new RemoteWebDriverService(browser, server, proxy, null, null, locale).startService();
                 break;
-            case GRID:
-                driver = new RemoteWebDriverService(browser, ("http://").concat("conqsgrafana01").concat(":4444").concat("/wd/hub"), proxy, downloadPath, remoteDownloadPath, locale).startService();
+            case QA:
+                driver = new RemoteWebDriverService(browser, ("http://").concat("localhost").concat(":4444"), proxy, downloadPath, remoteDownloadPath, locale).startService();
                 break;
             case LOCAL:
                 driver = new WebDriverService(browser, proxy, downloadPath, locale).startService();
                 break;
-            case EXPORT:
-                throw new InvalidParameterException(String.format("Use QA mode with EXPORT type instead of '%s' ", testMode));
             default:
                 throw new InvalidParameterException(String.format("Received unexpected test mode '%s' ", testMode));
         }

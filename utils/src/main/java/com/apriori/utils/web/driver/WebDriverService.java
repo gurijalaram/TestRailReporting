@@ -7,7 +7,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
@@ -26,12 +25,12 @@ public class WebDriverService extends BrowserManager {
 
     private WebDriver result;
     private DesiredCapabilities dc = new DesiredCapabilities();
-    private String browser;
+    private BrowserTypes browser;
     private Proxy proxy;
     private String downloadPath;
     private String locale;
 
-    public WebDriverService(String browser, Proxy proxy, String downloadPath, String locale) {
+    public WebDriverService(BrowserTypes browser, Proxy proxy, String downloadPath, String locale) {
         this.browser = browser;
         this.proxy = proxy;
         this.downloadPath = downloadPath;
@@ -46,7 +45,7 @@ public class WebDriverService extends BrowserManager {
 
         try {
             switch (browser) {
-                case "chrome":
+                case CHROME:
                     WebDriverManager.chromedriver().setup();
                     System.setProperty("webdriver.chrome.logfile", System.getProperty("java.io.tmpdir") + File.separator + "chromedriver.log");
                     System.setProperty("webdriver.chrome.verboseLogging", "true");
@@ -59,7 +58,7 @@ public class WebDriverService extends BrowserManager {
                     LOGGER.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                     break;
 
-                case "firefox":
+                case FIREFOX:
                     WebDriverManager.firefoxdriver().setup();
 
                     DesiredCapabilities firefoxOptions = new FirefoxOptions(downloadPath, locale).getFirefoxOptions();
@@ -67,16 +66,10 @@ public class WebDriverService extends BrowserManager {
                     LOGGER.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                     break;
 
-                case "edge":
+                case EDGE:
                     WebDriverManager.edgedriver().setup();
                     result = new EdgeDriver();
                     LOGGER.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
-                    break;
-
-                case "iexplorer":
-                    WebDriverManager.iedriver().setup();
-                    result = new InternetExplorerDriver();
-                    LOGGER.info("Full list of Capabilities: " + ((InternetExplorerDriver) result).getCapabilities().toString());
                     break;
 
                 default:
