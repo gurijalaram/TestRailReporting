@@ -51,16 +51,16 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     @FindBy(css = "input[name='productionLife']")
     private WebElement productionLifeInput;
 
-    @FindBy(xpath = "//label[.='Current Scenario']/..//button[@class='dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//label[.='Current Scenario']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement currentScenarioDropdown;
 
-    @FindBy(xpath = "//label[.='Process Group']/..//button[@class='dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//label[.='Process Group']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement processGroupDropdown;
 
-    @FindBy(xpath = "//label[.='VPE']/..//button[@class='dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//label[.='VPE']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement vpeDropdown;
 
-    @FindBy(xpath = "//label[.='Secondary Process']/..//button[@class='dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//label[.='Secondary Process']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
     private PageUtils pageUtils;
