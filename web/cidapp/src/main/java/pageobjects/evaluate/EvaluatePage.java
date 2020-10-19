@@ -2,6 +2,7 @@ package pageobjects.evaluate;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -93,7 +94,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectCurrentScenario(String scenarioName) {
-        pageUtils.selectDropdownOption(currentScenarioDropdown, scenarioName);
+        pageUtils.waitForElementAndClick(currentScenarioDropdown);
+        By currentScenario = By.xpath(String.format("//button[.='%s']", scenarioName));
+        pageUtils.waitForElementAndClick(currentScenario);
         return this;
     }
 
@@ -105,7 +108,8 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
         pageUtils.waitForElementToBeClickable(processGroupDropdown);
-        pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
+        By group = By.xpath(String.format("//button[.='%s']", processGroup));
+        pageUtils.scrollWithJavaScript(driver.findElement(group), true);
         return this;
     }
 
@@ -116,7 +120,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
-        pageUtils.selectDropdownOption(vpeDropdown, vpe);
+        pageUtils.waitForElementToBeClickable(vpeDropdown);
+        By vp = By.xpath(String.format("//button[.='%s']", vpe));
+        pageUtils.scrollWithJavaScript(driver.findElement(vp), true);
         return this;
     }
 
@@ -126,7 +132,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectSecondaryProcess(String secondaryProcess) {
-        pageUtils.selectDropdownOption(secondaryProcessDropdown, secondaryProcess);
+        pageUtils.waitForElementToBeClickable(secondaryProcessDropdown);
+        By secProcess = By.xpath(String.format("//button[.='%s']", secondaryProcess));
+        pageUtils.scrollWithJavaScript(driver.findElement(secProcess), true);
         return this;
     }
 
