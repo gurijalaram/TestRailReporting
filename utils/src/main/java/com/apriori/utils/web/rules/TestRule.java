@@ -87,7 +87,7 @@ public class TestRule implements MethodRule {
                 } finally {
                     MDC.put("methodName", frameworkMethod.getMethod().getDeclaringClass().getSimpleName() + "." + frameworkMethod.getName());
 
-                    if (testBaseNew.getDriver() != null && testBaseNew.getBrowser().equalsIgnoreCase("chrome")) {
+                    if (testBaseNew.getDriver() != null && testBaseNew.getBrowser().value().equalsIgnoreCase("chrome")) {
                         Logs logs = testBaseNew.getDriver().manage().logs();
                         try {
                             ConsoleLogger.printConsoleEntries(logs, frameworkMethod);
@@ -102,7 +102,7 @@ public class TestRule implements MethodRule {
 
                     if (testBaseNew.getDriver() == null) {
                         logger.debug("Driver object was not created");
-                    } else if (testBaseNew.getBrowser().equalsIgnoreCase("firefox")) {
+                    } else if (testBaseNew.getBrowser().value().equalsIgnoreCase("firefox")) {
                         testBaseNew.getDriver().close();
                     } else {
                         testBaseNew.getDriver().quit();
@@ -141,7 +141,7 @@ public class TestRule implements MethodRule {
 
                     if (testBaseNew.getDriver() == null) {
                         logger.debug("Driver object was not created");
-                    } else if (testBaseNew.getBrowser().equalsIgnoreCase("firefox")) {
+                    } else if (testBaseNew.getBrowser().value().equalsIgnoreCase("firefox")) {
                         testBaseNew.getDriver().close();
                     } else {
                         testBaseNew.getDriver().quit();
