@@ -1,7 +1,7 @@
 package pageobjects.navtoolbars;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,7 +17,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(xpath = "//button[.='Cost']")
     private WebElement costButton;
 
-    @FindBy(xpath = "div[class~='scenario-state-button']")
+    @FindBy(css = "div[class~='scenario-state-preview']")
     private WebElement costLabel;
 
     private PageUtils pageUtils;
@@ -47,16 +47,16 @@ public class EvaluateToolbar extends ExploreToolbar {
      * Method to check cost label contains/doesn't contain text
      */
     public void checkForCostLabel(int timeoutInMinutes) {
-        pageUtils.textPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
-        pageUtils.textNotPresentInElement(costLabel, CostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
+        pageUtils.textPresentInElement(costLabel, NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
+        pageUtils.textNotPresentInElement(costLabel, NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }
 
     /**
      * Gets cost label
      *
-     * @return string
+     * @return true/false
      */
-    public String getCostLabel() {
-        return pageUtils.waitForElementToAppear(costLabel).getText();
+    public boolean isCostLabel(String text) {
+        return pageUtils.textPresentInElement(costLabel, text);
     }
 }
