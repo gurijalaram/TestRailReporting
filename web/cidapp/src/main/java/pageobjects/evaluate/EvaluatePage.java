@@ -84,8 +84,8 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(leftPanel);
         pageUtils.waitForElementAppear(viewerCanvas);
-        pageUtils.waitForElementAndClick(renderButton);
-        pageUtils.waitForElementAppear(renderSelectedButton);
+//        pageUtils.waitForElementAndClick(renderButton);
+//        pageUtils.waitForElementAppear(renderSelectedButton);
     }
 
     /**
@@ -107,9 +107,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
-        pageUtils.waitForElementToBeClickable(processGroupDropdown);
+        pageUtils.waitForElementAndClick(processGroupDropdown);
         By group = By.xpath(String.format("//button[.='%s']", processGroup));
-        pageUtils.scrollWithJavaScript(driver.findElement(group), true);
+        pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
         return this;
     }
 
@@ -120,9 +120,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
-        pageUtils.waitForElementToBeClickable(vpeDropdown);
+        pageUtils.waitForElementAndClick(vpeDropdown);
         By vp = By.xpath(String.format("//button[.='%s']", vpe));
-        pageUtils.scrollWithJavaScript(driver.findElement(vp), true);
+        pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
         return this;
     }
 
@@ -132,9 +132,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectSecondaryProcess(String secondaryProcess) {
-        pageUtils.waitForElementToBeClickable(secondaryProcessDropdown);
+        pageUtils.waitForElementAndClick(secondaryProcessDropdown);
         By secProcess = By.xpath(String.format("//button[.='%s']", secondaryProcess));
-        pageUtils.scrollWithJavaScript(driver.findElement(secProcess), true);
+        pageUtils.scrollWithJavaScript(driver.findElement(secProcess), true).click();
         return this;
     }
 
