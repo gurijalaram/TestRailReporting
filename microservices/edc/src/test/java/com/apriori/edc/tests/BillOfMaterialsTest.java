@@ -1,15 +1,21 @@
 package com.apriori.edc.tests;
 
+import com.apriori.apibase.services.ats.apicalls.SecurityManager;
 import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
 import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.edc.tests.util.UserDataEDC;
 import com.apriori.edc.tests.util.UserTestDataUtil;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
+import com.apriori.utils.http.builder.service.HTTPRequest;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.builder.service.RequestAreaUiAuth;
 import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
 
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -29,13 +35,13 @@ public class BillOfMaterialsTest extends TestUtil {
 
     @BeforeClass
     public static void setUp() {
-        userTestDataUtil = new UserTestDataUtil();
-        userData = userTestDataUtil.initBillOfMaterials();
+//        userTestDataUtil = new UserTestDataUtil();
+//        userData = userTestDataUtil.initBillOfMaterials();
     }
 
     @AfterClass
     public static void clearTestData() {
-        userTestDataUtil.clearTestData(userData);
+//        userTestDataUtil.clearTestData(userData);
     }
 
     @Test
@@ -95,5 +101,25 @@ public class BillOfMaterialsTest extends TestUtil {
     @Severity(SeverityLevel.NORMAL)
     public void postBillOfMaterials() {
         userTestDataUtil.uploadTestData(userData);
+    }
+
+    @Test
+    public void testTest() {
+        System.out.println("*****************");
+        String token = SecurityManager.retriveJwtToken(
+                Constants.getAtsServiceHost(),
+                HttpStatus.SC_CREATED,
+                Constants.getAtsTokenUsername(),
+                Constants.getAtsTokenEmail(),
+                Constants.getAtsTokenIssuer(),
+                Constants.getAtsTokenSubject());
+
+
+        RequestEntity requestEntity = RequestEntity.init(
+                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS,     UserUtil.getUser(), BillOfMaterialsWrapper.class)
+                .setAutoLogin(true);
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+                GenericRequestUtil.get(requestEntity.setToken(token), new RequestAreaApi()).getStatusCode());
     }
 }

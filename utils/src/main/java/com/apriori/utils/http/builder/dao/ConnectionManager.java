@@ -173,6 +173,10 @@ public class ConnectionManager<T> {
 
         UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
 
+        if(requestEntity.getToken() != null) {
+            return requestEntity.getToken();
+        }
+
         if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
             logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
             RequestEntity authEntity = RequestEntity
@@ -252,6 +256,7 @@ public class ConnectionManager<T> {
         return resultOf(
                 createRequestSpecification()
                         .when()
+                        .relaxedHTTPSValidation()
                         .get(requestEntity.buildEndpoint())
                         .then()
                         .log().all()
