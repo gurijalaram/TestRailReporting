@@ -40,12 +40,6 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     @FindBy(css = "svg[data-icon='border-none']")
     private WebElement sectioningButton;
 
-    @FindBy(xpath = "//div[contains(text(),'Render')]")
-    private WebElement renderButton;
-
-    @FindBy(css = "button[data-ap-comp='solidViewerToolbarButton'][class='selected']")
-    private WebElement renderSelectedButton;
-
     @FindBy(css = "input[name='annualVolume']")
     private WebElement annualVolumeInput;
 
@@ -84,8 +78,6 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(leftPanel);
         pageUtils.waitForElementAppear(viewerCanvas);
-//        pageUtils.waitForElementAndClick(renderButton);
-//        pageUtils.waitForElementAppear(renderSelectedButton);
     }
 
     /**
