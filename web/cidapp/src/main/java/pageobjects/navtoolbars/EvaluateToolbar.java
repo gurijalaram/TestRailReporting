@@ -57,6 +57,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return true/false
      */
     public boolean isCostLabel(String text) {
+        pageUtils.waitForElementToAppear(costLabel);
         return pageUtils.textPresentInElement(costLabel, text);
     }
 }
