@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.explore.FileUploadPage;
 
 import java.io.File;
 
@@ -80,7 +81,7 @@ public class ExploreToolbar extends MainNavBar {
      * @param className    - the class name
      * @return new page object
      */
-    public <T> T uploadFileAndCancel(String scenarioName, File filePath, Class<T> className) {
+    public <T> T uploadComponentAndCancel(String scenarioName, File filePath, Class<T> className) {
         return uploadComponent(scenarioName, filePath).selectCancelButton(className);
     }
 
