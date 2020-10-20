@@ -9,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 /**
  * @author cfrith
  */
@@ -19,6 +21,9 @@ public class ExploreToolbar extends MainNavBar {
 
     @FindBy(xpath = "//button[.='New']")
     private WebElement newButton;
+
+    @FindBy(xpath = "//button[.='Component']")
+    private WebElement componentButton;
 
     @FindBy(xpath = "//button[.='Publish']")
     private WebElement publishButton;
@@ -53,5 +58,42 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isDeleteButtonPresent() {
         return deleteButton.isDisplayed();
+    }
+
+    /**
+     * Collective method to upload a file then select OK
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath     - location of the file
+     * @param className    - the class name
+     * @return new page object
+     */
+    public <T> T uploadComponentAndOk(String scenarioName, File filePath, Class<T> className) {
+        return uploadComponent(scenarioName, filePath).selectUploadButton(className);
+    }
+
+    /**
+     * Collective method to upload a file then select Cancel
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath     - location of the file
+     * @param className    - the class name
+     * @return new page object
+     */
+    public <T> T uploadFileAndCancel(String scenarioName, File filePath, Class<T> className) {
+        return uploadComponent(scenarioName, filePath).selectCancelButton(className);
+    }
+
+    /**
+     * Selects the file dropdown and enters file details
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath      - location of the file
+     * @return new page object
+     */
+    public FileUploadPage uploadComponent(String scenarioName, File filePath) {
+        pageUtils.waitForElementAndClick(newButton);
+        pageUtils.waitForElementAndClick(componentButton);
+        return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
     }
 }
