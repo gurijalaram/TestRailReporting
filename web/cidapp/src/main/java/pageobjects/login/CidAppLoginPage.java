@@ -1,6 +1,7 @@
 package pageobjects.login;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
@@ -18,7 +19,7 @@ import pageobjects.explore.ExplorePage;
 
 public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
-    private static String loginPageUrl = "localhost:3003";
+    private static String loginPageUrl = Constants.cidAppURL;
     private final Logger LOGGER = LoggerFactory.getLogger(CidAppLoginPage.class);
 
     @FindBy(css = "input[name='email']")
