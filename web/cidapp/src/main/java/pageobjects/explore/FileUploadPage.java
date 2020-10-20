@@ -95,7 +95,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     }
 
     /**
-     * Selects the ok button
+     * Selects the upload button
      *
      * @return generic page object
      */
