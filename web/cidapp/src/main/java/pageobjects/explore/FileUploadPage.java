@@ -12,6 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+/**
+ * @author cfrith
+ */
+
 public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);

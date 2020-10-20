@@ -10,6 +10,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author cfrith
+ */
+
 public class EvaluateToolbar extends ExploreToolbar {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EvaluateToolbar.class);

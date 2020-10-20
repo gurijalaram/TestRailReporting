@@ -12,6 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.navtoolbars.EvaluateToolbar;
 
+/**
+ * @author cfrith
+ */
+
 public class EvaluatePage extends EvaluateToolbar {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EvaluatePage.class);
