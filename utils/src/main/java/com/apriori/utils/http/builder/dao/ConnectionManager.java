@@ -252,6 +252,7 @@ public class ConnectionManager<T> {
         return resultOf(
                 createRequestSpecification()
                         .when()
+                        .relaxedHTTPSValidation()
                         .get(requestEntity.buildEndpoint())
                         .then()
                         .log().all()
@@ -267,6 +268,7 @@ public class ConnectionManager<T> {
         return resultOf(
                 createRequestSpecification()
                         .when()
+                        .relaxedHTTPSValidation()
                         .post(requestEntity.buildEndpoint())
                         .then()
                         .log().all()
@@ -283,7 +285,9 @@ public class ConnectionManager<T> {
         return resultOf(
 
                 createRequestSpecification()
-                        .given().config(
+                        .given()
+                        .relaxedHTTPSValidation()
+                        .config(
                         RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
                                 ContentType.TEXT)))
                         .expect()
@@ -381,6 +385,7 @@ public class ConnectionManager<T> {
         return resultOf(
                 createRequestSpecification()
                         .when()
+                        .relaxedHTTPSValidation()
                         .put(requestEntity.buildEndpoint())
                         .then()
                         .log().all()
@@ -391,6 +396,7 @@ public class ConnectionManager<T> {
         return resultOf(
                 createRequestSpecification()
                         .when()
+                        .relaxedHTTPSValidation()
                         .patch(requestEntity.buildEndpoint())
                         .then()
                         .log()
@@ -407,6 +413,7 @@ public class ConnectionManager<T> {
         return resultOf(
                 createRequestSpecification()
                         .when()
+                        .relaxedHTTPSValidation()
                         .delete(requestEntity.buildEndpoint())
                         .then()
                         .log().all()
