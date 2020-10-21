@@ -52,7 +52,8 @@ public class WebDriverService extends BrowserManager {
 
                     ChromeOptions options = new ChromeDriverOptions(downloadPath, locale).getChromeOptions();
                     dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
-                    dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                    options.addArguments("--ignore-ssl-errors=yes");
+                    options.addArguments("--ignore-certificate-errors");
                     dc.setCapability(ChromeOptions.CAPABILITY, options);
                     result = new ChromeDriver(dc);
                     LOGGER.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());

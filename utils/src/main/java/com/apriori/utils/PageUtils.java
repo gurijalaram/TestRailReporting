@@ -783,39 +783,12 @@ public class PageUtils {
     }
 
     /**
-     * Checks if env is TE
-     *
-     * @return boolean
-     */
-    public boolean isEnvTE() {
-        boolean isEnvTE = false;
-        if (Constants.environment.equals("cid-te")) {
-            isEnvTE = true;
-        }
-        return isEnvTE;
-    }
-
-    /**
      * Gets header to assert against
      *
      * @return String
      */
-    public String getHeaderToCheck(boolean isLocalEnv, boolean isAdmin) {
-        String headerToInsert = "";
-        String headerToReturn = "";
-        String ciDesignTextPreFormat = "CI Design %s";
-        if (isEnvTE()) {
-            headerToInsert = Constants.CID_TE_HEADER_TEXT;
-            headerToReturn = String.format(ciDesignTextPreFormat, headerToInsert);
-        } else if (isLocalEnv && !isAdmin) {
-            headerToReturn = "aPriori Cost Insight Report";
-        } else if (isLocalEnv && isAdmin) {
-            headerToReturn = "Log in to Cost Insight | Admin";
-        } else {
-            headerToInsert = Constants.CID_AUT_HEADER_TEXT;
-            headerToReturn = String.format(ciDesignTextPreFormat, headerToInsert);
-        }
-        return headerToReturn;
+    public String getHeaderToCheck(boolean isAdmin) {
+        return isAdmin ? "Log in to Cost Insight | Admin" : "aPriori Cost Insight Report";
     }
 
     /**
