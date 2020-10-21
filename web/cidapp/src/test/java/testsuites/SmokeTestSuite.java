@@ -2,6 +2,8 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import evaluate.CostScenarioTests;
+import explore.UploadComponentTests;
 import login.LoginTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -14,6 +16,8 @@ import testsuites.suiteinterface.SmokeTests;
 @Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses ({
     LoginTests.class,
+    CostScenarioTests.class,
+    UploadComponentTests.class
 })
 public class SmokeTestSuite {
 }

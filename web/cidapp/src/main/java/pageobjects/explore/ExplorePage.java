@@ -9,7 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.navtoolbars.ExploreToolbar;
-import pageobjects.navtoolbars.MainNavBar;
 
 /**
  * @author cfrith
@@ -30,8 +29,6 @@ public class ExplorePage extends ExploreToolbar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
-    private MainNavBar mainNavBar;
-    private ExploreToolbar exploreToolbar;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
