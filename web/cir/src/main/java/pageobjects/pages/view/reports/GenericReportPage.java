@@ -257,7 +257,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//button[contains(text(), 'Close')]")
     private WebElement datePickerCloseButton;
 
-    @FindBy(xpath = "//div[@id='useLatestExport']//a")
+    @FindBy(xpath = "//a[@title='Scenario']")
     private WebElement useLatestExportDropdown;
 
     @FindBy(xpath = "//div[@id='earliestExportDate']//div")
@@ -317,7 +317,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement dtcPartSummaryProcessGroupValue;
 
-    @FindBy(xpath = "(//div[@id='reportContainer']/table/tbody/tr[@style='height:20px'])[1]//span")
+    @FindBy(xpath = "//span[contains(text(), 'No data available')]")
     private WebElement noDataAvailableElement;
 
     @FindBy(xpath = "//*[local-name() = 'g' and @data-z-index='8']")
@@ -392,6 +392,15 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//table/tbody/tr[13]/td[2]")
     private WebElement machiningDtcDetailsPartNameLink;
 
+    @FindBy(xpath = "//span[contains(text(), 'Minimum Annual Spend:')]/../following-sibling::td[2]/span")
+    private WebElement minimumAnnualSpend;
+
+    @FindBy(xpath = "//tr[13]/td[20]/span")
+    private WebElement annualSpendDetailsValue;
+
+    @FindBy(xpath = "(//*[@class='highcharts-root'])[1]//*[contains(@class, 'highcharts-xaxis-labels')]")
+    private WebElement chartCountElement;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -430,6 +439,19 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(driver.findElement(locator));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
+     * Inputs Minimum Annual Spend
+     * @return current page object
+     */
+    public GenericReportPage inputMinimumAnnualSpend() {
+        By locator = By.xpath("//label[@title='Minimum Annual Spend']/input");
+        pageUtils.waitForElementAndClick(locator);
+        WebElement minimumAnnualSpend = driver.findElement(locator);
+        pageUtils.clearInput(driver.findElement(locator));
+        minimumAnnualSpend.sendKeys("6631000");
         return this;
     }
 
@@ -664,7 +686,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String listName, String expectedCount) {
-        //String genericLocator = "(//div[@id='%s']/div/div/div/div/div)[%s]/span[@title='%s']";
         String genericLocator = "//div[@title='%s']//span[@title='%s']";
 
         By availableLocator = By.xpath(String.format(genericLocator, listName, "Available: " + expectedCount));
@@ -696,7 +717,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Click Use Latest Scenario dropdown twice to remove focus from date
      * @return Generic Report Page instance
      */
-    public GenericReportPage clickScenarioDropdownTwice() {
+    public GenericReportPage clickUseLatestExportDropdownTwice() {
         pageUtils.waitForElementAndClick(useLatestExportDropdown);
         useLatestExportDropdown.click();
         return this;
@@ -768,6 +789,14 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(currentCurrency);
         pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
         return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Wait for report to load
+     */
+    public void waitForReportToLoad() {
+        pageUtils.waitForElementNotDisplayed(inputControlsDiv, 1);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
     }
 
     /**
@@ -910,6 +939,44 @@ public class GenericReportPage extends ReportsPageHeader {
         By rollUp = By.cssSelector(String.format("a[title='%s']", rollupName));
         pageUtils.waitForElementToAppear(rollUp);
         return driver.findElement(rollUp).getAttribute("title");
+    }
+
+    /**
+     * Gets invalid date
+     * @param datePartToInvalidate String
+     * @return String
+     */
+    public String getInvalidDate(String datePartToInvalidate) {
+        String currentDate = getCurrentDate();
+        Map<String, String> invalidDates = new HashMap<>();
+        invalidDates.put("yyyy", String.valueOf(LocalDateTime.now().plusYears(1).getYear()));
+        invalidDates.put("MM", "13");
+        invalidDates.put("dd", "32");
+        invalidDates.put("HH", "25");
+        invalidDates.put("mm", "65");
+
+        String newVal = "";
+        switch (datePartToInvalidate) {
+            case "yyyy":
+                newVal = currentDate.substring(0, 4);
+                break;
+            case "MM":
+                newVal = currentDate.substring(5, 7);
+                break;
+            case "dd":
+                newVal = currentDate.substring(8, 10);
+                break;
+            case "HH":
+                newVal = currentDate.substring(11, 13);
+                break;
+            case "mm":
+                newVal = currentDate.substring(14, 16);
+                break;
+            default:
+                newVal = "";
+        }
+
+        return currentDate.replace(newVal, invalidDates.get(datePartToInvalidate));
     }
 
     /**
@@ -1129,6 +1196,15 @@ public class GenericReportPage extends ReportsPageHeader {
         WebElement elementToUse = tooltipElementMap.get("Annual Spend Value");
         pageUtils.waitForElementToAppear(elementToUse);
         return new BigDecimal(elementToUse.getText().replace(",", ""));
+    }
+
+    /**
+     * Get Minimum Annual Spend value
+     * @return BigDecimal
+     */
+    public BigDecimal getMinimumAnnualSpendFromAboveChart() {
+        pageUtils.waitForElementToAppear(minimumAnnualSpend);
+        return new BigDecimal(minimumAnnualSpend.getText().replace(",", ""));
     }
 
     /**
@@ -1629,6 +1705,26 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getUpperTitleText() {
         return upperTitle.getText();
+    }
+
+    /**
+     * Gets Annual Spend value from Details reports
+     * @return BigDecimal
+     */
+    public BigDecimal getAnnualSpendValueDetailsReports() {
+        pageUtils.waitForElementToAppear(annualSpendDetailsValue);
+        return new BigDecimal(annualSpendDetailsValue.getText().replace(",", ""));
+    }
+
+    /**
+     * Gets count of chart elements on comparison reports
+     * @return String
+     */
+    public Integer getCountOfChartElements() {
+        waitForReportToLoad();
+        pageUtils.waitForElementToAppear(costMetricElementAboveChart);
+        pageUtils.waitForElementToAppear(chartCountElement);
+        return Integer.parseInt(chartCountElement.getAttribute("childElementCount"));
     }
 
     /**

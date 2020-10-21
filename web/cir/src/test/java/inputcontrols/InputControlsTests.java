@@ -11,6 +11,7 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -86,7 +87,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .setExportDateUsingInput(true, "?")
                 .setExportDateUsingInput(false, "?")
-                .clickScenarioDropdownTwice();
+                .clickUseLatestExportDropdownTwice();
 
         assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(true), is(true));
         assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(false), is(true));
@@ -570,6 +571,118 @@ public class InputControlsTests extends TestBase {
         assertIsTooltipElementVisible("DTC Score Value");
         assertIsTooltipElementVisible("Annual Spend Name");
         assertIsTooltipElementVisible("Annual Spend Value");
+    }
+
+    /**
+     * Generic test for invalid export set filter inputs
+     * @param reportName - String
+     * @param valueToInvalidate - String
+     */
+    public void testInvalidExportSetFilterDateInputs(String reportName, String valueToInvalidate) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        String invalidDate = genericReportPage.getInvalidDate(valueToInvalidate);
+        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
+
+        genericReportPage.setExportDateUsingInput(true, invalidDate)
+                .setExportDateUsingInput(false, invalidDate)
+                .clickUseLatestExportDropdownTwice();
+
+        if (valueToInvalidate.equals(DateElementsEnum.MONTH.getDateElement()) ||
+                valueToInvalidate.equals(DateElementsEnum.DAY.getDateElement())) {
+            assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(true), is(true));
+            assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(false), is(true));
+            assertThat(genericReportPage.getExportSetErrorText(true).isEmpty(), is(false));
+            assertThat(genericReportPage.getExportSetErrorText(false).isEmpty(), is(false));
+        } else {
+            genericReportPage.waitForCorrectExportSetListCount("Single export set selection.", "0");
+            assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+            assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
+        }
+    }
+
+    /**
+     * Generic test for Minimum Annual Spend
+     */
+    public void testMinimumAnnualSpend(String reportName, String exportSet) {
+        testMinimumAnnualSpendCore(reportName, exportSet, true);
+
+        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(), is(equalTo(new BigDecimal("6631000"))));
+
+        if (!reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
+            genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+            genericReportPage.hoverPartNameBubbleDtcReports();
+            BigDecimal annualSpendValue = genericReportPage.getAnnualSpendFromBubbleTooltip();
+
+            assertThat(
+                    annualSpendValue.compareTo(new BigDecimal("6631000")),
+                    is(equalTo(1))
+            );
+        }
+    }
+
+    /**
+     * Generic test for Minimum Annual Spend Details Reports
+     * @param reportName String
+     * @param exportSet String
+     */
+    public void testMinimumAnnualSpendDetailsReports(String reportName, String exportSet) {
+        testMinimumAnnualSpendCore(reportName, exportSet, true);
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName())) {
+            genericReportPage.waitForReportToLoad();
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+        } else {
+            BigDecimal valueForAssert = new BigDecimal("6631000.00");
+            assertThat(
+                    genericReportPage.getMinimumAnnualSpendFromAboveChart(),
+                    is(equalTo(valueForAssert))
+            );
+            assertThat(
+                    genericReportPage.getAnnualSpendValueDetailsReports().compareTo(valueForAssert),
+                    is(equalTo(1))
+            );
+        }
+    }
+
+    /**
+     * Generic test for Minimum Annual Spend Comparison Reports
+     * @param reportName String
+     * @param exportSet String
+     */
+    public void testMinimumAnnualSpendComparisonReports(String reportName, String exportSet) {
+        testMinimumAnnualSpendCore(reportName, exportSet, false);
+
+        Integer initialChartCount = genericReportPage.getCountOfChartElements();
+        genericReportPage.clickInputControlsButton()
+                .inputMinimumAnnualSpend()
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
+            genericReportPage.waitForReportToLoad();
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+        } else {
+            assertThat(genericReportPage.getCountOfChartElements().compareTo(initialChartCount), is(equalTo(-1)));
+        }
+    }
+
+    private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet);
+
+        if (setMinimumAnnualSpend) {
+            genericReportPage.inputMinimumAnnualSpend();
+        }
+
+        genericReportPage.clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
