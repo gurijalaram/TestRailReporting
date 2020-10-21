@@ -11,6 +11,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -258,5 +259,27 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 is(equalTo(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()))
         );
         assertThat(partName, is(startsWith(genericReportPage.getDtcPartSummaryPartNameValue())));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3031")
+    @Description("Verify Select Parts list controls function correctly")
+    public void testPartListInputControls() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ListNameEnum.PARTS_NO_SPACE.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3027")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpendDetailsReports(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
     }
 }

@@ -11,6 +11,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -350,6 +351,28 @@ public class PlasticDtcReportTests extends TestBase {
     public void testLinkToReportsUserGuide() throws Exception {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportsUserGuideNavigation(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1374")
+    @Description("Verify Select Parts list controls function correctly")
+    public void testPartListInputControls() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ListNameEnum.PARTS.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1371")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpend(
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
