@@ -32,8 +32,11 @@ public class CostScenarioTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluateToolbar = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluateToolbar.class)
-        .costScenario();
+            .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluateToolbar.class);
+
+        assertThat(evaluateToolbar.isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), is(true));
+
+        evaluateToolbar.costScenario();
 
         assertThat(evaluateToolbar.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
