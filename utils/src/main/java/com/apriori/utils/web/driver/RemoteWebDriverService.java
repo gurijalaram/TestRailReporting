@@ -79,7 +79,7 @@ public class RemoteWebDriverService extends BrowserManager {
 
                 case EDGE:
                     LOGGER.info("Starting EdgeDriver........ ");
-                    
+
                     EdgeOptions edgeOptions = new EdgeOptions();
                     edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
                     dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
