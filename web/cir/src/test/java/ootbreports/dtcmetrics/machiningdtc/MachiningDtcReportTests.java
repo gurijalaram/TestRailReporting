@@ -352,6 +352,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3572")
     @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
     public void testInvalidHourValueExportSetFilter() {
@@ -363,6 +364,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3573")
     @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
     public void testInvalidMinuteValueExportSetFilter() {
@@ -374,6 +376,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3575")
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
     public void testInvalidYearValueExportSetFilter() {
@@ -385,6 +388,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3576")
     @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
     public void testInvalidMonthValueExportSetFilter() {
@@ -396,6 +400,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3577")
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
     public void testInvalidDayValueExportSetFilter() {
@@ -407,6 +412,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3031")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -418,6 +424,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3027")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {

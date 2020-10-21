@@ -357,6 +357,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1374")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -368,6 +369,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1371")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
