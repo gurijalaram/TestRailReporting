@@ -58,7 +58,7 @@ public class DriverFactory {
                 throw new InvalidParameterException(String.format("Received unexpected test mode '%s' ", testMode));
         }
         return driver;
-    }	
+    }
 
     public WebDriver getDriver() {
         return driver;

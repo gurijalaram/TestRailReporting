@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
@@ -61,6 +62,7 @@ public class RemoteWebDriverService extends BrowserManager {
                     LOGGER.info("Starting ChromeDriver........ ");
 
                     ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
+                    options.setAcceptInsecureCerts(true);
                     dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                     dc.setCapability(ChromeOptions.CAPABILITY, options);
                     dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
@@ -70,13 +72,16 @@ public class RemoteWebDriverService extends BrowserManager {
                     LOGGER.info("Starting GeckoDriver........ ");
 
                     FirefoxProfile fp = new FirefoxProfile();
+                    fp.setAcceptUntrustedCertificates(true);
                     dc.setCapability(FirefoxDriver.PROFILE, fp);
                     dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
                     break;
 
                 case EDGE:
                     LOGGER.info("Starting EdgeDriver........ ");
-
+                    
+                    EdgeOptions edgeOptions = new EdgeOptions();
+                    edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
                     dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
                     break;
 
