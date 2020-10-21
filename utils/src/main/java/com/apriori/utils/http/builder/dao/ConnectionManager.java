@@ -286,10 +286,11 @@ public class ConnectionManager<T> {
 
                 createRequestSpecification()
                         .given()
-                        .relaxedHTTPSValidation()
+
                         .config(
                         RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
                                 ContentType.TEXT)))
+                        .relaxedHTTPSValidation()
                         .expect()
                         .when()
                         .post(requestEntity.buildEndpoint())
