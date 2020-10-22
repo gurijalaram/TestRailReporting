@@ -274,7 +274,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3029")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {

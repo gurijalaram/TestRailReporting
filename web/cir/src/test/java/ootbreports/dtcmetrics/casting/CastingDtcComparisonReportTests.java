@@ -126,7 +126,6 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
@@ -135,7 +134,6 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingInputField() {
@@ -192,7 +190,6 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
