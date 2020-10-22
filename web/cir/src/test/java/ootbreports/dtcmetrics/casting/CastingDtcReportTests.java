@@ -27,7 +27,6 @@ import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -342,6 +341,17 @@ public class CastingDtcReportTests extends TestBase {
     public void testLinkToReportsUserGuide() throws Exception {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportsUserGuideNavigation(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1700")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpend(
                 ReportNamesEnum.CASTING_DTC.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
         );
