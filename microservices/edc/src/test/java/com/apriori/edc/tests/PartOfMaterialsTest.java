@@ -2,42 +2,22 @@ package com.apriori.edc.tests;
 
 import com.apriori.apibase.services.response.objects.MaterialPart;
 import com.apriori.apibase.services.response.objects.MaterialPartWrapper;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.edc.tests.util.UserDataEDC;
-import com.apriori.edc.tests.util.UserTestDataUtil;
+import com.apriori.edc.tests.util.EdcTestUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaUiAuth;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.enums.common.api.PartsAPIEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PartOfMaterialsTest extends TestUtil {
-
-    private static UserTestDataUtil userTestDataUtil;
-    private static UserDataEDC userData;
-
-    @BeforeClass
-    public static void setUp() {
-        userTestDataUtil = new UserTestDataUtil();
-        userData = userTestDataUtil.initBillOfMaterials();
-    }
-
-    @AfterClass
-    public static void clearTestData() {
-        userTestDataUtil.clearTestData(userData);
-    }
+public class PartOfMaterialsTest extends EdcTestUtil {
 
     @Test
     @Description("Get list of parts")
@@ -48,10 +28,12 @@ public class PartOfMaterialsTest extends TestUtil {
                 .setInlineVariables(
                         userData.getBillOfMaterial().getIdentity(),
                         userData.getLineItem().getIdentity()
-                );
+                )
+                .setAutoLogin(true)
+                .setToken(token);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth()).getStatusCode());
+                GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getStatusCode());
     }
 
     @Test
@@ -63,10 +45,12 @@ public class PartOfMaterialsTest extends TestUtil {
                 .setInlineVariables(
                         userData.getBillOfMaterial().getIdentity(),
                         userData.getLineItem().getIdentity())
-                .setBody(userData.getMaterialPart());
+                .setBody(userData.getMaterialPart())
+                .setAutoLogin(true)
+                .setToken(token);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED,
-                GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth()).getStatusCode());
+                GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getStatusCode());
     }
 
     @Test
@@ -82,10 +66,12 @@ public class PartOfMaterialsTest extends TestUtil {
                 .setInlineVariables(
                         userData.getBillOfMaterial().getIdentity(),
                         userData.getLineItem().getIdentity())
-                .setBody(costingIdentity);
+                .setBody(costingIdentity)
+                .setAutoLogin(true)
+                .setToken(token);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth()).getStatusCode());
+                GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getStatusCode());
     }
 
     @Test
@@ -101,9 +87,11 @@ public class PartOfMaterialsTest extends TestUtil {
                 .setInlineVariables(
                         userData.getBillOfMaterial().getIdentity(),
                         userData.getLineItem().getIdentity())
-                .setBody(userData.getMaterialPart().setAverageCost(5f));
+                .setBody(userData.getMaterialPart().setAverageCost(5f))
+                .setAutoLogin(true)
+                .setToken(token);
 
-        final ResponseWrapper<MaterialPartWrapper> materialPartWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth());
+        final ResponseWrapper<MaterialPartWrapper> materialPartWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, materialPartWrapper.getStatusCode());
 
@@ -123,9 +111,11 @@ public class PartOfMaterialsTest extends TestUtil {
                         userData.getBillOfMaterial().getIdentity(),
                         materialPart.getLineItemIdentity(),
                         materialPart.getIdentity())
-                .setBody(userData.getMaterialPart().setAverageCost(5f));
+                .setBody(userData.getMaterialPart().setAverageCost(5f))
+                .setAutoLogin(true)
+                .setToken(token);
 
-        ResponseWrapper<MaterialPartWrapper> materialPartWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth());
+        ResponseWrapper<MaterialPartWrapper> materialPartWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, materialPartWrapper.getStatusCode());
     }

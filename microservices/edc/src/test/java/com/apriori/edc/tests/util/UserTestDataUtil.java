@@ -12,6 +12,7 @@ import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.utils.http.enums.common.api.PartsAPIEnum;
+import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
@@ -106,6 +107,7 @@ public class UserTestDataUtil {
 
         return (BillOfMaterialsWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaApi())
                 .getResponseEntity();
+
     }
 
     public void clearTestData(final UserDataEDC userDataEDC) {
@@ -113,7 +115,7 @@ public class UserTestDataUtil {
                 GenericRequestUtil.delete(
                         RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userDataEDC.getUserCredentials(), null)
                         .setInlineVariables(billOfMaterial.getIdentity())
-                        .setStatusCode(HttpStatus.SC_NO_CONTENT)
+                        .setStatusCode(HttpStatus.SC_NO_CONTENT, HttpStatus.SC_INTERNAL_SERVER_ERROR)
                         .setToken(this.getToken())
                         .setAutoLogin(true),
                         new RequestAreaApi()
@@ -128,7 +130,8 @@ public class UserTestDataUtil {
                 BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), null)
                 .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", testData))
                 .setToken(this.getToken())
-                .setAutoLogin(true);
+                .setAutoLogin(true)
+                .setFormParams(new FormParams().use("type", "WH"));
 
         GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi());
     }
