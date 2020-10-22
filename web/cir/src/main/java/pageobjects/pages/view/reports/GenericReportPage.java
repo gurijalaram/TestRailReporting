@@ -1200,11 +1200,11 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get Minimum Annual Spend value
-     * @return BigDecimal
+     * @return String
      */
-    public BigDecimal getMinimumAnnualSpendFromAboveChart() {
+    public String getMinimumAnnualSpendFromAboveChart() {
         pageUtils.waitForElementToAppear(minimumAnnualSpend);
-        return new BigDecimal(minimumAnnualSpend.getText().replace(",", ""));
+        return minimumAnnualSpend.getText();
     }
 
     /**
@@ -1247,6 +1247,7 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
+        pageUtils.waitFor(1000);
     }
 
     /**
