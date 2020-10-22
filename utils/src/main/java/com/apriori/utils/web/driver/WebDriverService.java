@@ -7,7 +7,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,8 +51,6 @@ public class WebDriverService extends BrowserManager {
 
                     ChromeOptions options = new ChromeDriverOptions(downloadPath, locale).getChromeOptions();
                     dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
-                    options.addArguments("--ignore-ssl-errors=yes");
-                    options.addArguments("--ignore-certificate-errors");
                     dc.setCapability(ChromeOptions.CAPABILITY, options);
                     result = new ChromeDriver(dc);
                     LOGGER.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
@@ -63,6 +60,7 @@ public class WebDriverService extends BrowserManager {
                     WebDriverManager.firefoxdriver().setup();
 
                     DesiredCapabilities firefoxOptions = new FirefoxOptions(downloadPath, locale).getFirefoxOptions();
+                    firefoxOptions.acceptInsecureCerts();
                     result = new FirefoxDriver(firefoxOptions);
                     LOGGER.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                     break;
