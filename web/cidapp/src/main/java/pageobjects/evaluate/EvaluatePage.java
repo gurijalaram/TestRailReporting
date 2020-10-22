@@ -2,16 +2,21 @@ package pageobjects.evaluate;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.navtoolbars.EvaluateToolbar;
 
-public class EvaluatePage extends LoadableComponent<EvaluatePage> {
+/**
+ * @author cfrith
+ */
+
+public class EvaluatePage extends EvaluateToolbar {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EvaluatePage.class);
 
@@ -39,52 +44,36 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
     @FindBy(css = "svg[data-icon='border-none']")
     private WebElement sectioningButton;
 
-    @FindBy(xpath = "//div[contains(text(),'Render')]")
-    private WebElement renderButton;
-
-    @FindBy(css = "button[data-ap-comp='solidViewerToolbarButton'][class='selected']")
-    private WebElement renderSelectedButton;
-
     @FindBy(css = "input[name='annualVolume']")
     private WebElement annualVolumeInput;
 
     @FindBy(css = "input[name='productionLife']")
     private WebElement productionLifeInput;
 
-    @FindBy(xpath = "//label[.='Current Scenario']/..//button[@class='dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//label[.='Current Scenario']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement currentScenarioDropdown;
 
-    @FindBy(xpath = "//label[.='Process Group']/..//button[@class='dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//label[.='Process Group']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement processGroupDropdown;
 
-    @FindBy(xpath = "//label[.='VPE']/..//button[@class='dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//label[.='VPE']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement vpeDropdown;
 
-    @FindBy(xpath = "//label[.='Secondary Process']/..//button[@class='dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//label[.='Secondary Process']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
     public EvaluatePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(leftPanel);
         pageUtils.waitForElementAppear(viewerCanvas);
-        pageUtils.waitForElementAndClick(renderButton);
-        pageUtils.waitForElementAppear(renderSelectedButton);
     }
 
     /**
@@ -93,7 +82,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectCurrentScenario(String scenarioName) {
-        pageUtils.selectDropdownOption(currentScenarioDropdown, scenarioName);
+        pageUtils.waitForElementAndClick(currentScenarioDropdown);
+        By currentScenario = By.xpath(String.format("//button[.='%s']", scenarioName));
+        pageUtils.waitForElementAndClick(currentScenario);
         return this;
     }
 
@@ -104,8 +95,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
-        pageUtils.waitForElementToBeClickable(processGroupDropdown);
-        pageUtils.selectDropdownOption(processGroupDropdown, processGroup);
+        pageUtils.waitForElementAndClick(processGroupDropdown);
+        By group = By.xpath(String.format("//button[.='%s']", processGroup));
+        pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
         return this;
     }
 
@@ -116,7 +108,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
-        pageUtils.selectDropdownOption(vpeDropdown, vpe);
+        pageUtils.waitForElementAndClick(vpeDropdown);
+        By vp = By.xpath(String.format("//button[.='%s']", vpe));
+        pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
         return this;
     }
 
@@ -126,7 +120,9 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return current page object
      */
     public EvaluatePage selectSecondaryProcess(String secondaryProcess) {
-        pageUtils.selectDropdownOption(secondaryProcessDropdown, secondaryProcess);
+        pageUtils.waitForElementAndClick(secondaryProcessDropdown);
+        By secProcess = By.xpath(String.format("//button[.='%s']", secondaryProcess));
+        pageUtils.scrollWithJavaScript(driver.findElement(secProcess), true).click();
         return this;
     }
 
