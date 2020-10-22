@@ -159,7 +159,6 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
     @TestRail(testCaseId = {"2973"})
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
@@ -171,7 +170,6 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
     @TestRail(testCaseId = {"2974"})
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
@@ -222,7 +220,6 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
     @TestRail(testCaseId = {"2978"})
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
@@ -238,7 +235,6 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
     @TestRail(testCaseId = {"2979"})
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
