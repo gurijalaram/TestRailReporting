@@ -255,13 +255,13 @@ public class DTCMachiningTests extends TestBase {
 
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("4")));
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("12")));
-        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "Tool Count"), is(equalTo("2")));
-        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "GCD Count"), is(equalTo("25")));
+        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "Tool Count"), is(equalTo("1")));
+        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "GCD Count"), is(equalTo("22")));
 
         investigationPage.selectInvestigationTopic("Machining Setups");
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("2")));
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:12", "GCD Count"), is(equalTo("100")));
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:13", "GCD Count"), is(equalTo("34")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("38")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:2", "GCD Count"), is(equalTo("59")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("39")));
     }
 
     @Test
