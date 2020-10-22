@@ -5,7 +5,9 @@ public enum NewCostingLabelEnum {
     COSTING_IN_PROGRESS("Costing in Progress"),
     UP_TO_DATE("Up To Date"),
     CREATED("Created"),
-    FETCHING("Fetching");
+    FETCHING("Fetching"),
+    UNCOSTED_SCENARIO("Uncosted Scenario"),
+    UNCOSTED_CHANGES("Uncosted Changes");
 
     private final String costingText;
 
