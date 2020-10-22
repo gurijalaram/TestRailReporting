@@ -12,6 +12,29 @@ allprojects {
     version = '0.0.1-SNAPSHOT'
 }
 
+
+//use this template to copy specific files into modules
+
+findModuleAndCopyRes(project(":utils").projectDir.path + "/src/main/resources/cas-int", "/resources", ":web:cas")
+
+///////////////////////////////////////////////////////
+
+void findModuleAndCopyRes( String fromDir, String toDir, String moduleName ) {
+    if (findProject(moduleName) != null) {
+        project(moduleName) {
+                    copyResources(fromDir, buildDir.path  + toDir)
+        }
+    }
+}
+
+void copyResources(String fromDir, String toDir) {
+    println 'Copying from dir: ' + fromDir + ' to dir: ' + toDir
+    copy {
+        from(fromDir)
+        into(toDir)
+    }
+}
+
 subprojects {
 
     apply plugin: 'java'
@@ -22,10 +45,6 @@ subprojects {
 
     def encodingType = 'UTF-8'
 
-    // Copy allure properties into each module test resources
-    processTestResources {
-        from project(":utils").projectDir.path + "/src/test/resources/allure.properties"
-    }
 
     repositories {
         mavenLocal()
@@ -76,8 +95,6 @@ subprojects {
 
         manifest {
             attributes 'Main-Class': 'testsuites.TestMain'
-
-            destinationDir = file("${project.rootDir}/fatJar")
         }
 
         from sourceSets.test.output
@@ -171,24 +188,5 @@ subprojects {
         implementation 'com.sun.mail:javax.mail:1.6.2'
         implementation 'javax.activation:activation:1.1.1'
         implementation 'pl.pragmatists:JUnitParams:1.1.1'
-    }
-}
-
-
-////////////////////////////// UTILS ///////////////////////////
-
-void findModuleAndCopyRes( String fromDir, String toDir, String moduleName ) {
-    if (findProject(moduleName) != null) {
-        project(moduleName) {
-            copyResources(fromDir, buildDir.path  + toDir)
-        }
-    }
-}
-
-void copyResources(String fromDir, String toDir) {
-    println 'Copying from dir: ' + fromDir + ' to dir: ' + toDir
-    copy {
-        from(fromDir)
-        into(toDir)
     }
 }
