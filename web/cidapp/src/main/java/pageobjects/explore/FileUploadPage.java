@@ -52,8 +52,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(modalDialog);
-        pageUtils.waitForElementToAppear(cancelButton);
+        pageUtils.waitForElementAppear(modalDialog);
+        pageUtils.waitForElementAppear(cancelButton);
     }
 
     /**
