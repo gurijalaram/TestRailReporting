@@ -20,7 +20,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
-    @FindBy(css = "h5.modal-title")
+    @FindBy(css = ".modal-content")
     private WebElement modalDialog;
 
     @FindBy(css = "input[type='file']")
@@ -100,7 +100,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return generic page object
      */
     public <T> T selectUploadButton(Class<T> className) {
-        pageUtils.waitForElementAndClick(uploadButton);
+        pageUtils.javaScriptClick(uploadButton);
         return PageFactory.initElements(driver, className);
     }
 
