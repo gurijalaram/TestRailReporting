@@ -10,8 +10,10 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -25,7 +27,6 @@ import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcReportTests extends TestBase {
 
@@ -323,5 +324,82 @@ public class MachiningDtcReportTests extends TestBase {
                 is(equalTo(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()))
         );
         assertThat(partName, is(startsWith(genericReportPage.getDtcPartSummaryPartNameValue())));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3572")
+    @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
+    public void testInvalidHourValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.HOUR.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3573")
+    @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
+    public void testInvalidMinuteValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.MINUTE.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3575")
+    @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
+    public void testInvalidYearValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.YEAR.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3576")
+    @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
+    public void testInvalidMonthValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.MONTH.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3577")
+    @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
+    public void testInvalidDayValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.DAY.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3031")
+    @Description("Verify Select Parts list controls function correctly")
+    public void testPartListInputControls() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ListNameEnum.PARTS.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3027")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpend(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
     }
 }
