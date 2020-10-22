@@ -1,19 +1,20 @@
 package com.apriori.edc.tests.util;
 
+import com.apriori.apibase.services.ats.apicalls.SecurityManager;
 import com.apriori.apibase.services.response.objects.BillOfMaterial;
 import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
 import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaUiAuth;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.utils.http.enums.common.api.PartsAPIEnum;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
-
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +26,26 @@ import java.util.Random;
 public class UserTestDataUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(UserTestDataUtil.class);
+    private String token;
 
     public UserDataEDC initEmptyUser() {
         UserCredentials userNamePass = UserUtil.getUser();
 
         return new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
+    }
+
+    public String getToken(){
+        return token == null ? token = this.initToken() : token;
+    }
+
+    public String initToken() {
+        return SecurityManager.retriveJwtToken(
+                Constants.getAtsServiceHost(),
+                HttpStatus.SC_CREATED,
+                Constants.getAtsTokenUsername(),
+                Constants.getAtsTokenEmail(),
+                Constants.getAtsTokenIssuer(),
+                Constants.getAtsTokenSubject());
     }
 
     public UserDataEDC initBillOfMaterials() {
@@ -65,9 +81,11 @@ public class UserTestDataUtil {
 
         RequestEntity requestEntity = RequestEntity.init(
                 PartsAPIEnum.GET_LINE_ITEMS, userDataEDC.getUserCredentials(), MaterialsLineItemsWrapper.class)
-                .setInlineVariables(userDataEDC.getBillOfMaterial().getIdentity());
+                .setInlineVariables(userDataEDC.getBillOfMaterial().getIdentity())
+                .setToken(this.getToken())
+                .setAutoLogin(true);
 
-        return (MaterialsLineItemsWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth())
+        return (MaterialsLineItemsWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaApi())
                 .getResponseEntity();
     }
 
@@ -82,9 +100,11 @@ public class UserTestDataUtil {
     private BillOfMaterialsWrapper getBillOfMaterials(UserDataEDC userDataEDC) {
 
         RequestEntity requestEntity = RequestEntity.init(
-                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), BillOfMaterialsWrapper.class);
+                BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), BillOfMaterialsWrapper.class)
+                .setToken(this.getToken())
+                .setAutoLogin(true);
 
-        return (BillOfMaterialsWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth())
+        return (BillOfMaterialsWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaApi())
                 .getResponseEntity();
     }
 
@@ -93,8 +113,10 @@ public class UserTestDataUtil {
                 GenericRequestUtil.delete(
                         RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userDataEDC.getUserCredentials(), null)
                         .setInlineVariables(billOfMaterial.getIdentity())
-                        .setStatusCode(HttpStatus.SC_NO_CONTENT),
-                        new RequestAreaUiAuth()
+                        .setStatusCode(HttpStatus.SC_NO_CONTENT)
+                        .setToken(this.getToken())
+                        .setAutoLogin(true),
+                        new RequestAreaApi()
                 )
         );
     }
@@ -104,9 +126,11 @@ public class UserTestDataUtil {
 
         RequestEntity requestEntity = RequestEntity.init(
                 BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), null)
-                .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", testData));
+                .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", testData))
+                .setToken(this.getToken())
+                .setAutoLogin(true);
 
-        GenericRequestUtil.postMultipart(requestEntity, new RequestAreaUiAuth());
+        GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi());
     }
 
     private MaterialLineItem getRandomLineItemWithParts(MaterialsLineItemsWrapper materialsLineItemsWrapper) {

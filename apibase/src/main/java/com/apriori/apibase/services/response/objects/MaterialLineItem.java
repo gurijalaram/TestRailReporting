@@ -1,6 +1,7 @@
 package com.apriori.apibase.services.response.objects;
 
 import com.apriori.utils.http.enums.Schema;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,11 +17,22 @@ public class MaterialLineItem {
     private String identity;
 
     @JsonProperty
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
 
     @JsonProperty
     private String createdBy;
+
+    @JsonProperty
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
+
+    @JsonProperty
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime deletedAt;
+
+    @JsonProperty
+    private String deletedBy;
 
     @JsonProperty
     private String costingStatus;
@@ -142,6 +154,33 @@ public class MaterialLineItem {
 
     public MaterialLineItem setStatus(String status) {
         this.status = status;
+        return this;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public MaterialLineItem setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public MaterialLineItem setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+        return this;
+    }
+
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    public MaterialLineItem setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
         return this;
     }
 }
