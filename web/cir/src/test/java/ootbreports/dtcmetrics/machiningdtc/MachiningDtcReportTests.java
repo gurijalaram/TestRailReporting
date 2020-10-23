@@ -298,6 +298,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2039")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
@@ -310,6 +311,7 @@ public class MachiningDtcReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         genericReportPage.hoverMachiningBubbleTwice();
+        genericReportPage.waitForCorrectPartName();
         genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
 

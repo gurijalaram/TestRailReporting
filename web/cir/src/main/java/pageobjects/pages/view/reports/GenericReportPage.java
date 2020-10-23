@@ -437,7 +437,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectExportSet(String exportSet) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         pageUtils.waitForSteadinessOfElement(locator);
-        pageUtils.waitForElementAndClick(driver.findElement(locator));
+        pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }
@@ -1247,7 +1247,14 @@ public class GenericReportPage extends ReportsPageHeader {
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
         hoverPartNameBubbleDtcReports();
-        pageUtils.waitFor(1000);
+    }
+
+    /**
+     * Waits for correct Part Name
+     */
+    public void waitForCorrectPartName() {
+        By locator = By.xpath("//*[contains(text(), 'PMI_PROFILEOFSURFACECREO (Initial) ')]");
+        pageUtils.waitForElementToAppear(locator);
     }
 
     /**
