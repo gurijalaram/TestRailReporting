@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.evaluate.EvaluatePage;
 
 /**
  * @author cfrith
@@ -41,10 +42,10 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return current page object
      */
-    public EvaluateToolbar costScenario() {
+    public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
         checkForCostLabel(2);
-        return this;
+        return new EvaluatePage(driver);
     }
 
     /**

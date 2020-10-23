@@ -62,7 +62,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Secondary Process']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
-    @FindBy(xpath = "//label[.'Material']/..//button")
+    @FindBy(xpath = "//label[.='Material']/..//button")
     private WebElement materialsButton;
 
     @FindBy(xpath = "//div[.='Material & Utilization']/../div[.='details']")
