@@ -68,7 +68,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
 
-    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(43)")
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(38)")
     private WebElement machiningDtcBubbleTwo;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
@@ -1246,14 +1246,17 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
+        waitForCorrectPartName(true);
         hoverPartNameBubbleDtcReports();
     }
 
     /**
      * Waits for correct Part Name
      */
-    public void waitForCorrectPartName() {
-        By locator = By.xpath("//*[contains(text(), 'PMI_PROFILEOFSURFACECREO (Initial) ')]");
+    public void waitForCorrectPartName(boolean initialCall) {
+        String partNameToExpect = initialCall ? Constants.PART_NAME_INITIAL_EXPECTED_MACHINING_DTC :
+                Constants.PART_NAME_EXPECTED_MACHINING_DTC;
+        By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partNameToExpect));
         pageUtils.waitForElementToAppear(locator);
     }
 
@@ -1261,6 +1264,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Clicks bubble to get to DTC Part Summary and Switches tab
      */
     public void clickMachiningBubbleAndSwitchTab() {
+        pageUtils.actionClick(machiningDtcBubbleTwo);
         pageUtils.actionClick(machiningDtcBubbleTwo);
 
         switchTab();
