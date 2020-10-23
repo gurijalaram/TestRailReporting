@@ -1265,7 +1265,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void clickMachiningBubbleAndSwitchTab() {
         pageUtils.actionClick(machiningDtcBubbleTwo);
-        pageUtils.actionClick(machiningDtcBubbleTwo);
 
         switchTab();
         pageUtils.waitForElementToAppear(upperTitle);
