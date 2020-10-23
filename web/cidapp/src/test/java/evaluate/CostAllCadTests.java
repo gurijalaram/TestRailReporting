@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.evaluate.CostDetailsPage;
 import pageobjects.evaluate.EvaluatePage;
+import pageobjects.explore.FileUploadPage;
 import pageobjects.login.CidAppLoginPage;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -31,6 +32,7 @@ public class CostAllCadTests extends TestBase {
 
     private File resourceFile;
     private CostDetailsPage costDetailsPage;
+    private FileUploadPage fileUploadPage;
 
     public CostAllCadTests() {
         super();
@@ -59,7 +61,8 @@ public class CostAllCadTests extends TestBase {
         assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.88"));
     }
 
-    @Test
+    // TODO: 23/10/2020 uncomment when functionality is implemented in app
+    /*@Test
     @TestRail(testCaseId = {"566"})
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
     public void costIncreaseDecrease() {
@@ -82,7 +85,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(referenceComparePage.getPiecePartCostDelta(), containsString("down"));
         assertThat(referenceComparePage.getFullyBurdenedCostDelta(), containsString("down"));
         assertThat(referenceComparePage.getTotalCapitalInvestmentsDelta(), containsString("up"));
-    }
+    }*/
 
     @Test
     @Category(SmokeTests.class)
@@ -245,11 +248,10 @@ public class CostAllCadTests extends TestBase {
         resourceFile = FileResourceUtil.getResourceAsFile("LargePart.prt.1");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluateHeader = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .checkForImage(1);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class);
 
-        assertThat(new EvaluatePage(driver).isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), (is(true)));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), (is(true)));
     }
 
     @Test
@@ -260,10 +262,10 @@ public class CostAllCadTests extends TestBase {
         resourceFile = FileResourceUtil.getResourceAsFile("LargePart.prt.1");
 
         loginPage = new CidAppLoginPage(driver);
-        warningPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk("<script>alert(document.cookie)</script>", resourceFile, WarningPage.class);
+        fileUploadPage = loginPage.login(UserUtil.getUser())
+            .uploadComponentAndOk("<script>alert(document.cookie)</script>", resourceFile, FileUploadPage.class);
 
-        assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
+        assertThat(fileUploadPage.getAlertWarning(), Matchers.containsString("error occurred"));
     }
 
     @Test
@@ -274,9 +276,9 @@ public class CostAllCadTests extends TestBase {
         resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
-        warningPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk("", resourceFile, WarningPage.class);
+        fileUploadPage = loginPage.login(UserUtil.getUser())
+            .uploadComponentAndOk("", resourceFile, FileUploadPage.class);
 
-        assertThat(warningPage.getWarningText(), Matchers.containsString("Some of the supplied inputs are invalid"));
+        assertThat(fileUploadPage.getFieldWarningText(), Matchers.containsString("Please fill in this field"));
     }
 }

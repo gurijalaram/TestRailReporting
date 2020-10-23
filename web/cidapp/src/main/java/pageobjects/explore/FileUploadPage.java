@@ -35,6 +35,12 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
     private WebElement cancelButton;
 
+    @FindBy(css = "//div[class='Toastify__toast-body']")
+    private WebElement alertWarning;
+
+    @FindBy(xpath = "//input[@name='scenarioName']/..//span")
+    private WebElement scenarioNameWarning;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -92,6 +98,22 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
         fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
         return this;
+    }
+
+    /**
+     * Gets alert warning
+     * @return string
+     */
+    public String getAlertWarning() {
+        return pageUtils.waitForElementToAppear(alertWarning).getText();
+    }
+
+    /**
+     * Gets scenario name warning
+     * @return string
+     */
+    public String getFieldWarningText() {
+        return pageUtils.waitForElementToAppear(scenarioNameWarning).getText();
     }
 
     /**

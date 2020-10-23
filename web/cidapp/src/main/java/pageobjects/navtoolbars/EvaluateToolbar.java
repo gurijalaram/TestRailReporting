@@ -49,6 +49,19 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
+     * Cost the scenario
+     *
+     * @param timeoutInMinutes - timeout in minutes
+     * @return current page object
+     */
+    public EvaluatePage costScenario(int timeoutInMinutes) {
+        pageUtils.waitForElementToAppear(costLabel);
+        pageUtils.waitForElementAndClick(costButton);
+        checkForCostLabel(timeoutInMinutes);
+        return new EvaluatePage(driver);
+    }
+
+    /**
      * Method to check cost label contains/doesn't contain text
      */
     public void checkForCostLabel(int timeoutInMinutes) {
