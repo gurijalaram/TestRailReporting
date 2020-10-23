@@ -5,6 +5,7 @@ import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialPart;
 import com.apriori.utils.users.UserCredentials;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class UserDataEDC {
     private String password;
     private String token;
 
+    private List<String> workingIdentities = new ArrayList<>();
     private List<BillOfMaterial> billOfMaterials;
     private BillOfMaterial billOfMaterial;
     private Map<String, String> authorizationHeaders;
@@ -134,6 +136,20 @@ public class UserDataEDC {
 
     public UserDataEDC setToken(String token) {
         this.token = token;
+        return this;
+    }
+
+    public List<String> getWorkingIdentities() {
+        return workingIdentities;
+    }
+
+    public UserDataEDC setWorkingIdentities(List<String> workingIdentities) {
+        this.workingIdentities = workingIdentities;
+        return this;
+    }
+
+    public UserDataEDC addWorkingIdentity(String identityToClear) {
+        this.workingIdentities.add(identityToClear);
         return this;
     }
 }
