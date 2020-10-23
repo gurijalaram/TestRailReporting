@@ -20,7 +20,7 @@ public class Constants {
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-aut";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-qa";
 
     public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
     public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
@@ -55,6 +55,7 @@ public class Constants {
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
     public static final String ASSEMBLY_STRING = "[assembly]";
+    public static final String PART_NAME_EXPECTED_MACHINING_DTC = "PMI_SYMMETRYCREO (Initial)";
     public static final String CASTING_DIE_SAND_NAME = String.format(
             "%s, %s",
             ProcessGroupEnum.CASTING_DIE.getProcessGroup(),

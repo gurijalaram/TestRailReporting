@@ -11,7 +11,7 @@ public enum MassMetricEnum {
     }
 
     /**
-     * Gets export set name
+     * Gets mass metric name
      *
      * @return String
      */
