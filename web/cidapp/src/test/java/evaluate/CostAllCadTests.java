@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
@@ -17,6 +17,7 @@ import io.qameta.allure.Description;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.evaluate.CostDetailsPage;
 import pageobjects.evaluate.EvaluatePage;
 import pageobjects.login.CidAppLoginPage;
 import testsuites.suiteinterface.SmokeTests;
@@ -29,6 +30,7 @@ public class CostAllCadTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
+    private CostDetailsPage costDetailsPage;
 
     public CostAllCadTests() {
         super();
@@ -49,8 +51,8 @@ public class CostAllCadTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openCostDetails()
-            .expandDropdown("Piece Part Cost")
-            .expandDropdown("Total Variable Costs");
+            .expandDropDown("Piece Part Cost")
+            .expandDropDown("Total Variable Costs");
 
         assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("15.87"));
         assertThat(costDetailsPage.getCostContribution("Labor "), containsString("6.82"));
@@ -96,7 +98,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -113,7 +115,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -130,7 +132,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -147,7 +149,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -164,7 +166,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -181,7 +183,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -198,7 +200,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -215,7 +217,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -232,7 +234,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), (is(true)));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), (is(true)));
     }
 
     @Test
@@ -247,7 +249,7 @@ public class CostAllCadTests extends TestBase {
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .checkForImage(1);
 
-        assertThat(new EvaluatePage(driver).isCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), (is(true)));
+        assertThat(new EvaluatePage(driver).isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), (is(true)));
     }
 
     @Test

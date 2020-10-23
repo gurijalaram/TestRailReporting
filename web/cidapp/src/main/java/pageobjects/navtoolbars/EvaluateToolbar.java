@@ -40,7 +40,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     /**
      * Cost the scenario
      *
-     * @return current page object
+     * @return new page object
      */
     public EvaluatePage costScenario() {
         pageUtils.waitForElementAndClick(costButton);
