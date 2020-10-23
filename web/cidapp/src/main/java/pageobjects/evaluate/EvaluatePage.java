@@ -62,6 +62,12 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Secondary Process']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
+    @FindBy(xpath = "//label[.'Material']/..//button")
+    private WebElement materialsButton;
+
+    @FindBy(xpath = "//div[.='Material & Utilization']/../div[.='details']")
+    private WebElement materialsDetailsButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -150,5 +156,15 @@ public class EvaluatePage extends EvaluateToolbar {
         productionLifeInput.sendKeys(Keys.DELETE);
         productionLifeInput.sendKeys(productionLife);
         return this;
+    }
+
+    /**
+     * Opens the material selector table
+     *
+     * @return new page object
+     */
+    public MaterialCompositionPage openMaterialSelectorTable() {
+        pageUtils.waitForElementAndClick(materialsButton);
+        return new MaterialCompositionPage(driver);
     }
 }
