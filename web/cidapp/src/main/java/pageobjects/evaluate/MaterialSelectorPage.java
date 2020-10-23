@@ -85,4 +85,16 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
         searchInput.sendKeys(text);
         return this;
     }
+
+    /**
+     * Selects the material
+     * @param materialName - material name
+     * @return current page object
+     */
+    public MaterialSelectorPage selectMaterial(String materialName) {
+        By material = By.xpath(String.format("//div[@role='row']//div[contains(text(),'%s')]", materialName));
+        pageUtils.waitForElementToAppear(material);
+        pageUtils.scrollWithJavaScript(driver.findElement(material), true).click();
+        return this;
+    }
 }
