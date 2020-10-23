@@ -1,6 +1,7 @@
 package com.apriori.edc.tests.util;
 
 import com.apriori.apibase.utils.TestUtil;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 

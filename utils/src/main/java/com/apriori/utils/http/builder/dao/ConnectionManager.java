@@ -1,5 +1,9 @@
 package com.apriori.utils.http.builder.dao;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
+
+import static org.hamcrest.Matchers.isOneOf;
+
 import com.apriori.utils.AuthorizationFormUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -14,6 +18,7 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
+
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.builder.RequestSpecBuilder;
@@ -27,13 +32,23 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -41,9 +56,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
-import static org.hamcrest.Matchers.isOneOf;
 
 /**
  * {@link ConnectionManager} class has the following purposes:
@@ -85,7 +97,7 @@ public class ConnectionManager<T> {
 
         if (multiPartFiles != null) {
             builder.setContentType("multipart/form-data");
-            for(Map.Entry<String, File> fileInfo : multiPartFiles.entrySet()) {
+            for (Map.Entry<String, File> fileInfo : multiPartFiles.entrySet()) {
                 builder.addMultiPart(
                         new  MultiPartSpecBuilder(fileInfo.getValue())
                                 .controlName("multiPartFile")
@@ -173,7 +185,7 @@ public class ConnectionManager<T> {
 
         UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
 
-        if(requestEntity.getToken() != null) {
+        if (requestEntity.getToken() != null) {
             return requestEntity.getToken();
         }
 

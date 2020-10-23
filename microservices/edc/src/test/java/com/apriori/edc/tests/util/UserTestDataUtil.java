@@ -1,7 +1,11 @@
 package com.apriori.edc.tests.util;
 
 import com.apriori.apibase.services.ats.apicalls.SecurityManager;
-import com.apriori.apibase.services.response.objects.*;
+import com.apriori.apibase.services.response.objects.BillOfMaterial;
+import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
+import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper;
+import com.apriori.apibase.services.response.objects.MaterialLineItem;
+import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -13,6 +17,7 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
+
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
