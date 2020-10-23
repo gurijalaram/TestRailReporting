@@ -11,9 +11,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MaterialCompositionPage extends LoadableComponent<MaterialCompositionPage> {
+public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(MaterialCompositionPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(MaterialSelectorPage.class);
 
     @FindBy(xpath = "//label[.='Type']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement typeDropdown;
@@ -30,7 +30,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public MaterialCompositionPage(WebDriver driver) {
+    public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -54,7 +54,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @param materialType - the type
      * @return current page object
      */
-    public MaterialCompositionPage selectType(String materialType) {
+    public MaterialSelectorPage selectType(String materialType) {
         pageUtils.waitForElementAndClick(typeDropdown);
         By type = By.xpath(String.format("//button[.='%s']", materialType));
         pageUtils.scrollWithJavaScript(driver.findElement(type), true).click();
@@ -67,7 +67,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @param selectionMethod - the selection method
      * @return current page object
      */
-    public MaterialCompositionPage selectionMethod(String selectionMethod) {
+    public MaterialSelectorPage selectionMethod(String selectionMethod) {
         pageUtils.waitForElementAndClick(methodDropdown);
         By method = By.xpath(String.format("//button[.='%s']", selectionMethod));
         pageUtils.scrollWithJavaScript(driver.findElement(method), true).click();
@@ -80,7 +80,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @param text - the text
      * @return current page object
      */
-    public MaterialCompositionPage search(String text) {
+    public MaterialSelectorPage search(String text) {
         pageUtils.waitForElementToAppear(searchInput).clear();
         searchInput.sendKeys(text);
         return this;

@@ -163,8 +163,8 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public MaterialCompositionPage openMaterialSelectorTable() {
+    public MaterialSelectorPage openMaterialSelectorTable() {
         pageUtils.waitForElementAndClick(materialsButton);
-        return new MaterialCompositionPage(driver);
+        return new MaterialSelectorPage(driver);
     }
 }
