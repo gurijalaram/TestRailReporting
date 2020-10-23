@@ -43,11 +43,13 @@ public class UserTestDataUtil {
     }
 
     public String initToken() {
+        UserCredentials userCredentials = UserUtil.getUser();
+
         return SecurityManager.retriveJwtToken(
                 Constants.getAtsServiceHost(),
                 HttpStatus.SC_CREATED,
-                Constants.getAtsTokenUsername(),
-                Constants.getAtsTokenEmail(),
+                userCredentials.getUsername().split("@")[0],
+                userCredentials.getUsername(),
                 Constants.getAtsTokenIssuer(),
                 Constants.getAtsTokenSubject());
     }
