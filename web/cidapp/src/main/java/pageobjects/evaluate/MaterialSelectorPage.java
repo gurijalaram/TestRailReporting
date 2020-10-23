@@ -27,6 +27,12 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     @FindBy(xpath = "//div[@class='apriori-table   scrollable-y ']")
     private WebElement materialTable;
 
+    @FindBy(xpath = "//button[.='Select']")
+    private WebElement selectButton;
+
+    @FindBy(xpath = "//button[.='Cancel']")
+    private WebElement cancelButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -96,5 +102,25 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
         pageUtils.waitForElementToAppear(material);
         pageUtils.scrollWithJavaScript(driver.findElement(material), true).click();
         return this;
+    }
+
+    /**
+     * Selects the select button
+     *
+     * @return new page object
+     */
+    public EvaluatePage select() {
+        pageUtils.waitForElementAndClick(selectButton);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Selects the cancel button
+     *
+     * @return new page object
+     */
+    public EvaluatePage cancel() {
+        pageUtils.waitForElementAndClick(cancelButton);
+        return new EvaluatePage(driver);
     }
 }
