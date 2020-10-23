@@ -1,6 +1,7 @@
 package com.apriori.utils.http.builder.dao;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
+
 import static org.hamcrest.Matchers.isOneOf;
 
 import com.apriori.utils.AuthorizationFormUtil;
@@ -19,6 +20,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.restassured.RestAssured;
+import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.HttpClientConfig;
@@ -30,6 +32,7 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -45,6 +48,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -93,7 +97,14 @@ public class ConnectionManager<T> {
 
         if (multiPartFiles != null) {
             builder.setContentType("multipart/form-data");
-            multiPartFiles.forEach(builder::addMultiPart);
+            for (Map.Entry<String, File> fileInfo : multiPartFiles.entrySet()) {
+                builder.addMultiPart(
+                        new  MultiPartSpecBuilder(fileInfo.getValue())
+                                .controlName("multiPartFile")
+                                .fileName(fileInfo.getValue().getName())
+                        .build()
+                );
+            }
         } else {
             builder.setContentType(ContentType.JSON);
         }
@@ -159,6 +170,7 @@ public class ConnectionManager<T> {
 
         return  RestAssured.given()
                 .spec(builder.build())
+
                 .redirects().follow(requestEntity.isFollowRedirection())
                 .log()
                 .all();
@@ -172,6 +184,10 @@ public class ConnectionManager<T> {
     private String getAuthToken() {
 
         UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
+
+        if (requestEntity.getToken() != null) {
+            return requestEntity.getToken();
+        }
 
         if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
             logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
