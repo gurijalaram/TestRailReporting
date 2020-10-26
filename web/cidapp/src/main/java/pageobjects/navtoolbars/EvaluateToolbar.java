@@ -78,4 +78,15 @@ public class EvaluateToolbar extends ExploreToolbar {
         pageUtils.waitForElementToAppear(costLabel);
         return pageUtils.textPresentInElement(costLabel, text);
     }
+
+    // TODO: 26/10/2020 currently a stub. will return a new page object (material utilization page) 
+    /**
+     * Opens the material composition dialog
+     *
+     * @return new page object
+     */
+    public EvaluatePage openMaterialUtilization() {
+        pageUtils.waitForElementAndClick(materialsDetails);
+        return this;
+    }
 }

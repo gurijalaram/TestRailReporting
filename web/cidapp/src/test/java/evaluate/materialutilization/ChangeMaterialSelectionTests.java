@@ -454,7 +454,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectMaterial("Inconel 625")
             .select()
             .costScenario()
-            .openMaterialSelectorTable();
+            .openMaterialUtilization();
 
         assertThat(materialSelectorPage.getMaterialInfo("Name"), is("Inconel 625"));
     }
