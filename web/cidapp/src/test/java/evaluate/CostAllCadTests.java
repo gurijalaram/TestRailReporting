@@ -51,14 +51,18 @@ public class CostAllCadTests extends TestBase {
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .clickSelectButton()
             .costScenario()
             .openCostDetails()
             .expandDropDown("Piece Part Cost")
-            .expandDropDown("Total Variable Costs");
+            .expandDropDown("Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("15.87"));
-        assertThat(costDetailsPage.getCostContribution("Labor "), containsString("6.82"));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.88"));
+        assertThat(costDetailsPage.getCostContribution("Material Cost"), containsString("15.87"));
+        assertThat(costDetailsPage.getCostContribution("Labor"), containsString("6.82"));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), containsString("1.88"));
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app
@@ -99,6 +103,10 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -116,6 +124,9 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -133,6 +144,10 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -150,6 +165,10 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -167,6 +186,10 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -184,6 +207,10 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -201,6 +228,10 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -218,6 +249,10 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -235,6 +270,9 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .clickSelectButton()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), (is(true)));
@@ -279,6 +317,6 @@ public class CostAllCadTests extends TestBase {
         fileUploadPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk("", resourceFile, FileUploadPage.class);
 
-        assertThat(fileUploadPage.getFieldWarningText(), Matchers.containsString("Please fill in this field"));
+        assertThat(fileUploadPage.getFieldWarningText(), Matchers.containsString("Scenario name is required."));
     }
 }
