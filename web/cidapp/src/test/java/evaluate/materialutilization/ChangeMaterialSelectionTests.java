@@ -446,7 +446,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
 
         loginPage = new CidAppLoginPage(driver);
-        materialSelectorPage = loginPage.login(UserUtil.getUser())
+        materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario()
@@ -456,7 +456,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario()
             .openMaterialUtilization();
 
-        assertThat(materialSelectorPage.getMaterialInfo("Name"), is("Inconel 625"));
+        assertThat(materialUtilizationPage.getMaterialInfo("Name"), is("Inconel 625"));
     }
 
     @Test
