@@ -202,7 +202,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public EvaluatePage openMaterialUtilization() {
-        pageUtils.waitForElementAndClick(materialsDetails);
+        pageUtils.waitForElementAndClick(materialsDetailsButton);
         return this;
     }
 }
