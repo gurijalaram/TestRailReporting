@@ -405,7 +405,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2027")
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsExportDates() {
@@ -425,7 +424,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2027")
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsExportSets() {
@@ -443,7 +441,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2027")
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsRollup() {
@@ -461,7 +458,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2027")
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsMinimumAnnualSpend() {
@@ -486,7 +482,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2027")
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsProcessGroup() {
@@ -505,7 +500,6 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2027")
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsDtcScore() {

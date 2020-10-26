@@ -437,7 +437,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectExportSet(String exportSet) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         pageUtils.waitForSteadinessOfElement(locator);
-        pageUtils.waitForElementAndClick(locator);
+        pageUtils.waitForElementAndClick(driver.findElement(locator));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }
