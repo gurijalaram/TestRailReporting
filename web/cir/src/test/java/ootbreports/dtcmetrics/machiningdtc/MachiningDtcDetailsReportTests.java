@@ -15,6 +15,7 @@ import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
@@ -260,5 +261,17 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlManufacturingIssues() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum());
     }
 }

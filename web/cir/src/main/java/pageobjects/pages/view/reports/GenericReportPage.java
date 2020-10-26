@@ -266,6 +266,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='latestExportDate']//div")
     private WebElement latestExportSetDateError;
 
+    @FindBy(xpath = "//div[@id='sortOrder']//a")
+    private WebElement sortOrderDropdown;
+
     @FindBy(xpath = "//div[@id='costMetric']//a")
     private WebElement costMetricDropdown;
 
@@ -567,6 +570,20 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!massMetricDropdown.getAttribute("title").equals(massMetric)) {
             massMetricDropdown.click();
             driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", massMetric))).click();
+        }
+        return this;
+    }
+
+    /**
+     * Selects cost metric, if necessary
+     * @param sortOrder - String
+     * @return current page object
+     */
+    public GenericReportPage selectSortOrder(String sortOrder) {
+        pageUtils.scrollWithJavaScript(sortOrderDropdown, true);
+        if (!sortOrderDropdown.getAttribute("title").equals(sortOrder)) {
+            sortOrderDropdown.click();
+            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", sortOrder))).click();
         }
         return this;
     }
