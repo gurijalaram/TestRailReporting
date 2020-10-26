@@ -830,11 +830,11 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets number of currently available created by users
+     * Gets number of currently available list items
      *
-     * @return String - count of created by users
+     * @return String - count of list items
      */
-    public String getCountOfListUsers(String listName, String option) {
+    public String getCountOfListAvailableItems(String listName, String option) {
         int substringVal = option.equals("Available") ? 11 : 10;
         By locator = By.xpath(String.format("//div[@title='%s']//span[contains(@title, '%s')]", listName, option));
         pageUtils.waitForElementToAppear(locator);
