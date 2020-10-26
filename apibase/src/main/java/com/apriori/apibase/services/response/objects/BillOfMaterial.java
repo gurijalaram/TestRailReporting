@@ -1,7 +1,7 @@
 package com.apriori.apibase.services.response.objects;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -21,8 +21,12 @@ public class BillOfMaterial {
     private Integer numberOfLineItemsCosted;
 
     @JsonProperty
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
+
+    @JsonProperty
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
 
     @JsonProperty
     private String createdBy;
@@ -166,6 +170,15 @@ public class BillOfMaterial {
 
     public BillOfMaterial setNumberOfLineItemsIncomplete(Integer numberOfLineItemsIncomplete) {
         this.numberOfLineItemsIncomplete = numberOfLineItemsIncomplete;
+        return this;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public BillOfMaterial setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
         return this;
     }
 }

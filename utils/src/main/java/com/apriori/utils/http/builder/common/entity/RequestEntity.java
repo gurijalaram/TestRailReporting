@@ -26,6 +26,8 @@ import java.util.Map;
  */
 public class RequestEntity {
 
+    private String token;
+
     private WebDriver driver;
     private UserAuthenticationEntity userAuthenticationEntity;
     private RequestInitService requestInitService;
@@ -69,6 +71,14 @@ public class RequestEntity {
                 .setEndpoint(endpoint);
     }
 
+
+    public static RequestEntity initWithToken(EndpointEnum endpoint, final String token, Class<?> returnType) {
+        return new RequestEntity()
+                .setToken(token)
+                .setEndpoint(endpoint)
+                .setReturnType(returnType);
+    }
+
     public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
                 .setReturnType(returnType)
@@ -109,6 +119,10 @@ public class RequestEntity {
     private RequestEntity(UserAuthenticationEntity userAuthenticationEntity, WebDriver driver) {
         this.userAuthenticationEntity = userAuthenticationEntity;
         this.driver = driver;
+    }
+
+    public RequestEntity() {
+
     }
 
     private List<Map<String, ?>> initFormUrlUserData() {
@@ -400,6 +414,15 @@ public class RequestEntity {
 
     public RequestEntity setUrlEncodingEnabled(boolean urlEncodingEnabled) {
         this.urlEncodingEnabled = urlEncodingEnabled;
+        return this;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public RequestEntity setToken(String token) {
+        this.token = token;
         return this;
     }
 }
