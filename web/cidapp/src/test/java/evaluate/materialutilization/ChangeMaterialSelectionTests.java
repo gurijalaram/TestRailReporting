@@ -454,7 +454,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectMaterial("Inconel 625")
             .select()
             .costScenario()
-            .openMaterialUtilization();
+            .openMaterialSelectorTable();
 
         assertThat(materialSelectorPage.getMaterialInfo("Name"), is("Inconel 625"));
     }
@@ -473,6 +473,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
+            // TODO: 26/10/2020 not yet implemented
             .selectExploreButton()
             .openScenario(scenarioName, "MACHINED BOX AMERICAS");
 
