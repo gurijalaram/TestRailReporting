@@ -16,7 +16,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.evaluate.EvaluatePage;
-import pageobjects.evaluate.MaterialSelectorPage;
 import pageobjects.login.CidAppLoginPage;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -26,7 +25,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private MaterialSelectorPage materialSelectorPage;
 
     private File resourceFile;
 
