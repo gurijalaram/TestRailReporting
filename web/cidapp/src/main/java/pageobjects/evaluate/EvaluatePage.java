@@ -194,4 +194,15 @@ public class EvaluatePage extends EvaluateToolbar {
         By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
         return pageUtils.waitForElementToAppear(materialsInfo).getText();
     }
+
+    // TODO: 26/10/2020 currently a stub. will return a new page object (material utilization page)
+    /**
+     * Opens the material composition dialog
+     *
+     * @return new page object
+     */
+    public EvaluatePage openMaterialUtilization() {
+        pageUtils.waitForElementAndClick(materialsDetails);
+        return this;
+    }
 }
