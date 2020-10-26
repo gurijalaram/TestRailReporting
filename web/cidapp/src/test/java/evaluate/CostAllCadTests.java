@@ -54,7 +54,7 @@ public class CostAllCadTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .clickSelectButton()
+            .select()
             .costScenario()
             .openCostDetails()
             .expandDropDown("Piece Part Cost")
@@ -106,7 +106,7 @@ public class CostAllCadTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -126,7 +126,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -147,7 +147,7 @@ public class CostAllCadTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -168,7 +168,7 @@ public class CostAllCadTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -189,7 +189,7 @@ public class CostAllCadTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -210,7 +210,7 @@ public class CostAllCadTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -231,7 +231,7 @@ public class CostAllCadTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -252,7 +252,7 @@ public class CostAllCadTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -272,7 +272,7 @@ public class CostAllCadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
-            .clickSelectButton()
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), (is(true)));

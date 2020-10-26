@@ -68,6 +68,10 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Material & Utilization']/../div[.='details']")
     private WebElement materialsDetailsButton;
 
+    @FindBy(xpath = "//div[.='Cost Results']/../div[.='details']")
+    private WebElement costDetailsButton;
+
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -84,6 +88,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Selects the current scenario
+     *
      * @param scenarioName - the scenario name
      * @return current page object
      */
@@ -122,6 +127,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Selects the secondary process
+     *
      * @param secondaryProcess - the secondary process
      * @return current page object
      */
@@ -167,4 +173,15 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.waitForElementAndClick(materialsButton);
         return new MaterialSelectorPage(driver);
     }
+
+    /**
+     * Opens the Cost Result Panel
+     *
+     * @return new page object
+     */
+    public CostDetailsPage openCostDetails() {
+        pageUtils.waitForElementAndClick(costDetailsButton);
+        return new CostDetailsPage(driver);
+    }
+
 }
