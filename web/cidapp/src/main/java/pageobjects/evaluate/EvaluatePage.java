@@ -184,4 +184,14 @@ public class EvaluatePage extends EvaluateToolbar {
         return new CostDetailsPage(driver);
     }
 
+    /**
+     * Gets material info
+     *
+     * @param material - the material
+     * @return material info as string
+     */
+    public String getMaterialInfo(String material) {
+        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
+        return pageUtils.waitForElementToAppear(materialsInfo).getText();
+    }
 }
