@@ -117,6 +117,15 @@
                 ],
                 "pattern": "^(.*)$"
               },
+              "updatedAt": {
+                "type": "string",
+                "title": "The Createdat Schema",
+                "default": "",
+                "examples": [
+                  "2020-02-03T16:53:00.000+0000"
+                ],
+                "pattern": "^(.*)$"
+              },
               "name": {
                 "type": "string",
                 "title": "The Name Schema",
