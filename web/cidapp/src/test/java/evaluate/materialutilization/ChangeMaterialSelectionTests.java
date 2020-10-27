@@ -48,14 +48,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Aluminum AlSi10Mg"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Aluminum AlSi10Mg")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Duraform ProX GF")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Duraform ProX GF"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Duraform ProX GF")));
     }
 
     @Test
@@ -71,14 +71,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Steel, Hot Worked, AISI 1010")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, AISI 316")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Stainless Steel, Stock, AISI 316"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Stainless Steel, Stock, AISI 316")));
     }
 
     @Test
@@ -94,14 +94,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Aluminum, Cast, ANSI AL380.0")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("ISO JMB 800-1")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("ISO JMB 800-1"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("ISO JMB 800-1")));
     }
 
     @Test
@@ -117,14 +117,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
             .costScenario(5);
 
-        assertThat(evaluatePage.getMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Aluminum, Cast, ANSI AL380.0")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Brass, Cast, Yellow 270")
             .select()
             .costScenario(5);
 
-        assertThat(evaluatePage.getMaterialInfo("Brass, Cast, Yellow 270"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Brass, Cast, Yellow 270")));
     }
 
     @Test
@@ -140,14 +140,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Aluminum, Cast, ANSI AL380.0")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Copper, Cast, UNS C28000")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Copper, Cast, UNS C28000"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Copper, Cast, UNS C28000")));
     }
 
     @Test
@@ -163,14 +163,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Cold Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Steel, Cold Worked, AISI 1010")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Titanium, Ti-5Al-2.5Sn")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Titanium, Ti-5Al-2.5Sn"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Titanium, Ti-5Al-2.5Sn")));
     }
 
     @Test
@@ -186,14 +186,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("ABS"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("ABS")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("PET 30% Glass")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("PET 30% Glass"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("PET 30% Glass")));
     }
 
     @Test
@@ -209,14 +209,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("F-0005"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("F-0005")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("FLN2-4405")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("FLN2-4405"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("FLN2-4405")));
     }
 
     @Test
@@ -232,14 +232,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Default"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Default")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("870 Black")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("870 Black"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("870 Black")));
     }
 
     @Test
@@ -255,14 +255,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Polyethylene, High Density (HDPE)"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Polyethylene, High Density (HDPE)")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Nylon, Type 46")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Nylon, Type 46"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Nylon, Type 46")));
     }
 
     @Test
@@ -278,14 +278,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Steel, Cold Worked, AISI 1020")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Inconel 625")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Inconel 625"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Inconel 625")));
     }
 
     @Test
@@ -301,14 +301,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Aluminum, Stock, ANSI 2017"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Aluminum, Stock, ANSI 2017")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Copper, Stock, UNS C11000")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Copper, Stock, UNS C11000"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Copper, Stock, UNS C11000")));
     }
 
     @Test
@@ -325,14 +325,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Steel, Cold Worked, AISI 1020")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("C60E")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("C60E"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("C60E")));
     }
 
     @Test
@@ -348,14 +348,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Polyethylene, HDPE Extrusion Sheet"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Polyethylene, HDPE Extrusion Sheet")));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Acrylic, PMMA")
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Acrylic, PMMA"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Acrylic, PMMA")));
     }
 
 //    @Test
@@ -411,7 +411,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Polyetheretherketone (PEEK)")));
     }
 
     @Test
@@ -435,7 +435,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Polyetheretherketone (PEEK)")));
     }
 
     @Test
@@ -456,7 +456,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario()
             .openMaterialUtilization();
 
-        assertThat(materialUtilizationPage.getMaterialInfo("Name"), is(equalTo("Inconel 625")));
+        assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("Inconel 625")));
     }
 
     @Test
@@ -476,7 +476,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .clickExplore()
             .openScenario(scenarioName, "MACHINED BOX AMERICAS");
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Steel, Hot Worked, AISI 1095")));
     }
 
     @Test
@@ -495,7 +495,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Steel, Hot Worked, AISI 1010")));
     }
 
     @Test
@@ -513,7 +513,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .select()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Steel, Cold Worked, AISI 1020")));
     }
 
     @Test
@@ -532,6 +532,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .cancel()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Cold Worked, AISI 1020"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Steel, Cold Worked, AISI 1020")));
     }
 }
