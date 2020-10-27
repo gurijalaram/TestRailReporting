@@ -190,11 +190,10 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Gets material info
      *
-     * @param material - the material
      * @return material info as string
      */
-    public String getMaterialInfo(String material) {
-        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
+    public String getMaterialInfo() {
+        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value]"));
         return pageUtils.waitForElementToAppear(materialsInfo).getAttribute("defaultValue");
     }
 
@@ -207,4 +206,5 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.waitForElementAndClick(materialsDetailsButton);
         return new MaterialUtilizationPage(driver);
     }
+
 }
