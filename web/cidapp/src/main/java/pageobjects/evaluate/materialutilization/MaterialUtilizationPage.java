@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.common.PanelController;
+import pageobjects.evaluate.EvaluatePage;
 
 public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizationPage> {
 
@@ -29,6 +30,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
         this.panelController = new PanelController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        this.get();
     }
 
     @Override
@@ -47,8 +49,16 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
      * @param materialInfo
      * @return string
      */
-    public String getMaterialInfo(String materialInfo) {
+    public String getUtilizationInfo(String materialInfo) {
         By info = By.xpath(String.format("//span[.='%s']/..//span[@class='property-value']", materialInfo));
-        return pageUtils.waitForElementToAppear(info).getAttribute("textContent");
+        return pageUtils.waitForElementToAppear(info).getAttribute("defaultValue");
+    }
+
+    /**
+     * Closes current panel
+     * @return new page object
+     */
+    public EvaluatePage closePanel() {
+        return panelController.closePanel();
     }
 }
