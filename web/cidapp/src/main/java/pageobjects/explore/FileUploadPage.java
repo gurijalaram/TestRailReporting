@@ -20,7 +20,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     private final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
-    @FindBy(css = "h5.modal-title")
+    @FindBy(css = ".modal-content")
     private WebElement modalDialog;
 
     @FindBy(css = "input[type='file']")
@@ -34,6 +34,12 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
     private WebElement cancelButton;
+
+    @FindBy(css = "//div[class='Toastify__toast-body']")
+    private WebElement alertWarning;
+
+    @FindBy(xpath = "//input[@name='scenarioName']/..//span")
+    private WebElement scenarioNameWarning;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -95,12 +101,28 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     }
 
     /**
+     * Gets alert warning
+     * @return string
+     */
+    public String getAlertWarning() {
+        return pageUtils.waitForElementToAppear(alertWarning).getText();
+    }
+
+    /**
+     * Gets scenario name warning
+     * @return string
+     */
+    public String getFieldWarningText() {
+        return pageUtils.waitForElementToAppear(scenarioNameWarning).getText();
+    }
+
+    /**
      * Selects the upload button
      *
      * @return generic page object
      */
     public <T> T selectUploadButton(Class<T> className) {
-        pageUtils.waitForElementAndClick(uploadButton);
+        pageUtils.javaScriptClick(uploadButton);
         return PageFactory.initElements(driver, className);
     }
 
