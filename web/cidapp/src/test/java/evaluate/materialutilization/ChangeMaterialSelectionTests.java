@@ -1,5 +1,6 @@
 package evaluate.materialutilization;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -16,6 +17,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.evaluate.EvaluatePage;
+import pageobjects.evaluate.materialutilization.MaterialUtilizationPage;
 import pageobjects.login.CidAppLoginPage;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -27,6 +29,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
+    private MaterialUtilizationPage materialUtilizationPage;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -454,7 +457,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario()
             .openMaterialUtilization();
 
-        assertThat(materialUtilizationPage.getMaterialInfo("Name"), is("Inconel 625"));
+        assertThat(materialUtilizationPage.getMaterialInfo("Name"), is(equalTo("Inconel 625")));
     }
 
     @Test

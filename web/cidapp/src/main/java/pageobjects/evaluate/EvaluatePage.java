@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.evaluate.materialutilization.MaterialUtilizationPage;
 import pageobjects.navtoolbars.EvaluateToolbar;
 
 /**
@@ -195,14 +196,13 @@ public class EvaluatePage extends EvaluateToolbar {
         return pageUtils.waitForElementToAppear(materialsInfo).getText();
     }
 
-    // TODO: 26/10/2020 currently a stub. will return a new page object (material utilization page)
     /**
      * Opens the material composition dialog
      *
      * @return new page object
      */
-    public EvaluatePage openMaterialUtilization() {
+    public MaterialUtilizationPage openMaterialUtilization() {
         pageUtils.waitForElementAndClick(materialsDetailsButton);
-        return this;
+        return new MaterialUtilizationPage(driver);
     }
 }
