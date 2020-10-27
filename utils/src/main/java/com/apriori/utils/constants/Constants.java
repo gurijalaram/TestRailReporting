@@ -20,7 +20,7 @@ public class Constants {
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-int";
 
     public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
     public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
