@@ -218,6 +218,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .select()
             .costScenario()
             .openMaterialSelectorTable()
+            .search("625")
             .selectMaterial("Inconel 625")
             .select()
             .costScenario()
@@ -226,7 +227,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("Inconel 625")));
     }
 
-    @Test
+/*    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"884", "888"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
@@ -242,11 +243,12 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario()
             .clickExplore()
             .openScenario(scenarioName, "MACHINED BOX AMERICAS");
+        // TODO: 27/10/2020 not fully implemented
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1095"), is(true));
-    }
+    }*/
 
-    @Test
+/*    @Test
     @TestRail(testCaseId = {"885"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
@@ -258,12 +260,13 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialSelectorTable()
+            // TODO: 27/10/2020 not fully implemented
             .selectionMethod("MCAD <material not found - VPE default used>")
             .select()
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));
-    }
+    }*/
 
     @Test
     @TestRail(testCaseId = {"905"})
