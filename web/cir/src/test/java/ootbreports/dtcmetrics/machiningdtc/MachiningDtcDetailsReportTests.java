@@ -270,8 +270,87 @@ public class MachiningDtcDetailsReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
-                .selectSortOrder(SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum());
+                .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.isRowOneIssuesGreaterThanRowTwo(), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlDesignStandards() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.isRowOneDesignIssuesMoreThanRowThree(), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlTolerances() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.isRowOneTolerancesGreaterThanRowTwo(), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlSlowOperations() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.isRowOneSlowOperationsGreaterThanRowTwo(), is(equalTo(1)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlAnnualSpend() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.isRowOneAnnualSpendGreaterThanRowTwo(), is(equalTo(1)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlDtcRank() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getDtcRankMachiningDtcDetails(true), is(equalTo("6")));
+        assertThat(genericReportPage.getDtcRankMachiningDtcDetails(false), is(equalTo("5")));
     }
 }

@@ -404,6 +404,60 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@class='highcharts-root'])[1]//*[contains(@class, 'highcharts-xaxis-labels')]")
     private WebElement chartCountElement;
 
+    @FindBy(xpath = "//table/tbody/tr[13]/td[28]/span")
+    private WebElement machiningDtcDetailsRowOneSharpCornerIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[30]/span")
+    private WebElement machiningDtcDetailsRowOneObstructedCornerIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[32]/span")
+    private WebElement machiningDtcDetailsRowOneLdRatioIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[28]/span")
+    private WebElement machiningDtcDetailsRowTwoSharpCornerIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[30]/span")
+    private WebElement machiningDtcDetailsRowTwoObstructedCornerIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[32]/span")
+    private WebElement machiningDtcDetailsRowTwoLdRatioIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[42]/span")
+    private WebElement machiningDtcDetailsRowOneTolerances;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[42]/span")
+    private WebElement machiningDtcDetailsRowTwoTolerances;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[34]/span")
+    private WebElement machiningDtcDetailsRowOneTime;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[34]/span")
+    private WebElement machiningDtcDetailsRowTwoTime;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[20]/span")
+    private WebElement machiningDtcDetailsRowOneAnnualSpend;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[20]/span")
+    private WebElement machiningDtcDetailsRowTwoAnnualSpend;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[24]/span")
+    private WebElement machiningDtcDetailsRowOneDtcRank;
+
+    @FindBy(xpath = "//table/tbody/tr[17]/td[24]/span")
+    private WebElement machiningDtcDetailsRowThreeDtcRank;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[38]/span")
+    private WebElement machiningDtcDetailsRowOneFillet;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[40]/span")
+    private WebElement machiningDtcDetailsRowOneHole;
+
+    @FindBy(xpath = "//table/tbody/tr[17]/td[38]/span")
+    private WebElement machiningDtcDetailsRowTwoFillet;
+
+    @FindBy(xpath = "//table/tbody/tr[17]/td[40]/span")
+    private WebElement machiningDtcDetailsRowTwoHole;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -440,7 +494,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectExportSet(String exportSet) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         pageUtils.waitForSteadinessOfElement(locator);
-        pageUtils.waitForElementAndClick(driver.findElement(locator));
+        pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }
@@ -1742,6 +1796,94 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(costMetricElementAboveChart);
         pageUtils.waitForElementToAppear(chartCountElement);
         return Integer.parseInt(chartCountElement.getAttribute("childElementCount"));
+    }
+
+    /**
+     * Gets values and ensures that row one is greater than row two
+     * @return boolean
+     */
+    public boolean isRowOneIssuesGreaterThanRowTwo() {
+        pageUtils.waitForElementToAppear(machiningDtcDetailsRowOneSharpCornerIssues);
+        pageUtils.waitForElementToAppear(machiningDtcDetailsRowTwoSharpCornerIssues);
+
+        int sharpCornerIssuesRowOne = Integer.parseInt(machiningDtcDetailsRowOneSharpCornerIssues.getText());
+        int obstructedCornerIssuesRowOne = Integer.parseInt(machiningDtcDetailsRowOneObstructedCornerIssues.getText());
+        int ldRatioIssuesRowOne = Integer.parseInt(machiningDtcDetailsRowOneLdRatioIssues.getText());
+        int rowOneTotal = sharpCornerIssuesRowOne + obstructedCornerIssuesRowOne + ldRatioIssuesRowOne;
+
+        int sharpCornerIssuesRowTwo = Integer.parseInt(machiningDtcDetailsRowTwoSharpCornerIssues.getText());
+        int obstructedCornerIssuesRowTwo = Integer.parseInt(machiningDtcDetailsRowTwoObstructedCornerIssues.getText());
+        int ldRatioIssuesRowTwo = Integer.parseInt(machiningDtcDetailsRowTwoLdRatioIssues.getText());
+        int rowTwoTotal = sharpCornerIssuesRowTwo + obstructedCornerIssuesRowTwo + ldRatioIssuesRowTwo;
+        return rowOneTotal > rowTwoTotal;
+    }
+
+    /**
+     * Gets and checks if design standards row one more than row three
+     */
+    public boolean isRowOneDesignIssuesMoreThanRowThree() {
+        pageUtils.waitForElementToAppear(machiningDtcDetailsRowOneFillet);
+        int rowOneValOne = Integer.parseInt(machiningDtcDetailsRowOneFillet.getText());
+        int rowOneValTwo = Integer.parseInt(machiningDtcDetailsRowOneHole.getText());
+        int rowOneTotal = rowOneValOne + rowOneValTwo;
+
+        int rowTwoValOne = Integer.parseInt(machiningDtcDetailsRowTwoHole.getText());
+        int rowTwoValTwo = Integer.parseInt(machiningDtcDetailsRowTwoFillet.getText());
+        int rowTwoTotal = rowTwoValOne + rowTwoValTwo;
+
+        return rowOneTotal > rowTwoTotal;
+    }
+
+    /**
+     * Gets values and ensures that row one is greater than row two
+     * @return boolean
+     */
+    public boolean isRowOneTolerancesGreaterThanRowTwo() {
+        pageUtils.waitForElementToAppear(machiningDtcDetailsRowOneTolerances);
+        pageUtils.waitForElementToAppear(machiningDtcDetailsRowTwoTolerances);
+        return Integer.parseInt(machiningDtcDetailsRowOneTolerances.getText()) >
+                Integer.parseInt(machiningDtcDetailsRowTwoTolerances.getText());
+    }
+
+    /**
+     * Gets values and ensures that row one is greater than row two
+     * @return int
+     */
+    public int isRowOneSlowOperationsGreaterThanRowTwo() {
+        pageUtils.waitForElementToAppear(machiningDtcDetailsRowOneTime);
+        BigDecimal slowOperationsRowOne =
+                new BigDecimal(machiningDtcDetailsRowOneTime.getText().replace(",", ""));
+        BigDecimal slowOperationsRowTwo =
+                new BigDecimal(machiningDtcDetailsRowTwoTime.getText().replace(",", ""));
+        return slowOperationsRowOne.compareTo(slowOperationsRowTwo);
+    }
+
+    /**
+     * Gets values and ensures that row one is greater than row two
+     * @return int
+     */
+    public int isRowOneAnnualSpendGreaterThanRowTwo() {
+        pageUtils.waitForElementToAppear(machiningDtcDetailsRowOneAnnualSpend);
+        BigDecimal annualSpendRowOne =
+                new BigDecimal(machiningDtcDetailsRowOneAnnualSpend.getText()
+                        .replace(",", "")
+                        .replace("\n", ""));
+        BigDecimal annualSpendRowTwo =
+                new BigDecimal(machiningDtcDetailsRowTwoAnnualSpend.getText()
+                        .replace(",", "")
+                        .replace("\n", ""));
+        return annualSpendRowOne.compareTo(annualSpendRowTwo);
+    }
+
+    /**
+     * Gets DTC Rank value for row one or two
+     * @param useRowOne
+     * @return String
+     */
+    public String getDtcRankMachiningDtcDetails(boolean useRowOne) {
+        WebElement elementToUse = useRowOne ? machiningDtcDetailsRowOneDtcRank : machiningDtcDetailsRowThreeDtcRank;
+        pageUtils.waitForElementToAppear(elementToUse);
+        return elementToUse.getText();
     }
 
     /**

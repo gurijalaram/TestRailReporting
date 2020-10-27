@@ -5,7 +5,8 @@ public enum SortOrderEnum {
     DESIGN_STANDARDS("Design Standards"),
     TOLERANCES("Tolerances"),
     SLOW_OPERATIONS("Slow Operations"),
-    ANNUAL_SPEND("Annual Spend");
+    ANNUAL_SPEND("Annual Spend"),
+    DTC_RANK("DTC Rank");
 
     private final String sortOrder;
 
