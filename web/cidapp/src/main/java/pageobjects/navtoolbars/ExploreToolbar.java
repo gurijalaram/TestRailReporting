@@ -97,4 +97,14 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
     }
+
+    /**
+     * Publish the scenario
+     *
+     * @return new page object
+     */
+    public <T> T publishScenario(Class<T> className) {
+        pageUtils.waitForElementAndClick(publishButton);
+        return PageFactory.initElements(driver, className);
+    }
 }

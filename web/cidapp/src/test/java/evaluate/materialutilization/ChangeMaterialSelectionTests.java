@@ -9,7 +9,6 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -359,36 +358,36 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.getMaterialInfo("Acrylic, PMMA"), is(true));
     }
 
-    @Test
-    @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"864", "866", "867", "889"})
-    @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
-    public void changeMaterialSelectionTestStockMachining() {
-
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario();
-
-        assertThat(evaluatePage.getMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
-
-        evaluatePage.openMaterialSelectorTable()
-            .selectMaterial("Polyetheretherketone (PEEK)")
-            .select()
-            .costScenario()
-            // TODO: 26/10/2020 not yet implemented
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(scenarioName, "bracket_basic");
-
-        assertThat(evaluatePage.getMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
-    }
+//    @Test
+//    @Category(SmokeTests.class)
+//    @TestRail(testCaseId = {"864", "866", "867", "889"})
+//    @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
+//    public void changeMaterialSelectionTestStockMachining() {
+//
+//        String scenarioName = new GenerateStringUtil().generateScenarioName();
+//        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+//
+//        loginPage = new CidAppLoginPage(driver);
+//        evaluatePage = loginPage.login(UserUtil.getUser())
+//            .uploadComponentAndOk(scenarioName, resourceFile, EvaluatePage.class)
+//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+//            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+//            .costScenario();
+//
+//        assertThat(evaluatePage.getMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+//
+//        evaluatePage.openMaterialSelectorTable()
+//            .selectMaterial("Polyetheretherketone (PEEK)")
+//            .select()
+//            .costScenario()
+//            // TODO: 27/10/2020 not fully implemented
+//            .publishScenario(PublishPage.class)
+//            .selectPublishButton()
+//            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+//            .openScenario(scenarioName, "bracket_basic");
+//
+//        assertThat(evaluatePage.getMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
+//    }
 
     @Test
     @TestRail(testCaseId = {"865"})
