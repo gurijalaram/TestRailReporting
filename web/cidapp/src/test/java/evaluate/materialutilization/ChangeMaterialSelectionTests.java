@@ -474,7 +474,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            // TODO: 26/10/2020 not yet implemented
             .goExplore()
             .openScenario(scenarioName, "MACHINED BOX AMERICAS");
 
