@@ -51,6 +51,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
 
         evaluatePage.openMaterialSelectorTable()
+            .cancel()
+            .openMaterialSelectorTable()
             .search("270")
             .selectMaterial("Brass, Cast, Yellow 270")
             .submit()
@@ -79,6 +81,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
 
         evaluatePage.openMaterialSelectorTable()
+            .cancel()
+            .openMaterialSelectorTable()
             .search("C28000")
             .selectMaterial("Copper, Cast, UNS C28000")
             .submit()
@@ -106,6 +110,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfoDisplayed("ABS"), is(true));
 
         evaluatePage.openMaterialSelectorTable()
+            .cancel()
+            .openMaterialSelectorTable()
             .search("PET")
             .selectMaterial("PET 30% Glass")
             .submit()
@@ -191,6 +197,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit()
             .costScenario()
             .openMaterialSelectorTable()
+            .cancel()
+            .openMaterialSelectorTable()
             .search("PEEK")
             .selectMaterial("Polyetheretherketone (PEEK)")
             .submit()
@@ -215,6 +223,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectMaterial("Steel, Cold Worked, AISI 1020")
             .submit()
             .costScenario()
+            .openMaterialSelectorTable()
+            .cancel()
             .openMaterialSelectorTable()
             .search("625")
             .selectMaterial("Inconel 625")
@@ -303,6 +313,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
             .submit()
+            .openMaterialSelectorTable()
+            .cancel()
             .openMaterialSelectorTable()
             .search("316")
             .selectMaterial("Stainless Steel, Stock, AISI 316")
