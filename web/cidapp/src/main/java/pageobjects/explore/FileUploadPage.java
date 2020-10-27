@@ -29,8 +29,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = "input[name='scenarioName']")
     private WebElement scenarioNameInput;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Upload']")
-    private WebElement uploadButton;
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Submit']")
+    private WebElement submitButton;
 
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
     private WebElement cancelButton;
@@ -122,7 +122,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return generic page object
      */
     public <T> T selectUploadButton(Class<T> className) {
-        pageUtils.javaScriptClick(uploadButton);
+        pageUtils.javaScriptClick(submitButton);
         return PageFactory.initElements(driver, className);
     }
 
