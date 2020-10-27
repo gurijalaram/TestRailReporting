@@ -188,13 +188,13 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets material info
+     * Checks material info is displayed
      *
-     * @return material info as string
+     * @return true/false
      */
-    public String getMaterialInfo() {
-        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value]"));
-        return pageUtils.waitForElementToAppear(materialsInfo).getAttribute("defaultValue");
+    public boolean isMaterialInfoDisplayed(String material) {
+        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
+        return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
     }
 
     /**
