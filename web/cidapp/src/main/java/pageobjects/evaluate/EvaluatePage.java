@@ -196,7 +196,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public String getMaterialInfo(String material) {
         By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
-        return pageUtils.waitForElementToAppear(materialsInfo).getText();
+        return pageUtils.waitForElementToAppear(materialsInfo).getAttribute("textContext");
     }
 
     /**
