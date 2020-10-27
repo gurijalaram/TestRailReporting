@@ -48,14 +48,15 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .select()
-            .costScenario(5);
+            .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
 
         evaluatePage.openMaterialSelectorTable()
+            .search("270")
             .selectMaterial("Brass, Cast, Yellow 270")
             .select()
-            .costScenario(5);
+            .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Brass, Cast, Yellow 270"), is(true));
     }
@@ -71,11 +72,16 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
 
         evaluatePage.openMaterialSelectorTable()
+            .search("C28000")
             .selectMaterial("Copper, Cast, UNS C28000")
             .select()
             .costScenario();
@@ -94,11 +100,15 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("ABS"), is(true));
 
         evaluatePage.openMaterialSelectorTable()
+            .search("PET")
             .selectMaterial("PET 30% Glass")
             .select()
             .costScenario();
@@ -117,11 +127,16 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .select()
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Cold Worked, AISI 1020"), is(true));
 
         evaluatePage.openMaterialSelectorTable()
+            .search("625")
             .selectMaterial("Inconel 625")
             .select()
             .costScenario();
@@ -162,7 +177,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 //    }
 
     @Test
-    @TestRail(testCaseId = {"865"})
+    @TestRail(testCaseId = {"865", "868", "875"})
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
 
@@ -172,37 +187,13 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
             .openMaterialSelectorTable()
-            .selectMaterial("Polyetheretherketone (PEEK)")
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
             .select()
             .costScenario()
             .openMaterialSelectorTable()
-            .selectMaterial("Polyetheretherketone (PEEK)")
-            .selectMaterial("Polyetheretherketone (PEEK)")
-            .select()
-            .costScenario();
-
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"868", "875"})
-    @Description("Test de-selecting the material, previous material applied and the scenario can be cost")
-    public void changeMaterialSelectionTestDeSelect() {
-
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openMaterialSelectorTable()
-            .selectMaterial("Polyetheretherketone (PEEK)")
-            .select()
-            .costScenario()
-            .openMaterialSelectorTable()
+            .search("PEEK")
             .selectMaterial("Polyetheretherketone (PEEK)")
             .select()
             .costScenario();
@@ -221,6 +212,10 @@ public class ChangeMaterialSelectionTests extends TestBase {
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .select()
             .costScenario()
             .openMaterialSelectorTable()
             .selectMaterial("Inconel 625")
@@ -282,6 +277,10 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .select()
+            .openMaterialSelectorTable()
             .select()
             .costScenario();
 
@@ -300,6 +299,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .select()
+            .openMaterialSelectorTable()
+            .search("316")
             .selectMaterial("Stainless Steel, Stock, AISI 316")
             .cancel()
             .costScenario();
