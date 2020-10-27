@@ -246,7 +246,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .goExplore()
+            .clickExplore()
             .openScenario(scenarioName, "MACHINED BOX AMERICAS");
 
         assertThat(evaluatePage.getMaterialInfo("Steel, Hot Worked, AISI 1095"), is(true));

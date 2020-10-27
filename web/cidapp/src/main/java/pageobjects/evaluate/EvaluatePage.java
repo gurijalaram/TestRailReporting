@@ -11,7 +11,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.evaluate.materialutilization.MaterialUtilizationPage;
-import pageobjects.explore.ExplorePage;
 import pageobjects.navtoolbars.EvaluateToolbar;
 
 /**
@@ -196,7 +195,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public String getMaterialInfo(String material) {
         By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
-        return pageUtils.waitForElementToAppear(materialsInfo).getText();
+        return pageUtils.waitForElementToAppear(materialsInfo).getAttribute("textContext");
     }
 
     /**
@@ -207,15 +206,5 @@ public class EvaluatePage extends EvaluateToolbar {
     public MaterialUtilizationPage openMaterialUtilization() {
         pageUtils.waitForElementAndClick(materialsDetailsButton);
         return new MaterialUtilizationPage(driver);
-    }
-
-    /**
-     * Navigates to the explore page
-     *
-     * @return new page object
-     */
-    public ExplorePage goExplore() {
-        pageUtils.waitForElementAndClick(exploreButton);
-        return new ExplorePage(driver);
     }
 }
