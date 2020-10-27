@@ -2,6 +2,7 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import evaluate.CostAllCadTests;
 import evaluate.CostScenarioTests;
 import explore.UploadComponentTests;
 import login.LoginTests;
@@ -17,7 +18,8 @@ import testsuites.suiteinterface.SmokeTests;
 @Suite.SuiteClasses ({
     LoginTests.class,
     CostScenarioTests.class,
-    UploadComponentTests.class
+    UploadComponentTests.class,
+    CostAllCadTests.class,
 })
 public class SmokeTestSuite {
 }
