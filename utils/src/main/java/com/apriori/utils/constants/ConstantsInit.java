@@ -31,6 +31,9 @@ public interface ConstantsInit extends Config {
     @Key("url.additional.cidapp")
     String cidAppURL();
 
+    @Key("logout.header.text")
+    String logoutHeaderText();
+
     @Key("url.grid.server")
     String gridServerUrl();
 

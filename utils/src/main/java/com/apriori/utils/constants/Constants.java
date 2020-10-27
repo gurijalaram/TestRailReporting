@@ -144,6 +144,7 @@ public class Constants {
     public static final String ciaURL = getBaseUrl() + constantsInit.ciaURL();
     public static final String cicURL = constantsInit.cicURL();
     public static final String cidAppURL = getBaseUrl();
+    public static final String headerText = constantsInit.logoutHeaderText();
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 
