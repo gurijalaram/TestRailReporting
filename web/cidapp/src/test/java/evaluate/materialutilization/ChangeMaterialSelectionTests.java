@@ -51,14 +51,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .select()
             .costScenario(5);
 
-        assertThat(evaluatePage.getMaterialInfo("Aluminum, Cast, ANSI AL380.0"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is("Aluminum, Cast, ANSI AL380.0"));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Brass, Cast, Yellow 270")
             .select()
             .costScenario(5);
 
-        assertThat(evaluatePage.getMaterialInfo("Brass, Cast, Yellow 270"), is(true));
+        assertThat(evaluatePage.getMaterialInfo(), is(equalTo("Brass, Cast, Yellow 270")));
     }
 
     @Test
