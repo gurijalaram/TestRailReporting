@@ -1,8 +1,8 @@
 package pageobjects.header;
 
 import com.apriori.utils.PageUtils;
-
 import com.apriori.utils.constants.Constants;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
