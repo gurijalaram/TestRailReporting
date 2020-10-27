@@ -29,6 +29,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
         this.panelController = new PanelController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        this.get();
     }
 
     @Override
