@@ -1,5 +1,9 @@
 package ootbreports.dtcmetrics.plastic;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -15,14 +19,8 @@ import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
-import testsuites.suiteinterface.CiaCirTestDevTest;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
 
@@ -215,7 +213,6 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1369")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
@@ -231,16 +228,16 @@ public class PlasticDtcComparisonReportTests extends TestBase {
         String[] tableNames = {"Manufacturing Issues", "Slow Operations", "Design Standards", "Tolerances"};
         String elementName = "PLASTIC MOULDED CAP THICKPART";
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[0], "1"),
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("1", "1"),
                 is(equalTo(elementName)));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[0], "1"),
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("2", "1"),
                 is(equalTo(elementName)));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[1], "1"),
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("3", "1"),
                 is(equalTo(elementName)));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[1], "1"),
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("4", "1"),
                 is(equalTo(elementName)));
     }
 }

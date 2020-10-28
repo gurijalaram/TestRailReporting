@@ -13,11 +13,13 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
@@ -25,6 +27,7 @@ import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
@@ -280,6 +283,97 @@ public class CastingDtcComparisonReportTests extends TestBase {
         inputControlsTests.testMinimumAnnualSpendComparisonReports(
                 ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testCastingDtcComparisonSortOrderManufacturingCastingIssues() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.castingDtcComparisonSortOrderTest(
+                SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(),
+                "JEEP WJ FRONT BRAKE DISC 99-04 (Init…",
+                "GEAR HOUSING (Initial)"
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testCastingDtcComparisonSortOrderManufacturingMachiningIssues() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.castingDtcComparisonSortOrderTest(
+                SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(),
+                "DTCCASTINGISSUES (sand casting)",
+                "DTCCASTINGISSUES (Initial)"
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testCastingDtcComparisonSortOrderMaterialScrap() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.castingDtcComparisonSortOrderTest(
+                SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
+                "OBSTRUCTED MACHINING (Initial)",
+                "B2315 (Initial)"
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testCastingDtcComparisonSortOrderTolerances() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.castingDtcComparisonSortOrderTest(
+                SortOrderEnum.TOLERANCES.getSortOrderEnum(),
+                "DTCCASTINGISSUES (Initial)",
+                "DTCCASTINGISSUES (sand casting)"
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testCastingDtcComparisonSortOrderSlowOperations() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.castingDtcComparisonSortOrderTest(
+                SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
+                "DTCCASTINGISSUES (Initial)",
+                "DTCCASTINGISSUES (sand casting)"
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testCastingDtcComparisonSortOrderSpecialTooling() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.castingDtcComparisonSortOrderTest(
+                SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(),
+                "DU600051458 (Initial)",
+                "DU200068073_B (Initial)"
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testCastingDtcComparisonSortOrderAnnualSpend() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.castingDtcComparisonSortOrderTest(
+                SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
+                "E3-241-4-N (Initial)",
+                "40137441.MLDES.0002 (Initial)"
         );
     }
 }
