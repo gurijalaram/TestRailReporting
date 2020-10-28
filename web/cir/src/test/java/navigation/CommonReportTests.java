@@ -5,7 +5,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
@@ -90,5 +92,39 @@ public class CommonReportTests extends TestBase {
         assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
         assertThat(cirUserGuide.getTabCount(), is(2));
+    }
+
+    public void machiningDtcComparisonSortOrderTest(String sortOrder, String elementNameOne, String elementNameTwo) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(sortOrder)
+                .clickOk();
+
+        genericReportPage.waitForReportToLoad();
+        String[] tableNames = {"Manufacturing Issues", "Slow Operations", "Design Standards", "Tolerances"};
+        String[] elementNames = {elementNameOne, elementNameTwo};
+
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[0], "1"),
+                is(equalTo(elementNames[0])));
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[0], "2"),
+                is(equalTo(elementNames[1])));
+
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[1], "1"),
+                is(equalTo(elementNames[0])));
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[1], "2"),
+                is(equalTo(elementNames[1])));
+
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[2], "1"),
+                is(equalTo(elementNames[0])));
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[2], "2"),
+                is(equalTo(elementNames[1])));
+
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[3], "1"),
+                is(equalTo(elementNames[0])));
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[3], "2"),
+                is(equalTo(elementNames[1])));
     }
 }

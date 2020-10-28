@@ -38,6 +38,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
     private Map<String, WebElement> tooltipElementMap = new HashMap<>();
+    Map<String, String> machiningDtcComparisonNameMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
@@ -467,6 +468,7 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseMachiningDtcComparisonNameMap();
         initialiseTooltipElementMap();
         initialiseDtcScoreBubbleMap();
         initialiseAssemblyHashMap();
@@ -1888,13 +1890,28 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets DTC Rank value for row one or two
-     * @param useRowOne
+     * @param useRowOne boolean
      * @return String
      */
     public String getDtcRankMachiningDtcDetails(boolean useRowOne) {
         WebElement elementToUse = useRowOne ? machiningDtcDetailsRowOneDtcRank : machiningDtcDetailsRowThreeDtcRank;
         pageUtils.waitForElementToAppear(elementToUse);
         return elementToUse.getText();
+    }
+
+    /**
+     * Gets Machining DTC Comparison table element name
+     * @param tableName String
+     * @param rowIndex String
+     * @return String
+     */
+    public String getTableElementNameMachiningDtcComparison(String tableName, String rowIndex) {
+        By locator = By.xpath(String.format(
+                "((//*[@class='highcharts-axis-labels highcharts-xaxis-labels '])[%s]//*[local-name()='text'])[%s]",
+                machiningDtcComparisonNameMap.get(tableName),
+                rowIndex)
+        );
+        return driver.findElement(locator).getText();
     }
 
     /**
@@ -1978,5 +1995,15 @@ public class GenericReportPage extends ReportsPageHeader {
         tooltipElementMap.put("DTC Score Value", tooltipDtcScoreValue);
         tooltipElementMap.put("Annual Spend Name", tooltipAnnualSpendName);
         tooltipElementMap.put("Annual Spend Value", tooltipAnnualSpendValue);
+    }
+
+    /**
+     * Initialises Machining DTC Comparison Name Map
+     */
+    private void initialiseMachiningDtcComparisonNameMap() {
+        machiningDtcComparisonNameMap.put("Manufacturing Issues", "1");
+        machiningDtcComparisonNameMap.put("Slow Operations", "2");
+        machiningDtcComparisonNameMap.put("Design Standards", "3");
+        machiningDtcComparisonNameMap.put("Tolerances", "4");
     }
 }
