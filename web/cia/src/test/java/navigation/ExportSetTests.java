@@ -120,7 +120,7 @@ public class ExportSetTests extends TestBase {
 
         String headerToCheck = logout.getHeaderToCheck();
 
-        assertThat(logout.getHeaderText(), equalTo(headerToCheck));
+        assertThat(logout.getActualHeaderText(), equalTo(headerToCheck));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
