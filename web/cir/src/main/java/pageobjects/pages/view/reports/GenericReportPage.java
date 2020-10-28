@@ -1852,8 +1852,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public boolean isRowOneTolerancesGreaterThanRowTwo() {
         pageUtils.waitForElementToAppear(machiningDtcDetailsRowOneTolerances);
         pageUtils.waitForElementToAppear(machiningDtcDetailsRowTwoTolerances);
-        return Integer.parseInt(machiningDtcDetailsRowOneTolerances.getText()) >
-                Integer.parseInt(machiningDtcDetailsRowTwoTolerances.getText());
+        return Integer.parseInt(machiningDtcDetailsRowOneTolerances.getText())
+                > Integer.parseInt(machiningDtcDetailsRowTwoTolerances.getText());
     }
 
     /**
