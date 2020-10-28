@@ -118,9 +118,9 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToAdminLogout();
 
-        String headerToCheck = logout.getHeaderToCheck();
+        String expectedHeader = logout.getExpectedHeader();
 
-        assertThat(logout.getHeaderText(), startsWith(headerToCheck));
+        assertThat(logout.getActualHeaderText(), startsWith(expectedHeader));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }

@@ -610,7 +610,8 @@ public class InputControlsTests extends TestBase {
     public void testMinimumAnnualSpend(String reportName, String exportSet) {
         testMinimumAnnualSpendCore(reportName, exportSet, true);
 
-        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(), is(equalTo(new BigDecimal("6631000.00"))));
+        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(),
+                is(startsWith("6,631,000")));
 
         if (!reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
