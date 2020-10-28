@@ -16,7 +16,6 @@
         "name",
         "cloudReference",
         "serviceName",
-        "version",
         "description"
       ],
       "properties": {

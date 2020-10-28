@@ -64,7 +64,17 @@
         "customerType": {
           "type": "string",
           "pattern": "^(.*)$"
+        },
+        "useExternalIdentityProvider": {
+          "type": "boolean"
+        },
+        "mfaRequired": {
+          "type": "boolean"
+        },
+        "oneTimePasswordApplications": {
+          "type": "array"
         }
+
       },
       "if": {
         "properties": {
