@@ -8,17 +8,27 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import pageobjects.pages.login.ReportsLoginPage;
+import pageobjects.pages.view.reports.GenericReportPage;
+import testsuites.suiteinterface.CiaCirTestDevTest;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
 
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
+    private GenericReportPage genericReportPage;
 
     public PlasticDtcDetailsReportTests() {
         super();
@@ -190,5 +200,24 @@ public class PlasticDtcDetailsReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1369")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlManufacturingIssues() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
+                .clickOk();
+
+        genericReportPage.waitForReportToLoad();
+
+        assertThat(genericReportPage.getPlasticDtcDetailsRowOnePartName(),
+                is(equalTo("PLASTIC MOULDED CAP THICKPART")));
     }
 }

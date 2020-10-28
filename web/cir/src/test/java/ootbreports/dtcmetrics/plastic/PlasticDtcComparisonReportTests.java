@@ -8,17 +8,27 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import pageobjects.pages.login.ReportsLoginPage;
+import pageobjects.pages.view.reports.GenericReportPage;
+import testsuites.suiteinterface.CiaCirTestDevTest;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
 
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
+    private GenericReportPage genericReportPage;
 
     public PlasticDtcComparisonReportTests() {
         super();
@@ -202,5 +212,35 @@ public class PlasticDtcComparisonReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1369")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlManufacturingIssues() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
+                .clickOk();
+
+        genericReportPage.waitForReportToLoad();
+        String[] tableNames = {"Manufacturing Issues", "Slow Operations", "Design Standards", "Tolerances"};
+        String elementName = "PLASTIC MOULDED CAP THICKPART";
+
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[0], "1"),
+                is(equalTo(elementName)));
+
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[0], "1"),
+                is(equalTo(elementName)));
+
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[1], "1"),
+                is(equalTo(elementName)));
+
+        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison(tableNames[1], "1"),
+                is(equalTo(elementName)));
     }
 }

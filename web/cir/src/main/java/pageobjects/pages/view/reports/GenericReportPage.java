@@ -459,6 +459,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//table/tbody/tr[17]/td[40]/span")
     private WebElement machiningDtcDetailsRowTwoHole;
 
+    @FindBy(xpath = "//span[@class='_jrHyperLink ReportExecution']/span")
+    private WebElement plasticDtcDetailsRowOnePartName;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -1912,6 +1915,15 @@ public class GenericReportPage extends ReportsPageHeader {
                 rowIndex)
         );
         return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Gets part name from row one of Plastic Dtc Details
+     * @return String
+     */
+    public String getPlasticDtcDetailsRowOnePartName() {
+        pageUtils.waitForElementToAppear(plasticDtcDetailsRowOnePartName);
+        return plasticDtcDetailsRowOnePartName.getAttribute("textContent");
     }
 
     /**
