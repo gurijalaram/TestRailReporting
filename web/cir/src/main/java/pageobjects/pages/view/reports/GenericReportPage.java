@@ -53,7 +53,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[18][local-name() = 'path']")
     private WebElement castingDtcBubbleTwo;
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[8][local-name() = 'path']")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[7][local-name() = 'path']")
     private WebElement dtcScoreMediumBubble;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[5][local-name() = 'path']")
@@ -68,7 +68,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[local-name() = 'path'][43]")
     private WebElement machiningDtcBubble;
 
-    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(45)")
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(38)")
     private WebElement machiningDtcBubbleTwo;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
@@ -857,8 +857,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitForElementToAppear(currentCurrency);
-        pageUtils.checkElementAttribute(currentCurrency, "innerText", currencyToCheck);
+        By locator = By.xpath(String.format("//table//span[contains(text(), '%s')]", currencyToCheck));
+        pageUtils.waitForElementToAppear(locator);
         return PageFactory.initElements(driver, className);
     }
 
@@ -1271,11 +1271,11 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Get Minimum Annual Spend value
-     * @return BigDecimal
+     * @return String
      */
-    public BigDecimal getMinimumAnnualSpendFromAboveChart() {
+    public String getMinimumAnnualSpendFromAboveChart() {
         pageUtils.waitForElementToAppear(minimumAnnualSpend);
-        return new BigDecimal(minimumAnnualSpend.getText().replace(",", ""));
+        return minimumAnnualSpend.getText();
     }
 
     /**
@@ -1317,7 +1317,18 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
+        waitForCorrectPartName(true);
         hoverPartNameBubbleDtcReports();
+    }
+
+    /**
+     * Waits for correct Part Name
+     */
+    public void waitForCorrectPartName(boolean initialCall) {
+        String partNameToExpect = initialCall ? Constants.PART_NAME_INITIAL_EXPECTED_MACHINING_DTC :
+                Constants.PART_NAME_EXPECTED_MACHINING_DTC;
+        By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partNameToExpect));
+        pageUtils.waitForElementToAppear(locator);
     }
 
     /**

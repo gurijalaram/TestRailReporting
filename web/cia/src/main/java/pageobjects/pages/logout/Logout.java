@@ -64,7 +64,7 @@ public class Logout extends AdminHeader {
      *
      * @return String - header text
      */
-    public String getHeaderText() {
+    public String getActualHeaderText() {
         pageUtils.waitForElementToAppear(loginPageTitle);
         return loginPageTitle.getText();
     }
