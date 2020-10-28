@@ -55,7 +55,8 @@ public class Constants {
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
     public static final String ASSEMBLY_STRING = "[assembly]";
-    public static final String PART_NAME_EXPECTED_MACHINING_DTC = "PMI_SYMMETRYCREO (Initial)";
+    public static final String PART_NAME_INITIAL_EXPECTED_MACHINING_DTC = "PMI_SYMMETRYCREO (Initial) ";
+    public static final String PART_NAME_EXPECTED_MACHINING_DTC = "PMI_FLATNESSCREO (Initial)";
     public static final String CASTING_DIE_SAND_NAME = String.format(
             "%s, %s",
             ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
@@ -67,8 +68,8 @@ public class Constants {
             ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
     );
 
-    public static final String CID_TE_HEADER_TEXT = "CI Design (TE)";
     public static final String CID_AUT_HEADER_TEXT = "CI Design AUTOMATION";
+    public static final String CID_QA_HEADER_TEXT = "CI Design QUAIL";
 
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
@@ -143,6 +144,7 @@ public class Constants {
     public static final String ciaURL = getBaseUrl() + constantsInit.ciaURL();
     public static final String cicURL = constantsInit.cicURL();
     public static final String cidAppURL = getBaseUrl();
+    public static final String headerText = constantsInit.logoutHeaderText();
     public static final String usersFile = constantsInit.usersCsvFileName();
     public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
 
