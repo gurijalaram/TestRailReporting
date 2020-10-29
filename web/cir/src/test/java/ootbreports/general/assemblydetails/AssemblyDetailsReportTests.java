@@ -661,7 +661,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterSearch() {
@@ -673,7 +672,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterOperation() {
@@ -696,7 +694,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilter() {
@@ -708,7 +705,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterOperation() {
