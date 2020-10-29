@@ -383,10 +383,10 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[9]")
     private WebElement tooltipAnnualSpendValue;
 
-    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[7]/*[local-name()='rect'])[14]")
+    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[7]/*[local-name()='rect'])[13]")
     private WebElement machiningDtcComparisonBar;
 
-    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[16]/*[local-name()='text'])[14]")
+    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[16]/*[local-name()='text'])[13]")
     private WebElement machiningDtcComparisonPartName;
 
     @FindBy(xpath = "//table/tbody/tr[13]/td[2]")

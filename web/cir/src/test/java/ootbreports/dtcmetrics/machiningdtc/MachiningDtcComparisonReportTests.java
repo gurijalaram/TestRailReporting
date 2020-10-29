@@ -22,8 +22,10 @@ import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
@@ -236,6 +238,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2039")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
