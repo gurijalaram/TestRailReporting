@@ -22,10 +22,8 @@ import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 

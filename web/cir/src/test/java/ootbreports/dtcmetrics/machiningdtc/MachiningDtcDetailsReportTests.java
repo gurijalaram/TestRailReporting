@@ -266,6 +266,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
@@ -277,10 +278,14 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
                 .clickOk();
 
-        assertThat(genericReportPage.isRowOneIssuesGreaterThanRowTwo(), is(true));
-    }
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("DTCMACHINING_001")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("MACHININGDESIGN_TO_COST")));
+   }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDesignStandards() {
@@ -292,10 +297,14 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 .selectSortOrder(SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum())
                 .clickOk();
 
-        assertThat(genericReportPage.isRowOneDesignIssuesMoreThanRowThree(), is(true));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("DTCMACHINING_001")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("PUNCH")));
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlTolerances() {
@@ -307,10 +316,14 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
                 .clickOk();
 
-        assertThat(genericReportPage.isRowOneTolerancesGreaterThanRowTwo(), is(true));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("MACHININGDESIGN_TO_COST")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("PARTBODY_1")));
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlSlowOperations() {
@@ -322,10 +335,14 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
                 .clickOk();
 
-        assertThat(genericReportPage.isRowOneSlowOperationsGreaterThanRowTwo(), is(equalTo(1)));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("MACHININGDESIGN_TO_COST")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("DTCMACHINING_001")));
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlAnnualSpend() {
@@ -337,10 +354,14 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
                 .clickOk();
 
-        assertThat(genericReportPage.isRowOneAnnualSpendGreaterThanRowTwo(), is(equalTo(1)));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("PMI_ROUGHNESSCREO")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("PMI_PROFILEOFSURFACECREO")));
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDtcRank() {
@@ -352,7 +373,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
                 .clickOk();
 
-        assertThat(genericReportPage.getDtcRankMachiningDtcDetails(true), is(equalTo("6")));
-        assertThat(genericReportPage.getDtcRankMachiningDtcDetails(false), is(equalTo("5")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("MACHININGDESIGN_TO_COST")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("PUNCH")));
     }
 }
