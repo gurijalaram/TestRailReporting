@@ -11,8 +11,10 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -465,7 +467,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        String inputString = "QA Automation Account 01";
+        String inputString = "Ben Hegan";
 
         genericReportPage.searchListForName(listName, inputString);
         assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
@@ -485,10 +487,25 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        String nameToSelect = "QA Automation Account 01";
+        String nameToSelect = "Ben Hegan";
         genericReportPage.selectCreatedByName(listName, nameToSelect);
 
-        // assert export sets have filtered and last modified by is down to zero available when bug is fixed
+        genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListUsers(listName, "Selected"), is(equalTo("1")));
+
+        if (listName.equals(ListNameEnum.CREATED_BY.getListName())) {
+            String lastModifiedByListName = ListNameEnum.LAST_MODIFIED_BY.getListName();
+            genericReportPage.waitForCorrectAvailableSelectedCount(lastModifiedByListName,
+                    "Available: ", "1");
+            assertThat(
+                    genericReportPage.getCountOfListUsers(lastModifiedByListName, "Available"),
+                    is(equalTo("1"))
+            );
+        }
+
+        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName());
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+                is(startsWith(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())));
     }
 
     /**
