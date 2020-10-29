@@ -18,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
@@ -114,6 +115,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC Comparison input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
