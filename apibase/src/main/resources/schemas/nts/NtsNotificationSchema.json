@@ -10,7 +10,10 @@
     "title",
     "content",
     "displayAt",
-    "hideAt"
+    "hideAt",
+    "identity",
+    "createdBy",
+    "createdAt"
   ],
   "properties": {
     "applicationIdentity": {
@@ -41,6 +44,15 @@
       "type": "string"
     },
     "hideAt": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
       "type": "string"
     }
   }

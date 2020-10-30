@@ -3,6 +3,7 @@ package com.apriori.apibase.services.nts.objects;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -19,15 +20,50 @@ public class Notification {
     private String type;
     private String title;
     private String content;
-
+    private String identity;
+    private String createdBy;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime displayAt;
 
+
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime hideAt;
+
+
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime createdAt;
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public Notification setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public Notification setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+        return this;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public Notification setIdentity(String identity) {
+        this.identity = identity;
+        return this;
+    }
 
     public String getApplicationIdentity() {
         return applicationIdentity;
@@ -65,12 +101,12 @@ public class Notification {
         return this;
     }
 
-    public Boolean getUrgent() {
+    public Boolean getIsUrgent() {
         return isUrgent;
     }
 
-    public Notification setUrgent(Boolean urgent) {
-        isUrgent = urgent;
+    public Notification setIsUrgent(Boolean isUrgent) {
+        this.isUrgent = isUrgent;
         return this;
     }
 
