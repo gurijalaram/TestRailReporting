@@ -96,15 +96,7 @@ public class ConnectionManager<T> {
         }
 
         if (multiPartFiles != null) {
-            builder.setContentType("multipart/form-data");
-            for (Map.Entry<String, File> fileInfo : multiPartFiles.entrySet()) {
-                builder.addMultiPart(
-                        new  MultiPartSpecBuilder(fileInfo.getValue())
-                                .controlName("multiPartFile")
-                                .fileName(fileInfo.getValue().getName())
-                        .build()
-                );
-            }
+            multiPartFiles.forEach(builder::addMultiPart);
         } else {
             builder.setContentType(ContentType.JSON);
         }

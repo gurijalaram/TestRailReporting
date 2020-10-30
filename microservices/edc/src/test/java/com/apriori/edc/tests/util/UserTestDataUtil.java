@@ -43,8 +43,10 @@ public class UserTestDataUtil {
     }
 
     public String initToken() {
-        UserCredentials userCredentials = UserUtil.getUser();
+        return initToken(UserUtil.getUser());
+    }
 
+    public String initToken(UserCredentials userCredentials) {
         return SecurityManager.retriveJwtToken(
                 Constants.getAtsServiceHost(),
                 HttpStatus.SC_CREATED,

@@ -91,6 +91,7 @@ subprojects {
     //compile jar file
     task fatJar(type: Jar) {
         archiveBaseName = project.jar_name
+       // destinationDir = file("${project.rootDir}/fatJar")
         zip64 = true
 
         manifest {
