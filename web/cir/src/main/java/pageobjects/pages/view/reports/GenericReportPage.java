@@ -7,6 +7,7 @@ import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import org.jsoup.Jsoup;
@@ -401,6 +402,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@class='highcharts-root'])[1]//*[contains(@class, 'highcharts-xaxis-labels')]")
     private WebElement chartCountElement;
 
+    @FindBy(xpath = "//label[@title='Outlier Distance']/input")
+    private WebElement outlierDistanceElement;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -452,6 +456,17 @@ public class GenericReportPage extends ReportsPageHeader {
         WebElement minimumAnnualSpend = driver.findElement(locator);
         pageUtils.clearInput(driver.findElement(locator));
         minimumAnnualSpend.sendKeys("6631000");
+        return this;
+    }
+
+    /**
+     * Clicks Distance Outlier input and scrolls down
+     * @return current page object
+     */
+    public GenericReportPage clickDistanceOutlierInputAndScrollDown() {
+        outlierDistanceElement.click();
+        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("(//div[@title='Select Parts ']//ul)[1]")), true);
+        waitForCorrectAvailableSelectedCount(ListNameEnum.PARTS.getListName(), "Available: ", "0");
         return this;
     }
 
@@ -830,9 +845,9 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets number of currently available created by users
+     * Gets number of currently available list users
      *
-     * @return String - count of created by users
+     * @return String - count of list by users
      */
     public String getCountOfListUsers(String listName, String option) {
         int substringVal = option.equals("Available") ? 11 : 10;

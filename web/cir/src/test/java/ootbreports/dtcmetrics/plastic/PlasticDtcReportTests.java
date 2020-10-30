@@ -21,13 +21,16 @@ import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import pageobjects.pages.view.reports.PlasticDtcReportPage;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PlasticDtcReportTests extends TestBase {
     
@@ -353,5 +356,21 @@ public class PlasticDtcReportTests extends TestBase {
                 ReportNamesEnum.PLASTIC_DTC.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "2320")
+    @Description("Verify minimum annual spend input control correctly filters list of available parts")
+    public void testMinimumAnnualSpendFiltersPartList() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .inputMinimumAnnualSpend()
+                .clickDistanceOutlierInputAndScrollDown();
+
+        assertThat(genericReportPage.getCountOfListUsers(ListNameEnum.PARTS.getListName(), "Available"), is(equalTo("0")));
     }
 }
