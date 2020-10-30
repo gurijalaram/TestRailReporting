@@ -9,14 +9,12 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.sun.tools.jxc.ap.Const;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.header.ReportsPageHeader;
 import pageobjects.pages.login.ReportsLoginPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class LoginTests extends TestBase {
 
@@ -28,7 +26,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category({CIARStagingSmokeTest.class, CiaCirTestDevTest.class})
+    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "2695")
     @Description("Successful login to CI Report")
     public void testLogin() {
@@ -39,7 +37,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2696")
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
@@ -50,7 +47,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2697")
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
@@ -62,7 +58,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2698")
     @Description("Empty email/password field message displayed")
     public void testEmptyFieldsMessage() {
@@ -73,7 +68,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2699")
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {

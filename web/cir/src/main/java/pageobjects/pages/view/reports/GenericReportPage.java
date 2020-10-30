@@ -680,15 +680,15 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Wait for correct assembly selected in dropdown
      *
-     * @return
+     * @return current page object
      */
     public GenericReportPage waitForCorrectAssemblyInDropdown(String assemblyName) {
         By locator = By.xpath(String.format("//a[contains(@title, '%s')]", assemblyName));
         pageUtils.waitForElementToAppear(locator);
         return this;
     }
-
 
     /**
      * Wait for export set list count to be zero
