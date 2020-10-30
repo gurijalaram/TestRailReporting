@@ -96,6 +96,7 @@ public class ConnectionManager<T> {
         }
 
         if (multiPartFiles != null) {
+            builder.setContentType("multipart/form-data");
             multiPartFiles.forEach(builder::addMultiPart);
         } else {
             builder.setContentType(ContentType.JSON);

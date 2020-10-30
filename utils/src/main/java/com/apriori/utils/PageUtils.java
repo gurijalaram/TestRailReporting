@@ -788,7 +788,7 @@ public class PageUtils {
      * @return String
      */
     public String getHeaderToCheck() {
-        return Constants.environment.equals("cid-te") ? Constants.CID_TE_HEADER_TEXT : Constants.CID_AUT_HEADER_TEXT;
+        return Constants.environment.equals("cid-qa") ? Constants.CID_QA_HEADER_TEXT : Constants.CID_AUT_HEADER_TEXT;
     }
 
     /**

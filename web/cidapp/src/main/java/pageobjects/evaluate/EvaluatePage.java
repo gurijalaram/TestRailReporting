@@ -62,6 +62,16 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Secondary Process']/..//div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
+    @FindBy(xpath = "//label[.='Material']/..//button")
+    private WebElement materialsButton;
+
+    @FindBy(xpath = "//div[.='Material & Utilization']/../div[.='details']")
+    private WebElement materialsDetailsButton;
+
+    @FindBy(xpath = "//div[.='Cost Results']/../div[.='details']")
+    private WebElement costDetailsButton;
+
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -78,6 +88,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Selects the current scenario
+     *
      * @param scenarioName - the scenario name
      * @return current page object
      */
@@ -116,6 +127,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Selects the secondary process
+     *
      * @param secondaryProcess - the secondary process
      * @return current page object
      */
@@ -151,4 +163,25 @@ public class EvaluatePage extends EvaluateToolbar {
         productionLifeInput.sendKeys(productionLife);
         return this;
     }
+
+    /**
+     * Opens the material selector table
+     *
+     * @return new page object
+     */
+    public MaterialSelectorPage openMaterialSelectorTable() {
+        pageUtils.waitForElementAndClick(materialsButton);
+        return new MaterialSelectorPage(driver);
+    }
+
+    /**
+     * Opens the Cost Result Panel
+     *
+     * @return new page object
+     */
+    public CostDetailsPage openCostDetails() {
+        pageUtils.waitForElementAndClick(costDetailsButton);
+        return new CostDetailsPage(driver);
+    }
+
 }

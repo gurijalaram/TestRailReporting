@@ -298,7 +298,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getPartCost(), is(closeTo(1.92, 1)));
+        assertThat(evaluatePage.getPartCost(), is(closeTo(1.02, 1)));
 
         componentsPage = evaluatePage.selectExploreButton()
             .openAssembly(scenarioName, "Assembly2")
@@ -309,7 +309,7 @@ public class AssemblyUploadTests extends TestBase {
             .selectSaveButton()
             .expandAssembly(scenarioName, "ASSY02");
 
-        assertThat(componentsPage.getComponentCell("PART0002", "Piece Part Cost (USD)"), is(equalTo("2.36")));
+        assertThat(componentsPage.getComponentCell("PART0002", "Piece Part Cost (USD)"), is(equalTo("2.05")));
 
         componentsPage.openColumnsTable()
             .removeColumn(ColumnsEnum.PIECE_PART_COST.getColumns())
