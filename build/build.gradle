@@ -45,6 +45,12 @@ subprojects {
 
     def encodingType = 'UTF-8'
 
+    // Copy allure properties into each module test resources
+    processTestResources {
+//        from project(":fms").projectDir.path + "/src/test/resources/allure.properties"
+        from project(":apibase").projectDir.path + "/src/test/resources/allure.properties"
+    }
+
 
     repositories {
         mavenLocal()
