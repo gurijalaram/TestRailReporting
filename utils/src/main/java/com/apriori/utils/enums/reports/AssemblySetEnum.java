@@ -9,7 +9,7 @@ public enum AssemblySetEnum {
     TOP_LEVEL_SHORT("TOP-LEVEL"),
     PISTON_ASSEMBLY("PISTON_ASSEMBLY");
 
-    private String assemblySetName;
+    private final String assemblySetName;
 
     AssemblySetEnum(String assemblySetName) {
         this.assemblySetName = assemblySetName;
