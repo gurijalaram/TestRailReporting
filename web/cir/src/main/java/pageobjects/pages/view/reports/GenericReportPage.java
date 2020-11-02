@@ -267,6 +267,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='latestExportDate']//div")
     private WebElement latestExportSetDateError;
 
+    @FindBy(xpath = "//div[@id='sortOrder']//a")
+    private WebElement sortOrderDropdown;
+
     @FindBy(xpath = "//div[@id='costMetric']//a")
     private WebElement costMetricDropdown;
 
@@ -404,6 +407,63 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//label[@title='Outlier Distance']/input")
     private WebElement outlierDistanceElement;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[28]/span")
+    private WebElement machiningDtcDetailsRowOneSharpCornerIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[30]/span")
+    private WebElement machiningDtcDetailsRowOneObstructedCornerIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[32]/span")
+    private WebElement machiningDtcDetailsRowOneLdRatioIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[28]/span")
+    private WebElement machiningDtcDetailsRowTwoSharpCornerIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[30]/span")
+    private WebElement machiningDtcDetailsRowTwoObstructedCornerIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[32]/span")
+    private WebElement machiningDtcDetailsRowTwoLdRatioIssues;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[42]/span")
+    private WebElement machiningDtcDetailsRowOneTolerances;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[42]/span")
+    private WebElement machiningDtcDetailsRowTwoTolerances;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[34]/span")
+    private WebElement machiningDtcDetailsRowOneTime;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[34]/span")
+    private WebElement machiningDtcDetailsRowTwoTime;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[20]/span")
+    private WebElement machiningDtcDetailsRowOneAnnualSpend;
+
+    @FindBy(xpath = "//table/tbody/tr[15]/td[20]/span")
+    private WebElement machiningDtcDetailsRowTwoAnnualSpend;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[24]/span")
+    private WebElement machiningDtcDetailsRowOneDtcRank;
+
+    @FindBy(xpath = "//table/tbody/tr[17]/td[24]/span")
+    private WebElement machiningDtcDetailsRowThreeDtcRank;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[38]/span")
+    private WebElement machiningDtcDetailsRowOneFillet;
+
+    @FindBy(xpath = "//table/tbody/tr[13]/td[40]/span")
+    private WebElement machiningDtcDetailsRowOneHole;
+
+    @FindBy(xpath = "//table/tbody/tr[17]/td[38]/span")
+    private WebElement machiningDtcDetailsRowTwoFillet;
+
+    @FindBy(xpath = "//table/tbody/tr[17]/td[40]/span")
+    private WebElement machiningDtcDetailsRowTwoHole;
+
+    @FindBy(xpath = "//span[@class='_jrHyperLink ReportExecution']/span")
+    private WebElement plasticDtcDetailsRowOnePartName;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -582,6 +642,20 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!massMetricDropdown.getAttribute("title").equals(massMetric)) {
             massMetricDropdown.click();
             driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", massMetric))).click();
+        }
+        return this;
+    }
+
+    /**
+     * Selects cost metric, if necessary
+     * @param sortOrder - String
+     * @return current page object
+     */
+    public GenericReportPage selectSortOrder(String sortOrder) {
+        pageUtils.scrollWithJavaScript(sortOrderDropdown, true);
+        if (!sortOrderDropdown.getAttribute("title").equals(sortOrder)) {
+            sortOrderDropdown.click();
+            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", sortOrder))).click();
         }
         return this;
     }
@@ -845,11 +919,11 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets number of currently available list users
+     * Gets number of currently available list items
      *
-     * @return String - count of list by users
+     * @return String - count of list items
      */
-    public String getCountOfListUsers(String listName, String option) {
+    public String getCountOfListAvailableItems(String listName, String option) {
         int substringVal = option.equals("Available") ? 11 : 10;
         By locator = By.xpath(String.format("//div[@title='%s']//span[contains(@title, '%s')]", listName, option));
         pageUtils.waitForElementToAppear(locator);
@@ -1752,6 +1826,55 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(chartCountElement);
         return Integer.parseInt(chartCountElement.getAttribute("childElementCount"));
     }
+
+    /**
+     * Gets Machining DTC Comparison table element name
+     * @param tableIndex String
+     * @param rowIndex String
+     * @return String
+     */
+    public String getTableElementNameMachiningDtcComparison(String tableIndex, String rowIndex) {
+        By locator = By.xpath(String.format(
+                "((//*[@class='highcharts-axis-labels highcharts-xaxis-labels '])[%s]//*[local-name()='text'])[%s]",
+                tableIndex,
+                rowIndex)
+        );
+        return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Gets part name from row one of Plastic Dtc Details
+     * @return String
+     */
+    public String getPlasticDtcDetailsRowOnePartName() {
+        pageUtils.waitForElementToAppear(plasticDtcDetailsRowOnePartName);
+        return plasticDtcDetailsRowOnePartName.getAttribute("textContent");
+    }
+
+    /**
+     *
+     * @param getRowOnePartName
+     * @return
+     */
+    public String getPartNameCastingDtcDetails(boolean getRowOnePartName) {
+        String rowIndex = getRowOnePartName ? "1" : "2";
+        By locator = By.xpath(String.format("(//span[@class='_jrHyperLink ReportExecution']/span)[%s]", rowIndex));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("textContent");
+    }
+
+    /**
+     *
+     * @param getRowOneScenarioName
+     * @return
+     */
+    public String getScenarioNameCastingDtcDetails(boolean getRowOneScenarioName) {
+        String rowIndex = getRowOneScenarioName ? "1" : "2";
+        By locator = By.xpath(String.format("(//span[@class='_jrHyperLink ReportExecution'])[%s]/../following-sibling::td[2]/span", rowIndex));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("textContent");
+    }
+
 
     /**
      * Switches tab, if second tab is open

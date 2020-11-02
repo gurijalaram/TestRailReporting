@@ -7,7 +7,7 @@ public enum ExportSetEnum {
     CASTING_DTC("---01-dtc-casting"),
     ROLL_UP_A("---01-roll-up-a");
 
-    private String exportSetName;
+    private final String exportSetName;
 
     ExportSetEnum(String exportSetName) {
         this.exportSetName = exportSetName;
