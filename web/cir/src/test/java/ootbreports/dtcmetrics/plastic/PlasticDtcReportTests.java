@@ -371,6 +371,6 @@ public class PlasticDtcReportTests extends TestBase {
                 .inputMinimumAnnualSpend()
                 .clickDistanceOutlierInputAndScrollDown();
 
-        assertThat(genericReportPage.getCountOfListUsers(ListNameEnum.PARTS.getListName(), "Available"), is(equalTo("0")));
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"), is(equalTo("0")));
     }
 }
