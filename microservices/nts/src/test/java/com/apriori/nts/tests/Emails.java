@@ -1,4 +1,4 @@
-package com.apriori.cds.tests;
+package com.apriori.nts.tests;
 
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.nts.apicalls.NotificationService;
