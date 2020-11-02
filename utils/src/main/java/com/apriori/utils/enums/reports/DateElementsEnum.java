@@ -7,7 +7,7 @@ public enum DateElementsEnum {
     MONTH("MM"),
     DAY("dd");
 
-    private String dateElement;
+    private final String dateElement;
 
     DateElementsEnum(String dateElement) {
         this.dateElement = dateElement;
