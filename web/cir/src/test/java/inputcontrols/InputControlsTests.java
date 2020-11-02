@@ -488,18 +488,20 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class);
 
         String nameToSelect = "Ben Hegan";
-        genericReportPage.selectCreatedByName(listName, nameToSelect);
+        String lastModifiedByAvailable = genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        genericReportPage.selectListItem(listName, nameToSelect);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", "1");
-        assertThat(genericReportPage.getCountOfListUsers(listName, "Selected"), is(equalTo("1")));
+        assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo("1")));
 
         if (listName.equals(ListNameEnum.CREATED_BY.getListName())) {
             String lastModifiedByListName = ListNameEnum.LAST_MODIFIED_BY.getListName();
+            String expectedCount = Constants.environment.equals("cid-qa") ? "3" : "1";
             genericReportPage.waitForCorrectAvailableSelectedCount(lastModifiedByListName,
-                    "Available: ", "1");
+                    "Available: ", expectedCount);
             assertThat(
-                    genericReportPage.getCountOfListUsers(lastModifiedByListName, "Available"),
-                    is(equalTo("1"))
+                    genericReportPage.getCountOfListAvailableItems(lastModifiedByListName, "Available"),
+                    is(not(equalTo(lastModifiedByAvailable)))
             );
         }
 

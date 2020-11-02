@@ -1717,7 +1717,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param listName String
      * @param nameToSelect String
      */
-    public void selectCreatedByName(String listName, String nameToSelect) {
+    public void selectListItem(String listName, String nameToSelect) {
         By locator = By.xpath(String.format("//div[@title='%s']//li[contains(@title ,'%s')]/div/a", listName, nameToSelect));
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForElementAndClick(locator);
