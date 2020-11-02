@@ -20,9 +20,9 @@ import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
+import testsuites.suiteinterface.OnPremTest;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
 
