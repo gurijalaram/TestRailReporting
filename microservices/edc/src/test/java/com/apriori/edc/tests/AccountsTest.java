@@ -10,38 +10,31 @@ import com.apriori.edc.tests.util.UserDataEDC;
 import com.apriori.edc.tests.util.UserTestDataUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaUiAuth;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.enums.common.api.AccountEndpointEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-
 import org.apache.http.HttpStatus;
 import org.junit.After;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AccountsTest extends TestUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(AccountStatus.class);
-    private static UserDataEDC userData;
-
     private String identity = "";
+    private String token = "";
+    private UserDataEDC userData = new UserDataEDC(UserUtil.getUser());
 
-    @BeforeClass
-    public static void setUp() {
-        userData = new UserTestDataUtil().initEmptyUser();
-
-        final AccountStatus accountStatus = getActiveAccount();
-
-        userData.setIdentity(accountStatus.getIdentity());
-        userData.setAccountId(accountStatus.getAccountId());
+    @Before
+    public void initUser() {
+        token = new UserTestDataUtil().initToken(userData.getUserCredentials());
+        userData.setIdentity(createAndActivateNewAccount(userData.getUsername(), "TestSecretForTesting").getIdentity());
     }
 
     @After
@@ -57,8 +50,10 @@ public class AccountsTest extends TestUtil {
     public void testGetAccounts() {
 
         ResponseWrapper<Accounts> accountsResponseWrapper = GenericRequestUtil.get(
-                RequestEntity.init(AccountEndpointEnum.GET_ACCOUNTS, UserCredentials.init(userData.getUsername(), userData.getPassword()), Accounts.class),
-                new RequestAreaUiAuth());
+                RequestEntity.init(AccountEndpointEnum.GET_ACCOUNTS, UserCredentials.init(userData.getUsername(), userData.getPassword()), Accounts.class)
+                        .setToken(token)
+                        .setAutoLogin(true),
+                new RequestAreaApi());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountsResponseWrapper.getStatusCode());
     }
@@ -72,12 +67,12 @@ public class AccountsTest extends TestUtil {
         final String newName = "ACCOUNT UPDATE VIA AUTOMATION";
 
         identity = accountStatus.getIdentity();
-        updateAccount(identity,
+        final AccountStatus updatedAccount = updateAccount(identity,
                 accountStatus.setName(newName)
         );
 
         assertEquals("The user name, should be updated",
-                getActiveAccount().getName(),
+                updatedAccount.getName(),
                 newName);
 
         activateDefaultUserAndDeleteAnotherByIdentity(identity);
@@ -124,13 +119,15 @@ public class AccountsTest extends TestUtil {
         deleteAccountByIdentity(identity);
     }
 
-    private static AccountStatus getActiveAccount() {
+    private AccountStatus getActiveAccount() {
 
         RequestEntity requestEntity = RequestEntity.init(
                 AccountEndpointEnum.GET_ACTIVE_USER, userData.getUserCredentials(), AccountsStatusWrapper.class)
-                .setStatusCode(HttpStatus.SC_OK);
+                .setStatusCode(HttpStatus.SC_OK)
+                .setToken(token)
+                .setAutoLogin(true);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth()).getResponseEntity()).getAccountStatus();
+        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getResponseEntity()).getAccountStatus();
     }
 
     private AccountStatus getAccountByIdentity(String identity) {
@@ -140,9 +137,11 @@ public class AccountsTest extends TestUtil {
                 userData.getUserCredentials(),
                 AccountsStatusWrapper.class)
                 .setInlineVariables(identity)
-                .setStatusCode(HttpStatus.SC_OK);
+                .setStatusCode(HttpStatus.SC_OK)
+                .setToken(token)
+                .setAutoLogin(true);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth())
+        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaApi())
                 .getResponseEntity()).getAccountStatus();
     }
 
@@ -150,9 +149,11 @@ public class AccountsTest extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(
                 AccountEndpointEnum.ACTIVATE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), AccountsStatusWrapper.class)
                 .setInlineVariables(identity)
-                .setStatusCode(HttpStatus.SC_OK);
+                .setStatusCode(HttpStatus.SC_OK)
+                .setToken(token)
+                .setAutoLogin(true);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth()).getResponseEntity()).getAccountStatus();
+        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity()).getAccountStatus();
     }
 
     private AccountStatus updateAccount(final String identity, final AccountStatus accountStatus) {
@@ -161,9 +162,11 @@ public class AccountsTest extends TestUtil {
                 AccountEndpointEnum.UPDATE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), AccountsStatusWrapper.class)
                 .setStatusCode(HttpStatus.SC_OK)
                 .setInlineVariables(identity)
-                .setBody(accountStatus);
+                .setBody(accountStatus)
+                .setToken(token)
+                .setAutoLogin(true);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.patch(requestEntity, new RequestAreaUiAuth())
+        return ((AccountsStatusWrapper) GenericRequestUtil.patch(requestEntity, new RequestAreaApi())
                 .getResponseEntity()).getAccountStatus();
     }
 
@@ -178,9 +181,11 @@ public class AccountsTest extends TestUtil {
         final RequestEntity requestEntity = RequestEntity.init(
                 AccountEndpointEnum.POST_ACCOUNTS, userData.getUserCredentials(), AccountsStatusWrapper.class)
                 .setBody(accountStatus)
-                .setStatusCode(HttpStatus.SC_CREATED);
+                .setStatusCode(HttpStatus.SC_CREATED)
+                .setToken(token)
+                .setAutoLogin(true);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaUiAuth())
+        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaApi())
                 .getResponseEntity()).getAccountStatus();
     }
 
@@ -189,8 +194,10 @@ public class AccountsTest extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(
                 AccountEndpointEnum.DELETE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), null)
                 .setInlineVariables(identity)
-                .setStatusCode(HttpStatus.SC_NO_CONTENT);
+                .setStatusCode(HttpStatus.SC_NO_CONTENT)
+                .setToken(token)
+                .setAutoLogin(true);
 
-        GenericRequestUtil.delete(requestEntity, new RequestAreaUiAuth());
+        GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
     }
 }
