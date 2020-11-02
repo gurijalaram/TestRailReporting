@@ -5,7 +5,7 @@ public enum RollupEnum {
     DTC_MACHINING_DATASET("DTC_MACHININGDATASET (Initial)"),
     ROLL_UP_A("ROLL-UP A (Initial)");
 
-    private String rollupName;
+    private final String rollupName;
 
     RollupEnum(String name) {
         this.rollupName = name;
