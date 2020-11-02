@@ -465,6 +465,15 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[@class='_jrHyperLink ReportExecution']/span")
     private WebElement plasticDtcDetailsRowOnePartName;
 
+    @FindBy(xpath = "//*[local-name()='rect' and @y='206.5']")
+    private WebElement castingDtcComparisonFirstBarFirstChart;
+
+    @FindBy(xpath = "(//*[@style='font-weight:bold'])[3]")
+    private WebElement castingDtcComparisonDtcRadiusIssues;
+
+    @FindBy(xpath = "(//*[@style='font-weight:bold'])[4]")
+    private WebElement castingDtcComparisonDtcDraftIssues;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -739,6 +748,29 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementToAppear(upperTitle);
         return this;
+    }
+
+    /**
+     * Hovers over bar in Casting DTC Comparison Report
+     * @return current page object
+     */
+    public GenericReportPage hoverBarCastingDtcComparison() {
+        pageUtils.waitForElementToAppear(castingDtcComparisonFirstBarFirstChart);
+        Actions builder = new Actions(driver);
+        builder.moveToElement(castingDtcComparisonFirstBarFirstChart).build().perform();
+        return this;
+    }
+
+    /**
+     * Get DTC Issue Value from Casting DTC Comparison Report
+     * @return String
+     */
+    public String getDtcIssueValueCastingDtcComparison(String valueToGet) {
+        pageUtils.waitForElementToAppear(castingDtcComparisonDtcDraftIssues);
+        pageUtils.waitForElementToAppear(castingDtcComparisonDtcRadiusIssues);
+        WebElement elementToUse = valueToGet.equals("Draft") ? castingDtcComparisonDtcDraftIssues :
+                castingDtcComparisonDtcRadiusIssues;
+        return elementToUse.getAttribute("textContent");
     }
 
     /**
@@ -1828,12 +1860,12 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets Machining DTC Comparison table element name
+     * Gets DTC Comparison table element name
      * @param tableIndex String
      * @param rowIndex String
      * @return String
      */
-    public String getTableElementNameMachiningDtcComparison(String tableIndex, String rowIndex) {
+    public String getTableElementNameDtcComparison(String tableIndex, String rowIndex) {
         By locator = By.xpath(String.format(
                 "((//*[@class='highcharts-axis-labels highcharts-xaxis-labels '])[%s]//*[local-name()='text'])[%s]",
                 tableIndex,
@@ -1864,9 +1896,9 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     *
-     * @param getRowOneScenarioName
-     * @return
+     * Gets Scenario Name from Casting Dtc Details report
+     * @param getRowOneScenarioName boolean
+     * @return String
      */
     public String getScenarioNameCastingDtcDetails(boolean getRowOneScenarioName) {
         String rowIndex = getRowOneScenarioName ? "1" : "2";

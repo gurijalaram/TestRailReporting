@@ -367,4 +367,34 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 "40137441.MLDES.0002 (Initial)"
         );
     }
+
+    @Test
+    @TestRail(testCaseId = "1708")
+    @Description("Verify DTC issue counts are correct")
+    public void testDtcIssueCountsAreCorrect() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+                .hoverBarCastingDtcComparison();
+
+        String partName = genericReportPage.getTableElementNameDtcComparison("1", "1");
+        String reportsDraftValue = genericReportPage.getDtcIssueValueCastingDtcComparison("Draft");
+        String reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcComparison("Radius");
+
+        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+                .filter()
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
+    }
 }
