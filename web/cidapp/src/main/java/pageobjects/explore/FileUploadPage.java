@@ -122,7 +122,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return generic page object
      */
     public <T> T selectUploadButton(Class<T> className) {
-        pageUtils.javaScriptClick(submitButton);
+        pageUtils.waitForElementAndClick(submitButton);
         return PageFactory.initElements(driver, className);
     }
 
