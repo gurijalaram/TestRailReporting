@@ -13,27 +13,22 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.evaluate.EvaluatePage;
 import pageobjects.explore.ExplorePage;
 import pageobjects.login.CidAppLoginPage;
 import pageobjects.login.ForgottenPasswordPage;
 import testsuites.suiteinterface.SmokeTests;
 
-import java.io.File;
-
 public class LoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
-    private File resourceFile;
-    private EvaluatePage evaluatePage;
-
-    public LoginTests() {
-        super();
-    }
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
+
+    public LoginTests() {
+        super();
+    }
 
     @Test
     @Category(SmokeTests.class)
