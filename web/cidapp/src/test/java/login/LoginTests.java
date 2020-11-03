@@ -16,15 +16,16 @@ import org.junit.experimental.categories.Category;
 import pageobjects.explore.ExplorePage;
 import pageobjects.login.CidAppLoginPage;
 import pageobjects.login.ForgottenPasswordPage;
+import pageobjects.login.PrivacyPolicyPage;
 import testsuites.suiteinterface.SmokeTests;
 
 public class LoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
-
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
+    private PrivacyPolicyPage privacyPolicyPage;
 
     public LoginTests() {
         super();
@@ -99,7 +100,7 @@ public class LoginTests extends TestBase {
         assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
     }
 
-    /*@Category(CustomerSmokeTests.class)
+    /*@Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"1574"})
     @Description("Validate forgotten password link")
@@ -109,9 +110,9 @@ public class LoginTests extends TestBase {
         forgottenPasswordPage = loginPage.forgottenPassword();
 
         assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
-    }
+    }*/
 
-    @Category(CustomerSmokeTests.class)
+    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"1575"})
     @Description("Validate Welcome Message")
@@ -126,7 +127,7 @@ public class LoginTests extends TestBase {
         assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1590", "1583", "1180"})
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
