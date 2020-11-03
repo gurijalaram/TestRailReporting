@@ -71,6 +71,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Cost Results']/../div[.='details']")
     private WebElement costDetailsButton;
 
+    @FindBy(xpath = "//div[.='Inputs']/../div[normalize-space()='more']")
+    private WebElement inputDetailsButton;
+
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -184,4 +187,12 @@ public class EvaluatePage extends EvaluateToolbar {
         return new CostDetailsPage(driver);
     }
 
+    /**
+     * Opens the Input Panel
+     * @return new page object
+     */
+    public MoreInputsPage openInputDetails() {
+        pageUtils.waitForElementAndClick(inputDetailsButton);
+        return new MoreInputsPage(driver);
+    }
 }

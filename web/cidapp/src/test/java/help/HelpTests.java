@@ -54,7 +54,7 @@ public class HelpTests extends TestBase {
             .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
-            .openMoreInputs()
+            .openInputDetails()
             .clickHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("More Inputs"));
