@@ -66,11 +66,11 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
-     * @param className    - the class name
+     * @param klass    - the class name
      * @return new page object
      */
-    public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> className) {
-        return uploadComponent(scenarioName, filePath).selectSubmitButton(className);
+    public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
+        return uploadComponent(scenarioName, filePath).selectSubmitButton(klass);
     }
 
     /**
