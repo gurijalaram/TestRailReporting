@@ -32,7 +32,7 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluateToolbar = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluateToolbar.class);
+            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluateToolbar.class);
 
         assertThat(evaluateToolbar.isCostLabel(NewCostingLabelEnum.CREATED.getCostingText()), is(true));
     }
