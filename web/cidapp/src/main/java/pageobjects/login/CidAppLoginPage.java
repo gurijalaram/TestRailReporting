@@ -43,7 +43,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
     @FindBy(css = ".auth0-lock-name")
     private WebElement aprioriTitle;
 
-    @FindBy(xpath = "//a[contains(text(),'Privacy Policy')]")
+    @FindBy(xpath = "//a[.='Privacy Policy']")
     private WebElement privacyPolicy;
 
     @FindBy(xpath = "//a[contains(text(),'Help')]")
@@ -198,6 +198,16 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
         getEmail();
         getPassword();
         return this;
+    }
+
+    /**
+     * Selects privacy policy
+     *
+     * @return new page object
+     */
+    public PrivacyPolicyPage privacyPolicy() {
+        pageUtils.waitForElementAndClick(privacyPolicy);
+        return new PrivacyPolicyPage(driver);
     }
 
     /**
