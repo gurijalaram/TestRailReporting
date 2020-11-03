@@ -1,4 +1,4 @@
-package pageobjects.explore;
+package pageobjects.pages.explore;
 
 import com.apriori.utils.PageUtils;
 

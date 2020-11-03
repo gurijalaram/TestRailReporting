@@ -1,4 +1,4 @@
-package pageobjects.help;
+package pageobjects.pages.help;
 
 import com.apriori.utils.PageUtils;
 

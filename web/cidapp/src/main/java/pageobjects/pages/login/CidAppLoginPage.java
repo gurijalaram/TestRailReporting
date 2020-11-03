@@ -1,4 +1,4 @@
-package pageobjects.login;
+package pageobjects.pages.login;
 
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.explore.ExplorePage;
+import pageobjects.pages.explore.ExplorePage;
 
 /**
  * @author cfrith
