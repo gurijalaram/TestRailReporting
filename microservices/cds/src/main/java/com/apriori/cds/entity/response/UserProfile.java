@@ -1,9 +1,16 @@
 package com.apriori.cds.entity.response;
 
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
+import java.time.LocalDateTime;
+
 public class UserProfile {
     private String identity;
     private String createdBy;
-    private String createdAt;
     private String givenName;
     private String familyName;
     private String jobTitle;
@@ -16,6 +23,29 @@ public class UserProfile {
     private String suffix;
     private String stateProvince;
     private String county;
+
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime createdAt;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
+
+    public UserProfile setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public UserProfile setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
+    }
 
     public String getCounty() {
         return county;
@@ -127,14 +157,6 @@ public class UserProfile {
         return this.createdBy;
     }
 
-    public UserProfile setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public String getCreatedAt() {
-        return this.createdAt;
-    }
 
     public UserProfile setGivenName(String givenName) {
         this.givenName = givenName;

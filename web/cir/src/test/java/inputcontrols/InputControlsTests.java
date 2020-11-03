@@ -50,7 +50,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
                 .setExportDateUsingInput(false, "")
-                .waitForCorrectExportSetListCount("exportSetName", "0");
+                .waitForCorrectExportSetListCount("Single export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -70,7 +70,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
-                .waitForCorrectExportSetListCount("exportSetName", "0");
+                .waitForCorrectExportSetListCount("Single export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -363,7 +363,7 @@ public class InputControlsTests extends TestBase {
                 processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
             assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
         } else {
-            genericReportPage.setReportName(ReportNamesEnum.DTC_PART_SUMMARY.getReportName());
+            genericReportPage.setReportName(reportName);
             genericReportPage.hoverPartNameBubbleDtcReports();
             String partName = genericReportPage.getPartNameDtcReports();
 
@@ -387,8 +387,8 @@ public class InputControlsTests extends TestBase {
         genericReportPage.hoverProcessGroupBubble(false);
         String partNameTwo = genericReportPage.getPartNameDtcReports();
 
-        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
-        navigateToDtcPartSummaryAndAssert(partNameTwo, ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+        navigateToDtcPartSummaryAndAssert(partNameTwo, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
     }
 
     /**
@@ -508,18 +508,18 @@ public class InputControlsTests extends TestBase {
                 add("Invert");
             }};
 
-        String availableValue = genericReportPage.getCountOfListUsers(listName, "Available");
-        String selectedInitialValue = genericReportPage.getCountOfListUsers(listName, "Selected");
+        String availableValue = genericReportPage.getCountOfListAvailableItems(listName, "Available");
+        String selectedInitialValue = genericReportPage.getCountOfListAvailableItems(listName, "Selected");
 
         for (String buttonName : buttonNames) {
             genericReportPage.clickListPanelButton(listName, buttonName);
 
             if (buttonName.equals("Select All") || buttonName.equals("Invert")) {
                 genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", availableValue);
-                assertThat(genericReportPage.getCountOfListUsers(listName, "Selected"), is(equalTo(availableValue)));
+                assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo(availableValue)));
             } else {
                 genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", selectedInitialValue);
-                assertThat(genericReportPage.getCountOfListUsers(listName, "Selected"),
+                assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"),
                         is(equalTo(selectedInitialValue)));
             }
         }
@@ -610,7 +610,8 @@ public class InputControlsTests extends TestBase {
     public void testMinimumAnnualSpend(String reportName, String exportSet) {
         testMinimumAnnualSpendCore(reportName, exportSet, true);
 
-        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(), is(equalTo(new BigDecimal("6631000"))));
+        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(),
+                is(startsWith("6,631,000")));
 
         if (!reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -714,6 +715,7 @@ public class InputControlsTests extends TestBase {
     }
 
     private void navigateToDtcPartSummaryAndAssert(String partName, String processGroupName) {
+        partName = partName.equals("DTCCASTINGISSUES") ? partName + " (sand casting)" : partName;
         genericReportPage.navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
                 .selectComponent(partName)

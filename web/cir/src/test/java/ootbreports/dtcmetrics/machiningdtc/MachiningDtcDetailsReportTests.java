@@ -15,6 +15,7 @@ import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
@@ -260,5 +261,113 @@ public class MachiningDtcDetailsReportTests extends TestBase {
                 ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlManufacturingIssues() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("DTCMACHINING_001")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("MACHININGDESIGN_TO_COST")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlDesignStandards() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("DTCMACHINING_001")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("PUNCH")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlTolerances() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("MACHININGDESIGN_TO_COST")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("PARTBODY_1")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlSlowOperations() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("MACHININGDESIGN_TO_COST")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("DTCMACHINING_001")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlAnnualSpend() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("PMI_ROUGHNESSCREO")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("PMI_PROFILEOFSURFACECREO")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlDtcRank() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("MACHININGDESIGN_TO_COST")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("PUNCH")));
     }
 }

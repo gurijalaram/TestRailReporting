@@ -6,7 +6,7 @@ public enum ListNameEnum {
     PARTS("Select Parts "),
     PARTS_NO_SPACE("Select Parts");
 
-    private String listName;
+    private final String listName;
 
     ListNameEnum(String listName) {
         this.listName = listName;
