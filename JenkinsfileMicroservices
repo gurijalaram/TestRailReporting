@@ -43,6 +43,7 @@ pipeline {
                 echo "Building.."
                 sh """
                     docker build \
+                        --rm \
                         --build-arg MODULE=${MODULE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
                         --build-arg FOLDER=${folder} \
