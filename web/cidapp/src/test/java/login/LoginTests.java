@@ -15,13 +15,13 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.explore.ExplorePage;
 import pageobjects.login.CidAppLoginPage;
+import pageobjects.login.ForgottenPasswordPage;
 import pageobjects.login.PrivacyPolicyPage;
 import testsuites.suiteinterface.SmokeTests;
 
 public class LoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
-    private PrivacyPolicyPage privacyPolicyPage;
 
     public LoginTests() {
         super();
@@ -29,6 +29,7 @@ public class LoginTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private ForgottenPasswordPage forgottenPasswordPage;
 
     @Test
     @Category(SmokeTests.class)
@@ -85,6 +86,18 @@ public class LoginTests extends TestBase {
             "SOLUTION FOR A NEW NORMAL\n" +
             "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
         assertThat(loginPage.isLogoDisplayed(), is(true));
+    }
+
+    @Category(SmokeTests.class)
+    @Test
+    @TestRail(testCaseId = {"1574"})
+    @Description("Validate forgotten password link")
+    public void forgotPassword() {
+
+        loginPage = new CidAppLoginPage(driver);
+        forgottenPasswordPage = loginPage.forgottenPassword();
+
+        assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
     }
 
     /*@Category(SmokeTests.class)
