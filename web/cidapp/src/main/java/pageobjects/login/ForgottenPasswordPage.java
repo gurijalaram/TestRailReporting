@@ -66,9 +66,9 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
      *
      * @return new page object
      */
-    public CidLoginPage sendEmail() {
+    public CidAppLoginPage sendEmail() {
         sendEmail.click();
-        return new CidLoginPage(driver);
+        return new CidAppLoginPage(driver);
     }
 
     /**
