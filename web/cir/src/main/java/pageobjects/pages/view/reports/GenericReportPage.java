@@ -465,7 +465,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[@class='_jrHyperLink ReportExecution']/span")
     private WebElement plasticDtcDetailsRowOnePartName;
 
-    @FindBy(xpath = "//*[local-name()='rect' and @y='206.5']")
+    @FindBy(xpath = "(//*[local-name()='g'])[13]//*[local-name()='rect'][1]")
     private WebElement castingDtcComparisonFirstBarFirstChart;
 
     @FindBy(xpath = "(//*[@style='font-size: 10px'])[1]")
