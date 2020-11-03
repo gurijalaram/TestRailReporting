@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -15,6 +16,7 @@ import org.junit.experimental.categories.Category;
 import pageobjects.evaluate.EvaluatePage;
 import pageobjects.explore.ExplorePage;
 import pageobjects.login.CidAppLoginPage;
+import pageobjects.login.ForgottenPasswordPage;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -31,6 +33,7 @@ public class LoginTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private ForgottenPasswordPage forgottenPasswordPage;
 
     @Test
     @Category(SmokeTests.class)
@@ -87,6 +90,18 @@ public class LoginTests extends TestBase {
             "SOLUTION FOR A NEW NORMAL\n" +
             "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
         assertThat(loginPage.isLogoDisplayed(), is(true));
+    }
+
+    @Category(SmokeTests.class)
+    @Test
+    @TestRail(testCaseId = {"1574"})
+    @Description("Validate forgotten password link")
+    public void forgotPassword() {
+
+        loginPage = new CidAppLoginPage(driver);
+        forgottenPasswordPage = loginPage.forgottenPassword();
+
+        assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
     }
 
     /*@Category(CustomerSmokeTests.class)
