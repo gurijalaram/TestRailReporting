@@ -374,36 +374,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = "1708")
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
-                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-                .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .hoverBarCastingDtcComparison();
-
-        String partName = genericReportPage.getPartNameDtcComparisonTooltip().substring(0, 30);
-        String reportsDraftValue = genericReportPage.getDtcIssueValueCastingDtcComparison("Draft");
-        String reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcComparison("Radius");
-        genericReportPage.openNewCidTabAndFocus(1);
-
-        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-                .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-                .apply(ExplorePage.class)
-                .openFirstScenario()
-                .openDesignGuidance();
-
-        String cidDraftValue = designGuidancePage.getDtcIssueValue("Draft");
-        String cidRadiusValue = designGuidancePage.getDtcIssueValue("Radius");
-
-        assertThat(reportsDraftValue, is(equalTo(cidDraftValue)));
-        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
     }
 }

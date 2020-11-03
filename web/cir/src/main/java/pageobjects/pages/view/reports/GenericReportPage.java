@@ -478,7 +478,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement castingDtcComparisonDtcDraftIssues;
 
     @FindBy(xpath = "(//span[@class='_jrHyperLink ReportExecution']/span)[1]")
-    private WebElement castingDtcDetailsPartNameRowOne;
+    private WebElement castingDtcDetailsComparisonPartNameRowOne;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -1927,13 +1927,14 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getPartNameRowOneCastingDtcDetails() {
-        pageUtils.waitForElementToAppear(castingDtcDetailsPartNameRowOne);
-        return castingDtcDetailsPartNameRowOne.getAttribute("textContent");
+        pageUtils.waitForElementToAppear(castingDtcDetailsComparisonPartNameRowOne);
+        return castingDtcDetailsComparisonPartNameRowOne.getAttribute("textContent");
     }
 
     /**
-     *
-     * @return
+     * Gets DTC Issue Count for draft or radius on Casting DTC Details report
+     * @param valueToGet - String value to get
+     * @return String
      */
     public String getDtcIssueValueCastingDtcDetails(String valueToGet) {
         int index = valueToGet.equals("Draft") ? 32 : 34;
