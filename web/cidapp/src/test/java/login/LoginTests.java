@@ -22,14 +22,14 @@ import testsuites.suiteinterface.SmokeTests;
 public class LoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
+    private CidAppLoginPage loginPage;
+    private ExplorePage explorePage;
+    private ForgottenPasswordPage forgottenPasswordPage;
+    private PrivacyPolicyPage privacyPolicyPage;
 
     public LoginTests() {
         super();
     }
-
-    private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
-    private ForgottenPasswordPage forgottenPasswordPage;
 
     @Test
     @Category(SmokeTests.class)
