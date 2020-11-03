@@ -28,6 +28,8 @@ RUN if [ "$MODULE" = "cid" ] && [ "$TEST_MODE" != "GRID" ]; then \
 
 # Prepare build workspace.
 FROM gradle:6.1.1-jdk8 AS sdk
+ARG MODULE
+ARG FOLDER
 WORKDIR /automation-workspace
 
 USER root
@@ -43,7 +45,7 @@ COPY . .
 
 # Build.
 WORKDIR /automation-workspace/build
-RUN gradle clean fatJar
+RUN gradle clean :$FOLDER:$MODULE:fatJar
 
 # App image.
 FROM runtime AS final
