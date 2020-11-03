@@ -13,12 +13,10 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.explore.ExplorePage;
-import pageobjects.login.CidAppLoginPage;
-import pageobjects.login.ForgottenPasswordPage;
-import pageobjects.login.PrivacyPolicyPage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.CidAppLoginPage;
+import pageobjects.pages.login.ForgottenPasswordPage;
+import pageobjects.pages.login.PrivacyPolicyPage;
 import testsuites.suiteinterface.SmokeTests;
 
 public class LoginTests extends TestBase {
@@ -102,18 +100,6 @@ public class LoginTests extends TestBase {
 
         assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
     }
-
-    /*@Category(SmokeTests.class)
-    @Test
-    @TestRail(testCaseId = {"1574"})
-    @Description("Validate forgotten password link")
-    public void forgotPassword() {
-
-        loginPage = new CidAppLoginPage(driver);
-        forgottenPasswordPage = loginPage.forgottenPassword();
-
-        assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
-    }*/
 
     @Category(SmokeTests.class)
     @Test
