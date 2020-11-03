@@ -26,6 +26,7 @@ import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
@@ -429,5 +430,42 @@ public class CastingDtcDetailsReportTests extends TestBase {
                 is(equalTo("BARCO_R8552931")));
         assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
                 is(equalTo("BARCO_R8761310")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1708")
+    @Description("Verify DTC issue counts are correct")
+    public void testDtcIssueCountsAreCorrect() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        String partName = genericReportPage.getPartNameRowOneCastingDtcDetails();
+        String reportsDraftValue = genericReportPage.getDtcIssueValueCastingDtcDetails("Draft");
+        String reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcDetails("Radius");
+        genericReportPage.openNewCidTabAndFocus(1);
+
+        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
+
+        String cidDraftValue = designGuidancePage.getDtcIssueValue("Draft");
+        String cidRadiusValue = designGuidancePage.getDtcIssueValue("Radius");
+
+        assertThat(reportsDraftValue, is(equalTo(cidDraftValue)));
+        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
     }
 }

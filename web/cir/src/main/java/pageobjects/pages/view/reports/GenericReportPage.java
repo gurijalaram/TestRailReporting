@@ -477,6 +477,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[4]")
     private WebElement castingDtcComparisonDtcDraftIssues;
 
+    @FindBy(xpath = "(//span[@class='_jrHyperLink ReportExecution']/span)[1]")
+    private WebElement castingDtcDetailsPartNameRowOne;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -1919,6 +1922,25 @@ public class GenericReportPage extends ReportsPageHeader {
         return driver.findElement(locator).getAttribute("textContent");
     }
 
+    /**
+     * Gets Part Name row one in Casting DTC Details
+     * @return String
+     */
+    public String getPartNameRowOneCastingDtcDetails() {
+        pageUtils.waitForElementToAppear(castingDtcDetailsPartNameRowOne);
+        return castingDtcDetailsPartNameRowOne.getAttribute("textContent");
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getDtcIssueValueCastingDtcDetails(String valueToGet) {
+        int index = valueToGet.equals("Draft") ? 32 : 34;
+        By locator = By.xpath(String.format("//table/tbody/tr[13]/td[%s]/span", index));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
+    }
 
     /**
      * Switches tab, if second tab is open
