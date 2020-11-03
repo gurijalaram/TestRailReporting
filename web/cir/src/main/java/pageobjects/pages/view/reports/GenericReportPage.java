@@ -468,6 +468,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[local-name()='rect' and @y='206.5']")
     private WebElement castingDtcComparisonFirstBarFirstChart;
 
+    @FindBy(xpath = "(//*[@style='font-size: 10px'])[1]")
+    private WebElement castingDtcComparisonPartNameTableOne;
+
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[3]")
     private WebElement castingDtcComparisonDtcRadiusIssues;
 
@@ -730,7 +733,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Opens new tab with CID open and switches to it
      * @return current page object
      */
-    public GenericReportPage openNewTabAndFocus(int index) {
+    public GenericReportPage openNewCidTabAndFocus(int index) {
         pageUtils.jsNewTab();
         pageUtils.windowHandler(index);
 
@@ -759,6 +762,15 @@ public class GenericReportPage extends ReportsPageHeader {
         Actions builder = new Actions(driver);
         builder.moveToElement(castingDtcComparisonFirstBarFirstChart).build().perform();
         return this;
+    }
+
+    /**
+     * Gets part name from DTC Comparison report tooltip
+     * @return String
+     */
+    public String getPartNameDtcComparisonTooltip() {
+        pageUtils.waitForElementToAppear(castingDtcComparisonPartNameTableOne);
+        return castingDtcComparisonPartNameTableOne.getAttribute("textContent");
     }
 
     /**

@@ -26,6 +26,7 @@ import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
@@ -160,12 +161,12 @@ public class CastingDtcComparisonReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
-        genericReportPage.openNewTabAndFocus(2);
+        genericReportPage.openNewCidTabAndFocus(2);
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
                 .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
@@ -369,6 +370,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1708")
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {
@@ -383,18 +385,25 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
                 .hoverBarCastingDtcComparison();
 
-        String partName = genericReportPage.getTableElementNameDtcComparison("1", "1");
+        String partName = genericReportPage.getPartNameDtcComparisonTooltip().substring(0, 30);
         String reportsDraftValue = genericReportPage.getDtcIssueValueCastingDtcComparison("Draft");
         String reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcComparison("Radius");
+        genericReportPage.openNewCidTabAndFocus(1);
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
                 .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();
+
+        String cidDraftValue = designGuidancePage.getDtcIssueValue("Draft");
+        String cidRadiusValue = designGuidancePage.getDtcIssueValue("Radius");
+
+        assertThat(reportsDraftValue, is(equalTo(cidDraftValue)));
+        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
     }
 }

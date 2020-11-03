@@ -508,7 +508,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .openNewTabAndFocus(1);
+            .openNewCidTabAndFocus(1);
 
         List<String> columnsToAdd = Arrays.asList(
             ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
@@ -756,7 +756,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         reportsValues.put("Fully Burdened Cost", assemblyDetailsReportPage.getFiguresFromTable("Fully Burdened Cost"));
         reportsValues.put("Capital Investments", assemblyDetailsReportPage.getFiguresFromTable("Capital Investments"));
 
-        assemblyDetailsReportPage.openNewTabAndFocus(1);
+        assemblyDetailsReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .setScenarioType(Constants.PART_SCENARIO_TYPE)

@@ -30,7 +30,6 @@ import pageobjects.pages.view.reports.PlasticDtcReportPage;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class PlasticDtcReportTests extends TestBase {
     
@@ -172,7 +171,7 @@ public class PlasticDtcReportTests extends TestBase {
         genericReportPage.hoverPartNameBubbleDtcReports();
         String partName = genericReportPage.getPartNameDtcReports();
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
-        genericReportPage.openNewTabAndFocus(1);
+        genericReportPage.openNewCidTabAndFocus(1);
 
         EvaluatePage evaluatePage = new ExplorePage(driver)
             .filter()
@@ -359,7 +358,6 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2320")
     @Description("Verify minimum annual spend input control correctly filters list of available parts")
     public void testMinimumAnnualSpendFiltersPartList() {

@@ -160,7 +160,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
-        genericReportPage.openNewTabAndFocus(1);
+        genericReportPage.openNewCidTabAndFocus(1);
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()

@@ -50,6 +50,12 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
     @FindBy(xpath = "//div[contains(text(), 'Hole Issue')]/ancestor::td/following-sibling::td")
     private WebElement holeIssueValue;
 
+    @FindBy(xpath = "(//td[contains(@class, 'numeric-column')])[1]")
+    private WebElement draftIssueValue;
+
+    @FindBy(xpath = "(//td[contains(@class, 'numeric-column')])[3]")
+    private WebElement radiusIssueValue;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -135,5 +141,16 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
     public String getHoleIssueValue() {
         pageUtils.waitForElementToAppear(holeIssueValue);
         return holeIssueValue.getText();
+    }
+
+    /**
+     * Gets DTC Issue Value Draft or Radius
+     * @param issueName - String of value title
+     * @return String value
+     */
+    public String getDtcIssueValue(String issueName) {
+        WebElement elementToUse = issueName.equals("Draft") ? draftIssueValue : radiusIssueValue;
+        pageUtils.waitForElementToAppear(elementToUse);
+        return elementToUse.getText();
     }
 }
