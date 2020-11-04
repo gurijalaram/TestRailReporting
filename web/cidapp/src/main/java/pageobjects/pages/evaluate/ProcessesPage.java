@@ -18,7 +18,7 @@ import pageobjects.pages.help.HelpDocPage;
 
 public class ProcessesPage extends LoadableComponent<ProcessesPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ProcessesPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ProcessesPage.class);
 
     @FindBy(css = "div[dir='ltr']")
     private WebElement chartContainer;
@@ -31,7 +31,7 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

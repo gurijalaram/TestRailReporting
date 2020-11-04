@@ -19,7 +19,7 @@ import pageobjects.pages.help.HelpDocPage;
 
 public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(DesignGuidancePage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DesignGuidancePage.class);
 
     @FindBy(xpath = "//div[normalize-space(@class)='apriori-table']")
     private WebElement chartTable;
@@ -32,7 +32,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
