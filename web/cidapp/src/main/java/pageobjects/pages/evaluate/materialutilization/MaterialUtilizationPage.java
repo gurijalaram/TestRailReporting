@@ -1,4 +1,4 @@
-package pageobjects.pages.evaluate;
+package pageobjects.pages.evaluate.materialutilization;
 
 import com.apriori.utils.PageUtils;
 
@@ -12,14 +12,14 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class ProcessesPage extends LoadableComponent<ProcessesPage> {
+public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizationPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ProcessesPage.class);
+    private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public ProcessesPage(WebDriver driver) {
+    public MaterialUtilizationPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -34,6 +34,5 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 }
