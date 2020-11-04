@@ -3,6 +3,8 @@ package pageobjects.pages.evaluate;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
@@ -17,6 +19,9 @@ import pageobjects.pages.help.HelpDocPage;
 public class ProcessesPage extends LoadableComponent<ProcessesPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ProcessesPage.class);
+
+    @FindBy(css = "div[dir='ltr']")
+    private WebElement chartContainer;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -38,7 +43,7 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementAppear(chartContainer);
     }
 
     /**
