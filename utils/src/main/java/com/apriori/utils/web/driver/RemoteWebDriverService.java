@@ -1,5 +1,7 @@
 package com.apriori.utils.web.driver;
 
+import com.apriori.utils.WebDriverConnectionException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -87,8 +89,8 @@ public class RemoteWebDriverService extends BrowserManager {
             result.setFileDetector(new LocalFileDetector());
             LOGGER.info("Full list of Capabilities: " + (result).getCapabilities().toString());
 
-        } catch (NullPointerException | MalformedURLException e) {
-            e.printStackTrace();
+        } catch (RuntimeException | MalformedURLException e) {
+            new WebDriverConnectionException(String.format("Not able to connect to connect to '%s'. Check BOTH grid and node are running", server), e).printStackTrace();
         }
         return result;
     }
