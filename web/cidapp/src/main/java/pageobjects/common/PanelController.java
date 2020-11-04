@@ -9,7 +9,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.evaluate.EvaluatePage;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.help.HelpDocPage;
+
+/**
+ * @author cfrith
+ */
 
 public class PanelController extends LoadableComponent<PanelController> {
 
@@ -59,9 +64,8 @@ public class PanelController extends LoadableComponent<PanelController> {
      * Opens the help page
      * @return new page object
      */
-    // TODO: 27/10/2020 not fully implemented
-    public PanelController openHelp() {
+    public HelpDocPage openHelp() {
         pageUtils.waitForElementAndClick(questionButton);
-        return this;
+        return new HelpDocPage(driver);
     }
 }

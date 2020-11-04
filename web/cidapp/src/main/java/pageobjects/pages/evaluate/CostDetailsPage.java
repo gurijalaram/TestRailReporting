@@ -10,6 +10,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.common.PanelController;
+import pageobjects.pages.help.HelpDocPage;
+
+/**
+ * @author cfrith
+ */
 
 public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
@@ -23,10 +29,12 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private PanelController panelController;
 
     public CostDetailsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.panelController = new PanelController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -63,5 +71,21 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     public String getCostContribution(String costContribution) {
         By costDropdown = By.xpath(String.format("//div[normalize-space(text())='%s']/..//div[@class='right']", costContribution));
         return pageUtils.waitForElementToAppear(costDropdown).getText();
+    }
+
+    /**
+     * Closes current panel
+     * @return new page object
+     */
+    public EvaluatePage closePanel() {
+        return panelController.closePanel();
+    }
+
+    /**
+     * Opens the help page
+     * @return new page object
+     */
+    public HelpDocPage openHelp() {
+        return panelController.openHelp();
     }
 }

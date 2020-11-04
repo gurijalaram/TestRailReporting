@@ -55,7 +55,7 @@ public class HelpTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openInputDetails()
-            .clickHelp();
+            .openHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("More Inputs"));
     }
@@ -73,7 +73,7 @@ public class HelpTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
-            .clickHelp();
+            .openHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));
     }
@@ -91,7 +91,7 @@ public class HelpTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .clickHelp();
+            .openHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("Design Guidance Details"));
     }
@@ -108,8 +108,8 @@ public class HelpTests extends TestBase {
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
-            .openProcessDetails()
-            .clickHelp();
+            .openProcesses()
+            .openHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("Process Details"));
     }
@@ -127,7 +127,7 @@ public class HelpTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .openCostDetails()
-            .clickHelp();
+            .openHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Details"));
     }

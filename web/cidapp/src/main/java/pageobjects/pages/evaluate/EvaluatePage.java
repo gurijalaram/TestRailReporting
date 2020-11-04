@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.evaluate.materialutilization.MaterialUtilizationPage;
 import pageobjects.navtoolbars.EvaluateToolbar;
 import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
@@ -70,6 +69,12 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(xpath = "//div[.='Material & Utilization']/../div[.='details']")
     private WebElement materialsDetailsButton;
+
+    @FindBy(xpath = "//div[.='Design Guidance']/../div[.='details']")
+    private WebElement designGuidanceDetailsButton;
+
+    @FindBy(xpath = "//div[.='Processes']/../div[.='details']")
+    private WebElement processesDetailsButton;
 
     @FindBy(xpath = "//div[.='Cost Results']/../div[.='details']")
     private WebElement costDetailsButton;
@@ -174,6 +179,16 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Checks material info is displayed
+     *
+     * @return true/false
+     */
+    public boolean isMaterialInfoDisplayed(String material) {
+        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
+        return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
+    }
+
+    /**
      * Opens the material selector table
      *
      * @return new page object
@@ -204,17 +219,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Checks material info is displayed
-     *
-     * @return true/false
-     */
-    public boolean isMaterialInfoDisplayed(String material) {
-        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
-        return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
-    }
-
-    /**
-     * Opens the material composition dialog
+     * Opens the Material Utilization Panel
      *
      * @return new page object
      */
@@ -224,20 +229,12 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens the Material Utilization Panel
-     *
-     * @return new page object
-     */
-    public MaterialUtilizationPage openMaterialUtilizationDetails() {
-        return new MaterialUtilizationPage(driver);
-    }
-
-    /**
      * Opens the Design Guidance Panel
      *
      * @return new page object
      */
-    public DesignGuidancePage openDesignGuidanceDetails() {
+    public DesignGuidancePage openDesignGuidance() {
+        pageUtils.waitForElementAndClick(designGuidanceDetailsButton);
         return new DesignGuidancePage(driver);
     }
 
@@ -246,7 +243,8 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public ProcessesPage openProcessesDetails() {
+    public ProcessesPage openProcesses() {
+        pageUtils.waitForElementAndClick(processesDetailsButton);
         return new ProcessesPage(driver);
     }
 }

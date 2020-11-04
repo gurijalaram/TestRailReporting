@@ -9,8 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.evaluate.EvaluatePage;
-import pageobjects.explore.ExplorePage;
+import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.help.HelpPage;
 
