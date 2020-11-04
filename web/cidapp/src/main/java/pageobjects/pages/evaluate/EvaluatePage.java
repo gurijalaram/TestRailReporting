@@ -11,6 +11,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.navtoolbars.EvaluateToolbar;
+import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 
 /**
  * @author cfrith
@@ -178,6 +180,16 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Opens the Input Panel
+     *
+     * @return new page object
+     */
+    public MoreInputsPage openInputDetails() {
+        pageUtils.waitForElementAndClick(inputDetailsButton);
+        return new MoreInputsPage(driver);
+    }
+
+    /**
      * Opens the Cost Result Panel
      *
      * @return new page object
@@ -188,11 +200,29 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens the Input Panel
+     * Opens the Material Utilization Panel
+     *
      * @return new page object
      */
-    public MoreInputsPage openInputDetails() {
-        pageUtils.waitForElementAndClick(inputDetailsButton);
-        return new MoreInputsPage(driver);
+    public MaterialUtilizationPage openMaterialUtilizationDetails() {
+        return new MaterialUtilizationPage(driver);
+    }
+
+    /**
+     * Opens the Design Guidance Panel
+     *
+     * @return new page object
+     */
+    public DesignGuidancePage openDesignGuidanceDetails() {
+        return new DesignGuidancePage(driver);
+    }
+
+    /**
+     * Opens the Processes Panel
+     *
+     * @return new page object
+     */
+    public ProcessesPage openProcessesDetails() {
+        return new ProcessesPage(driver);
     }
 }
