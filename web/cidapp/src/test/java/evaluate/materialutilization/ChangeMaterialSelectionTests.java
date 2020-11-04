@@ -13,9 +13,9 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import pageobjects.evaluate.EvaluatePage;
-import pageobjects.evaluate.materialutilization.MaterialUtilizationPage;
-import pageobjects.login.CidAppLoginPage;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
+import pageobjects.pages.login.CidAppLoginPage;
 
 import java.io.File;
 
