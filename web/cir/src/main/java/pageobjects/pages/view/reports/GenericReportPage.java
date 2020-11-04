@@ -386,10 +386,10 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[9]")
     private WebElement tooltipAnnualSpendValue;
 
-    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[7]/*[local-name()='rect'])[14]")
+    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[7]/*[local-name()='rect'])[13]")
     private WebElement machiningDtcComparisonBar;
 
-    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[16]/*[local-name()='text'])[14]")
+    @FindBy(xpath = "(((//div[@class='highcharts-container '])[2]//*[local-name()='g'])[16]/*[local-name()='text'])[13]")
     private WebElement machiningDtcComparisonPartName;
 
     @FindBy(xpath = "//table/tbody/tr[13]/td[2]")
@@ -753,6 +753,16 @@ public class GenericReportPage extends ReportsPageHeader {
         return this;
     }
 
+    /**
+     * Wait for correct assembly selected in dropdown
+     *
+     * @return current page object
+     */
+    public GenericReportPage waitForCorrectAssemblyInDropdown(String assemblyName) {
+        By locator = By.xpath(String.format("//a[contains(@title, '%s')]", assemblyName));
+        pageUtils.waitForElementToAppear(locator);
+        return this;
+    }
 
     /**
      * Wait for export set list count to be zero
@@ -1697,7 +1707,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return boolean
      */
     public boolean isListOptionVisible(String listName, String inputString) {
-        By locator = By.xpath(String.format("//div[@title='%s']//li[@title='%s']/div/a", listName, inputString));
+        By locator = By.xpath(String.format("//div[@title='%s']//li[contains(@title, '%s')]/div/a", listName, inputString));
         pageUtils.waitForElementToAppear(locator);
         WebElement optionElement = driver.findElement(locator);
         return optionElement.isEnabled() && optionElement.isEnabled();
@@ -1708,8 +1718,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param listName String
      * @param nameToSelect String
      */
-    public void selectCreatedByName(String listName, String nameToSelect) {
-        By locator = By.xpath(String.format("//div[@title='%s']//li[@title='%s']/div/a", listName, nameToSelect));
+    public void selectListItem(String listName, String nameToSelect) {
+        By locator = By.xpath(String.format("//div[@title='%s']//li[contains(@title ,'%s')]/div/a", listName, nameToSelect));
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForElementAndClick(locator);
     }
@@ -1756,7 +1766,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCurrentlySelectedAssembly() {
         pageUtils.waitForElementToAppear(currentAssemblyElement);
-        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Assembly Select']/div/div/div/a"));
         return currentAssemblyElement.getAttribute("title");
     }
 

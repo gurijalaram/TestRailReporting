@@ -20,6 +20,7 @@ import com.apriori.utils.web.driver.TestBase;
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.EvaluatePage;
@@ -232,6 +233,7 @@ public class PlasticDtcReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
+    @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Plastic DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {

@@ -692,7 +692,6 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
-    @Issue("AP-64112")
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterOperation() {
