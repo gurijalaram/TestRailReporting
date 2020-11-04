@@ -746,7 +746,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .clickOk().waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         Map<String, String> reportsValues = new HashMap<>();
         reportsValues.put("Part Name", assemblyDetailsReportPage.getRowFivePartName());
@@ -775,5 +776,46 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(reportsValues.get("Piece Part Cost"), is(cidValues.get("Piece Part Cost")));
         assertThat(reportsValues.get("Fully Burdened Cost"), is(cidValues.get("Fully Burdened Cost")));
         assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1933")
+    @Description("Verify component subassembly report details")
+    public void testComponentSubAssemblyReportDetails() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
+                .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        BigDecimal actualfBC = genericReportPage.getComponentCostReportValue("Fully Burdened Cost");
+        BigDecimal actualCostTarget = genericReportPage.getComponentCostReportValue("Cost Target");
+        BigDecimal actualVariance = genericReportPage.getComponentCostReportValue("Variance");
+        BigDecimal actualTotalPlannedVolume = genericReportPage.getComponentCostReportValue("Total Planned Volume");
+        BigDecimal actualLifetimeCost = genericReportPage.getComponentCostReportValue("Lifetime Cost");
+        BigDecimal actualPercentageOfTarget = genericReportPage.getComponentCostReportValue("% of Target");
+        BigDecimal actualLifetimeProjectedCostDifference = genericReportPage.getComponentCostReportValue("Lifetime Projected Cost");
+        BigDecimal oneHundred = new BigDecimal("100");
+
+        // Calculate variance:
+        BigDecimal expectedVariance = actualfBC.subtract(actualCostTarget);
+
+        // Calculate % of Target:
+        BigDecimal expectedPercentageOfTarget = (oneHundred.divide(actualCostTarget)).multiply(actualVariance);
+
+        // Calculate Lifetime Cost:
+        BigDecimal expectedLifetimeCost = actualfBC.multiply(actualTotalPlannedVolume);
+
+        // Calculate Projected Cost Difference:
+        BigDecimal expectedProjectedCostDifference = actualLifetimeCost.subtract(actualCostTarget.multiply(actualTotalPlannedVolume));
+
+        assertThat(actualVariance.compareTo(expectedVariance), is(equalTo(0)));
+        //assertThat(actualPercentageOfTarget.compareTo(expectedPercentageOfTarget), is(equalTo(0)));
+        //assertThat(actualLifetimeCost.compareTo(expectedLifetimeCost), is(equalTo(0)));
+        assertThat(actualLifetimeProjectedCostDifference.compareTo(expectedProjectedCostDifference), is(equalTo(0)));
     }
 }

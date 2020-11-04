@@ -1470,13 +1470,13 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Select component from dropdown
-     * @param partName String
+     * @param componentName String
      */
-    public GenericReportPage selectComponent(String partName) {
+    public GenericReportPage selectComponent(String componentName) {
         pageUtils.waitForElementAndClick(componentSelectDropdown);
         pageUtils.waitForElementAndClick(componentSelectSearchInput);
-        componentSelectSearchInput.sendKeys(partName);
-        By componentToSelectLocator = By.xpath(String.format("//a[contains(text(), '%s')]", partName));
+        componentSelectSearchInput.sendKeys(componentName);
+        By componentToSelectLocator = By.xpath(String.format("//a[contains(text(), '%s')]", componentName));
         pageUtils.waitForElementToAppear(componentToSelectLocator);
         pageUtils.waitForElementAndClick(componentToSelectLocator);
         return this;
@@ -1950,6 +1950,17 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath(String.format("//table/tbody/tr[13]/td[%s]/span", index));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Gets value from Component Cost Report
+     * @param valueToGet String
+     * @return String
+     */
+    public BigDecimal getComponentCostReportValue(String valueToGet) {
+       By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[1]/span", valueToGet));
+       pageUtils.waitForElementToAppear(locator);
+       return new BigDecimal(driver.findElement(locator).getText().replace(",", ""));
     }
 
     /**
