@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.evaluate.materialutilization.MaterialUtilizationPage;
 import pageobjects.navtoolbars.EvaluateToolbar;
 
 /**
@@ -71,6 +72,8 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Cost Results']/../div[.='details']")
     private WebElement costDetailsButton;
 
+    @FindBy(xpath = "//button[.='Explore']")
+    private WebElement exploreButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -182,6 +185,26 @@ public class EvaluatePage extends EvaluateToolbar {
     public CostDetailsPage openCostDetails() {
         pageUtils.waitForElementAndClick(costDetailsButton);
         return new CostDetailsPage(driver);
+    }
+
+    /**
+     * Checks material info is displayed
+     *
+     * @return true/false
+     */
+    public boolean isMaterialInfoDisplayed(String material) {
+        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
+        return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
+    }
+
+    /**
+     * Opens the material composition dialog
+     *
+     * @return new page object
+     */
+    public MaterialUtilizationPage openMaterialUtilization() {
+        pageUtils.waitForElementAndClick(materialsDetailsButton);
+        return new MaterialUtilizationPage(driver);
     }
 
 }

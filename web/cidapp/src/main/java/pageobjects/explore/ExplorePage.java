@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.evaluate.EvaluatePage;
 import pageobjects.navtoolbars.ExploreToolbar;
 
 /**
@@ -54,5 +55,10 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getScenariosFound() {
         return pageUtils.waitForElementAppear(scenarioCount).getText();
+    }
+
+    public EvaluatePage openScenario(String partName, String scenarioName) {
+
+        return new EvaluatePage(driver);
     }
 }

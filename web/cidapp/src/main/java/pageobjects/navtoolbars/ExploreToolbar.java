@@ -62,15 +62,15 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Collective method to upload a file then select OK
+     * Collective method to upload a file then select Submit
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
-     * @param className    - the class name
+     * @param klass    - the class name
      * @return new page object
      */
-    public <T> T uploadComponentAndOk(String scenarioName, File filePath, Class<T> className) {
-        return uploadComponent(scenarioName, filePath).selectUploadButton(className);
+    public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
+        return uploadComponent(scenarioName, filePath).selectSubmitButton(klass);
     }
 
     /**
@@ -96,5 +96,15 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(newButton);
         pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
+    }
+
+    /**
+     * Publish the scenario
+     *
+     * @return new page object
+     */
+    public <T> T publishScenario(Class<T> className) {
+        pageUtils.waitForElementAndClick(publishButton);
+        return PageFactory.initElements(driver, className);
     }
 }

@@ -24,11 +24,14 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     @FindBy(xpath = "//label[normalize-space(text())='Search']/..//input")
     private WebElement searchInput;
 
-    @FindBy(xpath = "//div[@class='apriori-table   scrollable-y ']")
+    @FindBy(xpath = "//div[@class='table-body']")
     private WebElement materialTable;
 
-    @FindBy(xpath = "//button[.='Select']")
-    private WebElement selectButton;
+    @FindBy(xpath = "//div[@class='cell-content']")
+    private WebElement rowText;
+
+    @FindBy(xpath = "//button[.='Submit']")
+    private WebElement submitButton;
 
     @FindBy(xpath = "//button[.='Cancel']")
     private WebElement cancelButton;
@@ -51,7 +54,8 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(materialTable);
+        pageUtils.waitForElementAppear(materialTable);
+        pageUtils.waitForElementAppear(rowText);
     }
 
     /**
@@ -109,8 +113,8 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      *
      * @return new page object
      */
-    public EvaluatePage select() {
-        pageUtils.waitForElementAndClick(selectButton);
+    public EvaluatePage submit() {
+        pageUtils.waitForElementAndClick(submitButton);
         return new EvaluatePage(driver);
     }
 
