@@ -3,6 +3,8 @@ package pageobjects.pages.evaluate;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
@@ -17,6 +19,9 @@ import pageobjects.pages.help.HelpDocPage;
 public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     private final Logger logger = LoggerFactory.getLogger(MoreInputsPage.class);
+
+    @FindBy(xpath = "//div[.='Basic Attributes']")
+    private WebElement attributesText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -38,10 +43,12 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(attributesText);
     }
 
     /**
      * Closes current panel
+     *
      * @return new page object
      */
     public EvaluatePage closePanel() {
@@ -50,6 +57,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     /**
      * Opens the help page
+     *
      * @return new page object
      */
     public HelpDocPage openHelp() {

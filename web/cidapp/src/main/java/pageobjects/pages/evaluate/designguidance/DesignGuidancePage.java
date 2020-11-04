@@ -3,6 +3,8 @@ package pageobjects.pages.evaluate.designguidance;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
@@ -18,6 +20,9 @@ import pageobjects.pages.help.HelpDocPage;
 public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     private final Logger logger = LoggerFactory.getLogger(DesignGuidancePage.class);
+
+    @FindBy(xpath = "//div[normalize-space(@class)='apriori-table']")
+    private WebElement chartTable;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -39,7 +44,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementAppear(chartTable);
     }
 
     /**
