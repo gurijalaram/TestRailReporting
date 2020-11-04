@@ -85,7 +85,6 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
 
-
     private PageUtils pageUtils;
     private WebDriver driver;
 
