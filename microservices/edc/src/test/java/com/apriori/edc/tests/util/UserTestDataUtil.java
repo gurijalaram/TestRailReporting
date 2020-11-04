@@ -43,8 +43,10 @@ public class UserTestDataUtil {
     }
 
     public String initToken() {
-        UserCredentials userCredentials = UserUtil.getUser();
+        return initToken(UserUtil.getUser());
+    }
 
+    public String initToken(UserCredentials userCredentials) {
         return SecurityManager.retriveJwtToken(
                 Constants.getAtsServiceHost(),
                 HttpStatus.SC_CREATED,
@@ -149,7 +151,7 @@ public class UserTestDataUtil {
     }
 
     public String uploadTestData(final UserDataEDC userDataEDC) {
-        final File testData = FileResourceUtil.getLocalResourceFile("test-data/apriori-4-items.csv");
+        final File testData = FileResourceUtil.getResourceAsFile("test_data", "apriori-4-items.csv");
 
         RequestEntity requestEntity = RequestEntity.init(
                 BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, userDataEDC.getUserCredentials(), BillOfSingleMaterialWrapper.class)

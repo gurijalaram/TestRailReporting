@@ -5,9 +5,11 @@ import com.apriori.apibase.utils.TestUtil;
 
 import com.apriori.cis.controller.BatchPartResources;
 import com.apriori.cis.controller.BatchResources;
+import com.apriori.cis.controller.PartResources;
 import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 
+import com.apriori.cis.entity.response.Part;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -19,24 +21,29 @@ import org.junit.Test;
 public class BatchPartResourcesTest extends TestUtil {
     private static PropertyStore propertyStore;
     private static Batch batch;
+    private static Part part;
 
     @BeforeClass
     public static void testSetup() {
-        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromFile(
-        Thread.currentThread().getContextClassLoader().getResource("property-store.json").getPath(), PropertyStore.class);
         batch = BatchResources.createNewBatch();
+
+        NewPartRequest newPartRequest =
+                (NewPartRequest)JsonManager.deserializeJsonFromFile(
+                        Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreatePartData.json").getPath(), NewPartRequest.class);
+
+        part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getResponse().getIdentity());
+
     }
 
     @Test
     @TestRail(testCaseId = "4280")
     @Description("API returns a list of Parts per Batch in the CIS DB")
     public void createBatchParts() {
-
         NewPartRequest newPartRequest =
                 (NewPartRequest)JsonManager.deserializeJsonFromFile(
                 Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreatePartData.json").getPath(), NewPartRequest.class);
 
-        BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
+        BatchPartResources.createNewBatchPart(newPartRequest, batch.getResponse().getIdentity());
     }
 
     @Test
@@ -50,6 +57,7 @@ public class BatchPartResourcesTest extends TestUtil {
     @TestRail(testCaseId = "4281")
     @Description("API returns a representation of a single Batch-Part in the CIS DB")
     public void getBatchPart() {
-        BatchPartResources.getBatchPartRepresentation(propertyStore.getBatchIdentity(), propertyStore.getPartIdentity());
+        BatchPartResources.getBatchPartRepresentation(batch.getResponse().getIdentity(),
+                part.getResponse().getIdentity());
     }
 }

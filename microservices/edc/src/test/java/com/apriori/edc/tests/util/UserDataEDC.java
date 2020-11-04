@@ -29,9 +29,14 @@ public class UserDataEDC {
     public UserDataEDC() {
     }
 
-    public UserDataEDC(String username, String password) {
+    public UserDataEDC(final String username, final String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public UserDataEDC(final UserCredentials userCredentials) {
+        this.username = userCredentials.getUsername();
+        this.password = userCredentials.getPassword();
     }
 
     public List<BillOfMaterial> getBillOfMaterials() {

@@ -1,7 +1,7 @@
-package com.apriori.cds.tests.suite;
+package com.apriori.nts.tests.suite;
 
-import com.apriori.cds.tests.Emails;
-import com.apriori.cds.tests.Notifications;
+import com.apriori.nts.tests.Emails;
+import com.apriori.nts.tests.Notifications;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 

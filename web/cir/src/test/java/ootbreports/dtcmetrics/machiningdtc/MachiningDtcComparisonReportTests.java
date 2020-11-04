@@ -15,14 +15,18 @@ import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
@@ -101,6 +105,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "3021")
     @Description("Verify save button on Machining DTC Comparison input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -273,6 +278,66 @@ public class MachiningDtcComparisonReportTests extends TestBase {
         inputControlsTests.testMinimumAnnualSpendComparisonReports(
                 ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlManufacturingIssues() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum(),
+                "DTCMACHINING_001 (Toleranced)",
+                "MACHININGDESIGN_TO_COST (Initial)"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlDesignStandards() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum(),
+                "DTCMACHINING_001 (Toleranced)",
+                "PUNCH (Initial)"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlTolerances() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.TOLERANCES.getSortOrderEnum(),
+                "MACHININGDESIGN_TO_COST (Initial)",
+                "PARTBODY_1 (Initial)"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlSlowOperations() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
+                "MACHININGDESIGN_TO_COST (Initial)",
+                "DTCMACHINING_001 (Toleranced)"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3025")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlAnnualSpend() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
+                "PMI_ROUGHNESSCREO (Initial)",
+                "PMI_PROFILEOFSURFACECREO (Initial)"
         );
     }
 }

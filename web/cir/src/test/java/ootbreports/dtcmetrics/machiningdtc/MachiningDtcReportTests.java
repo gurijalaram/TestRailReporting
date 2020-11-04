@@ -22,6 +22,7 @@ import com.apriori.utils.web.driver.TestBase;
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
@@ -143,6 +144,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "3021")
     @Description("Verify save button on Machining DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -309,6 +311,7 @@ public class MachiningDtcReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         genericReportPage.hoverMachiningBubbleTwice();
+        genericReportPage.waitForCorrectPartName(false);
         genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
 
@@ -401,5 +404,122 @@ public class MachiningDtcReportTests extends TestBase {
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsExportDates() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .setExportDateUsingInput(true, "")
+                .clickUseLatestExportDropdownTwice()
+                .waitForCorrectExportSetListCount("Single export set selection.", "0");
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "0");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("0")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsExportSets() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "0");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("0")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsRollup() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "0");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("0")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsMinimumAnnualSpend() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName());
+
+        assertThat(genericReportPage.getSelectedRollup(RollupEnum.DTC_MACHINING_DATASET.getRollupName()),
+                is(equalTo(RollupEnum.DTC_MACHINING_DATASET.getRollupName())));
+
+        genericReportPage
+                .inputMinimumAnnualSpend()
+                .clickUseLatestExportDropdownTwice();
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "18");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("18")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsProcessGroup() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .setProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "0");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("0")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsDtcScore() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "43");
+
+        genericReportPage.setDtcScore(DtcScoreEnum.LOW.getDtcScoreName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "31");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("31")));
     }
 }

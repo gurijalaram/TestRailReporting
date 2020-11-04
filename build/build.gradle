@@ -13,11 +13,9 @@ allprojects {
 }
 
 
-//use this template to copy specific files into modules
-
-findModuleAndCopyRes(project(":utils").projectDir.path + "/src/main/resources/cas-int", "/resources", ":web:cas")
-
-///////////////////////////////////////////////////////
+/* use this template to copy specific files into modules
+    findModuleAndCopyRes(project(":utils").projectDir.path + "/src/main/resources/cas-int", "/resources", ":web:cas")
+*/
 
 void findModuleAndCopyRes( String fromDir, String toDir, String moduleName ) {
     if (findProject(moduleName) != null) {
@@ -45,6 +43,10 @@ subprojects {
 
     def encodingType = 'UTF-8'
 
+    // Copy allure properties into each module test resources
+    processTestResources {
+        from project(":apibase").projectDir.path + "/src/test/resources/allure.properties"
+    }
 
     repositories {
         mavenLocal()
@@ -91,6 +93,7 @@ subprojects {
     //compile jar file
     task fatJar(type: Jar) {
         archiveBaseName = project.jar_name
+       // destinationDir = file("${project.rootDir}/fatJar")
         zip64 = true
 
         manifest {

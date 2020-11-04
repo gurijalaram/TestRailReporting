@@ -11,8 +11,10 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -50,7 +52,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
                 .setExportDateUsingInput(false, "")
-                .waitForCorrectExportSetListCount("exportSetName", "0");
+                .waitForCorrectExportSetListCount("Single export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -70,7 +72,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
-                .waitForCorrectExportSetListCount("exportSetName", "0");
+                .waitForCorrectExportSetListCount("Single export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -363,7 +365,7 @@ public class InputControlsTests extends TestBase {
                 processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
             assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
         } else {
-            genericReportPage.setReportName(ReportNamesEnum.DTC_PART_SUMMARY.getReportName());
+            genericReportPage.setReportName(reportName);
             genericReportPage.hoverPartNameBubbleDtcReports();
             String partName = genericReportPage.getPartNameDtcReports();
 
@@ -387,8 +389,8 @@ public class InputControlsTests extends TestBase {
         genericReportPage.hoverProcessGroupBubble(false);
         String partNameTwo = genericReportPage.getPartNameDtcReports();
 
-        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
-        navigateToDtcPartSummaryAndAssert(partNameTwo, ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+        navigateToDtcPartSummaryAndAssert(partNameTwo, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
     }
 
     /**
@@ -465,7 +467,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        String inputString = "QA Automation Account 01";
+        String inputString = "Ben Hegan";
 
         genericReportPage.searchListForName(listName, inputString);
         assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
@@ -485,10 +487,27 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class);
 
-        String nameToSelect = "QA Automation Account 01";
-        genericReportPage.selectCreatedByName(listName, nameToSelect);
+        String nameToSelect = "Ben Hegan";
+        String lastModifiedByAvailable = genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        genericReportPage.selectListItem(listName, nameToSelect);
 
-        // assert export sets have filtered and last modified by is down to zero available when bug is fixed
+        genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo("1")));
+
+        if (listName.equals(ListNameEnum.CREATED_BY.getListName())) {
+            String lastModifiedByListName = ListNameEnum.LAST_MODIFIED_BY.getListName();
+            String expectedCount = Constants.environment.equals("cid-qa") ? "3" : "1";
+            genericReportPage.waitForCorrectAvailableSelectedCount(lastModifiedByListName,
+                    "Available: ", expectedCount);
+            assertThat(
+                    genericReportPage.getCountOfListAvailableItems(lastModifiedByListName, "Available"),
+                    is(not(equalTo(lastModifiedByAvailable)))
+            );
+        }
+
+        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName());
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+                is(startsWith(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())));
     }
 
     /**
@@ -508,18 +527,18 @@ public class InputControlsTests extends TestBase {
                 add("Invert");
             }};
 
-        String availableValue = genericReportPage.getCountOfListUsers(listName, "Available");
-        String selectedInitialValue = genericReportPage.getCountOfListUsers(listName, "Selected");
+        String availableValue = genericReportPage.getCountOfListAvailableItems(listName, "Available");
+        String selectedInitialValue = genericReportPage.getCountOfListAvailableItems(listName, "Selected");
 
         for (String buttonName : buttonNames) {
             genericReportPage.clickListPanelButton(listName, buttonName);
 
             if (buttonName.equals("Select All") || buttonName.equals("Invert")) {
                 genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", availableValue);
-                assertThat(genericReportPage.getCountOfListUsers(listName, "Selected"), is(equalTo(availableValue)));
+                assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo(availableValue)));
             } else {
                 genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", selectedInitialValue);
-                assertThat(genericReportPage.getCountOfListUsers(listName, "Selected"),
+                assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"),
                         is(equalTo(selectedInitialValue)));
             }
         }
@@ -610,7 +629,8 @@ public class InputControlsTests extends TestBase {
     public void testMinimumAnnualSpend(String reportName, String exportSet) {
         testMinimumAnnualSpendCore(reportName, exportSet, true);
 
-        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(), is(equalTo(new BigDecimal("6631000"))));
+        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(),
+                is(startsWith("6,631,000")));
 
         if (!reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -714,6 +734,7 @@ public class InputControlsTests extends TestBase {
     }
 
     private void navigateToDtcPartSummaryAndAssert(String partName, String processGroupName) {
+        partName = partName.equals("DTCCASTINGISSUES") ? partName + " (sand casting)" : partName;
         genericReportPage.navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
                 .selectComponent(partName)

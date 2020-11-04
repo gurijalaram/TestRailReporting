@@ -43,6 +43,7 @@ pipeline {
                 echo "Building.."
                 sh """
                     docker build \
+                        --rm \
                         --build-arg MODULE=${MODULE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
                         --build-arg FOLDER=${folder} \
@@ -91,7 +92,7 @@ pipeline {
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
-            sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
+            sh "docker image prune --force"
             cleanWs()
         }
     }
