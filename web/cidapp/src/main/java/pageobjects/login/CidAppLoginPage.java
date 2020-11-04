@@ -28,7 +28,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
     @FindBy(css = "input[name='password']")
     private WebElement password;
 
-    @FindBy(css = "a[href='javascript:void(0)")
+    @FindBy(css = "a[class='auth0-lock-alternative-link")
     private WebElement forgotPassword;
 
     @FindBy(css = "button[type='submit']")
@@ -43,7 +43,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
     @FindBy(css = ".auth0-lock-name")
     private WebElement aprioriTitle;
 
-    @FindBy(xpath = "//a[contains(text(),'Privacy Policy')]")
+    @FindBy(xpath = "//a[.='Privacy Policy']")
     private WebElement privacyPolicy;
 
     @FindBy(xpath = "//a[contains(text(),'Help')]")
@@ -198,6 +198,26 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
         getEmail();
         getPassword();
         return this;
+    }
+
+    /**
+     * Selects forgotten password
+     *
+     * @return new page object
+     */
+    public ForgottenPasswordPage forgottenPassword() {
+        pageUtils.waitForElementAndClick(forgotPassword);
+        return new ForgottenPasswordPage(driver);
+    }
+
+    /**
+     * Selects privacy policy
+     *
+     * @return new page object
+     */
+    public PrivacyPolicyPage privacyPolicy() {
+        pageUtils.waitForElementAndClick(privacyPolicy);
+        return new PrivacyPolicyPage(driver);
     }
 
     /**

@@ -14,7 +14,7 @@ import testsuites.suiteinterface.SmokeTests;
 //TODO: add project ID for TestRail
 //@ProjectRunID("999")
 @RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(SmokeTests.class)
+//@Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses ({
     LoginTests.class,
     CostScenarioTests.class,

@@ -144,7 +144,7 @@ pipeline {
                     sh "docker rmi -f selenium/node-chrome"
                 }
             }
-            sh "docker image prune --force --filter=\"label=build-date=${timeStamp}\""
+            sh "docker image prune --force"
             cleanWs()
         }
     }
