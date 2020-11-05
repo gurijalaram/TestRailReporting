@@ -1,4 +1,4 @@
-package pageobjects.evaluate;
+package pageobjects.pages.evaluate;
 
 import com.apriori.utils.PageUtils;
 
@@ -10,8 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.evaluate.materialutilization.MaterialUtilizationPage;
 import pageobjects.navtoolbars.EvaluateToolbar;
+import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 
 /**
  * @author cfrith
@@ -69,8 +70,17 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Material & Utilization']/../div[.='details']")
     private WebElement materialsDetailsButton;
 
+    @FindBy(xpath = "//div[.='Design Guidance']/../div[.='details']")
+    private WebElement designGuidanceDetailsButton;
+
+    @FindBy(xpath = "//div[.='Processes']/../div[.='details']")
+    private WebElement processesDetailsButton;
+
     @FindBy(xpath = "//div[.='Cost Results']/../div[.='details']")
     private WebElement costDetailsButton;
+
+    @FindBy(xpath = "//div[.='Inputs']/../div[normalize-space()='more']")
+    private WebElement inputDetailsButton;
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
@@ -168,6 +178,16 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Checks material info is displayed
+     *
+     * @return true/false
+     */
+    public boolean isMaterialInfoDisplayed(String material) {
+        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
+        return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
+    }
+
+    /**
      * Opens the material selector table
      *
      * @return new page object
@@ -175,6 +195,16 @@ public class EvaluatePage extends EvaluateToolbar {
     public MaterialSelectorPage openMaterialSelectorTable() {
         pageUtils.waitForElementAndClick(materialsButton);
         return new MaterialSelectorPage(driver);
+    }
+
+    /**
+     * Opens the Input Panel
+     *
+     * @return new page object
+     */
+    public MoreInputsPage openInputDetails() {
+        pageUtils.waitForElementAndClick(inputDetailsButton);
+        return new MoreInputsPage(driver);
     }
 
     /**
@@ -188,17 +218,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Checks material info is displayed
-     *
-     * @return true/false
-     */
-    public boolean isMaterialInfoDisplayed(String material) {
-        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
-        return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
-    }
-
-    /**
-     * Opens the material composition dialog
+     * Opens the Material Utilization Panel
      *
      * @return new page object
      */
@@ -207,4 +227,23 @@ public class EvaluatePage extends EvaluateToolbar {
         return new MaterialUtilizationPage(driver);
     }
 
+    /**
+     * Opens the Design Guidance Panel
+     *
+     * @return new page object
+     */
+    public DesignGuidancePage openDesignGuidance() {
+        pageUtils.waitForElementAndClick(designGuidanceDetailsButton);
+        return new DesignGuidancePage(driver);
+    }
+
+    /**
+     * Opens the Processes Panel
+     *
+     * @return new page object
+     */
+    public ProcessesPage openProcesses() {
+        pageUtils.waitForElementAndClick(processesDetailsButton);
+        return new ProcessesPage(driver);
+    }
 }

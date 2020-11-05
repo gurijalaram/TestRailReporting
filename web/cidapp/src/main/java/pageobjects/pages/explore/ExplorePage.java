@@ -1,4 +1,4 @@
-package pageobjects.explore;
+package pageobjects.pages.explore;
 
 import com.apriori.utils.PageUtils;
 
@@ -8,8 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.evaluate.EvaluatePage;
 import pageobjects.navtoolbars.ExploreToolbar;
+import pageobjects.pages.evaluate.EvaluatePage;
 
 /**
  * @author cfrith
