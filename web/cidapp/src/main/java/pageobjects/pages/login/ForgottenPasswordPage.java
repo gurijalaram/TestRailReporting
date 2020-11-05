@@ -1,4 +1,4 @@
-package pageobjects.login;
+package pageobjects.pages.login;
 
 import com.apriori.utils.PageUtils;
 
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ForgottenPasswordPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ForgottenPasswordPage.class);
 
     @FindBy(css = ".auth0-lock-name")
     private WebElement resetPasswordText;
@@ -36,7 +36,7 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
     public ForgottenPasswordPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -1,4 +1,4 @@
-package pageobjects.evaluate.materialutilization;
+package pageobjects.pages.evaluate.materialutilization;
 
 import com.apriori.utils.PageUtils;
 
@@ -11,7 +11,12 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.common.PanelController;
-import pageobjects.evaluate.EvaluatePage;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.help.HelpDocPage;
+
+/**
+ * @author cfrith
+ */
 
 public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizationPage> {
 
@@ -60,5 +65,13 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
      */
     public EvaluatePage closePanel() {
         return panelController.closePanel();
+    }
+
+    /**
+     * Opens the help page
+     * @return new page object
+     */
+    public HelpDocPage openHelp() {
+        return panelController.openHelp();
     }
 }
