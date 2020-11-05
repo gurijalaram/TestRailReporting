@@ -161,6 +161,23 @@ public class CostAllCadTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
+    @Description("CAD file from all supported CAD formats - Creo 7")
+    public void testCADFormatCreo7() {
+
+        resourceFile = FileResourceUtil.getResourceAsFile("creo7test.prt.1");
+
+        loginPage = new CidLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
 
@@ -188,6 +205,23 @@ public class CostAllCadTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"574"})
+    @Description("CAD file from all supported CAD formats - Inventor 2020")
+    public void testCADFormatInventor2020() {
+
+        resourceFile = FileResourceUtil.getResourceAsFile("Inventor2020test.ipt");
+
+        loginPage = new CidLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
