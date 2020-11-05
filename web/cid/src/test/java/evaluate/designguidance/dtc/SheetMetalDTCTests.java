@@ -112,7 +112,7 @@ public class SheetMetalDTCTests extends TestBase {
         assertThat(guidancePage.getGuidanceMessage(), containsString("Hole is too close to to the following bend(s): StraightBend:3"));
 
         guidancePage.selectIssueTypeAndGCD("Proximity Warning, Distance", "Simple Holes", "SimpleHole:2");
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Hole is too close to the following hole(s): SimpleHole:1"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Hole is too close to the following hole(s): SimpleHole:3, SimpleHole:1"));
     }
 
     @Test
