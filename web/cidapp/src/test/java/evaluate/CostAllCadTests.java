@@ -17,10 +17,10 @@ import io.qameta.allure.Description;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.evaluate.CostDetailsPage;
-import pageobjects.evaluate.EvaluatePage;
-import pageobjects.explore.FileUploadPage;
-import pageobjects.login.CidAppLoginPage;
+import pageobjects.pages.evaluate.CostDetailsPage;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.explore.FileUploadPage;
+import pageobjects.pages.login.CidAppLoginPage;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;

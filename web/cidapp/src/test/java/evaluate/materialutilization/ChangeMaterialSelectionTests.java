@@ -13,9 +13,9 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import pageobjects.evaluate.EvaluatePage;
-import pageobjects.evaluate.materialutilization.MaterialUtilizationPage;
-import pageobjects.login.CidAppLoginPage;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
+import pageobjects.pages.login.CidAppLoginPage;
 
 import java.io.File;
 
@@ -246,7 +246,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1095"), is(true));
     }*/
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"885"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
@@ -255,16 +255,15 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialSelectorTable()
-            // TODO: 27/10/2020 not fully implemented
             .selectionMethod("MCAD <material not found - VPE default used>")
-            .select()
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));
-    }*/
+    }
 
     @Test
     @TestRail(testCaseId = {"905"})
