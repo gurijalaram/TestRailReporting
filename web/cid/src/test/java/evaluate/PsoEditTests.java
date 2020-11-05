@@ -69,7 +69,7 @@ public class PsoEditTests extends TestBase {
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
+            .costScenario(5)
             .openProcessDetails()
             .selectProcessChart("High Pressure Die Casting")
             .selectOptions()
@@ -77,7 +77,7 @@ public class PsoEditTests extends TestBase {
             .selectMoldMaterialDropdown("AISI P20")
             .selectPartToleranceDropdown("Low Tolerance +/-0.254 (+/-0.010\")")
             .closePanel()
-            .costScenario()
+            .costScenario(5)
             .openProcessDetails()
             .selectProcessChart("High Pressure Die Casting")
             .selectOptions();

@@ -111,7 +111,7 @@ public class DTCMachiningTests extends TestBase {
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues", "Sharp Corner", "PlanarFace:5");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Contouring: Feature contains a sharp corner that would require a zero tool diameter."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Facing: Feature contains a sharp corner that would require a zero tool diameter. If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SideMillingLengthDia.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SideMillingLengthDia3.SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
