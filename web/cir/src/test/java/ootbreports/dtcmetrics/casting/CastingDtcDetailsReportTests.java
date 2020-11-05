@@ -439,6 +439,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+        commonReportTests.testCastingDtcIssueCounts(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
     }
 }

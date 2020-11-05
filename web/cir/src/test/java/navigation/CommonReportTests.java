@@ -189,13 +189,13 @@ public class CommonReportTests extends TestBase {
      * Generic test for Casting DTC Details and Comparison DTC Issue Counts
      * @param reportName String
      */
-    public void testCastingDtcIssueCounts(String reportName) {
+    public void testCastingDtcIssueCounts(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectExportSet(exportSetName)
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -213,8 +213,8 @@ public class CommonReportTests extends TestBase {
             reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcComparison(radiusString);
         } else {
             partName = genericReportPage.getPartNameRowOneCastingDtcDetails();
-            reportsDraftValue = genericReportPage.getDtcIssueValueCastingDtcDetails(draftString);
-            reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcDetails(radiusString);
+            reportsDraftValue = genericReportPage.getDtcIssueValueCastingDtcDetails(reportName, draftString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcDetails(reportName, radiusString);
         }
         genericReportPage.openNewCidTabAndFocus(1);
 

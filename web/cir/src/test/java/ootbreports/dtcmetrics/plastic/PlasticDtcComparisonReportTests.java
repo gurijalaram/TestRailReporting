@@ -242,4 +242,15 @@ public class PlasticDtcComparisonReportTests extends TestBase {
         assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
                 is(equalTo(elementName)));
     }
+
+    @Test
+    @TestRail(testCaseId = "1378")
+    @Description("Verify DTC issue counts are correct")
+    public void testDtcIssueCountsAreCorrect() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testCastingDtcIssueCounts(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
 }

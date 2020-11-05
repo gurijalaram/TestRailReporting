@@ -440,7 +440,7 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic tet for DTC Score Input Control - details reports
+     * Generic test for DTC Score Input Control - details reports
      * @param reportName - String
      * @param exportSet - String
      * @param dtcScore - String

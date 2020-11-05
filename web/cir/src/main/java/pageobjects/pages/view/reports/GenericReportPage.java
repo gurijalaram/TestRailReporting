@@ -1945,8 +1945,14 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param valueToGet - String value to get
      * @return String
      */
-    public String getDtcIssueValueCastingDtcDetails(String valueToGet) {
-        int index = valueToGet.equals("Draft") ? 32 : 34;
+    public String getDtcIssueValueCastingDtcDetails(String reportName, String valueToGet) {
+        // 29 or 31 if plastic
+        int index = 0;
+        if (reportName.equals(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName())) {
+            index = valueToGet.equals("Draft") ? 32 : 34;
+        } else {
+            index = valueToGet.equals("Draft") ? 29 : 31;
+        }
         By locator = By.xpath(String.format("//table/tbody/tr[13]/td[%s]/span", index));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
