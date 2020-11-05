@@ -2,6 +2,7 @@ package pageobjects.evaluate;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,6 +40,56 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(processTree);
+    }
+
+    /**
+     * Selects both the process type and process name of the secondary process
+     *
+     * @param processType - accepts a comma separated list of type string
+     * @param processName - the process name
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectSecondaryProcess(String processType, String processName) {
+        findProcessTypeAndName(processType, processName).click();
+        return this;
+    }
+
+    /**
+     * Finds the process type and name
+     *
+     * @param processType - the process type
+     * @param processName - the process name
+     * @return webelement
+     */
+    private WebElement findProcessTypeAndName(String processType, String processName) {
+        return selectProcessType(processType).findProcessName(processName);
+    }
+
+    /**
+     * Selects the secondary types dropdowns in the process tree
+     *
+     * @param processType - the secondary process type
+     * @return current page object
+     */
+    private SecondaryProcessesPage selectProcessType(String processType) {
+        String[] processTypes = processType.split(",");
+
+        for (String process : processTypes) {
+            By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
+            pageUtils.scrollWithJavaScript(driver.findElement(secondaryProcess), true).click();
+        }
+        return this;
+    }
+
+    /**
+     * Select the secondary process checkbox
+     *
+     * @param processName - the secondary process
+     * @return current page object
+     */
+    private WebElement findProcessName(String processName) {
+        By processBox = By.xpath(String.format("//span[.='%s']/ancestor::span//label", processName.trim()));
+        return pageUtils.scrollWithJavaScript(driver.findElement(processBox), true);
     }
 
     /**

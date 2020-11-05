@@ -210,7 +210,13 @@ public class EvaluatePage extends EvaluateToolbar {
         return new MaterialUtilizationPage(driver);
     }
 
+    /**
+     * Opens the secondary processes page
+     *
+     * @return new page object
+     */
     public SecondaryProcessesPage openSecondaryProcesses() {
+        pageUtils.waitForElementAndClick(secondaryProcessesPencil);
         return new SecondaryProcessesPage(driver);
     }
 
