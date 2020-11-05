@@ -226,7 +226,7 @@ public class DTCMachiningTests extends TestBase {
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Walls", "CurvedWall:22");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Contouring: Feature contains a sharp corner"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Side Milling: Feature contains a sharp corner that would require a zero tool diameter. If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
 
     @Test
