@@ -70,7 +70,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
-        return uploadComponent(scenarioName, filePath).selectSubmitButton(klass);
+        return uploadComponent(scenarioName, filePath).submit(klass);
     }
 
     /**
@@ -82,7 +82,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public <T> T uploadComponentAndCancel(String scenarioName, File filePath, Class<T> className) {
-        return uploadComponent(scenarioName, filePath).selectCancelButton(className);
+        return uploadComponent(scenarioName, filePath).cancel(className);
     }
 
     /**

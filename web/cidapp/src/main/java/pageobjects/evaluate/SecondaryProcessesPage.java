@@ -35,6 +35,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementAppear(processTree);
     }
 }
