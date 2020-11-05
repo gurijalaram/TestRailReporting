@@ -107,6 +107,51 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
+     * Select all
+     *
+     * @return current page object
+     */
+    public ModalDialogController selectAll() {
+        return modalDialogController.selectAll();
+    }
+
+    /**
+     * Deselect all
+     *
+     * @return current page object
+     */
+    public ModalDialogController deselectAll() {
+        return modalDialogController.deselectAll();
+    }
+
+    /**
+     * Reset
+     *
+     * @return current page object
+     */
+    public ModalDialogController reset() {
+        return modalDialogController.reset();
+    }
+
+    /**
+     * Expand all
+     *
+     * @return current page object
+     */
+    public ModalDialogController expandAll() {
+        return modalDialogController.expandAll();
+    }
+
+    /**
+     * Collapse all
+     *
+     * @return current page object
+     */
+    public ModalDialogController collapseAll() {
+        return modalDialogController.collapseAll();
+    }
+
+    /**
      * Selects the submit button
      *
      * @return generic page object
