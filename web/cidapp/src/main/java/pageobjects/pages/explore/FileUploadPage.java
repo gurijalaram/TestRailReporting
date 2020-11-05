@@ -1,4 +1,4 @@
-package pageobjects.explore;
+package pageobjects.pages.explore;
 
 import com.apriori.utils.PageUtils;
 
@@ -18,7 +18,7 @@ import java.io.File;
 
 public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(FileUploadPage.class);
 
     @FindBy(css = ".modal-content")
     private WebElement modalDialog;
@@ -47,7 +47,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     public FileUploadPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
