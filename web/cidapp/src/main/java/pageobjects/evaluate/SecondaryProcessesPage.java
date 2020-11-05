@@ -97,6 +97,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
 
     /**
      * Enter search input
+     *
      * @param searchTerm - search term
      * @return current page object
      */
@@ -149,6 +150,17 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public ModalDialogController collapseAll() {
         return modalDialogController.collapseAll();
+    }
+
+    /**
+     * Get number of selected processes
+     *
+     * @return
+     */
+    public String getNoOfSelected() {
+        By amounts = By.cssSelector("div[class='selected-amount'] span");
+        String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
+        return amount[0].trim();
     }
 
     /**
