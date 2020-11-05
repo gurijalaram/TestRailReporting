@@ -31,9 +31,11 @@ import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -779,6 +781,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1933")
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
@@ -797,25 +800,20 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal actualVariance = genericReportPage.getComponentCostReportValue("Variance");
         BigDecimal actualTotalPlannedVolume = genericReportPage.getComponentCostReportValue("Total Planned Volume");
         BigDecimal actualLifetimeCost = genericReportPage.getComponentCostReportValue("Lifetime Cost");
-        BigDecimal actualPercentageOfTarget = genericReportPage.getComponentCostReportValue("% of Target");
+        BigDecimal actualPercentageOfTarget = genericReportPage.getComponentCostReportValue("% of Target").setScale(1, RoundingMode.DOWN);
         BigDecimal actualLifetimeProjectedCostDifference = genericReportPage.getComponentCostReportValue("Lifetime Projected Cost");
         BigDecimal oneHundred = new BigDecimal("100");
 
-        // Calculate variance:
         BigDecimal expectedVariance = actualfBC.subtract(actualCostTarget);
-
-        // Calculate % of Target:
-        BigDecimal expectedPercentageOfTarget = (oneHundred.divide(actualCostTarget)).multiply(actualVariance);
-
-        // Calculate Lifetime Cost:
+        BigDecimal expectedPercentageOfTarget = (oneHundred.divide(actualCostTarget, RoundingMode.UNNECESSARY)).multiply(actualVariance).setScale(1);
         BigDecimal expectedLifetimeCost = actualfBC.multiply(actualTotalPlannedVolume);
-
-        // Calculate Projected Cost Difference:
         BigDecimal expectedProjectedCostDifference = actualLifetimeCost.subtract(actualCostTarget.multiply(actualTotalPlannedVolume));
 
         assertThat(actualVariance.compareTo(expectedVariance), is(equalTo(0)));
-        //assertThat(actualPercentageOfTarget.compareTo(expectedPercentageOfTarget), is(equalTo(0)));
+        assertThat(actualPercentageOfTarget.compareTo(expectedPercentageOfTarget), is(equalTo(0)));
+        // Problem in below line: actual is 2,332,078.82 but expected is 2,332,000.00
         //assertThat(actualLifetimeCost.compareTo(expectedLifetimeCost), is(equalTo(0)));
+        // Has to be a bug as the values used to calculate it are the same in this test as in ap pro
         assertThat(actualLifetimeProjectedCostDifference.compareTo(expectedProjectedCostDifference), is(equalTo(0)));
     }
 }
