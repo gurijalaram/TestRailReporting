@@ -19,6 +19,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(xpath = "//div[normalize-space(@class)='tree selectable']")
     private WebElement processTree;
 
+    @FindBy(xpath = "//input[@placeholder='Search...']")
+    private WebElement searchInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -90,6 +93,17 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     private WebElement findProcessName(String processName) {
         By processBox = By.xpath(String.format("//span[.='%s']/ancestor::span//label", processName.trim()));
         return pageUtils.scrollWithJavaScript(driver.findElement(processBox), true);
+    }
+
+    /**
+     * Enter search input
+     * @param searchTerm - search term
+     * @return current page object
+     */
+    public SecondaryProcessesPage search(String searchTerm) {
+        pageUtils.waitForElementAppear(searchInput).clear();
+        searchInput.sendKeys(searchTerm);
+        return this;
     }
 
     /**
