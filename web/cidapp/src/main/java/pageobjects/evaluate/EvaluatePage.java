@@ -64,13 +64,16 @@ public class EvaluatePage extends EvaluateToolbar {
     private WebElement secondaryProcessDropdown;
 
     @FindBy(xpath = "//label[.='Material']/..//button")
-    private WebElement materialsButton;
+    private WebElement materialsPencil;
 
     @FindBy(xpath = "//div[.='Material & Utilization']/../div[.='details']")
     private WebElement materialsDetailsButton;
 
     @FindBy(xpath = "//div[.='Cost Results']/../div[.='details']")
     private WebElement costDetailsButton;
+
+    @FindBy(xpath = "//label[.='Secondary Processes']/..//button")
+    private WebElement secondaryProcessesPencil;
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
@@ -173,7 +176,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public MaterialSelectorPage openMaterialSelectorTable() {
-        pageUtils.waitForElementAndClick(materialsButton);
+        pageUtils.waitForElementAndClick(materialsPencil);
         return new MaterialSelectorPage(driver);
     }
 
@@ -205,6 +208,10 @@ public class EvaluatePage extends EvaluateToolbar {
     public MaterialUtilizationPage openMaterialUtilization() {
         pageUtils.waitForElementAndClick(materialsDetailsButton);
         return new MaterialUtilizationPage(driver);
+    }
+
+    public SecondaryProcessesPage openSecondaryProcesses() {
+        return new SecondaryProcessesPage(driver);
     }
 
 }

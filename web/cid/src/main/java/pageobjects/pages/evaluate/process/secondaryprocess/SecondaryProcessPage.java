@@ -38,7 +38,6 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private By secondaryProcess;
 
     public SecondaryProcessPage(WebDriver driver) {
         this.driver = driver;
