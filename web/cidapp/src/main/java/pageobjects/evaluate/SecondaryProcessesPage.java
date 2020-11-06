@@ -113,8 +113,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public ModalDialogController selectAll() {
-        return modalDialogController.selectAll();
+    public SecondaryProcessesPage selectAll() {
+        modalDialogController.selectAll();
+        return this;
     }
 
     /**
@@ -122,8 +123,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public ModalDialogController deselectAll() {
-        return modalDialogController.deselectAll();
+    public SecondaryProcessesPage deselectAll() {
+        modalDialogController.deselectAll();
+        return this;
     }
 
     /**
@@ -131,8 +133,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public ModalDialogController reset() {
-        return modalDialogController.reset();
+    public SecondaryProcessesPage reset() {
+        modalDialogController.reset();
+        return this;
     }
 
     /**
@@ -140,8 +143,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public ModalDialogController expandAll() {
-        return modalDialogController.expandAll();
+    public SecondaryProcessesPage expandAll() {
+        modalDialogController.expandAll();
+        return this;
     }
 
     /**
@@ -149,8 +153,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public ModalDialogController collapseAll() {
-        return modalDialogController.collapseAll();
+    public SecondaryProcessesPage collapseAll() {
+        modalDialogController.collapseAll();
+        return this;
     }
 
     /**
