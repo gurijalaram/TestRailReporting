@@ -119,7 +119,7 @@ public class DTCMachiningTests extends TestBase {
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SideMillingLengthDia3.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("Deep hole.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
@@ -129,7 +129,7 @@ public class DTCMachiningTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues", "Side Milling L/D", "CurvedWall:3");
+            .selectIssueTypeAndGCD("Machining Issues", "Side Milling L/D", "CurvedWall:6");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Required tool exceeds the max L/D Ratio"));
     }
@@ -226,7 +226,7 @@ public class DTCMachiningTests extends TestBase {
             .openGuidanceTab()
             .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Walls", "CurvedWall:22");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Contouring: Feature contains a sharp corner"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Side Milling: Feature contains a sharp corner that would require a zero tool diameter. If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
 
     @Test
