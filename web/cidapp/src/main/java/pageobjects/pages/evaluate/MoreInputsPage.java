@@ -1,4 +1,4 @@
-package pageobjects.common;
+package pageobjects.pages.evaluate;
 
 import com.apriori.utils.PageUtils;
 
@@ -9,32 +9,28 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.common.PanelController;
 import pageobjects.pages.help.HelpDocPage;
 
 /**
  * @author cfrith
  */
 
-public class PanelController extends LoadableComponent<PanelController> {
+public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(PanelController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(MoreInputsPage.class);
 
-    @FindBy(css = "svg[data-icon='question']")
-    private WebElement questionButton;
+    @FindBy(xpath = "//div[.='Basic Attributes']")
+    private WebElement attributesText;
 
-    @FindBy(css = "svg[data-icon='times']")
-    private WebElement closeButton;
-
-    @FindBy(xpath = "//span[normalize-space(@class)='Resizer Resizer horizontal")
-    private WebElement panelResizer;
-
-    private PageUtils pageUtils;
     private WebDriver driver;
+    private PageUtils pageUtils;
+    private PanelController panelController;
 
-    public PanelController(WebDriver driver) {
+    public MoreInputsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.panelController = new PanelController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -47,25 +43,24 @@ public class PanelController extends LoadableComponent<PanelController> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(questionButton);
-        pageUtils.waitForElementAppear(closeButton);
+        pageUtils.waitForElementAppear(attributesText);
     }
 
     /**
      * Closes current panel
+     *
      * @return new page object
      */
     public EvaluatePage closePanel() {
-        pageUtils.waitForElementAndClick(closeButton);
-        return new EvaluatePage(driver);
+        return panelController.closePanel();
     }
 
     /**
      * Opens the help page
+     *
      * @return new page object
      */
     public HelpDocPage openHelp() {
-        pageUtils.waitForElementAndClick(questionButton);
-        return new HelpDocPage(driver);
+        return panelController.openHelp();
     }
 }
