@@ -14,6 +14,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -159,6 +160,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-64577")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Creo 7")
@@ -210,6 +212,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-64578")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Inventor 2020")
