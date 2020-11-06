@@ -15,6 +15,9 @@ import pageobjects.navtoolbars.EvaluateToolbar;
 import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author cfrith
  */
@@ -88,6 +91,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
+
+    @FindBy(xpath = "//label[.='Secondary Processes']//..//div//span[@class]")
+    private List<WebElement> secondaryProcesses;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -250,6 +256,7 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.waitForElementAndClick(processesDetailsButton);
         return new ProcessesPage(driver);
     }
+
     /**
      * Opens the secondary processes page
      *
@@ -260,4 +267,23 @@ public class EvaluatePage extends EvaluateToolbar {
         return new SecondaryProcessesPage(driver);
     }
 
+    /**
+     * Gets list of secondary processes
+     *
+     * @return list of string
+     */
+    public List<String> getSecondaryProcesses() {
+        return secondaryProcesses.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the process routing details
+     *
+     * @return string
+     */
+    public String getProcessRoutingDetails() {
+        By processRouting = By.cssSelector("div[class='routing-name']");
+        pageUtils.waitForElementToAppear(processRouting);
+        return driver.findElement(processRouting).getAttribute("textContent");
+    }
 }
