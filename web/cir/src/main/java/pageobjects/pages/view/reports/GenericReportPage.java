@@ -766,7 +766,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage hoverBarDtcComparison(String reportName) {
-        // (//*[local-name()='g'])[13]//*[local-name()='rect'][1] first value is 9 for plastic
         String indexToUse = reportName.contains("Plastic") ? "9" : "13";
         By locator = By.xpath(String.format("(//*[local-name()='g'])[%s]//*[local-name()='rect'][1]", indexToUse));
         pageUtils.waitForElementToAppear(locator);
@@ -791,8 +790,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getDtcIssueValueDtcComparison(String valueToGet) {
         WebElement elementToUse = dtcComparisonDtcIssueMap.get(valueToGet);
         pageUtils.waitForElementToAppear(elementToUse);
-        //WebElement elementToUse = valueToGet.equals("Draft") ? dtcComparisonDtcDraftIssues :
-        //        dtcComparisonDtcRadiusIssues;
         return elementToUse.getAttribute("textContent");
     }
 
