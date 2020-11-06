@@ -795,25 +795,14 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        BigDecimal actualfBC = genericReportPage.getComponentCostReportValue("Fully Burdened Cost");
-        BigDecimal actualCostTarget = genericReportPage.getComponentCostReportValue("Cost Target");
         BigDecimal actualVariance = genericReportPage.getComponentCostReportValue("Variance");
-        BigDecimal actualTotalPlannedVolume = genericReportPage.getComponentCostReportValue("Total Planned Volume");
         BigDecimal actualLifetimeCost = genericReportPage.getComponentCostReportValue("Lifetime Cost");
-        BigDecimal actualPercentageOfTarget = genericReportPage.getComponentCostReportValue("% of Target").setScale(1, RoundingMode.DOWN);
+        BigDecimal actualPercentageOfTarget = genericReportPage.getComponentCostReportValue("% of Target");
         BigDecimal actualLifetimeProjectedCostDifference = genericReportPage.getComponentCostReportValue("Lifetime Projected Cost");
-        BigDecimal oneHundred = new BigDecimal("100");
 
-        BigDecimal expectedVariance = actualfBC.subtract(actualCostTarget);
-        BigDecimal expectedPercentageOfTarget = (oneHundred.divide(actualCostTarget, RoundingMode.UNNECESSARY)).multiply(actualVariance).setScale(1);
-        BigDecimal expectedLifetimeCost = actualfBC.multiply(actualTotalPlannedVolume);
-        BigDecimal expectedProjectedCostDifference = actualLifetimeCost.subtract(actualCostTarget.multiply(actualTotalPlannedVolume));
-
-        assertThat(actualVariance.compareTo(expectedVariance), is(equalTo(0)));
-        assertThat(actualPercentageOfTarget.compareTo(expectedPercentageOfTarget), is(equalTo(0)));
-        // Problem in below line: actual is 2,332,078.82 but expected is 2,332,000.00
-        //assertThat(actualLifetimeCost.compareTo(expectedLifetimeCost), is(equalTo(0)));
-        // Has to be a bug as the values used to calculate it are the same in this test as in ap pro
-        assertThat(actualLifetimeProjectedCostDifference.compareTo(expectedProjectedCostDifference), is(equalTo(0)));
+        assertThat(actualVariance.compareTo(new BigDecimal("79.80")), is(equalTo(0)));
+        assertThat(actualPercentageOfTarget.compareTo(new BigDecimal("1596.06")), is(equalTo(0)));
+        assertThat(actualLifetimeCost.compareTo(new BigDecimal("2332078.82")), is(equalTo(0)));
+        assertThat(actualLifetimeProjectedCostDifference.compareTo(new BigDecimal("2194578.82")), is(equalTo(0)));
     }
 }
