@@ -2,6 +2,7 @@ package pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -149,8 +150,11 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
      * @return String value
      */
     public String getDtcIssueValue(String issueName) {
-        WebElement elementToUse = issueName.equals("Draft") ? draftIssueValue : radiusIssueValue;
-        pageUtils.waitForElementToAppear(elementToUse);
-        return elementToUse.getText();
+        By locator = By.xpath(String.format(
+                "//div[@title='%s Issue']/ancestor::tr[2]/td[contains(@class, 'numeric-column')]",
+                issueName)
+        );
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 }

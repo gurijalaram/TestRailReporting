@@ -372,13 +372,11 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1708")
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testCastingDtcIssueCounts(
-                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName()
-        );
+        commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
     }
 }

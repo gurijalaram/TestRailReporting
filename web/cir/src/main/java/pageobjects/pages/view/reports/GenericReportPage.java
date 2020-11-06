@@ -37,6 +37,7 @@ import java.util.Map;
 public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
     private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
     private Map<String, WebElement> tooltipElementMap = new HashMap<>();
     private Map<String, WebElement> assemblyMap = new HashMap<>();
@@ -469,13 +470,16 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement castingDtcComparisonFirstBarFirstChart;
 
     @FindBy(xpath = "(//*[@style='font-size: 10px'])[1]")
-    private WebElement castingDtcComparisonPartNameTableOne;
+    private WebElement dtcComparisonPartNameTableOne;
+
+    @FindBy(xpath = "(//*[@style='font-weight:bold'])[2]")
+    private WebElement dtcComparisonDtcMaterialIssues;
 
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[3]")
-    private WebElement castingDtcComparisonDtcRadiusIssues;
+    private WebElement dtcComparisonDtcRadiusIssues;
 
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[4]")
-    private WebElement castingDtcComparisonDtcDraftIssues;
+    private WebElement dtcComparisonDtcDraftIssues;
 
     @FindBy(xpath = "(//span[@class='_jrHyperLink ReportExecution']/span)[1]")
     private WebElement castingDtcDetailsComparisonPartNameRowOne;
@@ -489,6 +493,7 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseDtcComparisonDtcIssueMap();
         initialiseTooltipElementMap();
         initialiseDtcScoreBubbleMap();
         initialiseAssemblyHashMap();
@@ -760,10 +765,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers over bar in Casting DTC Comparison Report
      * @return current page object
      */
-    public GenericReportPage hoverBarCastingDtcComparison() {
-        pageUtils.waitForElementToAppear(castingDtcComparisonFirstBarFirstChart);
+    public GenericReportPage hoverBarDtcComparison(String reportName) {
+        // (//*[local-name()='g'])[13]//*[local-name()='rect'][1] first value is 9 for plastic
+        String indexToUse = reportName.contains("Plastic") ? "9" : "13";
+        By locator = By.xpath(String.format("(//*[local-name()='g'])[%s]//*[local-name()='rect'][1]", indexToUse));
+        pageUtils.waitForElementToAppear(locator);
         Actions builder = new Actions(driver);
-        builder.moveToElement(castingDtcComparisonFirstBarFirstChart).build().perform();
+        builder.moveToElement(driver.findElement(locator)).build().perform();
         return this;
     }
 
@@ -772,19 +780,19 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getPartNameDtcComparisonTooltip() {
-        pageUtils.waitForElementToAppear(castingDtcComparisonPartNameTableOne);
-        return castingDtcComparisonPartNameTableOne.getAttribute("textContent");
+        pageUtils.waitForElementToAppear(dtcComparisonPartNameTableOne);
+        return dtcComparisonPartNameTableOne.getAttribute("textContent");
     }
 
     /**
      * Get DTC Issue Value from Casting DTC Comparison Report
      * @return String
      */
-    public String getDtcIssueValueCastingDtcComparison(String valueToGet) {
-        pageUtils.waitForElementToAppear(castingDtcComparisonDtcDraftIssues);
-        pageUtils.waitForElementToAppear(castingDtcComparisonDtcRadiusIssues);
-        WebElement elementToUse = valueToGet.equals("Draft") ? castingDtcComparisonDtcDraftIssues :
-                castingDtcComparisonDtcRadiusIssues;
+    public String getDtcIssueValueDtcComparison(String valueToGet) {
+        WebElement elementToUse = dtcComparisonDtcIssueMap.get(valueToGet);
+        pageUtils.waitForElementToAppear(elementToUse);
+        //WebElement elementToUse = valueToGet.equals("Draft") ? dtcComparisonDtcDraftIssues :
+        //        dtcComparisonDtcRadiusIssues;
         return elementToUse.getAttribute("textContent");
     }
 
@@ -1945,13 +1953,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param valueToGet - String value to get
      * @return String
      */
-    public String getDtcIssueValueCastingDtcDetails(String reportName, String valueToGet) {
-        // 29 or 31 if plastic
+    public String getDtcIssueValueDtcDetails(String reportName, String valueToGet) {
         int index = 0;
         if (reportName.equals(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName())) {
             index = valueToGet.equals("Draft") ? 32 : 34;
         } else {
-            index = valueToGet.equals("Draft") ? 29 : 31;
+            index = valueToGet.equals("Material") ? 26 : 31;
         }
         By locator = By.xpath(String.format("//table/tbody/tr[13]/td[%s]/span", index));
         pageUtils.waitForElementToAppear(locator);
@@ -2050,5 +2057,14 @@ public class GenericReportPage extends ReportsPageHeader {
         tooltipElementMap.put("DTC Score Value", tooltipDtcScoreValue);
         tooltipElementMap.put("Annual Spend Name", tooltipAnnualSpendName);
         tooltipElementMap.put("Annual Spend Value", tooltipAnnualSpendValue);
+    }
+
+    /**
+     * Initialises DTC Comparison Dtc Issue map
+     */
+    private void initialiseDtcComparisonDtcIssueMap() {
+        dtcComparisonDtcIssueMap.put("Draft", dtcComparisonDtcDraftIssues);
+        dtcComparisonDtcIssueMap.put("Material", dtcComparisonDtcMaterialIssues);
+        dtcComparisonDtcIssueMap.put("Radius", dtcComparisonDtcRadiusIssues);
     }
 }

@@ -189,13 +189,13 @@ public class CommonReportTests extends TestBase {
      * Generic test for Casting DTC Details and Comparison DTC Issue Counts
      * @param reportName String
      */
-    public void testCastingDtcIssueCounts(String reportName, String exportSetName) {
+    public void testCastingDtcIssueCounts(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(exportSetName)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -207,14 +207,14 @@ public class CommonReportTests extends TestBase {
         String radiusString = "Radius";
 
         if (reportName.equals(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName())) {
-            genericReportPage.hoverBarCastingDtcComparison();
+            genericReportPage.hoverBarDtcComparison(reportName);
             partName = genericReportPage.getPartNameDtcComparisonTooltip().substring(0, 30);
-            reportsDraftValue = genericReportPage.getDtcIssueValueCastingDtcComparison(draftString);
-            reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcComparison(radiusString);
+            reportsDraftValue = genericReportPage.getDtcIssueValueDtcComparison(draftString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueDtcComparison(radiusString);
         } else {
             partName = genericReportPage.getPartNameRowOneCastingDtcDetails();
-            reportsDraftValue = genericReportPage.getDtcIssueValueCastingDtcDetails(reportName, draftString);
-            reportsRadiusValue = genericReportPage.getDtcIssueValueCastingDtcDetails(reportName, radiusString);
+            reportsDraftValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, draftString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, radiusString);
         }
         genericReportPage.openNewCidTabAndFocus(1);
 
@@ -232,6 +232,57 @@ public class CommonReportTests extends TestBase {
         String cidRadiusValue = designGuidancePage.getDtcIssueValue(radiusString);
 
         assertThat(reportsDraftValue, is(equalTo(cidDraftValue)));
+        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
+    }
+
+    /**
+     * Generic test for Plastic DTC Details and Comparison DTC Issue Counts
+     * @param reportName String
+     */
+    public void testPlasticDtcIssueCounts(String reportName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        String partName = "";
+        String reportsMaterialValue = "";
+        String reportsRadiusValue = "";
+        String materialString = "Material";
+        String radiusString = "Radius";
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
+            genericReportPage.hoverBarDtcComparison(reportName);
+            partName = genericReportPage.getPartNameDtcComparisonTooltip();
+            reportsMaterialValue = genericReportPage.getDtcIssueValueDtcComparison(materialString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueDtcComparison(radiusString);
+        } else {
+            partName = genericReportPage.getPartNameRowOneCastingDtcDetails();
+            reportsMaterialValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, materialString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, radiusString);
+        }
+        genericReportPage.openNewCidTabAndFocus(1);
+
+        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
+
+        radiusString = "Radii";
+        String cidMaterialValue = designGuidancePage.getDtcIssueValue(materialString);
+        String cidRadiusValue = designGuidancePage.getDtcIssueValue(radiusString);
+
+        assertThat(reportsMaterialValue, is(equalTo(cidMaterialValue)));
         assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
     }
 }
