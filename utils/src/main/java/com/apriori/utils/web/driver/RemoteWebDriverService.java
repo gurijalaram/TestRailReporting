@@ -1,7 +1,5 @@
 package com.apriori.utils.web.driver;
 
-import com.apriori.utils.WebDriverConnectionException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +10,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,8 +88,8 @@ public class RemoteWebDriverService extends BrowserManager {
             result.setFileDetector(new LocalFileDetector());
             LOGGER.info("Full list of Capabilities: " + (result).getCapabilities().toString());
 
-        } catch (RuntimeException | MalformedURLException e) {
-            new WebDriverConnectionException(String.format("Not able to connect to connect to '%s'. Check BOTH grid and node are running", server), e).printStackTrace();
+        } catch (UnreachableBrowserException | MalformedURLException e) {
+            e.printStackTrace();
         }
         return result;
     }
