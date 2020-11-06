@@ -42,7 +42,7 @@ public class SecondaryProcessTests extends TestBase {
     /*@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"679", "653", "670"})
-    @Description("Test secondary process leak test")
+    @Description("Test secondary process leak test - edit wall thickness PSO and validate the process chart")
     public void secondaryProcessLeakTest() {
 
         resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulding.CATPart");
@@ -73,7 +73,7 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"658", "659", "661"})
-    @Description("Test secondary process xray")
+    @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
     public void secondaryProcessXray() {
 
         resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulding.CATPart");
