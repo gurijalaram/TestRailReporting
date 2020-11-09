@@ -26,7 +26,7 @@ public class PanelController extends LoadableComponent<PanelController> {
     @FindBy(css = "svg[data-icon='times']")
     private WebElement closeButton;
 
-    @FindBy(xpath = "//span[normalize-space(@class)='Resizer Resizer horizontal")
+    @FindBy(xpath = "//span[normalize-space(@class)='Resizer Resizer horizontal']")
     private WebElement panelResizer;
 
     private PageUtils pageUtils;

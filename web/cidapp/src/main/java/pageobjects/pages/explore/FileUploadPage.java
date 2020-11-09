@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.common.ModalDialogController;
 
 import java.io.File;
 
@@ -29,12 +30,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = "input[name='scenarioName']")
     private WebElement scenarioNameInput;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Submit']")
-    private WebElement submitButton;
-
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
-    private WebElement cancelButton;
-
     @FindBy(css = "//div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
@@ -43,10 +38,12 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ModalDialogController modalDialogController;
 
     public FileUploadPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -59,7 +56,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(modalDialog);
-        pageUtils.waitForElementAppear(cancelButton);
     }
 
     /**
@@ -121,9 +117,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      *
      * @return generic page object
      */
-    public <T> T selectSubmitButton(Class<T> klass) {
-        pageUtils.javaScriptClick(submitButton);
-        return PageFactory.initElements(driver, klass);
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
     }
 
     /**
@@ -131,8 +126,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      *
      * @return generic page object
      */
-    public <T> T selectCancelButton(Class<T> className) {
-        pageUtils.waitForElementAndClick(cancelButton);
-        return PageFactory.initElements(driver,className);
+    public <T> T cancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
     }
 }
