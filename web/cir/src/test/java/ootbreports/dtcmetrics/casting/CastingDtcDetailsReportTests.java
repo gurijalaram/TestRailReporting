@@ -294,6 +294,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingCasting() {
@@ -312,6 +313,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingMachining() {
@@ -335,6 +337,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlMaterialScrap() {
@@ -353,6 +356,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlTolerances() {
@@ -376,6 +380,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlSlowOperations() {
@@ -399,6 +404,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlSpecialTooling() {
@@ -417,6 +423,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlAnnualSpend() {
@@ -435,6 +442,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDtcRank() {
