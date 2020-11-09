@@ -746,7 +746,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .clickOk().waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         Map<String, String> reportsValues = new HashMap<>();
         reportsValues.put("Part Name", assemblyDetailsReportPage.getRowFivePartName());
@@ -775,5 +776,12 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(reportsValues.get("Piece Part Cost"), is(cidValues.get("Piece Part Cost")));
         assertThat(reportsValues.get("Fully Burdened Cost"), is(cidValues.get("Fully Burdened Cost")));
         assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1928")
+    @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
+    public void testLevelsInsideBOM() {
+
     }
 }
