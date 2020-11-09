@@ -57,7 +57,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      * @return current page object
      */
     public CostDetailsPage expandDropDown(String costDetails) {
-        By costDropdown = By.xpath(String.format("//div[normalize-space(text())='%s']", costDetails));
+        By costDropdown = By.xpath(String.format("//div[@class='cost-result-list']//div[normalize-space(text())='%s']", costDetails));
         pageUtils.waitForElementToAppear(costDropdown);
         pageUtils.waitForElementAndClick(costDropdown);
         return this;
