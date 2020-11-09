@@ -263,6 +263,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1378")
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {
