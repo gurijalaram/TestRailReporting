@@ -5,12 +5,16 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
 import pageobjects.header.ReportsPageHeader;
+import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.library.LibraryPage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.userguides.CirUserGuidePage;
@@ -111,24 +115,24 @@ public class CommonReportTests extends TestBase {
         genericReportPage.waitForReportToLoad();
         String[] elementNames = {elementNameOne, elementNameTwo};
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("1", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("1", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
                 is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("2", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("2", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "2"),
                 is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("3", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("3", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "2"),
                 is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("4", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("4", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
                 is(equalTo(elementNames[1])));
     }
 
@@ -150,34 +154,135 @@ public class CommonReportTests extends TestBase {
         genericReportPage.waitForReportToLoad();
         String[] elementNames = {elementNameOne, elementNameTwo};
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("1", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("1", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
                 is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("2", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("2", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "2"),
                 is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("3", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("3", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "2"),
                 is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("4", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("4", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
                 is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("5", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("5", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("5", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("5", "2"),
                 is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("6", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("6", "1"),
                 is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("6", "2"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("6", "2"),
                 is(equalTo(elementNames[1])));
+    }
+
+    /**
+     * Generic test for Casting DTC Details and Comparison DTC Issue Counts
+     * @param reportName String
+     */
+    public void testCastingDtcIssueCounts(String reportName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        String partName = "";
+        String reportsDraftValue = "";
+        String reportsRadiusValue = "";
+        String draftString = "Draft";
+        String radiusString = "Radius";
+
+        if (reportName.equals(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName())) {
+            genericReportPage.hoverBarDtcComparison(reportName);
+            partName = genericReportPage.getPartNameDtcComparisonTooltip().substring(0, 30);
+            reportsDraftValue = genericReportPage.getDtcIssueValueDtcComparison(draftString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueDtcComparison(radiusString);
+        } else {
+            partName = genericReportPage.getPartNameRowOneCastingDtcDetails();
+            reportsDraftValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, draftString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, radiusString);
+        }
+        genericReportPage.openNewCidTabAndFocus(1);
+
+        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
+
+        String cidDraftValue = designGuidancePage.getDtcIssueValue(draftString);
+        String cidRadiusValue = designGuidancePage.getDtcIssueValue(radiusString);
+
+        assertThat(reportsDraftValue, is(equalTo(cidDraftValue)));
+        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
+    }
+
+    /**
+     * Generic test for Plastic DTC Details and Comparison DTC Issue Counts
+     * @param reportName String
+     */
+    public void testPlasticDtcIssueCounts(String reportName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        String partName = "";
+        String reportsMaterialValue = "";
+        String reportsRadiusValue = "";
+        String materialString = "Material";
+        String radiusString = "Radius";
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
+            genericReportPage.hoverBarDtcComparison(reportName);
+            partName = genericReportPage.getPartNameDtcComparisonTooltip();
+            reportsMaterialValue = genericReportPage.getDtcIssueValueDtcComparison(materialString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueDtcComparison(radiusString);
+        } else {
+            partName = genericReportPage.getPartNameRowOneCastingDtcDetails();
+            reportsMaterialValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, materialString);
+            reportsRadiusValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, radiusString);
+        }
+        genericReportPage.openNewCidTabAndFocus(1);
+
+        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
+
+        radiusString = "Radii";
+        String cidMaterialValue = designGuidancePage.getDtcIssueValue(materialString);
+        String cidRadiusValue = designGuidancePage.getDtcIssueValue(radiusString);
+
+        assertThat(reportsMaterialValue, is(equalTo(cidMaterialValue)));
+        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
     }
 }

@@ -2,6 +2,7 @@ package pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -49,6 +50,12 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
 
     @FindBy(xpath = "//div[contains(text(), 'Hole Issue')]/ancestor::td/following-sibling::td")
     private WebElement holeIssueValue;
+
+    @FindBy(xpath = "(//td[contains(@class, 'numeric-column')])[1]")
+    private WebElement draftIssueValue;
+
+    @FindBy(xpath = "(//td[contains(@class, 'numeric-column')])[3]")
+    private WebElement radiusIssueValue;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -135,5 +142,19 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
     public String getHoleIssueValue() {
         pageUtils.waitForElementToAppear(holeIssueValue);
         return holeIssueValue.getText();
+    }
+
+    /**
+     * Gets DTC Issue Value Draft or Radius
+     * @param issueName - String of value title
+     * @return String value
+     */
+    public String getDtcIssueValue(String issueName) {
+        By locator = By.xpath(String.format(
+                "//div[@title='%s Issue']/ancestor::tr[2]/td[contains(@class, 'numeric-column')]",
+                issueName)
+        );
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 }
