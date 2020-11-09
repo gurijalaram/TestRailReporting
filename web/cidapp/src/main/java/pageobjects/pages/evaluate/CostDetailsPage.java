@@ -69,7 +69,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      * @return string
      */
     public String getCostContribution(String costContribution) {
-        By costDropdown = By.xpath(String.format("//div[normalize-space(text())='%s']/..//div[@class='right']", costContribution));
+        By costDropdown = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/..//span[@class='property-value']", costContribution));
         return pageUtils.waitForElementToAppear(costDropdown).getText();
     }
 
