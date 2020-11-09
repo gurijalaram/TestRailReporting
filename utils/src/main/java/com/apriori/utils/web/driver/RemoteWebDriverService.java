@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,7 +88,7 @@ public class RemoteWebDriverService extends BrowserManager {
             result.setFileDetector(new LocalFileDetector());
             LOGGER.info("Full list of Capabilities: " + (result).getCapabilities().toString());
 
-        } catch (NullPointerException | MalformedURLException e) {
+        } catch (UnreachableBrowserException | MalformedURLException e) {
             e.printStackTrace();
         }
         return result;
