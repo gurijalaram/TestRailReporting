@@ -1,4 +1,4 @@
-package pageobjects.login;
+package pageobjects.pages.login;
 
 import com.apriori.utils.PageUtils;
 
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PrivacyPolicyPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(PrivacyPolicyPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -30,7 +30,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     public PrivacyPolicyPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -14,6 +14,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -159,6 +160,24 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-64577")
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"574"})
+    @Description("CAD file from all supported CAD formats - Creo 7")
+    public void testCADFormatCreo7() {
+
+        resourceFile = FileResourceUtil.getResourceAsFile("creo7test.prt.1");
+
+        loginPage = new CidLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+    }
+
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - NX")
@@ -188,6 +207,24 @@ public class CostAllCadTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+    }
+
+    @Test
+    @Issue("AP-64578")
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"574"})
+    @Description("CAD file from all supported CAD formats - Inventor 2020")
+    public void testCADFormatInventor2020() {
+
+        resourceFile = FileResourceUtil.getResourceAsFile("Inventor2020test.ipt");
+
+        loginPage = new CidLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
     }
