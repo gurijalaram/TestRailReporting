@@ -508,7 +508,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .openNewTabAndFocus(1);
+            .openNewCidTabAndFocus(1);
 
         List<String> columnsToAdd = Arrays.asList(
             ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
@@ -746,16 +746,19 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .clickOk().waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         Map<String, String> reportsValues = new HashMap<>();
         reportsValues.put("Part Name", assemblyDetailsReportPage.getRowFivePartName());
         reportsValues.put("Cycle Time", assemblyDetailsReportPage.getFiguresFromTable("Cycle Time"));
         reportsValues.put("Piece Part Cost", assemblyDetailsReportPage.getFiguresFromTable("Piece Part Cost"));
-        reportsValues.put("Fully Burdened Cost", assemblyDetailsReportPage.getFiguresFromTable("Fully Burdened Cost"));
-        reportsValues.put("Capital Investments", assemblyDetailsReportPage.getFiguresFromTable("Capital Investments"));
+        reportsValues.put("Fully Burdened Cost",
+                assemblyDetailsReportPage.getFiguresFromTable("Fully Burdened Cost"));
+        reportsValues.put("Capital Investments",
+                assemblyDetailsReportPage.getFiguresFromTable("Capital Investments"));
 
-        assemblyDetailsReportPage.openNewTabAndFocus(1);
+        assemblyDetailsReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .setScenarioType(Constants.PART_SCENARIO_TYPE)
@@ -775,5 +778,32 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(reportsValues.get("Piece Part Cost"), is(cidValues.get("Piece Part Cost")));
         assertThat(reportsValues.get("Fully Burdened Cost"), is(cidValues.get("Fully Burdened Cost")));
         assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1933")
+    @Description("Verify component subassembly report details")
+    public void testComponentSubAssemblyReportDetails() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
+                .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        BigDecimal actualVariance = genericReportPage.getComponentCostReportValue("Variance");
+        BigDecimal actualLifetimeCost = genericReportPage.getComponentCostReportValue("Lifetime Cost");
+        BigDecimal actualPercentageOfTarget = genericReportPage.getComponentCostReportValue("% of Target");
+        BigDecimal actualLifetimeProjectedCostDifference =
+                genericReportPage.getComponentCostReportValue("Lifetime Projected Cost");
+
+        assertThat(actualVariance.compareTo(new BigDecimal("79.80")), is(equalTo(0)));
+        assertThat(actualPercentageOfTarget.compareTo(new BigDecimal("1596.06")), is(equalTo(0)));
+        assertThat(actualLifetimeCost.compareTo(new BigDecimal("2332078.82")), is(equalTo(0)));
+        assertThat(actualLifetimeProjectedCostDifference.compareTo(new BigDecimal("2194578.82")),
+                is(equalTo(0)));
     }
 }

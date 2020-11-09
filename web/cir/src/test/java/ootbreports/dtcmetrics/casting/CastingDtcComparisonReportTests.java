@@ -162,12 +162,12 @@ public class CastingDtcComparisonReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
-        genericReportPage.openNewTabAndFocus(2);
+        genericReportPage.openNewCidTabAndFocus(2);
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
                 .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
@@ -368,5 +368,13 @@ public class CastingDtcComparisonReportTests extends TestBase {
                 "E3-241-4-N (Initial)",
                 "40137441.MLDES.0002 (Initial)"
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1708")
+    @Description("Verify DTC issue counts are correct")
+    public void testDtcIssueCountsAreCorrect() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
     }
 }

@@ -162,7 +162,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
-        genericReportPage.openNewTabAndFocus(1);
+        genericReportPage.openNewCidTabAndFocus(1);
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
@@ -431,5 +431,13 @@ public class CastingDtcDetailsReportTests extends TestBase {
                 is(equalTo("BARCO_R8552931")));
         assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
                 is(equalTo("BARCO_R8761310")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1708")
+    @Description("Verify DTC issue counts are correct")
+    public void testDtcIssueCountsAreCorrect() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 }
