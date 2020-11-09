@@ -237,4 +237,12 @@ public class PlasticDtcDetailsReportTests extends TestBase {
         assertThat(genericReportPage.getPlasticDtcDetailsRowOnePartName(),
                 is(equalTo("PLASTIC MOULDED CAP THICKPART")));
     }
+
+    @Test
+    @TestRail(testCaseId = "1378")
+    @Description("Verify DTC issue counts are correct")
+    public void testDtcIssueCountsAreCorrect() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testPlasticDtcIssueCounts(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName());
+    }
 }

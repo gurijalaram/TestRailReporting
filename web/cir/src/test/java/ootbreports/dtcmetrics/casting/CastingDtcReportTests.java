@@ -174,7 +174,7 @@ public class CastingDtcReportTests extends TestBase {
         genericReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
         String partName = genericReportPage.getPartNameDtcReports();
-        genericReportPage.openNewTabAndFocus(1);
+        genericReportPage.openNewCidTabAndFocus(1);
 
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
