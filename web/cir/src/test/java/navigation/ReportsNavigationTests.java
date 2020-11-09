@@ -13,7 +13,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import pageobjects.header.ReportsPageHeader;
 import pageobjects.pages.create.CreateAdHocViewPage;
 import pageobjects.pages.create.CreateDashboardPage;
@@ -31,7 +30,6 @@ import pageobjects.pages.view.ViewMessagesPage;
 import pageobjects.pages.view.ViewRepositoryPage;
 import pageobjects.pages.view.ViewSchedulesPage;
 import pageobjects.pages.view.ViewSearchResultsPage;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class ReportsNavigationTests extends TestBase {
 
@@ -98,7 +96,6 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {

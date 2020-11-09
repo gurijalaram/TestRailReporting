@@ -24,14 +24,12 @@ import io.qameta.allure.Issue;
 import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openqa.selenium.WebElement;
 import pageobjects.pages.evaluate.ComponentsPage;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
@@ -55,43 +53,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuAssemblyCostA4() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
-                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName()
-        );
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuAssemblyCostLetter() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
-                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName()
-        );
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuAssemblyDetails() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
-                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
-        );
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuComponentCost() {
@@ -103,7 +64,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuScenarioComparison() {
@@ -115,34 +75,17 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryAssemblyCostA4() {
+    @TestRail(testCaseId = "1915")
+    @Description("Validate report is available by navigation")
+    public void testReportAvailabilityByMenuAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
+        commonReportTests.testReportAvailabilityByNavigation(
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
+        );
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryAssemblyCostLetter() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryAssemblyDetails() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryComponentCost() {
@@ -151,7 +94,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryScenarioComparison() {
@@ -160,27 +102,11 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchAssemblyCostA4() {
+    @TestRail(testCaseId = "3060")
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibraryAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchAssemblyCostLetter() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchAssemblyDetails() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
@@ -200,7 +126,15 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class, CIARStagingSmokeTest.class})
+    @TestRail(testCaseId = "1916")
+    @Description("Validate report is available by search")
+    public void testReportAvailableBySearchAssemblyDetails() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+    }
+
+    @Test
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {

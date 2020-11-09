@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.header.ReportsPageHeader;
 import pageobjects.pages.login.ReportsLoginPage;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class LoginTests extends TestBase {
 
@@ -26,7 +25,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "2695")
     @Description("Successful login to CI Report")
     public void testLogin() {
