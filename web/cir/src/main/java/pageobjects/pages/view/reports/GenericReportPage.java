@@ -1130,15 +1130,6 @@ public class GenericReportPage extends ReportsPageHeader {
         return currentDate.replace(newVal, invalidDates.get(datePartToInvalidate));
     }
 
-    /**
-     * Substrings date to remove time
-     *
-     * @return String
-     */
-    private String removeTimeFromDate(String dateToSubstring) {
-        return dateToSubstring.substring(0, 10);
-    }
-
     private String getCurrentDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.format(LocalDateTime.now(ZoneOffset.UTC).withNano(0));
@@ -1178,7 +1169,7 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Sets month dropdown value in date picker
      *
-     * @param indexToSelect
+     * @param indexToSelect int
      */
     private void setMonthValuePicker(int indexToSelect) {
         Select monthSelect = new Select(datePickerMonthSelect);
@@ -1188,7 +1179,7 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Sets year dropdown value in date picker
      *
-     * @param valueToSelect
+     * @param valueToSelect String
      */
     private void setYearValuePicker(String valueToSelect) {
         Select yearSelect = new Select(datePickerYearSelect);
@@ -1913,9 +1904,9 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     *
-     * @param getRowOnePartName
-     * @return
+     * Gets part name from Casting DTC Details Report
+     * @param getRowOnePartName boolean
+     * @return String
      */
     public String getPartNameCastingDtcDetails(boolean getRowOnePartName) {
         String rowIndex = getRowOnePartName ? "1" : "2";
@@ -1968,9 +1959,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public BigDecimal getComponentCostReportValue(String valueToGet) {
-       By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[1]/span", valueToGet));
-       pageUtils.waitForElementToAppear(locator);
-       return new BigDecimal(driver.findElement(locator).getText().replace(",", ""));
+        By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[1]/span", valueToGet));
+        pageUtils.waitForElementToAppear(locator);
+        return new BigDecimal(driver.findElement(locator).getText().replace(",", ""));
     }
 
     /**
