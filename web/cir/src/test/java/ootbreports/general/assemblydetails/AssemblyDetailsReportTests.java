@@ -682,8 +682,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+                .clickOk().waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         Map<String, String> reportsValues = new HashMap<>();
         reportsValues.put("Part Name", assemblyDetailsReportPage.getRowFivePartName());
