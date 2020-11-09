@@ -28,7 +28,7 @@ import java.io.File;
 
 public class LoginTests extends TestBase {
 
-    private static String loginPageErrorMessage = "Wrong email or password.";
+    private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
     File resourceFile;
     private CidLoginPage loginPage;
     private ExplorePage explorePage;
