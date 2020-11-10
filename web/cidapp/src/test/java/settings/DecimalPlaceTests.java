@@ -85,7 +85,7 @@ public class DecimalPlaceTests extends TestBase {
             .submit();
 
         assertThat(evaluatePage.isMaterialDisplayed("Finish Mass", "5.3095"), is(true));
-        assertThat(evaluatePage.isMaterialDisplayed("Utilizaion", "81.1637"), is(true));
+        assertThat(evaluatePage.isMaterialDisplayed("Utilization", "81.1637"), is(true));
         assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.4000, 1));
         assertThat(evaluatePage.getCostResult("Material Cost"), closeTo(17.3420, 1));
         assertThat(evaluatePage.getCostResult("Piece Part Cost"), closeTo(21.0566, 1));
