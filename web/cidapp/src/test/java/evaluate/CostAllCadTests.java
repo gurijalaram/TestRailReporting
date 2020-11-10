@@ -1,6 +1,5 @@
 package evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -57,12 +56,11 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario()
             .openCostDetails()
-            .expandDropDown("Piece Part Cost")
-            .expandDropDown("Total Variable Cost");
+            .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost"), containsString("15.87"));
-        assertThat(costDetailsPage.getCostContribution("Labor"), containsString("6.82"));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), containsString("1.88"));
+        assertThat(costDetailsPage.isCostContributionDisplayed("Material Cost", "15.87"), is(true));
+        assertThat(costDetailsPage.isCostContributionDisplayed("Labor", "6.82"), is(true));
+        assertThat(costDetailsPage.isCostContributionDisplayed("Direct Overhead", "1.88"), is(true));
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app

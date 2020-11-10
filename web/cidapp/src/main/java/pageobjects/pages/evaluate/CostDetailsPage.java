@@ -80,6 +80,19 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     }
 
     /**
+     * Checks the specified contribution is displayed
+     *
+     * @param label - the label
+     * @param value - the value
+     * @return true/false
+     */
+    public boolean isCostContributionDisplayed(String label, String value) {
+        By costResult = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/..//span[.='%s']", label, value));
+        pageUtils.waitForElementToAppear(costResult);
+        return driver.findElement(costResult).isDisplayed();
+    }
+
+    /**
      * Closes current panel
      *
      * @return new page object
