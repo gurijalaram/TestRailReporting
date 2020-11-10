@@ -318,17 +318,6 @@ public class EvaluatePage extends EvaluateToolbar {
         return driver.findElement(result).getAttribute("textContent");
     }
 
-//    /**
-//     * Gets the value of finish mass
-//     *
-//     * @return string
-//     */
-//    public double getUtilization() {
-//        By utilization = By.xpath("//span[.='Utilization']/..//span[@class='property-value']");
-//        pageUtils.waitForElementToAppear(utilization);
-//        return Double.parseDouble(driver.findElement(utilization).getAttribute("textContent"));
-//    }
-
     /**
      * Gets guidance result
      *
