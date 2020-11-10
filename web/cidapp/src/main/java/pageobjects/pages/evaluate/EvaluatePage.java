@@ -288,20 +288,23 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Gets finish mass
+     *
+     * @param label - the label
      * @return double
      */
-    public double getMaterialResult(String resultType) {
-        return Double.parseDouble(getMaterialDetails(resultType).replaceAll("[^0-9?!\\.]", ""));
+    public double getMaterialResult(String label) {
+        return Double.parseDouble(getMaterialDetails(label).replaceAll("[^0-9?!\\.]", ""));
     }
 
     /**
      * Checks the value of finish mass
-     * @param resultType - the type of result
+     *
+     * @param label - the label
      * @param value - the value
      * @return true/false
      */
-    public boolean isMaterialResult(String resultType, String value) {
-        By result = By.xpath(String.format("//span[.='%s']/..//span[.='%s']", resultType, value));
+    public boolean isMaterialResult(String label, String value) {
+        By result = By.xpath(String.format("//span[.='%s']/..//span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(result);
         return driver.findElement(result).isDisplayed();
     }
@@ -309,11 +312,12 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Gets the finish mass details
-     * @param resultType  - the type of result
+     *
+     * @param label - the label
      * @return string
      */
-    private String getMaterialDetails(String resultType) {
-        By result = By.xpath(String.format("//span[.='%s']/..//span[@class='property-value']", resultType));
+    private String getMaterialDetails(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/..//span[@class='property-value']", label));
         pageUtils.waitForElementToAppear(result);
         return driver.findElement(result).getAttribute("textContent");
     }
@@ -321,33 +325,33 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Gets guidance result
      *
-     * @param result - the result
+     * @param label - the label
      * @return string
      */
-    public String getGuidanceResult(String result) {
-        By guidanceResult = By.xpath(String.format("//div[@class='design-guidance']//span[.='%s']/..//span[@class='property-value']", result));
+    public String getGuidanceResult(String label) {
+        By guidanceResult = By.xpath(String.format("//div[@class='design-guidance']//span[.='%s']/..//span[@class='property-value']", label));
         return pageUtils.waitForElementToAppear(guidanceResult).getAttribute("textContent");
     }
 
     /**
      * Gets processes result
      *
-     * @param result - the result
+     * @param label - the label
      * @return string
      */
-    public String getProcessesResult(String result) {
-        By processResult = By.xpath(String.format("//div[@class='process-summary']//span[.='%s']/..//span[@class='property-value']", result));
+    public String getProcessesResult(String label) {
+        By processResult = By.xpath(String.format("//div[@class='process-summary']//span[.='%s']/..//span[@class='property-value']", label));
         return pageUtils.waitForElementToAppear(processResult).getAttribute("textContent");
     }
 
     /**
      * Gets cost result
      *
-     * @param result - the result
+     * @param label - the label
      * @return string
      */
-    public String getCostResult(String result) {
-        By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/..//span[@class='property-value']", result));
+    public String getCostResult(String label) {
+        By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/..//span[@class='property-value']", label));
         return pageUtils.waitForElementToAppear(costResult).getAttribute("textContent");
     }
 }
