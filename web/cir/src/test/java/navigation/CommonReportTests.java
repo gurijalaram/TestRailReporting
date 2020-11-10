@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -19,10 +20,12 @@ import pageobjects.pages.library.LibraryPage;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.userguides.CirUserGuidePage;
 import pageobjects.pages.view.ViewSearchResultsPage;
+import pageobjects.pages.view.reports.AssemblyCostReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 
 public class CommonReportTests extends TestBase {
 
+    private AssemblyCostReportPage assemblyCostReportPage;
     private ViewSearchResultsPage viewSearchResultsPage;
     private GenericReportPage genericReportPage;
     private ReportsPageHeader reportsPageHeader;
@@ -284,5 +287,68 @@ public class CommonReportTests extends TestBase {
 
         assertThat(reportsMaterialValue, is(equalTo(cidMaterialValue)));
         assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
+    }
+
+    /**
+     * Generic test for Export Set Dropdown in Assembly Cost Reports
+     * @param reportName String
+     * @param exportSetName String
+     */
+    public void testExportSetDropdownFunctionality(String reportName, String exportSetName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(exportSetName, AssemblyCostReportPage.class)
+                .waitForAssemblyPartNumberFilter();
+
+        assertThat(assemblyCostReportPage.getAssemblyPartNumberFilterItemCount(), is(equalTo("3")));
+
+        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
+                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()), is(true));
+
+        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
+                AssemblySetEnum.SUB_SUB_ASM_SHORT.getAssemblySetName()), is(true));
+
+        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
+                AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName()), is(true));
+    }
+
+    /**
+     * Generic test for Export Set Dropdown in Assembly Cost Reports
+     * @param reportName String
+     * @param assemblyName String
+     */
+    public void testAssemblySetDropdownFunctionality(String reportName, String assemblyName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyCostReportPage.class)
+                .selectAssemblySetDropdown(assemblyName, AssemblyCostReportPage.class);
+
+        assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
+
+        assertThat(assemblyCostReportPage.isScenarioNameEnabled(
+                Constants.DEFAULT_SCENARIO_NAME), is(true));
+    }
+
+    /**
+     * Generic test for Scenario Name Dropdown
+     * @param reportName String
+     * @param scenarioName String
+     */
+    public void testScenarioNameDropdown(String reportName, String scenarioName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyCostReportPage.class)
+                .selectScenarioNameDropdown(scenarioName, AssemblyCostReportPage.class);
+
+        assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
+
+        assertThat(assemblyCostReportPage.isScenarioNameEnabled(
+                Constants.DEFAULT_SCENARIO_NAME), is(true));
     }
 }

@@ -30,7 +30,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostA4() {
@@ -42,7 +41,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyCostLetter() {
@@ -54,7 +52,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyCostA4() {
@@ -63,7 +60,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyCostLetter() {
@@ -73,7 +69,6 @@ public class AssemblyCostTests extends TestBase {
 
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyCostA4() {
@@ -82,7 +77,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyCostLetter() {
@@ -91,30 +85,74 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetDropdownFunctionalityAssemblyCostA4() {
-        assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), AssemblyCostReportPage.class)
-                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyCostReportPage.class)
-                .waitForAssemblyPartNumberFilter();
-
-        assertThat(assemblyCostReportPage.getAssemblyPartNumberFilterItemCount(), is(equalTo("3")));
-
-        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemDisplayedAndEnabled(
-                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()), is(true));
-        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemDisplayedAndEnabled(
-                AssemblySetEnum.SUB_SUB_ASM_SHORT.getAssemblySetName()), is(true));
-        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemDisplayedAndEnabled(
-                AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName()), is(true));
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testExportSetDropdownFunctionality(
+                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
+                ExportSetEnum.TOP_LEVEL.getExportSetName()
+        );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetDropdownFunctionalityAssemblyCostLetter() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testExportSetDropdownFunctionality(
+                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
+                ExportSetEnum.TOP_LEVEL.getExportSetName()
+        );
+    }
 
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3008")
+    @Description("Verify Export Set drop-down functions correctly")
+    public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testAssemblySetDropdownFunctionality(
+                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
+                Constants.DEFAULT_SCENARIO_NAME
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3008")
+    @Description("Verify Export Set drop-down functions correctly")
+    public void testAssemblySetDropdownFunctionalityAssemblyCostLetter() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testAssemblySetDropdownFunctionality(
+                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
+                Constants.DEFAULT_SCENARIO_NAME
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3010")
+    @Description("Verify Scenario Name drop-down functions correctly")
+    public void testScenarioNameDropdownFunctionalityAssemblyCostA4() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testScenarioNameDropdown(
+                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
+                Constants.DEFAULT_SCENARIO_NAME
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3010")
+    @Description("Verify Scenario Name drop-down functions correctly")
+    public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testScenarioNameDropdown(
+                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
+                Constants.DEFAULT_SCENARIO_NAME
+        );
     }
 }

@@ -19,8 +19,16 @@ public class AssemblyCostReportPage extends GenericReportPage {
     @FindBy(xpath = "//label[@title='Single [assembly] part number selection.']/div/div/div/a")
     private WebElement assemblyPartNumberDropdown;
 
+    @FindBy(xpath = "//label[@title='Single scenario name selection.']/div/div/div/a")
+    private WebElement scenarioNameDropdown;
+
     @FindBy(xpath = "//li[@title='TOP-LEVEL']/..")
     private WebElement assemblyPartNumberDropdownItemList;
+
+    @FindBy(xpath = "//li[@title='Initial']/..")
+    private WebElement scenarioNameItemList;
+
+    private String dropdownOptionLocator = "li[title='%s'] > div > a";
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -36,11 +44,46 @@ public class AssemblyCostReportPage extends GenericReportPage {
     /**
      * Selects Export Set from Dropdown
      * @param exportSet String
+     * @param className class to return instance of
+     * @param <T> generic
+     * @return instance of class
      */
     public <T> T selectExportSetDropdown(String exportSet, Class<T> className) {
-        pageUtils.waitForElementAndClick(exportSetDropdown);
         if (!exportSetDropdown.getAttribute("title").equals(exportSet)) {
-            By locator = By.cssSelector(String.format("li[title='%s'] > div > a", exportSet));
+            pageUtils.waitForElementAndClick(exportSetDropdown);
+            By locator = By.cssSelector(String.format(dropdownOptionLocator, exportSet));
+            pageUtils.waitForElementAndClick(locator);
+        }
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Selects Assembly from Dropdown
+     * @param assemblyName String
+     * @param className class to return instance of
+     * @param <T> generic
+     * @return instance of class
+     */
+    public <T> T selectAssemblySetDropdown(String assemblyName, Class<T> className) {
+        if (!assemblyPartNumberDropdown.getAttribute("title").equals(assemblyName)) {
+            pageUtils.waitForElementAndClick(assemblyPartNumberDropdown);
+            By locator = By.cssSelector(String.format(dropdownOptionLocator, assemblyName));
+            pageUtils.waitForElementAndClick(locator);
+        }
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Selects Assembly from Dropdown
+     * @param scenarioName String
+     * @param className class to return instance of
+     * @param <T> generic
+     * @return instance of class
+     */
+    public <T> T selectScenarioNameDropdown(String scenarioName, Class<T> className) {
+        if (!scenarioNameDropdown.getAttribute("title").equals(scenarioName)) {
+            pageUtils.waitForElementAndClick(scenarioNameDropdown);
+            By locator = By.cssSelector(String.format(dropdownOptionLocator, scenarioName));
             pageUtils.waitForElementAndClick(locator);
         }
         return PageFactory.initElements(driver, className);
@@ -57,13 +100,18 @@ public class AssemblyCostReportPage extends GenericReportPage {
     }
 
     public String getAssemblyPartNumberFilterItemCount() {
-        pageUtils.waitForElementToAppear(assemblyPartNumberDropdownItemList);
         return assemblyPartNumberDropdownItemList.getAttribute("childElementCount");
     }
 
-    public boolean isAssemblyPartNumberItemDisplayedAndEnabled(String itemName) {
-        WebElement elementToUse = driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", itemName)));
-        pageUtils.waitForElementToAppear(elementToUse);
-        return elementToUse.isEnabled() && elementToUse.isDisplayed();
+    public String getScenarioNameCount() {
+        return scenarioNameItemList.getAttribute("childElementCount");
+    }
+
+    public boolean isAssemblyPartNumberItemEnabled(String itemName) {
+        return driver.findElement(By.cssSelector(String.format(dropdownOptionLocator, itemName))).isEnabled();
+    }
+
+    public boolean isScenarioNameEnabled(String scenarioName) {
+        return driver.findElement(By.cssSelector(String.format(dropdownOptionLocator, scenarioName))).isEnabled();
     }
 }
