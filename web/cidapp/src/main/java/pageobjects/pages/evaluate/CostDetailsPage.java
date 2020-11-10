@@ -65,12 +65,12 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     /**
      * Gets the cost contribution
-     * @param costContribution - cost contribution
-     * @return string
+     * @param label - cost contribution
+     * @return double
      */
-    public String getCostContribution(String costContribution) {
-        By costDropdown = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/..//span[@class='property-value']", costContribution));
-        return pageUtils.waitForElementToAppear(costDropdown).getText();
+    public double getCostContribution(String label) {
+        By costDropdown = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/..//span[@class='property-value']", label));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(costDropdown).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
 
     /**
