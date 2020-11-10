@@ -53,18 +53,24 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     /**
      * Expands the cost dropdown
+     *
      * @param costDetails - the cost dropdown
      * @return current page object
      */
     public CostDetailsPage expandDropDown(String costDetails) {
-        By costDropdown = By.xpath(String.format("//div[@class='cost-result-list']//div[normalize-space(text())='%s']", costDetails));
-        pageUtils.waitForElementToAppear(costDropdown);
-        pageUtils.waitForElementAndClick(costDropdown);
+        String[] costDropdowns = costDetails.split(",");
+
+        for (String costDropdown : costDropdowns) {
+            By dropdown = By.xpath(String.format("//div[@class='cost-result-list']//div[normalize-space(text())='%s']", costDropdown.trim()));
+            pageUtils.waitForElementToAppear(dropdown);
+            pageUtils.waitForElementAndClick(dropdown);
+        }
         return this;
     }
 
     /**
      * Gets the cost contribution
+     *
      * @param label - cost contribution
      * @return double
      */
@@ -75,6 +81,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     /**
      * Closes current panel
+     *
      * @return new page object
      */
     public EvaluatePage closePanel() {
@@ -83,6 +90,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     /**
      * Opens the help page
+     *
      * @return new page object
      */
     public HelpDocPage openHelp() {
