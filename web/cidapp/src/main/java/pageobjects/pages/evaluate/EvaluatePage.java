@@ -207,7 +207,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens the Input Panel
+     * Opens the input panel
      *
      * @return new page object
      */
@@ -217,7 +217,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens the Cost Result Panel
+     * Opens the cost result panel
      *
      * @return new page object
      */
@@ -227,7 +227,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens the Material Utilization Panel
+     * Opens the material utilization panel
      *
      * @return new page object
      */
@@ -237,7 +237,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens the Design Guidance Panel
+     * Opens the design guidance panel
      *
      * @return new page object
      */
@@ -247,7 +247,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens the Processes Panel
+     * Opens the processes panel
      *
      * @return new page object
      */
@@ -284,5 +284,34 @@ public class EvaluatePage extends EvaluateToolbar {
         By processRouting = By.cssSelector("div[class='routing-name']");
         pageUtils.waitForElementToAppear(processRouting);
         return driver.findElement(processRouting).getAttribute("textContent");
+    }
+
+    /**
+     * Gets guidance result
+     * @param result - the result
+     * @return string
+     */
+    public String getGuidanceResult(String result) {
+        By guidanceResult = By.xpath(String.format("//div[@class='design-guidance']//span[.='%s']/..//span[@class='property-value']", result));
+        return pageUtils.waitForElementToAppear(guidanceResult).getAttribute("textContent");
+    }
+
+    /**
+     * Gets processes result
+     * @param result - the result
+     * @return string
+     */
+    public String getProcessesResult(String result) {
+        By processResult = By.xpath(String.format("//div[@class='process-summary']//span[.='%s']/..//span[@class='property-value']", result));
+        return pageUtils.waitForElementToAppear(processResult).getAttribute("textContent");
+    }
+
+    /** Gets cost result
+     * @param result - the result
+     * @return string
+     */
+    public String getCostResult(String result) {
+        By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/..//span[@class='property-value']", result));
+        return pageUtils.waitForElementToAppear(costResult).getAttribute("textContent");
     }
 }
