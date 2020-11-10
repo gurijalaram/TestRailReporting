@@ -9,7 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.explore.ExplorePage;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.explore.ExplorePage;
+import pageobjects.pages.help.HelpPage;
 
 /**
  * @author cfrith
@@ -77,10 +79,10 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
      *
      * @retun new page object
      */
-    public MainNavBar goToHelp() {
+    public HelpPage goToHelp() {
         pageUtils.waitForElementAndClick(helpDropdown);
         pageUtils.waitForElementAndClick(helpButton);
-        return this;
+        return new HelpPage(driver);
     }
 
     /**
@@ -91,6 +93,36 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     public MainNavBar goToAbout() {
         pageUtils.waitForElementAndClick(helpDropdown);
         pageUtils.waitForElementAndClick(aboutButton);
+        return this;
+    }
+
+    /**
+     * Navigates to the explore page
+     *
+     * @return new page object
+     */
+    public ExplorePage clickExplore() {
+        pageUtils.waitForElementAndClick(exploreButton);
+        return new ExplorePage(driver);
+    }
+
+    /**
+     * Navigates to the evaluate page
+     *
+     * @return new page object
+     */
+    public EvaluatePage clickEvaluate() {
+        pageUtils.waitForElementAndClick(exploreButton);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Navigates to the compare page
+     *
+     * @return new page object
+     */
+    public MainNavBar clickCompare() {
+        pageUtils.waitForElementAndClick(exploreButton);
         return this;
     }
 }

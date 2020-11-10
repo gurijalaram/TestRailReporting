@@ -1,5 +1,6 @@
 package com.apriori.utils.http.utils;
 
+import com.apriori.utils.web.driver.BrowserTypes;
 import com.apriori.utils.web.driver.DriverFactory;
 import com.apriori.utils.web.driver.TestMode;
 import com.apriori.utils.web.driver.TestType;
@@ -31,7 +32,7 @@ public class WebDriverUtils {
     public String getToken(final String email, final String password) {
         WebDriver driver = new DriverFactory(TestMode.LOCAL,
             TestType.UI,
-            "chrome",
+            BrowserTypes.CHROME,
             null,
             "../",
             null,

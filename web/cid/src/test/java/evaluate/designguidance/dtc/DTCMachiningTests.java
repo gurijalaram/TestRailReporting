@@ -115,7 +115,7 @@ public class DTCMachiningTests extends TestBase {
                 .openGuidanceTab()
                 .selectIssueTypeAndGCD("Machining Issues", "Sharp Corner", "PlanarFace:5");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Contouring: Feature contains a sharp corner that would require a zero tool diameter."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Facing: Feature contains a sharp corner that would require a zero tool diameter. If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
 
     @Test
@@ -124,17 +124,17 @@ public class DTCMachiningTests extends TestBase {
     public void testDTCSideMilling() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machining-DTC_Issue_SideMillingLengthDia.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Deep hole.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openGuidanceTab()
-                .selectIssueTypeAndGCD("Machining Issues", "Side Milling L/D", "CurvedWall:3");
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .openDesignGuidance()
+            .openGuidanceTab()
+            .selectIssueTypeAndGCD("Machining Issues", "Side Milling L/D", "CurvedWall:6");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Required tool exceeds the max L/D Ratio"));
     }
@@ -210,11 +210,11 @@ public class DTCMachiningTests extends TestBase {
 
         guidancePage = new GuidancePage(driver);
         guidancePage.selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "Curved Walls", "CurvedWall:21");
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Side Milling: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry."));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Rounding: Feature is not accessible by an active Setup. Activate a new Setup, override operation feasibility, or select a specialized machining operation."));
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("2")));
 
         guidancePage.selectIssueTypeAndGCD("Slow Machining Operations, Contoured Surface", "Curved Surfaces", "CurvedSurface:2");
-        assertThat(guidancePage.getGuidanceCell("Curved Surfaces", "Count"), is(equalTo("2")));
+        assertThat(guidancePage.getGuidanceCell("Curved Surfaces", "Count"), is(equalTo("5")));
     }
 
     @Test
@@ -235,7 +235,7 @@ public class DTCMachiningTests extends TestBase {
                 .openGuidanceTab()
                 .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Walls", "CurvedWall:22");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Contouring: Feature contains a sharp corner"));
+        assertThat(guidancePage.getGuidanceMessage(), containsString("Side Milling: Feature contains a sharp corner that would require a zero tool diameter. If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
 
     @Test
@@ -265,13 +265,13 @@ public class DTCMachiningTests extends TestBase {
 
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("4")));
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("12")));
-        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "Tool Count"), is(equalTo("2")));
-        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "GCD Count"), is(equalTo("25")));
+        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "Tool Count"), is(equalTo("1")));
+        assertThat(investigationPage.getInvestigationCell("Fillet Radius - Standard", "GCD Count"), is(equalTo("22")));
 
         investigationPage.selectInvestigationTopic("Machining Setups");
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("2")));
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:12", "GCD Count"), is(equalTo("100")));
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:13", "GCD Count"), is(equalTo("34")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("38")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:2", "GCD Count"), is(equalTo("59")));
+        assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("39")));
     }
 
     @Test

@@ -36,6 +36,26 @@ public class Report {
     private String fileName;
     private String contentType;
     private String batchIdentity;
+    private String installationIdentity;
+    private String errors;
+
+    public String getErrors() {
+        return errors;
+    }
+
+    public Report setErrors(String errors) {
+        this.errors = errors;
+        return this;
+    }
+
+    public String getInstallationIdentity() {
+        return installationIdentity;
+    }
+
+    public Report setInstallationIdentity(String installationIdentity) {
+        this.installationIdentity = installationIdentity;
+        return this;
+    }
 
     public String getBatchIdentity() {
         return batchIdentity;

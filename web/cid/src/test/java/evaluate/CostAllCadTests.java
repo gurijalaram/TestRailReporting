@@ -14,6 +14,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -61,9 +62,9 @@ public class CostAllCadTests extends TestBase {
                 .expandDropdown("Piece Part Cost")
                 .expandDropdown("Total Variable Costs");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("15.87"));
-        assertThat(costDetailsPage.getCostContribution("Labor "), containsString("6.82"));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("1.88"));
+        assertThat(costDetailsPage.getCostContribution("Material Cost "), containsString("17.13"));
+        assertThat(costDetailsPage.getCostContribution("Labor "), containsString("8.15"));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead "), containsString("2.28"));
     }
 
     @Test
@@ -165,6 +166,24 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-64577")
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"574"})
+    @Description("CAD file from all supported CAD formats - Creo 7")
+    public void testCADFormatCreo7() {
+
+        resourceFile = FileResourceUtil.getResourceAsFile("creo7test.prt.1");
+
+        loginPage = new CidLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+                .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+    }
+
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - NX")
@@ -195,6 +214,24 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
                 .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
                 .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+    }
+
+    @Test
+    @Issue("AP-64578")
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"574"})
+    @Description("CAD file from all supported CAD formats - Inventor 2020")
+    public void testCADFormatInventor2020() {
+
+        resourceFile = FileResourceUtil.getResourceAsFile("Inventor2020test.ipt");
+
+        loginPage = new CidLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
                 .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));

@@ -9,7 +9,6 @@
         "createdAt",
         "customerIdentity",
         "deploymentIdentity",
-        "userIdentity",
         "reportType",
         "state",
         "reportFormat"
@@ -58,6 +57,12 @@
           "type": "string"
         },
         "reportFormat": {
+          "type": "string"
+        },
+        "installationIdentity": {
+          "type": "string"
+        },
+        "errors": {
           "type": "string"
         },
         "parts": {

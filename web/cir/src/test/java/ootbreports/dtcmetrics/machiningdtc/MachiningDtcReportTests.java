@@ -1,10 +1,19 @@
 package ootbreports.dtcmetrics.machiningdtc;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.enums.reports.DateElementsEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -12,15 +21,19 @@ import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.pages.login.ReportsLoginPage;
+import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class MachiningDtcReportTests extends TestBase {
 
-    private ReportAvailabilityTests reportAvailabilityTests;
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
+    private GenericReportPage genericReportPage;
 
     public MachiningDtcReportTests() {
         super();
@@ -31,8 +44,8 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "2024")
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.MACHINING_DTC.getReportName()
         );
@@ -42,16 +55,16 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = "3415")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "3416")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -96,10 +109,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.MACHINING_DTC.getReportName(),
-                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.MACHINING_DTC.getReportName());
     }
 
     @Test
@@ -134,6 +144,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "3021")
     @Description("Verify save button on Machining DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -249,5 +260,266 @@ public class MachiningDtcReportTests extends TestBase {
     public void testProcessGroupSandAndDieCasting() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsMachining();
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreLow() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreMainReports(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                DtcScoreEnum.LOW.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreMedium() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreMainReports(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                DtcScoreEnum.MEDIUM.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreHigh() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreMainReports(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "2039")
+    @Description("Validate links to component cost detail report (incl. headers etc.)")
+    public void testComponentCostDetailReportLink() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        genericReportPage.hoverMachiningBubbleTwice();
+        genericReportPage.waitForCorrectPartName(false);
+        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        String partName = genericReportPage.getPartNameDtcReports();
+
+        assertThat(
+                genericReportPage.getPartNameDtcReports(),
+                is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
+        );
+
+        genericReportPage.clickMachiningBubbleAndSwitchTab();
+
+        assertThat(
+                genericReportPage.getUpperTitleText(),
+                is(equalTo(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()))
+        );
+        assertThat(partName, is(startsWith(genericReportPage.getDtcPartSummaryPartNameValue())));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3572")
+    @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
+    public void testInvalidHourValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.HOUR.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3573")
+    @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
+    public void testInvalidMinuteValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.MINUTE.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3575")
+    @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
+    public void testInvalidYearValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.YEAR.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3576")
+    @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
+    public void testInvalidMonthValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.MONTH.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3577")
+    @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
+    public void testInvalidDayValueExportSetFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testInvalidExportSetFilterDateInputs(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                DateElementsEnum.DAY.getDateElement()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3031")
+    @Description("Verify Select Parts list controls function correctly")
+    public void testPartListInputControls() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ListNameEnum.PARTS.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3027")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpend(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsExportDates() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .setExportDateUsingInput(true, "")
+                .clickUseLatestExportDropdownTwice()
+                .waitForCorrectExportSetListCount("Single export set selection.", "0");
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "0");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("0")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsExportSets() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "0");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("0")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsRollup() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "0");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("0")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsMinimumAnnualSpend() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName());
+
+        assertThat(genericReportPage.getSelectedRollup(RollupEnum.DTC_MACHINING_DATASET.getRollupName()),
+                is(equalTo(RollupEnum.DTC_MACHINING_DATASET.getRollupName())));
+
+        genericReportPage
+                .inputMinimumAnnualSpend()
+                .clickUseLatestExportDropdownTwice();
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "18");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("18")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsProcessGroup() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+                .setProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "0");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("0")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "2027")
+    @Description("Verify Select Parts list is correctly filtered by input control")
+    public void testPartListFilterByInputControlsDtcScore() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "43");
+
+        genericReportPage.setDtcScore(DtcScoreEnum.LOW.getDtcScoreName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.PARTS.getListName(), "Available: ", "31");
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+                is(equalTo("31")));
     }
 }

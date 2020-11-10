@@ -4,21 +4,29 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.AssemblySetEnum;
+import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InputControlsTests extends TestBase {
 
@@ -44,8 +52,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
                 .setExportDateUsingInput(false, "")
-                .ensureDatesAreCorrect()
-                .waitForCorrectExportSetListCount("0");
+                .waitForCorrectExportSetListCount("Single export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -65,8 +72,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
                 .setExportDateUsingPicker(false)
-                .ensureDatesAreCorrect()
-                .waitForCorrectExportSetListCount("0");
+                .waitForCorrectExportSetListCount("Single export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -83,7 +89,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .setExportDateUsingInput(true, "?")
                 .setExportDateUsingInput(false, "?")
-                .clickScenarioDropdownTwice();
+                .clickUseLatestExportDropdownTwice();
 
         assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(true), is(true));
         assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(false), is(true));
@@ -195,9 +201,8 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for export set selection
      * @param reportName - report to use
-     * @param exportSetName - export set to use
      */
-    public void testExportSetSelection(String reportName, String exportSetName) {
+    public void testExportSetSelection(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
@@ -360,7 +365,7 @@ public class InputControlsTests extends TestBase {
                 processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
             assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
         } else {
-            genericReportPage.setReportName(ReportNamesEnum.DTC_PART_SUMMARY.getReportName());
+            genericReportPage.setReportName(reportName);
             genericReportPage.hoverPartNameBubbleDtcReports();
             String partName = genericReportPage.getPartNameDtcReports();
 
@@ -379,13 +384,13 @@ public class InputControlsTests extends TestBase {
         );
 
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
-        genericReportPage.hoverProcessGroupBubbleOne();
+        genericReportPage.hoverProcessGroupBubble(true);
         String partName = genericReportPage.getPartNameDtcReports();
-        genericReportPage.hoverProcessGroupBubbleTwo();
+        genericReportPage.hoverProcessGroupBubble(false);
         String partNameTwo = genericReportPage.getPartNameDtcReports();
 
-        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
-        navigateToDtcPartSummaryAndAssert(partNameTwo, ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+        navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+        navigateToDtcPartSummaryAndAssert(partNameTwo, ProcessGroupEnum.CASTING_SAND.getProcessGroup());
     }
 
     /**
@@ -404,6 +409,300 @@ public class InputControlsTests extends TestBase {
         String partName = genericReportPage.getPartNameDtcReports();
 
         navigateToDtcPartSummaryAndAssert(partName, ProcessGroupEnum.STOCK_MACHINING.getProcessGroup());
+    }
+
+    /**
+     * Generic test for DTC Score Input Control - main reports
+     * @param reportName - String
+     * @param exportSet - String
+     * @param dtcScore - String
+     */
+    public void testDtcScoreMainReports(String reportName, String exportSet, String dtcScore) {
+        dtcScoreTestCore(reportName, exportSet, dtcScore);
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
+            dtcScorePlasticAssertions(reportName, dtcScore);
+        } else {
+            dtcScoreCastingMachiningAssertions(dtcScore);
+        }
+    }
+
+    /**
+     * Generic test for DTC Score Input Control - comparison reports
+     * @param reportName - String
+     * @param exportSet - String
+     * @param dtcScore - String
+     */
+    public void testDtcScoreComparisonReports(String reportName, String exportSet, String dtcScore) {
+        dtcScoreTestCore(reportName, exportSet, dtcScore);
+
+        assertThat(genericReportPage.getDtcScoreAboveChart(), is(equalTo(dtcScore)));
+    }
+
+    /**
+     * Generic test for DTC Score Input Control - details reports
+     * @param reportName - String
+     * @param exportSet - String
+     * @param dtcScore - String
+     */
+    public void testDtcScoreDetailsReports(String reportName, String exportSet, String dtcScore) {
+        dtcScoreTestCore(reportName, exportSet, dtcScore);
+
+        assertThat(genericReportPage.getDtcScoreAboveChart(), is(equalTo(dtcScore)));
+
+        ArrayList<String> valuesToCheck = genericReportPage.getDtcScoreValuesDtcDetailsReports(reportName);
+        for (String value : valuesToCheck) {
+            assertThat(value, is(equalTo(dtcScore)));
+        }
+    }
+
+    /**
+     * Generic test for created by filter search
+     * @param reportName String
+     * @param listName String
+     */
+    public void testListFilterSearch(String reportName, String listName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        String inputString = "Ben Hegan";
+
+        genericReportPage.searchListForName(listName, inputString);
+        assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
+
+        genericReportPage.searchListForName(listName, "fakename");
+        assertThat(genericReportPage.getCountOfListItems(listName), is(equalTo("0")));
+    }
+
+    /**
+     * Generic test for created by filter operation
+     * @param reportName String
+     * @param listName String
+     */
+    public void testListFilterOperation(String reportName, String listName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        String nameToSelect = "Ben Hegan";
+        String lastModifiedByAvailable = genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        genericReportPage.selectListItem(listName, nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo("1")));
+
+        if (listName.equals(ListNameEnum.CREATED_BY.getListName())) {
+            String lastModifiedByListName = ListNameEnum.LAST_MODIFIED_BY.getListName();
+            String expectedCount = Constants.environment.equals("cid-qa") ? "3" : "1";
+            genericReportPage.waitForCorrectAvailableSelectedCount(lastModifiedByListName,
+                    "Available: ", expectedCount);
+            assertThat(
+                    genericReportPage.getCountOfListAvailableItems(lastModifiedByListName, "Available"),
+                    is(not(equalTo(lastModifiedByAvailable)))
+            );
+        }
+
+        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName());
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+                is(startsWith(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())));
+    }
+
+    /**
+     * Generic test for created by filter buttons
+     * @param reportName String
+     */
+    public void testListFilterButtons(String reportName, String listName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        ArrayList<String> buttonNames = new ArrayList<String>() {
+            {
+                add("Select All");
+                add("Deselect All");
+                add("Invert");
+            }};
+
+        String availableValue = genericReportPage.getCountOfListAvailableItems(listName, "Available");
+        String selectedInitialValue = genericReportPage.getCountOfListAvailableItems(listName, "Selected");
+
+        for (String buttonName : buttonNames) {
+            genericReportPage.clickListPanelButton(listName, buttonName);
+
+            if (buttonName.equals("Select All") || buttonName.equals("Invert")) {
+                genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", availableValue);
+                assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo(availableValue)));
+            } else {
+                genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", selectedInitialValue);
+                assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"),
+                        is(equalTo(selectedInitialValue)));
+            }
+        }
+    }
+
+    /**
+     * Generic test for assembly number search criteria
+     * @param reportName String
+     * @param assemblySearchInput String
+     */
+    public void testAssemblyNumberSearchCriteria(String reportName, String assemblySearchInput) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        genericReportPage.inputAssemblyNumberSearchCriteria(assemblySearchInput);
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(), startsWith(assemblySearchInput));
+
+        genericReportPage.inputAssemblyNumberSearchCriteria("");
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(), is(equalTo("")));
+        assertThat(genericReportPage.isAssemblyNumberSearchErrorVisible(), is(equalTo(true)));
+        assertThat(genericReportPage.getAssemblyNumberSearchErrorText(),
+                is(equalTo("This field is mandatory so you must enter data.")));
+    }
+
+    /**
+     * Generic test for chart tooltips on DTC Reports
+     * @param reportName - String
+     * @param exportSet - String
+     */
+    public void testDtcChartTooltips(String reportName, String exportSet) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet)
+                .clickOk();
+
+        genericReportPage.setReportName(reportName);
+        genericReportPage.hoverPartNameBubbleDtcReports();
+
+        assertThat(genericReportPage.isTooltipDisplayed(), is(true));
+        assertIsTooltipElementVisible("Finish Mass Name");
+        assertIsTooltipElementVisible("Finish Mass Value");
+        assertIsTooltipElementVisible("FBC Name");
+        assertIsTooltipElementVisible("FBC Value");
+        assertIsTooltipElementVisible("DTC Score Name");
+        assertIsTooltipElementVisible("DTC Score Value");
+        assertIsTooltipElementVisible("Annual Spend Name");
+        assertIsTooltipElementVisible("Annual Spend Value");
+    }
+
+    /**
+     * Generic test for invalid export set filter inputs
+     * @param reportName - String
+     * @param valueToInvalidate - String
+     */
+    public void testInvalidExportSetFilterDateInputs(String reportName, String valueToInvalidate) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class);
+
+        String invalidDate = genericReportPage.getInvalidDate(valueToInvalidate);
+        Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
+
+        genericReportPage.setExportDateUsingInput(true, invalidDate)
+                .setExportDateUsingInput(false, invalidDate)
+                .clickUseLatestExportDropdownTwice();
+
+        if (valueToInvalidate.equals(DateElementsEnum.MONTH.getDateElement()) ||
+                valueToInvalidate.equals(DateElementsEnum.DAY.getDateElement())) {
+            assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(true), is(true));
+            assertThat(genericReportPage.isExportSetFilterErrorDisplayedAndEnabled(false), is(true));
+            assertThat(genericReportPage.getExportSetErrorText(true).isEmpty(), is(false));
+            assertThat(genericReportPage.getExportSetErrorText(false).isEmpty(), is(false));
+        } else {
+            genericReportPage.waitForCorrectExportSetListCount("Single export set selection.", "0");
+            assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
+            assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
+        }
+    }
+
+    /**
+     * Generic test for Minimum Annual Spend
+     */
+    public void testMinimumAnnualSpend(String reportName, String exportSet) {
+        testMinimumAnnualSpendCore(reportName, exportSet, true);
+
+        assertThat(genericReportPage.getMinimumAnnualSpendFromAboveChart(),
+                is(startsWith("6,631,000")));
+
+        if (!reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
+            genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
+            genericReportPage.hoverPartNameBubbleDtcReports();
+            BigDecimal annualSpendValue = genericReportPage.getAnnualSpendFromBubbleTooltip();
+
+            assertThat(
+                    annualSpendValue.compareTo(new BigDecimal("6631000")),
+                    is(equalTo(1))
+            );
+        }
+    }
+
+    /**
+     * Generic test for Minimum Annual Spend Details Reports
+     * @param reportName String
+     * @param exportSet String
+     */
+    public void testMinimumAnnualSpendDetailsReports(String reportName, String exportSet) {
+        testMinimumAnnualSpendCore(reportName, exportSet, true);
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName())) {
+            genericReportPage.waitForReportToLoad();
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+        } else {
+            BigDecimal valueForAssert = new BigDecimal("6631000.00");
+            assertThat(
+                    genericReportPage.getMinimumAnnualSpendFromAboveChart(),
+                    is(equalTo(valueForAssert))
+            );
+            assertThat(
+                    genericReportPage.getAnnualSpendValueDetailsReports().compareTo(valueForAssert),
+                    is(equalTo(1))
+            );
+        }
+    }
+
+    /**
+     * Generic test for Minimum Annual Spend Comparison Reports
+     * @param reportName String
+     * @param exportSet String
+     */
+    public void testMinimumAnnualSpendComparisonReports(String reportName, String exportSet) {
+        testMinimumAnnualSpendCore(reportName, exportSet, false);
+
+        Integer initialChartCount = genericReportPage.getCountOfChartElements();
+        genericReportPage.clickInputControlsButton()
+                .inputMinimumAnnualSpend()
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
+            genericReportPage.waitForReportToLoad();
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+        } else {
+            assertThat(genericReportPage.getCountOfChartElements().compareTo(initialChartCount), is(equalTo(-1)));
+        }
+    }
+
+    private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSet);
+
+        if (setMinimumAnnualSpend) {
+            genericReportPage.inputMinimumAnnualSpend();
+        }
+
+        genericReportPage.clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
@@ -435,6 +734,7 @@ public class InputControlsTests extends TestBase {
     }
 
     private void navigateToDtcPartSummaryAndAssert(String partName, String processGroupName) {
+        partName = partName.equals("DTCCASTINGISSUES") ? partName + " (sand casting)" : partName;
         genericReportPage.navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
                 .selectComponent(partName)
@@ -444,5 +744,45 @@ public class InputControlsTests extends TestBase {
                 genericReportPage.getProcessGroupValueDtc(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()),
                 is(equalTo(processGroupName))
         );
+    }
+
+    private void dtcScoreTestCore(String reportName, String exportSet, String dtcScore) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSet)
+                .setDtcScore(dtcScore)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+    }
+
+    private void dtcScoreCastingMachiningAssertions(String dtcScore) {
+        genericReportPage.hoverBubbleDtcScoreDtcReports(dtcScore);
+
+        String dtcScoreValue = genericReportPage.getDtcScoreDtcReports().replace(" ", "");
+
+        assertThat(dtcScore, is(equalTo(genericReportPage.getDtcScoreAboveChart())));
+        assertThat(dtcScore, is(equalTo(dtcScoreValue)));
+    }
+
+    private void dtcScorePlasticAssertions(String reportName, String dtcScore) {
+        if (dtcScore.equals("Low")) {
+            genericReportPage.setReportName(reportName);
+            genericReportPage.hoverPartNameBubbleDtcReports();
+        } else {
+            genericReportPage.waitForNoBubbleReportToLoad();
+            By locator = By.xpath("//*[@class='highcharts-series-group']//*[local-name() = 'path']");
+            List<WebElement> elements = driver.findElements(locator);
+            int bubbleListSize = elements.size();
+            assertThat(bubbleListSize, is(equalTo(6)));
+        }
+
+        assertThat(dtcScore, is(equalTo(genericReportPage.getDtcScoreAboveChart())));
+    }
+
+    private void assertIsTooltipElementVisible(String tooltipKey) {
+        assertThat(genericReportPage.isTooltipElementVisible(tooltipKey), is(true));
     }
 }

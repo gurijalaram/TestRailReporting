@@ -11,7 +11,7 @@ public enum CostMetricEnum {
     }
 
     /**
-     * Gets export set name
+     * Gets cost metric name
      *
      * @return String
      */

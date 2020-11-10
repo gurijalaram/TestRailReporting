@@ -6,7 +6,6 @@ import com.apriori.utils.runner.ConcurrentTestRunner;
 import com.apriori.utils.web.rules.TestRule;
 import com.apriori.utils.web.util.ConsoleLogHandler;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -28,7 +27,7 @@ public class TestBase extends TestHelper {
     @Rule
     public TestRule testRule = new TestRule();
 
-    protected String browser;
+    protected BrowserTypes browser;
     protected String locale;
     private static Proxy seleniumProxy;
 
@@ -56,7 +55,7 @@ public class TestBase extends TestHelper {
         df = new DriverFactory(mode, type, browser, seleniumProxy, downloadPath, remoteDownloadFolder, locale);
         driver = df.getDriver();
 
-        if (browser.equalsIgnoreCase("chrome")) {
+        if (browser.value().equalsIgnoreCase("chrome")) {
             driver = new EventFiringWebDriver(df.getDriver());
             TestHelper.logger.info("CONSOLE LOG LEVEL: " + Constants.consoleLogLevel.getName());
             ConsoleLogHandler consoleLogHandler = new ConsoleLogHandler(Constants.consoleLogLevel);
@@ -74,11 +73,9 @@ public class TestBase extends TestHelper {
             driver.manage().window().setSize(new Dimension(1920,1080));
             driver.manage().window().maximize();
         }
-
         TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
         driver.manage().deleteAllCookies();
         TestHelper.logger.debug("Browser window size: " + driver.manage().window().getSize());
-
 
         MDC.put("methodName", this.getClass().getSimpleName() + "." + name.getMethodName());
         if (type.equals(TestType.EXPORT)) {
@@ -99,14 +96,14 @@ public class TestBase extends TestHelper {
     }
 
 
-    private String getBrowserType(String browserProperty) {
+    private BrowserTypes getBrowserType(String browserProperty) {
         if (browserProperty == null || browserProperty.isEmpty()) {
-            return "chrome";
+            return BrowserTypes.CHROME;
         }
-        return StringUtils.lowerCase(browserProperty);
+        return BrowserTypes.valueOf(browserProperty.toUpperCase());
     }
 
-    public String getBrowser() {
+    public BrowserTypes getBrowser() {
         return browser;
     }
 

@@ -69,20 +69,21 @@ public class PsoEditTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openProcessDetails()
-                .selectProcessChart("High Pressure Die Casting")
-                .selectOptions()
-                .selectOptimizeForMinimumCostButton()
-                .selectMoldMaterialDropdown("AISI P20")
-                .selectPartToleranceDropdown("Low Tolerance +/-0.254 (+/-0.010\")")
-                .closePanel()
-                .costScenario()
-                .openProcessDetails()
-                .selectProcessChart("High Pressure Die Casting")
-                .selectOptions();
+
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario(5)
+            .openProcessDetails()
+            .selectProcessChart("High Pressure Die Casting")
+            .selectOptions()
+            .selectOptimizeForMinimumCostButton()
+            .selectMoldMaterialDropdown("AISI P20")
+            .selectPartToleranceDropdown("Low Tolerance +/-0.254 (+/-0.010\")")
+            .closePanel()
+            .costScenario(5)
+            .openProcessDetails()
+            .selectProcessChart("High Pressure Die Casting")
+            .selectOptions();
 
         assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is(true));
         assertThat(processSetupOptionsPage.getMoldMaterial("AISI P20"), is(true));

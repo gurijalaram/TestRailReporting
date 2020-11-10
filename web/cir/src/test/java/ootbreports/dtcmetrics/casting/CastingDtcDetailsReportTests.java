@@ -8,15 +8,18 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
-import navigation.ReportAvailabilityTests;
+import navigation.CommonReportTests;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
@@ -27,7 +30,7 @@ import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
-    private ReportAvailabilityTests reportAvailabilityTests;
+    private CommonReportTests commonReportTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
 
@@ -39,8 +42,8 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByNavigation(
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
                 Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.CASTING_DTC_DETAILS.getReportName()
         );
@@ -50,16 +53,16 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
-        reportAvailabilityTests = new ReportAvailabilityTests(driver);
-        reportAvailabilityTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -67,10 +70,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcDetailsExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetSelection(
-                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName()
-        );
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -116,6 +116,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Ignore("not applicable due to reports configuration")
     @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC Details input control panel functions correctly")
@@ -161,7 +162,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
-        genericReportPage.openNewTabAndFocus(1);
+        genericReportPage.openNewCidTabAndFocus(1);
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
@@ -224,5 +225,219 @@ public class CastingDtcDetailsReportTests extends TestBase {
                 ExportSetEnum.CASTING_DTC.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreLow() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                DtcScoreEnum.LOW.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreMedium() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                DtcScoreEnum.MEDIUM.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreHigh() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreDetailsReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName(),
+                DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1700")
+    @Description("Verify Minimum Annual Spend input control functions correctly")
+    public void testMinimumAnnualSpend() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinimumAnnualSpendDetailsReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlManufacturingCasting() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.CASTING_ISSUES.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("JEEP WJ FRONT BRAKE DISC 99-04")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("GEAR HOUSING")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlManufacturingMachining() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("DTCCASTINGISSUES")));
+        assertThat(genericReportPage.getScenarioNameCastingDtcDetails(true),
+                is(equalTo("sand casting")));
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("DTCCASTINGISSUES")));
+        assertThat(genericReportPage.getScenarioNameCastingDtcDetails(false),
+                is(equalTo("Initial")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlMaterialScrap() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("OBSTRUCTED MACHINING")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("B2315")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlTolerances() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("DTCCASTINGISSUES")));
+        assertThat(genericReportPage.getScenarioNameCastingDtcDetails(true),
+                is(equalTo("Initial")));
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("DTCCASTINGISSUES")));
+        assertThat(genericReportPage.getScenarioNameCastingDtcDetails(false),
+                is(equalTo("sand casting")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlSlowOperations() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("DTCCASTINGISSUES")));
+        assertThat(genericReportPage.getScenarioNameCastingDtcDetails(true),
+                is(equalTo("Initial")));
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("DTCCASTINGISSUES")));
+        assertThat(genericReportPage.getScenarioNameCastingDtcDetails(false),
+                is(equalTo("sand casting")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlSpecialTooling() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("DU600051458")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("DU200068073_B")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlAnnualSpend() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("E3-241-4-N")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("40137441.MLDES.0002")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1698")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderInputControlDtcRank() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
+                .clickOk();
+
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+                is(equalTo("BARCO_R8552931")));
+        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+                is(equalTo("BARCO_R8761310")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1708")
+    @Description("Verify DTC issue counts are correct")
+    public void testDtcIssueCountsAreCorrect() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
     }
 }

@@ -114,7 +114,7 @@ public class ProcessRoutingTests extends TestBase {
                 .costScenario()
                 .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 53.95, Piece Part Cost (USD): 0.62, Fully Burdened Cost (USD): 1.05, Total Capital Investments (USD): 11,768.49"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.02, Piece Part Cost (USD): 0.62, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,934.97"));
     }
 
     @Test
@@ -340,7 +340,7 @@ public class ProcessRoutingTests extends TestBase {
                 .costScenario()
                 .openMaterialCompositionTable();
 
-        assertThat(materialCompositionPage.getListOfMaterialTypes(), containsInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane"));
+        assertThat(materialCompositionPage.getListOfMaterialTypes(), containsInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV"));
     }
 
     @Test
@@ -548,11 +548,11 @@ public class ProcessRoutingTests extends TestBase {
                 .openProcessDetails()
                 .selectProcessChart("Band Saw");
 
-        assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("16 (45%)"));
+        assertThat(processRoutingPage.getProcessPercentage(), CoreMatchers.hasItem("16 (50%)"));
         assertThat(processRoutingPage.getMachineName(), is("DoAll 3613-1 Vert"));
 
         processRoutingPage.selectProcessChart("2 Axis Lathe");
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 19.72"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 15.99"));
         assertThat(processRoutingPage.getMachineName(), is("Virtual 2 Axis Lathe - Small"));
     }
 
@@ -789,8 +789,8 @@ public class ProcessRoutingTests extends TestBase {
                 .selectRoutingsButton();
 
         assertThat(routingsPage.getRoutings(), containsInAnyOrder("Stage Tooling", "Prog Die", "[CTL]/Shear/Press", "[CTL]/Shear/Chemical Mill", "Tandem Die",
-                "[CTL]/Laser/[Bend]", "[CTL]/Laser Punch/[Bend]", "[CTL]/Plasma/[Deslag]/[Bend]", "[CTL]/Plasma Punch/[Deslag]/[Bend]", "[CTL]/Oxyfuel/[Deslag]/[Bend]",
-                "[CTL]/Waterjet/[Bend]", "[CTL]/Turret/[Bend]", "[CTL]/2 Axis Router/[Bend]", "[CTL]/[Bend]"));
+            "[CTL]/Laser/[Bend]", "[CTL]/Laser Punch/[Bend]", "[CTL]/Plasma/[Deslag]/[Bend]", "[CTL]/Plasma Punch/[Deslag]/[Bend]", "[CTL]/Oxyfuel/[Deslag]/[Bend]",
+            "[CTL]/Waterjet/[Bend]", "[CTL]/Turret/[Bend]", "[CTL]/2 Axis Router/[Bend]", "[CTL]/[Bend]", "[CTL]/Fiber Laser/[Bend]"));
     }
 
     @Test
@@ -915,6 +915,6 @@ public class ProcessRoutingTests extends TestBase {
                 .costScenario()
                 .openProcessDetails();
 
-        assertThat(processRoutingPage.getRoutingLabels(), containsInAnyOrder("Melting", "Coremaking", "Gravity Die Casting", "Core Refractory Coat", "Refractory Coat Oven Dry", "Trim", "Cleaning", "Finishing", "Visual Inspection", "5 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
+        assertThat(processRoutingPage.getRoutingLabels(), containsInAnyOrder("Melting", "Coremaking", "Gravity Die Casting", "Core Refractory Coat", "Refractory Coat Oven Dry", "Trim", "Cleaning", "Finishing", "Visual Inspection", "5 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder", "3 Axis Mill"));
     }
 }
