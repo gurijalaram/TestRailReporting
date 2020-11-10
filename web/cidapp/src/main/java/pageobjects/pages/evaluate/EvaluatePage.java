@@ -287,7 +287,51 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets finish mass
+     * @return double
+     */
+    public double getMaterialResult(String resultType) {
+        return Double.parseDouble(getMaterialDetails(resultType).replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Checks the value of finish mass
+     * @param resultType - the type of result
+     * @param value - the value
+     * @return true/false
+     */
+    public boolean isMaterialResult(String resultType, String value) {
+        By result = By.xpath(String.format("//span[.='%s']/..//span[.='%s']", resultType, value));
+        pageUtils.waitForElementToAppear(result);
+        return driver.findElement(result).isDisplayed();
+    }
+
+
+    /**
+     * Gets the finish mass details
+     * @param resultType  - the type of result
+     * @return string
+     */
+    private String getMaterialDetails(String resultType) {
+        By result = By.xpath(String.format("//span[.='%s']/..//span[@class='property-value']", resultType));
+        pageUtils.waitForElementToAppear(result);
+        return driver.findElement(result).getAttribute("textContent");
+    }
+
+//    /**
+//     * Gets the value of finish mass
+//     *
+//     * @return string
+//     */
+//    public double getUtilization() {
+//        By utilization = By.xpath("//span[.='Utilization']/..//span[@class='property-value']");
+//        pageUtils.waitForElementToAppear(utilization);
+//        return Double.parseDouble(driver.findElement(utilization).getAttribute("textContent"));
+//    }
+
+    /**
      * Gets guidance result
+     *
      * @param result - the result
      * @return string
      */
@@ -298,6 +342,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Gets processes result
+     *
      * @param result - the result
      * @return string
      */
@@ -306,7 +351,9 @@ public class EvaluatePage extends EvaluateToolbar {
         return pageUtils.waitForElementToAppear(processResult).getAttribute("textContent");
     }
 
-    /** Gets cost result
+    /**
+     * Gets cost result
+     *
      * @param result - the result
      * @return string
      */
