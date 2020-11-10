@@ -2,6 +2,7 @@ package pageobjects.pages.evaluate;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,6 +45,30 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(chartContainer);
+    }
+
+    /**
+     * Gets total result
+     *
+     * @param label - the label
+     * @return double
+     */
+    public double getTotalResult(String label) {
+        By costResult = By.xpath(String.format("//span[.='%s']/..//span[@class='property-value']", label));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Checks the specified total is displayed
+     *
+     * @param label - the label
+     * @param value - the value
+     * @return true/false
+     */
+    public boolean isTotalResultDisplayed(String label, String value) {
+        By costResult = By.xpath(String.format("//span[.='%s']/..//span[.='%s']", label, value));
+        pageUtils.waitForElementToAppear(costResult);
+        return driver.findElement(costResult).isDisplayed();
     }
 
     /**
