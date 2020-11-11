@@ -9,7 +9,6 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DecimalPlaceEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -69,7 +68,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResult("Total Capital Investment"), closeTo(14141.50, 1));
 
         evaluatePage.openSettings()
-            .setDropdown("Decimal Places", DecimalPlaceEnum.ZERO.getDecimalPlaces())
+            .setDropdown("Decimal Places", DecimalPlaceEnum.ONE.getDecimalPlaces())
             .submit();
 
         assertThat(evaluatePage.isMaterialDisplayed("Finish Mass", "0.16kg"), is(true));

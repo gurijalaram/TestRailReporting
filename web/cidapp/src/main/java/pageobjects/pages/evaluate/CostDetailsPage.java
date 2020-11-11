@@ -69,6 +69,17 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     }
 
     /**
+     * Gets the value of the dropdown label
+     *
+     * @param label - the label
+     * @return double
+     */
+    public double getDropdownValue(String label) {
+        By value = By.xpath(String.format("//div[@class='cost-result-list']//div[normalize-space(text())='%s']/..//div[@class='summary-amount']", label));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(value).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
      * Gets the cost contribution
      *
      * @param label - cost contribution
