@@ -356,8 +356,8 @@ public class CommonReportTests extends TestBase {
     }
 
     /**
-     *
-     * @param reportName
+     * Generic test to check that Sub Assembly selection works
+     * @param reportName String
      */
     public void testSubAssemblySelectionAssemblyCost(String reportName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
@@ -379,5 +379,24 @@ public class CommonReportTests extends TestBase {
 
             assertThat(assemblyCostReportPage.getCurrentAssemblyPartNumber(), is(equalTo(assemblyName)));
         }
+    }
+
+    /**
+     * Generic test for Assembly Cost Data Integrity
+     * @param reportName String
+     */
+    public void testAssemblyCostDataIntegrity(String reportName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+
+        assemblyCostReportPage.clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyCostReportPage.class);
+
+        // get values and check them all
+
     }
 }

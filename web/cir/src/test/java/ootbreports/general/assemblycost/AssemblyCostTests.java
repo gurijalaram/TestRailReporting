@@ -104,7 +104,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly")
     public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
@@ -116,7 +115,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly")
     public void testAssemblySetDropdownFunctionalityAssemblyCostLetter() {
@@ -150,7 +148,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3002")
     @Description("Verify the user can select sub assemblies from within assembly Export Sets")
     public void testSubAssemblySelectionAssemblyCostA4() {
@@ -159,11 +156,26 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3002")
     @Description("Verify the user can select sub assemblies from within assembly Export Sets")
     public void testSubAssemblySelectionAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testSubAssemblySelectionAssemblyCost(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "2998")
+    @Description("Validate report content aligns to aP desktop values (simple case)")
+    public void testDataIntegrityAssemblyCostA4() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testAssemblyCostDataIntegrity(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "2998")
+    @Description("Validate report content aligns to aP desktop values (simple case)")
+    public void testDataIntegrityAssemblyCostLetter() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testAssemblyCostDataIntegrity(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
     }
 }
