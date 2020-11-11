@@ -85,7 +85,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetDropdownFunctionalityAssemblyCostA4() {
@@ -97,7 +96,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetDropdownFunctionalityAssemblyCostLetter() {
@@ -133,7 +131,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3010")
     @Description("Verify Scenario Name drop-down functions correctly")
     public void testScenarioNameDropdownFunctionalityAssemblyCostA4() {
@@ -145,7 +142,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3010")
     @Description("Verify Scenario Name drop-down functions correctly")
     public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
