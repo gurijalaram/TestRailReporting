@@ -116,7 +116,7 @@ public class AssemblyCostTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testAssemblySetDropdownFunctionality(
                 ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
-                Constants.DEFAULT_SCENARIO_NAME
+                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
         );
     }
 
@@ -128,7 +128,7 @@ public class AssemblyCostTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testAssemblySetDropdownFunctionality(
                 ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
-                Constants.DEFAULT_SCENARIO_NAME
+                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
         );
     }
 

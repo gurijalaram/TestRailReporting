@@ -66,9 +66,11 @@ public class AssemblyCostReportPage extends GenericReportPage {
      */
     public <T> T selectAssemblySetDropdown(String assemblyName, Class<T> className) {
         if (!assemblyPartNumberDropdown.getAttribute("title").equals(assemblyName)) {
-            pageUtils.waitForElementAndClick(assemblyPartNumberDropdown);
-            By locator = By.cssSelector(String.format(dropdownOptionLocator, assemblyName));
-            pageUtils.waitForElementAndClick(locator);
+            By locator = By.cssSelector("a[title='TOP-LEVEL']");
+            pageUtils.waitForElementToAppear(locator);
+            assemblyPartNumberDropdown.click();
+            By locatorToUse = By.cssSelector(String.format(dropdownOptionLocator, assemblyName));
+            pageUtils.waitForElementAndClick(locatorToUse);
         }
         return PageFactory.initElements(driver, className);
     }
