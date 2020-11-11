@@ -327,6 +327,7 @@ public class CommonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
                 .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForAssemblyPartNumberFilter(assemblyName)
                 .selectAssemblySetDropdown(assemblyName);
 
         assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
