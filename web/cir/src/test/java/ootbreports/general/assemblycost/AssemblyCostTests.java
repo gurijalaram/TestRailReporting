@@ -1,7 +1,5 @@
 package ootbreports.general.assemblycost;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +14,6 @@ import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.AssemblyCostReportPage;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
@@ -89,7 +86,7 @@ public class AssemblyCostTests extends TestBase {
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetDropdownFunctionalityAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testExportSetDropdownFunctionality(
+        commonReportTests.testExportSetDropdownAssemblyCost(
                 ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
                 ExportSetEnum.TOP_LEVEL.getExportSetName()
         );
@@ -100,7 +97,7 @@ public class AssemblyCostTests extends TestBase {
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetDropdownFunctionalityAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testExportSetDropdownFunctionality(
+        commonReportTests.testExportSetDropdownAssemblyCost(
                 ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
                 ExportSetEnum.TOP_LEVEL.getExportSetName()
         );
@@ -112,7 +109,7 @@ public class AssemblyCostTests extends TestBase {
     @Description("Verify Export Set drop-down functions correctly")
     public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testAssemblySetDropdownFunctionality(
+        commonReportTests.testAssemblySetDropdownAssemblyCost(
                 ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
                 AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
         );
@@ -124,7 +121,7 @@ public class AssemblyCostTests extends TestBase {
     @Description("Verify Export Set drop-down functions correctly")
     public void testAssemblySetDropdownFunctionalityAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testAssemblySetDropdownFunctionality(
+        commonReportTests.testAssemblySetDropdownAssemblyCost(
                 ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
                 AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
         );
@@ -135,7 +132,7 @@ public class AssemblyCostTests extends TestBase {
     @Description("Verify Scenario Name drop-down functions correctly")
     public void testScenarioNameDropdownFunctionalityAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testScenarioNameDropdown(
+        commonReportTests.testScenarioNameDropdownAssemblyCost(
                 ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
                 Constants.DEFAULT_SCENARIO_NAME
         );
@@ -146,9 +143,27 @@ public class AssemblyCostTests extends TestBase {
     @Description("Verify Scenario Name drop-down functions correctly")
     public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testScenarioNameDropdown(
+        commonReportTests.testScenarioNameDropdownAssemblyCost(
                 ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
                 Constants.DEFAULT_SCENARIO_NAME
         );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3002")
+    @Description("Verify the user can select sub assemblies from within assembly Export Sets")
+    public void testSubAssemblySelectionAssemblyCostA4() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testSubAssemblySelectionAssemblyCost(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3002")
+    @Description("Verify the user can select sub assemblies from within assembly Export Sets")
+    public void testSubAssemblySelectionAssemblyCostLetter() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testSubAssemblySelectionAssemblyCost(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
     }
 }

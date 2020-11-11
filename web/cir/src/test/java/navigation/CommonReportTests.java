@@ -23,6 +23,8 @@ import pageobjects.pages.view.ViewSearchResultsPage;
 import pageobjects.pages.view.reports.AssemblyCostReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 
+import java.util.ArrayList;
+
 public class CommonReportTests extends TestBase {
 
     private AssemblyCostReportPage assemblyCostReportPage;
@@ -294,13 +296,13 @@ public class CommonReportTests extends TestBase {
      * @param reportName String
      * @param exportSetName String
      */
-    public void testExportSetDropdownFunctionality(String reportName, String exportSetName) {
+    public void testExportSetDropdownAssemblyCost(String reportName, String exportSetName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
-                .selectExportSetDropdown(exportSetName, AssemblyCostReportPage.class)
-                .waitForAssemblyPartNumberFilter();
+                .selectExportSetDropdown(exportSetName)
+                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
 
         assertThat(assemblyCostReportPage.getAssemblyPartNumberFilterItemCount(), is(equalTo("3")));
 
@@ -319,13 +321,13 @@ public class CommonReportTests extends TestBase {
      * @param reportName String
      * @param assemblyName String
      */
-    public void testAssemblySetDropdownFunctionality(String reportName, String assemblyName) {
+    public void testAssemblySetDropdownAssemblyCost(String reportName, String assemblyName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
-                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyCostReportPage.class)
-                .selectAssemblySetDropdown(assemblyName, AssemblyCostReportPage.class);
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectAssemblySetDropdown(assemblyName);
 
         assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
 
@@ -338,17 +340,43 @@ public class CommonReportTests extends TestBase {
      * @param reportName String
      * @param scenarioName String
      */
-    public void testScenarioNameDropdown(String reportName, String scenarioName) {
+    public void testScenarioNameDropdownAssemblyCost(String reportName, String scenarioName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
-                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyCostReportPage.class)
-                .selectScenarioNameDropdown(scenarioName, AssemblyCostReportPage.class);
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectScenarioNameDropdown(scenarioName);
 
         assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
 
         assertThat(assemblyCostReportPage.isScenarioNameEnabled(
                 Constants.DEFAULT_SCENARIO_NAME), is(true));
+    }
+
+    /**
+     *
+     * @param reportName
+     */
+    public void testSubAssemblySelectionAssemblyCost(String reportName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+
+        ArrayList<String> assemblyNames = new ArrayList<String>() {
+            {
+                add(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+                add(AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName());
+                add(AssemblySetEnum.SUB_SUB_ASM_SHORT.getAssemblySetName());
+            }};
+
+        for (String assemblyName : assemblyNames) {
+            assemblyCostReportPage.selectAssemblySetDropdown(assemblyName);
+
+            assertThat(assemblyCostReportPage.getCurrentAssemblyPartNumber(), is(equalTo(assemblyName)));
+        }
     }
 }
