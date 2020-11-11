@@ -1,5 +1,6 @@
 package evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -13,7 +14,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.CostDetailsPage;
@@ -301,7 +301,7 @@ public class CostAllCadTests extends TestBase {
         fileUploadPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit("<script>alert(document.cookie)</script>", resourceFile, FileUploadPage.class);
 
-        assertThat(fileUploadPage.getAlertWarning(), Matchers.containsString("error occurred"));
+        assertThat(fileUploadPage.getAlertWarning(), containsString("error occurred"));
     }
 
     @Test
@@ -315,6 +315,6 @@ public class CostAllCadTests extends TestBase {
         fileUploadPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit("", resourceFile, FileUploadPage.class);
 
-        assertThat(fileUploadPage.getFieldWarningText(), Matchers.containsString("Scenario name is required."));
+        assertThat(fileUploadPage.getFieldWarningText(), containsString("Scenario name is required."));
     }
 }
