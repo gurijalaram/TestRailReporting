@@ -230,16 +230,24 @@ public class PlasticDtcComparisonReportTests extends TestBase {
         String[] tableNames = {"Manufacturing Issues", "Slow Operations", "Design Standards", "Tolerances"};
         String elementName = "PLASTIC MOULDED CAP THICKPART";
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("1", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
                 is(equalTo(elementName)));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("2", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
                 is(equalTo(elementName)));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("3", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
                 is(equalTo(elementName)));
 
-        assertThat(genericReportPage.getTableElementNameMachiningDtcComparison("4", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
                 is(equalTo(elementName)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1378")
+    @Description("Verify DTC issue counts are correct")
+    public void testDtcIssueCountsAreCorrect() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testPlasticDtcIssueCounts(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName());
     }
 }
