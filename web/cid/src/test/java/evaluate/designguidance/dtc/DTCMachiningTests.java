@@ -59,18 +59,19 @@ public class DTCMachiningTests extends TestBase {
     @Test
     @Description("Testing DTC Machining Keyseat Mill")
     public void testDTCKeyseat() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machining-DTC_Issue_KeyseatMillAccessibility.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues", "Keyseat Mill Accessibility", "Slot:3");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Machining Issues", "Keyseat Mill Accessibility", "Slot:3");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("There is no available Groove milling tool that can fit inside the Slot."));
     }
@@ -79,17 +80,19 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1800"})
     @Description("Testing DTC Machining Sharp Corner on a Curved Surface")
     public void testDTCCurvedSurface() {
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Surfaces", "CurvedSurface:1");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Surfaces", "CurvedSurface:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Contouring: Feature contains a sharp corner that would require a zero tool diameter"));
     }
@@ -98,18 +101,19 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1798"})
     @Description("Testing DTC Machining Sharp Corner - Planar Face - Contouring")
     public void testDTCSharpCorner() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machining-DTC_Issue_SharpCorner-PlanarFace.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues", "Sharp Corner", "PlanarFace:5");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Machining Issues", "Sharp Corner", "PlanarFace:5");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Facing: Feature contains a sharp corner that would require a zero tool diameter. If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
@@ -118,8 +122,9 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1804"})
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Deep hole.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Deep hole.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
@@ -138,18 +143,19 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1803"})
     @Description("Testing DTC Machining Missing Setups")
     public void testDTCMissingSetup() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues", "Missing Setups", "PlanarFace:6");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Machining Issues", "Missing Setups", "PlanarFace:6");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Setup Axis was not automatically assigned"));
     }
@@ -158,18 +164,19 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1801"})
     @Description("Verify obstructed surfaces on planar faces")
     public void obstructedSurfacePlanarFace() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "Planar Faces", "PlanarFace:9");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Machining Issues, Obstructed Surfaces", "Planar Faces", "PlanarFace:9");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Feature is obstructed"));
     }
@@ -179,24 +186,25 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1799", "1802", "1806", "1593"})
     @Description("Ensure that  'Guidance' includes: - Issue type count - DTC Messaging for each guidance instance")
     public void stockMachiningDTC() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "nist_ftc_06_asme1_sw1500_rd.SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Planar Faces", "PlanarFace:10");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Planar Faces", "PlanarFace:10");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Facing: Feature contains a sharp corner"));
 
@@ -213,18 +221,19 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1797"})
     @Description("Verify Sharp corners on curved walls are highlighted")
     public void sharpCornerCurvedWall() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("1379344_BEFORE_DTC.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "1379344_BEFORE_DTC.stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Walls", "CurvedWall:22");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Machining Issues, Sharp Corner", "Curved Walls", "CurvedWall:22");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Side Milling: Feature contains a sharp corner that would require a zero tool diameter. If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
@@ -234,24 +243,25 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1792", "1795", "1796"})
     @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
     public void stockMachineDTC() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("nist_ftc_06_asme1_sw1500_rd.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "nist_ftc_06_asme1_sw1500_rd.SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         investigationPage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Holes and Fillets");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Holes and Fillets");
 
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("4")));
         assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("12")));
@@ -268,25 +278,26 @@ public class DTCMachiningTests extends TestBase {
     @TestRail(testCaseId = {"1808", "1809"})
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidLoginPage(driver);
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openTolerancesTab()
-            .selectToleranceType(ToleranceEnum.DIAMTOLERANCE.getToleranceName())
-            .selectGcd("CurvedWall:99");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openTolerancesTab()
+                .selectToleranceType(ToleranceEnum.DIAMTOLERANCE.getToleranceName())
+                .selectGcd("CurvedWall:99");
         assertThat(tolerancePage.getGCDCell("CurvedWall:99", "Operation"), Matchers.is(Matchers.equalTo("Contouring / Bulk Milling Surface / General Grinding")));
 
         tolerancePage.selectGcd("SimpleHole:13");

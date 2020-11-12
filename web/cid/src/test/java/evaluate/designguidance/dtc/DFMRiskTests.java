@@ -40,7 +40,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - High for Stock Machining")
     public void stockMachiningHighDFM() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("gs515625_gt077_high.prt.2");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "gs515625_gt077_high.prt.2");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -58,7 +58,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - Medium for Stock Machining")
     public void stockMachiningMediumDFM() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("9856874Medium.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "9856874Medium.prt.1");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -76,7 +76,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - Critical for Sheet Metal")
     public void sheetMetalCriticalDFM() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("1271576_CRITICAL.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "1271576_CRITICAL.prt.1");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -95,7 +95,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - High for Sheet Metal")
     public void sheetMetalHighDFM() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("3571050_cad.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "3571050_cad.prt.1");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -113,7 +113,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk - High for Sheet Metal")
     public void plasticMouldedMediumDFM() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulded-Special Tooling Sliders Lifters.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "PlasticMoulded-Special Tooling Sliders Lifters.CATPart");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -131,8 +131,7 @@ public class DFMRiskTests extends TestBase {
     @TestRail(testCaseId = {"3849"})
     @Description("Validate DFM Risk - Low for Sand Casting")
     public void sandCastLowDFM() {
-
-        resourceFile = FileResourceUtil.getResourceAsFile("casting_q5_thinvalve.prt");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_SAND, "casting_q5_thinvalve.prt");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -151,7 +150,7 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate when switch PG from a group with dfm risk to a group without that the risk is removed")
     public void noRiskTransferDie() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -176,15 +175,18 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
 
-        String file = "1379344.stp";
-        resourceFile = FileResourceUtil.getResourceAsFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        final String fileName = "1379344.stp";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, fileName);
+        cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, fileName);
+
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
@@ -210,15 +212,17 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
 
-        String file = "DTCPlasticIssues.SLDPRT";
-        resourceFile = FileResourceUtil.getResourceAsFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        final String file = "DTCPlasticIssues.SLDPRT";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
+        cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
@@ -244,15 +248,17 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
 
-        String file = "bracketdfm.SLDPRT";
-        resourceFile = FileResourceUtil.getResourceAsFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        final String file = "bracketdfm.SLDPRT";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
+        cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
@@ -276,15 +282,17 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
 
-        String file = "manifold.prt.1";
-        resourceFile = FileResourceUtil.getResourceAsFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        final String file = "manifold.prt.1";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
+        cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
@@ -308,15 +316,17 @@ public class DFMRiskTests extends TestBase {
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
 
-        String file = "SandCastBox.SLDPRT";
-        resourceFile = FileResourceUtil.getResourceAsFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        final String file = "SandCastBox.SLDPRT";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
+        cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
@@ -339,15 +349,17 @@ public class DFMRiskTests extends TestBase {
     @Description("CAD file association can be updated & subsequently reverted")
     public void revertCADUpdate() {
 
-        String file = "1379344.stp";
-        resourceFile = FileResourceUtil.getResourceAsFile(file);
-        cadResourceFile = FileResourceUtil.getResourceCadFile(file);
+        final String file = "1379344.stp";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
+        cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(744, 1)));

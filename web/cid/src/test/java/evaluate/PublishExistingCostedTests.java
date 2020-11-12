@@ -49,28 +49,31 @@ public class PublishExistingCostedTests extends TestBase {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "testpart-4";
-        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".prt");
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".prt");
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(testScenarioName, partName)
-            .editScenario(EvaluatePage.class)
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", partName)
-            .apply(ExplorePage.class);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .openScenario(testScenarioName, partName)
+                .editScenario(EvaluatePage.class)
+                .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", partName)
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.findScenario(testScenarioName, partName).isDisplayed(), is(true));
     }
@@ -84,37 +87,39 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioNameB = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .highlightScenario(testScenarioName, partName);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .highlightScenario(testScenarioName, partName);
 
         genericHeader = new GenericHeader(driver);
         genericHeader.toggleLock()
-            .openJobQueue()
-            .checkJobQueueActionStatus(partName, testScenarioName, "Update", "okay")
-            .closeJobQueue(ExplorePage.class);
+                .openJobQueue()
+                .checkJobQueueActionStatus(partName, testScenarioName, "Update", "okay")
+                .closeJobQueue(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
         explorePage = explorePage.openScenario(testScenarioName, partName)
-            .editScenario(EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .publishScenario(PublishWarningPage.class)
-            .enterNewScenarioName(scenarioNameB)
-            .selectContinueButton()
-            .selectLock()
-            .selectPublishButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(partName, scenarioNameB, "Publish", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
+                .editScenario(EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .publishScenario(PublishWarningPage.class)
+                .enterNewScenarioName(scenarioNameB)
+                .selectContinueButton()
+                .selectLock()
+                .selectPublishButton()
+                .openJobQueue()
+                .checkJobQueueActionStatus(partName, scenarioNameB, "Publish", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
         assertThat(explorePage.findScenario(scenarioNameB, partName).isDisplayed(), is(true));
     }
@@ -128,25 +133,27 @@ public class PublishExistingCostedTests extends TestBase {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".stp");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .refreshCurrentPage()
-            .uploadFileAndOk(testScenarioName, FileResourceUtil.getResourceAsFile(partName + ".stp"), EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishWarningPage.class)
-            .selectOverwriteOption()
-            .selectContinueButton()
-            .selectPublishButton()
-            .openScenario(testScenarioName, partName);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .refreshCurrentPage()
+                .uploadFileAndOk(testScenarioName, FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp"), EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishWarningPage.class)
+                .selectOverwriteOption()
+                .selectContinueButton()
+                .selectPublishButton()
+                .openScenario(testScenarioName, partName);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
@@ -160,26 +167,28 @@ public class PublishExistingCostedTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testScenarioName2 = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".stp");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectLock()
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .refreshCurrentPage()
-            .uploadFileAndOk(testScenarioName, FileResourceUtil.getResourceAsFile(partName + ".stp"), EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishWarningPage.class)
-            .enterNewScenarioName(testScenarioName2)
-            .selectContinueButton()
-            .selectPublishButton()
-            .openScenario(testScenarioName2, partName);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectLock()
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .refreshCurrentPage()
+                .uploadFileAndOk(testScenarioName, FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp"), EvaluatePage.class)
+                .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishWarningPage.class)
+                .enterNewScenarioName(testScenarioName2)
+                .selectContinueButton()
+                .selectPublishButton()
+                .openScenario(testScenarioName2, partName);
 
         assertThat(evaluatePage.getCurrentScenarioName(testScenarioName2), is(true));
     }

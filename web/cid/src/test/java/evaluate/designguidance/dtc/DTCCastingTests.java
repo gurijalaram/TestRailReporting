@@ -65,28 +65,29 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"3846", "1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(8);
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario(8);
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
 
         guidancePage = evaluatePage.openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
@@ -112,28 +113,30 @@ public class DTCCastingTests extends TestBase {
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void geometryTest() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         geometryPage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario(3)
-            .openDesignGuidance()
-            .openGeometryTab()
-            .selectGCDAndGCDProperty("Surfaces", "Planar Faces", "PlanarFace:1");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario(3)
+                .openDesignGuidance()
+                .openGeometryTab()
+                .selectGCDAndGCDProperty("Surfaces", "Planar Faces", "PlanarFace:1");
 
         evaluatePage = new EvaluatePage(driver);
         propertiesDialogPage = evaluatePage.selectAnalysis()
-            .selectProperties()
-            .expandDropdown("Properties");
+                .selectProperties()
+                .expandDropdown("Properties");
         assertThat(propertiesDialogPage.getProperties("Finished Area (mm2)"), containsString("85.62"));
     }
 
@@ -143,23 +146,25 @@ public class DTCCastingTests extends TestBase {
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:6");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:6");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("89")));
@@ -182,29 +187,31 @@ public class DTCCastingTests extends TestBase {
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Gravity Die Cast")
-            .apply()
-            .closePanel()
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openProcessDetails()
+                .selectRoutingsButton()
+                .selectRouting("Gravity Die Cast")
+                .apply()
+                .closePanel()
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
@@ -221,22 +228,24 @@ public class DTCCastingTests extends TestBase {
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+                .openSettings()
+                .openTolerancesTab()
+                .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openTolerancesTab();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openTolerancesTab();
 
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.DIAMTOLERANCE.getToleranceName()), "9"), Matchers.is(true));
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.FLATNESS.getToleranceName()), "5"), Matchers.is(true));
@@ -251,17 +260,19 @@ public class DTCCastingTests extends TestBase {
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("SandCastIssues.SLDPRT");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "SandCastIssues.SLDPRT");
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         guidancePage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Hole Issue", "Maximum Hole Depth", "MultiStepHole:1");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Hole Issue", "Maximum Hole Depth", "MultiStepHole:1");
         assertThat(guidancePage.getGuidanceMessage(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
 
         guidancePage.selectIssueTypeAndGCD("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");

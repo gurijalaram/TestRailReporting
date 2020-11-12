@@ -89,8 +89,8 @@ public class LoginTests extends TestBase {
         loginPage = new CidLoginPage(driver);
 
         assertThat(loginPage.getMarketingText(), containsString("COST INSIGHT GENERATE:\n" +
-            "SOLUTION FOR A NEW NORMAL\n" +
-            "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
+                "SOLUTION FOR A NEW NORMAL\n" +
+                "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
         assertThat(loginPage.isLogoDisplayed(), is(true));
     }
 
@@ -126,23 +126,24 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"1590", "1583", "1180"})
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
     public void cadConnectionRemains() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("225_gasket-1-solid1.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "225_gasket-1-solid1.prt.1");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openAdminDropdown()
-            .selectLogOut();
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .openAdminDropdown()
+                .selectLogOut();
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .openScenario(scenarioName, "225_gasket-1-solid1");
+                .openScenario(scenarioName, "225_gasket-1-solid1");
 
         assertThat(evaluatePage.isCADConnectionStatus(), is("CAD file connected"));
     }

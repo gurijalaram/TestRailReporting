@@ -49,7 +49,9 @@ public class DecimalPlaceTests extends TestBase {
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
@@ -72,8 +74,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), closeTo(0.000000, 1));
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
-            .save(EvaluatePage.class);
+                .changeDecimalPlaces(DecimalPlaceEnum.ZERO.getDecimalPlaces())
+                .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5"), is(true));
         assertThat(evaluatePage.isUtilization("81"), is(true));
@@ -84,8 +86,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat((int) evaluatePage.getCapitalInvestment(), is(0));
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
-            .save(EvaluatePage.class);
+                .changeDecimalPlaces(DecimalPlaceEnum.FOUR.getDecimalPlaces())
+                .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5.3095"), is(true));
         assertThat(evaluatePage.isUtilization("81.1637"), is(true));
@@ -112,8 +114,8 @@ public class DecimalPlaceTests extends TestBase {
 
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.ONE.getDecimalPlaces())
-            .save(EvaluatePage.class);
+                .changeDecimalPlaces(DecimalPlaceEnum.ONE.getDecimalPlaces())
+                .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5.3"), is(true));
         assertThat(evaluatePage.isUtilization("81.2"), is(true));
@@ -139,8 +141,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getPiecePartCost(), closeTo(21.1, 1));
 
         evaluatePage.openSettings()
-            .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
-            .save(EvaluatePage.class);
+                .changeDecimalPlaces(DecimalPlaceEnum.FIVE.getDecimalPlaces())
+                .save(EvaluatePage.class);
 
         assertThat(evaluatePage.isFinishMass("5.30946"), is(true));
         assertThat(evaluatePage.isUtilization("81.16369"), is(true));
@@ -151,7 +153,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCapitalInvestment(), closeTo(0.00000, 1));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
-            .costScenario();
+                .costScenario();
 
         assertThat(evaluatePage.isFinishMass("5.30946"), is(true));
         assertThat(evaluatePage.isUtilization("81.16369"), is(true));
