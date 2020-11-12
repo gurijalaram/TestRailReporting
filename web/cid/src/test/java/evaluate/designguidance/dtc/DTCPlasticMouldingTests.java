@@ -44,34 +44,35 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1066", "1593"})
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap noDraft.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap noDraft.CATPart");
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(5)
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario(5)
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
 
         designGuidancePage = new DesignGuidancePage(driver);
         guidancePage = designGuidancePage.closePanel()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Reaction Injection Mold")
-            .apply()
-            .closePanel()
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("Nylon, Type 6")
-            .apply()
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
+                .openProcessDetails()
+                .selectRoutingsButton()
+                .selectRouting("Reaction Injection Mold")
+                .apply()
+                .closePanel()
+                .openMaterialCompositionTable()
+                .selectMaterialComposition("Nylon, Type 6")
+                .apply()
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Part of this surface is below the minimum recommended draft angle."));
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("22")));
@@ -82,23 +83,24 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1067", "1593", "1068"})
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
     public void structuralFoamMouldDraft() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap noDraft.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap noDraft.CATPart");
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closePanel()
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Planar Faces", "PlanarFace:11");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openProcessDetails()
+                .selectRoutingsButton()
+                .selectRouting("Structural Foam Mold")
+                .apply()
+                .closePanel()
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Draft Issue, Draft Angle", "Planar Faces", "PlanarFace:11");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("No Surface draft has been applied."));
         assertThat(guidancePage.getGuidanceCell("Planar Faces", "Count"), is(equalTo("4")));
@@ -107,17 +109,18 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Test
     @Description("Testing DTC Plastic Moulding Edge Radius Internal")
     public void testMouldingEdgeInternal() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap edge radius.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap edge radius.CATPart");
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Radii Issue", "Minimum Internal Edge Radius", "SharpEdge:8");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Internal Edge Radius is less than the minimum limit"));
     }
@@ -125,17 +128,18 @@ public class DTCPlasticMouldingTests extends TestBase {
     @Test
     @Description("Testing DTC Plastic Moulding Edge Radius External")
     public void testMouldingEdgeExternal() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap edge radius.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap edge radius.CATPart");
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Radii Issue", "Minimum External Edge Radius", "SharpEdge:7");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Radii Issue", "Minimum External Edge Radius", "SharpEdge:7");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("External Edge Radius is less than the minimum limit"));
     }
@@ -145,27 +149,28 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"3841", "1076", "1070", "1081", "1082"})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap thinPart.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap thinPart.SLDPRT");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Low"), is(true));
 
         guidancePage = evaluatePage.openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closePanel()
-            .costScenario(1)
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
+                .selectRoutingsButton()
+                .selectRouting("Structural Foam Mold")
+                .apply()
+                .closePanel()
+                .costScenario(1)
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Structural Foam Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
 
@@ -184,50 +189,51 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1078", "1079", "1080"})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 3.556 mm")));
 
         designGuidancePage = new DesignGuidancePage(driver);
         guidancePage = designGuidancePage.closePanel()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closePanel()
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
+                .openProcessDetails()
+                .selectRoutingsButton()
+                .selectRouting("Structural Foam Mold")
+                .apply()
+                .closePanel()
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Structural Foam Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 15 mm")));
 
         designGuidancePage = new DesignGuidancePage(driver);
         guidancePage = designGuidancePage.closePanel()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Reaction Injection Mold")
-            .apply()
-            .closePanel()
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("Polyurethane, Polymeric MDI")
-            .apply()
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
+                .openProcessDetails()
+                .selectRoutingsButton()
+                .selectRouting("Reaction Injection Mold")
+                .apply()
+                .closePanel()
+                .openMaterialCompositionTable()
+                .selectMaterialComposition("Polyurethane, Polymeric MDI")
+                .apply()
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Material Issue", "Maximum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Reaction Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidancePage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 50.8 mm")));
@@ -238,34 +244,35 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1075", "1077"})
     @Description("Testing DTC Moulding Thickness Min")
     public void plasticMinWallThickness() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap thinPart.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap thinPart.CATPart");
 
         loginPage = new CidLoginPage(driver);
         guidancePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
 
         designGuidancePage = new DesignGuidancePage(driver);
         guidancePage = designGuidancePage.closePanel()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Reaction Injection Mold")
-            .apply()
-            .closePanel()
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("Polyurethane, Polymeric MDI")
-            .apply()
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
+                .openProcessDetails()
+                .selectRoutingsButton()
+                .selectRouting("Reaction Injection Mold")
+                .apply()
+                .closePanel()
+                .openMaterialCompositionTable()
+                .selectMaterialComposition("Polyurethane, Polymeric MDI")
+                .apply()
+                .costScenario()
+                .openDesignGuidance()
+                .openGuidanceTab()
+                .selectIssueTypeAndGCD("Material Issue", "Minimum Wall Thickness", "Component:1");
 
         assertThat(guidancePage.getGuidanceMessage(), containsString("Reaction Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
     }
@@ -274,17 +281,18 @@ public class DTCPlasticMouldingTests extends TestBase {
     @TestRail(testCaseId = {"1071", "1072", "1083"})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticSlideLift() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
 
         loginPage = new CidLoginPage(driver);
         investigationPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openInvestigationTab()
-            .selectInvestigationTopic("Slides and Lifters");
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openDesignGuidance()
+                .openInvestigationTab()
+                .selectInvestigationTopic("Slides and Lifters");
 
         assertThat(investigationPage.getInvestigationCell("SlideBundle", "GCD Count"), is(equalTo("1")));
         assertThat(investigationPage.getInvestigationCell("LifterBundle", "GCD Count"), is(equalTo("7")));

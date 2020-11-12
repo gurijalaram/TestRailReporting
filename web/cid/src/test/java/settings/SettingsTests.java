@@ -98,8 +98,9 @@ public class SettingsTests extends TestBase {
     @TestRail(testCaseId = {"274", "1609", "1602", "573", "599"})
     @Description("User can change the default Process group")
     public void defaultPG() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -108,7 +109,7 @@ public class SettingsTests extends TestBase {
         loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup());
+            .selectProcessGroup(processGroupEnum.getProcessGroup());
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
@@ -127,8 +128,9 @@ public class SettingsTests extends TestBase {
     @TestRail(testCaseId = {"275"})
     @Description("User can change the default VPE")
     public void defaultVPE() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "partbody_2.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -142,7 +144,7 @@ public class SettingsTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_MEXICO.getVpe()), is(true));
@@ -153,8 +155,9 @@ public class SettingsTests extends TestBase {
     @TestRail(testCaseId = {"278", "279", "561"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "partbody_2.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -169,7 +172,7 @@ public class SettingsTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getAnnualVolume(), is("9,524"));
@@ -181,10 +184,11 @@ public class SettingsTests extends TestBase {
     @TestRail(testCaseId = {"280", "281"})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String partName = "Push Pin.stp";
+        final String batchSize = "46";
 
-        String partName = "Push Pin.stp";
-        String batchSize = "46";
-        resourceFile = FileResourceUtil.getResourceAsFile(partName);
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName);
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -199,7 +203,7 @@ public class SettingsTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         moreInputsPage = settingsPage.save(ExplorePage.class)
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openMoreInputs();
 

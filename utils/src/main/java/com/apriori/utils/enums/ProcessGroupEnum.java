@@ -21,7 +21,9 @@ public enum ProcessGroupEnum {
     SHEET_METAL_TRANSFER_DIE("Sheet Metal - Transfer Die"),
     SHEET_PLASTIC("Sheet Plastic"),
     STOCK_MACHINING("Stock Machining"),
-    TWO_MODEL_MACHINING("2-Model Machining");
+    TWO_MODEL_MACHINING("2-Model Machining"),
+    WITHOUT_PG("Without PG"),
+    ASSEMBLY("Assembly");
 
     private final String processGroup;
 
