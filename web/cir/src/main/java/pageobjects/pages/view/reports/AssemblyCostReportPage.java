@@ -28,6 +28,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
     @FindBy(xpath = "//li[@title='Initial']/..")
     private WebElement scenarioNameItemList;
 
+    private String generalCostInfoValueLocator = "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span";
     private String dropdownOptionLocator = "li[title='%s'] > div > a";
 
     private PageUtils pageUtils;
@@ -134,5 +135,16 @@ public class AssemblyCostReportPage extends GenericReportPage {
      */
     public boolean isScenarioNameEnabled(String scenarioName) {
         return driver.findElement(By.cssSelector(String.format(dropdownOptionLocator, scenarioName))).isEnabled();
+    }
+
+    /**
+     * Gets General Cost Info value
+     * @param valueName String - value to get
+     * @return String
+     */
+    public String getGeneralCostInfoValue(String valueName, boolean isGeneralCostValue) {
+        String tdIndex = isGeneralCostValue ? "2" : "1";
+        By locator = By.xpath(String.format(generalCostInfoValueLocator, valueName, tdIndex));
+        return driver.findElement(locator).getText();
     }
 }

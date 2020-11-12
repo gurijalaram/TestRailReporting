@@ -39,6 +39,9 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
     @FindBy(css = "[data-ap-field='totalCost']")
     private WebElement piecePartCost;
 
+    @FindBy(xpath = "(//span[@data-ap-field='capitalInvestment'])[1]")
+    private WebElement totalCapitalInvestments;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -142,5 +145,26 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
     public double getPiecePartCost() {
         pageUtils.waitForElementToAppear(piecePartCost);
         return Double.parseDouble(piecePartCost.getText());
+    }
+
+    /**
+     * Gets Piece Part Cost as String
+     *
+     * @return String
+     */
+    public String getPiecePartCostString() {
+        By locator = By.xpath("(//span[@title='691.48'])[2]");
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("title");
+    }
+
+    /**
+     * Gets Total Capital Investments
+     *
+     * @return String
+     */
+    public String getTotalCapitalInvestments() {
+        pageUtils.waitForElementToAppear(totalCapitalInvestments);
+        return totalCapitalInvestments.getAttribute("title");
     }
 }

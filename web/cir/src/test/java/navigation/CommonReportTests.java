@@ -14,6 +14,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.WebDriver;
 import pageobjects.header.ReportsPageHeader;
+import pageobjects.pages.evaluate.CostDetailsPage;
+import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.library.LibraryPage;
@@ -396,7 +398,31 @@ public class CommonReportTests extends TestBase {
         assemblyCostReportPage.clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyCostReportPage.class);
 
-        // get values and check them all
+        String reportsPartName =
+                assemblyCostReportPage.getGeneralCostInfoValue("Assembly #", true);
+        String reportsScenarioName =
+                assemblyCostReportPage.getGeneralCostInfoValue("Scenario Name", true);
+        String reportsPiecePartCost =
+                assemblyCostReportPage.getGeneralCostInfoValue("Total", false);
+        String reportsCiCost = assemblyCostReportPage.getGeneralCostInfoValue("Capital", false);
 
+        assemblyCostReportPage.openNewCidTabAndFocus(1);
+
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario();
+
+        CostDetailsPage costDetailsPage = evaluatePage.openAssemblyCostDetails();
+
+        assertThat(reportsPartName, is(equalTo(evaluatePage.getPartName())));
+        assertThat(reportsScenarioName, is(equalTo(evaluatePage.getScenarioName())));
+
+        assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getPiecePartCostString())));
+        assertThat(reportsCiCost, is(equalTo(costDetailsPage.getTotalCapitalInvestments())));
     }
 }

@@ -164,6 +164,7 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2998")
     @Description("Validate report content aligns to aP desktop values (simple case)")
     public void testDataIntegrityAssemblyCostA4() {
@@ -172,6 +173,7 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2998")
     @Description("Validate report content aligns to aP desktop values (simple case)")
     public void testDataIntegrityAssemblyCostLetter() {
