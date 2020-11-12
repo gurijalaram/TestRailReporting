@@ -74,8 +74,8 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      * @param label - the label
      * @return double
      */
-    public double getDropdownValue(String label) {
-        By value = By.xpath(String.format("//div[@class='cost-result-list']//div[normalize-space(text())='%s']/..//div[@class='summary-amount']", label));
+    public double getChevronDropdownValue(String label) {
+        By value = By.xpath(String.format("//div[normalize-space(text())='%s']/following-sibling::div", label));
         return Double.parseDouble(pageUtils.waitForElementToAppear(value).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
 
@@ -86,7 +86,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      * @return double
      */
     public double getCostContribution(String label) {
-        By costDropdown = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/..//span[@class='property-value']", label));
+        By costDropdown = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/following-sibling::span", label));
         return Double.parseDouble(pageUtils.waitForElementToAppear(costDropdown).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
 
@@ -98,7 +98,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      * @return true/false
      */
     public boolean isCostContributionDisplayed(String label, String value) {
-        By costResult = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/..//span[.='%s']", label, value));
+        By costResult = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(costResult);
         return driver.findElement(costResult).isDisplayed();
     }

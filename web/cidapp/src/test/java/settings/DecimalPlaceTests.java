@@ -103,7 +103,7 @@ public class DecimalPlaceTests extends TestBase {
         costDetailsPage = evaluatePage.openCostDetails()
             .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
-        assertThat(costDetailsPage.getDropdownValue("Total Variable Cost"), closeTo(18.8710, 1));
+        assertThat(costDetailsPage.getChevronDropdownValue("Total Variable Cost"), closeTo(18.8710, 1));
         assertThat(costDetailsPage.getCostContribution("Indirect Overhead"), closeTo(0.3163, 1));
         assertThat(costDetailsPage.getCostContribution("SG&A"), closeTo(1.8693, 1));
         assertThat(costDetailsPage.getCostContribution("Margin"), closeTo(0.0000, 1));
