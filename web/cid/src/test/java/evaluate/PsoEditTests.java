@@ -29,28 +29,29 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"761", "762", "763", "764"})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap DFM.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap DFM.CATPart");
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario(3)
-            .openProcessDetails()
-            .selectProcessChart("Injection Molding")
-            .selectOptions()
-            .selectDefinedValueDropdown("8")
-            .selectOverrideNominalButton()
-            .setOverride("0.4")
-            .selectAddColorantButton()
-            .selectMaterialDefinedButton()
-            .setMaterialRegrindInput("0.3")
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Injection Molding")
-            .selectOptions();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario(3)
+                .openProcessDetails()
+                .selectProcessChart("Injection Molding")
+                .selectOptions()
+                .selectDefinedValueDropdown("8")
+                .selectOverrideNominalButton()
+                .setOverride("0.4")
+                .selectAddColorantButton()
+                .selectMaterialDefinedButton()
+                .setMaterialRegrindInput("0.3")
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Injection Molding")
+                .selectOptions();
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("8"), is(true));
         assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.40"));
@@ -62,13 +63,15 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"771", "772", "773"})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting-Die.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting-Die.stp");
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
+
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario(5)
             .openProcessDetails()
             .selectProcessChart("High Pressure Die Casting")
@@ -91,24 +94,25 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"769", "770"})
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("SandCast.x_t");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "SandCast.x_t");
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario(3)
-            .openProcessDetails()
-            .selectProcessChart("Vertical Automatic")
-            .selectOptions()
-            .selectOptimizeForMinimumCostButton()
-            .selectMoldMaterialDropdown("Plastic")
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Vertical Automatic")
-            .selectOptions();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario(3)
+                .openProcessDetails()
+                .selectProcessChart("Vertical Automatic")
+                .selectOptions()
+                .selectOptimizeForMinimumCostButton()
+                .selectMoldMaterialDropdown("Plastic")
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Vertical Automatic")
+                .selectOptions();
 
         assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is(true));
         assertThat(processSetupOptionsPage.getMoldMaterial("Plastic"), is(true));
@@ -118,24 +122,25 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"768"})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Band Saw")
-            .selectOptions()
-            .selectOverrideBundleCount()
-            .setBundleCountOverride("3")
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Band Saw")
-            .selectOptions();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Band Saw")
+                .selectOptions()
+                .selectOverrideBundleCount()
+                .setBundleCountOverride("3")
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Band Saw")
+                .selectOptions();
 
         assertThat(processSetupOptionsPage.getBundleCount(), is("3"));
     }
@@ -144,24 +149,25 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"774"})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Compaction Pressing")
-            .selectOptions()
-            .selectMaterialAllowanceOverrideValue()
-            .setMaterialAllowanceOverride("0.611")
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Compaction Pressing")
-            .selectOptions();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Compaction Pressing")
+                .selectOptions()
+                .selectMaterialAllowanceOverrideValue()
+                .setMaterialAllowanceOverride("0.611")
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Compaction Pressing")
+                .selectOptions();
 
         assertThat(processSetupOptionsPage.getMaterialAllowance(), is("0.611"));
     }
@@ -170,23 +176,24 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"775"})
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
     public void sheetPlasticPSO() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("sheet_plastic.STEP");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "sheet_plastic.STEP");
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("4 Cavities Drape Forming")
-            .selectOptions()
-            .setCoolingtimeInput("150.29")
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("4 Cavities Drape Forming")
-            .selectOptions();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("4 Cavities Drape Forming")
+                .selectOptions()
+                .setCoolingtimeInput("150.29")
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("4 Cavities Drape Forming")
+                .selectOptions();
 
         assertThat(processSetupOptionsPage.getCoolingTime(), is("150.29"));
     }
@@ -195,51 +202,52 @@ public class PsoEditTests extends TestBase {
     @TestRail(testCaseId = {"1652"})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("plasticLid.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "plasticLid.SLDPRT");
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Injection Molding")
-            .selectOptions()
-            .selectOptimizeForMinimumCostButton()
-            .selectOverrideNominalButton()
-            .setOverride("0.13")
-            .selectUserDefinedColorChargeButton()
-            .setDefinedColorChargeInput("0.68")
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Injection Molding")
-            .selectOptions();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Injection Molding")
+                .selectOptions()
+                .selectOptimizeForMinimumCostButton()
+                .selectOverrideNominalButton()
+                .setOverride("0.13")
+                .selectUserDefinedColorChargeButton()
+                .setDefinedColorChargeInput("0.68")
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Injection Molding")
+                .selectOptions();
 
         assertThat(processSetupOptionsPage.getOptimizeForMinimumCostSelected(), is(true));
         assertThat(processSetupOptionsPage.getNominalWallThicknessOverride(), is("0.13"));
         assertThat(processSetupOptionsPage.getColorChargeOverride(), is("0.68"));
 
         processSetupOptionsPage.closePanel()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Structural Foam Molding")
-            .selectOptions()
-            .selectDefinedValueDropdown("4")
-            .selectAddColorantButton()
-            .selectMaterialDefinedButton()
-            .setMaterialRegrindInput("1.00")
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Structural Foam Molding")
-            .selectOptions();
+                .openProcessDetails()
+                .selectRoutingsButton()
+                .selectRouting("Structural Foam Mold")
+                .apply()
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Structural Foam Molding")
+                .selectOptions()
+                .selectDefinedValueDropdown("4")
+                .selectAddColorantButton()
+                .selectMaterialDefinedButton()
+                .setMaterialRegrindInput("1.00")
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Structural Foam Molding")
+                .selectOptions();
 
         assertThat(processSetupOptionsPage.getDefinedValueDropdown("4"), is(true));
         assertThat(processSetupOptionsPage.isAddColorantSelected(), is(true));
@@ -251,23 +259,25 @@ public class PsoEditTests extends TestBase {
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Push Pin.stp");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
 
         loginPage = new CidLoginPage(driver);
         processSetupOptionsPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Band Saw")
-            .selectOptions()
-            .selectOverrideBundleCount()
-            .setBundleCountOverride("jrigm")
-            .closePanel()
-            .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Band Saw")
-            .selectOptions();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Band Saw")
+                .selectOptions()
+                .selectOverrideBundleCount()
+                .setBundleCountOverride("jrigm")
+                .closePanel()
+                .costScenario()
+                .openProcessDetails()
+                .selectProcessChart("Band Saw")
+                .selectOptions();
 
         assertThat(processSetupOptionsPage.getBundleCount(), is(""));
     }

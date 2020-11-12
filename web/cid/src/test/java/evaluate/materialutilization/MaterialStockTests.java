@@ -44,26 +44,27 @@ public class MaterialStockTests extends TestBase {
     @TestRail(testCaseId = {"862", "871"})
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Powder Metal.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Powder Metal.stp");
 
         loginPage = new CidLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialUtilization();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .openMaterialUtilization();
 
         assertThat(materialUtilizationPage.getMaterialInfo("Name"), is(equalTo("F-0005")));
         assertThat(materialUtilizationPage.getMaterialInfo("Cut Code"), is(equalTo("1.1")));
 
         materialUtilizationPage.closePanel()
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("FN-0205")
-            .apply()
-            .costScenario()
-            .openMaterialUtilization();
+                .openMaterialCompositionTable()
+                .selectMaterialComposition("FN-0205")
+                .apply()
+                .costScenario()
+                .openMaterialUtilization();
 
         assertThat(materialUtilizationPage.getMaterialInfo("Name"), is(equalTo("FN-0205")));
         assertThat(materialUtilizationPage.getMaterialInfo("Cut Code"), is(equalTo("2.1")));
@@ -74,33 +75,34 @@ public class MaterialStockTests extends TestBase {
     @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970", "298"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_matPMI.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic_matPMI.prt.1");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario();
         assertThat(evaluatePage.getPartCost(), is(closeTo(20.44, 1)));
 
         stockPage = evaluatePage.openMaterialUtilization()
-            .goToStockTab();
+                .goToStockTab();
         assertThat(stockPage.checkTableDetails("Auto"), is(true));
         assertThat(stockPage.checkTableDetails("7.65"), is(true));
 
         stockPage.editStock()
-            .selectStock("4.00  mm x 1500 mm x 3000 mm")
-            .apply();
+                .selectStock("4.00  mm x 1500 mm x 3000 mm")
+                .apply();
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
 
         evaluatePage = stockPage.closePanel()
-            .costScenario();
+                .costScenario();
         assertThat(evaluatePage.getPartCost(), is(closeTo(20.99, 1)));
 
         stockPage = evaluatePage.openMaterialUtilization()
-            .goToStockTab();
+                .goToStockTab();
 
         assertThat(stockPage.checkTableDetails("4.00 mm x 1500 mm x 3000 mm"), is(true));
         assertThat(stockPage.checkTableDetails("Manual"), is(true));
@@ -113,25 +115,27 @@ public class MaterialStockTests extends TestBase {
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Square circle.CATPart");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Square circle.CATPart");
 
         loginPage = new CidLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialUtilization()
-            .goToStockTab();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .openMaterialUtilization()
+                .goToStockTab();
 
         assertThat(stockPage.checkTableDetails("ROUND_BAR"), is(true));
         assertThat(stockPage.checkTableDetails("Virtual Stock Yes"), is(true));
 
         stockPage.closePanel()
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .costScenario()
-            .openMaterialUtilization()
-            .goToStockTab();
+                .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+                .costScenario()
+                .openMaterialUtilization()
+                .goToStockTab();
 
         assertThat(stockPage.checkTableDetails("3 in OD. 20 ft lengths"), is(true));
         assertThat(stockPage.checkTableDetails("Virtual Stock No"), is(true));
@@ -143,17 +147,19 @@ public class MaterialStockTests extends TestBase {
     @Description("validate the user can collapse and expand material properties")
     public void materialProperties() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
 
         loginPage = new CidLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialUtilization()
-            .toggleMaterialPropertiesPanel()
-            .toggleUtilizationPanel();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .openMaterialUtilization()
+                .toggleMaterialPropertiesPanel()
+                .toggleUtilizationPanel();
 
         assertThat(materialUtilizationPage.utilizationPanelExpanded(), is("collapsed"));
         assertThat(materialUtilizationPage.materialPanelExpanded(), is("collapsed"));

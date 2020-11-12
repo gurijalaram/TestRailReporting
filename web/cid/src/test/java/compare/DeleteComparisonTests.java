@@ -49,45 +49,46 @@ public class DeleteComparisonTests extends TestBase {
     @TestRail(testCaseId = {"433", "2280", "2319"})
     @Description("Test a private comparison can be deleted from the explore page")
     public void testDeletePrivateComparisonExplore() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machined Box AMERICAS.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machined Box AMERICAS.SLDPRT");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         new CidLoginPage(driver).login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .selectExploreButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "Machined Box AMERICAS")
-            .apply(ScenarioTablePage.class);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectExploreButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "Machined Box AMERICAS")
+                .apply(ScenarioTablePage.class);
 
         scenarioTablePage = new ScenarioTablePage(driver);
 
         new ScenarioTablePage(driver).selectComparisonScenario(testScenarioName, "Machined Box AMERICAS")
-            .apply(GenericHeader.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class);
+                .apply(GenericHeader.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+                .closeJobQueue(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison(testComparisonName)
-            .delete()
-            .deleteExploreComparison()
-            .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Comparison")
-            .setRowOne("Scenario Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+                .highlightComparison(testComparisonName)
+                .delete()
+                .deleteExploreComparison()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .setRowOne("Scenario Name", "Contains", testComparisonName)
+                .apply(ExplorePage.class);
 
         assertThat(new ExplorePage(driver).getNoComponentText(), is(containsString(noComponentMessage)));
     }
@@ -102,18 +103,18 @@ public class DeleteComparisonTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.delete()
-            .deleteComparison()
-            .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Scenario Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
+                .deleteComparison()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Part")
+                .setRowOne("Scenario Name", "Contains", testComparisonName)
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
@@ -125,48 +126,49 @@ public class DeleteComparisonTests extends TestBase {
     @TestRail(testCaseId = {"3838", "430", "432", "442", "448"})
     @Description("Test deleting a public comparison from explore tab")
     public void testPublicComparisonDeleteExplore() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machined Box AMERICAS.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machined Box AMERICAS.SLDPRT");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CidLoginPage(driver);
 
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-critical-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
 
         explorePage = evaluatePage.publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "Machined Box AMERICAS")
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(testScenarioName, "MACHINED BOX AMERICAS")
-            .apply(GenericHeader.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison(testComparisonName)
-            .delete()
-            .deleteExploreComparison()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Comparison")
-            .setRowOne("Part Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "Machined Box AMERICAS")
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(testScenarioName, "MACHINED BOX AMERICAS")
+                .apply(GenericHeader.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+                .highlightComparison(testComparisonName)
+                .delete()
+                .deleteExploreComparison()
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .setRowOne("Part Name", "Contains", testComparisonName)
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
@@ -178,50 +180,51 @@ public class DeleteComparisonTests extends TestBase {
     @TestRail(testCaseId = {"443"})
     @Description("Delete a public comparison from comparison page")
     public void deletePublicComparisonPage() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("testpart-4.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "testpart-4.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CidLoginPage(driver);
 
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "testpart-4")
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(testScenarioName, "testpart-4")
-            .apply(GenericHeader.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Comparison")
-            .setRowOne("Part Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class)
-            .openComparison(testComparisonName);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "testpart-4")
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(testScenarioName, "testpart-4")
+                .apply(GenericHeader.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .setRowOne("Part Name", "Contains", testComparisonName)
+                .apply(ExplorePage.class)
+                .openComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.delete()
-            .deleteComparison()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Comparison")
-            .setRowOne("Scenario Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
+                .deleteComparison()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .setRowOne("Scenario Name", "Contains", testComparisonName)
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
@@ -230,49 +233,50 @@ public class DeleteComparisonTests extends TestBase {
     @TestRail(testCaseId = {"431"})
     @Description("In comparison view, the user can delete the currently open comparison and any matching public or private comparisons")
     public void deletePublicPrivateComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("testpart-4.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "testpart-4.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "testpart-4")
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(testScenarioName, "testpart-4")
-            .apply(GenericHeader.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison(testComparisonName)
-            .editScenario(ComparePage.class);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "testpart-4")
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(testScenarioName, "testpart-4")
+                .apply(GenericHeader.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+                .highlightComparison(testComparisonName)
+                .editScenario(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.delete()
-            .selectIterationsCheckbox()
-            .deleteComparison()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Comparison")
-            .setRowOne("Part Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
+                .selectIterationsCheckbox()
+                .deleteComparison()
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Delete", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .setRowOne("Part Name", "Contains", testComparisonName)
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.getNoComponentText(), containsString("You have no components that match the selected filter"));
     }

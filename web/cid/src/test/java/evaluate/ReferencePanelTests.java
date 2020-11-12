@@ -35,8 +35,9 @@ public class ReferencePanelTests extends TestBase {
     @TestRail(testCaseId = {"355"})
     @Description("Validate the compare panel updates the comparison details to the previous iteration of the scenario")
     public void referenceUpdates() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("powderMetal.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "powderMetal.stp");
 
         loginPage = new CidLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
@@ -61,21 +62,22 @@ public class ReferencePanelTests extends TestBase {
     @TestRail(testCaseId = {"356", "354"})
     @Description("Validate  the compare panel can show the comparison between the most recent public iteration")
     public void referencePublicIteration() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(scenarioName, "MultiUpload")
-            .editScenario(EvaluatePage.class);
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .openScenario(scenarioName, "MultiUpload")
+                .editScenario(EvaluatePage.class);
 
         referenceComparePage = evaluatePage
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -96,8 +98,9 @@ public class ReferencePanelTests extends TestBase {
     @TestRail(testCaseId = {"358"})
     @Description("Validate The user can show and hide the comparison panel in Evaluate tab")
     public void expandCollapseReferencePanel() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -121,7 +124,7 @@ public class ReferencePanelTests extends TestBase {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String scenarioName3 = new GenerateStringUtil().generateScenarioName();
         String componentName = "Rapid Prototyping";
-        resourceFile = FileResourceUtil.getResourceAsFile("Rapid Prototyping.stp");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.RAPID_PROTOTYPING, "Rapid Prototyping.stp");
 
         loginPage = new CidLoginPage(driver);
         referenceComparePage = loginPage.login(UserUtil.getUser())
