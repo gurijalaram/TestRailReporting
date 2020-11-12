@@ -39,16 +39,18 @@ public class PreviewPanelTests extends TestBase {
 
         String partName = "Casting";
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getResourceAsFile(partName + ".prt");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".prt");
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .highlightScenario(testScenarioName, partName);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectExploreButton()
+                .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+                .highlightScenario(testScenarioName, partName);
 
         explorePage = new ExplorePage(driver);
         explorePage.openPreviewPanel();
@@ -61,17 +63,19 @@ public class PreviewPanelTests extends TestBase {
     @TestRail(testCaseId = {"1104", "1105"})
     public void previewPanelMetrics() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("225_gasket-1-solid1.prt.1");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "225_gasket-1-solid1.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .costScenario()
-            .selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
-            .highlightScenario(testScenarioName, "225_gasket-1-solid1");
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectExploreButton()
+                .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
+                .highlightScenario(testScenarioName, "225_gasket-1-solid1");
 
         explorePage = new ExplorePage(driver);
         previewPanelPage = explorePage.openPreviewPanel();

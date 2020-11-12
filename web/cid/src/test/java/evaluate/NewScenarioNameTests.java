@@ -43,7 +43,7 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, "partbody_2.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
@@ -62,7 +62,7 @@ public class NewScenarioNameTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, "partbody_2.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String testNewScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -93,8 +93,9 @@ public class NewScenarioNameTests extends TestBase {
     @TestRail(testCaseId = {"1588"})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("MultiUpload.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
         String scenarioA = new GenerateStringUtil().generateScenarioName();
         String scenarioB = new GenerateStringUtil().generateScenarioName();
         String scenarioC = new GenerateStringUtil().generateScenarioName();
@@ -103,18 +104,18 @@ public class NewScenarioNameTests extends TestBase {
         loginPage.login(UserUtil.getUser());
         explorePage = new ExplorePage(driver);
         explorePage = explorePage.uploadFileAndOk(scenarioA, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .refreshCurrentPage()
-            .uploadFileAndOk(scenarioB, FileResourceUtil.getResourceAsFile("MultiUpload.stp"), EvaluatePage.class)
+            .uploadFileAndOk(scenarioB, FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
             .refreshCurrentPage()
-            .uploadFileAndOk(scenarioC, FileResourceUtil.getResourceAsFile("MultiUpload.stp"), EvaluatePage.class)
+            .uploadFileAndOk(scenarioC, FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)

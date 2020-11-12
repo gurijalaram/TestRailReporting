@@ -36,23 +36,24 @@ public class RevertScenarioTests extends TestBase {
     @Description("Test revert saved scenario")
     @TestRail(testCaseId = {"3848", "585"})
     public void testRevertSavedScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("testpart-4.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "testpart-4.prt");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
-            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
-            .costScenario(3)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            .costScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario(3)
+                .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+                .costScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
 
         evaluatePage = evaluatePage.revert()
-            .revertScenario();
+                .revertScenario();
 
         assertThat(evaluatePage.isProcessGroupSelected(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
     }
@@ -62,18 +63,19 @@ public class RevertScenarioTests extends TestBase {
     @Description("Test revert unsaved scenario")
     @TestRail(testCaseId = {"586"})
     public void testRevertUnsavedScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("testpart-4.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "testpart-4.prt");
 
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
-            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup())
-            .costScenario(3)
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
-            .revert()
-            .revertScenario();
+                .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+                .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario(3)
+                .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+                .revert()
+                .revertScenario();
 
         assertThat(evaluatePage.isProcessGroupSelected(ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()), is(true));
     }

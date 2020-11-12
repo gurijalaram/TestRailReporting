@@ -47,23 +47,24 @@ public class MaterialPMITests extends TestBase {
     @TestRail(testCaseId = {"901"})
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
 
         loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         loginPage.login(currentUser)
-            .openSettings()
-            .openProdDefaultTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterialCatalog(VPEEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterial("Aluminum, Stock, ANSI 6061");
+                .openSettings()
+                .openProdDefaultTab()
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
+                .selectMaterialCatalog(VPEEnum.APRIORI_BRAZIL.getVpe())
+                .selectMaterial("Aluminum, Stock, ANSI 6061");
         new SettingsPage(driver).save(ExplorePage.class);
 
         evaluatePage = new ExplorePage(driver).uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .costScenario(3);
+                .costScenario(3);
 
         assertThat(evaluatePage.getMaterialInfo(), is("Aluminum, Stock, ANSI 6061"));
     }
