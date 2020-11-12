@@ -2,24 +2,32 @@ package ootbreports.general.scenariocomparison;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
+import inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
+import pageobjects.pages.view.reports.ScenarioComparisonReportPage;
 import testsuites.suiteinterface.CiaCirTestDevTest;
+
+import java.math.BigDecimal;
 
 public class ScenarioComparisonTests extends TestBase {
 
+    private ScenarioComparisonReportPage scenarioComparisonReportPage;
+    private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
@@ -85,5 +93,40 @@ public class ScenarioComparisonTests extends TestBase {
 
         assertThat(genericReportPage.getCountOfListAvailableItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("14")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3305")
+    @Description("Verify Currency Code input control is working correctly")
+    public void testCurrencyCode() {
+        BigDecimal gbpFirstFbc;
+        BigDecimal gbpSecondFbc;
+        BigDecimal usdFirstFbc;
+        BigDecimal usdSecondFbc;
+
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectFirstTwoComparisonScenarios()
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
+
+        usdFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
+        usdSecondFbc = scenarioComparisonReportPage.getFbcValue(false);
+
+        scenarioComparisonReportPage.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ScenarioComparisonReportPage.class);
+
+        gbpFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
+        gbpSecondFbc = scenarioComparisonReportPage.getFbcValue(false);
+
+        assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(gbpFirstFbc, is(not(usdFirstFbc)));
+        assertThat(gbpSecondFbc, is(not(usdSecondFbc)));
     }
 }

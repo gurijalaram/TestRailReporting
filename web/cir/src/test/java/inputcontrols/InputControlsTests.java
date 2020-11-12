@@ -230,7 +230,7 @@ public class InputControlsTests extends TestBase {
      * @param reportName - report to use
      * @param exportSetName - export set to use
      */
-    public void testCurrencyCode(String reportName, String exportSetName) {
+    public void testCurrencyCodeDtcReports(String reportName, String exportSetName) {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 

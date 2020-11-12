@@ -1016,6 +1016,17 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Selects first two Scenarios to compare
+     */
+    public GenericReportPage selectFirstTwoComparisonScenarios() {
+        for (int i = 1; i < 3; i++) {
+            By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]/div/a", i));
+            pageUtils.waitForElementAndClick(locator);
+        }
+        return this;
+    }
+
+    /**
      * Waits for correct available or selected count in any input controls list
      * @param listName - String
      * @param option - String

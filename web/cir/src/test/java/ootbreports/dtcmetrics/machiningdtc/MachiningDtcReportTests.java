@@ -73,7 +73,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCurrencyCode(
+        inputControlsTests.testCurrencyCodeDtcReports(
                 ReportNamesEnum.MACHINING_DTC.getReportName(),
                 ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
