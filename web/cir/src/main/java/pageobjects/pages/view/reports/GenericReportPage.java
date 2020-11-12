@@ -484,6 +484,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//span[@class='_jrHyperLink ReportExecution']/span)[1]")
     private WebElement castingDtcDetailsComparisonPartNameRowOne;
 
+    @FindBy(xpath = "(//div[@title='Scenario Name']//ul)[1]/li[1]")
+    private WebElement firstScenarioName;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -990,6 +993,26 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath(String.format("//div[@title='%s']//span[contains(@title, '%s')]", listName, option));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText().substring(substringVal);
+    }
+
+    /**
+     * Gets specified component name
+     * @param index String
+     * @return String
+     */
+    public String getComponentName(String index) {
+        By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[%s]", index));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("title");
+    }
+
+    /**
+     * Gets first scenario name
+     * @return String
+     */
+    public String getFirstScenarioName() {
+        pageUtils.waitForElementToAppear(firstScenarioName);
+        return firstScenarioName.getAttribute("title");
     }
 
     /**
