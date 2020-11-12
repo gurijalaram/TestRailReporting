@@ -78,7 +78,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return current page object
      */
     private FileUploadPage inputScenarioName(String scenarioName) {
-        pageUtils.waitForElementAndClick(scenarioNameInput);
         scenarioNameInput.clear();
         scenarioNameInput.sendKeys(scenarioName);
         return this;
