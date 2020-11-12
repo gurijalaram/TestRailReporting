@@ -741,9 +741,9 @@ public class AssemblyDetailsReportTests extends TestBase {
         for (int i = 7; i < 10; i++) {
             assertThat(levelValues.get(i).compareTo(new BigDecimal("2")), is(0));
         }
-	}
+    }
 
-	@Test
+    @Test
     @TestRail(testCaseId = "1933")
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {

@@ -1,25 +1,20 @@
 package ootbreports.general.assemblycost;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.pages.view.reports.AssemblyCostReportPage;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class AssemblyCostTests extends TestBase {
 
-    private AssemblyCostReportPage assemblyCostReportPage;
     private CommonReportTests commonReportTests;
 
     public AssemblyCostTests() {
