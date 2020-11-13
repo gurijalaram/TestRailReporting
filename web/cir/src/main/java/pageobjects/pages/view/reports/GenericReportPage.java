@@ -1016,19 +1016,38 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Selects default scenario name (Initial)
+     * @return instance of Scenario Comparison Report Page
+     */
+    public ScenarioComparisonReportPage selectDefaultScenarioName() {
+        By locator = By.xpath("//li[@title='Initial']/div/a");
+        pageUtils.waitForElementAndClick(locator);
+
+        By selectedLocator = By.xpath("(//li[@title='Initial' and contains(@class, 'jr-isSelected')])[1]");
+        pageUtils.waitForElementToAppear(selectedLocator);
+
+        By filteredLocator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[1 and contains(@title, '1200 (Initial')]");
+        pageUtils.waitForElementToAppear(filteredLocator);
+        return new ScenarioComparisonReportPage(driver);
+    }
+
+    /**
      * Selects first two Scenarios to compare
      */
     public GenericReportPage selectFirstTwoComparisonScenarios() {
         waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ",
-                "14");
+            "14");
+
         for (int i = 1; i < 3; i++) {
             By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]/div/a", i));
             pageUtils.waitForElementAndClick(locator);
-            By postFilterLocator = By.xpath(String.format(
-                    "(//div[@title='Scenarios to Compare']//ul)[1]/li[%s and @class='jr-mSelectlist-item jr-isHovered jr jr-isSelected']",
-                    i
-            ));
-            pageUtils.waitForElementToAppear(postFilterLocator);
+            if (i == 1) {
+                By postFilterLocator = By.xpath(String.format(
+                        "(//div[@title='Scenarios to Compare']//ul)[1]/li[%s and @class='jr-mSelectlist-item jr-isHovered jr jr-isSelected']",
+                        i
+                ));
+                pageUtils.waitForElementToAppear(postFilterLocator);
+            }
         }
         return this;
     }

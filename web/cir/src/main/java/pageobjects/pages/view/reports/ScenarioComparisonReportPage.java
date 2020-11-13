@@ -1,6 +1,7 @@
 package pageobjects.pages.view.reports;
 
 import com.apriori.utils.PageUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,5 +42,11 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         WebElement elementToUse = getFirst ? firstFbc : secondFbc;
         pageUtils.waitForElementToAppear(elementToUse);
         return new BigDecimal(elementToUse.getText());
+    }
+
+    public String getScenariosToCompareName(int index) {
+        By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]", index));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("title");
     }
 }

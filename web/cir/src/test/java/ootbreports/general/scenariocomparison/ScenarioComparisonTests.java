@@ -63,7 +63,6 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3246")
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -129,5 +128,27 @@ public class ScenarioComparisonTests extends TestBase {
         assertThat(scenarioComparisonReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpFirstFbc, is(not(usdFirstFbc)));
         assertThat(gbpSecondFbc, is(not(usdSecondFbc)));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3249")
+    @Description("Verfiy scenario name input control functions correctly")
+    public void testScenarioNameInputControl() {
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectDefaultScenarioName();
+
+        String rowOneScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(1);
+        String rowTwoScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(2);
+
+        assertThat(rowOneScenarioName.isEmpty(), is(false));
+        assertThat(rowOneScenarioName.contains(Constants.DEFAULT_SCENARIO_NAME), is(true));
+
+        assertThat(rowTwoScenarioName.isEmpty(), is(false));
+        assertThat(rowTwoScenarioName.contains(Constants.DEFAULT_SCENARIO_NAME), is(true));
     }
 }
