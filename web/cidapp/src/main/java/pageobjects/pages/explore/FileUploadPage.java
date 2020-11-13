@@ -33,7 +33,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = "//div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
-    @FindBy(xpath = "//input[@name='scenarioName']/..//span")
+    @FindBy(xpath = "//input[@name='scenarioName']/following-sibling::span")
     private WebElement scenarioNameWarning;
 
     private WebDriver driver;
