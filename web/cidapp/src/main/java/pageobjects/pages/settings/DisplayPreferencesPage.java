@@ -51,7 +51,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage setDropdown(String dropdown, String value) {
-        By theDropdown = By.xpath(String.format("//label[.='%s']/..//div[contains(@class,'apriori-select form-control')]", dropdown));
+        By theDropdown = By.xpath(String.format("//label[.='%s']/following-sibling::div[contains(@class,'apriori-select form-control')]", dropdown));
         pageUtils.waitForElementAndClick(theDropdown);
         By theValue = By.xpath(String.format("//button[.='%s']", value));
         pageUtils.scrollWithJavaScript(driver.findElement(theValue), true).click();
