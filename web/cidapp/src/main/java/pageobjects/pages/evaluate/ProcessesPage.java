@@ -54,7 +54,7 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
      * @return double
      */
     public double getTotalResult(String label) {
-        By costResult = By.xpath(String.format("//span[.='%s']/..//span[@class='property-value']", label));
+        By costResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
         return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
 
@@ -66,7 +66,7 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
      * @return true/false
      */
     public boolean isTotalResultDisplayed(String label, String value) {
-        By costResult = By.xpath(String.format("//span[.='%s']/..//span[.='%s']", label, value));
+        By costResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(costResult);
         return driver.findElement(costResult).isDisplayed();
     }
