@@ -96,6 +96,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3305")
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
@@ -125,7 +126,7 @@ public class ScenarioComparisonTests extends TestBase {
         gbpFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
         gbpSecondFbc = scenarioComparisonReportPage.getFbcValue(false);
 
-        assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(scenarioComparisonReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpFirstFbc, is(not(usdFirstFbc)));
         assertThat(gbpSecondFbc, is(not(usdSecondFbc)));
     }

@@ -1019,9 +1019,16 @@ public class GenericReportPage extends ReportsPageHeader {
      * Selects first two Scenarios to compare
      */
     public GenericReportPage selectFirstTwoComparisonScenarios() {
+        waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ",
+                "14");
         for (int i = 1; i < 3; i++) {
             By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]/div/a", i));
             pageUtils.waitForElementAndClick(locator);
+            By postFilterLocator = By.xpath(String.format(
+                    "(//div[@title='Scenarios to Compare']//ul)[1]/li[%s and @class='jr-mSelectlist-item jr-isHovered jr jr-isSelected']",
+                    i
+            ));
+            pageUtils.waitForElementToAppear(postFilterLocator);
         }
         return this;
     }
