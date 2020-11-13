@@ -55,43 +55,43 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "input[name='productionLife']")
     private WebElement productionLifeInput;
 
-    @FindBy(xpath = "//label[.='Current Scenario']/..//div[contains(@class,'apriori-select form-control')]")
+    @FindBy(xpath = "//label[.='Current Scenario']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement currentScenarioDropdown;
 
-    @FindBy(xpath = "//label[.='Process Group']/..//div[contains(@class,'apriori-select form-control')]")
+    @FindBy(xpath = "//label[.='Process Group']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement processGroupDropdown;
 
-    @FindBy(xpath = "//label[.='VPE']/..//div[contains(@class,'apriori-select form-control')]")
+    @FindBy(xpath = "//label[.='VPE']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement vpeDropdown;
 
-    @FindBy(xpath = "//label[.='Secondary Process']/..//div[contains(@class,'apriori-select form-control')]")
+    @FindBy(xpath = "//label[.='Secondary Process']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
-    @FindBy(xpath = "//label[.='Material']/..//button")
+    @FindBy(xpath = "//label[.='Material']/following-sibling::button")
     private WebElement materialsPencil;
 
-    @FindBy(xpath = "//div[.='Material & Utilization']/../div[.='details']")
+    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::[.='details']")
     private WebElement materialsDetailsButton;
 
-    @FindBy(xpath = "//div[.='Design Guidance']/../div[.='details']")
+    @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
     private WebElement designGuidanceDetailsButton;
 
-    @FindBy(xpath = "//div[.='Processes']/../div[.='details']")
+    @FindBy(xpath = "//div[.='Processes']/following-sibling::div[.='details']")
     private WebElement processesDetailsButton;
 
-    @FindBy(xpath = "//div[.='Cost Results']/../div[.='details']")
+    @FindBy(xpath = "//div[.='Cost Results']/following-sibling::div[.='details']")
     private WebElement costDetailsButton;
 
-    @FindBy(xpath = "//label[.='Secondary Processes']/..//button")
+    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::button")
     private WebElement secondaryProcessesPencil;
 
-    @FindBy(xpath = "//div[.='Inputs']/../div[normalize-space()='more']")
+    @FindBy(xpath = "//div[.='Inputs']/following-sibling::div[normalize-space()='more']")
     private WebElement inputDetailsButton;
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
 
-    @FindBy(xpath = "//label[.='Secondary Processes']//..//div//span[@class]")
+    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//span")
     private List<WebElement> secondaryProcesses;
 
     private PageUtils pageUtils;
@@ -192,7 +192,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isMaterialInfoDisplayed(String material) {
-        By materialsInfo = By.xpath(String.format("//label[.='Material']/..//input[@value='%s']", material));
+        By materialsInfo = By.xpath(String.format("//label[.='Material']/following-sibling::div//input[@value='%s']", material));
         return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
     }
 
@@ -287,13 +287,13 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets finish mass
+     * Gets material details
      *
      * @param label - the label
      * @return double
      */
     public double getMaterialResult(String label) {
-        By result = By.xpath(String.format("//span[.='%s']/..//span[@class='property-value']", label));
+        By result = By.xpath(String.format("//div[@class='display-property vertical']//span[.='%s']/following-sibling::span[@class='property-value']", label));
         pageUtils.waitForElementToAppear(result);
         return Double.parseDouble(driver.findElement(result).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
@@ -306,7 +306,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isMaterialDisplayed(String label, String value) {
-        By result = By.xpath(String.format("//span[.='%s']/..//span[.='%s']", label, value));
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(result);
         return driver.findElement(result).isDisplayed();
     }
@@ -318,7 +318,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return string
      */
     public String getGuidanceResult(String label) {
-        By guidanceResult = By.xpath(String.format("//div[@class='design-guidance']//span[.='%s']/..//span[@class='property-value']", label));
+        By guidanceResult = By.xpath(String.format("//div[@class='design-guidance']//span[.='%s']/following-sibling::span[@class='property-value']", label));
         return pageUtils.waitForElementToAppear(guidanceResult).getAttribute("textContent");
     }
 
@@ -330,7 +330,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isGuidanceResultDisplayed(String label, String value) {
-        By guidanceResult = By.xpath(String.format("//div[@class='design-guidance']//span[.='%s']/..//span[.='%s']", label, value));
+        By guidanceResult = By.xpath(String.format("//div[@class='design-guidance']//span[.='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(guidanceResult);
         return driver.findElement(guidanceResult).isDisplayed();
     }
@@ -342,7 +342,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return double
      */
     public double getProcessesResult(String label) {
-        By processResult = By.xpath(String.format("//div[@class='process-summary']//span[.='%s']/..//span[@class='property-value']", label));
+        By processResult = By.xpath(String.format("//div[@class='process-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
         return Double.parseDouble(pageUtils.waitForElementToAppear(processResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
 
@@ -354,7 +354,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isProcessResultDisplayed(String label, String value) {
-        By processResult = By.xpath(String.format("//div[@class='process-summary']//span[.='%s']/..//span[.='%s']", label, value));
+        By processResult = By.xpath(String.format("//div[@class='process-summary']//span[.='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(processResult);
         return driver.findElement(processResult).isDisplayed();
     }
@@ -366,7 +366,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return double
      */
     public double getCostResult(String label) {
-        By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/..//span[@class='property-value']", label));
+        By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
         return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
 
@@ -378,7 +378,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isCostResultDisplayed(String label, String value) {
-        By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/..//span[.='%s']", label, value));
+        By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(costResult);
         return driver.findElement(costResult).isDisplayed();
     }
