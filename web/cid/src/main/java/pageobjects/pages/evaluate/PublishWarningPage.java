@@ -32,6 +32,9 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     @FindBy(css = "[data-ap-comp='saveAsNew']")
     private WebElement newScenarioButton;
 
+    @FindBy(css = "div.panel-body div.gwt-Label")
+    private WebElement cannotPublishText;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -105,5 +108,9 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     public PublishWarningPage selectPublishAsNew() {
         pageUtils.waitForElementAndClick(newScenarioButton);
         return this;
+    }
+
+    public String getCannotPublishText() {
+        return pageUtils.waitForElementToAppear(cannotPublishText).getText();
     }
 }

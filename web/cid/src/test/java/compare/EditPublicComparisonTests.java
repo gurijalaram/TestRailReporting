@@ -273,4 +273,54 @@ public class EditPublicComparisonTests extends TestBase {
 
         assertThat(comparePage.isComparisonLockStatus("unlock"), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"429"})
+    @Description("Public comparison can be edited and given a new unique name if a private comparison of the same name already exists")
+    public void testEditComparisonAsNewScenario() {
+
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String testComparisonDescription = "Test comparison description";
+        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .enterComparisonDescription(testComparisonDescription)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        explorePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .highlightComparison(testComparisonName);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.editScenario(EditWarningPage.class)
+                .selectSaveAsNew()
+                .inputNewScenarioName(newScenarioName)
+                .selectContinue(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        explorePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .setRowOne("Scenario Name", "Contains", newScenarioName)
+                .apply(ScenarioTablePage.class)
+                .highlightComparison(testComparisonName)
+                .openPreviewPanel(ExplorePage.class);
+
+        assertThat(explorePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
+    }
 }

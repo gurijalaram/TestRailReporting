@@ -35,10 +35,12 @@ import java.io.File;
 public class PublishComparisonTests extends TestBase {
 
     private final String noComponentMessage = "You have no components that match the selected filter";
+    private final String cannotPublishMessage = "To publish a comparison, all referenced scenarios must be public. Remove or replace any private scenarios.";
     private CidLoginPage loginPage;
     private ComparePage comparePage;
     private ExplorePage explorePage;
     private GenericHeader genericHeader;
+    private PublishWarningPage publishWarningPage;
 
     private File resourceFile;
 
@@ -223,7 +225,7 @@ public class PublishComparisonTests extends TestBase {
                 .setRowOne("Scenario Name", "Contains", testComparisonName)
                 .apply(ExplorePage.class);
 
-        assertThat(new ExplorePage(driver).getNoComponentText(), CoreMatchers.is(containsString(noComponentMessage)));
+        assertThat(new ExplorePage(driver).getNoComponentText(), is(containsString(noComponentMessage)));
     }
 
     @Test
@@ -298,6 +300,41 @@ public class PublishComparisonTests extends TestBase {
                 .setRowOne("Scenario Name", "Contains", testComparisonName)
                 .apply(ExplorePage.class);
 
-        assertThat(new ExplorePage(driver).getNoComponentText(), CoreMatchers.is(containsString(noComponentMessage)));
+        assertThat(new ExplorePage(driver).getNoComponentText(), is(containsString(noComponentMessage)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"426"})
+    @Description("Attempt to publish a comparison containing private scenarios")
+    public void testAttemptPublishComparisonPrivateScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "testpart-4.prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String partName = "testpart-4";
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectExploreButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", partName)
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(scenarioName, partName)
+                .apply(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        publishWarningPage = genericHeader.publishScenario(PublishWarningPage.class);
+
+        assertThat(new PublishWarningPage(driver).getCannotPublishText(), is(containsString(cannotPublishMessage)));
     }
 }
