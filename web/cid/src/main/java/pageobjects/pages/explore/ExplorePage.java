@@ -39,6 +39,9 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "[data-ap-comp='previewPanel']")
     private WebElement previewPanelData;
 
+    @FindBy(css = "[data-ap-field='description']")
+    private WebElement descriptionText;
+
     private ScenarioTablePage scenarioTablePage;
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -231,12 +234,12 @@ public class ExplorePage extends ExploreHeader {
      *
      * @return new page object
      */
-    public PreviewPanelPage openPreviewPanel() {
+    public <T> T openPreviewPanel(Class<T> className) {
         if (pageUtils.isElementDisplayed(closePreviewButton)) {
             closePreviewButton.click();
         }
         pageUtils.waitForElementToAppear(previewButton).click();
-        return new PreviewPanelPage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -308,5 +311,14 @@ public class ExplorePage extends ExploreHeader {
     public String getColumnOrder(String columnName) {
         By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
         return driver.findElement(column).getAttribute("outerHTML");
+    }
+
+    /**
+     * Gets the comparison description text
+     *
+     * @return the text as String
+     */
+    public String getDescriptionText() {
+        return descriptionText.getText();
     }
 }

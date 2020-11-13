@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.pages.compare.ComparePage;
 
 /**
  * @author cfrith
@@ -94,9 +95,9 @@ public class EditWarningPage extends LoadableComponent<EditWarningPage> {
      *
      * @return new page object
      */
-    public EvaluatePage selectContinue() {
+    public <T> T selectContinue(Class<T> klass) {
         pageUtils.waitForElementAndClick(continueButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**

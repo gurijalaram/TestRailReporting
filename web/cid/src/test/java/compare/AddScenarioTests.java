@@ -22,7 +22,9 @@ import pageobjects.pages.compare.ComparePage;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.evaluate.PublishPage;
 import pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
+import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.login.CidLoginPage;
+import pageobjects.toolbars.GenericHeader;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -34,6 +36,8 @@ public class AddScenarioTests extends TestBase {
     private ComparePage comparePage;
     private ScenarioTablePage scenarioTablePage;
     private EvaluatePage evaluatePage;
+    private GenericHeader genericHeader;
+    private ExplorePage explorePage;
 
     private File resourceFile;
 
@@ -126,6 +130,37 @@ public class AddScenarioTests extends TestBase {
                 .createNewComparison()
                 .enterComparisonName(testComparisonName)
                 .save(ComparePage.class);
+
+        assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"415"})
+    @Description("Enter a very long comparison name and a very long description when creating a comparison")
+    public void comparisonLongNameAndDescription() {
+
+        String testComparisonName = (new GenerateStringUtil().generateComparisonName() + "abcdefghijklmopqrstuvwxyzabcdefghijklmopqrstuvwxyz");
+        String testComparisonDescription = ("This is a very long description abcdefghijklmopqrstuvwxyzabcdefghijklmopqrstuvwxyz");
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .enterComparisonDescription(testComparisonDescription)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        explorePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .highlightComparison(testComparisonName)
+                .openPreviewPanel(ExplorePage.class);
+
+        assertThat(explorePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
+
+        new ScenarioTablePage(driver).openComparison(testComparisonName);
 
         assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
     }
