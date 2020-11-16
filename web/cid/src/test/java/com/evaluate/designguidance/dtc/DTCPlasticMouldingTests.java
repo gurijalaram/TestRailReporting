@@ -17,11 +17,11 @@ import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.evaluate.designguidance.GuidancePage;
 import com.pageobjects.pages.evaluate.designguidance.investigation.InvestigationPage;
 import com.pageobjects.pages.login.CidLoginPage;
-import com.testsuites.suiteinterface.CustomerSmokeTests;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 

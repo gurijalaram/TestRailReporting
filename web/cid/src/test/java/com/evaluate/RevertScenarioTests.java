@@ -13,10 +13,10 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.login.CidLoginPage;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 

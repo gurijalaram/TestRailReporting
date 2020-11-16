@@ -27,11 +27,11 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.pageobjects.pages.login.PrivacyPolicyPage;
-import com.testsuites.suiteinterface.CIARStagingSmokeTest;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class ReportsNavigationTests extends TestBase {
 

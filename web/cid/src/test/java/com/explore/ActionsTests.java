@@ -24,12 +24,12 @@ import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.explore.ScenarioNotesPage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
-import com.testsuites.suiteinterface.CustomerSmokeTests;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 

@@ -15,11 +15,11 @@ import com.apriori.utils.web.driver.TestBase;
 import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.explore.TableColumnsPage;
 import com.pageobjects.pages.login.CidLoginPage;
-import com.testsuites.suiteinterface.CustomerSmokeTests;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 public class TableHeadersTests extends TestBase {
 

@@ -29,14 +29,14 @@ import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.pages.settings.ProductionDefaultPage;
 import com.pageobjects.pages.settings.SelectionSettingsPage;
 import com.pageobjects.pages.settings.SettingsPage;
-import com.testsuites.suiteinterface.CustomerSmokeTests;
-import com.testsuites.suiteinterface.SanityTests;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SanityTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 

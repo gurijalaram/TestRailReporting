@@ -22,11 +22,11 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.explore.ExplorePage;
-import com.testsuites.suiteinterface.CIARStagingSmokeTest;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 

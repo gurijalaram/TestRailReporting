@@ -16,14 +16,13 @@ import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.PublishPage;
 import com.pageobjects.pages.evaluate.PublishWarningPage;
 import com.pageobjects.pages.explore.ExplorePage;
-import com.pageobjects.pages.jobqueue.JobQueuePage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -33,7 +32,6 @@ public class PublishExistingCostedTests extends TestBase {
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private GenericHeader genericHeader;
-    private JobQueuePage jobQueuePage;
 
     private File resourceFile;
 

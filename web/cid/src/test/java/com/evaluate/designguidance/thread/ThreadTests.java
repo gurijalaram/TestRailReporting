@@ -25,12 +25,12 @@ import com.pageobjects.pages.evaluate.designguidance.investigation.Investigation
 import com.pageobjects.pages.evaluate.designguidance.tolerances.ThreadingPage;
 import com.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.pageobjects.pages.login.CidLoginPage;
-import com.testsuites.suiteinterface.CustomerSmokeTests;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 

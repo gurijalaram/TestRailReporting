@@ -25,13 +25,13 @@ import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.explore.FileOpenError;
 import com.pageobjects.pages.explore.FileUploadPage;
 import com.pageobjects.pages.login.CidLoginPage;
-import com.testsuites.suiteinterface.SanityTests;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SanityTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 

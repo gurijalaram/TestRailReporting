@@ -30,13 +30,13 @@ import com.pageobjects.pages.settings.SettingsPage;
 import com.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.pageobjects.pages.settings.ToleranceValueSettingsPage;
 import com.pageobjects.toolbars.PageHeader;
-import com.testsuites.suiteinterface.CustomerSmokeTests;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 

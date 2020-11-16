@@ -14,10 +14,10 @@ import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.help.HelpDocPage;
 import com.pageobjects.pages.help.HelpPage;
 import com.pageobjects.pages.login.CidLoginPage;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 

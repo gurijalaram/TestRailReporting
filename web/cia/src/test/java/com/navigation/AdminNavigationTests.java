@@ -17,11 +17,11 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.testsuites.suiteinterface.CIARStagingSmokeTest;
-import com.testsuites.suiteinterface.CustomerSmokeTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 public class AdminNavigationTests extends TestBase {
 

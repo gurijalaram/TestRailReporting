@@ -26,12 +26,12 @@ import com.navigation.CommonReportTests;
 import com.pageobjects.pages.evaluate.ComponentsPage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.explore.ExplorePage;
-import com.testsuites.suiteinterface.CIARStagingSmokeTest;
-import com.testsuites.suiteinterface.CustomerSmokeTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CIARStagingSmokeTest;
+import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

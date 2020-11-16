@@ -20,11 +20,11 @@ import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.process.ProcessRoutingPage;
 import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.login.CidLoginPage;
-import com.testsuites.SmokeTestSuite;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.SmokeTestSuite;
 
 import java.io.File;
 

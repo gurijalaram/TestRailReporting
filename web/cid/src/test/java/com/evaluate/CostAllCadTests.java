@@ -19,12 +19,12 @@ import com.pageobjects.pages.evaluate.ReferenceComparePage;
 import com.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.EvaluateHeader;
-import com.testsuites.suiteinterface.SmokeTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
