@@ -1,7 +1,5 @@
 package com.apriori.utils.constants;
 
-import com.apriori.utils.enums.ProcessGroupEnum;
-
 import org.aeonbits.owner.ConfigFactory;
 
 import java.util.logging.Level;
@@ -38,35 +36,7 @@ public class Constants {
     public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
     public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
 
-    public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_ONE = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
-    public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_TWO = "CIA_UG";
-    public static final String CIA_USER_GUIDE_URL_SUBSTRING = "CI_ADMIN_USER_GUIDE";
-    public static final String CIA_USER_GUIDE_TITLE = "Cost Insight Admin\nUser Guide";
-    public static final String SCENARIO_EXPORT_CHAPTER_PAGE_TITLE = "2 Scenario and System Data Exports";
-    public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
-    public static final String SAVED_CONFIG_NAME = "Saved Config";
-    public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
-    public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
-    public static final String REPORTING_HELP_URL = "https://help.jaspersoft.com/Default";
-    public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
-    public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
-    public static final String DTC_METRICS_FOLDER = "DTC Metrics";
-    public static final String GENERAL_FOLDER = "General";
-    public static final String PUBLIC_WORKSPACE = "Public";
-    public static final String PRIVATE_WORKSPACE = "Private";
-    public static final String ASSEMBLY_STRING = "[assembly]";
-    public static final String PART_NAME_INITIAL_EXPECTED_MACHINING_DTC = "PMI_SYMMETRYCREO (Initial) ";
-    public static final String PART_NAME_EXPECTED_MACHINING_DTC = "PMI_FLATNESSCREO (Initial)";
-    public static final String CASTING_DIE_SAND_NAME = String.format(
-            "%s, %s",
-            ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
-            ProcessGroupEnum.CASTING_SAND.getProcessGroup()
-    );
-    public static final String STOCK_MACHINING_TWO_MODEL_NAME = String.format(
-            "%s, %s",
-            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
-            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
-    );
+
     public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
     public static final String FORGOT_PWD_MESSAGE = "If the supplied email address is valid, you will receive an " +
             "email shortly with instructions on resetting your password. If you did not receive an email and still " +

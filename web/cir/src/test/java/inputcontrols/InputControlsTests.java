@@ -8,7 +8,6 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
@@ -23,6 +22,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
+import utils.Constants;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -496,7 +496,7 @@ public class InputControlsTests extends TestBase {
 
         if (listName.equals(ListNameEnum.CREATED_BY.getListName())) {
             String lastModifiedByListName = ListNameEnum.LAST_MODIFIED_BY.getListName();
-            String expectedCount = Constants.environment.equals("cid-qa") ? "3" : "1";
+            String expectedCount = com.apriori.utils.constants.Constants.environment.equals("cid-qa") ? "3" : "1";
             genericReportPage.waitForCorrectAvailableSelectedCount(lastModifiedByListName,
                     "Available: ", expectedCount);
             assertThat(

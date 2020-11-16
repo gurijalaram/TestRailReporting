@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -22,6 +21,7 @@ import pageobjects.pages.manage.SystemDataExport;
 import pageobjects.pages.userguides.CiaUserGuide;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import utils.Constants;
 
 public class AdminNavigationTests extends TestBase {
 
@@ -85,8 +85,8 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToHelpAdminGuide();
 
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
-        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(utils.Constants.CIA_USER_GUIDE_TITLE)));
+        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(utils.Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
         assertThat(ciaUserGuide.getTabCount(), is(2));
     }
 
@@ -100,9 +100,9 @@ public class AdminNavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         assertThat(ciaUserGuide.getTabCount(), is(2));
-        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
-        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
+        assertThat(currentUrl, is(containsString(utils.Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
+        assertThat(currentUrl, is(containsString(utils.Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(utils.Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
     }
 
     @Test

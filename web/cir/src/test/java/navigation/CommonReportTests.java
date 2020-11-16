@@ -5,8 +5,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -220,10 +220,10 @@ public class CommonReportTests extends TestBase {
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .setScenarioType(com.apriori.utils.constants.Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();
@@ -270,10 +270,10 @@ public class CommonReportTests extends TestBase {
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .setScenarioType(com.apriori.utils.constants.Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();

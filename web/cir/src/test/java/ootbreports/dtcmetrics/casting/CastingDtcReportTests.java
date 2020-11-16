@@ -5,9 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -29,6 +29,7 @@ import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import utils.Constants;
 
 import java.math.BigDecimal;
 
@@ -171,10 +172,10 @@ public class CastingDtcReportTests extends TestBase {
 
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(com.apriori.utils.constants.Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
                 .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 

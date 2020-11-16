@@ -7,10 +7,10 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -32,6 +32,7 @@ import pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import pageobjects.pages.view.reports.GenericReportPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import utils.Constants;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -519,10 +520,10 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         ComponentsPage componentsPage = new ExplorePage(driver)
             .filter()
-            .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
+            .setScenarioType(com.apriori.utils.constants.Constants.ASSEMBLY_SCENARIO_TYPE)
+            .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
             .setRowOne("Part Name", "Contains", Constants.PISTON_ASSEMBLY_CID_NAME)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+            .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
             .apply(ExplorePage.class)
             .openFirstScenario()
             .openComponentsTable()
@@ -761,10 +762,10 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(com.apriori.utils.constants.Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
                 .setRowOne("Part Name", "Contains", reportsValues.get("Part Name"))
-                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
