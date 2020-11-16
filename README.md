@@ -11,8 +11,9 @@
      - http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 7. Once you have installed the various tools, configure your AWS credentials. <br />  
   You can do this from a command prompt with the AWS CLI on your PATH: 
-    - `aws configure` This command will prompt for your IAM user access key and secret access key (downloaded above).
-  You should also set your default region to _us-east-1_.
+    - `aws configure` This command will prompt for your IAM user access key and secret access key (an admin user will be able to generate these details).
+  You should also set your `default region` to `_us-east-1_`.
+  You should set `default format` to `text`
   Your settings will be stored in your _%USERPROFILE%\.aws_ directory.
 8. Verify that things are configured properly using the following command. Confirm that the resulting ARN ends with your user name. 
     - `aws sts get-caller-identity `

@@ -14,7 +14,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.evaluate.CostDetailsPage;
@@ -57,12 +56,11 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario()
             .openCostDetails()
-            .expandDropDown("Piece Part Cost")
-            .expandDropDown("Total Variable Cost");
+            .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost"), containsString("15.87"));
-        assertThat(costDetailsPage.getCostContribution("Labor"), containsString("6.82"));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), containsString("1.88"));
+        assertThat(costDetailsPage.isCostContributionDisplayed("Material Cost", "15.87"), is(true));
+        assertThat(costDetailsPage.isCostContributionDisplayed("Labor", "6.82"), is(true));
+        assertThat(costDetailsPage.isCostContributionDisplayed("Direct Overhead", "1.88"), is(true));
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app
@@ -303,7 +301,7 @@ public class CostAllCadTests extends TestBase {
         fileUploadPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit("<script>alert(document.cookie)</script>", resourceFile, FileUploadPage.class);
 
-        assertThat(fileUploadPage.getAlertWarning(), Matchers.containsString("error occurred"));
+        assertThat(fileUploadPage.getAlertWarning(), containsString("error occurred"));
     }
 
     @Test
@@ -317,6 +315,6 @@ public class CostAllCadTests extends TestBase {
         fileUploadPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit("", resourceFile, FileUploadPage.class);
 
-        assertThat(fileUploadPage.getFieldWarningText(), Matchers.containsString("Scenario name is required."));
+        assertThat(fileUploadPage.getFieldWarningText(), containsString("Scenario name is required."));
     }
 }
