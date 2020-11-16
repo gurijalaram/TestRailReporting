@@ -2,23 +2,23 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import compare.PublishComparisonTests;
-import evaluate.AssemblyUploadTests;
-import evaluate.NewScenarioNameTests;
-import evaluate.ProcessGroupsTests;
-import evaluate.PublishNewCostedTests;
-import evaluate.designguidance.dtc.DTCCastingTests;
-import evaluate.designguidance.dtc.DTCPlasticMouldingTests;
-import evaluate.designguidance.failures.FailuresWarningsTests;
-import evaluate.designguidance.thread.ThreadTests;
-import evaluate.designguidance.tolerance.ToleranceTests;
-import explore.ActionsTests;
-import explore.TableHeadersTests;
-import login.LoginTests;
+import com.compare.PublishComparisonTests;
+import com.evaluate.AssemblyUploadTests;
+import com.evaluate.NewScenarioNameTests;
+import com.evaluate.ProcessGroupsTests;
+import com.evaluate.PublishNewCostedTests;
+import com.evaluate.designguidance.dtc.DTCCastingTests;
+import com.evaluate.designguidance.dtc.DTCPlasticMouldingTests;
+import com.evaluate.designguidance.failures.FailuresWarningsTests;
+import com.evaluate.designguidance.thread.ThreadTests;
+import com.evaluate.designguidance.tolerance.ToleranceTests;
+import com.explore.ActionsTests;
+import com.explore.TableHeadersTests;
+import com.login.LoginTests;
+import com.settings.SettingsTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import settings.SettingsTests;
 import testsuites.suiteinterface.SanityTests;
 
 //TODO: add project ID for TestRail
