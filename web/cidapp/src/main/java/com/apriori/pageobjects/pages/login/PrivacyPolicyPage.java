@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(PrivacyPolicyPage.class);
+    private final Logger logger = LoggerFactory.getLogger(PrivacyPolicyPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -30,7 +30,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     public PrivacyPolicyPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

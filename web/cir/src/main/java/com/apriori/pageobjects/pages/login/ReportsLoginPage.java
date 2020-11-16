@@ -6,8 +6,8 @@ import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
-import org.openqa.selenium.By;
 import com.pageobjects.pages.login.PrivacyPolicyPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
