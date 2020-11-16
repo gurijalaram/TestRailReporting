@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -15,6 +14,7 @@ import org.junit.experimental.categories.Category;
 import pageobjects.header.ReportsPageHeader;
 import pageobjects.pages.login.ReportsLoginPage;
 import testsuites.suiteinterface.CIARStagingSmokeTest;
+import utils.Constants;
 
 public class LoginTests extends TestBase {
 

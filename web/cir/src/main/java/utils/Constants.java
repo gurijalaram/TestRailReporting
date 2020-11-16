@@ -25,9 +25,14 @@ public class Constants {
         ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
         ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
     );
-
     public static final String DEFAULT_SCENARIO_NAME = "Initial";
     public static final String PART_SCENARIO_TYPE = "Part";
     public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
     public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
+    public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
+    public static final String FORGOT_PWD_MESSAGE = "If the supplied email address is valid, you will receive an " +
+        "email shortly with instructions on resetting your password. If you did not receive an email and still " +
+        "require assistance, please send an email to support@apriori.com.";
+    public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
+    public static final String INVALID_ERROR_MESSAGE = "Invalid";
 }

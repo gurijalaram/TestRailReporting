@@ -36,13 +36,6 @@ public class Constants {
     public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
     public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
 
-    public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
-    public static final String FORGOT_PWD_MESSAGE = "If the supplied email address is valid, you will receive an " +
-            "email shortly with instructions on resetting your password. If you did not receive an email and still " +
-            "require assistance, please send an email to support@apriori.com.";
-    public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
-    public static final String INVALID_ERROR_MESSAGE = "Invalid";
-
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
