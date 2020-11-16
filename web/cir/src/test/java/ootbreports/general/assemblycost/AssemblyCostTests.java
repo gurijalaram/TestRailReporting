@@ -7,11 +7,9 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
-import navigation.CommonReportTests;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 public class AssemblyCostTests extends TestBase {
 
@@ -159,7 +157,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2998")
     @Description("Validate report content aligns to aP desktop values (simple case) (Assembly Cost A4 Report)")
     public void testDataIntegrityAssemblyCostA4() {
@@ -168,7 +165,6 @@ public class AssemblyCostTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2998")
     @Description("Validate report content aligns to aP desktop values (simple case) (Assembly Cost Letter Report)")
     public void testDataIntegrityAssemblyCostLetter() {

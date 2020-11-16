@@ -1,5 +1,6 @@
 package pageobjects.pages.view.reports;
 
+import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
