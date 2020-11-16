@@ -1,8 +1,8 @@
 package cicuserguide;
 
+import com.apriori.header.PageHeader;
 import com.apriori.utils.PageUtils;
 
-import header.PageHeader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
