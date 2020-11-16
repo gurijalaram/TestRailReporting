@@ -173,8 +173,8 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return generic page object
      */
-    public EvaluatePage submit() {
-        return modalDialogController.submit(EvaluatePage.class);
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
     }
 
     /**
