@@ -1027,7 +1027,7 @@ public class GenericReportPage extends ReportsPageHeader {
         By selectedLocator = By.xpath("(//li[@title='Initial' and contains(@class, 'jr-isSelected')])[1]");
         pageUtils.waitForElementToAppear(selectedLocator);
 
-        By filteredLocator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[1 and contains(@title, '1200 (Initial')]");
+        By filteredLocator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[1 and contains(@title, '613 (Initial)')]");
         pageUtils.waitForElementToAppear(filteredLocator);
         return new ScenarioComparisonReportPage(driver);
     }

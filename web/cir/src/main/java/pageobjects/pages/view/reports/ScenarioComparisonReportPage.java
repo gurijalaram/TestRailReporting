@@ -46,7 +46,20 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         return new BigDecimal(elementToUse.getText());
     }
 
+    /**
+     * Gets Scenarios to Compare Name
+     * @param index int
+     * @return String
+     */
     public String getScenariosToCompareName(int index) {
+        for (int i = 1; i < 11; i++) {
+            By locator = By.xpath(
+                    String.format(
+                            "(//div[@title='Scenarios to Compare']//ul)[1]/li[%s and contains(@title, '(Initial)')]", i)
+            );
+            pageUtils.waitForElementToAppear(locator);
+        }
+
         By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]", index));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getAttribute("title");
