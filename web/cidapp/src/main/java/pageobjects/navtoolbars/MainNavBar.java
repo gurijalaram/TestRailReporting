@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.explore.ExplorePage;
 import pageobjects.pages.help.HelpPage;
+import pageobjects.pages.settings.DisplayPreferencesPage;
 
 /**
  * @author cfrith
@@ -69,9 +70,9 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
      *
      * @return new page object
      */
-    public MainNavBar openSettings() {
+    public DisplayPreferencesPage openSettings() {
         pageUtils.waitForElementAndClick(settingsButton);
-        return this;
+        return new DisplayPreferencesPage(driver);
     }
 
     /**

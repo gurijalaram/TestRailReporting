@@ -55,7 +55,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
      * @return string
      */
     public String getUtilizationInfo(String materialInfo) {
-        By info = By.xpath(String.format("//span[.='%s']/..//span[@class='property-value']", materialInfo));
+        By info = By.xpath(String.format("//span[.='%s']/following-sibling::span", materialInfo));
         return pageUtils.waitForElementToAppear(info).getAttribute("textContent");
     }
 
