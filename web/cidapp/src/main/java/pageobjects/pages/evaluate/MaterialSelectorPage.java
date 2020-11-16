@@ -15,13 +15,13 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     private final Logger LOGGER = LoggerFactory.getLogger(MaterialSelectorPage.class);
 
-    @FindBy(xpath = "//label[.='Type']/..//div[contains(@class,'apriori-select form-control')]")
+    @FindBy(xpath = "//label[.='Type']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement typeDropdown;
 
-    @FindBy(xpath = "//label[.='Selection Method']/..//div[contains(@class,'apriori-select form-control')]")
+    @FindBy(xpath = "//label[.='Selection Method']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement methodDropdown;
 
-    @FindBy(xpath = "//label[normalize-space(text())='Search']/..//input")
+    @FindBy(xpath = "//label[normalize-space(text())='Search']/following-sibling::input")
     private WebElement searchInput;
 
     @FindBy(xpath = "//div[@class='table-body']")

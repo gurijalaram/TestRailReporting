@@ -53,28 +53,59 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     /**
      * Expands the cost dropdown
+     *
      * @param costDetails - the cost dropdown
      * @return current page object
      */
     public CostDetailsPage expandDropDown(String costDetails) {
-        By costDropdown = By.xpath(String.format("//div[normalize-space(text())='%s']", costDetails));
-        pageUtils.waitForElementToAppear(costDropdown);
-        pageUtils.waitForElementAndClick(costDropdown);
+        String[] costDropdowns = costDetails.split(",");
+
+        for (String costDropdown : costDropdowns) {
+            By dropdown = By.xpath(String.format("//div[@class='cost-result-list']//div[normalize-space(text())='%s']", costDropdown.trim()));
+            pageUtils.waitForElementToAppear(dropdown);
+            pageUtils.waitForElementAndClick(dropdown);
+        }
         return this;
     }
 
     /**
-     * Gets the cost contribution
-     * @param costContribution - cost contribution
-     * @return string
+     * Gets the value of the dropdown label
+     *
+     * @param label - the label
+     * @return double
      */
-    public String getCostContribution(String costContribution) {
-        By costDropdown = By.xpath(String.format("//div[normalize-space(text())='%s']/..//div[@class='right']", costContribution));
-        return pageUtils.waitForElementToAppear(costDropdown).getText();
+    public double getChevronDropdownValue(String label) {
+        By value = By.xpath(String.format("//div[normalize-space(text())='%s']/following-sibling::div", label));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(value).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Gets the cost contribution
+     *
+     * @param label - cost contribution
+     * @return double
+     */
+    public double getCostContribution(String label) {
+        By costDropdown = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/following-sibling::span", label));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(costDropdown).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Checks the specified contribution is displayed
+     *
+     * @param label - the label
+     * @param value - the value
+     * @return true/false
+     */
+    public boolean isCostContributionDisplayed(String label, String value) {
+        By costResult = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/following-sibling::span[.='%s']", label, value));
+        pageUtils.waitForElementToAppear(costResult);
+        return driver.findElement(costResult).isDisplayed();
     }
 
     /**
      * Closes current panel
+     *
      * @return new page object
      */
     public EvaluatePage closePanel() {
@@ -83,6 +114,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     /**
      * Opens the help page
+     *
      * @return new page object
      */
     public HelpDocPage openHelp() {
