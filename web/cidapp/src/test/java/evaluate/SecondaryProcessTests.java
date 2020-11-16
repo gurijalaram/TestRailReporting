@@ -18,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.navtoolbars.EvaluateToolbar;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.evaluate.SecondaryProcessesPage;
 import pageobjects.pages.login.CidAppLoginPage;
@@ -91,7 +92,7 @@ public class SecondaryProcessTests extends TestBase {
 
         evaluatePage.openSecondaryProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
-            .submit()
+            .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Xray Inspection"));
@@ -241,7 +242,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes", "Stress Relief")
-            .submit()
+            .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief"));
@@ -264,7 +265,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
-            .submit()
+            .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize"));
@@ -287,7 +288,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment", "Certification")
-            .submit()
+            .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Certification"));
@@ -414,7 +415,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
-            .submit()
+            .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation"));
@@ -475,7 +476,7 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
-            .submit()
+            .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize / Carton Forming / Pack & Load"));
@@ -790,7 +791,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
-            .submit()
+            .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));

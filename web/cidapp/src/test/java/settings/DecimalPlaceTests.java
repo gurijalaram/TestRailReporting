@@ -18,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.navtoolbars.ExploreToolbar;
 import pageobjects.pages.evaluate.CostDetailsPage;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.evaluate.ProcessesPage;
@@ -55,7 +56,7 @@ public class DecimalPlaceTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .openSettings()
             .setDropdown("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
-            .submit()
+            .submit(ExploreToolbar.class)
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
@@ -71,7 +72,7 @@ public class DecimalPlaceTests extends TestBase {
 
         evaluatePage.openSettings()
             .setDropdown("Decimal Places", DecimalPlaceEnum.ONE.getDecimalPlaces())
-            .submit();
+            .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterialDisplayed("Finish Mass", "0.16kg"), is(true));
         assertThat(evaluatePage.isMaterialDisplayed("Utilization","96.87%"), is(true));
@@ -83,7 +84,7 @@ public class DecimalPlaceTests extends TestBase {
 
         evaluatePage.openSettings()
             .setDropdown("Decimal Places", DecimalPlaceEnum.FOUR.getDecimalPlaces())
-            .submit();
+            .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterialDisplayed("Finish Mass", "5.3095"), is(true));
         assertThat(evaluatePage.isMaterialDisplayed("Utilization", "81.1637"), is(true));
@@ -112,7 +113,7 @@ public class DecimalPlaceTests extends TestBase {
 
         evaluatePage.openSettings()
             .setDropdown("Decimal Places", DecimalPlaceEnum.ONE.getDecimalPlaces())
-            .submit();
+            .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterialDisplayed("Finish Mass","5.3"), is(true));
         assertThat(evaluatePage.isMaterialDisplayed("Utilization", "81.2"), is(true));
@@ -140,7 +141,7 @@ public class DecimalPlaceTests extends TestBase {
 
         evaluatePage.openSettings()
             .setDropdown("Decimal Places", DecimalPlaceEnum.FIVE.getDecimalPlaces())
-            .submit();
+            .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterialDisplayed("Finish Mass","5.30946"), is(true));
         assertThat(evaluatePage.isMaterialDisplayed("Utilization", "81.16369"), is(true));
