@@ -24,6 +24,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pageobjects.pages.view.reports.ScenarioComparisonReportPage;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

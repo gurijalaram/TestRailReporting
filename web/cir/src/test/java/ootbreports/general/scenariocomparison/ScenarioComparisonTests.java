@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -12,13 +14,12 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
-import inputcontrols.InputControlsTests;
+
+import com.inputcontrols.InputControlsTests;
+import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
-import navigation.CommonReportTests;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.pages.login.ReportsLoginPage;
-import pageobjects.pages.view.reports.GenericReportPage;
 import pageobjects.pages.view.reports.ScenarioComparisonReportPage;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 

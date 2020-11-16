@@ -1,6 +1,9 @@
 package pageobjects.pages.view.reports;
 
+import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
+import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +18,6 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
 
-    // elements go here
     @FindBy(xpath = "//span[contains(text(), 'FULLY')]/../following-sibling::td[2]")
     private WebElement firstFbc;
 
