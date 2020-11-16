@@ -2,13 +2,13 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import login.LoginTests;
-import navigation.ReportsNavigationTests;
-import ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
-import ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
-import ootbreports.dtcmetrics.casting.CastingDtcReportTests;
-import ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
-import ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
+import com.login.LoginTests;
+import com.navigation.ReportsNavigationTests;
+import com.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
+import com.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
+import com.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
+import com.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
+import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
