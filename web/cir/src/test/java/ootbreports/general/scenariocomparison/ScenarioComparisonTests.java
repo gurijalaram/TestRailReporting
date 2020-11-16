@@ -15,7 +15,6 @@ import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -28,7 +27,6 @@ import java.math.BigDecimal;
 public class ScenarioComparisonTests extends TestBase {
 
     private ScenarioComparisonReportPage scenarioComparisonReportPage;
-    private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
