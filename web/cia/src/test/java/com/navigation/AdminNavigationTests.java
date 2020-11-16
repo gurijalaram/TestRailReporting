@@ -100,8 +100,8 @@ public class AdminNavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         assertThat(ciaUserGuide.getTabCount(), is(2));
-        assertThat(currentUrl, is(containsString(utils.Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
-        assertThat(currentUrl, is(containsString(utils.Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
+        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
+        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
         assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
     }
 
