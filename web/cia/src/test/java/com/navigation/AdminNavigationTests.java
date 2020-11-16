@@ -85,8 +85,8 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToHelpAdminGuide();
 
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(utils.Constants.CIA_USER_GUIDE_TITLE)));
-        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(utils.Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
+        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
         assertThat(ciaUserGuide.getTabCount(), is(2));
     }
 
@@ -102,7 +102,7 @@ public class AdminNavigationTests extends TestBase {
         assertThat(ciaUserGuide.getTabCount(), is(2));
         assertThat(currentUrl, is(containsString(utils.Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
         assertThat(currentUrl, is(containsString(utils.Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(utils.Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
+        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
     }
 
     @Test
