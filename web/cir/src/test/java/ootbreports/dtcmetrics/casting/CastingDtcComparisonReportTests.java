@@ -168,9 +168,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
                 .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .setScenarioType(com.apriori.utils.constants.Constants.PART_SCENARIO_TYPE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();

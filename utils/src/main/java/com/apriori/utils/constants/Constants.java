@@ -36,7 +36,6 @@ public class Constants {
     public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
     public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
 
-
     public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
     public static final String FORGOT_PWD_MESSAGE = "If the supplied email address is valid, you will receive an " +
             "email shortly with instructions on resetting your password. If you did not receive an email and still " +
@@ -47,11 +46,6 @@ public class Constants {
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
-
-    public static final String DEFAULT_SCENARIO_NAME = "Initial";
-    public static final String PART_SCENARIO_TYPE = "Part";
-    public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
-    public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 

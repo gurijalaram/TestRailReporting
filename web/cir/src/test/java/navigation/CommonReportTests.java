@@ -20,6 +20,7 @@ import pageobjects.pages.login.ReportsLoginPage;
 import pageobjects.pages.userguides.CirUserGuidePage;
 import pageobjects.pages.view.ViewSearchResultsPage;
 import pageobjects.pages.view.reports.GenericReportPage;
+import utils.Constants;
 
 public class CommonReportTests extends TestBase {
 
@@ -221,9 +222,9 @@ public class CommonReportTests extends TestBase {
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
                 .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .setScenarioType(com.apriori.utils.constants.Constants.PART_SCENARIO_TYPE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();
@@ -271,9 +272,9 @@ public class CommonReportTests extends TestBase {
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
                 .filter()
                 .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .setScenarioType(com.apriori.utils.constants.Constants.PART_SCENARIO_TYPE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();

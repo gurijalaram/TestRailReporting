@@ -520,10 +520,10 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         ComponentsPage componentsPage = new ExplorePage(driver)
             .filter()
-            .setScenarioType(com.apriori.utils.constants.Constants.ASSEMBLY_SCENARIO_TYPE)
+            .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
             .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
             .setRowOne("Part Name", "Contains", Constants.PISTON_ASSEMBLY_CID_NAME)
-            .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
+            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
             .apply(ExplorePage.class)
             .openFirstScenario()
             .openComponentsTable()
@@ -762,10 +762,10 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(com.apriori.utils.constants.Constants.PART_SCENARIO_TYPE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
                 .setRowOne("Part Name", "Contains", reportsValues.get("Part Name"))
-                .setRowTwo("Scenario Name", "Contains", com.apriori.utils.constants.Constants.DEFAULT_SCENARIO_NAME)
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
