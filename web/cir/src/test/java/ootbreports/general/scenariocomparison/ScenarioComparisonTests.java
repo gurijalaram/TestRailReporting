@@ -47,7 +47,7 @@ public class ScenarioComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3245")
-    @Description("Validate report is available by navigation")
+    @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
@@ -55,13 +55,14 @@ public class ScenarioComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3245")
-    @Description("Validate report is available by navigation")
+    @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3246")
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -141,6 +142,7 @@ public class ScenarioComparisonTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectDefaultScenarioName();
 
+        scenarioComparisonReportPage.waitForScenarioFilter();
         String rowOneScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(1);
         String rowTwoScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(2);
 

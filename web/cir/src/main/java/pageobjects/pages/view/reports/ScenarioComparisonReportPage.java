@@ -52,6 +52,15 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
      * @return String
      */
     public String getScenariosToCompareName(int index) {
+        By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]", index));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("title");
+    }
+
+    /**
+     * Waits for scenario filter to take effect
+     */
+    public void waitForScenarioFilter() {
         for (int i = 1; i < 11; i++) {
             By locator = By.xpath(
                     String.format(
@@ -59,9 +68,5 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
             );
             pageUtils.waitForElementToAppear(locator);
         }
-
-        By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]", index));
-        pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(locator).getAttribute("title");
     }
 }
