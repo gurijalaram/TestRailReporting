@@ -2,11 +2,12 @@ package com.apriori.utils;
 
 import com.apriori.utils.enums.ProcessGroupEnum;
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +80,7 @@ public class FileResourceUtil {
         final String cloudFilePath = String.format("%s/%s/%s", workspaceName, processGroup.getProcessGroup(), fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, processGroup.getProcessGroup());
 
-        AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
+        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
         S3Object object = s3Client.getObject(new GetObjectRequest(S3_BUCKET_NAME, cloudFilePath));
 
         return copyIntoTempFile(object.getObjectContent(), localTempFolderPath, fileName);
