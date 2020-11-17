@@ -20,6 +20,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import pageobjects.pages.compare.ComparePage;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.evaluate.PublishPage;
 import pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
@@ -41,6 +42,7 @@ public class ActionsTests extends TestBase {
     private GenericHeader genericHeader;
     private AssignPage assignPage;
     private WarningPage warningPage;
+    private ComparePage comparePage;
 
     private File resourceFile;
 
@@ -564,5 +566,36 @@ public class ActionsTests extends TestBase {
                 .save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"436"})
+    @Description("In comparison view, the user can assign the currently open public comparison")
+    public void actionsAssignComparison() {
+
+        String testComparisonName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        scenarioNotesPage = genericHeader.publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+                .highlightComparison(testComparisonName)
+                .selectAssignScenario()
+                .selectAssignee("Nataliia Valieieva")
+                .update(ExplorePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .openComparison(testComparisonName)
+                .selectInfoNotes();
+
+        assertThat(scenarioNotesPage.isAssignee(), is("Nataliia Valieieva"));
     }
 }

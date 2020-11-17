@@ -69,9 +69,9 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
      *
      * @return new page object
      */
-    public EvaluatePage save() {
+    public <T> T save(Class <T> className) {
         pageUtils.waitForElementAndClick(saveButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

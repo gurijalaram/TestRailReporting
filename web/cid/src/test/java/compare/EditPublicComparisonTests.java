@@ -231,6 +231,7 @@ public class EditPublicComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"435"})
     @Description("In explore view, the user can lock and unlock the currently open public comparison")
     public void testLockUnlockPublishComparison() {

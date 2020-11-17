@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjects.common.ScenarioTablePage;
+import pageobjects.pages.evaluate.EvaluatePage;
+import pageobjects.pages.explore.ScenarioNotesPage;
 
 /**
  * @author cfrith
@@ -38,6 +40,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     @FindBy(css = "div[data-ap-comp='scenarioTiles'] div.v-grid-scroller-horizontal")
     private WebElement horizontalScroller;
+
+    @FindBy(css = "a.gwt-Anchor.comparison-table-header-scenario-state")
+    private WebElement infoNotes;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -162,4 +167,16 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     private By findBasisButton(String partName, String scenarioName) {
         return By.xpath(String.format("//div[@title='%s']/ancestor::th//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName.toUpperCase(), scenarioName));
     }
+
+    public EvaluatePage openScenarioFromComparison(String partName, String scenarioName){
+        By scenarioNameLink = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
+        driver.findElement(scenarioNameLink).click();
+        return new EvaluatePage(driver);
+    }
+
+    public ScenarioNotesPage selectInfoNotes() {
+        pageUtils.waitForElementToAppear(infoNotes).click();
+        return new ScenarioNotesPage(driver);
+    }
+
 }

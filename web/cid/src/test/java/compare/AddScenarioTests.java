@@ -21,8 +21,10 @@ import pageobjects.common.ScenarioTablePage;
 import pageobjects.pages.compare.ComparePage;
 import pageobjects.pages.evaluate.EvaluatePage;
 import pageobjects.pages.evaluate.PublishPage;
+import pageobjects.pages.evaluate.PublishWarningPage;
 import pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import pageobjects.pages.explore.ExplorePage;
+import pageobjects.pages.explore.ScenarioPage;
 import pageobjects.pages.login.CidLoginPage;
 import pageobjects.toolbars.GenericHeader;
 import testsuites.suiteinterface.SmokeTests;
@@ -163,5 +165,165 @@ public class AddScenarioTests extends TestBase {
         new ScenarioTablePage(driver).openComparison(testComparisonName);
 
         assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"416"})
+    @Description("User can create a new scenario of an existing comparison with a unique name")
+    public void createNewScenarioOfExistingComparison() {
+
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .highlightComparison(testComparisonName)
+                .createNewScenario()
+                .enterScenarioName(testScenarioName)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .setRowOne("Scenario Name", "Contains", testScenarioName)
+                .apply(ScenarioTablePage.class)
+                .openComparison(testComparisonName);
+
+        assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"417", "418"})
+    @Description("User can create a new scenario of an existing comparison using all available characters, with a very long name")
+    public void newCompScenarioAllCharactersLongName() {
+
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String testScenarioName = (new GenerateStringUtil().generateScenarioName() + "This is very long name of scenario" + "!£$%^&()_+{}~`1-=[]#';@");
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .highlightComparison(testComparisonName)
+                .createNewScenario()
+                .enterScenarioName(testScenarioName)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .setRowOne("Scenario Name", "Contains", testScenarioName)
+                .apply(ScenarioTablePage.class)
+                .openComparison(testComparisonName);
+
+        assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"441"})
+    @Description("In comparison view, user can access any scenario included in the comparison")
+    public void accessScenarioIncludedInComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"1027312-101-A1333.stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String testAssemblyName = "1027312-101-A1333";
+        String partName = "1027311-001";
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Assembly")
+                .setRowOne("Part Name", "Contains", testAssemblyName)
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(scenarioName, testAssemblyName)
+                .apply(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", partName)
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(scenarioName, partName)
+                .apply(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        evaluatePage = genericHeader.publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .openComparison(testComparisonName)
+                .openScenarioFromComparison(partName, scenarioName);
+
+        assertThat(evaluatePage.getCurrentScenarioName(scenarioName), is(true));
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Assembly")
+                .setRowOne("Part Name", "Contains", testAssemblyName)
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(scenarioName, testAssemblyName)
+                .apply(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", partName)
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(scenarioName, partName)
+                .apply(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        evaluatePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .apply(ExplorePage.class)
+                .openComparison(testComparisonName)
+                .openScenarioFromComparison(partName, scenarioName);
+
+        assertThat(evaluatePage.getCurrentScenarioName(scenarioName), is(true));
     }
 }

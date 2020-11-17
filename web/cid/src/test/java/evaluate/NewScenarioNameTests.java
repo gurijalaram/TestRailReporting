@@ -51,7 +51,7 @@ public class NewScenarioNameTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .createNewScenario()
             .enterScenarioName(testScenarioName)
-            .save();
+            .save(EvaluatePage.class);
 
         assertThat(evaluatePage.getCurrentScenarioName(testScenarioName), is(true));
     }
@@ -83,7 +83,7 @@ public class NewScenarioNameTests extends TestBase {
         explorePage = new ExplorePage(driver);
         evaluatePage = explorePage.createNewScenario()
             .enterScenarioName(testNewScenarioName)
-            .save();
+            .save(EvaluatePage.class);
 
         assertThat(evaluatePage.getCurrentScenarioName(testNewScenarioName), is(true));
     }
