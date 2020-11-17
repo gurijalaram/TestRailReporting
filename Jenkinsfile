@@ -92,10 +92,12 @@ pipeline {
             }
         }
         stage("Test") {
-            withCredentials([string(credentialsId: 'aws_secret_access_key', variable: 'AWS_CONFIG_SECRET_TXT'), file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
-            }
             steps {
                 echo "Running.."
+
+                withCredentials([string(credentialsId: 'aws_secret_access_key', variable: 'AWS_CONFIG_SECRET_TXT'), file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
+                }
+
                 sh """
                     docker run \
                         -itd \
