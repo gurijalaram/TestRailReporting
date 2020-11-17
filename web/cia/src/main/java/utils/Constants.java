@@ -1,6 +1,6 @@
 package utils;
 
-public class Constants extends com.apriori.utils.constants.Constants {
+public class Constants {
 
     public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
     public static final String CIA_USER_GUIDE_URL_SUBSTRING = "CI_ADMIN_USER_GUIDE";
