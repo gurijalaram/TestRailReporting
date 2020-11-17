@@ -68,5 +68,6 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
             );
             pageUtils.waitForElementToAppear(locator);
         }
+        pageUtils.waitFor(1000);
     }
 }
