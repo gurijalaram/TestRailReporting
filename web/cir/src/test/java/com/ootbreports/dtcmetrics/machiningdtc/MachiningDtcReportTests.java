@@ -25,7 +25,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import utils.Constants;
 
 public class MachiningDtcReportTests extends TestBase {
 

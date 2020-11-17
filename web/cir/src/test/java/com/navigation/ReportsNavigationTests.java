@@ -29,7 +29,7 @@ import com.pageobjects.pages.login.PrivacyPolicyPage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import utils.Constants;
 
 public class ReportsNavigationTests extends TestBase {
 
