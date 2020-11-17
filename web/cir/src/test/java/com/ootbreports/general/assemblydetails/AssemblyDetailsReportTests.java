@@ -30,7 +30,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 
 import java.math.BigDecimal;
@@ -53,31 +52,28 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuAssemblyCostA4() {
+    public void testReportAvailabilityByMenuComponentCost() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-            Constants.GENERAL_FOLDER,
-            ReportNamesEnum.ASSEMBLY_COST_A4.getReportName()
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.COMPONENT_COST.getReportName()
         );
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuAssemblyCostLetter() {
+    public void testReportAvailabilityByMenuScenarioComparison() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-            Constants.GENERAL_FOLDER,
-            ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName()
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
         );
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyDetails() {
@@ -89,58 +85,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuComponentCost() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-            Constants.GENERAL_FOLDER,
-            ReportNamesEnum.COMPONENT_COST.getReportName()
-        );
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-            Constants.GENERAL_FOLDER,
-            ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
-        );
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryAssemblyCostA4() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryAssemblyCostLetter() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryAssemblyDetails() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
-    }
-
-    @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryComponentCost() {
@@ -149,7 +93,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryScenarioComparison() {
@@ -158,27 +101,11 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchAssemblyCostA4() {
+    @TestRail(testCaseId = "3060")
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibraryAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchAssemblyCostLetter() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchAssemblyDetails() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
     }
 
     @Test
@@ -198,7 +125,15 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class, CIARStagingSmokeTest.class})
+    @TestRail(testCaseId = "1916")
+    @Description("Validate report is available by search")
+    public void testReportAvailableBySearchAssemblyDetails() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+    }
+
+    @Test
+    @Category(CustomerSmokeTests.class)
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -778,6 +713,32 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(reportsValues.get("Piece Part Cost"), is(cidValues.get("Piece Part Cost")));
         assertThat(reportsValues.get("Fully Burdened Cost"), is(cidValues.get("Fully Burdened Cost")));
         assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1928")
+    @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
+    public void testLevelsInsideBOM() {
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        ArrayList<BigDecimal> levelValues =
+                assemblyDetailsReportPage.getLevelValues(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType());
+
+        assertThat(levelValues.isEmpty(), is(false));
+        for (int i = 0; i < 7; i++) {
+            assertThat(levelValues.get(i).compareTo(new BigDecimal("1")), is(0));
+        }
+
+        for (int i = 7; i < 10; i++) {
+            assertThat(levelValues.get(i).compareTo(new BigDecimal("2")), is(0));
+        }
     }
 
     @Test
