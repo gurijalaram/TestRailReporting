@@ -113,12 +113,13 @@ pipeline {
                 echo "Running.."
 
                 withCredentials([
-                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
-                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                        file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
+                        file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
                     sh """
                     docker run \
-                        -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-                        -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+                        -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
+                        -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
+                        -e AWS_PROFILE='development' \
                         -e AWS_DEFAULT_REGION='us-east-1' \
                         -itd \
                         --name ${buildInfo.name}-build-${timeStamp} \
