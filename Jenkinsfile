@@ -115,15 +115,11 @@ pipeline {
                 withCredentials([
                         file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
                         file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')])
-                sh """
-                docker run \
-                    -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
-                    -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
-                    amazon/aws-cli sts get-caller-identity --output text --query Account
-                """
 
                 sh """
                     docker run \
+                        -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
+                        -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
                         -itd \
                         --name ${buildInfo.name}-build-${timeStamp} \
                         ${buildInfo.name}-build-${timeStamp}:latest
