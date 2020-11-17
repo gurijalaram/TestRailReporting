@@ -119,6 +119,8 @@ pipeline {
                     docker run \
                         -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
                         -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
+                        -e AWS_PROFILE='development' \
+                        -e AWS_DEFAULT_REGION='us-east-1' \
                         -itd \
                         --name ${buildInfo.name}-build-${timeStamp} \
                         ${buildInfo.name}-build-${timeStamp}:latest
