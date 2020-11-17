@@ -64,10 +64,9 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         for (int i = 1; i < 11; i++) {
             By locator = By.xpath(
                     String.format(
-                            "(//div[@title='Scenarios to Compare']//ul)[1]/li[%s and contains(@title, '(Initial)')]", i)
+                            "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, 'Initial')])[%s]", i)
             );
             pageUtils.waitForElementToAppear(locator);
         }
-        pageUtils.waitFor(1000);
     }
 }
