@@ -484,7 +484,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
-        String inputString = "Ben Hegan";
+        String inputString = reportName.equals(ReportNamesEnum.SCENARIO_COMPARISON.getReportName()) ? "bhegan" : "Ben Hegan";
 
         genericReportPage.searchListForName(listName, inputString);
         assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
@@ -505,7 +505,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
-        String nameToSelect = "Ben Hegan";
+        String nameToSelect = reportName.equals(ReportNamesEnum.SCENARIO_COMPARISON.getReportName()) ? "bhegan" : "Ben Hegan";
         String lastModifiedByAvailable = genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
         genericReportPage.selectListItem(listName, nameToSelect);
 

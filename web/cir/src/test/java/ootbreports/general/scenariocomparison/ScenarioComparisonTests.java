@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
@@ -15,6 +16,7 @@ import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -27,6 +29,7 @@ import java.math.BigDecimal;
 public class ScenarioComparisonTests extends TestBase {
 
     private ScenarioComparisonReportPage scenarioComparisonReportPage;
+    private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
@@ -129,7 +132,6 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3249")
     @Description("Verfiy scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -149,5 +151,75 @@ public class ScenarioComparisonTests extends TestBase {
 
         assertThat(rowTwoScenarioName.isEmpty(), is(false));
         assertThat(rowTwoScenarioName.contains(Constants.DEFAULT_SCENARIO_NAME), is(true));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testLastModifiedByFilterSearch() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testLastModifiedByFilterOperation() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterOperation(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testLastModifiedByFilterButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testCreatedByFilterSearch() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testCreatedByFilterOperation() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterOperation(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testCreatedByFilterButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
     }
 }
