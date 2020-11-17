@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class ViewRepositoryPage extends ReportsPageHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewRepositoryPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
 
     private Map<String, WebElement> folderElementMap = new HashMap<>();
     private Map<String, WebElement> reportElementMap = new HashMap<>();
@@ -84,7 +84,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseFolderMap();
         initialiseReportMap();

@@ -145,7 +145,6 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
@@ -166,14 +165,14 @@ public class CastingDtcComparisonReportTests extends TestBase {
         genericReportPage.openNewCidTabAndFocus(2);
 
         DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-                .filter()
-                .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-                .apply(ExplorePage.class)
-                .openFirstScenario()
-                .openDesignGuidance();
+            .filter()
+            .setWorkspace(Constants.PUBLIC_WORKSPACE)
+            .setScenarioType(Constants.PART_SCENARIO_TYPE)
+            .setRowOne("Part Name", "Contains", partName)
+            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+            .apply(ExplorePage.class)
+            .openFirstScenario()
+            .openDesignGuidance();
 
         String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
 
