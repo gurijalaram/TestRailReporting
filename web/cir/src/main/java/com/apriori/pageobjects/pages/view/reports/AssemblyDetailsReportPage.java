@@ -80,9 +80,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Generic method to get specific value from an Assembly Details Report table
      *
-     * @param assemblyType
-     * @param rowName
-     * @param columnName
+     * @param assemblyType String
+     * @param rowName String
+     * @param columnName String
      * @return BigDecimal
      */
     public BigDecimal getValueFromTable(String assemblyType, String rowName, String columnName) {
@@ -103,49 +103,54 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Generic method to get values in a given column
      *
-     * @param assemblyType
-     * @param columnName
+     * @param assemblyType String
+     * @param columnName String
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getValuesByColumn(String assemblyType, String columnName) {
         Document assemblyDetailsReport = parsePageSetCss(assemblyType, "", columnName);
         List<Element> valueElements = assemblyDetailsReport.select(cssSelector);
 
-        return IntStream.range(0, valueElements.size()).filter(i -> isValueValid(valueElements.get(i).text()) || columnName.equals("Cycle Time") && i <= (valueElements.size() - 2))
-            .mapToObj(i -> new BigDecimal(valueElements.get(i).text().replaceAll(",", ""))).collect(Collectors.toCollection(ArrayList::new));
+        return IntStream.range(0, valueElements.size()).filter(i -> isValueValid(valueElements.get(i).text()) ||
+                columnName.equals("Cycle Time") && i <= (valueElements.size() - 2))
+            .mapToObj(i -> new BigDecimal(valueElements.get(i).text().replaceAll(",", "")))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
      * Gets quantities that are blank and returns them as 0
      *
-     * @param assemblyType
-     * @param columnName
+     * @param assemblyType String
+     * @param columnName String
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getEmptyQuantities(String assemblyType, String columnName) {
         Document assemblyDetailsReport = parsePageSetCss(assemblyType, "", columnName);
         List<Element> elementList = assemblyDetailsReport.select(cssSelector);
 
-        return IntStream.range(0, elementList.size()).mapToObj(i -> new BigDecimal("0")).collect(Collectors.toCollection(ArrayList::new));
+        return IntStream.range(0, elementList.size()).mapToObj(i -> new BigDecimal("0"))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
      * Gets all level values
      *
-     * @param assemblyType
+     * @param assemblyType String
      * @return ArrayList of BigDecimals
      */
     public ArrayList<BigDecimal> getLevelValues(String assemblyType) {
         Document assemblyDetailsReport = parsePageSetCss(assemblyType, "", "Level");
-        return assemblyDetailsReport.select(cssSelector).stream().filter(element -> isValueValid(element.text())).map(element -> new BigDecimal(element.text().replace(".", ""))).collect(Collectors.toCollection(ArrayList::new));
+        return assemblyDetailsReport.select(cssSelector).stream().filter(element -> isValueValid(element.text()))
+                .map(element -> new BigDecimal(element.text().replace(".", "")))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 
     /**
      * Gets expected Cycle Time grand total
      *
-     * @param assemblyType
-     * @param columnName
+     * @param assemblyType String
+     * @param columnName String
      * @return BigDecimal
      */
     public BigDecimal getExpectedCTGrandTotal(String assemblyType, String columnName) {
@@ -169,6 +174,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Gets expected Fully Burdened Cost/Piece Part Cost grand total
      *
+     * @param assemblyType String
+     * @param columnName String
      * @return BigDecimal
      */
     public BigDecimal getExpectedFbcPpcGrandTotal(String assemblyType, String columnName) {
@@ -187,6 +194,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Gets expected Capital Investment grand total
      *
+     * @param assemblyType String
+     * @param columnName String
      * @return BigDecimal
      */
     public BigDecimal getExpectedCIGrandTotal(String assemblyType, String columnName) {
@@ -221,15 +230,36 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Ensures two values are almost near (within 0.03)
      *
-     * @param valueOne
-     * @param valueTwo
+     * @param valueOne BigDecimal
+     * @param valueTwo BigDecimal
      * @return boolean
      */
     public boolean areValuesAlmostEqual(BigDecimal valueOne, BigDecimal valueTwo) {
         BigDecimal largerValue = valueOne.max(valueTwo);
         BigDecimal smallerValue = valueOne.min(valueTwo);
         BigDecimal difference = largerValue.subtract(smallerValue);
-        return difference.compareTo(new BigDecimal("0.00")) >= 0 && difference.compareTo(new BigDecimal("0.03")) <= 0;
+        return difference.compareTo(new BigDecimal("0.00")) >= 0 &&
+                difference.compareTo(new BigDecimal("0.03")) <= 0;
+    }
+
+    /**
+     * Gets sub total of values to add
+     *
+     * @param assemblyType String
+     * @param column String
+     * @return Array List of BigDecimals
+     */
+    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
+        ArrayList<BigDecimal> returnValues = new ArrayList<>();
+
+        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
+        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
+        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
+        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
+
+        returnValues.add(expectedTotal);
+        returnValues.add(actualTotal);
+        return returnValues;
     }
 
     /**
@@ -318,7 +348,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Gets all part numbers
      *
-     * @param assemblyType
+     * @param assemblyType String
      * @return List of Strings
      */
     private List<String> checkPartNumber(String assemblyType) {
@@ -328,7 +358,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         ArrayList<String> secondaryPartNums;
 
         if (assemblyType.equals(AssemblyTypeEnum.TOP_LEVEL.getAssemblyType())) {
-            mainPartNums = assemblyDetailsReport.select(cssSelector).stream().filter(element -> !element.text().isEmpty() && !element.text().equals("Part Number")
+            mainPartNums = assemblyDetailsReport.select(cssSelector).stream()
+                    .filter(element -> !element.text().isEmpty() && !element.text().equals("Part Number")
                 && !element.text().equals("GRAND TOTAL")).map(Element::text).collect(Collectors.toList());
         } else {
             for (Element element : assemblyDetailsReport.select(cssSelector)) {
@@ -342,8 +373,10 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
         // Gets secondary part numbers and integrates them into the list
         setCssLocator(assemblyType, "", "Part Number Secondary");
-        secondaryPartNums = assemblyDetailsReport.select(cssSelector).stream().filter(element -> element.text().replace(" ", "").chars().allMatch(Character::isLetter) &&
-            element.text().equals("Assembly Process")).map(Element::text).collect(Collectors.toCollection(ArrayList::new));
+        secondaryPartNums = assemblyDetailsReport.select(cssSelector).stream().filter(element -> element.text()
+                .replace(" ", "").chars().allMatch(Character::isLetter) &&
+            element.text().equals("Assembly Process")).map(Element::text)
+                .collect(Collectors.toCollection(ArrayList::new));
 
         mainPartNums.add(0, secondaryPartNums.get(0));
         if (assemblyType.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType())) {
@@ -359,8 +392,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Generic method to get expected total of a certain column
      *
-     * @param assemblyType
-     * @param columnName
+     * @param assemblyType String
+     * @param columnName String
      * @return BigDecimal
      */
     private List<BigDecimal> getColumnValuesForSum(String assemblyType, String columnName) {
@@ -389,54 +422,61 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Gets Cycle Time values for Sub Assembly grand total
      *
-     * @param assemblyType
-     * @param values
+     * @param assemblyType String
+     * @param values String
      * @return List of BigDecimals
      */
     private List<BigDecimal> checkCTSubAssemblyValues(String assemblyType, List<BigDecimal> values) {
         List<BigDecimal> levelValues = getLevelValues(assemblyType);
-        return IntStream.range(0, levelValues.size()).filter(i -> levelValues.get(i).compareTo(new BigDecimal("1")) == 0).filter(i -> values.get(i)
+        return IntStream.range(0, levelValues.size()).filter(i -> levelValues.get(i)
+                .compareTo(new BigDecimal("1")) == 0).filter(i -> values.get(i)
             .compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
      * Gets Cycle Time values for Sub-Sub-Assembly grand total
      *
-     * @param assemblyType
-     * @param levels
-     * @param values
+     * @param assemblyType String
+     * @param levels String
+     * @param values String
      * @return List of BigDecimals
      */
-    private List<BigDecimal> checkCTSubSubAsmValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+    private List<BigDecimal> checkCTSubSubAsmValues(String assemblyType, List<BigDecimal> levels,
+                                                    List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0)
+                .mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
      * Gets Cycle Time values for Top Level grand total
      *
-     * @param assemblyType
-     * @param levels
-     * @param values
+     * @param assemblyType String
+     * @param levels String
+     * @param values String
      * @return List of BigDecimals
      */
-    private List<BigDecimal> checkCTTopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+    private List<BigDecimal> checkCTTopLevelValues(String assemblyType, List<BigDecimal> levels,
+                                                   List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).chars().allMatch(Character::isDigit) || partNums.get(i).equals("Assembly Process") ||
-            partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i)
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).chars().allMatch(Character::isDigit) ||
+                partNums.get(i).equals("Assembly Process") ||
+            partNums.get(i).equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase()
+                    .replace(" ", "-"))).filter(i -> levels.get(i)
             .compareTo(new BigDecimal("1")) == 0).mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
      * Gets Piece Part Cost values for Sub Assembly grand total
      *
-     * @param assemblyType
-     * @param levels
-     * @param values
-     * @param quantities
-     * @return
+     * @param assemblyType String
+     * @param levels List of BigDecimals
+     * @param values List of BigDecimals
+     * @param quantities List of BigDecimals
+     * @return List of BigDecimals
      */
-    private List<BigDecimal> checkPPCValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values, List<BigDecimal> quantities) {
+    private List<BigDecimal> checkPPCValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values,
+                                            List<BigDecimal> quantities) {
         List<String> partNums = checkPartNumber(assemblyType);
         List<BigDecimal> trimmedValues = new ArrayList<>();
 
@@ -444,62 +484,71 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
             refinedQuantities.clear();
         }
 
-        IntStream.range(0, partNums.size()).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).forEach(i -> {
-            trimmedValues.add(values.get(i));
-            refinedQuantities.add(quantities.get(i));
-        });
+        IntStream.range(0, partNums.size()).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 &&
+                values.get(i).compareTo(new BigDecimal("0.00")) != 0).forEach(i -> {
+                    trimmedValues.add(values.get(i));
+                    refinedQuantities.add(quantities.get(i));
+                });
         return trimmedValues;
     }
 
     /**
      * Gets Capital Investment values for Sub Assembly grand total
      *
-     * @param assemblyType
-     * @param levels
-     * @param values
+     * @param assemblyType String
+     * @param levels List of BigDecimals
+     * @param values List of BigDecimals
      * @return List of BigDecimals
      */
-    private List<BigDecimal> checkCISubAssemblyValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+    private List<BigDecimal> checkCISubAssemblyValues(String assemblyType, List<BigDecimal> levels,
+                                                      List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i)
-            .equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType().toUpperCase().replace(" ", "-"))).filter(i -> levels.get(i)
-            .compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") ||
+                partNums.get(i).equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType().toUpperCase()
+                    .replace(" ", "-"))).filter(i -> levels.get(i)
+                    .compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0)
+                    .mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
      * Gets Capital Investment values for Sub-Sub-Assembly grand total
      *
-     * @param assemblyType
-     * @param levels
-     * @param values
+     * @param assemblyType String
+     * @param levels List of BigDecimals
+     * @param values List of BigDecimals
      * @return List of BigDecimals
      */
-    private List<BigDecimal> checkCISubSubAsmValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+    private List<BigDecimal> checkCISubSubAsmValues(String assemblyType, List<BigDecimal> levels,
+                                                    List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i)
-            .compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get).collect(Collectors.toList());
+        return IntStream.range(0, partNums.size()).filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 &&
+                values.get(i).compareTo(new BigDecimal("0.00")) != 0).mapToObj(values::get)
+                .collect(Collectors.toList());
     }
 
     /**
      * Gets Capital Investment values for Top Level grand total
      *
-     * @param assemblyType
-     * @param levels
-     * @param values
+     * @param assemblyType String
+     * @param levels List of BigDecimals
+     * @param values List of BigDecimals
      * @return List of BigDecimals
      */
-    private List<BigDecimal> checkCITopLevelValues(String assemblyType, List<BigDecimal> levels, List<BigDecimal> values) {
+    private List<BigDecimal> checkCITopLevelValues(String assemblyType, List<BigDecimal> levels,
+                                                   List<BigDecimal> values) {
         List<String> partNums = checkPartNumber(assemblyType);
-        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") || partNums.get(i)
+        return IntStream.range(0, partNums.size()).filter(i -> partNums.get(i).equals("Assembly Process") ||
+                partNums.get(i)
             .equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType().toUpperCase().replace(" ", "-")))
-            .filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(new BigDecimal("0.00")) != 0)
+            .filter(i -> levels.get(i).compareTo(new BigDecimal("1")) == 0 && values.get(i).compareTo(
+                    new BigDecimal("0.00")) != 0)
             .mapToObj(values::get).collect(Collectors.toList());
     }
 
     /**
      * Gets quantity list, trims it to size and multiplies by value where necessary
      *
-     * @param assemblyType
+     * @param assemblyType String
      * @return List of BigDecimals
      */
     private List<BigDecimal> checkQuantityList(String assemblyType) {
@@ -521,7 +570,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Applies quantities to values (final stage before sum, usually)
      *
-     * @param values
+     * @param values List of BigDecimals
      * @return List of BigDecimals
      */
     private List<BigDecimal> applyQuantities(List<BigDecimal> values) {
@@ -542,7 +591,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Checks if value of current cell is a valid one
      *
-     * @param valueToCheck
+     * @param valueToCheck String
      * @return boolean
      */
     private boolean isValueValid(String valueToCheck) {
@@ -568,9 +617,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Returns parsed markup of page and sets the CSS Locator
      *
-     * @param assemblyType
-     * @param rowIndex
-     * @param columnName
+     * @param assemblyType String
+     * @param rowIndex String
+     * @param columnName String
      * @return Document (jsoup)
      */
     private Document parsePageSetCss(String assemblyType, String rowIndex, String columnName) {
@@ -581,9 +630,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     /**
      * Sets css locator based on parameters
      *
-     * @param assemblyType
-     * @param rowIndex
-     * @param columnName
+     * @param assemblyType String
+     * @param rowIndex String
+     * @param columnName String
      */
     private void setCssLocator(String assemblyType, String rowIndex, String columnName) {
         String columnSelector;
@@ -600,13 +649,16 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         columnSelector = genericColumnMap.get(columnName);
 
         if (!rowIndex.isEmpty()) {
-            String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s span";
+            String baseCssSelector =
+                    "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table %s %s span";
             cssSelector = String.format(baseCssSelector, rowSelector, columnSelector);
         } else if (columnName.equals("Part Number Main")) {
-            String baseCssSelectorNoRowSpecified = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span span";
+            String baseCssSelectorNoRowSpecified =
+                    "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span span";
             cssSelector = String.format(baseCssSelectorNoRowSpecified, columnSelector);
         } else {
-            String baseCssSelectorNoRowSpecified = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span";
+            String baseCssSelectorNoRowSpecified =
+                    "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr %s span";
             cssSelector = String.format(baseCssSelectorNoRowSpecified, columnSelector);
         }
     }

@@ -14,7 +14,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 import testsuites.suiteinterface.OnPremTest;
 
 public class LoginTests extends TestBase {
@@ -27,8 +26,8 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category({OnPremTest.class, CIARStagingSmokeTest.class})
-    @TestRail(testCaseId = {"2695"})
+    @Category(OnPremTest.class)
+    @TestRail(testCaseId = "2695")
     @Description("Successful login to CI Report")
     public void testLogin() {
         reportsPageHeader = new ReportsLoginPage(driver)
@@ -38,7 +37,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category({OnPremTest.class, CIARStagingSmokeTest.class})
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "2696")
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
@@ -49,6 +48,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
+	@Category(OnPremTest.class)
     @TestRail(testCaseId = "2697")
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
@@ -71,6 +71,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
+	@Category(OnPremTest.class)
     @TestRail(testCaseId = "2699")
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {

@@ -60,6 +60,9 @@ public class EvaluatePage extends EvaluateHeader {
     @FindBy(css = "[data-ap-comp='scenarioKey'] .pull-left .filter-option-text")
     private WebElement scenarioDropdown;
 
+    @FindBy(xpath = "(//td[@data-ap-comp='scenarioKey'])[2]//span[@class='filter-option-text']")
+    private WebElement scenarioName;
+
     @FindBy(css = "a[data-ap-nav-viewport='showInputDetails']")
     private WebElement moreInputs;
 
@@ -104,6 +107,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "a[data-ap-nav-viewport='showCostResultDetails']")
     private WebElement resultsDetails;
+
+    @FindBy(css = "a[data-ap-nav-viewport='showAssemblyCostResultDetails']")
+    private WebElement assemblyResultsDetails;
 
     @FindBy(css = "td[data-ap-field='failuresWarningsCount']")
     private WebElement warningsCount;
@@ -315,6 +321,16 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
+     * Opens the Cost Result Panel for an Assembly
+     *
+     * @return new page object
+     */
+    public CostDetailsPage openAssemblyCostDetails() {
+        pageUtils.waitForElementAndClick(assemblyResultsDetails);
+        return new CostDetailsPage(driver);
+    }
+
+    /**
      * Gets the process routing details
      *
      * @return the details as string
@@ -404,6 +420,16 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean getCurrentScenarioName(String text) {
         return pageUtils.textPresentInElement(scenarioDropdown, text);
+    }
+
+    /**
+     * Gets Scenario Name
+     *
+     * @return String
+     */
+    public String getScenarioName() {
+        pageUtils.waitForElementToAppear(scenarioName);
+        return scenarioName.getText();
     }
 
     /**
