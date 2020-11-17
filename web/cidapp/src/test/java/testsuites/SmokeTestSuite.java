@@ -2,14 +2,12 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import evaluate.CostAllCadTests;
-import evaluate.CostScenarioTests;
-import explore.UploadComponentTests;
-import login.LoginTests;
-import org.junit.experimental.categories.Categories;
+import com.evaluate.CostAllCadTests;
+import com.evaluate.CostScenarioTests;
+import com.explore.UploadComponentTests;
+import com.login.LoginTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuites.suiteinterface.SmokeTests;
 
 //TODO: add project ID for TestRail
 //@ProjectRunID("999")

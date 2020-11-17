@@ -2,11 +2,11 @@ package testsuites;
 
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import login.LoginTests;
-import navbar.NavBarTests;
+import com.login.LoginTests;
+import com.navbar.NavBarTests;
+import com.workflow.WorkflowTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import workflow.WorkflowTests;
 
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
