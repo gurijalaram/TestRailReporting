@@ -62,7 +62,6 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3246")
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -95,7 +94,6 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3305")
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
