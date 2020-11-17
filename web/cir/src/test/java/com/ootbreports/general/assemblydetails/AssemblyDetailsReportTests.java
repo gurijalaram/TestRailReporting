@@ -30,7 +30,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.OnPremTest;
 
 import java.math.BigDecimal;
@@ -90,30 +89,6 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuComponentCost() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-            Constants.GENERAL_FOLDER,
-            ReportNamesEnum.COMPONENT_COST.getReportName()
-        );
-    }
-
-    @Test
-    @Category(OnPremTest.class)
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-            Constants.GENERAL_FOLDER,
-            ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
-        );
-    }
-
-    @Test
-    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryComponentCost() {
@@ -141,24 +116,6 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryComponentCost() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.COMPONENT_COST.getReportName());
-    }
-
-    @Test
-    @Category({CIARStagingSmokeTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
-    }
-
-    @Test
-    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchComponentCost() {
@@ -182,24 +139,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testReportAvailableBySearchAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
-    }
-
-    @Test
-    @Category(OnPremTest.class)
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchComponentCost() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());
-    }
-
-    @Test
-    @Category(OnPremTest.class)
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
     }
 
     @Test
@@ -356,7 +295,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({CIARStagingSmokeTest.class, OnPremTest.class})
+    @Category(OnPremTest.class)
     @Issue("AP-58059")
     @Issue("AP-53537")
     @TestRail(testCaseId = {"1934", "1929"})
@@ -833,7 +772,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-	@Category(OnPremTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1933")
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {

@@ -14,6 +14,7 @@ import com.ootbreports.dtcmetrics.plastic.PlasticDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.plastic.PlasticDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.plastic.PlasticDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
+import ootbreports.general.assemblycost.AssemblyCostTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -22,18 +23,19 @@ import testsuites.suiteinterface.OnPremTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(OnPremTest.class)
 @Suite.SuiteClasses({
-        ReportsNavigationTests.class,
-        LoginTests.class,
         AssemblyDetailsReportTests.class,
+        AssemblyCostTests.class,
         CastingDtcReportTests.class,
         CastingDtcDetailsReportTests.class,
         CastingDtcComparisonReportTests.class,
+        LoginTests.class,
         MachiningDtcReportTests.class,
         MachiningDtcDetailsReportTests.class,
         MachiningDtcComparisonReportTests.class,
         PlasticDtcReportTests.class,
         PlasticDtcDetailsReportTests.class,
-        PlasticDtcComparisonReportTests.class
+        PlasticDtcComparisonReportTests.class,
+        ReportsNavigationTests.class
 })
 
 public class OnPremCirSuite {

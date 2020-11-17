@@ -48,7 +48,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-	@Category(OnPremTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "2697")
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
@@ -71,7 +71,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-	@Category(OnPremTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "2699")
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {

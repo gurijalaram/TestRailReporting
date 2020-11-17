@@ -6,7 +6,6 @@ import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.junit.internal.Checks;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -299,26 +298,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForSteadinessOfElement(locator);
         return driver.findElement(locator).getText();
-    }
-
-    /**
-     * Gets sub total of values to add
-     *
-     * @param assemblyType
-     * @param column
-     * @return Array List of BigDecimals
-     */
-    public ArrayList<BigDecimal> getSubTotalAdditionValue(String assemblyType, String column) {
-        ArrayList<BigDecimal> returnValues = new ArrayList<>();
-
-        BigDecimal subTotal = getValueFromTable(assemblyType, "Component Subtotal", column + " Sub");
-        BigDecimal assemblyProcesses = getValueFromTable(assemblyType, "Assembly Processes", column);
-        BigDecimal expectedTotal = subTotal.add(assemblyProcesses);
-        BigDecimal actualTotal = getValueFromTable(assemblyType, "Grand Total", column);
-
-        returnValues.add(expectedTotal);
-        returnValues.add(actualTotal);
-        return returnValues;
     }
 
     /**

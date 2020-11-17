@@ -26,7 +26,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.pageobjects.pages.login.PrivacyPolicyPage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;

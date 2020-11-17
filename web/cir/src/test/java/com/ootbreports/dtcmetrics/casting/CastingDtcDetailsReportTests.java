@@ -112,7 +112,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({OnPremTest.class, CIARStagingSmokeTest.class})
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC Details input control panel works")
     public void testResetButton() {
@@ -124,7 +124,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({CIARStagingSmokeTest.class, OnPremTest.class})
+    @Category(OnPremTest.class)
     @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC Details input control panel functions correctly")

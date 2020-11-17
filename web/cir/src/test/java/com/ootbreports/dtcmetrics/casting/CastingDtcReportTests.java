@@ -92,7 +92,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({OnPremTest.class, CIARStagingSmokeTest.class})
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -126,7 +126,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({OnPremTest.class, CIARStagingSmokeTest.class})
+    @Category(OnPremTest.class)
     @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC input control panel functions correctly")
