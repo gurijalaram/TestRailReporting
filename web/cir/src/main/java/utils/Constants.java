@@ -12,6 +12,8 @@ public class Constants {
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
     public static final String DTC_METRICS_FOLDER = "DTC Metrics";
     public static final String GENERAL_FOLDER = "General";
+    public static final String PUBLIC_WORKSPACE = "Public";
+    public static final String PRIVATE_WORKSPACE = "Private";
     public static final String ASSEMBLY_STRING = "[assembly]";
     public static final String PART_NAME_INITIAL_EXPECTED_MACHINING_DTC = "PMI_SYMMETRYCREO (Initial) ";
     public static final String PART_NAME_EXPECTED_MACHINING_DTC = "PMI_FLATNESSCREO (Initial)";

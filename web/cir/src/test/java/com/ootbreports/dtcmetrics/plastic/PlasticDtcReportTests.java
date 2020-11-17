@@ -10,7 +10,6 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -176,7 +175,7 @@ public class PlasticDtcReportTests extends TestBase {
         EvaluatePage evaluatePage = new ExplorePage(driver)
             .filter()
             .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .setWorkspace(Constants.PUBLIC_WORKSPACE)
             .setRowOne("Part Name", "Contains", partName)
             .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
             .apply(ExplorePage.class)

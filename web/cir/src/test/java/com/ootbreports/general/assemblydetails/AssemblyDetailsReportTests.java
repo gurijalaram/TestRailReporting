@@ -13,7 +13,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -521,7 +520,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         ComponentsPage componentsPage = new ExplorePage(driver)
             .filter()
             .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
-            .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .setWorkspace(Constants.PUBLIC_WORKSPACE)
             .setRowOne("Part Name", "Contains", Constants.PISTON_ASSEMBLY_CID_NAME)
             .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
             .apply(ExplorePage.class)
@@ -763,7 +762,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
                 .setRowOne("Part Name", "Contains", reportsValues.get("Part Name"))
                 .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
