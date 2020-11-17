@@ -13,16 +13,23 @@ import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.pageobjects.pages.evaluate.CostDetailsPage;
+import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import org.openqa.selenium.WebDriver;
+import pageobjects.pages.view.reports.AssemblyCostReportPage;
+
+import java.util.ArrayList;
 
 public class CommonReportTests extends TestBase {
 
+    private AssemblyCostReportPage assemblyCostReportPage;
     private ViewSearchResultsPage viewSearchResultsPage;
     private GenericReportPage genericReportPage;
     private ReportsPageHeader reportsPageHeader;
@@ -292,5 +299,138 @@ public class CommonReportTests extends TestBase {
 
         assertThat(reportsMaterialValue, is(equalTo(cidMaterialValue)));
         assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
+    }
+
+    /**
+     * Generic test for Export Set Dropdown in Assembly Cost Reports
+     * @param reportName String
+     * @param exportSetName String
+     */
+    public void testExportSetDropdownAssemblyCost(String reportName, String exportSetName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(exportSetName)
+                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+
+        assertThat(assemblyCostReportPage.getAssemblyPartNumberFilterItemCount(), is(equalTo("3")));
+
+        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
+                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()), is(true));
+
+        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
+                AssemblySetEnum.SUB_SUB_ASM_SHORT.getAssemblySetName()), is(true));
+
+        assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
+                AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName()), is(true));
+    }
+
+    /**
+     * Generic test for Export Set Dropdown in Assembly Cost Reports
+     * @param reportName String
+     * @param assemblyName String
+     */
+    public void testAssemblySetDropdownAssemblyCost(String reportName, String assemblyName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForAssemblyPartNumberFilter(assemblyName)
+                .selectAssemblySetDropdown(assemblyName);
+
+        assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
+
+        assertThat(assemblyCostReportPage.isScenarioNameEnabled(
+                Constants.DEFAULT_SCENARIO_NAME), is(true));
+    }
+
+    /**
+     * Generic test for Scenario Name Dropdown
+     * @param reportName String
+     * @param scenarioName String
+     */
+    public void testScenarioNameDropdownAssemblyCost(String reportName, String scenarioName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectScenarioNameDropdown(scenarioName);
+
+        assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
+
+        assertThat(assemblyCostReportPage.isScenarioNameEnabled(
+                Constants.DEFAULT_SCENARIO_NAME), is(true));
+    }
+
+    /**
+     * Generic test to check that Sub Assembly selection works
+     * @param reportName String
+     */
+    public void testSubAssemblySelectionAssemblyCost(String reportName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+
+        ArrayList<String> assemblyNames = new ArrayList<String>() {
+            {
+                add(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+                add(AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName());
+                add(AssemblySetEnum.SUB_SUB_ASM_SHORT.getAssemblySetName());
+            }};
+
+        for (String assemblyName : assemblyNames) {
+            assemblyCostReportPage.selectAssemblySetDropdown(assemblyName);
+
+            assertThat(assemblyCostReportPage.getCurrentAssemblyPartNumber(), is(equalTo(assemblyName)));
+        }
+    }
+
+    /**
+     * Generic test for Assembly Cost Data Integrity
+     * @param reportName String
+     */
+    public void testAssemblyCostDataIntegrity(String reportName) {
+        assemblyCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, AssemblyCostReportPage.class)
+                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+
+        assemblyCostReportPage.clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyCostReportPage.class);
+
+        String reportsPartName =
+                assemblyCostReportPage.getGeneralCostInfoValue("Assembly #", true);
+        String reportsScenarioName =
+                assemblyCostReportPage.getGeneralCostInfoValue("Scenario Name", true);
+        String reportsPiecePartCost =
+                assemblyCostReportPage.getGeneralCostInfoValue("Total", false);
+        String reportsCiCost = assemblyCostReportPage.getGeneralCostInfoValue("Capital", false);
+
+        assemblyCostReportPage.openNewCidTabAndFocus(1);
+
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario();
+
+        CostDetailsPage costDetailsPage = evaluatePage.openAssemblyCostDetails();
+
+        assertThat(reportsPartName, is(equalTo(evaluatePage.getPartName())));
+        assertThat(reportsScenarioName, is(equalTo(evaluatePage.getScenarioName())));
+
+        assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getPiecePartCostString())));
+        assertThat(reportsCiCost, is(equalTo(costDetailsPage.getTotalCapitalInvestments())));
     }
 }

@@ -26,7 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
@@ -117,7 +116,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
     @Test
     @Ignore("not applicable due to reports configuration")
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Casting DTC Details input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
@@ -146,7 +144,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyDetailsReportAvailableAndCorrectData() {

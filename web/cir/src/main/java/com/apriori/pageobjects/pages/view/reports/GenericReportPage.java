@@ -934,8 +934,8 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Generic method to wait for correct currency and return specified page object
      *
-     * @param currencyToCheck
-     * @param className
+     * @param currencyToCheck String
+     * @param className generic
      * @param <T> return type - any page object that is specified
      * @return new instance of page object
      */
