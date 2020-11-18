@@ -71,18 +71,17 @@ public class RequestEntity {
                 .setEndpoint(endpoint);
     }
 
+    public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
+        return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
+            .setReturnType(returnType)
+            .setEndpoint(endpoint);
+    }
 
     public static RequestEntity initWithToken(EndpointEnum endpoint, final String token, Class<?> returnType) {
         return new RequestEntity()
                 .setToken(token)
                 .setEndpoint(endpoint)
                 .setReturnType(returnType);
-    }
-
-    public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
-        return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
-                .setReturnType(returnType)
-                .setEndpoint(endpoint);
     }
 
     public static RequestEntity initDefaultFormAuthorizationData(final String username, final String password) {
