@@ -494,41 +494,6 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for created by filter operation
-     *
-     * @param reportName String
-     * @param listName   String
-     */
-    public void testListFilterOperation(String reportName, String listName) {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class);
-
-        String nameToSelect = reportName.equals(ReportNamesEnum.SCENARIO_COMPARISON.getReportName()) ? "bhegan" : "Ben Hegan";
-        String lastModifiedByAvailable = genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
-        genericReportPage.selectListItem(listName, nameToSelect);
-
-        genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", "1");
-        assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo("1")));
-
-        if (listName.equals(ListNameEnum.CREATED_BY.getListName())) {
-            String lastModifiedByListName = ListNameEnum.LAST_MODIFIED_BY.getListName();
-            String expectedCount = Constants.environment.equals("cid-qa") ? "3" : "1";
-            genericReportPage.waitForCorrectAvailableSelectedCount(lastModifiedByListName,
-                "Available: ", expectedCount);
-            assertThat(
-                genericReportPage.getCountOfListAvailableItems(lastModifiedByListName, "Available"),
-                is(not(equalTo(lastModifiedByAvailable)))
-            );
-        }
-
-        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName());
-        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
-            is(startsWith(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())));
-    }
-
-    /**
      * Generic test for created by filter buttons
      *
      * @param reportName String

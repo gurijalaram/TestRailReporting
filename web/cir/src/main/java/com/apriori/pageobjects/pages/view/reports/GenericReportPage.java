@@ -984,6 +984,10 @@ public class GenericReportPage extends ReportsPageHeader {
         return availableExportSets.getText().substring(11);
     }
 
+    public void wait(int milliseconds) {
+        pageUtils.waitFor(milliseconds);
+    }
+
     /**
      * Gets number of currently available list items
      *

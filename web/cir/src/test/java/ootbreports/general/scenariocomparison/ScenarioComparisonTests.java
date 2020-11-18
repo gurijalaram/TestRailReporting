@@ -3,14 +3,15 @@ package ootbreports.general.scenariocomparison;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -156,6 +157,72 @@ public class ScenarioComparisonTests extends TestBase {
     @Test
     @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3349")
+    @Description("Verify Created By input control works correctly")
+    public void testCreatedByFilterSearch() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Created By input control works correctly")
+    public void testCreatedByFilterOperation() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class);
+
+        String lastModifiedByAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+        String scenariosToCompareAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
+
+        String nameToSelect = "bhegan";
+        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
+
+        String expectedLastModifiedCount = Constants.environment.equals("cid-qa") ? "2" : "1";
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
+        String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        String scenariosToCompareAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
+
+        assertThat(lastModifiedByAvailableCountPreSelection,
+                is(not(equalTo(lastModifiedByAvailableCountPostSelection))));
+        assertThat(scenarioNameAvailableCountPreSelection,
+                is(not(equalTo(scenarioNameAvailableCountPostSelection))));
+        assertThat(scenariosToCompareAvailableCountPreSelection,
+                is(not(equalTo(scenariosToCompareAvailableCountPostSelection))));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Created By input control works correctly")
+    public void testCreatedByFilterButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
@@ -166,14 +233,38 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterOperation() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testListFilterOperation(
-                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
-                ListNameEnum.LAST_MODIFIED_BY.getListName()
-        );
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class);
+
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+        String scenariosToCompareAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
+
+        String nameToSelect = "bhegan";
+        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
+
+        String expectedScenarioNameCount = Constants.environment.equals("cid-qa") ? "2" : "1";
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", expectedScenarioNameCount);
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+        String scenariosToCompareAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
+
+        assertThat(scenarioNameAvailableCountPreSelection,
+                is(not(equalTo(scenarioNameAvailableCountPostSelection))));
+        assertThat(scenariosToCompareAvailableCountPreSelection,
+                is(not(equalTo(scenariosToCompareAvailableCountPostSelection))));
     }
 
     @Test
@@ -185,41 +276,6 @@ public class ScenarioComparisonTests extends TestBase {
         inputControlsTests.testListFilterButtons(
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 ListNameEnum.LAST_MODIFIED_BY.getListName()
-        );
-    }
-
-    @Test
-    @Category(CiaCirTestDevTest.class)
-    @TestRail(testCaseId = "3349")
-    @Description("Verify Last Modified By input control works correctly")
-    public void testCreatedByFilterSearch() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testListFilterSearch(
-                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
-                ListNameEnum.CREATED_BY.getListName()
-        );
-    }
-
-    @Test
-    @TestRail(testCaseId = "3349")
-    @Description("Verify Last Modified By input control works correctly")
-    public void testCreatedByFilterOperation() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testListFilterOperation(
-                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
-                ListNameEnum.CREATED_BY.getListName()
-        );
-    }
-
-    @Test
-    @Category(CiaCirTestDevTest.class)
-    @TestRail(testCaseId = "3349")
-    @Description("Verify Last Modified By input control works correctly")
-    public void testCreatedByFilterButtons() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testListFilterButtons(
-                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
-                ListNameEnum.CREATED_BY.getListName()
         );
     }
 }
