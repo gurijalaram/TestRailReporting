@@ -3,11 +3,10 @@ package com.apriori.utils;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
