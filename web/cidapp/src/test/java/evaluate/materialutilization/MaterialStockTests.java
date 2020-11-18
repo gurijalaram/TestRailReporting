@@ -82,7 +82,7 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
-        assertThat(evaluatePage.getPartCost(), is(closeTo(20.44, 1)));
+        assertThat(evaluatePage.getCostResults("Piece Part Cost"), is(closeTo(20.44, 1)));
 
         stockPage = evaluatePage.openMaterialUtilization()
             .goToStockTab();
