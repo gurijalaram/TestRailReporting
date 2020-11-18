@@ -123,6 +123,7 @@ pipeline {
                         -e AWS_DEFAULT_REGION='us-east-1' \
                         -itd \
                         --name ${buildInfo.name}-build-${timeStamp} \
+                        ${buildInfo.name}-build-${timeStamp}:latest
                      """
                      }
                      /*
