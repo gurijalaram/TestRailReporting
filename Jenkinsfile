@@ -126,7 +126,7 @@ pipeline {
                         ${buildInfo.name}-build-${timeStamp}:latest
                      """
                      }
-                     /*
+
                 echo "Testing.."
 
                 script {
@@ -155,12 +155,10 @@ pipeline {
                     .
                 """
                 allure includeProperties: false, jdk: "", results: [[path: "allure-results"]]
-                */
             }
         }
 
     }
-    /*
     post {
         always {
             echo "Cleaning up.."
@@ -178,5 +176,4 @@ pipeline {
             cleanWs()
         }
     }
-    */
 }
