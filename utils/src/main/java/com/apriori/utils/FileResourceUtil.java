@@ -23,6 +23,7 @@ public class FileResourceUtil {
     private static final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
     private static final int TEMP_DIR_ATTEMPTS = 50;
     private static final String S3_BUCKET_NAME = "qa-test-parts";
+    private static final Regions S3_REGION_NAME = Regions.US_EAST_1;
 
     /**
      * Get resource file stream from a jar file. {getResource}
@@ -80,7 +81,7 @@ public class FileResourceUtil {
         final String cloudFilePath = String.format("%s/%s/%s", workspaceName, processGroup.getProcessGroup(), fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, processGroup.getProcessGroup());
 
-        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
+        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(S3_REGION_NAME).build();
         S3Object object = s3Client.getObject(new GetObjectRequest(S3_BUCKET_NAME, cloudFilePath));
 
         return copyIntoTempFile(object.getObjectContent(), localTempFolderPath, fileName);
