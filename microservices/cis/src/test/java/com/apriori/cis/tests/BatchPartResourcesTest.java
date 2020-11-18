@@ -1,25 +1,19 @@
 package com.apriori.cis.tests;
 
-import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.utils.TestUtil;
-
 import com.apriori.cis.controller.BatchPartResources;
 import com.apriori.cis.controller.BatchResources;
-import com.apriori.cis.controller.PartResources;
 import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
-
 import com.apriori.cis.entity.response.Part;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class BatchPartResourcesTest extends TestUtil {
-    private static PropertyStore propertyStore;
     private static Batch batch;
     private static Part part;
 
