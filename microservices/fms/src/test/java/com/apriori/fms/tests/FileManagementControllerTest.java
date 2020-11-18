@@ -5,8 +5,8 @@ import com.apriori.ats.service.SecurityManager;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
-
 import com.apriori.utils.enums.ProcessGroupEnum;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.BeforeClass;
@@ -47,7 +47,6 @@ public class FileManagementControllerTest extends TestUtil {
                         Constants.getFmsFileIdentity()
                 ).getStatusCode());
     }
-
 
     @Test
     @TestRail(testCaseId = "3939")
