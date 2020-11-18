@@ -14,7 +14,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class LoginTests extends TestBase {
 
@@ -26,7 +25,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = "2695")
     @Description("Successful login to CI Report")
     public void testLogin() {

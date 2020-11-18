@@ -31,7 +31,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CIARStagingSmokeTest;
 
 public class ReportsNavigationTests extends TestBase {
 
@@ -98,7 +97,6 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(CIARStagingSmokeTest.class)
     @TestRail(testCaseId = {"2968"})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
