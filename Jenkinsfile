@@ -7,31 +7,14 @@ def threadCount
 def browser
 def testSuite
 def folder = "web"
-def environment = [profile: 'development', region: 'us-east-1']
-
-def registry_id(profile = '', region = '') {
-    withCredentials([
-            file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
-            file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
-        return sh(
-                returnStdout: true,
-                script: """
-                docker run \
-                    -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
-                    -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
-                    amazon/aws-cli sts get-caller-identity --output text --query Account
-            """
-        ).trim()
-    }
-}
 
 pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa', 'cidapp-int'], description: 'What is the target environment for testing?')
         choice(name: 'TEST_TYPE', choices: ['cid', 'apitests', 'ciconnect', 'cas', 'cir', 'cia', 'cidapp'], description: 'What type of test is running?')
-        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'CIARStagingSmokeTestSuite', 'Other'], description: 'What is the test tests.suite?')
-        string(name: 'OTHER_TEST', defaultValue: 'test name', description: 'What is the test/tests.suite to execute')
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
+        string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
@@ -47,7 +30,6 @@ pipeline {
             steps {
                 echo "Initializing.."
                 script {
-
                     // Read file.
                     buildInfo = readYaml file: buildInfoFile
                     sh "rm ${buildInfoFile}"
