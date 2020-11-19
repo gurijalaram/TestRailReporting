@@ -1,4 +1,4 @@
-package pageobjects.pages.view.reports;
+package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
