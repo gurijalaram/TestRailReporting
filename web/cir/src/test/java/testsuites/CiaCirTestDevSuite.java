@@ -2,7 +2,6 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import ootbreports.general.scenariocomparison.ScenarioComparisonTests;
 
 import org.junit.experimental.categories.Categories;
@@ -13,7 +12,6 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        AssemblyDetailsReportTests.class,
         ScenarioComparisonTests.class
 })
 

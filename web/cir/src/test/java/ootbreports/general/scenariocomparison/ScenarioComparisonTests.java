@@ -209,7 +209,6 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterButtons() {
@@ -268,7 +267,6 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterButtons() {
