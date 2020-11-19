@@ -1852,8 +1852,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getCountOfListItems(String listName) {
-        //WebElement currentListElement =
-        //        driver.findElement(By.xpath(String.format("(//div[@title='%s']//ul)[1]", listName)));
         By locator = By.xpath(String.format("(//div[@title='%s']//ul)[1]", listName));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getAttribute("childElementCount");
