@@ -4,6 +4,7 @@ import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.fms.entity.response.FilesResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -40,12 +41,12 @@ public class FileManagementController {
     }
 
 
-    public static ResponseWrapper<FileResponse> uploadFile(String token, String fileName) {
+    public static ResponseWrapper<FileResponse> uploadFile(String token, ProcessGroupEnum processGroup, String fileName) {
 
         RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, Constants.getFmsServiceHost()), FileResponse.class)
                 .setHeaders(initHeaders(token, true))
                 .setMultiPartFiles(new MultiPartFiles()
-                        .use("data", FileResourceUtil.getResourceAsFile(fileName))
+                        .use("data", FileResourceUtil.getCloudFile(processGroup, fileName))
                 )
                 .setFormParams(new FormParams()
                         .use("filename", fileName)
