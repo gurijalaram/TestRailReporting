@@ -11,6 +11,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.pageobjects.common.ScenarioTablePage;
 import com.pageobjects.pages.compare.ComparePage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.PublishPage;
@@ -21,7 +22,6 @@ import io.qameta.allure.Description;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.common.ScenarioTablePage;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;

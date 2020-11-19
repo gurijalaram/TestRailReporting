@@ -76,10 +76,15 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
      * @return current page object
      */
     public ScenarioNotesPage enterScenarioInfoNotes(String status, String costMaturity, String description, String notes) {
+        enterScenarioInfoNotesForComparison(status, costMaturity, description);
+        enterScenarioNotes(notes);
+        return this;
+    }
+
+    public ScenarioNotesPage enterScenarioInfoNotesForComparison(String status, String costMaturity, String description) {
         selectStatus(status);
         selectCostMaturity(costMaturity);
         enterDescription(description);
-        enterScenarioNotes(notes);
         return this;
     }
 

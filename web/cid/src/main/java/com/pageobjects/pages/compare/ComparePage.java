@@ -4,6 +4,8 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.constants.Constants;
 
 import com.pageobjects.common.ScenarioTablePage;
+import com.pageobjects.pages.evaluate.EvaluatePage;
+import com.pageobjects.pages.explore.ScenarioNotesPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,9 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjects.common.ScenarioTablePage;
-import pageobjects.pages.evaluate.EvaluatePage;
-import pageobjects.pages.explore.ScenarioNotesPage;
+
 
 /**
  * @author cfrith
@@ -176,8 +176,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     public ScenarioNotesPage selectInfoNotes() {
-        pageUtils.waitForElementToAppear(infoNotes).click();
+        pageUtils.waitForElementAndClick(infoNotes);
         return new ScenarioNotesPage(driver);
     }
-
 }

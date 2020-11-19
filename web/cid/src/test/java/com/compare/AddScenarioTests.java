@@ -17,16 +17,14 @@ import com.pageobjects.pages.compare.ComparePage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.PublishPage;
 import com.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
+import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.login.CidLoginPage;
+import com.pageobjects.toolbars.GenericHeader;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pageobjects.pages.evaluate.PublishWarningPage;
-import pageobjects.pages.explore.ExplorePage;
-import pageobjects.pages.explore.ScenarioPage;
-import pageobjects.toolbars.GenericHeader;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;

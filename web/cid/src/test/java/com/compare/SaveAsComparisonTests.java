@@ -12,6 +12,7 @@ import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.pageobjects.common.ScenarioTablePage;
 import com.pageobjects.pages.compare.ComparePage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.PublishPage;
@@ -57,26 +58,26 @@ public class SaveAsComparisonTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .selectComparisonScenario(scenarioName, "Push Pin")
-            .apply(GenericHeader.class)
-            .saveAs()
-            .inputName(testSaveAsComparisonName)
-            .inputDescription(testSaveAsComparisonDescription)
-            .selectCreateButton();
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .selectComparisonScenario(scenarioName, "Push Pin")
+                .apply(GenericHeader.class)
+                .saveAs()
+                .inputName(testSaveAsComparisonName)
+                .inputDescription(testSaveAsComparisonDescription)
+                .selectCreateButton();
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testSaveAsComparisonName, "Initial", "Save Comparison As", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
+                .openJobQueue()
+                .checkJobQueueActionStatus(testSaveAsComparisonName, "Initial", "Save Comparison As", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }
@@ -91,26 +92,26 @@ public class SaveAsComparisonTests extends TestBase {
         String testSaveAsComparisonDescription = "Save As Comparison Description";
 
         new CidLoginPage(driver).login(UserUtil.getUser())
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
 
         new GenericHeader(driver).publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .openComparison(testComparisonName);
+                .selectPublishButton()
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+                .openComparison(testComparisonName);
 
         new GenericHeader(driver).saveAs()
-            .inputName(testSaveAsComparisonName)
-            .inputDescription(testSaveAsComparisonDescription)
-            .selectCreateButton();
+                .inputName(testSaveAsComparisonName)
+                .inputDescription(testSaveAsComparisonDescription)
+                .selectCreateButton();
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testSaveAsComparisonName, "Initial", "Save Comparison As", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
+                .openJobQueue()
+                .checkJobQueueActionStatus(testSaveAsComparisonName, "Initial", "Save Comparison As", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
 
         assertThat(explorePage.findComparison(testSaveAsComparisonName).isDisplayed(), is(true));
     }
@@ -127,26 +128,84 @@ public class SaveAsComparisonTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
 
         new ComparePage(driver).addScenario()
-            .selectComparisonScenario(scenarioName, "Push Pin")
-            .apply(GenericHeader.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class);
+                .selectComparisonScenario(scenarioName, "Push Pin")
+                .apply(GenericHeader.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+                .closeJobQueue(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         jobQueuePage = genericHeader.selectExploreButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ExplorePage.class)
-            .openJobQueue();
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ExplorePage.class)
+                .openJobQueue();
+
+        assertThat(jobQueuePage.getJobQueueIconMessage("stop"), containsString("Comparison " + testComparisonName + " already exists"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"420"})
+    @Description("In comparison view, Save as feature fails to create a copy of existing comparison with a non-unique name")
+    public void comparisonSaveAsNameExists() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .selectComparisonScenario(scenarioName, "Push Pin")
+                .apply(GenericHeader.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .selectComparisonScenario(scenarioName, "Push Pin")
+                .apply(GenericHeader.class)
+                .saveAs()
+                .inputName(testComparisonName)
+                .selectCreateButton();
+
+        genericHeader = new GenericHeader(driver);
+        jobQueuePage = genericHeader.openJobQueue();
+
+        assertThat(jobQueuePage.getJobQueueIconMessage("stop"), containsString("Comparison " + testComparisonName + " already exists"));
+
+        new JobQueuePage(driver).closeJobQueue(GenericHeader.class)
+                .selectExploreButton()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .openComparison(testComparisonName);
+
+        new GenericHeader(driver).saveAs()
+                .inputName(testComparisonName)
+                .selectCreateButton();
+
+        genericHeader = new GenericHeader(driver);
+        jobQueuePage = genericHeader.openJobQueue();
 
         assertThat(jobQueuePage.getJobQueueIconMessage("stop"), containsString("Comparison " + testComparisonName + " already exists"));
     }

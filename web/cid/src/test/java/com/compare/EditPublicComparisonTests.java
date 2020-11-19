@@ -1,4 +1,4 @@
-package compare;
+package com.compare;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -12,18 +12,14 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-
 import com.pageobjects.common.ScenarioTablePage;
 import com.pageobjects.pages.compare.ComparePage;
+import com.pageobjects.pages.evaluate.EditWarningPage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.PublishPage;
-import pageobjects.pages.evaluate.PublishWarningPage;
-import pageobjects.pages.evaluate.EditWarningPage;
 import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
-import pageobjects.pages.explore.PreviewPanelPage;
-import pageobjects.pages.explore.ComparisonPage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
