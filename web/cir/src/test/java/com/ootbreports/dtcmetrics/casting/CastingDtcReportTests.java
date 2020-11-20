@@ -200,9 +200,9 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCurrencyCode(
-            ReportNamesEnum.CASTING_DTC.getReportName(),
-            ExportSetEnum.ROLL_UP_A.getExportSetName()
+        inputControlsTests.testCurrencyCodeDtcReports(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
 

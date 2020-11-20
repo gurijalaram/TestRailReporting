@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.library.LibraryPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
+import com.apriori.pageobjects.pages.view.reports.AssemblyCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -23,7 +24,6 @@ import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import org.openqa.selenium.WebDriver;
-import pageobjects.pages.view.reports.AssemblyCostReportPage;
 
 import java.util.ArrayList;
 
