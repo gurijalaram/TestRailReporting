@@ -5,6 +5,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.reports.ListNameEnum;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,6 +42,12 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
     @FindBy(xpath = "(//div[contains(text(), 'No Items Selected')])[6]")
     private WebElement noItemsAvailable;
+
+    @FindBy(xpath = "(//div[@title='Scenarios to Compare']//ul)[1]/li[1]")
+    private WebElement firstScenarioToCompare;
+
+    @FindBy(xpath = "//div[@id='partNumber']//input")
+    private WebElement partNumberSearchCriteriaInput;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -161,5 +168,32 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         pageUtils.waitForElementAndClick(locator);
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Selected: ", "0");
+    }
+
+    /**
+     * Gets name of first scenario to compare
+     */
+    public String getNameOfFirstScenarioToCompare() {
+        By scenariosToCompareLocator =
+                By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='000002736 (Initial) [part]']");
+        pageUtils.waitForElementToAppear(scenariosToCompareLocator);
+        pageUtils.waitForElementToAppear(firstScenarioToCompare);
+        return firstScenarioToCompare.getAttribute("title").substring(0, 9);
+    }
+
+    /**
+     * Inputs part number search criteria
+     * @param partNumberToInput String
+     */
+    public void inputPartNumberSearchCriteria(String partNumberToInput) {
+        pageUtils.waitForElementAndClick(partNumberSearchCriteriaInput);
+        pageUtils.clearInput(partNumberSearchCriteriaInput);
+        partNumberSearchCriteriaInput.sendKeys(partNumberToInput);
+        partNumberSearchCriteriaInput.sendKeys(Keys.ENTER);
+        By scenarioNameLocator = By.xpath("(//div[@title='Scenario Name']//ul)[1]/li[@title='Initial']");
+        By scenariosToCompareLocator =
+                By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='000002736 (Initial) [part]']");
+        pageUtils.waitForElementToAppear(scenarioNameLocator);
+        pageUtils.waitForElementToAppear(scenariosToCompareLocator);
     }
 }

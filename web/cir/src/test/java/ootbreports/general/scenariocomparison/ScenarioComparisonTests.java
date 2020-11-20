@@ -338,4 +338,26 @@ public class ScenarioComparisonTests extends TestBase {
         assertThat(genericReportPage.getCountOfListAvailableItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("0")));
     }
+
+    @Test
+    @TestRail(testCaseId = "3306")
+    @Description("Verify Part Number Search Criteria input control works correctly")
+    public void testPartNumberSearchCriteriaFunctionality() {
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectDefaultScenarioName();
+
+        String nameToInput = scenarioComparisonReportPage.getNameOfFirstScenarioToCompare();
+        scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
+
+        assertThat(scenarioComparisonReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+        assertThat(scenarioComparisonReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
+        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(),
+                is(equalTo("000002736 (Initial) [part]")));
+    }
 }
