@@ -20,6 +20,8 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 
 import java.math.BigDecimal;
 
@@ -35,6 +37,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3245")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -46,6 +49,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3245")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -54,6 +58,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3245")
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
@@ -62,6 +67,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3246")
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -94,6 +100,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3305")
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
@@ -129,6 +136,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3249")
     @Description("Verfiy scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -151,6 +159,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterSearch() {
@@ -162,6 +171,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterOperation() {
@@ -203,6 +213,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterButtons() {
@@ -214,6 +225,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterSearch() {
@@ -225,6 +237,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterOperation() {
@@ -259,6 +272,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterButtons() {
