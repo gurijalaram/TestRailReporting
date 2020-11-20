@@ -2,6 +2,7 @@ package com.pageobjects.pages.jobqueue;
 
 import com.apriori.utils.PageUtils;
 
+import com.pageobjects.pages.compare.ComparePage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
@@ -63,6 +64,12 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
         By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]");
         pageUtils.waitForElementAndClick(scenario);
         return new EvaluatePage(driver);
+    }
+
+    public ComparePage openComparisonLink(String scenarioName, String comparisonName, String jobType){
+        By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,comparisonState," + comparisonName.toUpperCase() + "," + scenarioName + "')]");
+        pageUtils.waitForElementAndClick(scenario);
+        return new ComparePage(driver);
     }
 
     /**

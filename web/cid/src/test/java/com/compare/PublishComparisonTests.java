@@ -473,4 +473,43 @@ public class PublishComparisonTests extends TestBase {
 
         assertThat(new PublishWarningPage(driver).getCannotPublishDueLockedComparisonText(), is(containsString(cannotPublishLock)));
     }
+
+    @Test
+    @Issue("AP-61539")
+    @TestRail(testCaseId = {"461"})
+    @Description("After publishing a Comparison, ensure no stale links remain in Job Queue or Toolbar")
+    public void openPublishedComparisonFromJobQueue() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "Casting")
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(testScenarioName, "Casting")
+                .apply(GenericHeader.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
+                .openComparisonLink("Initial", testComparisonName, "Publish");
+
+        assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
+        assertThat(comparePage.isComparisonPublicWorkspace("public"), is(true));
+    }
 }

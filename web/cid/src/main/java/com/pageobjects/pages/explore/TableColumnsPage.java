@@ -118,9 +118,9 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
      *
      * @return new page object
      */
-    public ExplorePage selectSaveButton() {
+    public <T> T selectSaveButton(Class <T> className) {
         pageUtils.waitForElementAndClick(okButton);
-        return new ExplorePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

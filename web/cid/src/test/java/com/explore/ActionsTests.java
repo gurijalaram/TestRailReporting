@@ -113,14 +113,14 @@ public class ActionsTests extends TestBase {
                 .openColumnsTable()
                 .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
                 .addColumn(ColumnsEnum.STATUS.getColumns())
-                .selectSaveButton();
+                .selectSaveButton(ExplorePage.class);
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.STATUS.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
 
         explorePage.openColumnsTable()
                 .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
                 .removeColumn(ColumnsEnum.STATUS.getColumns())
-                .selectSaveButton();
+                .selectSaveButton(ExplorePage.class);
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})

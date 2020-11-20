@@ -1,13 +1,12 @@
 package com.compare;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -323,5 +322,33 @@ public class AddScenarioTests extends TestBase {
                 .openScenarioFromComparison(partName, scenarioName);
 
         assertThat(evaluatePage.getCurrentScenarioName(scenarioName), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"447"})
+    @Description("User can add columns to the part table within the Add Scenarios dialog box")
+    public void addColumnsPartTable() {
+
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+
+        loginPage = new CidLoginPage(driver);
+        scenarioTablePage = loginPage.login(UserUtil.getUser())
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .openColumnsTable()
+                .addColumn(ColumnsEnum.TYPE.getColumns())
+                .addColumn(ColumnsEnum.STATUS.getColumns())
+                .addColumn(ColumnsEnum.ASSIGNEE.getColumns())
+                .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
+                .selectSaveButton(ScenarioTablePage.class);
+
+        assertThat(scenarioTablePage.getColumnHeaderNames(), hasItems(ColumnsEnum.TYPE.getColumns(), ColumnsEnum.STATUS.getColumns(), ColumnsEnum.ASSIGNEE.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
+
+        scenarioTablePage.openColumnsTable()
+                .removeColumn(ColumnsEnum.ASSIGNEE.getColumns())
+                .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
+                .selectSaveButton(ScenarioTablePage.class);
     }
 }

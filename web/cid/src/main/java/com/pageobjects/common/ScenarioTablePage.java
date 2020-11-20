@@ -44,7 +44,7 @@ public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
     @FindBy(css = "button[data-ap-nav-dialog='showTableViewEditor']")
     private WebElement columnsButton;
 
-    @FindBy(css = ".v-grid-header")
+    @FindBy(css = "[data-ap-comp='componentTable'] .v-grid-header")
     private WebElement columnHeaders;
 
     @FindBy(css = "div[data-ap-comp='noComponentsMessage']")
