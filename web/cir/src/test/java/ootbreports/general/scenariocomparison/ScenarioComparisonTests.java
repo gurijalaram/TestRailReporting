@@ -20,6 +20,8 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
 
@@ -267,5 +269,35 @@ public class ScenarioComparisonTests extends TestBase {
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3247")
+    @Description("Verify Scenarios to Compare input control functions correctly")
+    public void testScenariosToCompareInputControlFunctionality() {
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectDefaultScenarioName();
+
+        scenarioComparisonReportPage.selectAllScenariosToCompare();
+        assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(),
+                is(equalTo(scenarioComparisonReportPage.getCountOfAvailableScenariosToCompare())));
+
+        scenarioComparisonReportPage.deselectAllScenariosToCompare();
+        assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(), is(equalTo("0")));
+
+        scenarioComparisonReportPage.invertScenariosToCompare();
+        assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(),
+                is(equalTo(scenarioComparisonReportPage.getCountOfAvailableScenariosToCompare())));
+
+        scenarioComparisonReportPage.deselectAllScenariosToCompare();
+        scenarioComparisonReportPage.selectFirstScenarioToCompare();
+        scenarioComparisonReportPage.clickSelectedTabAndThenX();
+        assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(), is(equalTo("0")));
+        assertThat(scenarioComparisonReportPage.isNoItemsAvailableTextDisplayed(), is(equalTo(true)));
     }
 }
