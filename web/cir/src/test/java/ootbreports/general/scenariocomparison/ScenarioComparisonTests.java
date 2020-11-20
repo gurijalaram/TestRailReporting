@@ -300,4 +300,42 @@ public class ScenarioComparisonTests extends TestBase {
         assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(), is(equalTo("0")));
         assertThat(scenarioComparisonReportPage.isNoItemsAvailableTextDisplayed(), is(equalTo(true)));
     }
+
+    @Test
+    @TestRail(testCaseId = "3306")
+    @Description("Verify Part Number Search Criteria input control works correctly")
+    public void testPartNumberSearchCriteriaInputControl() {
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectDefaultScenarioName();
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3304")
+    @Description("Verify export date input controls functions correctly")
+    public void testExportSetInputControlEarliestDateFilterFunctionality() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .setExportDateUsingInput(true, "")
+                .setExportDateUsingInput(false, "")
+                .clickUseLatestExportDropdownTwice();
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.EXPORT_SET.getListName(), "Available: ", "0");
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.EXPORT_SET.getListName(), "Available"), is(equalTo("0")));
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("0")));
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("0")));
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("0")));
+    }
 }

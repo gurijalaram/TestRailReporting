@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.pageobjects.pages.view.reports.ScenarioComparisonReportPage;
+import ootbreports.general.scenariocomparison.ScenarioComparisonTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import org.junit.experimental.categories.Categories;
@@ -11,7 +11,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-    ScenarioComparisonReportPage.class
+    ScenarioComparisonTests.class
 })
 
 public class CiaCirTestDevSuite {
