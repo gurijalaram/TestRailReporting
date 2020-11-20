@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -609,11 +610,38 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterOperation() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testListFilterOperation(
-            ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-            ListNameEnum.CREATED_BY.getListName()
-        );
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class);
+
+        String lastModifiedByAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        String nameToSelect = "Ben Hegan";
+        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
+
+        String expectedLastModifiedCount = Constants.environment.equals("cid-qa") ? "2" : "1";
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
+        String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        assertThat(lastModifiedByAvailableCountPreSelection,
+                is(not(equalTo(lastModifiedByAvailableCountPostSelection))));
+        assertThat(scenarioNameAvailableCountPreSelection,
+                is(equalTo(scenarioNameAvailableCountPostSelection)));
+
+        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+                is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
     }
 
     @Test
@@ -642,11 +670,29 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterOperation() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testListFilterOperation(
-            ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-            ListNameEnum.LAST_MODIFIED_BY.getListName()
-        );
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class);
+
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        String nameToSelect = "Ben Hegan";
+        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
+
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        assertThat(scenarioNameAvailableCountPreSelection,
+                is(equalTo(scenarioNameAvailableCountPostSelection)));
+
+        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+                is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
     }
 
     @Test
