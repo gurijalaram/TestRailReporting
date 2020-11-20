@@ -23,6 +23,9 @@
         "mfaRequired": {
           "type": "boolean"
         },
+        "customAttributes": {
+          "type": "object"
+        },
         "identity": {
           "type": "string",
           "pattern": "^(.*)$"
