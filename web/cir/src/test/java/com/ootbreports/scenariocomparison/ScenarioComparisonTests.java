@@ -1,5 +1,6 @@
-package ootbreports.general.scenariocomparison;
+package com.ootbreports.scenariocomparison;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -138,7 +139,7 @@ public class ScenarioComparisonTests extends TestBase {
     @Test
     @Category(OnPremTest.class)
     @TestRail(testCaseId = "3249")
-    @Description("Verfiy scenario name input control functions correctly")
+    @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -281,5 +282,107 @@ public class ScenarioComparisonTests extends TestBase {
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3247")
+    @Description("Verify Scenarios to Compare input control functions correctly")
+    public void testScenariosToCompareInputControlFunctionality() {
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectDefaultScenarioName();
+
+        scenarioComparisonReportPage.selectAllScenariosToCompare();
+        assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(),
+                is(equalTo(scenarioComparisonReportPage.getCountOfAvailableScenariosToCompare())));
+
+        scenarioComparisonReportPage.deselectAllScenariosToCompare();
+        assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(), is(equalTo("0")));
+
+        scenarioComparisonReportPage.invertScenariosToCompare();
+        assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(),
+                is(equalTo(scenarioComparisonReportPage.getCountOfAvailableScenariosToCompare())));
+
+        scenarioComparisonReportPage.deselectAllScenariosToCompare();
+        scenarioComparisonReportPage.selectFirstScenarioToCompare();
+        scenarioComparisonReportPage.clickSelectedTabAndThenX();
+        assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(), is(equalTo("0")));
+        assertThat(scenarioComparisonReportPage.isNoItemsAvailableTextDisplayed(), is(equalTo(true)));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3248")
+    @Description("Verify Component Type input control functions correctly")
+    public void testPartNumberSearchCriteriaInputControl() {
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectComponentType("assembly");
+
+        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+                containsString("[assembly]"));
+
+        scenarioComparisonReportPage.selectComponentType("part");
+        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+                containsString("[part]"));
+
+        scenarioComparisonReportPage.selectComponentType("rollup");
+        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+                containsString("[rollup]"));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3304")
+    @Description("Verify export date input controls functions correctly")
+    public void testExportSetInputControlEarliestDateFilterFunctionality() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .setExportDateUsingInput(true, "")
+                .setExportDateUsingInput(false, "")
+                .clickUseLatestExportDropdownTwice();
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.EXPORT_SET.getListName(), "Available: ", "0");
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.EXPORT_SET.getListName(), "Available"), is(equalTo("0")));
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("0")));
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("0")));
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("0")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3306")
+    @Description("Verify Part Number Search Criteria input control works correctly")
+    public void testPartNumberSearchCriteriaFunctionality() {
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectDefaultScenarioName();
+
+        scenarioComparisonReportPage.waitForScenarioFilter();
+        String nameToInput = scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(true);
+        scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
+
+        assertThat(scenarioComparisonReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+        assertThat(scenarioComparisonReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
+        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+                is(equalTo("000002736 (Initial) [part]")));
     }
 }
