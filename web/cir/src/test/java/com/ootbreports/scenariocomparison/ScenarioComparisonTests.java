@@ -285,6 +285,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3247")
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
@@ -314,7 +315,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3248")
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
@@ -338,6 +339,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3304")
     @Description("Verify export date input controls functions correctly")
     public void testExportSetInputControlEarliestDateFilterFunctionality() {
@@ -363,7 +365,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3306")
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
