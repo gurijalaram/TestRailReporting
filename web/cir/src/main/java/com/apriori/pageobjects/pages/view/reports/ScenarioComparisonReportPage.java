@@ -171,14 +171,23 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
     }
 
     /**
+     * Waits for Scenario to Compare filter to take effect
+     */
+    public void waitForScenarioToCompareFilter() {
+        for (int i = 1; i < 11; i++) {
+            By locator = By.xpath(String.format(
+                    "(//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')][%s]", i));
+            pageUtils.waitForElementToAppear(locator);
+        }
+    }
+
+    /**
      * Gets name of first scenario to compare
      */
-    public String getNameOfFirstScenarioToCompare() {
-        By scenariosToCompareLocator =
-                By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='000002736 (Initial) [part]']");
-        pageUtils.waitForElementToAppear(scenariosToCompareLocator);
+    public String getNameOfFirstScenarioToCompare(boolean substringName) {
         pageUtils.waitForElementToAppear(firstScenarioToCompare);
-        return firstScenarioToCompare.getAttribute("title").substring(0, 9);
+        String scenarioName = firstScenarioToCompare.getAttribute("title");
+        return substringName ? scenarioName.substring(0, 9) : scenarioName;
     }
 
     /**
@@ -195,5 +204,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
                 By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='000002736 (Initial) [part]']");
         pageUtils.waitForElementToAppear(scenarioNameLocator);
         pageUtils.waitForElementToAppear(scenariosToCompareLocator);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1");
     }
 }
