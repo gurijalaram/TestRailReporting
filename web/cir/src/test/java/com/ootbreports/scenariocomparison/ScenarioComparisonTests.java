@@ -1,4 +1,4 @@
-package ootbreports.general.scenariocomparison;
+package com.ootbreports.scenariocomparison;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
