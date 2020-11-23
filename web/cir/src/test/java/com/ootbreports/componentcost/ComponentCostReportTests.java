@@ -24,14 +24,12 @@ public class ComponentCostReportTests extends TestBase {
 
     private ComponentCostReportPage componentCostReportPage;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public ComponentCostReportTests() {
         super();
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3323")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -43,7 +41,6 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3323")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByLibrary() {
@@ -52,7 +49,6 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3323")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityBySearch() {
@@ -61,6 +57,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3324")
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetSelection() {
@@ -78,7 +75,8 @@ public class ComponentCostReportTests extends TestBase {
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
         assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
 
-        // check number of available components in dropdown
-        // ensure that there are 11 parts and 3 assemblies
+        assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
+        assertThat(componentCostReportPage.getCountOfComponentTypeElements("part"), is(equalTo(11)));
+        assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), is(equalTo(3)));
     }
 }

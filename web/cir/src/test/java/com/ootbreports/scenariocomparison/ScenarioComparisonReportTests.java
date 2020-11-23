@@ -26,14 +26,14 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import java.math.BigDecimal;
 
-public class ScenarioComparisonTests extends TestBase {
+public class ScenarioComparisonReportTests extends TestBase {
 
     private ScenarioComparisonReportPage scenarioComparisonReportPage;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
-    public ScenarioComparisonTests() {
+    public ScenarioComparisonReportTests() {
         super();
     }
 
