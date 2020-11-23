@@ -141,27 +141,27 @@ public class MaterialStockTests extends TestBase {
 //        assertThat(stockPage.checkTableDetails("Virtual Stock No"), is(true));
     }
 
-    @Test
-    @Category(SmokeTests.class)
-//    @TestRail(testCaseId = {"3839", "869"})
-    @Description("validate the user can collapse and expand material properties")
-    public void materialProperties() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
-
-        loginPage = new CidAppLoginPage(driver);
-        materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialUtilization()
-            .toggleMaterialPropertiesPanel()
-            .toggleUtilizationPanel();
-
-        assertThat(materialUtilizationPage.utilizationPanelExpanded(), is("collapsed"));
-        assertThat(materialUtilizationPage.materialPanelExpanded(), is("collapsed"));
-    }
+//    @Test
+//    @Category(SmokeTests.class)
+////    @TestRail(testCaseId = {"3839", "869"})
+//    @Description("validate the user can collapse and expand material properties")
+//    public void materialProperties() {
+//
+//        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+//
+//        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
+//
+//        loginPage = new CidAppLoginPage(driver);
+//        materialUtilizationPage = loginPage.login(UserUtil.getUser())
+//            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+//            .selectProcessGroup(processGroupEnum.getProcessGroup())
+//            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+//            .costScenario()
+//            .openMaterialUtilization()
+//            .toggleMaterialPropertiesPanel()
+//            .toggleUtilizationPanel();
+//
+//        assertThat(materialUtilizationPage.utilizationPanelExpanded(), is("collapsed"));
+//        assertThat(materialUtilizationPage.materialPanelExpanded(), is("collapsed"));
+//    }
 }
