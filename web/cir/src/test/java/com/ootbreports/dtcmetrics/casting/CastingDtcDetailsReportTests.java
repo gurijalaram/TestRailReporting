@@ -25,7 +25,6 @@ import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 

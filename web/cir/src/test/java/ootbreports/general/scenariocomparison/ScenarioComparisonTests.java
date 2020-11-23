@@ -1,0 +1,271 @@
+package ootbreports.general.scenariocomparison;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.pages.view.reports.ScenarioComparisonReportPage;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
+import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.web.driver.TestBase;
+
+import com.inputcontrols.InputControlsTests;
+import com.navigation.CommonReportTests;
+import io.qameta.allure.Description;
+import org.junit.Test;
+
+import java.math.BigDecimal;
+
+public class ScenarioComparisonTests extends TestBase {
+
+    private ScenarioComparisonReportPage scenarioComparisonReportPage;
+    private InputControlsTests inputControlsTests;
+    private GenericReportPage genericReportPage;
+    private CommonReportTests commonReportTests;
+
+    public ScenarioComparisonTests() {
+        super();
+    }
+
+    @Test
+    @TestRail(testCaseId = "3245")
+    @Description("Validate report is available by navigation")
+    public void testReportAvailabilityByMenu() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
+                Constants.GENERAL_FOLDER,
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3245")
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibrary() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "3245")
+    @Description("Validate report is available by search")
+    public void testReportAvailabilityBySearch() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "3246")
+    @Description("Verify Export Set input control functions correctly")
+    public void testExportSetFilterFunctionality() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.COMPONENT_TYPE.getListName(), "Available: ", "2");
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.COMPONENT_TYPE.getListName(), "Available"), is(equalTo("2")));
+        assertThat(genericReportPage.getComponentName("1"), is(equalTo("assembly")));
+        assertThat(genericReportPage.getComponentName("2"), is(equalTo("part")));
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("1")));
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("2")));
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+        assertThat(genericReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
+
+        assertThat(genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("14")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3305")
+    @Description("Verify Currency Code input control is working correctly")
+    public void testCurrencyCode() {
+        BigDecimal gbpFirstFbc;
+        BigDecimal gbpSecondFbc;
+        BigDecimal usdFirstFbc;
+        BigDecimal usdSecondFbc;
+
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectFirstTwoComparisonScenarios()
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
+
+        usdFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
+        usdSecondFbc = scenarioComparisonReportPage.getFbcValue(false);
+
+        scenarioComparisonReportPage.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ScenarioComparisonReportPage.class);
+
+        gbpFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
+        gbpSecondFbc = scenarioComparisonReportPage.getFbcValue(false);
+
+        assertThat(scenarioComparisonReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(gbpFirstFbc, is(not(usdFirstFbc)));
+        assertThat(gbpSecondFbc, is(not(usdSecondFbc)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3249")
+    @Description("Verfiy scenario name input control functions correctly")
+    public void testScenarioNameInputControl() {
+        scenarioComparisonReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectDefaultScenarioName();
+
+        scenarioComparisonReportPage.waitForScenarioFilter();
+        String rowOneScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(1);
+        String rowTwoScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(2);
+
+        assertThat(rowOneScenarioName.isEmpty(), is(false));
+        assertThat(rowOneScenarioName.contains(Constants.DEFAULT_SCENARIO_NAME), is(true));
+
+        assertThat(rowTwoScenarioName.isEmpty(), is(false));
+        assertThat(rowTwoScenarioName.contains(Constants.DEFAULT_SCENARIO_NAME), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Created By input control works correctly")
+    public void testCreatedByFilterSearch() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Created By input control works correctly")
+    public void testCreatedByFilterOperation() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class);
+
+        String lastModifiedByAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+        String scenariosToCompareAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
+
+        String nameToSelect = "bhegan";
+        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
+
+        String expectedLastModifiedCount = Constants.environment.equals("cid-qa") ? "2" : "1";
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
+        String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        String scenariosToCompareAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
+
+        assertThat(lastModifiedByAvailableCountPreSelection,
+                is(not(equalTo(lastModifiedByAvailableCountPostSelection))));
+        assertThat(scenarioNameAvailableCountPreSelection,
+                is(not(equalTo(scenarioNameAvailableCountPostSelection))));
+        assertThat(scenariosToCompareAvailableCountPreSelection,
+                is(not(equalTo(scenariosToCompareAvailableCountPostSelection))));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Created By input control works correctly")
+    public void testCreatedByFilterButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.CREATED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testLastModifiedByFilterSearch() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterSearch(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testLastModifiedByFilterOperation() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class);
+
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+        String scenariosToCompareAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
+
+        String nameToSelect = "bhegan";
+        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
+
+        String expectedScenarioNameCount = Constants.environment.equals("cid-qa") ? "2" : "1";
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", expectedScenarioNameCount);
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+        String scenariosToCompareAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
+
+        assertThat(scenarioNameAvailableCountPreSelection,
+                is(not(equalTo(scenarioNameAvailableCountPostSelection))));
+        assertThat(scenariosToCompareAvailableCountPreSelection,
+                is(not(equalTo(scenariosToCompareAvailableCountPostSelection))));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3349")
+    @Description("Verify Last Modified By input control works correctly")
+    public void testLastModifiedByFilterButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                ListNameEnum.LAST_MODIFIED_BY.getListName()
+        );
+    }
+}

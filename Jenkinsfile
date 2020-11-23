@@ -48,7 +48,7 @@ pipeline {
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
                     url = params.TARGET_URL
-                    if(url != "none") {
+                    if (url != "none") {
                         javaOpts = javaOpts + " -Durl=${params.TARGET_URL}"
                     }
 
@@ -93,12 +93,21 @@ pipeline {
         stage("Test") {
             steps {
                 echo "Running.."
-                sh """
+
+                withCredentials([
+                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh """
                     docker run \
+                        -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+                        -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+                        -e AWS_PROFILE='development' \
+                        -e AWS_DEFAULT_REGION='us-east-1' \
                         -itd \
                         --name ${buildInfo.name}-build-${timeStamp} \
                         ${buildInfo.name}-build-${timeStamp}:latest
-                """
+                     """
+                     }
 
                 echo "Testing.."
 
@@ -130,6 +139,7 @@ pipeline {
                 allure includeProperties: false, jdk: "", results: [[path: "allure-results"]]
             }
         }
+
     }
     post {
         always {
