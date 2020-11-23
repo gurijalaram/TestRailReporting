@@ -2039,11 +2039,10 @@ public class GenericReportPage extends ReportsPageHeader {
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
 
         for (int i = 1; i < 6; i++) {
-            By locator2 = By.xpath(
-                    String.format(
+            By locator2 =
+                    By.xpath(String.format(
                             "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]",
-                            componentType,
-                            i)
+                            componentType, i)
             );
             pageUtils.waitForElementToAppear(locator2);
         }
