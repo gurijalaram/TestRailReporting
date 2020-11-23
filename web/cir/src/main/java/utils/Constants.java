@@ -1,8 +1,9 @@
 package utils;
 
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
-public class Constants {
+public class Constants extends CommonConstants {
 
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
     public static final String SAVED_CONFIG_NAME = "Saved Config";

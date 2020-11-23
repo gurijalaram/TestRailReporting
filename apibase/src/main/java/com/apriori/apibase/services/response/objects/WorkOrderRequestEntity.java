@@ -1,6 +1,6 @@
 package com.apriori.apibase.services.response.objects;
 
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.WorkOrderScenarioTypeEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class WorkOrderRequestEntity {
 
-    private String baseURL = Constants.getBaseUrl();
+    private String baseURL = CommonConstants.getBaseUrl();
     private String username;
     private String password;
     private String scenarioName;

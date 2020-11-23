@@ -1,29 +1,29 @@
 package com.apriori.cis.controller;
 
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 
 public class CisBase {
     private static String baseUrl;
 
     static {
-        baseUrl = "https://" + Constants.getCisServiceHost() + "/customers";
+        baseUrl = "https://" + CommonConstants.getCisServiceHost() + "/customers";
     }
 
     public static String getCisUrl() {
-        StringBuilder url = new StringBuilder(baseUrl).append("/").append(Constants.getCisCustomerIdentity())
-                .append("/%s?key=").append(Constants.getSecretKey());
+        StringBuilder url = new StringBuilder(baseUrl).append("/").append(CommonConstants.getCisCustomerIdentity())
+                .append("/%s?key=").append(CommonConstants.getSecretKey());
         return url.toString();
     }
 
     public static String getBaseCisUrl() {
-        StringBuilder url = new StringBuilder(baseUrl).append("?key=").append(Constants.getSecretKey());
+        StringBuilder url = new StringBuilder(baseUrl).append("?key=").append(CommonConstants.getSecretKey());
         return url.toString();
     }
 
     public static String getReportTypesUrl() {
         StringBuilder url;
-        url = new StringBuilder("https://" + Constants.getCisServiceHost().concat("/report-types")).append("%s?key=")
-                .append(Constants.getSecretKey());
+        url = new StringBuilder("https://" + CommonConstants.getCisServiceHost().concat("/report-types")).append("%s?key=")
+                .append(CommonConstants.getSecretKey());
         return url.toString();
     }
 
@@ -35,7 +35,7 @@ public class CisBase {
     }
 
     public static String getBatchUrlWithIdentity() {
-        String url = String.format(getBatchUrl(), "/" + Constants.getCisBatchIdentity() + "%s");
+        String url = String.format(getBatchUrl(), "/" + CommonConstants.getCisBatchIdentity() + "%s");
         return url;
     }
 

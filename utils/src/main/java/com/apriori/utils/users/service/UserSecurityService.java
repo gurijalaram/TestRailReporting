@@ -1,6 +1,6 @@
 package com.apriori.utils.users.service;
 
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.users.UserCredentials;
 
 import org.slf4j.Logger;
@@ -24,14 +24,14 @@ public class UserSecurityService {
 
     /**
      * Return single user
-     * if in {@link com.apriori.utils.constants.Constants#environment}.properties file different.users is false
+     * if in {@link CommonConstants#environment}.properties file different.users is false
      * else each time return unique user
      *
      * @param accessLevel - user's access level
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser(String accessLevel) {
-        return Constants.useDifferentUsers ? getSecurityUser(accessLevel) : getGlobalUser();
+        return CommonConstants.useDifferentUsers ? getSecurityUser(accessLevel) : getGlobalUser();
     }
 
     private static synchronized UserCredentials getSecurityUser(String security) {
@@ -48,7 +48,7 @@ public class UserSecurityService {
             return globalUser;
         }
 
-        globalUser = getSecurityUser(Constants.DEFAULT_ACCESS_LEVEL);
+        globalUser = getSecurityUser(CommonConstants.DEFAULT_ACCESS_LEVEL);
         return globalUser;
     }
 }

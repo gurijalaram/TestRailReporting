@@ -30,52 +30,76 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @FindBy(css = "button[aria-label='Create Dashboards']")
     protected WebElement createDashboardsButton;
+
     @FindBy(id = "helpLink")
     private WebElement helpButton;
+
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
+
     @FindBy(id = "main_home")
     private WebElement homeMenuOption;
+
     @FindBy(id = "main_library")
     private WebElement libraryMenuOption;
+
     @FindBy(id = "main_view")
     private WebElement viewMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(1)")
     private WebElement viewSearchResultsMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(2)")
     private WebElement viewRepositoryMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(3)")
     private WebElement viewSchedulesMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(4)")
     private WebElement viewMessagesMenuOption;
+
     @FindBy(id = "main_manage")
     private WebElement manageMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(1)")
     private WebElement manageUsersMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(2)")
     private WebElement manageRolesMenuOption;
+
     @FindBy(id = "main_create")
     private WebElement createMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(1)")
     private WebElement createAdHocViewMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(2)")
     private WebElement createReportMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(3)")
     private WebElement createDashboardMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(4)")
     private WebElement createDomainMenuOption;
+
     @FindBy(css = "ul[id=menuList] > li:nth-child(5)")
     private WebElement createDataSourceMenuOption;
+
     @FindBy(id = "jasper")
     private WebElement reportsMenuOption;
+
     @FindBy(css = "ul[id='metaLinks'] > li:nth-child(2) > a")
     private WebElement reportUserGuide;
+
     @FindBy(id = "main_logOut_link")
     private WebElement logoutMenuOption;
+
     @FindBy(xpath = "//h2[contains(text(), 'Admin')]")
     private WebElement adminTitle;
+
     @FindBy(xpath = "//h2[contains(text(), 'Dashboards')]")
     private WebElement dashboardsTitle;
+
     @FindBy(css = "div[id='header']")
     private WebElement jasperLogo;
 

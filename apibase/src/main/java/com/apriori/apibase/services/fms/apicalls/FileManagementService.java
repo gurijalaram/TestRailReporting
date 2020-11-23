@@ -3,7 +3,7 @@ package com.apriori.apibase.services.fms.apicalls;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.fms.objects.FileResponses;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -19,11 +19,11 @@ public class FileManagementService {
     private static String finalUrl = "https://%s/files/";
 
     public static ResponseWrapper<FileResponses> getFiles(String token) {
-        return getFileInfo(FileResponses.class,  Constants.getFmsServiceHost(), token, null);
+        return getFileInfo(FileResponses.class,  CommonConstants.getFmsServiceHost(), token, null);
     }
 
     public static ResponseWrapper<FileResponse> getFileByIdentity(String token, String fileIdentity) {
-        return getFileInfo(FileResponse.class,  Constants.getFmsServiceHost(), token, fileIdentity);
+        return getFileInfo(FileResponse.class,  CommonConstants.getFmsServiceHost(), token, fileIdentity);
     }
 
     public static <T> ResponseWrapper<T> getFileInfo(Class klass, String url, String token,  String fileIdentity) {
@@ -42,7 +42,7 @@ public class FileManagementService {
 
     public static ResponseWrapper<FileResponse> uploadFile(String token, String fileName) {
 
-        RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, Constants.getFmsServiceHost()), FileResponse.class)
+        RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, CommonConstants.getFmsServiceHost()), FileResponse.class)
                 .setHeaders(initHeaders(token, true))
                 .setMultiPartFiles(new MultiPartFiles()
                         .use("data", FileResourceUtil.getResourceAsFile(fileName))
@@ -58,7 +58,7 @@ public class FileManagementService {
     private static Map<String, String> initHeaders(String token, boolean addMultiPartFile) {
         Map<String, String> headers = new HashMap<String, String>() {{
                 put("Authorization", "Bearer " + token);
-                put("ap-cloud-context", Constants.getAtsAuthTargetCloudContext());
+                put("ap-cloud-context", CommonConstants.getAtsAuthTargetCloudContext());
             }};
 
         if (addMultiPartFile) {

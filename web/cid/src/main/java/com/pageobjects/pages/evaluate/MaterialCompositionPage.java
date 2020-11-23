@@ -1,7 +1,7 @@
 package com.pageobjects.pages.evaluate;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -105,7 +105,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
     public WebElement findMaterialComposition(String materialName) {
         setCompositionTableTopOfPage();
         By material = By.xpath("//div[@data-ap-comp='materialSelectionTable']//tbody//td[.='" + materialName + "']");
-        return pageUtils.scrollToElement(material, materialScroller, Constants.PAGE_DOWN);
+        return pageUtils.scrollToElement(material, materialScroller, CommonConstants.PAGE_DOWN);
     }
 
     /**
