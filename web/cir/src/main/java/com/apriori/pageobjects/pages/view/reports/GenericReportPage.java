@@ -487,6 +487,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@title='Scenario Name']//ul)[1]/li[1]")
     private WebElement firstScenarioName;
 
+    @FindBy(xpath = "//div[@id='componentType']//li[@title='Deselect All']")
+    private WebElement componentTypeDeselectAll;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -981,10 +984,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCountOfExportSets() {
         return availableExportSets.getText().substring(11);
-    }
-
-    public void wait(int milliseconds) {
-        pageUtils.waitFor(milliseconds);
     }
 
     /**
@@ -2035,6 +2034,29 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath("//a[@title='3538968 (Initial)  [part]']");
         pageUtils.waitForElementToAppear(locator);
         return new ComponentCostReportPage(driver);
+	}
+
+	/**
+     * Selects Component Type
+     * @return instance of Scenario Comparison Report Page
+     */
+    public ScenarioComparisonReportPage selectComponentType(String componentType) {
+        pageUtils.waitForElementAndClick(componentTypeDeselectAll);
+
+        By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']", componentType));
+        pageUtils.waitForElementAndClick(locator);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
+
+        for (int i = 1; i < 6; i++) {
+            By locator2 =
+                    By.xpath(String.format(
+                            "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]",
+                            componentType, i)
+            );
+            pageUtils.waitForElementToAppear(locator2);
+        }
+        return new ScenarioComparisonReportPage(driver);
     }
 
     /**
