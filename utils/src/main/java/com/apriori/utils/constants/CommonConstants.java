@@ -112,6 +112,10 @@ public class CommonConstants {
     public static final String cidAppURL = getBaseUrl();
     public static final String headerText = constantsInit.logoutHeaderText();
 
+
+
+
+
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     static {
@@ -132,6 +136,9 @@ public class CommonConstants {
     public static String useDifferentUsers() {
         return PROPERTIES.getProperty("different.users");
     }
+
+
+
 
 
 
