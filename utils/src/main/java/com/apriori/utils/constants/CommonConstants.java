@@ -1,7 +1,13 @@
 package com.apriori.utils.constants;
 
+import com.apriori.utils.FileResourceUtil;
+
 import org.aeonbits.owner.ConfigFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.logging.Level;
 
 public class CommonConstants {
@@ -105,8 +111,29 @@ public class CommonConstants {
     public static final String cicURL = constantsInit.cicURL();
     public static final String cidAppURL = getBaseUrl();
     public static final String headerText = constantsInit.logoutHeaderText();
-    public static final String usersFile = constantsInit.usersCsvFileName();
-    public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
+
+    private static final Properties PROPERTIES = new Properties();
+    private static final File INPUT_STREAM;
+    static {
+
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile("common.properties");
+
+        try {
+            PROPERTIES.load(new FileInputStream(INPUT_STREAM));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Get default url
+     * @return string
+     */
+    public static String useDifferentUsers() {
+        return PROPERTIES.getProperty("different.users");
+    }
+
+
 
     private static String buildMode;
 

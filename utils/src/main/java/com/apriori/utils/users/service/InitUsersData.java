@@ -114,11 +114,6 @@ class InitUsersData {
     }
 
     private static String initPathToFileWithUsers() {
-
-        return CommonConstants.environment +
-            "/" +
-            CommonConstants.usersFile +
-            ".csv";
+        return "common-users.csv";
     }
-
 }
