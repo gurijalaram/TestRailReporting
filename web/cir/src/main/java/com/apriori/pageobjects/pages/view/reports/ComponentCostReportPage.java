@@ -19,6 +19,9 @@ public class ComponentCostReportPage extends GenericReportPage {
     @FindBy(xpath = "(//ul[@class='jr-mSelectlist jr'])[2]")
     private WebElement componentSelectDropdownList;
 
+    @FindBy(xpath = "//div[@id='componentType']//a")
+    private WebElement componentTypeDropdown;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -38,10 +41,29 @@ public class ComponentCostReportPage extends GenericReportPage {
         return componentSelectDropdownList.getAttribute("childElementCount");
     }
 
+    /**
+     * Gets count of Component Type elements
+     * @param componentType types to find
+     * @return int
+     */
     public int getCountOfComponentTypeElements(String componentType) {
         By locator = By.xpath(String.format(
                 "(//ul[@class='jr-mSelectlist jr'])[2]/li[contains(@title, '[%s]')]", componentType));
         List<WebElement> elements = driver.findElements(locator);
         return elements.size();
+    }
+
+    /**
+     * Selects Component Type dropdown
+     * @param type - type to set
+     * @return Instance of Component Cost Report Page
+     */
+    public ComponentCostReportPage setComponentType(String type) {
+        pageUtils.waitForElementAndClick(componentTypeDropdown);
+        By locator = By.xpath(String.format("//li[@title='%s']", type));
+        pageUtils.waitForElementAndClick(locator);
+        By typeSelectedDropdown = By.xpath(String.format("//a[@title='%s']", type));
+        pageUtils.waitForElementToAppear(typeSelectedDropdown);
+        return this;
     }
 }

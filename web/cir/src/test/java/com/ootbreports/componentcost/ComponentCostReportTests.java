@@ -79,4 +79,27 @@ public class ComponentCostReportTests extends TestBase {
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("part"), is(equalTo(11)));
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), is(equalTo(3)));
     }
+
+    @Test
+    @TestRail(testCaseId = "3325")
+    @Description("Verify Component Select drop-down functions correctly")
+    public void testComponentSelectDropdown() {
+        componentCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForComponentFilter()
+                .setComponentType("assembly");
+
+        // assert on available scenario name being just one
+        // assert on available scenario name being Initial
+        // assert on component number being 3
+
+        //componentCostReportPage.setComponentType("part");
+        // assert on available scenario name being just one
+        // assert on available scenario name being Initial
+        // assert on component number being 3
+    }
 }
