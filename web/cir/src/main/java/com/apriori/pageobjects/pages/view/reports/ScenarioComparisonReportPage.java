@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 
 public class ScenarioComparisonReportPage extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ScenarioComparisonReportPage.class);
 
     @FindBy(xpath = "//span[contains(text(), 'FULLY')]/../following-sibling::td[2]")
     private WebElement firstFbc;
