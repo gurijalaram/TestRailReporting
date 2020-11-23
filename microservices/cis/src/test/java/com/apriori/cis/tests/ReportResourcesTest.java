@@ -9,6 +9,7 @@ import com.apriori.cis.entity.request.NewReportRequest;
 import com.apriori.cis.entity.response.Report;
 import com.apriori.cis.utils.CisUtils;
 
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.Constants;
 import com.apriori.utils.json.utils.JsonManager;
@@ -62,8 +63,8 @@ public class ReportResourcesTest extends TestUtil {
     @TestRail(testCaseId = "4181")
     @Description("Create a new report using the CIS API")
     public void createNewReport() {
-        Object obj = JsonManager.deserializeJsonFromFile(
-            Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreateReportData.json").getPath(), NewReportRequest.class);
+        Object obj = JsonManager.deserializeJsonFromStream(
+                FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"), NewReportRequest.class);
 
         Report report  = ReportResources.createReport(obj);
 
@@ -81,8 +82,8 @@ public class ReportResourcesTest extends TestUtil {
     @Description("Export a report using the CIS API")
     public void exportReport() {
         Integer count = 0;
-        Object rptObj = JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreateReportData.json").getPath(), NewReportRequest.class);
+        Object rptObj = JsonManager.deserializeJsonFromStream(
+                FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"), NewReportRequest.class);
 
         Report report = ReportResources.createReport(rptObj, Constants.getCisPartIdentity());
         String reportIdentity = report.getResponse().getIdentity();

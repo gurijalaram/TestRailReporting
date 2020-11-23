@@ -13,6 +13,7 @@ import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
 import com.apriori.cis.utils.CisProperties;
 import com.apriori.cis.utils.CisUtils;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -51,8 +52,8 @@ public class CostingScenarioTest extends TestUtil {
 
         // create batch part
         NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreatePartData.json").getPath(), NewPartRequest.class);
+                (NewPartRequest)JsonManager.deserializeJsonFromStream(
+                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
         Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
 
