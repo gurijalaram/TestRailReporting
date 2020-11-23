@@ -2034,9 +2034,9 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath("//a[@title='3538968 (Initial)  [part]']");
         pageUtils.waitForElementToAppear(locator);
         return new ComponentCostReportPage(driver);
-	}
+    }
 
-	/**
+    /**
      * Selects Component Type
      * @return instance of Scenario Comparison Report Page
      */

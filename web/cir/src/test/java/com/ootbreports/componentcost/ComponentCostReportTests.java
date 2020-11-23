@@ -2,11 +2,9 @@ package com.ootbreports.componentcost;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
@@ -15,6 +13,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
+
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;

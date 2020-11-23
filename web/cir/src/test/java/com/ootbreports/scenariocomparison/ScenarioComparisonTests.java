@@ -340,13 +340,13 @@ public class ScenarioComparisonTests extends TestBase {
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.EXPORT_SET.getListName(), "Available: ", "0");
-        assertThat(genericReportPage.getCountOfListAvailableItems(
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.EXPORT_SET.getListName(), "Available"), is(equalTo("0")));
-        assertThat(genericReportPage.getCountOfListAvailableItems(
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("0")));
-        assertThat(genericReportPage.getCountOfListAvailableItems(
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("0")));
-        assertThat(genericReportPage.getCountOfListAvailableItems(
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("0")));
     }
 
@@ -366,9 +366,9 @@ public class ScenarioComparisonTests extends TestBase {
         String nameToInput = scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(true);
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
-        assertThat(scenarioComparisonReportPage.getCountOfListAvailableItems(
+        assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
-        assertThat(scenarioComparisonReportPage.getCountOfListAvailableItems(
+        assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
                 is(equalTo("000002736 (Initial) [part]")));
