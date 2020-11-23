@@ -992,7 +992,7 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return String - count of list items
      */
-    public String getCountOfListAvailableItems(String listName, String option) {
+    public String getCountOfListAvailableOrSelectedItems(String listName, String option) {
         int substringVal = option.equals("Available") ? 11 : 10;
         By locator = By.xpath(String.format("//div[@title='%s']//span[contains(@title, '%s')]", listName, option));
         pageUtils.waitForElementToAppear(locator);
@@ -2025,6 +2025,16 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[1]/span", valueToGet));
         pageUtils.waitForElementToAppear(locator);
         return new BigDecimal(driver.findElement(locator).getText().replace(",", ""));
+    }
+
+    /**
+     * Waits for Component dropdown filter to take effect
+     * @return ComponentCostReportPage instance
+     */
+    public ComponentCostReportPage waitForComponentFilter() {
+        By locator = By.xpath("//a[@title='3538968 (Initial)  [part]']");
+        pageUtils.waitForElementToAppear(locator);
+        return new ComponentCostReportPage(driver);
     }
 
     /**
