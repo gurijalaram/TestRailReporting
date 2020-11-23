@@ -1,5 +1,6 @@
 package ootbreports.general.scenariocomparison;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -132,7 +133,7 @@ public class ScenarioComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3249")
-    @Description("Verfiy scenario name input control functions correctly")
+    @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -301,6 +302,7 @@ public class ScenarioComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3248")
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
@@ -309,7 +311,18 @@ public class ScenarioComparisonTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectDefaultScenarioName();
+                .selectComponentType("assembly");
+
+        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+                containsString("[assembly]"));
+
+        scenarioComparisonReportPage.selectComponentType("part");
+        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+                containsString("[part]"));
+
+        scenarioComparisonReportPage.selectComponentType("rollup");
+        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+                containsString("[rollup]"));
     }
 
     @Test
