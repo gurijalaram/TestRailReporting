@@ -91,6 +91,16 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
+     * Hover over the evaluate tab
+     *
+     * @return current page object
+     */
+    public PageHeader hoverOnEvaluateTab() {
+        pageUtils.mouseMove(evaluateTab);
+        return this;
+    }
+
+    /**
      * Selects the compare button
      *
      * @return current page object
@@ -98,6 +108,16 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public ComparePage selectCompareButton() {
         pageUtils.waitForElementAndClick(compareTab);
         return new ComparePage(driver);
+    }
+
+    /**
+     * Hover over the compare tab
+     *
+     * @return current page object
+     */
+    public PageHeader hoverOnCompareTab() {
+        pageUtils.mouseMove(compareTab);
+        return this;
     }
 
     /**
@@ -148,5 +168,13 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public CidLoginPage selectLogOut() {
         pageUtils.waitForElementAndClick(logOutButton);
         return new CidLoginPage(driver);
+    }
+
+    public String getTitleEvaluateTab() {
+        return evaluateTab.getAttribute("title");
+    }
+
+    public String getTitleCompareTab() {
+        return compareTab.getAttribute("title");
     }
 }
