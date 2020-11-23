@@ -170,7 +170,7 @@ public class CastingDtcReportTests extends TestBase {
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setWorkspace(WorkspaceEnum.PUBLIC.getWorkspace())
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
                 .setRowOne("Part Name", "Contains", partName)
                 .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .apply(ExplorePage.class)
