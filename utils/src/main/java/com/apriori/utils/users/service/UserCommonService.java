@@ -29,7 +29,7 @@ public class UserCommonService {
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser() {
-        return CommonConstants.useDifferentUsers().equals("true") ? getNewUser() : getGlobalUser();
+        return CommonConstants.getUseDifferentUser().equals("true") ? getNewUser() : getGlobalUser();
     }
 
     private static UserCredentials getNewUser() {

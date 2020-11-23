@@ -127,10 +127,10 @@ public class CommonConstants {
     }
 
     /**
-     * Get default url
+     * Get instruction whether to use different user
      * @return string
      */
-    public static String useDifferentUsers() {
+    public static String getUseDifferentUser() {
         return PROPERTIES.getProperty("different.users");
     }
 

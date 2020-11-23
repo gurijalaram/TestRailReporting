@@ -31,7 +31,7 @@ public class UserSecurityService {
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser(String accessLevel) {
-        return CommonConstants.useDifferentUsers().equals("true") ? getSecurityUser(accessLevel) : getGlobalUser();
+        return CommonConstants.getUseDifferentUser().equals("true") ? getSecurityUser(accessLevel) : getGlobalUser();
     }
 
     private static synchronized UserCredentials getSecurityUser(String security) {
