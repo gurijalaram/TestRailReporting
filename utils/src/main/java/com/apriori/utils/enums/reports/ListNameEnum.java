@@ -1,6 +1,7 @@
 package com.apriori.utils.enums.reports;
 
 public enum ListNameEnum {
+    EXPORT_SET("Single export set selection."),
     CREATED_BY("Created By"),
     LAST_MODIFIED_BY("Last Modified By"),
     PARTS("Select Parts "),
