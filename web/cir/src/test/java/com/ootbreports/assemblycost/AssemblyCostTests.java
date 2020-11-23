@@ -1,4 +1,4 @@
-package ootbreports.general.assemblycost;
+package com.ootbreports.assemblycost;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
