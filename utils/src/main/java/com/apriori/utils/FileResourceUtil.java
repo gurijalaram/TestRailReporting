@@ -125,7 +125,6 @@ public class FileResourceUtil {
      * @param resourceFileName - the file name
      * @return file object
      */
-    @Deprecated
     public static File getResourceAsFile(String resourceFileName) {
         try {
             InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourceFileName);
