@@ -112,6 +112,7 @@ public class CommonConstants {
     public static final String cidAppURL = getBaseUrl();
     public static final String headerText = constantsInit.logoutHeaderText();
 
+    private static String CSV_FILE;
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
 
@@ -132,6 +133,14 @@ public class CommonConstants {
      */
     public static String getUseDifferentUser() {
         return PROPERTIES.getProperty("different.users");
+    }
+
+    /**
+     * Get csv file to use
+     * @return string
+     */
+    public static String getCsvFile() {
+        return CSV_FILE = CSV_FILE == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
     }
 
     private static String buildMode;
@@ -307,7 +316,7 @@ public class CommonConstants {
         if (cisPartIdentity == null) {
             cisPartIdentity = System.getProperty("cisPartIdentity", constantsInit.cisPartIdentity());
         }
-        
+
         return cisPartIdentity;
     }
 
@@ -358,7 +367,7 @@ public class CommonConstants {
         return apitestsBasePath;
 
     }
-    
+
     public static String getApitestsResourcePath() {
         if (apitestsResourcePath == null) {
             apitestsResourcePath = System.getProperty("apitestsResourcePath", constantsInit.apitestsResourcePath());
@@ -395,12 +404,12 @@ public class CommonConstants {
         return ntsEmailRecipientAddress;
 
     }
-    
+
     public static String getNtsEmailSubject() {
         if (ntsEmailSubject == null) {
             ntsEmailSubject = System.getProperty("ntsEmailSubject", constantsInit.ntsEmailSubject());
         }
-        
+
         return ntsEmailSubject;
     }
 
@@ -419,5 +428,5 @@ public class CommonConstants {
 
         return ntsEmailAttachment;
     }
-    
+
 }

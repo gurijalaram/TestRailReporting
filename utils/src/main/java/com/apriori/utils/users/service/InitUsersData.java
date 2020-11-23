@@ -114,6 +114,6 @@ class InitUsersData {
     }
 
     private static String initPathToFileWithUsers() {
-        return "common-users.csv";
+        return CommonConstants.getCsvFile();
     }
 }
