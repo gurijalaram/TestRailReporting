@@ -7,6 +7,7 @@ public enum ListNameEnum {
     PARTS("Select Parts "),
     PARTS_NO_SPACE("Select Parts"),
     COMPONENT_TYPE("Scenario Type"),
+    COMPONENT_SELECT("Component Select"),
     SCENARIO_NAME("Scenario Name"),
     SCENARIOS_TO_COMPARE("Scenarios to Compare");
 

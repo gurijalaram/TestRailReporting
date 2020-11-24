@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.enums.reports.ListNameEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ComponentCostReportPage extends GenericReportPage {
@@ -65,5 +67,24 @@ public class ComponentCostReportPage extends GenericReportPage {
         By typeSelectedDropdown = By.xpath(String.format("//a[@title='%s']", type));
         pageUtils.waitForElementToAppear(typeSelectedDropdown);
         return this;
+    }
+
+    public ArrayList<String> getComponentSelectNames() {
+        By locator = By.xpath("(//ul[@class='jr-mSelectlist jr'])[2]/li");
+        List<WebElement> componentElements = driver.findElements(locator);
+        ArrayList<String> componentNames = new ArrayList<>();
+        for (WebElement element : componentElements) {
+            componentNames.add(element.getAttribute("title"));
+        }
+        return componentNames;
+    }
+
+    /**
+     * Waits for Component Select filter to take effect
+     */
+    public void waitForComponentFilter(boolean isAssembly) {
+        String dropdownTitle = isAssembly ? "SUB-ASSEMBLY (Initial)  [assembly]" : "3538968 (Initial)  [part]";
+        By locator = By.xpath(String.format("//a[@title='%s']", dropdownTitle));
+        pageUtils.waitForElementToAppear(locator);
     }
 }

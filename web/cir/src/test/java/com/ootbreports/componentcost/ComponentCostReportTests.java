@@ -20,6 +20,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 
+import java.util.ArrayList;
+
 public class ComponentCostReportTests extends TestBase {
 
     private ComponentCostReportPage componentCostReportPage;
@@ -81,6 +83,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3325")
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
@@ -90,16 +93,29 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForComponentFilter()
-                .setComponentType("assembly");
+                .waitForComponentFilter();
 
-        // assert on available scenario name being just one
-        // assert on available scenario name being Initial
-        // assert on component number being 3
+        componentSelectAsserts(true);
+        componentSelectAsserts(false);
+    }
 
-        //componentCostReportPage.setComponentType("part");
-        // assert on available scenario name being just one
-        // assert on available scenario name being Initial
-        // assert on component number being 3
+    private void componentSelectAsserts(boolean isAssembly) {
+        String componentType = isAssembly ? "assembly" : "part";
+        String expectedCount = isAssembly ? "3" : "11";
+
+        componentCostReportPage.setComponentType(componentType);
+        componentCostReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", "1");
+        componentCostReportPage.waitForComponentFilter(isAssembly);
+
+        assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+        assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
+
+        assertThat(componentCostReportPage.getComponentListCount(), is(equalTo(expectedCount)));
+        ArrayList<String> partComponentNames = componentCostReportPage.getComponentSelectNames();
+        for (String componentName : partComponentNames) {
+            assertThat(componentName.contains(componentType), is(true));
+        }
     }
 }
