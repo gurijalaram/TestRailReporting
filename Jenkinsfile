@@ -6,6 +6,7 @@ def url
 def threadCount
 def browser
 def testSuite
+def csv
 def folder = "web"
 
 pipeline {
@@ -19,6 +20,7 @@ pipeline {
         booleanParam(name: 'HEADLESS', defaultValue: true)
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
+        string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
     }
 
     agent {
@@ -69,6 +71,11 @@ pipeline {
                     testSuite = "testsuites." + params.TEST_SUITE
                     if (params.TEST_SUITE == "Other") {
                         testSuite = params.OTHER_TEST
+                    }
+
+                    csv = params.CSV_FILE
+                    if (csv != "none") {
+                        javaOpts = javaOpts + " -Durl=${params.CSV_FILE}"
                     }
 
                     echo "${javaOpts}"

@@ -128,7 +128,7 @@ public class CommonConstants {
     }
 
     /**
-     * Get instruction whether to use different user
+     * Get true/false value of whether to use different user
      * @return string
      */
     public static String getUseDifferentUser() {
