@@ -8,7 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -26,6 +25,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import utils.Constants;
 
 public class MachiningDtcReportTests extends TestBase {
 

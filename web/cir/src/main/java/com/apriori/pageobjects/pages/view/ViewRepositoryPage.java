@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.view;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import org.openqa.selenium.WebDriver;
@@ -12,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 import java.util.HashMap;
 import java.util.Map;

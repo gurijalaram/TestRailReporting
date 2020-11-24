@@ -3,9 +3,8 @@ package com.apriori.cds.tests;
 import com.apriori.cds.entity.response.Application;
 import com.apriori.cds.entity.response.Applications;
 import com.apriori.cds.tests.utils.CdsTestUtil;
-
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.dao.ServiceConnector;
@@ -13,9 +12,7 @@ import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-
 import org.apache.http.HttpStatus;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +45,7 @@ public class CdsApplications extends CdsTestUtil {
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
         url = String.format(url,
-                String.format("applications/%s", Constants.getCdsIdentityApplication()));
+                String.format("applications/%s", CommonConstants.getCdsIdentityApplication()));
 
         ResponseWrapper<Application> response =  getRequest(Application.class, false);
 

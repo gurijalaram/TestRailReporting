@@ -2,7 +2,7 @@ package com.pageobjects.pages.evaluate.designguidance.tolerances;
 
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 
 import com.pageobjects.toolbars.EvaluatePanelToolbar;
 import org.openqa.selenium.By;
@@ -88,7 +88,7 @@ public class TolerancePage extends EvaluatePanelToolbar {
     public WebElement findToleranceType(String toleranceType) {
         By tolerance = By.xpath("//div[@data-ap-comp='tolerancesTable']//td[contains(text(),'" + toleranceType + "')]/ancestor::tr");
         pageUtils.waitForElementToAppear(tolerance);
-        return pageUtils.scrollToElement(tolerance, toleranceScroller, Constants.ARROW_DOWN);
+        return pageUtils.scrollToElement(tolerance, toleranceScroller, CommonConstants.ARROW_DOWN);
     }
 
     /**
@@ -99,7 +99,7 @@ public class TolerancePage extends EvaluatePanelToolbar {
      */
     private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='tolerancesDetailsTable']//td[.='" + gcdType + "']");
-        return pageUtils.scrollToElement(gcd, detailsScroller, Constants.ARROW_DOWN);
+        return pageUtils.scrollToElement(gcd, detailsScroller, CommonConstants.ARROW_DOWN);
     }
 
     /**
