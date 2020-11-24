@@ -22,6 +22,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
+import utils.Constants;
 
 import java.math.BigDecimal;
 

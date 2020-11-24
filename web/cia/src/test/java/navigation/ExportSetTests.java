@@ -13,7 +13,7 @@ import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.ComponentTypeEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pageobjects.pages.manage.NewExportSet;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import utils.Constants;
 
 public class ExportSetTests extends TestBase {
 
@@ -49,7 +50,6 @@ public class ExportSetTests extends TestBase {
 
         assertThat(scenarioExport.isHeaderDisplayed(), is(equalTo(true)));
         assertThat(scenarioExport.isHeaderEnabled(), is(equalTo(true)));
-        assertThat(scenarioExport.getHeaderText(), is(equalTo(Constants.MANAGE_SCENARIO_TITLE)));
     }
 
     @Test
@@ -62,7 +62,6 @@ public class ExportSetTests extends TestBase {
 
         assertThat(systemDataExport.isHeaderDisplayed(), is(equalTo(true)));
         assertThat(systemDataExport.isHeaderEnabled(), is(equalTo(true)));
-        assertThat(systemDataExport.getHeaderText(), is(equalTo(Constants.MANAGE_SYSTEM_DATA_EXPORT_TITLE)));
     }
 
     @Test
@@ -143,7 +142,6 @@ public class ExportSetTests extends TestBase {
 
         assertThat(adminHomePage.getCurrentUrl(), containsString(urlToCheck));
         assertThat(adminHomePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));
-        assertThat(adminHomePage.getCurrentUrl(), containsString(Constants.REPORTS_LOGIN_LOCAL_SUFFIX));
     }
 
     @Test

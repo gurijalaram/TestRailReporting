@@ -16,6 +16,9 @@ public class Constants {
     public static final String CIA_USER_GUIDE_TITLE = "Cost Insight Admin\nUser Guide";
     public static final String SCENARIO_EXPORT_CHAPTER_PAGE_TITLE = "2 Scenario and System Data Exports";
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
+    public static final String DEFAULT_SCENARIO_NAME = "Initial";
+    public static final String ON_PREM_BASE_URL = "https://conqbaci";
+    public static final String REPORTS_LOGIN_LOCAL_SUFFIX = "jasperserver-pro/login.html";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cia-qa";

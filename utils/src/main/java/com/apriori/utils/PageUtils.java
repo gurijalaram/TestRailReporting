@@ -805,7 +805,7 @@ public class PageUtils {
      * @return String of main part of url, minus 1 or 2 at end as can't tel which it is
      */
     public String getLocalUrlToCheck() {
-        String returnVal = Constants.getBaseUrl();
+        String returnVal = CommonConstants.getBaseUrl();
         if (returnVal.contains("localhost")) {
             returnVal = returnVal.replace("localhost/", "conqbaci0");
         }

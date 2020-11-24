@@ -4,6 +4,7 @@ import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
+import com.ootbreports.assemblycost.AssemblyCostTests;
 import com.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
@@ -14,7 +15,6 @@ import com.ootbreports.dtcmetrics.plastic.PlasticDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.plastic.PlasticDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.plastic.PlasticDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
-import ootbreports.general.assemblycost.AssemblyCostTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
