@@ -84,6 +84,28 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3326")
+    @Description("Verify Component Type drop-down functions correctly")
+    public void testComponentTypeDropdown() {
+        componentCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForComponentFilter();
+
+        componentSelectAsserts(true);
+        componentSelectAsserts(false);
+
+        componentCostReportPage.clickOk()
+                .waitForCorrectPartName("3538968");
+
+        assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("3538968")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3325")
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
@@ -95,8 +117,17 @@ public class ComponentCostReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForComponentFilter();
 
-        componentSelectAsserts(true);
-        componentSelectAsserts(false);
+        assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
+
+        assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+        assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
+
+        componentCostReportPage.selectComponent("TOP-LEVEL")
+                .clickOk()
+                .waitForCorrectPartName("TOP-LEVEL");
+
+        assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("TOP-LEVEL")));
     }
 
     private void componentSelectAsserts(boolean isAssembly) {
