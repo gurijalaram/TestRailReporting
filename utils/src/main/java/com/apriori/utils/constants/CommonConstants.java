@@ -1,12 +1,17 @@
 package com.apriori.utils.constants;
 
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.FileResourceUtil;
 
 import org.aeonbits.owner.ConfigFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.logging.Level;
 
-public class Constants {
+public class CommonConstants {
+
     public static final String DEFAULT_PROJECT_ID_VALUE = "177";
     public static final String DEFAULT_PROJECT_ID_KEY = "RUN_ID";
 
@@ -38,50 +43,9 @@ public class Constants {
     public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
     public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
 
-    public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_ONE = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
-    public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_TWO = "CIA_UG";
-    public static final String CIA_USER_GUIDE_URL_SUBSTRING = "CI_ADMIN_USER_GUIDE";
-    public static final String CIA_USER_GUIDE_TITLE = "Cost Insight Admin\nUser Guide";
-    public static final String SCENARIO_EXPORT_CHAPTER_PAGE_TITLE = "2 Scenario and System Data Exports";
-    public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
-    public static final String SAVED_CONFIG_NAME = "Saved Config";
-    public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
-    public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
-    public static final String REPORTING_HELP_URL = "https://help.jaspersoft.com/Default";
-    public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
-    public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
-    public static final String DTC_METRICS_FOLDER = "DTC Metrics";
-    public static final String GENERAL_FOLDER = "General";
-    public static final String PUBLIC_WORKSPACE = "Public";
-    public static final String PRIVATE_WORKSPACE = "Private";
-    public static final String ASSEMBLY_STRING = "[assembly]";
-    public static final String PART_NAME_INITIAL_EXPECTED_MACHINING_DTC = "PMI_SYMMETRYCREO (Initial) ";
-    public static final String PART_NAME_EXPECTED_MACHINING_DTC = "PMI_FLATNESSCREO (Initial)";
-    public static final String CASTING_DIE_SAND_NAME = String.format(
-            "%s, %s",
-            ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
-            ProcessGroupEnum.CASTING_SAND.getProcessGroup()
-    );
-    public static final String STOCK_MACHINING_TWO_MODEL_NAME = String.format(
-            "%s, %s",
-            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
-            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
-    );
-    public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
-    public static final String FORGOT_PWD_MESSAGE = "If the supplied email address is valid, you will receive an " +
-            "email shortly with instructions on resetting your password. If you did not receive an email and still " +
-            "require assistance, please send an email to support@apriori.com.";
-    public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
-    public static final String INVALID_ERROR_MESSAGE = "Invalid";
-
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
-
-    public static final String DEFAULT_SCENARIO_NAME = "Initial";
-    public static final String PART_SCENARIO_TYPE = "Part";
-    public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
-    public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
@@ -128,7 +92,6 @@ public class Constants {
     public static final String defaultCdsIdentityCustomerKey = "cdsIdentityCustomer";
     public static final String defaultCdsIdentityApplicationKey = "cdsIdentityApplication";
 
-
     private static final ConstantsInit constantsInit;
 
     static {
@@ -148,8 +111,37 @@ public class Constants {
     public static final String cicURL = constantsInit.cicURL();
     public static final String cidAppURL = getBaseUrl();
     public static final String headerText = constantsInit.logoutHeaderText();
-    public static final String usersFile = constantsInit.usersCsvFileName();
-    public static final Boolean useDifferentUsers = constantsInit.useDifferentUsers();
+
+    private static String csvFile;
+    private static final Properties PROPERTIES = new Properties();
+    private static final File INPUT_STREAM;
+
+    static {
+
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile("common.properties");
+
+        try {
+            PROPERTIES.load(new FileInputStream(INPUT_STREAM));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Get true/false value of whether to use different user
+     * @return string
+     */
+    public static String getUseDifferentUser() {
+        return PROPERTIES.getProperty("different.users");
+    }
+
+    /**
+     * Get csv file to use
+     * @return string
+     */
+    public static String getCsvFile() {
+        return csvFile = csvFile == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
+    }
 
     private static String buildMode;
 
@@ -324,7 +316,7 @@ public class Constants {
         if (cisPartIdentity == null) {
             cisPartIdentity = System.getProperty("cisPartIdentity", constantsInit.cisPartIdentity());
         }
-        
+
         return cisPartIdentity;
     }
 
@@ -375,7 +367,7 @@ public class Constants {
         return apitestsBasePath;
 
     }
-    
+
     public static String getApitestsResourcePath() {
         if (apitestsResourcePath == null) {
             apitestsResourcePath = System.getProperty("apitestsResourcePath", constantsInit.apitestsResourcePath());
@@ -412,12 +404,12 @@ public class Constants {
         return ntsEmailRecipientAddress;
 
     }
-    
+
     public static String getNtsEmailSubject() {
         if (ntsEmailSubject == null) {
             ntsEmailSubject = System.getProperty("ntsEmailSubject", constantsInit.ntsEmailSubject());
         }
-        
+
         return ntsEmailSubject;
     }
 
@@ -436,5 +428,5 @@ public class Constants {
 
         return ntsEmailAttachment;
     }
-    
+
 }

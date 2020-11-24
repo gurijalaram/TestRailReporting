@@ -2,7 +2,7 @@ package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
@@ -751,7 +751,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.jsNewTab();
         pageUtils.windowHandler(index);
 
-        driver.get(Constants.cidURL);
+        driver.get(CommonConstants.cidURL);
         pageUtils.waitForElementToAppear(cidLogo);
 
         return new GenericReportPage(driver);
@@ -1459,8 +1459,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Waits for correct Part Name
      */
     public void waitForCorrectPartName(boolean initialCall) {
-        String partNameToExpect = initialCall ? Constants.PART_NAME_INITIAL_EXPECTED_MACHINING_DTC :
-                Constants.PART_NAME_EXPECTED_MACHINING_DTC;
+        String partNameToExpect = initialCall ? utils.Constants.PART_NAME_INITIAL_EXPECTED_MACHINING_DTC :
+                utils.Constants.PART_NAME_EXPECTED_MACHINING_DTC;
         By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partNameToExpect));
         pageUtils.waitForElementToAppear(locator);
     }

@@ -23,14 +23,13 @@ import com.apriori.pageobjects.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.pageobjects.pages.login.PrivacyPolicyPage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import utils.Constants;
 
 public class ReportsNavigationTests extends TestBase {
 

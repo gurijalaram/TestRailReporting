@@ -1,7 +1,7 @@
 package com.apriori.utils.web.rules;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.web.driver.TestMode;
 import com.apriori.utils.web.exceptions.APIClient;
 import com.apriori.utils.web.exceptions.APIException;
@@ -83,7 +83,7 @@ public class TestRailRule extends TestWatcher {
     public void addResultForCase(Map<String, Object> parameterData)
         throws IOException, APIException {
 
-        if (!Constants.getBuildMode().equals(TestMode.QA.value())) {
+        if (!CommonConstants.getBuildMode().equals(TestMode.QA.value())) {
             return;
         }
 
@@ -92,7 +92,7 @@ public class TestRailRule extends TestWatcher {
         client.setPassword(PASSWORD);
         String[] values = testRail.testCaseId();
         for (String value : values) {
-            client.sendPost("add_result_for_case/" + Constants.RUN_ID + "/" + value + "", parameterData);
+            client.sendPost("add_result_for_case/" + CommonConstants.RUN_ID + "/" + value + "", parameterData);
         }
     }
 }

@@ -7,7 +7,7 @@ import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper
 import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -48,12 +48,12 @@ public class UserTestDataUtil {
 
     public String initToken(UserCredentials userCredentials) {
         return SecurityManager.retriveJwtToken(
-                Constants.getAtsServiceHost(),
+                CommonConstants.getAtsServiceHost(),
                 HttpStatus.SC_CREATED,
                 userCredentials.getUsername().split("@")[0],
                 userCredentials.getUsername(),
-                Constants.getAtsTokenIssuer(),
-                Constants.getAtsTokenSubject());
+                CommonConstants.getAtsTokenIssuer(),
+                CommonConstants.getAtsTokenSubject());
     }
 
     public UserDataEDC initBillOfMaterials() {

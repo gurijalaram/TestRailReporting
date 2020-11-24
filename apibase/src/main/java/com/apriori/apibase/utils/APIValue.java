@@ -1,7 +1,7 @@
 package com.apriori.apibase.utils;
 
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,7 +39,7 @@ public class APIValue {
         String jsonResponse = new HTTPRequest()
             .unauthorized()
             .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
-            .setEndpoint(Constants.getBaseUrl() + endpoint)
+            .setEndpoint(CommonConstants.getBaseUrl() + endpoint)
             .setAutoLogin(false)
             .setReturnType(entityClass)
             .commitChanges()

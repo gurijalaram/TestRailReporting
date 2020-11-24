@@ -1,5 +1,6 @@
 package com.apriori.utils.users;
 
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.users.service.UserCommonService;
 import com.apriori.utils.users.service.UserSecurityService;
 
@@ -8,15 +9,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Get user functionality.
- * Has reference to {@link com.apriori.utils.constants.Constants#environment}.properties file
+ * Has reference to {@link CommonConstants#environment}.properties file
  * reference properties:
  * - different.users
  * - if true: will return each time new user
  * - if false: will return each time single user
- * - users.csv.file: the name of csv file with users list from resources/{@link com.apriori.utils.constants.Constants#environment} folder
+ * - users.csv.file: the name of csv file with users list from resources/{@link CommonConstants#environment} folder
  * (if users are absent, return default user with:
- * - username:{@link com.apriori.utils.constants.Constants#DEFAULT_USER_NAME}
- * - password:{@link com.apriori.utils.constants.Constants#DEFAULT_PASSWORD}
+ * - username:{@link CommonConstants#DEFAULT_USER_NAME}
+ * - password:{@link CommonConstants#DEFAULT_PASSWORD}
  * )
  * <p>
  * Users list is global for two Collections:

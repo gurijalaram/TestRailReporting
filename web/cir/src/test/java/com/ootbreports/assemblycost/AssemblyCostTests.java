@@ -1,7 +1,6 @@
 package com.ootbreports.assemblycost;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -10,6 +9,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import utils.Constants;
 
 public class AssemblyCostTests extends TestBase {
 
