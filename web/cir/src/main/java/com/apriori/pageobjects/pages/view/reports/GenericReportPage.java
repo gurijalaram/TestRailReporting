@@ -24,6 +24,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -1469,15 +1470,6 @@ public class GenericReportPage extends ReportsPageHeader {
 	* Waits for correct part name
 	* @param partName String
 	*/
-    public void waitForCorrectPartName(String partName) {
-        By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partNameToExpect));
-        pageUtils.waitForElementToAppear(locator);
-    }
-
-    /**
-     * Waits for correct part name
-     * @param partName String
-     */
     public void waitForCorrectPartName(String partName) {
         By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partName));
         pageUtils.waitForElementToAppear(locator);
