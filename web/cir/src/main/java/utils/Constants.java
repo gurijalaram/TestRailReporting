@@ -1,7 +1,6 @@
 package utils;
 
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import java.io.File;
@@ -9,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Constants extends CommonConstants {
+public class Constants {
 
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
     public static final String SAVED_CONFIG_NAME = "Saved Config";
