@@ -82,27 +82,6 @@ public class ComponentCostReportTests extends TestBase {
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), is(equalTo(3)));
     }
 
-    @Test
-    @Category(CiaCirTestDevTest.class)
-    @TestRail(testCaseId = "3326")
-    @Description("Verify Component Type drop-down functions correctly")
-    public void testComponentTypeDropdown() {
-        componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForComponentFilter();
-
-        componentSelectAsserts(true);
-        componentSelectAsserts(false);
-
-        componentCostReportPage.clickOk()
-                .waitForCorrectPartName("3538968");
-
-        assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("3538968")));
-    }
 
     @Test
     @Category(CiaCirTestDevTest.class)
@@ -128,6 +107,48 @@ public class ComponentCostReportTests extends TestBase {
                 .waitForCorrectPartName("TOP-LEVEL");
 
         assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("TOP-LEVEL")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3326")
+    @Description("Verify Component Type drop-down functions correctly")
+    public void testComponentTypeDropdown() {
+        componentCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForComponentFilter();
+
+        componentSelectAsserts(true);
+        componentSelectAsserts(false);
+
+        componentCostReportPage.clickOk()
+                .waitForCorrectPartName("3538968");
+
+        assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("3538968")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "3327")
+    @Description("Verify scenario name input control functions correctly")
+    public void testScenarioNameInputControl() {
+        componentCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForComponentFilter()
+                .selectDefaultScenarioName(ComponentCostReportPage.class);
+
+        assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
+        ArrayList<String> partComponentNames = componentCostReportPage.getComponentSelectNames();
+        for (String componentName : partComponentNames) {
+            assertThat(componentName.contains(Constants.DEFAULT_SCENARIO_NAME), is(true));
+        }
     }
 
     private void componentSelectAsserts(boolean isAssembly) {

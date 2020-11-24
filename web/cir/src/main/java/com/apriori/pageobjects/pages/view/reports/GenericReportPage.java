@@ -1022,7 +1022,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Selects default scenario name (Initial)
      * @return instance of Scenario Comparison Report Page
      */
-    public ScenarioComparisonReportPage selectDefaultScenarioName() {
+    public <T> T selectDefaultScenarioName(Class<T> className) {
         By locator = By.xpath("//li[@title='Initial']/div/a");
         pageUtils.waitForElementAndClick(locator);
 
@@ -1031,7 +1031,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         By filteredLocator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[1 and contains(@title, '(Initial)')]");
         pageUtils.waitForElementToAppear(filteredLocator);
-        return new ScenarioComparisonReportPage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

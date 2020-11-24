@@ -140,7 +140,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectDefaultScenarioName();
+                .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
         scenarioComparisonReportPage.waitForScenarioFilter();
         String rowOneScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(1);
@@ -281,7 +281,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectDefaultScenarioName();
+                .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
         scenarioComparisonReportPage.selectAllScenariosToCompare();
         assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(),
@@ -360,7 +360,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectDefaultScenarioName();
+                .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
         scenarioComparisonReportPage.waitForScenarioFilter();
         String nameToInput = scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(true);
