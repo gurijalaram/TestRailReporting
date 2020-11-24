@@ -45,6 +45,10 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     @FindBy(css = "a.gwt-Anchor.comparison-table-header-scenario-state")
     private WebElement infoNotes;
 
+    @FindBy(css = ".v-grid-scroller.v-grid-scroller-vertical")
+    private WebElement componentScroller;
+
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -102,12 +106,12 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return true/false
      */
     public boolean isComparisonLockStatus(String lockStatus) {
-        By lockedIcon = By.xpath(String.format("//div[@class='locked-status-icon fa fa-%s']",lockStatus));
+        By lockedIcon = By.xpath(String.format("//div[@class='locked-status-icon fa fa-%s']", lockStatus));
         return pageUtils.waitForElementToAppear(lockedIcon).isDisplayed();
     }
 
-    public boolean isComparisonPublicWorkspace(String workspace){
-        By workspaceIcon = By.xpath(String.format("//div[@class='workspace-status-icon fa fa-users %s-workspace']",workspace));
+    public boolean isComparisonPublicWorkspace(String workspace) {
+        By workspaceIcon = By.xpath(String.format("//div[@class='workspace-status-icon fa fa-users %s-workspace']", workspace));
         return pageUtils.waitForElementToAppear(workspaceIcon).isDisplayed();
     }
 
@@ -120,7 +124,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public ComparePage removeScenarioFromCompareView(String partName, String scenarioName) {
         By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
-            partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
+                partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
         pageUtils.scrollToElement(removeComparisonButton, horizontalScroller, Constants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
@@ -150,12 +154,13 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Checks if the scenario is a basis
-     * @param partName - the part name
+     *
+     * @param partName     - the part name
      * @param scenarioName - the scenario name
      * @return true/false
      */
     public boolean isBasisButtonPresent(String partName, String scenarioName) {
-        return  pageUtils.isElementDisplayed(driver.findElement(findBasisButton(partName, scenarioName)));
+        return pageUtils.isElementDisplayed(driver.findElement(findBasisButton(partName, scenarioName)));
     }
 
     /**
@@ -174,7 +179,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
         return By.xpath(String.format("//div[@title='%s']/ancestor::th//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName.toUpperCase(), scenarioName));
     }
 
-    public EvaluatePage openScenarioFromComparison(String partName, String scenarioName){
+    public EvaluatePage openScenarioFromComparison(String partName, String scenarioName) {
         By scenarioNameLink = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
         driver.findElement(scenarioNameLink).click();
         return new EvaluatePage(driver);
@@ -184,4 +189,88 @@ public class ComparePage extends LoadableComponent<ComparePage> {
         pageUtils.waitForElementAndClick(infoNotes);
         return new ScenarioNotesPage(driver);
     }
+
+    public ComparePage selectInfoAndInputs() {
+        By infoAndInputsSection = By.xpath("//div[contains(text(),'Info & Inputs')]");
+        pageUtils.waitForElementAndClick(infoAndInputsSection);
+        return this;
+    }
+
+    public ComparePage selectMaterialAndUtilization() {
+        By materialAndUtilizationSection = By.xpath("//div[contains(text(),'Material & Utilization')]");
+        pageUtils.scrollToElement(materialAndUtilizationSection, componentScroller, Constants.ARROW_DOWN);
+        pageUtils.waitForElementAndClick(materialAndUtilizationSection);
+        return this;
+    }
+
+    public ComparePage selectDesignGuidanceSection() {
+        By designGuidanceSection = By.xpath("//div[contains(text(),'Design Guidance')]");
+        pageUtils.scrollToElement(designGuidanceSection, componentScroller, Constants.ARROW_DOWN);
+        pageUtils.waitForElementAndClick(designGuidanceSection);
+        return this;
+    }
+
+    public ComparePage selectProcess() {
+        By processSection = By.xpath("//div[contains(text(),'Process')]");
+        pageUtils.scrollToElement(processSection, componentScroller, Constants.ARROW_DOWN);
+        pageUtils.waitForElementToAppear(processSection);
+        pageUtils.waitForElementAndClick(processSection);
+        return this;
+    }
+
+    public ComparePage selectCostResults() {
+        By costResultsSection = By.xpath("//div[contains(text(),'Cost Results')]");
+        pageUtils.scrollToElement(costResultsSection, componentScroller, Constants.ARROW_DOWN);
+        pageUtils.waitForElementAndClick(costResultsSection);
+        return this;
+    }
+
+    public boolean isInfoInputsSectionCollapsed(String arrowDirection) {
+        By arrowInfoInput = By.xpath(String.format("//div[contains(text(),'Info & Inputs')]/ancestor::tr//span[@class = 'fa fa-caret-%s']", arrowDirection));
+        return pageUtils.waitForElementToAppear(arrowInfoInput).isDisplayed();
+    }
+
+    public boolean isMaterialUtilizationCollapsed(String arrowDirection) {
+        By arrowMaterialUtilization = By.xpath(String.format("//div[contains(text(),'Material & Utilization')]/ancestor::tr//span[@class = 'fa fa-caret-%s']", arrowDirection));
+        pageUtils.scrollToElement(arrowMaterialUtilization, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(arrowMaterialUtilization).isDisplayed();
+    }
+
+    public boolean isDesignGuidanceCollapsed(String arrowDirection) {
+        By arrowDesignGuidance = By.xpath(String.format("//div[contains(text(),'Design Guidance')]/ancestor::tr//span[@class = 'fa fa-caret-%s']", arrowDirection));
+        pageUtils.scrollToElement(arrowDesignGuidance, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(arrowDesignGuidance).isDisplayed();
+    }
+
+    public boolean isProcessCollapsed(String arrowDirection) {
+        By arrowProcess = By.xpath(String.format("//div[contains(text(),'Process')]/ancestor::tr//span[@class = 'fa fa-caret-%s']", arrowDirection));
+        pageUtils.scrollToElement(arrowProcess, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(arrowProcess).isDisplayed();
+    }
+
+    public boolean isCostResultCollapsed(String arrowDirection) {
+        By arrowCostResult = By.xpath(String.format("//div[contains(text(),'Cost Results')]/ancestor::tr//span[@class = 'fa fa-caret-%s']", arrowDirection));
+        pageUtils.scrollToElement(arrowCostResult, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(arrowCostResult).isDisplayed();
+    }
+
+    public String getDfmRisk() {
+        By dfmRisk = By.cssSelector("td.v-grid-cell .dfm-label");
+        pageUtils.scrollToElement(dfmRisk, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(dfmRisk).getText();
+    }
+
+    public String getWarningsCount() {
+        By warnings = By.xpath("//div[contains(text(),'Warnings')]/ancestor::tr//div[@class = 'gwt-Label comparison-table-row-value-cell-table-formula-value comparison-table-ellipsis-value']");
+        pageUtils.scrollToElement(warnings, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(warnings).getAttribute("title");
+    }
+
+    public String getGuidanceIssuesCount() {
+        By guidanceIssues = By.xpath("//div[contains(text(),'Guidance Issues')]/ancestor::tr//div[@class = 'gwt-Label comparison-table-row-value-cell-table-formula-value comparison-table-ellipsis-value']");
+        pageUtils.scrollToElement(guidanceIssues, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(guidanceIssues).getAttribute("title");
+    }
+
+
 }

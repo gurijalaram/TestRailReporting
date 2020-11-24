@@ -475,7 +475,6 @@ public class PublishComparisonTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-61539")
     @TestRail(testCaseId = {"461"})
     @Description("After publishing a Comparison, ensure no stale links remain in Job Queue or Toolbar")
     public void openPublishedComparisonFromJobQueue() {
