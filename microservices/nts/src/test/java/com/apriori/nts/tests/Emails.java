@@ -3,6 +3,7 @@ package com.apriori.nts.tests;
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.nts.apicalls.NotificationService;
 import com.apriori.apibase.services.nts.objects.GetEmailResponse;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.json.utils.JsonManager;
@@ -43,8 +44,8 @@ public class Emails {
     @TestRail(testCaseId = "3881")
     @Description("Get a single email using the NTS API")
     public void getEmail() {
-        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("property-store.json").getPath(),
+        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromStream(
+                FileResourceUtil.getResourceFileStream("property-store.json"),
                 PropertyStore.class);
         String identity = propertyStore.getEmailIdentity();
         NotificationService.getEmail(identity);
