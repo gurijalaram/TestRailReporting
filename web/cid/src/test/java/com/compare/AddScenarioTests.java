@@ -384,29 +384,29 @@ public class AddScenarioTests extends TestBase {
                 .apply(ScenarioTablePage.class)
                 .selectComparisonScenario(scenarioName, partName)
                 .apply(ComparePage.class)
-                .selectInfoAndInputs()
-                .selectMaterialAndUtilization()
-                .selectDesignGuidanceSection()
-                .selectProcess2()
-                .selectCostResults();
+                .toggleSection("Info & Inputs")
+                .toggleSection("Material & Utilization")
+                .toggleSection("Design Guidance")
+                .toggleSection("Process")
+                .toggleSection("Cost Results");
 
-        assertThat(comparePage.isInfoInputsSectionCollapsed("right"), is(true));
-        assertThat(comparePage.isMaterialUtilizationCollapsed("right"), is(true));
-        assertThat(comparePage.isDesignGuidanceCollapsed("right"), is(true));
-        assertThat(comparePage.isProcessCollapsed("right"), is(true));
-        assertThat(comparePage.isCostResultCollapsed("right"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Last Modified"), is(false));
+        assertThat(comparePage.isInfoDisplayed("Finish Mass (kg)"), is(false));
+        assertThat(comparePage.isInfoDisplayed("Warnings"), is(false));
+        assertThat(comparePage.isInfoDisplayed("Routing"), is(false));
+        assertThat(comparePage.isInfoDisplayed("Labour (USD)"), is(false));
 
-        new ComparePage(driver).selectInfoAndInputs()
-                .selectMaterialAndUtilization()
-                .selectDesignGuidanceSection()
-                .selectProcess()
-                .selectCostResults();
+        comparePage.toggleSection("Info & Inputs")
+            .toggleSection("Material & Utilization")
+            .toggleSection("Design Guidance")
+            .toggleSection("Process")
+            .toggleSection("Cost Results");
 
-        assertThat(comparePage.isInfoInputsSectionCollapsed("down"), is(true));
-        assertThat(comparePage.isMaterialUtilizationCollapsed("down"), is(true));
-        assertThat(comparePage.isDesignGuidanceCollapsed("down"), is(true));
-        assertThat(comparePage.isProcessCollapsed("down"), is(true));
-        assertThat(comparePage.isCostResultCollapsed("down"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Last Modified"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Finish Mass (kg)"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Warnings"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Routing"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Labour (USD)"), is(true));
     }
 
     @Test
@@ -448,22 +448,22 @@ public class AddScenarioTests extends TestBase {
                 .apply(ScenarioTablePage.class)
                 .selectComparisonScenario(scenarioName, partName)
                 .apply(ComparePage.class)
-                .selectMaterialAndUtilization()
-                .selectCostResults();
+                .toggleSection("Material & Utilization")
+                .toggleSection("Cost Results");
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.selectExploreButton()
                 .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
                 .openComparison(testComparisonNameA);
 
-        assertThat(comparePage.isMaterialUtilizationCollapsed("right"), is(true));
-        assertThat(comparePage.isCostResultCollapsed("right"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Finish Mass (kg)"), is(false));
+        assertThat(comparePage.isInfoDisplayed("Labour (USD)"), is(false));
 
-        new ComparePage(driver).selectMaterialAndUtilization()
-                .selectCostResults();
+        comparePage.toggleSection("Material & Utilization")
+            .toggleSection("Cost Results");
 
-        assertThat(comparePage.isMaterialUtilizationCollapsed("down"), is(true));
-        assertThat(comparePage.isCostResultCollapsed("down"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Finish Mass (kg)"), is(true));
+        assertThat(comparePage.isInfoDisplayed("Labour (USD)"), is(true));
     }
 
     @Test
