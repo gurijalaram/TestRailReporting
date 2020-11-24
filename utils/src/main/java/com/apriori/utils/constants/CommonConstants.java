@@ -106,7 +106,6 @@ public class CommonConstants {
     public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();
     public static final String internalApiURL = getBaseUrl() + constantsInit.internalApiURL();
     public static final String cidURL = getBaseUrl() + constantsInit.cidURL();
-    public static final String cicURL = constantsInit.cicURL();
     public static final String cidAppURL = getBaseUrl();
     public static final String headerText = constantsInit.logoutHeaderText();
 
