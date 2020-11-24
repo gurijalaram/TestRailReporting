@@ -112,7 +112,7 @@ public class CommonConstants {
     public static final String cidAppURL = getBaseUrl();
     public static final String headerText = constantsInit.logoutHeaderText();
 
-    private static String CSV_FILE;
+    private static String csvFile;
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
 
@@ -140,7 +140,7 @@ public class CommonConstants {
      * @return string
      */
     public static String getCsvFile() {
-        return CSV_FILE = CSV_FILE == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
+        return csvFile = csvFile == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
     }
 
     private static String buildMode;
