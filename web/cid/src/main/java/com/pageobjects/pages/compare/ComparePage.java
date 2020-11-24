@@ -211,9 +211,15 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     public ComparePage selectProcess() {
-        By processSection = By.xpath("//div[contains(text(),'Process')]");
+        By processSection = By.xpath("//span[@class='fa fa-caret-right']/ancestor::div[.='Process']");
         pageUtils.scrollToElement(processSection, componentScroller, Constants.ARROW_DOWN);
-        pageUtils.waitForElementToAppear(processSection);
+        pageUtils.waitForElementAndClick(processSection);
+        return this;
+    }
+
+    public ComparePage selectProcess2() {
+        By processSection = By.xpath("//span[@class='fa fa-caret-down']/ancestor::div[.='Process']");
+        pageUtils.scrollToElement(processSection, componentScroller, Constants.ARROW_DOWN);
         pageUtils.waitForElementAndClick(processSection);
         return this;
     }

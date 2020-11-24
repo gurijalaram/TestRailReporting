@@ -2,7 +2,9 @@ package com.compare;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -385,7 +387,7 @@ public class AddScenarioTests extends TestBase {
                 .selectInfoAndInputs()
                 .selectMaterialAndUtilization()
                 .selectDesignGuidanceSection()
-                .selectProcess()
+                .selectProcess2()
                 .selectCostResults();
 
         assertThat(comparePage.isInfoInputsSectionCollapsed("right"), is(true));
