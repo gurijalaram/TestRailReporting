@@ -6,7 +6,7 @@ def url
 def threadCount
 def browser
 def testSuite
-def csv
+def csvFile
 def folder = "web"
 
 pipeline {
@@ -73,9 +73,9 @@ pipeline {
                         testSuite = params.OTHER_TEST
                     }
 
-                    csv = params.CSV_FILE
-                    if (csv != "none") {
-                        javaOpts = javaOpts + " -Durl=${params.CSV_FILE}"
+                    csvFile = params.CSV_FILE
+                    if (csvFile != "none") {
+                        javaOpts = javaOpts + " -DcsvFile=${params.CSV_FILE}"
                     }
 
                     echo "${javaOpts}"
