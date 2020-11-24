@@ -1,7 +1,7 @@
 package com.pageobjects.pages.evaluate.materialutilization.stock;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -97,7 +97,7 @@ public class SelectStockPage extends LoadableComponent<SelectStockPage> {
      */
     private WebElement findStock(String stockName) {
         By stock = By.xpath("//div[@data-ap-comp='stockSelectionTable']//td[contains(text(),'" + stockName + "')]");
-        return pageUtils.scrollToElement(stock, stockScroller, Constants.PAGE_DOWN);
+        return pageUtils.scrollToElement(stock, stockScroller, CommonConstants.PAGE_DOWN);
     }
 
     /**

@@ -6,7 +6,7 @@ import com.apriori.apibase.services.cis.objects.ReportType;
 import com.apriori.apibase.services.cis.objects.ReportTypes;
 import com.apriori.apibase.services.cis.objects.Reports;
 import com.apriori.apibase.services.cis.objects.requests.NewReportRequest;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -60,7 +60,7 @@ public class ReportResources extends CisBase {
     }
 
     public static <T> ResponseWrapper<T> getSpecificReportType() {
-        String url = String.format(getReportTypesUrl(), "/" + Constants.getCisReportTypeIdentity());
+        String url = String.format(getReportTypesUrl(), "/" + CommonConstants.getCisReportTypeIdentity());
         return GenericRequestUtil.get(
                 RequestEntity.init(url, ReportType.class),
                 new RequestAreaApi()
@@ -77,12 +77,12 @@ public class ReportResources extends CisBase {
         if (identity != null) {
             nrr.addPart(identity);
         } else {
-            nrr.addPart(Constants.getCisPartIdentity());
+            nrr.addPart(CommonConstants.getCisPartIdentity());
         }
 
         String url = String.format(getCisUrl(), endpointReports);
         List<String> partsIdentities = new ArrayList<>();
-        partsIdentities.add(Constants.getCisPartIdentity());
+        partsIdentities.add(CommonConstants.getCisPartIdentity());
         NewReportRequest body = new NewReportRequest();
         body
                 .setExternalId(String.format(nrr.getExternalId(), System.currentTimeMillis()))

@@ -1,6 +1,6 @@
 package com.apriori.apibase.utils;
 
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -49,7 +49,7 @@ public class APIAuthentication {
             ResponseWrapper<AuthenticateJSON> tokenDetails =  new HTTPRequest().defaultFormAuthorization(username, password)
                 .customizeRequest()
                 .setReturnType(AuthenticateJSON.class)
-                .setEndpoint(Constants.getBaseUrl() + "ws/auth/token")
+                .setEndpoint(CommonConstants.getBaseUrl() + "ws/auth/token")
                 .setAutoLogin(false)
                 .commitChanges()
                 .connect()

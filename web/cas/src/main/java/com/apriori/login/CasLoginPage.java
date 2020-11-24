@@ -2,7 +2,7 @@ package com.apriori.login;
 
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     private final Logger logger = LoggerFactory.getLogger(CasLoginPage.class);
-    private static String loginPageUrl = Constants.cidURL;
+    private static String loginPageUrl = CommonConstants.cidURL;
 
     @FindBy(css = "input[name='email']")
     private WebElement email;

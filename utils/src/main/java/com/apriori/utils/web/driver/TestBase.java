@@ -1,7 +1,7 @@
 package com.apriori.utils.web.driver;
 
 import com.apriori.utils.TestHelper;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.runner.ConcurrentTestRunner;
 import com.apriori.utils.web.rules.TestRule;
 import com.apriori.utils.web.util.ConsoleLogHandler;
@@ -57,8 +57,8 @@ public class TestBase extends TestHelper {
 
         if (browser.value().equalsIgnoreCase("chrome")) {
             driver = new EventFiringWebDriver(df.getDriver());
-            TestHelper.logger.info("CONSOLE LOG LEVEL: " + Constants.consoleLogLevel.getName());
-            ConsoleLogHandler consoleLogHandler = new ConsoleLogHandler(Constants.consoleLogLevel);
+            TestHelper.logger.info("CONSOLE LOG LEVEL: " + CommonConstants.consoleLogLevel.getName());
+            ConsoleLogHandler consoleLogHandler = new ConsoleLogHandler(CommonConstants.consoleLogLevel);
             ((EventFiringWebDriver) driver).register(consoleLogHandler);
         }
 

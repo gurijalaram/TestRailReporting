@@ -21,8 +21,7 @@ import org.junit.runners.Suite;
         PartResourcesTest.class,
         ReportResourcesTest.class,
         BatchResourcesTest.class,
-        BatchPartResourcesTest.class,
-        MultiPartCostingScenarioTest.class
+        BatchPartResourcesTest.class
 })
 public class APISuite {
 }
