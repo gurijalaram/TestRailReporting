@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,12 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     @FindBy(xpath = "//div[@id='componentType']//a")
     private WebElement componentTypeDropdown;
+
+    @FindBy(xpath = "//span[contains(text(), 'Lifetime Cost:')]/../following-sibling::td[1]/span")
+    private WebElement lifetimeCost;
+
+    @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../following-sibling::td[1]/span")
+    private WebElement currentCurrency;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -69,6 +76,10 @@ public class ComponentCostReportPage extends GenericReportPage {
         return this;
     }
 
+    /**
+     * Gets values from Component Select dropdown
+     * @return ArrayList<String>
+     */
     public ArrayList<String> getComponentSelectNames() {
         By locator = By.xpath("(//ul[@class='jr-mSelectlist jr'])[2]/li");
         List<WebElement> componentElements = driver.findElements(locator);
@@ -86,5 +97,23 @@ public class ComponentCostReportPage extends GenericReportPage {
         String dropdownTitle = isAssembly ? "SUB-ASSEMBLY (Initial)  [assembly]" : "3538968 (Initial)  [part]";
         By locator = By.xpath(String.format("//a[@title='%s']", dropdownTitle));
         pageUtils.waitForElementToAppear(locator);
+    }
+
+    /**
+     * Gets lifetime cost
+     * @return BigDecimal
+     */
+    public BigDecimal getLifetimeCost() {
+        pageUtils.waitForElementToAppear(lifetimeCost);
+        return new BigDecimal(lifetimeCost.getText().replace(",", ""));
+    }
+
+    /**
+     * Gets current currency
+     * @return String
+     */
+    public String getCurrentCurrency() {
+        pageUtils.waitForElementToAppear(currentCurrency);
+        return currentCurrency.getText();
     }
 }

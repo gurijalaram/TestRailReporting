@@ -2,6 +2,7 @@ package com.ootbreports.componentcost;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -9,6 +10,7 @@ import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -21,6 +23,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class ComponentCostReportTests extends TestBase {
@@ -60,7 +63,6 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3324")
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetSelection() {
@@ -85,7 +87,6 @@ public class ComponentCostReportTests extends TestBase {
 
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3325")
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
@@ -111,7 +112,6 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3326")
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {
@@ -133,7 +133,6 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3327")
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -151,6 +150,34 @@ public class ComponentCostReportTests extends TestBase {
         for (String componentName : partComponentNames) {
             assertThat(componentName.contains(Constants.DEFAULT_SCENARIO_NAME), is(true));
         }
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3329")
+    @Description("Verify Currency Code input control is working correctly")
+    public void testCurrencyCode() {
+        componentCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ComponentCostReportPage.class);
+
+        BigDecimal lifetimeCostUSD = componentCostReportPage.getLifetimeCost();
+
+        componentCostReportPage.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ComponentCostReportPage.class);
+
+        BigDecimal lifetimeCostGBP = componentCostReportPage.getLifetimeCost();
+
+        assertThat(componentCostReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(lifetimeCostUSD, is(not(lifetimeCostGBP)));
     }
 
     private void componentSelectAsserts(boolean isAssembly) {
