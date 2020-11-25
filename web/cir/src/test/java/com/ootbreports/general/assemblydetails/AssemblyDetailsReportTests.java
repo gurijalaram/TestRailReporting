@@ -650,7 +650,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
 
-        String expectedLastModifiedCount = Constants.environment.equals("cid-qa") ? "2" : "1";
+        String expectedLastModifiedCount = Constants.DEFAULT_ENVIRONMENT_VALUE.equals("cir-qa") ? "2" : "1";
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
         String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
