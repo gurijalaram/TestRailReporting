@@ -2,7 +2,6 @@ package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
@@ -24,6 +23,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -751,7 +751,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.jsNewTab();
         pageUtils.windowHandler(index);
 
-        driver.get(CommonConstants.cidURL);
+        driver.get(Constants.getDefaultUrl());
         pageUtils.waitForElementToAppear(cidLogo);
 
         return new GenericReportPage(driver);
