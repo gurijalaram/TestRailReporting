@@ -13,12 +13,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
 
-    private static String loginPageURL = CommonConstants.cicURL;
+    private static String loginPageURL = Constants.getDefaultUrl();
     protected String url;
 
     @FindBy(css = "input[name='email']")
