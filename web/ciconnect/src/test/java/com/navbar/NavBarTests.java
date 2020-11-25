@@ -13,7 +13,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-import com.apriori.workflows.GenericWorkflow;
 import com.apriori.workflows.Schedule;
 
 import cicuserguide.CicUserGuide;
@@ -21,9 +20,7 @@ import org.junit.Test;
 
 public class NavBarTests extends TestBase {
 
-    private GenericWorkflow genericWorkflow;
     private UserList userList;
-    private LoginPage loginPage;
     private ConnectorList connectorList;
     private Schedule schedule;
     private PageHeader pageHeader;
