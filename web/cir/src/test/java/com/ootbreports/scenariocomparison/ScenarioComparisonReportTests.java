@@ -132,6 +132,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3249")
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -273,6 +274,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3247")
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
@@ -367,7 +369,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("2")));
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),

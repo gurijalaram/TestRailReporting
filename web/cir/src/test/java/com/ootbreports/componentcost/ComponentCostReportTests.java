@@ -133,6 +133,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3327")
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
