@@ -27,18 +27,8 @@ public class CommonConstants {
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-qa";
 
-    public static final String DEFAULT_SCENARIO_NAME_KEY = "scenarioName";
-    public static final String DEFAULT_EXPORT_SET_NAME_KEY = "exportSetName";
-    public static final String DEFAULT_ELEMENT_NAME_KEY = "elementName";
-    public static final String DEFAULT_SCENARIO_TYPE_KEY = "scenarioType";
-
     public static final String DEFAULT_USER_NAME_KEY = "username";
     public static final String DEFAULT_PASSWORD_KEY = "password";
-
-    public static final String SCENARIO_NAME = System.getProperty(DEFAULT_SCENARIO_NAME_KEY);
-    public static final String EXPORT_SET_NAME = System.getProperty(DEFAULT_EXPORT_SET_NAME_KEY);
-    public static final String ELEMENT_NAME = System.getProperty(DEFAULT_ELEMENT_NAME_KEY);
-    public static final String SCENARIO_TYPE = System.getProperty(DEFAULT_SCENARIO_TYPE_KEY);
 
     public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
     public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
