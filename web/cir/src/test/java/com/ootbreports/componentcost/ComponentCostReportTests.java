@@ -153,7 +153,6 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3329")
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
@@ -181,7 +180,6 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3328")
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {
