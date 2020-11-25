@@ -2,7 +2,7 @@ package com.apriori.pageobjects.pages.login;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
@@ -13,11 +13,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 public class ReportsLoginPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
-    private static String loginPageURL = Constants.cirURL;
+    private static String loginPageURL = Constants.getDefaultUrl();
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
@@ -160,8 +161,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
     public ReportsPageHeader login() {
         UserCredentials userCredentials;
 
-        if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
-            userCredentials = new UserCredentials(Constants.PROP_USER_NAME, Constants.PROP_USER_PASSWORD);
+        if (CommonConstants.PROP_USER_NAME != null && CommonConstants.PROP_USER_PASSWORD != null) {
+            userCredentials = new UserCredentials(CommonConstants.PROP_USER_NAME, CommonConstants.PROP_USER_PASSWORD);
         } else {
             userCredentials = UserUtil.getUser();
         }

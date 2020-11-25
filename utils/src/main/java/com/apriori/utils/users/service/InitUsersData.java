@@ -1,7 +1,7 @@
 package com.apriori.utils.users.service;
 
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.users.UserCredentials;
 
 import org.slf4j.Logger;
@@ -22,11 +22,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Work with users list file.
  * The users list file name, is declared by users.csv.file property.
- * users.csv.file: the name of csv file with users list by path: resources/{@link com.apriori.utils.constants.Constants#environment} folder
+ * users.csv.file: the name of csv file with users list by path: resources/{@link CommonConstants#environment} folder
  * (if users are absent, return default user with:
- * - username:{@link com.apriori.utils.constants.Constants#DEFAULT_USER_NAME}
- * - password:{@link com.apriori.utils.constants.Constants#DEFAULT_PASSWORD}
- * - accessLevel:{@link com.apriori.utils.constants.Constants#DEFAULT_ACCESS_LEVEL}
+ * - username:{@link CommonConstants#DEFAULT_USER_NAME}
+ * - password:{@link CommonConstants#DEFAULT_PASSWORD}
+ * - accessLevel:{@link CommonConstants#DEFAULT_ACCESS_LEVEL}
  * )
  *
  * @author vzarovnyi
@@ -93,7 +93,7 @@ class InitUsersData {
         if (userRecordWithAccessLevel(values)) {
             return new UserCredentials(values[0], values[1], values[2]);
         } else {
-            return new UserCredentials(values[0], values[1], Constants.DEFAULT_ACCESS_LEVEL);
+            return new UserCredentials(values[0], values[1], CommonConstants.DEFAULT_ACCESS_LEVEL);
         }
     }
 
@@ -108,17 +108,12 @@ class InitUsersData {
     }
 
     private static UserCredentials createDefaultUser() {
-        logger.info(String.format("Creating default user %s/%s/%s", Constants.DEFAULT_USER_NAME, Constants.DEFAULT_PASSWORD, Constants.DEFAULT_ACCESS_LEVEL));
+        logger.info(String.format("Creating default user %s/%s/%s", CommonConstants.DEFAULT_USER_NAME, CommonConstants.DEFAULT_PASSWORD, CommonConstants.DEFAULT_ACCESS_LEVEL));
 
-        return new UserCredentials(Constants.DEFAULT_USER_NAME, Constants.DEFAULT_PASSWORD, Constants.DEFAULT_ACCESS_LEVEL);
+        return new UserCredentials(CommonConstants.DEFAULT_USER_NAME, CommonConstants.DEFAULT_PASSWORD, CommonConstants.DEFAULT_ACCESS_LEVEL);
     }
 
     private static String initPathToFileWithUsers() {
-
-        return Constants.environment +
-            "/" +
-            Constants.usersFile +
-            ".csv";
+        return CommonConstants.getCsvFile();
     }
-
 }

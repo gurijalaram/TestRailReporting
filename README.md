@@ -96,9 +96,9 @@ Get user functionality has reference to `{environment}.properties` file.
        - false: will return each time the same (first from list) user
    * **users.csv.file**: the name of csv file with users list from `resources/ + {environment}` folder
         - if there are no users, return default user with:
-           - username:{com.apriori.utils.constants.Constants#defaultUserName} (admin@apriori.com)
-           - password:{com.apriori.utils.constants.Constants#defaultPassword} (admin)
-           - accessLevel:{com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
+           - username:{com.apriori.utils.constants.CommonConstants#defaultUserName} (admin@apriori.com)
+           - password:{com.apriori.utils.constants.CommonConstants#defaultPassword} (admin)
+           - accessLevel:{com.apriori.utils.constants.CommonConstants#defaultAccessLevel} (admin)
  
    Users list is global for two Collections:
    * security users collection
@@ -130,7 +130,7 @@ Get user functionality has reference to `{environment}.properties` file.
  * {username},{password},{accessLevel}
     - {username}: required
     - {password}: required
-    - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
+    - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.CommonConstants#defaultAccessLevel} (admin)
 
 
 ## API Request functionality

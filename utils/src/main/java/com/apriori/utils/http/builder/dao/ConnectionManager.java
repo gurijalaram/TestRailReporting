@@ -1,11 +1,10 @@
 package com.apriori.utils.http.builder.dao;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
-
 import static org.hamcrest.Matchers.isOneOf;
 
 import com.apriori.utils.AuthorizationFormUtil;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
@@ -20,7 +19,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.restassured.RestAssured;
-import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.HttpClientConfig;
@@ -32,7 +30,6 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -48,7 +45,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -233,7 +229,7 @@ public class ConnectionManager<T> {
                 throw new RuntimeException(String.format("Your returnType %s is not annotated with @Schema annotation", returnType.getName()));
             }
 
-            final URL resource = Thread.currentThread().getContextClassLoader().getResource(Constants.schemaBasePath + schemaLocation);
+            final URL resource = Thread.currentThread().getContextClassLoader().getResource(CommonConstants.schemaBasePath + schemaLocation);
             if (resource == null) {
                 throw new RuntimeException(
                         String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
@@ -323,7 +319,7 @@ public class ConnectionManager<T> {
         conn.setDoOutput(true);
         conn.setRequestProperty("Content-Type",
                 "multipart/form-data; boundary=" + boundary);
-        conn.setRequestProperty("ap-cloud-context", Constants.getNtsTargetCloudContext());
+        conn.setRequestProperty("ap-cloud-context", CommonConstants.getNtsTargetCloudContext());
 
         OutputStream outputStream = conn.getOutputStream();
         BufferedWriter bodyWriter = new BufferedWriter(new OutputStreamWriter(outputStream));

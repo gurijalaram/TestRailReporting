@@ -1,6 +1,6 @@
 package com.apriori.utils.http.enums.common;
 
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.enums.EndpointEnum;
 
 /**
@@ -9,7 +9,7 @@ import com.apriori.utils.http.enums.EndpointEnum;
 public interface ExternalEndpointEnum extends EndpointEnum {
 
     default String getEndpoint(Object... variables) {
-        return Constants.internalApiURL + String.format(getEndpointString(), variables);
+        return CommonConstants.internalApiURL + String.format(getEndpointString(), variables);
     }
 
     default String getSchemaLocation() {

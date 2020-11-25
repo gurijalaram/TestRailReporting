@@ -3,14 +3,12 @@ package com.apriori.cds.tests;
 import com.apriori.cds.entity.response.Role;
 import com.apriori.cds.entity.response.Roles;
 import com.apriori.cds.tests.utils.CdsTestUtil;
-
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.dao.ServiceConnector;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,7 +41,7 @@ public class CdsRoles extends CdsTestUtil {
     @Description("API returns a role's information based on the supplied identity")
     public void getRoleById() {
         url = String.format(url,
-            String.format("roles/%s", Constants.getCdsIdentityRole()));
+            String.format("roles/%s", CommonConstants.getCdsIdentityRole()));
         ResponseWrapper<Role> response = getCommonRequest(url, true, Role.class);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());

@@ -10,19 +10,17 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import utils.Constants;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -240,7 +238,7 @@ public class InputControlsTests extends TestBase {
      * @param reportName    - report to use
      * @param exportSetName - export set to use
      */
-    public void testCurrencyCode(String reportName, String exportSetName) {
+    public void testCurrencyCodeDtcReports(String reportName, String exportSetName) {
         BigDecimal gbpGrandTotal;
         BigDecimal usdGrandTotal;
 
@@ -484,48 +482,13 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
-        String inputString = "Ben Hegan";
+        String inputString = reportName.equals(ReportNamesEnum.SCENARIO_COMPARISON.getReportName()) ? "bhegan" : "Ben Hegan";
 
         genericReportPage.searchListForName(listName, inputString);
         assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
 
         genericReportPage.searchListForName(listName, "fakename");
         assertThat(genericReportPage.getCountOfListItems(listName), is(equalTo("0")));
-    }
-
-    /**
-     * Generic test for created by filter operation
-     *
-     * @param reportName String
-     * @param listName   String
-     */
-    public void testListFilterOperation(String reportName, String listName) {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class);
-
-        String nameToSelect = "Ben Hegan";
-        String lastModifiedByAvailable = genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
-        genericReportPage.selectListItem(listName, nameToSelect);
-
-        genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", "1");
-        assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo("1")));
-
-        if (listName.equals(ListNameEnum.CREATED_BY.getListName())) {
-            String lastModifiedByListName = ListNameEnum.LAST_MODIFIED_BY.getListName();
-            String expectedCount = Constants.environment.equals("cid-qa") ? "3" : "1";
-            genericReportPage.waitForCorrectAvailableSelectedCount(lastModifiedByListName,
-                "Available: ", expectedCount);
-            assertThat(
-                genericReportPage.getCountOfListAvailableItems(lastModifiedByListName, "Available"),
-                is(not(equalTo(lastModifiedByAvailable)))
-            );
-        }
-
-        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName());
-        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
-            is(startsWith(AssemblySetEnum.PISTON_ASSEMBLY.getAssemblySetName())));
     }
 
     /**

@@ -1,20 +1,20 @@
 package com.apriori.utils.runner;
 
 import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 
 public class SuiteRunnerHelper {
 
     static void initProjectRunId(Class<?> klass) {
-        String systemProjectRunId = System.getProperty(Constants.DEFAULT_PROJECT_ID_KEY);
+        String systemProjectRunId = System.getProperty(CommonConstants.DEFAULT_PROJECT_ID_KEY);
         if (systemProjectRunId != null) {
-            Constants.RUN_ID = systemProjectRunId;
+            CommonConstants.RUN_ID = systemProjectRunId;
             return;
         }
 
         ProjectRunID projectRunID = klass.getAnnotation(ProjectRunID.class);
         if (projectRunID != null) {
-            Constants.RUN_ID = projectRunID.value();
+            CommonConstants.RUN_ID = projectRunID.value();
         }
     }
 }

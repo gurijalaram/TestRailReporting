@@ -4,13 +4,13 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -31,6 +31,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import utils.Constants;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -609,11 +610,38 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterOperation() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testListFilterOperation(
-            ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-            ListNameEnum.CREATED_BY.getListName()
-        );
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class);
+
+        String lastModifiedByAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        String nameToSelect = "Ben Hegan";
+        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
+
+        String expectedLastModifiedCount = Constants.DEFAULT_ENVIRONMENT_VALUE.equals("cir-qa") ? "2" : "1";
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
+        String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        assertThat(lastModifiedByAvailableCountPreSelection,
+                is(not(equalTo(lastModifiedByAvailableCountPostSelection))));
+        assertThat(scenarioNameAvailableCountPreSelection,
+                is(equalTo(scenarioNameAvailableCountPostSelection)));
+
+        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+                is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
     }
 
     @Test
@@ -642,11 +670,29 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterOperation() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testListFilterOperation(
-            ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
-            ListNameEnum.LAST_MODIFIED_BY.getListName()
-        );
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class);
+
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        String nameToSelect = "Ben Hegan";
+        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), nameToSelect);
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected: ", "1");
+        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
+
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+
+        assertThat(scenarioNameAvailableCountPreSelection,
+                is(equalTo(scenarioNameAvailableCountPostSelection)));
+
+        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
+        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+                is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
     }
 
     @Test
@@ -695,13 +741,13 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
-            .filter()
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setRowOne("Part Name", "Contains", reportsValues.get("Part Name"))
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario();
+                .filter()
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setRowOne("Part Name", "Contains", reportsValues.get("Part Name"))
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario();
 
         Map<String, String> cidValues = new HashMap<>();
         cidValues.put("Cycle Time", String.valueOf(evaluatePage.getCycleTimeCount()));

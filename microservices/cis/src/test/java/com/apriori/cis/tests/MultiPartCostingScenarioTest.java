@@ -12,16 +12,24 @@ import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
 import com.apriori.cis.utils.CisProperties;
 import com.apriori.cis.utils.CisUtils;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,8 +61,6 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
     @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
             "process to complete. Then retrieve costing results.")
     public void costMultipleParts() throws InterruptedException {
-        
-        
         // create batch
         Batch batch = BatchResources.createNewBatch();
         MultiPartCostingScenarioTest.batchIdentity = CisUtils.getIdentity(batch, Batch.class);
@@ -97,6 +103,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
         initPropertyStore();
 
 
+
     }
 
     public void run() {
@@ -107,8 +114,8 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
 
             // create batch part
             NewPartRequest newPartRequest =
-                    (NewPartRequest)JsonManager.deserializeJsonFromFile(
-                            Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreatePartData.json").getPath(), NewPartRequest.class);
+                    (NewPartRequest)JsonManager.deserializeJsonFromStream(
+                            FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
             newPartRequest.setFilename(part);
             batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
@@ -218,9 +225,17 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
     }
 
     private void getPartsFromFileSystem() {
-        String dir = Thread.currentThread().getContextClassLoader().getResource("parts").getPath();
+        InputStream dir = FileResourceUtil.getResourceFileStream("parts/parts-list.txt");
+        String text = "";
+        try {
+            text = IOUtils.toString(dir);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         List<String> tmpPartList = new ArrayList<>();
-        Collections.addAll(tmpPartList, Objects.requireNonNull(new File(dir).list()));
+        Collections.addAll(tmpPartList, Objects.requireNonNull(text.split("/n")));
         partList.addAll(tmpPartList.stream().map(p -> "parts/" + p).collect(Collectors.toList()));
     }
 

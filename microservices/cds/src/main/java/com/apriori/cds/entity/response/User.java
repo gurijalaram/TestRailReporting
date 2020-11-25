@@ -24,6 +24,7 @@ public class User {
     private User response;
     private String updatedBy;
     private Boolean mfaRequired;
+    private Object customAttributes;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -32,6 +33,15 @@ public class User {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
+
+    public Object getCustomAttributes() {
+        return customAttributes;
+    }
+
+    public User setCustomAttributes(Object customAttributes) {
+        this.customAttributes = customAttributes;
+        return this;
+    }
 
     public Boolean getMfaRequired() {
         return mfaRequired;

@@ -2,7 +2,7 @@ package com.apriori.apibase.utils;
 
 import com.apriori.apibase.services.response.objects.ColumnEntity;
 import com.apriori.apibase.services.response.objects.DisplayColumnsEntity;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class UISetup {
             .unauthorized()
             .customizeRequest()
             .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
-            .setEndpoint(Constants.getBaseUrl() + "ws/workspace/users/me/table-views/workspaceTable")
+            .setEndpoint(CommonConstants.getBaseUrl() + "ws/workspace/users/me/table-views/workspaceTable")
             .setBody(displayColumns
                 .setChildren(generateDefaultColumnsList())
                 .setName("private"))
