@@ -1464,14 +1464,14 @@ public class GenericReportPage extends ReportsPageHeader {
     public void waitForCorrectPartNameMachiningDtc(boolean initialCall) {
         String partNameToExpect = initialCall ? Constants.PART_NAME_INITIAL_EXPECTED_MACHINING_DTC :
                 Constants.PART_NAME_EXPECTED_MACHINING_DTC;
-		By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partNameToExpect));
+        By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partNameToExpect));
         pageUtils.waitForElementToAppear(locator);
-	}
-		
-	/**
-	* Waits for correct part name
-	* @param partName String
-	*/
+    }
+
+    /**
+    * Waits for correct part name
+    * @param partName String
+    */
     public void waitForCorrectPartName(String partName) {
         By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partName));
         pageUtils.waitForElementToAppear(locator);

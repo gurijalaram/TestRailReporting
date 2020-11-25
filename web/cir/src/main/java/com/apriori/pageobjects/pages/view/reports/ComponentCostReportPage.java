@@ -2,7 +2,6 @@ package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.utils.PageUtils;
 
-import com.apriori.utils.enums.reports.ListNameEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -90,7 +89,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets values from Component Select dropdown
-     * @return ArrayList<String>
+     * @return ArrayList - String
      */
     public ArrayList<String> getComponentSelectNames() {
         By locator = By.xpath("(//ul[@class='jr-mSelectlist jr'])[2]/li");
