@@ -180,6 +180,39 @@ public class ComponentCostReportTests extends TestBase {
         assertThat(lifetimeCostUSD, is(not(lifetimeCostGBP)));
     }
 
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3328")
+    @Description("Verify latest export date input control functions correctly")
+    public void testLatestExportDateFilter() {
+        componentCostReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
+                .setLatestExportDateToTodayMinusTwoYears()
+                .clickComponentTypeDropdownTwice();
+
+        componentCostReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.CREATED_BY.getListName(), "Available: ", "0");
+
+        assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
+                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("0")));
+
+        assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("0")));
+
+        assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("0")));
+
+        assertThat(componentCostReportPage.getComponentSelectDropdownText(),
+                is(equalTo("Click to select item...")));
+
+        assertThat(componentCostReportPage.getWarningMessageText(),
+                is(equalTo("This field is mandatory so you must enter data.")));
+
+        assertThat(componentCostReportPage.isWarningDisplayedAndEnabled(), is(equalTo(true)));
+    }
+
     private void componentSelectAsserts(boolean isAssembly) {
         String componentType = isAssembly ? "assembly" : "part";
         String expectedCount = isAssembly ? "3" : "11";

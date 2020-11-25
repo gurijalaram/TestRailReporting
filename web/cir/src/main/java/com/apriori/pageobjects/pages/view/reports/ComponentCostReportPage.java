@@ -12,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +28,20 @@ public class ComponentCostReportPage extends GenericReportPage {
     @FindBy(xpath = "//div[@id='componentType']//a")
     private WebElement componentTypeDropdown;
 
+    @FindBy(xpath = "//label[@title='Component Select']//a")
+    private WebElement componentSelectDropdown;
+
     @FindBy(xpath = "//span[contains(text(), 'Lifetime Cost:')]/../following-sibling::td[1]/span")
     private WebElement lifetimeCost;
 
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../following-sibling::td[1]/span")
     private WebElement currentCurrency;
+
+    @FindBy(xpath = "//label[contains(@title, 'Latest Export Date')]/input")
+    private WebElement latestExportDateInput;
+
+    @FindBy(xpath = "//label[@title='Component Select']/span[@class='warning']")
+    private WebElement warningSpan;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -115,5 +127,55 @@ public class ComponentCostReportPage extends GenericReportPage {
     public String getCurrentCurrency() {
         pageUtils.waitForElementToAppear(currentCurrency);
         return currentCurrency.getText();
+    }
+
+    /**
+     * Clicks dropdown twice to remove focus from date element to effect filter
+     * @return instance of Component Cost Report Page
+     */
+    public ComponentCostReportPage clickComponentTypeDropdownTwice() {
+        pageUtils.waitForElementAndClick(componentTypeDropdown);
+        componentTypeDropdown.click();
+        return this;
+    }
+
+    /**
+     * Sets latest export date to today two years ago
+     * @return instance of Component cost Report Page
+     */
+    public ComponentCostReportPage setLatestExportDateToTodayMinusTwoYears() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date = formatter.format(LocalDateTime.now(ZoneOffset.UTC).minusYears(2).withNano(0));
+        pageUtils.waitForElementToAppear(latestExportDateInput);
+        latestExportDateInput.clear();
+        latestExportDateInput.click();
+        latestExportDateInput.sendKeys(date);
+        return this;
+    }
+
+    /**
+     * Gets Component Select dropdown text
+     * @return String
+     */
+    public String getComponentSelectDropdownText() {
+        pageUtils.waitForElementToAppear(componentSelectDropdown);
+        return componentSelectDropdown.getText();
+    }
+
+    /**
+     * Gets warning message text
+     * @return String
+     */
+    public String getWarningMessageText() {
+        pageUtils.waitForElementToAppear(warningSpan);
+        return warningSpan.getText();
+    }
+
+    /**
+     * Checks if warning is displayed and enabled
+     * @return boolean
+     */
+    public boolean isWarningDisplayedAndEnabled() {
+        return warningSpan.isDisplayed() && warningSpan.isEnabled();
     }
 }
