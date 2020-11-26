@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PublishPage extends LoadableComponent {
+public class PublishPage extends LoadableComponent<PublishPage> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(PublishPage.class);
 
