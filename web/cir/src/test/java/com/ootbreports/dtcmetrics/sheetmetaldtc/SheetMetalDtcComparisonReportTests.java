@@ -64,7 +64,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3041")
     @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
     public void testApplyButton() {
@@ -77,7 +76,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3041")
     @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
     public void testResetButton() {
@@ -89,11 +87,26 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3041")
     @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCancelButton(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName());
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3040")
+    @Description("Verify Export Set list controls function correctly")
+    public void testExportSetListControls() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSelection(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "3040")
+    @Description("Verify Export Set list controls function correctly")
+    public void testExportSetSearch() {
+
     }
 }
