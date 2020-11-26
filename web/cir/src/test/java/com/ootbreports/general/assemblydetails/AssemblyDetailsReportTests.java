@@ -55,17 +55,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
-                ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
-        );
-    }
-
-    @Test
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -77,33 +66,9 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchComponentCost() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
     }
 
     @Test
