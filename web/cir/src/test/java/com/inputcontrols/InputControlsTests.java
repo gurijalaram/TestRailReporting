@@ -510,18 +510,18 @@ public class InputControlsTests extends TestBase {
             }
         };
 
-        String availableValue = genericReportPage.getCountOfListAvailableItems(listName, "Available");
-        String selectedInitialValue = genericReportPage.getCountOfListAvailableItems(listName, "Selected");
+        String availableValue = genericReportPage.getCountOfListAvailableOrSelectedItems(listName, "Available");
+        String selectedInitialValue = genericReportPage.getCountOfListAvailableOrSelectedItems(listName, "Selected");
 
         for (String buttonName : buttonNames) {
             genericReportPage.clickListPanelButton(listName, buttonName);
 
             if (buttonName.equals("Select All") || buttonName.equals("Invert")) {
                 genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", availableValue);
-                assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"), is(equalTo(availableValue)));
+                assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(listName, "Selected"), is(equalTo(availableValue)));
             } else {
                 genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", selectedInitialValue);
-                assertThat(genericReportPage.getCountOfListAvailableItems(listName, "Selected"),
+                assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(listName, "Selected"),
                     is(equalTo(selectedInitialValue)));
             }
         }
