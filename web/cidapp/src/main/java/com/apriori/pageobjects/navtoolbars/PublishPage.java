@@ -3,6 +3,7 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,14 +19,8 @@ public class PublishPage extends LoadableComponent {
     @FindBy(css = "div[class='header-message'] p")
     private WebElement headerMessage;
 
-    @FindBy(xpath = "//label[.='Status']/following-sibling::div[contains(@class,'apriori-select form-control')]")
-    private WebElement statusDropdown;
-
-    @FindBy(xpath = "//label[.='Cost Maturity']/following-sibling::div[contains(@class,'apriori-select form-control')]")
-    private WebElement costMaturityDropdown;
-
-    @FindBy(xpath = "//label[.='Assignee']/following-sibling::div[contains(@class,'apriori-select form-control')]")
-    private WebElement assigneeDropdown;
+    @FindBy(css = "div[class='checkbox-icon']")
+    private WebElement lockTickBox;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -49,23 +44,27 @@ public class PublishPage extends LoadableComponent {
 
     }
 
-    public String getScenarioInfo() {
-        return pageUtils.waitForElementAppear(headerMessage).getAttribute("textContent");
-    }
-
-    public PublishPage selectStatus(String status) {
+    /**
+     * Set dropdown for any field
+     *
+     * @param dropdown - the dropdown
+     * @param value    - the value
+     * @return current page object
+     */
+    public PublishPage setDropdown(String dropdown, String value) {
+        By theDropdown = By.xpath(String.format("//label[.='%s']/following-sibling::div[contains(@class,'apriori-select form-control')]", dropdown));
+        pageUtils.waitForElementAndClick(theDropdown);
+        By theValue = By.xpath(String.format("//button[.='%s']", value));
+        pageUtils.scrollWithJavaScript(driver.findElement(theValue), true).click();
         return this;
     }
 
-    public PublishPage selectCostMaturity(String costMaturity) {
-        return this;
-    }
-
-    public PublishPage selectAssignee(String assignee) {
-        return this;
-    }
-
+    /**
+     * Click locked tick box
+     * @return current page object
+     */
     public PublishPage lock() {
+        pageUtils.waitForElementToAppear(lockTickBox).click();
         return this;
     }
 
