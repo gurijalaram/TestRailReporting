@@ -13,11 +13,11 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import utils.Constants;
 
-public class AssemblyCostTests extends TestBase {
+public class AssemblyCostReportTests extends TestBase {
 
     private CommonReportTests commonReportTests;
 
-    public AssemblyCostTests() {
+    public AssemblyCostReportTests() {
         super();
     }
 

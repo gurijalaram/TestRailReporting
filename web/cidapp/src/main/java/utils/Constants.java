@@ -10,7 +10,7 @@ import java.util.Properties;
 public class Constants {
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cas-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-qa";
     public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;

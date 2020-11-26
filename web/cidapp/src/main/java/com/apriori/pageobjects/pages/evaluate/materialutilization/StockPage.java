@@ -14,13 +14,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author cfrith
- */
+public class StockPage extends LoadableComponent<StockPage> {
 
-public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizationPage> {
-
-    private final Logger LOGGER = LoggerFactory.getLogger(MaterialUtilizationPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(StockPage.class);
 
     @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
     private WebElement panelDetails;
@@ -32,7 +28,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     private WebDriver driver;
     private PanelController panelController;
 
-    public MaterialUtilizationPage(WebDriver driver) {
+    public StockPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
@@ -52,23 +48,14 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     }
 
     /**
-     * Gets material information
+     * Gets stock information
      *
      * @param label
      * @return string
      */
-    public String getUtilizationInfo(String label) {
+    public String getStockInfo(String label) {
         By info = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
         return pageUtils.waitForElementToAppear(info).getAttribute("textContent");
-    }
-
-    /**
-     * Go to stock tab
-     * @return new page object
-     */
-    public StockPage goToStockTab() {
-        pageUtils.waitForElementAndClick(stockPanel);
-        return new StockPage(driver);
     }
 
     /**

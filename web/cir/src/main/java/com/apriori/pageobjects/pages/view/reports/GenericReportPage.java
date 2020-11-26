@@ -2,7 +2,6 @@ package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
@@ -24,6 +23,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -751,7 +751,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.jsNewTab();
         pageUtils.windowHandler(index);
 
-        driver.get(CommonConstants.cidURL);
+        driver.get(Constants.getDefaultUrl());
         pageUtils.waitForElementToAppear(cidLogo);
 
         return new GenericReportPage(driver);
@@ -991,7 +991,7 @@ public class GenericReportPage extends ReportsPageHeader {
      *
      * @return String - count of list items
      */
-    public String getCountOfListAvailableItems(String listName, String option) {
+    public String getCountOfListAvailableOrSelectedItems(String listName, String option) {
         int substringVal = option.equals("Available") ? 11 : 10;
         By locator = By.xpath(String.format("//div[@title='%s']//span[contains(@title, '%s')]", listName, option));
         pageUtils.waitForElementToAppear(locator);
@@ -1022,16 +1022,18 @@ public class GenericReportPage extends ReportsPageHeader {
      * Selects default scenario name (Initial)
      * @return instance of Scenario Comparison Report Page
      */
-    public ScenarioComparisonReportPage selectDefaultScenarioName() {
+    public <T> T selectDefaultScenarioName(Class<T> className) {
         By locator = By.xpath("//li[@title='Initial']/div/a");
         pageUtils.waitForElementAndClick(locator);
 
         By selectedLocator = By.xpath("(//li[@title='Initial' and contains(@class, 'jr-isSelected')])[1]");
         pageUtils.waitForElementToAppear(selectedLocator);
 
-        By filteredLocator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[1 and contains(@title, '(Initial)')]");
-        pageUtils.waitForElementToAppear(filteredLocator);
-        return new ScenarioComparisonReportPage(driver);
+        if (className.equals(ScenarioComparisonReportPage.class)) {
+            By filteredLocator = By.xpath("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')])[1]");
+            pageUtils.waitForElementToAppear(filteredLocator);
+        }
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -1451,17 +1453,26 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
         setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
         hoverPartNameBubbleDtcReports();
-        waitForCorrectPartName(true);
+        waitForCorrectPartNameMachiningDtc(true);
         hoverPartNameBubbleDtcReports();
     }
 
     /**
      * Waits for correct Part Name
      */
-    public void waitForCorrectPartName(boolean initialCall) {
-        String partNameToExpect = initialCall ? utils.Constants.PART_NAME_INITIAL_EXPECTED_MACHINING_DTC :
-                utils.Constants.PART_NAME_EXPECTED_MACHINING_DTC;
+    public void waitForCorrectPartNameMachiningDtc(boolean initialCall) {
+        String partNameToExpect = initialCall ? Constants.PART_NAME_INITIAL_EXPECTED_MACHINING_DTC :
+                Constants.PART_NAME_EXPECTED_MACHINING_DTC;
         By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partNameToExpect));
+        pageUtils.waitForElementToAppear(locator);
+    }
+
+    /**
+    * Waits for correct part name
+    * @param partName String
+    */
+    public void waitForCorrectPartName(String partName) {
+        By locator = By.xpath(String.format("//*[contains(text(), '%s')]", partName));
         pageUtils.waitForElementToAppear(locator);
     }
 
@@ -2025,6 +2036,16 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[1]/span", valueToGet));
         pageUtils.waitForElementToAppear(locator);
         return new BigDecimal(driver.findElement(locator).getText().replace(",", ""));
+    }
+
+    /**
+     * Waits for Component dropdown filter to take effect
+     * @return ComponentCostReportPage instance
+     */
+    public ComponentCostReportPage waitForComponentFilter() {
+        By locator = By.xpath("//a[@title='3538968 (Initial)  [part]']");
+        pageUtils.waitForElementToAppear(locator);
+        return new ComponentCostReportPage(driver);
     }
 
     /**
