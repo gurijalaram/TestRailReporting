@@ -62,7 +62,7 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(cancelButton);
-        pageUtils.waitForElementAppear(submitButton);
+        pageUtils.waitForElementAppear(closePanel);
     }
 
     /**

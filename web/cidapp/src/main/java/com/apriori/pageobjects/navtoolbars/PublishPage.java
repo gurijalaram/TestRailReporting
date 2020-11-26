@@ -16,6 +16,9 @@ public class PublishPage extends LoadableComponent {
 
     private final Logger LOGGER = LoggerFactory.getLogger(PublishPage.class);
 
+    @FindBy(xpath = "//h5[.='Publish Scenario']")
+    private WebElement headerDialog;
+
     @FindBy(css = "div[class='header-message'] p")
     private WebElement headerMessage;
 
@@ -41,7 +44,7 @@ public class PublishPage extends LoadableComponent {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementAppear(headerDialog);
     }
 
     /**
