@@ -1,4 +1,4 @@
-package com.ootbreports.dtcmetrics.plastic;
+package com.ootbreports.dtcmetrics.plasticdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

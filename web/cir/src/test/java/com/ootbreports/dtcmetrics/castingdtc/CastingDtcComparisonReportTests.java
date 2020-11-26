@@ -1,4 +1,4 @@
-package com.ootbreports.dtcmetrics.casting;
+package com.ootbreports.dtcmetrics.castingdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

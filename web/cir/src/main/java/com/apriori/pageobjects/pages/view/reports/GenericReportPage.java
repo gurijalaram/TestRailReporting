@@ -2071,6 +2071,17 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Waits for rollup change to take effect
+     * @param rollup String
+     * @return instance of Sheet Metal Dtc Report page
+     */
+    public SheetMetalDtcReportPage waitForCorrectRollupInDropdown(String rollup) {
+        By locator = By.xpath(String.format("//label[@title='Rollup']//a[@title='%s']", rollup));
+        pageUtils.waitForElementToAppear(locator);
+        return new SheetMetalDtcReportPage(driver);
+    }
+
+    /**
      * Switches tab, if second tab is open
      */
     private void switchTab() {
