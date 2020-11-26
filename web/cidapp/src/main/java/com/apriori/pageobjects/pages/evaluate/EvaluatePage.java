@@ -365,7 +365,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @param label - the label
      * @return double
      */
-    public double getCostResult(String label) {
+    public double getCostResults(String label) {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
         return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }

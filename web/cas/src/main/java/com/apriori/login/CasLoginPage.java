@@ -1,6 +1,7 @@
 package com.apriori.login;
 
 import com.apriori.customeradmin.CustomerAdminPage;
+import com.apriori.utils.Constants;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
 
@@ -11,7 +12,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.Constants;
 
 /**
  * @author cfrith
