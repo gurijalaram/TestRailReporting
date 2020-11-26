@@ -42,7 +42,7 @@ public class SecondaryProcessTests extends TestBase {
 
     /*@Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"679", "653", "670"})
+    @TestRail(testCaseId = {"5140", "5115", "5132"})
     @Description("Test secondary process leak test - edit wall thickness PSO and validate the process chart")
     public void secondaryProcessLeakTest() {
 
@@ -73,7 +73,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"658", "659", "661"})
+    @TestRail(testCaseId = {"5120", "5121", "5123"})
     @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
     public void secondaryProcessXray() {
 
@@ -100,7 +100,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     /*@Test
-    @TestRail(testCaseId = {"687", "688"})
+    @TestRail(testCaseId = {"5142", "5149"})
     @Description("Test secondary process Carburize")
     public void secondaryProcessCarburize() {
 
@@ -137,7 +137,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"690"})
+    @TestRail(testCaseId = {"5151"})
     @Description("Test secondary process Atmosphere Oil Harden")
     public void secondaryProcessAtmosphereOilHarden() {
 
@@ -165,7 +165,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"696"})
+    @TestRail(testCaseId = {"5157"})
     @Description("Test secondary process Standard Anneal")
     public void secondaryProcessStandardAnneal() {
 
@@ -197,7 +197,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"700"})
+    @TestRail(testCaseId = {"5161"})
     @Description("Test secondary process Vacuum Temper")
     public void secondaryProcessVacuumTemper() {
 
@@ -296,7 +296,7 @@ public class SecondaryProcessTests extends TestBase {
 
     /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1616"})
+    @TestRail(testCaseId = {"5132"})
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
 
@@ -325,7 +325,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"680", "681", "682"})
+    @TestRail(testCaseId = {"5141", "5142", "5143"})
     @Description("Test secondary process powder coat cart PSO")
     public void psoPowderCoatCart() {
 
@@ -361,7 +361,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"683", "684", "685", "686"})
+    @TestRail(testCaseId = {"5144", "5145", "5146", "5147"})
     @Description("Test secondary process wet coat line PSO")
     public void psoWetCoatLine() {
 
@@ -423,7 +423,7 @@ public class SecondaryProcessTests extends TestBase {
 
     /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1614", "654", "657"})
+    @TestRail(testCaseId = {"5116", "5119"})
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {
 
@@ -457,7 +457,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1614", "655", "656"})
+    @TestRail(testCaseId = {"5117"})
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
 
@@ -484,7 +484,7 @@ public class SecondaryProcessTests extends TestBase {
 
     /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1615", "669"})
+    @TestRail(testCaseId = {"5131"})
     @Description("secondary process automatically added by aPriori")
     public void cannotDeselectSP() {
 
@@ -510,7 +510,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"689"})
+    @TestRail(testCaseId = {"5150"})
     @Description("Test secondary process Carbonitride")
     public void secondaryProcessCarbonitride() {
 
@@ -539,7 +539,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"691"})
+    @TestRail(testCaseId = {"5152"})
     @Description("Test secondary process Vacuum air harden")
     public void secondaryProcessVacuumAirHarden() {
 
@@ -568,7 +568,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"692", "702"})
+    @TestRail(testCaseId = {"5153", "5162"})
     @Description("Test secondary process Vacuum Air Harden with High Temper")
     public void secondaryProcessVacuumAirHardenHighTemp() {
 
@@ -597,7 +597,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"693"})
+    @TestRail(testCaseId = {"5154"})
     @Description("Test secondary process Spring steel")
     public void secondaryProcessSpringSteel() {
 
@@ -623,7 +623,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"694"})
+    @TestRail(testCaseId = {"5155"})
     @Description("Test secondary process Stainless steel")
     public void secondaryProcessStainlessSteel() {
 
@@ -649,7 +649,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"695"})
+    @TestRail(testCaseId = {"5156"})
     @Description("Test secondary process High Speed Steel Harden")
     public void secondaryProcessHighSpeedSteel() {
 
@@ -675,7 +675,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 */
     /*@Test
-    @TestRail(testCaseId = {"697"})
+    @TestRail(testCaseId = {"5158"})
     @Description("Test secondary process Low Temp Vacuum Anneal")
     public void secondaryProcessLowTempVacuumAnneal() {
 
@@ -702,7 +702,7 @@ public class SecondaryProcessTests extends TestBase {
 
     /*@Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"698", "667"})
+    @TestRail(testCaseId = {"5159", "5129"})
     @Description("Test secondary process High Temp Vacuum Anneal")
     public void secondaryProcessHighTempVacuumAnneal() {
 
@@ -728,7 +728,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"699"})
+    @TestRail(testCaseId = {"5160"})
     @Description("Test secondary process Standard Temper")
     public void secondaryProcessStandardTemper() {
 
@@ -755,7 +755,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"660"})
+    @TestRail(testCaseId = {"5122"})
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {
 
@@ -777,7 +777,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"665"})
+    @TestRail(testCaseId = {"5127"})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
 
@@ -799,7 +799,7 @@ public class SecondaryProcessTests extends TestBase {
 
     /*@Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"671", "672", "677"})
+    @TestRail(testCaseId = {"5133", "5134", "5138"})
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {
 

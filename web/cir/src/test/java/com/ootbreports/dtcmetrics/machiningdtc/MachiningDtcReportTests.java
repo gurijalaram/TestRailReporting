@@ -306,7 +306,7 @@ public class MachiningDtcReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         genericReportPage.hoverMachiningBubbleTwice();
-        genericReportPage.waitForCorrectPartName(false);
+        genericReportPage.waitForCorrectPartNameMachiningDtc(false);
         genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
 
@@ -416,7 +416,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("0")));
     }
 
@@ -433,7 +433,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("0")));
     }
 
@@ -450,7 +450,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("0")));
     }
 
@@ -474,7 +474,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "18");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("18")));
     }
 
@@ -492,7 +492,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("0")));
     }
 
@@ -514,7 +514,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "31");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("31")));
     }
 }
