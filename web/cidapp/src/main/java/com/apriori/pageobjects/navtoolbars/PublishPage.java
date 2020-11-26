@@ -57,7 +57,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     public PublishPage setDropdown(String dropdown, String value) {
         By theDropdown = By.xpath(String.format("//label[.='%s']/following-sibling::div[contains(@class,'apriori-select form-control')]", dropdown));
         pageUtils.waitForElementAndClick(theDropdown);
-        By theValue = By.xpath(String.format("//button[.='%s']", value));
+        By theValue = By.xpath(String.format("//button[@value='%s']", value.toUpperCase()));
         pageUtils.scrollWithJavaScript(driver.findElement(theValue), true).click();
         return this;
     }
