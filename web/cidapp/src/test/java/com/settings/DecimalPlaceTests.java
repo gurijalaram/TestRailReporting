@@ -44,7 +44,7 @@ public class DecimalPlaceTests extends TestBase {
 
     @Category({SmokeTestSuite.class})
     @Test
-    @TestRail(testCaseId = {"3730", "3738", "3764", "3792", "3765", "3774"})
+    @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295"})
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
 
@@ -80,9 +80,9 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.isMaterialDisplayed("Finish Mass", "5.3kg"), is(true));
         assertThat(evaluatePage.isMaterialDisplayed("Utilization", "81.2%"), is(true));
-        assertThat(evaluatePage.isProcessResultDisplayed("Total Cycle Time", "109.4sec"), is(true));
+        assertThat(evaluatePage.isProcessResultDisplayed("Total Cycle Time", "109.4 sec"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Material Cost", "$15.9"), is(true));
-        assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "19.5"), is(true));
+        assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$19.5"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$19.5"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Total Capital Investment", "$0"), is(true));
         evaluatePage.openProcesses();
