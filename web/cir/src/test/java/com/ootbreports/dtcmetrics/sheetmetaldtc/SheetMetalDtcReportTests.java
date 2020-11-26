@@ -13,7 +13,9 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
+
 import com.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -54,11 +56,44 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3039")
     @Description("Verify earliest and latest export date calendar widgets correctly filter the list of export sets")
     public void testExportSetDateFilterDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingDatePicker(ReportNamesEnum.SHEET_METAL_DTC.getReportName());
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3041")
+    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
+    public void testApplyButton() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testApplyButton(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                RollupEnum.SHEET_METAL_DTC.getRollupName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3041")
+    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
+    public void testResetButton() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testResetButton(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3041")
+    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
+    public void testCancelButton() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCancelButton(ReportNamesEnum.SHEET_METAL_DTC.getReportName());
     }
 }
