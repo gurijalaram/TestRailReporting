@@ -19,6 +19,8 @@ import com.apriori.utils.web.driver.TestBase;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -34,6 +36,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3323")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -45,6 +48,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3323")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByLibrary() {
@@ -53,6 +57,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3323")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityBySearch() {
@@ -61,6 +66,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3324")
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetSelection() {
@@ -85,6 +91,7 @@ public class ComponentCostReportTests extends TestBase {
 
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3325")
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
@@ -110,6 +117,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3326")
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {
@@ -131,6 +139,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3327")
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -151,6 +160,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3329")
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
@@ -178,6 +188,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3328")
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {
