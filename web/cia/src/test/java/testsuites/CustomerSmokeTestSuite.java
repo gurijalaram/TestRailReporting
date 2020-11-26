@@ -2,7 +2,7 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import navigation.AdminNavigationTests;
+import com.navigation.AdminNavigationTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -13,7 +13,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CustomerSmokeTests.class)
 @Suite.SuiteClasses({
-        AdminNavigationTests.class
+    AdminNavigationTests.class
 })
 
 public class CustomerSmokeTestSuite {

@@ -6,6 +6,7 @@ def url
 def threadCount
 def browser
 def testSuite
+def csvFile
 def folder = "web"
 
 pipeline {
@@ -13,12 +14,13 @@ pipeline {
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa', 'cidapp-int'], description: 'What is the target environment for testing?')
         choice(name: 'TEST_TYPE', choices: ['cid', 'apitests', 'ciconnect', 'cas', 'cir', 'cia', 'cidapp'], description: 'What type of test is running?')
-        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'CIARStagingSmokeTestSuite', 'Other'], description: 'What is the test tests.suite?')
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
+        string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
     }
 
     agent {
@@ -48,7 +50,7 @@ pipeline {
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
                     url = params.TARGET_URL
-                    if(url != "none") {
+                    if (url != "none") {
                         javaOpts = javaOpts + " -Durl=${params.TARGET_URL}"
                     }
 
@@ -69,6 +71,11 @@ pipeline {
                     testSuite = "testsuites." + params.TEST_SUITE
                     if (params.TEST_SUITE == "Other") {
                         testSuite = params.OTHER_TEST
+                    }
+
+                    csvFile = params.CSV_FILE
+                    if (csvFile != "none") {
+                        javaOpts = javaOpts + " -DcsvFile=${params.CSV_FILE}"
                     }
 
                     echo "${javaOpts}"
@@ -93,12 +100,21 @@ pipeline {
         stage("Test") {
             steps {
                 echo "Running.."
-                sh """
+
+                withCredentials([
+                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh """
                     docker run \
+                        -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+                        -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+                        -e AWS_PROFILE='development' \
+                        -e AWS_DEFAULT_REGION='us-east-1' \
                         -itd \
                         --name ${buildInfo.name}-build-${timeStamp} \
                         ${buildInfo.name}-build-${timeStamp}:latest
-                """
+                     """
+                     }
 
                 echo "Testing.."
 
@@ -130,6 +146,7 @@ pipeline {
                 allure includeProperties: false, jdk: "", results: [[path: "allure-results"]]
             }
         }
+
     }
     post {
         always {

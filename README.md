@@ -11,8 +11,9 @@
      - http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 7. Once you have installed the various tools, configure your AWS credentials. <br />  
   You can do this from a command prompt with the AWS CLI on your PATH: 
-    - `aws configure` This command will prompt for your IAM user access key and secret access key (downloaded above).
-  You should also set your default region to _us-east-1_.
+    - `aws configure` This command will prompt for your IAM user access key and secret access key (an admin user will be able to generate these details).
+  You should also set your `default region` to `_us-east-1_`.
+  You should set `default format` to `text`
   Your settings will be stored in your _%USERPROFILE%\.aws_ directory.
 8. Verify that things are configured properly using the following command. Confirm that the resulting ARN ends with your user name. 
     - `aws sts get-caller-identity `
@@ -95,9 +96,9 @@ Get user functionality has reference to `{environment}.properties` file.
        - false: will return each time the same (first from list) user
    * **users.csv.file**: the name of csv file with users list from `resources/ + {environment}` folder
         - if there are no users, return default user with:
-           - username:{com.apriori.utils.constants.Constants#defaultUserName} (admin@apriori.com)
-           - password:{com.apriori.utils.constants.Constants#defaultPassword} (admin)
-           - accessLevel:{com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
+           - username:{com.apriori.utils.constants.CommonConstants#defaultUserName} (admin@apriori.com)
+           - password:{com.apriori.utils.constants.CommonConstants#defaultPassword} (admin)
+           - accessLevel:{com.apriori.utils.constants.CommonConstants#defaultAccessLevel} (admin)
  
    Users list is global for two Collections:
    * security users collection
@@ -129,7 +130,7 @@ Get user functionality has reference to `{environment}.properties` file.
  * {username},{password},{accessLevel}
     - {username}: required
     - {password}: required
-    - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.Constants#defaultAccessLevel} (admin)
+    - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.CommonConstants#defaultAccessLevel} (admin)
 
 
 ## API Request functionality

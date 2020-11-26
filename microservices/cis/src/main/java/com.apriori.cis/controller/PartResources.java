@@ -59,7 +59,7 @@ public class PartResources extends CisBase {
         RequestEntity requestEntity = RequestEntity.init(url, Part.class)
                 .setHeaders(headers)
                 .setMultiPartFiles(new MultiPartFiles()
-                        .use("data", FileResourceUtil.getLocalResourceFile(npr.getFilename()))
+                        .use("data", FileResourceUtil.getResourceAsFile(npr.getFilename()))
                 )
                 .setFormParams(new FormParams()
                         .use("filename", npr.getFilename())

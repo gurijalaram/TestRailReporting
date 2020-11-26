@@ -5,6 +5,7 @@ import com.apriori.apibase.services.CustomerBase;
 import com.apriori.cis.controller.CustomerResources;
 import com.apriori.cis.entity.request.PatchCostingPreferenceRequest;
 
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -58,8 +59,8 @@ public class CustomerResourcesTest extends CustomerBase {
     public void patchCostingPreferences() {
         Random rand = new Random();
         PatchCostingPreferenceRequest cp =
-                (PatchCostingPreferenceRequest) JsonManager.deserializeJsonFromFile(
-            Thread.currentThread().getContextClassLoader().getResource("schemas/requests/UpdateCostingPreferences.json").getPath(), PatchCostingPreferenceRequest.class);
+                (PatchCostingPreferenceRequest) JsonManager.deserializeJsonFromStream(
+                        FileResourceUtil.getResourceFileStream("schemas/requests/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
         Double value = rand.nextDouble();
         cp.setCadToleranceReplacement(100.00);
         cp.setMinCadToleranceThreshold(value);

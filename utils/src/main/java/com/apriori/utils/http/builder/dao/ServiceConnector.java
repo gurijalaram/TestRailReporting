@@ -1,6 +1,6 @@
 package com.apriori.utils.http.builder.dao;
 
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 
 public class ServiceConnector {
 
@@ -33,15 +33,15 @@ public class ServiceConnector {
      */
     public static String getServiceUrl(String host, String port, String secretKey) {
         if (host == null || host.isEmpty()) {
-            host = Constants.getServiceHost();
+            host = CommonConstants.getServiceHost();
         }
 
         if (port == null || port.isEmpty()) {
-            port = Constants.getServicePort();
+            port = CommonConstants.getServicePort();
         }
 
         if (secretKey == null || secretKey.isEmpty()) {
-            secretKey = Constants.getSecretKey();
+            secretKey = CommonConstants.getSecretKey();
         }
 
         StringBuilder url = new StringBuilder();

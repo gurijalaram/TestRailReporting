@@ -75,8 +75,9 @@ fabric.properties
 # Compiled class file
 *.class
 
-# Log file
+# Log files
 *.log
+ajcore*
 
 # BlueJ files
 *.ctxt

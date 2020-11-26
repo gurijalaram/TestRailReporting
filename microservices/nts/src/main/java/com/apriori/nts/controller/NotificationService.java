@@ -7,7 +7,7 @@ import com.apriori.nts.entity.response.SendEmailResponse;
 import com.apriori.nts.utils.EmailSetup;
 import com.apriori.utils.EmailUtil;
 import com.apriori.utils.EncryptionUtil;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.ConnectionManager;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -25,7 +25,7 @@ public class NotificationService {
 
     private static final Logger logger = LoggerFactory.getLogger(EncryptionUtil.class);
     private static String url =
-            "https://" + Constants.getNtsServiceHost() + "/emails%s?key=" + Constants.getSecretKey();
+            "https://" + CommonConstants.getNtsServiceHost() + "/emails%s?key=" + CommonConstants.getSecretKey();
 
 
     public static Boolean validateEmail(String subject) {
@@ -66,7 +66,7 @@ public class NotificationService {
         Map<String, String> params = new HashMap<String, String>();
         params.put("recipientAddress", emailSetup.getUsername());
         params.put("subject", subject);
-        params.put("content", Constants.getNtsEmailContent());
+        params.put("content", CommonConstants.getNtsEmailContent());
 
         if (parameters != null) {
             params.putAll(parameters);
@@ -110,7 +110,7 @@ public class NotificationService {
         Map<String, String> params = new HashMap<String, String>();
         params.put("recipientAddress", emailSetup.getUsername());
         params.put("subject", subject);
-        params.put("content", Constants.getNtsEmailContent());
+        params.put("content", CommonConstants.getNtsEmailContent());
 
         url = String.format(url, "");
 
@@ -130,7 +130,7 @@ public class NotificationService {
 
         url = String.format(url, "");
         Map<String, String> headers = new HashMap<String, String>();
-        headers.put("ap-cloud-context", Constants.getNtsTargetCloudContext());
+        headers.put("ap-cloud-context", CommonConstants.getNtsTargetCloudContext());
 
         return (GetEmailResponse) GenericRequestUtil.get(
                 RequestEntity.init(url, GetEmailResponse.class).setHeaders(headers),
@@ -143,7 +143,7 @@ public class NotificationService {
         url = String.format(url, "/" + identity);
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("ap-cloud-context", Constants.getNtsTargetCloudContext());
+        headers.put("ap-cloud-context", CommonConstants.getNtsTargetCloudContext());
 
         return (Email) GenericRequestUtil.get(
                 RequestEntity.init(url, Email.class).setHeaders(headers),
@@ -152,7 +152,7 @@ public class NotificationService {
     }
 
     public static Notifications getNotifications() {
-        url = "https://" + Constants.getNtsServiceHost() + "/notifications?key=" + Constants.getSecretKey();
+        url = "https://" + CommonConstants.getNtsServiceHost() + "/notifications?key=" + CommonConstants.getSecretKey();
         return (Notifications) GenericRequestUtil.get(
                 RequestEntity.init(url, Notifications.class),
                 new RequestAreaApi()
