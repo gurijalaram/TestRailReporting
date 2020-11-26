@@ -4,7 +4,7 @@ import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
-import com.ootbreports.assemblycost.AssemblyCostTests;
+import com.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.ootbreports.dtcmetrics.casting.CastingDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.casting.CastingDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.casting.CastingDtcReportTests;
@@ -24,7 +24,7 @@ import testsuites.suiteinterface.OnPremTest;
 @Categories.IncludeCategory(OnPremTest.class)
 @Suite.SuiteClasses({
         AssemblyDetailsReportTests.class,
-        AssemblyCostTests.class,
+        AssemblyCostReportTests.class,
         CastingDtcReportTests.class,
         CastingDtcDetailsReportTests.class,
         CastingDtcComparisonReportTests.class,
