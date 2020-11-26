@@ -192,7 +192,7 @@ public class SaveAsComparisonTests extends TestBase {
 
         assertThat(jobQueuePage.getJobQueueIconMessage("stop"), containsString("Comparison " + testComparisonName + " already exists"));
 
-        new JobQueuePage(driver).closeJobQueue(GenericHeader.class)
+        jobQueuePage.closeJobQueue(GenericHeader.class)
                 .selectExploreButton()
                 .filter()
                 .setWorkspace("Public")
@@ -200,7 +200,7 @@ public class SaveAsComparisonTests extends TestBase {
                 .apply(ScenarioTablePage.class)
                 .openComparison(testComparisonName);
 
-        new GenericHeader(driver).saveAs()
+        genericHeader.saveAs()
                 .inputName(testComparisonName)
                 .selectCreateButton();
 

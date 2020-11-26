@@ -17,6 +17,7 @@ import com.pageobjects.pages.compare.ComparePage;
 import com.pageobjects.pages.evaluate.EditWarningPage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.PublishPage;
+import com.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
@@ -90,53 +91,6 @@ public class EditPublicComparisonTests extends TestBase {
         comparePage = genericHeader.editScenario(ComparePage.class);
 
         assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"428"})
-    @Description("Private comparison can be overwritten by public comparison with the same name")
-    public void testOverwritePrivateComparison() {
-
-        String testComparisonName = new GenerateStringUtil().generateComparisonName();
-        String testComparisonDescription = "Test comparison description";
-
-        loginPage = new CidLoginPage(driver);
-        comparePage = loginPage.login(UserUtil.getUser())
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .enterComparisonDescription(testComparisonDescription)
-                .save(ComparePage.class);
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class);
-
-        genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Comparison")
-                .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName);
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.editScenario(EditWarningPage.class)
-                .selectOverwrite()
-                .selectContinue(ComparePage.class);
-
-        genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
-                .filter()
-                .setWorkspace("Private")
-                .setScenarioType("Comparison")
-                .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName)
-                .openPreviewPanel(ExplorePage.class);
-
-        assertThat(explorePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
     }
 
     @Test
@@ -226,6 +180,51 @@ public class EditPublicComparisonTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"428"})
+    @Description("Private comparison can be overwritten by public comparison with the same name")
+    public void testOverwritePrivateComparison() {
+
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String testComparisonDescription = "Test comparison description";
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .enterComparisonDescription(testComparisonDescription)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .highlightComparison(testComparisonName)
+                .editScenario(EditWarningPage.class)
+                .selectOverwrite()
+                .selectContinue(ComparePage.class);
+
+        genericHeader = new GenericHeader(driver);
+        explorePage = genericHeader.selectExploreButton()
+                .filter()
+                .setWorkspace("Private")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .highlightComparison(testComparisonName)
+                .openPreviewPanel(ExplorePage.class);
+
+        assertThat(explorePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
+    }
+
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"435"})
     @Description("In explore view, the user can lock and unlock the currently open public comparison")
@@ -240,21 +239,20 @@ public class EditPublicComparisonTests extends TestBase {
                 .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.publishScenario(PublishPage.class)
+        comparePage = genericHeader.publishScenario(PublishPage.class)
                 .selectPublishButton()
                 .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
                 .highlightComparison(testComparisonName)
                 .toggleLock()
                 .openJobQueue()
                 .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ExplorePage.class);
-
-        new ScenarioTablePage(driver).openComparison(testComparisonName);
+                .closeJobQueue(ExplorePage.class)
+                .openComparison(testComparisonName);
 
         assertThat(comparePage.isComparisonLockStatus("lock"), is(true));
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
+        comparePage = genericHeader.selectExploreButton()
                 .filter()
                 .setWorkspace("Public")
                 .setScenarioType("Comparison")
@@ -263,9 +261,8 @@ public class EditPublicComparisonTests extends TestBase {
                 .toggleLock()
                 .openJobQueue()
                 .checkJobQueueRow("okay")
-                .closeJobQueue(ExplorePage.class);
-
-        new ScenarioTablePage(driver).openComparison(testComparisonName);
+                .closeJobQueue(ExplorePage.class)
+                .openComparison(testComparisonName);
 
         assertThat(comparePage.isComparisonLockStatus("unlock"), is(true));
     }
@@ -294,15 +291,13 @@ public class EditPublicComparisonTests extends TestBase {
                 .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
+        comparePage = genericHeader.selectExploreButton()
                 .filter()
                 .setWorkspace("Public")
                 .setScenarioType("Comparison")
                 .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName);
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.editScenario(EditWarningPage.class)
+                .highlightComparison(testComparisonName)
+                .editScenario(EditWarningPage.class)
                 .selectSaveAsNew()
                 .inputNewScenarioName(newScenarioName)
                 .selectContinue(ComparePage.class);

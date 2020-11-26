@@ -21,6 +21,7 @@ import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.PublishPage;
 import com.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.pageobjects.pages.explore.ExplorePage;
+import com.pageobjects.pages.explore.ScenarioNotesPage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
 import io.qameta.allure.Description;
@@ -41,6 +42,7 @@ public class AddScenarioTests extends TestBase {
     private EvaluatePage evaluatePage;
     private GenericHeader genericHeader;
     private ExplorePage explorePage;
+    private ScenarioNotesPage scenarioNotesPage;
 
     private File resourceFile;
 
@@ -152,20 +154,8 @@ public class AddScenarioTests extends TestBase {
                 .enterComparisonDescription(testComparisonDescription)
                 .save(ComparePage.class);
 
-        genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
-                .filter()
-                .setWorkspace("Private")
-                .setScenarioType("Comparison")
-                .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName)
-                .openPreviewPanel(ExplorePage.class);
-
-        assertThat(explorePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
-
-        new ScenarioTablePage(driver).openComparison(testComparisonName);
-
         assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
+        assertThat(comparePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
     }
 
     @Test
@@ -359,8 +349,8 @@ public class AddScenarioTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"445"})
-    @Description("While in an open comparison, user is able to expand and collapse each section of the comparison")
-    public void expandCollapseSectionsInComparison() {
+    @Description("While in an open private comparison, user is able to expand and collapse each section of the comparison")
+    public void expandCollapseSectionsInPrivateComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "testpart-4.prt");
@@ -390,36 +380,98 @@ public class AddScenarioTests extends TestBase {
                 .toggleSection("Process")
                 .toggleSection("Cost Results");
 
-        assertThat(comparePage.isInfoDisplayed("Last Modified"), is(false));
-        assertThat(comparePage.isInfoDisplayed("Finish Mass (kg)"), is(false));
-        assertThat(comparePage.isInfoDisplayed("Warnings"), is(false));
-        assertThat(comparePage.isInfoDisplayed("Routing"), is(false));
-        assertThat(comparePage.isInfoDisplayed("Labour (USD)"), is(false));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Info & Inputs"), containsString("right"));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Material & Utilization"), containsString("right"));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Design Guidance"),containsString("right") );
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Process"), containsString("right"));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Cost Results"), containsString("right"));
 
         comparePage.toggleSection("Info & Inputs")
-            .toggleSection("Material & Utilization")
-            .toggleSection("Design Guidance")
-            .toggleSection("Process")
-            .toggleSection("Cost Results");
+                .toggleSection("Material & Utilization")
+                .toggleSection("Design Guidance")
+                .toggleSection("Process")
+                .toggleSection("Cost Results");
 
-        assertThat(comparePage.isInfoDisplayed("Last Modified"), is(true));
-        assertThat(comparePage.isInfoDisplayed("Finish Mass (kg)"), is(true));
-        assertThat(comparePage.isInfoDisplayed("Warnings"), is(true));
-        assertThat(comparePage.isInfoDisplayed("Routing"), is(true));
-        assertThat(comparePage.isInfoDisplayed("Labour (USD)"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Last Modified"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass (kg)"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Warnings"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Routing"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Labor (USD)"), is(true));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"445"})
+    @Description("While in an open public comparison, user is able to expand and collapse each section of the comparison")
+    public void expandCollapseSectionsInPublicComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String testComparisonName = new GenerateStringUtil().generateComparisonName();
+        String partName = "Push Pin";
+
+        loginPage = new CidLoginPage(driver);
+        comparePage = loginPage.login(UserUtil.getUser())
+                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", partName)
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(scenarioName, partName)
+                .apply(GenericHeader.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .apply(ScenarioTablePage.class)
+                .openComparison(testComparisonName)
+                .toggleSection("Info & Inputs")
+                .toggleSection("Material & Utilization")
+                .toggleSection("Design Guidance")
+                .toggleSection("Process")
+                .toggleSection("Cost Results");
+
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Info & Inputs"), containsString("right"));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Material & Utilization"), containsString("right"));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Design Guidance"),containsString("right") );
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Process"), containsString("right"));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Cost Results"), containsString("right"));
+
+        comparePage.toggleSection("Info & Inputs")
+                .toggleSection("Material & Utilization")
+                .toggleSection("Design Guidance")
+                .toggleSection("Process")
+                .toggleSection("Cost Results");
+
+        assertThat(comparePage.isComparisonInfoDisplayed("Last Modified"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass (kg)"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Warnings"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Routing"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Labor (USD)"), is(true));
     }
 
     @Test
     @TestRail(testCaseId = {"460"})
     @Description("When sections are collapsed in comparison, these are saved when user closes comparison.")
     public void collapseSectionsInComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "testpart-4.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonNameA = new GenerateStringUtil().generateComparisonName();
         String testComparisonNameB = new GenerateStringUtil().generateComparisonName();
-        String partName = "testpart-4";
+        String partName = "PowderMetalShaft";
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
@@ -456,14 +508,14 @@ public class AddScenarioTests extends TestBase {
                 .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
                 .openComparison(testComparisonNameA);
 
-        assertThat(comparePage.isInfoDisplayed("Finish Mass (kg)"), is(false));
-        assertThat(comparePage.isInfoDisplayed("Labour (USD)"), is(false));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Material & Utilization"), containsString("right"));
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Cost Results"), containsString("right"));
 
         comparePage.toggleSection("Material & Utilization")
-            .toggleSection("Cost Results");
+                .toggleSection("Cost Results");
 
-        assertThat(comparePage.isInfoDisplayed("Finish Mass (kg)"), is(true));
-        assertThat(comparePage.isInfoDisplayed("Labour (USD)"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass (kg)"), is(true));
+        assertThat(comparePage.isComparisonInfoDisplayed("Labor (USD)"), is(true));
     }
 
     @Test
@@ -502,7 +554,5 @@ public class AddScenarioTests extends TestBase {
         assertThat(comparePage.getDfmRisk(), is(equalTo("High")));
         assertThat(comparePage.getWarningsCount(), is("0"));
         assertThat(comparePage.getGuidanceIssuesCount(), is("26"));
-
-
     }
 }

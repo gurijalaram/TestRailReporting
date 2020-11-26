@@ -321,4 +321,16 @@ public class ExplorePage extends ExploreHeader {
     public String getDescriptionText() {
         return descriptionText.getText();
     }
+
+    /**
+     * Checks if type icon displayed
+     *
+     * @param comparisonName - name of comparison
+     * @return true/false
+     */
+    public boolean isComparisonIconDisplayedInTypeCell(String comparisonName) {
+        By typeIcon = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr//div[@title='Comparison']");
+        findComparison(comparisonName);
+        return pageUtils.isElementDisplayed(typeIcon);
+    }
 }

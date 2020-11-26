@@ -50,15 +50,15 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectExploreButton();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "SheetMetal")
-            .apply(ExplorePage.class);
+                .setWorkspace("Private")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "SheetMetal")
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal"), is(equalTo(1)));
     }
@@ -74,17 +74,17 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .selectExploreButton();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Process Group", "is", "Casting - Die")
-            .apply(ExplorePage.class);
+                .setWorkspace("Private")
+                .setScenarioType("Part")
+                .setRowOne("Process Group", "is", "Casting - Die")
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Casting"), is(equalTo(1)));
     }
@@ -99,15 +99,15 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectExploreButton();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "Wall")
-            .apply(ExplorePage.class);
+                .setWorkspace("Private")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "Wall")
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "CurvedWall"), is(equalTo(1)));
     }
@@ -122,15 +122,15 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectExploreButton();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectExploreButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Private")
-            .setScenarioType("Assembly")
-            .setRowOne("Part Name", "Contains", "Piston_assembly")
-            .apply(ExplorePage.class);
+                .setWorkspace("Private")
+                .setScenarioType("Assembly")
+                .setRowOne("Part Name", "Contains", "Piston_assembly")
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
@@ -145,22 +145,22 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Analysis", "High", "Test Description", "Test Notes")
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("piston_assembly", testScenarioName, "Update", "okay")
-            .closeJobQueue(EvaluatePage.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectScenarioInfoNotes()
+                .enterScenarioInfoNotes("Analysis", "High", "Test Description", "Test Notes")
+                .save(EvaluatePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("piston_assembly", testScenarioName, "Update", "okay")
+                .closeJobQueue(EvaluatePage.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Public")
-            .setScenarioType("Assembly")
-            .setRowOne("Status", "is", "Analysis")
-            .apply(ExplorePage.class);
+                .setWorkspace("Public")
+                .setScenarioType("Assembly")
+                .setRowOne("Status", "is", "Analysis")
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
@@ -176,16 +176,16 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "Push Pin")
-            .apply(ExplorePage.class);
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "Push Pin")
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), is(equalTo(1)));
     }
@@ -200,22 +200,22 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Complete", "High", "Test Description", "Test Notes")
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("piston_assembly", testScenarioName, "Update", "okay")
-            .closeJobQueue(EvaluatePage.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectScenarioInfoNotes()
+                .enterScenarioInfoNotes("Complete", "High", "Test Description", "Test Notes")
+                .save(EvaluatePage.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus("piston_assembly", testScenarioName, "Update", "okay")
+                .closeJobQueue(EvaluatePage.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Public")
-            .setScenarioType("Assembly")
-            .setRowOne("Description", "Contains", "Test Description")
-            .apply(ExplorePage.class);
+                .setWorkspace("Public")
+                .setScenarioType("Assembly")
+                .setRowOne("Description", "Contains", "Test Description")
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
@@ -227,20 +227,20 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         genericHeader.publishScenario(PublishPage.class)
-            .selectPublishButton();
+                .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Public")
-            .setScenarioType("Comparison")
-            .setRowOne("Part Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .setRowOne("Part Name", "Contains", testComparisonName)
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));
     }
@@ -255,19 +255,19 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .publishScenario("Analysis", "Initial", "Ciene Frith")
-            .selectLock()
-            .selectPublishButton();
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .publishScenario("Analysis", "Initial", "Ciene Frith")
+                .selectLock()
+                .selectPublishButton();
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-            .setWorkspace("Public, Private")
-            .setScenarioType("Part")
-            .setRowOne("Status", "is", "Analysis")
-            .setRowTwo("Cost Maturity", "is", "Initial")
-            .setRowThree("Assignee", "is", "Ciene Frith")
-            .apply(ExplorePage.class);
+                .setWorkspace("Public, Private")
+                .setScenarioType("Part")
+                .setRowOne("Status", "is", "Analysis")
+                .setRowTwo("Cost Maturity", "is", "Initial")
+                .setRowThree("Assignee", "is", "Ciene Frith")
+                .apply(ExplorePage.class);
 
         Assert.assertThat(explorePage.getListOfScenarios(testScenarioName, "PowderMetalShaft"), is(equalTo(1)));
     }
@@ -337,17 +337,11 @@ public class FilterCriteriaTests extends TestBase {
                 .apply(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.selectExploreButton()
-                .selectWorkSpace("Recent")
-                .openComparison(testComparisonNameA);
+        explorePage = genericHeader.selectExploreButton()
+                .selectWorkSpace("Recent");
 
-        assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonNameA.toUpperCase())));
+        assertThat(explorePage.isComparisonIconDisplayedInTypeCell(testComparisonNameA), is(true));
+        assertThat(explorePage.isComparisonIconDisplayedInTypeCell(testComparisonNameB), is(true));
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.selectExploreButton()
-                .selectWorkSpace("Recent")
-                .openComparison(testComparisonNameB);
-
-        assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonNameB.toUpperCase())));
     }
 }

@@ -170,10 +170,20 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         return new CidLoginPage(driver);
     }
 
+    /**
+     * Gets title of Evaluate tab
+     *
+     * @return the text as String
+     */
     public String getTitleEvaluateTab() {
         return evaluateTab.getAttribute("title");
     }
 
+    /**
+     * Gets title of Compare tab
+     *
+     * @return the text as String
+     */
     public String getTitleCompareTab() {
         return compareTab.getAttribute("title");
     }

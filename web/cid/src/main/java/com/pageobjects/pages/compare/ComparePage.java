@@ -87,7 +87,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return the text as String
      */
     public String getDescriptionText() {
-        return descriptionText.getText();
+        By descriptionText = By.cssSelector("textarea.gwt-TextArea.full-width");
+        pageUtils.waitForElementToAppear(descriptionText);
+        return driver.findElement(descriptionText).getAttribute("value");
     }
 
     /**
@@ -179,39 +181,68 @@ public class ComparePage extends LoadableComponent<ComparePage> {
         return By.xpath(String.format("//div[@title='%s']/ancestor::th//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName.toUpperCase(), scenarioName));
     }
 
+    /**
+     * Opens scenarios from comparison view
+     *
+     * @param scenarioName - the scenario name
+     * @param partName     the part name
+     * @return new page object
+     */
     public EvaluatePage openScenarioFromComparison(String partName, String scenarioName) {
         By scenarioNameLink = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
         driver.findElement(scenarioNameLink).click();
         return new EvaluatePage(driver);
     }
 
+    /**
+     * Clicks on Info&Notes link
+     *
+     * @return new page object
+     */
     public ScenarioNotesPage selectInfoNotes() {
         pageUtils.waitForElementAndClick(infoNotes);
         return new ScenarioNotesPage(driver);
     }
 
     /**
-     * @param label
-     * @return
+     * Expands or collapses section of the comparison
+     *
+     * @param sectionName - name of the section
+     * @return current page object
      */
-    public ComparePage toggleSection(String label) {
-        By processSection = By.xpath(String.format("//div[.='%s']/ancestor::tr//label[@class='glyphicon']", label));
-        pageUtils.scrollToElement(processSection, componentScroller, Constants.ARROW_DOWN);
-        pageUtils.waitForElementAndClick(processSection);
+    public ComparePage toggleSection(String sectionName) {
+        By sectionDropdown = By.xpath(String.format("//div[.='%s']/ancestor::tr//label[@class='glyphicon']", sectionName));
+        pageUtils.scrollToElement(sectionDropdown, componentScroller, Constants.ARROW_DOWN);
+        pageUtils.waitForElementAndClick(sectionDropdown);
         return this;
     }
 
     /**
-     * @param label
-     * @return
+     * Checks if info of appropriate section displayed
+     *
+     * @param columnName - name of column from section
+     * @return true/false
      */
-    public boolean isInfoDisplayed(String label) {
-        By arrowInfoInput = By.xpath(String.format("//div[.='%s']", label));
+    public boolean isComparisonInfoDisplayed(String columnName) {
+        By arrowInfoInput = By.xpath(String.format("//div[.='%s']", columnName));
+            pageUtils.scrollToElement(arrowInfoInput, componentScroller, Constants.ARROW_DOWN);
         return pageUtils.isElementDisplayed(arrowInfoInput);
     }
 
     /**
-     * @return
+     * Checks if sections are collapsed
+     *
+     * @param sectionName - name of the section
+     * @return attribute
+     */
+    public String isComparisonInfoNotDisplayed(String sectionName) {
+        By sectionDropdown = By.xpath(String.format("//div[.='%s']/ancestor::tr//label[@class='glyphicon']/span", sectionName));
+        return pageUtils.waitForElementToAppear(sectionDropdown).getAttribute("outerHTML");
+    }
+    /**
+     * Checks the dfm risk score
+     *
+     * @return dfm risk score
      */
     public String getDfmRisk() {
         By dfmRisk = By.cssSelector("td.v-grid-cell .dfm-label");
@@ -220,7 +251,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     * @return
+     * Gets warning count
+     *
+     * @return string
      */
     public String getWarningsCount() {
         By warnings = By.xpath("//div[contains(text(),'Warnings')]/ancestor::tr//div[@class = 'gwt-Label comparison-table-row-value-cell-table-formula-value comparison-table-ellipsis-value']");
@@ -229,7 +262,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     * @return
+     * Gets guidance issues count
+     *
+     * @return string
      */
     public String getGuidanceIssuesCount() {
         By guidanceIssues = By.xpath("//div[contains(text(),'Guidance Issues')]/ancestor::tr//div[@class = 'gwt-Label comparison-table-row-value-cell-table-formula-value comparison-table-ellipsis-value']");

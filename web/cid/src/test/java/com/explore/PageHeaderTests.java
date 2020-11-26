@@ -49,7 +49,7 @@ public class PageHeaderTests extends TestBase {
 
         assertThat(pageHeader.getTitleEvaluateTab(), is(evaluateTooltipText));
 
-        new PageHeader(driver).hoverOnCompareTab();
+        pageHeader.hoverOnCompareTab();
 
         assertThat(pageHeader.getTitleCompareTab(), is(compareTooltipText));
 

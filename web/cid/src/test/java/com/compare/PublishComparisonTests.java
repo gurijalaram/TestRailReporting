@@ -63,43 +63,43 @@ public class PublishComparisonTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "Casting")
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(testScenarioName, "Casting")
-            .apply(GenericHeader.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .openComparison(testComparisonName);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "Casting")
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(testScenarioName, "Casting")
+                .apply(GenericHeader.class)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+                .openComparison(testComparisonName);
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.toggleLock()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-            .closeJobQueue(ComparePage.class);
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+                .closeJobQueue(ComparePage.class);
 
         assertThat(comparePage.isComparisonLockStatus("lock"), is(true));
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.toggleLock()
-            .openJobQueue()
-            .checkJobQueueRow("okay")
-            .closeJobQueue(ComparePage.class);
+                .openJobQueue()
+                .checkJobQueueRow("okay")
+                .closeJobQueue(ComparePage.class);
 
         assertThat(comparePage.isComparisonLockStatus("unlock"), is(true));
     }
@@ -119,40 +119,40 @@ public class PublishComparisonTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "Casting")
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(testScenarioName, "CASTING")
-            .apply(GenericHeader.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
-            .closeJobQueue(ComparePage.class);
+                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.getProcessGroup())
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .createNewComparison()
+                .enterComparisonName(testComparisonName)
+                .save(ComparePage.class)
+                .addScenario()
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", "Casting")
+                .apply(ScenarioTablePage.class)
+                .selectComparisonScenario(testScenarioName, "CASTING")
+                .apply(GenericHeader.class)
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+                .closeJobQueue(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         explorePage = genericHeader.selectExploreButton()
-            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-            .highlightComparison(testComparisonName)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Comparison")
-            .setRowOne("Part Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
+                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+                .highlightComparison(testComparisonName)
+                .publishScenario(PublishPage.class)
+                .selectPublishButton()
+                .openJobQueue()
+                .checkJobQueueActionStatus(testComparisonName, "Initial", "Publish", "okay")
+                .closeJobQueue(ExplorePage.class)
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Comparison")
+                .setRowOne("Part Name", "Contains", testComparisonName)
+                .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));
     }
@@ -164,7 +164,7 @@ public class PublishComparisonTests extends TestBase {
     public void testOverwritePublicComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"1027312-101-A1333.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "1027312-101-A1333.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
         String testComparisonDescription = "Test comparison description";
@@ -215,19 +215,18 @@ public class PublishComparisonTests extends TestBase {
                 .setWorkspace("Public")
                 .setScenarioType("Comparison")
                 .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName);
-
-        new ExplorePage(driver).openPreviewPanel(ExplorePage.class);
+                .highlightComparison(testComparisonName)
+                .openPreviewPanel(ExplorePage.class);
 
         assertThat(explorePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
 
-        new ExplorePage(driver).filter()
+        explorePage.filter()
                 .setWorkspace("Private")
                 .setScenarioType("Comparison")
                 .setRowOne("Scenario Name", "Contains", testComparisonName)
                 .apply(ExplorePage.class);
 
-        assertThat(new ExplorePage(driver).getNoComponentText(), is(containsString(noComponentMessage)));
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 
     @Test
@@ -237,7 +236,7 @@ public class PublishComparisonTests extends TestBase {
     public void testPublishComparisonWithNewScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"1027312-101-A1333.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "1027312-101-A1333.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -289,7 +288,7 @@ public class PublishComparisonTests extends TestBase {
                 .filter()
                 .setWorkspace("Public")
                 .setScenarioType("Comparison")
-                .setRowOne("Scenario Name","Contains", newScenarioName)
+                .setRowOne("Scenario Name", "Contains", newScenarioName)
                 .apply(ScenarioTablePage.class)
                 .openComparison(testComparisonName);
 
@@ -303,7 +302,7 @@ public class PublishComparisonTests extends TestBase {
                 .setRowOne("Scenario Name", "Contains", testComparisonName)
                 .apply(ExplorePage.class);
 
-        assertThat(new ExplorePage(driver).getNoComponentText(), is(containsString(noComponentMessage)));
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 
     @Test
@@ -312,7 +311,7 @@ public class PublishComparisonTests extends TestBase {
     public void testPublishComparisonAllCharacters() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"1027312-101-A1333.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "1027312-101-A1333.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
         String newScenarioName = (new GenerateStringUtil().generateScenarioName() + "!£$%^&()_+{}~`1-=[]#';@");
@@ -364,7 +363,7 @@ public class PublishComparisonTests extends TestBase {
                 .filter()
                 .setWorkspace("Public")
                 .setScenarioType("Comparison")
-                .setRowOne("Scenario Name","Contains", newScenarioName)
+                .setRowOne("Scenario Name", "Contains", newScenarioName)
                 .apply(ScenarioTablePage.class)
                 .openComparison(testComparisonName);
 
@@ -378,7 +377,7 @@ public class PublishComparisonTests extends TestBase {
                 .setRowOne("Scenario Name", "Contains", testComparisonName)
                 .apply(ExplorePage.class);
 
-        assertThat(new ExplorePage(driver).getNoComponentText(), is(containsString(noComponentMessage)));
+        assertThat(explorePage.getNoComponentText(), is(containsString(noComponentMessage)));
     }
 
     @Test
@@ -413,7 +412,7 @@ public class PublishComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         publishWarningPage = genericHeader.publishScenario(PublishWarningPage.class);
 
-        assertThat(new PublishWarningPage(driver).getCannotPublishDuePrivateScenarioText(), is(containsString(cannotPublishPrivate)));
+        assertThat(publishWarningPage.getCannotPublishDuePrivateScenarioText(), is(containsString(cannotPublishPrivate)));
     }
 
     @Test
@@ -422,7 +421,7 @@ public class PublishComparisonTests extends TestBase {
     public void testPublishOverwriteLockedComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"1027312-101-A1333.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "1027312-101-A1333.stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
         String testAssemblyName = "1027312-101-A1333";
@@ -471,7 +470,7 @@ public class PublishComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         publishWarningPage = genericHeader.publishScenario(PublishWarningPage.class);
 
-        assertThat(new PublishWarningPage(driver).getCannotPublishDueLockedComparisonText(), is(containsString(cannotPublishLock)));
+        assertThat(publishWarningPage.getCannotPublishDueLockedComparisonText(), is(containsString(cannotPublishLock)));
     }
 
     @Test
