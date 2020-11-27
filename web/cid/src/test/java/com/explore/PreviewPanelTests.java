@@ -1,8 +1,5 @@
 package com.explore;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -19,6 +16,9 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.io.File;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PreviewPanelTests extends TestBase {
 
@@ -53,7 +53,7 @@ public class PreviewPanelTests extends TestBase {
             .highlightScenario(testScenarioName, partName);
 
         explorePage = new ExplorePage(driver);
-        explorePage.openPreviewPanel(PreviewPanelPage.class);
+        explorePage.openPreviewPanel(ExplorePage.class);
 
         assertThat(explorePage.viewPreviewPanelData(), is(true));
     }

@@ -1,11 +1,5 @@
 package com.explore;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -34,6 +28,12 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
 
 public class ActionsTests extends TestBase {
     private CidLoginPage loginPage;
@@ -601,7 +601,6 @@ public class ActionsTests extends TestBase {
 
         assertThat(scenarioNotesPage.isAssignee(), is("Nataliia Valieieva"));
     }
-
 
     @Test
     @Category(SmokeTests.class)

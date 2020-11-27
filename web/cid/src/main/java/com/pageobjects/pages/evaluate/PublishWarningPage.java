@@ -113,11 +113,21 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
         return this;
     }
 
-    public String getCannotPublishDuePrivateScenarioText() {
+    /**
+     * Gets a message about comparison is locked
+     *
+     * @return the text as String
+     */
+    public String getLockedComparisonText() {
         return pageUtils.waitForElementToAppear(cannotPublishDuePrivateScenarioText).getText();
     }
 
-    public String getCannotPublishDueLockedComparisonText(){
+    /**
+     * Gets a message about scenario is private
+     *
+     * @return the text as String
+     */
+    public String getPrivateScenarioText() {
         return pageUtils.waitForElementToAppear(cannotPublishDueLockedComparisonText).getText();
     }
 }

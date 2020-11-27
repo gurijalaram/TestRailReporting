@@ -329,8 +329,20 @@ public class ExplorePage extends ExploreHeader {
      * @return true/false
      */
     public boolean isComparisonIconDisplayedInTypeCell(String comparisonName) {
-        By typeIcon = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr//div[@title='Comparison']");
+        By comparisonIcon = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr//div[@title='Comparison']");
         findComparison(comparisonName);
-        return pageUtils.isElementDisplayed(typeIcon);
+        return pageUtils.isElementDisplayed(comparisonIcon);
+    }
+
+    public boolean isPartIconDisplayedInTypeCell(String partName, String scenarioName) {
+        By partIcon = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//div[@title='Part']");
+        findScenario(scenarioName, partName);
+        return pageUtils.isElementDisplayed(partIcon);
+    }
+
+    public boolean isAssemblyIconDisplayedInTypeCell(String partName, String scenarioName) {
+        By assemblyIcon = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//div[@title='Assembly']");
+        findAssembly(scenarioName, partName);
+        return pageUtils.isElementDisplayed(assemblyIcon);
     }
 }

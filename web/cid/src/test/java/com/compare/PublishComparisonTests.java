@@ -1,14 +1,8 @@
 package com.compare;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
@@ -24,13 +18,17 @@ import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class PublishComparisonTests extends TestBase {
 
@@ -412,7 +410,7 @@ public class PublishComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         publishWarningPage = genericHeader.publishScenario(PublishWarningPage.class);
 
-        assertThat(publishWarningPage.getCannotPublishDuePrivateScenarioText(), is(containsString(cannotPublishPrivate)));
+        assertThat(publishWarningPage.getPrivateScenarioText(), is(containsString(cannotPublishPrivate)));
     }
 
     @Test
@@ -470,7 +468,7 @@ public class PublishComparisonTests extends TestBase {
         genericHeader = new GenericHeader(driver);
         publishWarningPage = genericHeader.publishScenario(PublishWarningPage.class);
 
-        assertThat(publishWarningPage.getCannotPublishDueLockedComparisonText(), is(containsString(cannotPublishLock)));
+        assertThat(publishWarningPage.getLockedComparisonText(), is(containsString(cannotPublishLock)));
     }
 
     @Test

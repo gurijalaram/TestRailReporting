@@ -15,7 +15,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author cfrith
  */
@@ -47,7 +46,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     @FindBy(css = ".v-grid-scroller.v-grid-scroller-vertical")
     private WebElement componentScroller;
-
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -169,7 +167,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * Gets list of scenarios in comparison view
      *
      * @param scenarioName - the scenario name
-     * @param partName     the part name
+     * @param partName     - the part name
      * @return size of element as int
      */
     public boolean scenarioIsNotInComparisonView(String scenarioName, String partName) {
@@ -185,7 +183,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * Opens scenarios from comparison view
      *
      * @param scenarioName - the scenario name
-     * @param partName     the part name
+     * @param partName     - the part name
      * @return new page object
      */
     public EvaluatePage openScenarioFromComparison(String partName, String scenarioName) {
@@ -225,7 +223,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public boolean isComparisonInfoDisplayed(String columnName) {
         By arrowInfoInput = By.xpath(String.format("//div[.='%s']", columnName));
-            pageUtils.scrollToElement(arrowInfoInput, componentScroller, Constants.ARROW_DOWN);
+        pageUtils.scrollToElement(arrowInfoInput, componentScroller, Constants.ARROW_DOWN);
         return pageUtils.isElementDisplayed(arrowInfoInput);
     }
 
@@ -239,6 +237,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
         By sectionDropdown = By.xpath(String.format("//div[.='%s']/ancestor::tr//label[@class='glyphicon']/span", sectionName));
         return pageUtils.waitForElementToAppear(sectionDropdown).getAttribute("outerHTML");
     }
+
     /**
      * Checks the dfm risk score
      *

@@ -1,9 +1,5 @@
 package com.explore;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -25,6 +21,10 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class FilterCriteriaTests extends TestBase {
 
@@ -314,7 +314,7 @@ public class FilterCriteriaTests extends TestBase {
                 .apply(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.publishScenario(PublishPage.class)
+        explorePage = genericHeader.publishScenario(PublishPage.class)
                 .selectPublishButton()
                 .createNewComparison()
                 .enterComparisonName(testComparisonNameB)
@@ -334,14 +334,14 @@ public class FilterCriteriaTests extends TestBase {
                 .setRowOne("Part Name", "Contains", partName)
                 .apply(ScenarioTablePage.class)
                 .selectComparisonScenario(scenarioName, partName)
-                .apply(ComparePage.class);
-
-        genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
+                .apply(GenericHeader.class)
+                .selectExploreButton()
                 .selectWorkSpace("Recent");
 
         assertThat(explorePage.isComparisonIconDisplayedInTypeCell(testComparisonNameA), is(true));
         assertThat(explorePage.isComparisonIconDisplayedInTypeCell(testComparisonNameB), is(true));
+        assertThat(explorePage.isPartIconDisplayedInTypeCell(partName, scenarioName), is(true));
+        assertThat(explorePage.isAssemblyIconDisplayedInTypeCell(testAssemblyName, scenarioName), is(true));
 
     }
 }

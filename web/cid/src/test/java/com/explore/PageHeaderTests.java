@@ -6,6 +6,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import com.pageobjects.common.ScenarioTablePage;
 import com.pageobjects.pages.compare.ComparePage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
@@ -62,7 +63,6 @@ public class PageHeaderTests extends TestBase {
 
         assertThat(pageHeader.getTitleEvaluateTab(), is("Part  " + partName.toUpperCase() + " ,  " + "Scenario  " + testScenarioName + " "));
 
-        genericHeader = new GenericHeader(driver);
         pageHeader = genericHeader.createNewComparison()
                 .enterComparisonName(testComparisonName)
                 .save(ComparePage.class)

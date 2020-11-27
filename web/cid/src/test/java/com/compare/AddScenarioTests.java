@@ -1,11 +1,5 @@
 package com.compare;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -32,6 +26,10 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class AddScenarioTests extends TestBase {
 
@@ -382,7 +380,7 @@ public class AddScenarioTests extends TestBase {
 
         assertThat(comparePage.isComparisonInfoNotDisplayed("Info & Inputs"), containsString("right"));
         assertThat(comparePage.isComparisonInfoNotDisplayed("Material & Utilization"), containsString("right"));
-        assertThat(comparePage.isComparisonInfoNotDisplayed("Design Guidance"),containsString("right") );
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Design Guidance"), containsString("right"));
         assertThat(comparePage.isComparisonInfoNotDisplayed("Process"), containsString("right"));
         assertThat(comparePage.isComparisonInfoNotDisplayed("Cost Results"), containsString("right"));
 
@@ -444,7 +442,7 @@ public class AddScenarioTests extends TestBase {
 
         assertThat(comparePage.isComparisonInfoNotDisplayed("Info & Inputs"), containsString("right"));
         assertThat(comparePage.isComparisonInfoNotDisplayed("Material & Utilization"), containsString("right"));
-        assertThat(comparePage.isComparisonInfoNotDisplayed("Design Guidance"),containsString("right") );
+        assertThat(comparePage.isComparisonInfoNotDisplayed("Design Guidance"), containsString("right"));
         assertThat(comparePage.isComparisonInfoNotDisplayed("Process"), containsString("right"));
         assertThat(comparePage.isComparisonInfoNotDisplayed("Cost Results"), containsString("right"));
 

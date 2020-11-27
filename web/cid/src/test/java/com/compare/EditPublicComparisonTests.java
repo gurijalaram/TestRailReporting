@@ -1,33 +1,33 @@
 package com.compare;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import com.pageobjects.common.ScenarioTablePage;
 import com.pageobjects.pages.compare.ComparePage;
 import com.pageobjects.pages.evaluate.EditWarningPage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.PublishPage;
-import com.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
 import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class EditPublicComparisonTests extends TestBase {
 
@@ -201,8 +201,7 @@ public class EditPublicComparisonTests extends TestBase {
                 .enterComparisonName(testComparisonName)
                 .save(ComparePage.class);
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.selectExploreButton()
+        genericHeader.selectExploreButton()
                 .filter()
                 .setWorkspace("Public")
                 .setScenarioType("Comparison")
@@ -212,16 +211,14 @@ public class EditPublicComparisonTests extends TestBase {
                 .selectOverwrite()
                 .selectContinue(ComparePage.class);
 
-        genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
+        genericHeader.selectExploreButton()
                 .filter()
                 .setWorkspace("Private")
                 .setScenarioType("Comparison")
                 .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName)
-                .openPreviewPanel(ExplorePage.class);
+                .openComparison(testComparisonName);
 
-        assertThat(explorePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
+        assertThat(comparePage.getDescriptionText(), is(Matchers.equalTo(testComparisonDescription)));
     }
 
     @Test
@@ -236,10 +233,8 @@ public class EditPublicComparisonTests extends TestBase {
         comparePage = loginPage.login(UserUtil.getUser())
                 .createNewComparison()
                 .enterComparisonName(testComparisonName)
-                .save(ComparePage.class);
-
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.publishScenario(PublishPage.class)
+                .save(GenericHeader.class)
+                .publishScenario(PublishPage.class)
                 .selectPublishButton()
                 .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
                 .highlightComparison(testComparisonName)
@@ -290,8 +285,7 @@ public class EditPublicComparisonTests extends TestBase {
                 .enterComparisonName(testComparisonName)
                 .save(ComparePage.class);
 
-        genericHeader = new GenericHeader(driver);
-        comparePage = genericHeader.selectExploreButton()
+        genericHeader.selectExploreButton()
                 .filter()
                 .setWorkspace("Public")
                 .setScenarioType("Comparison")
@@ -302,16 +296,14 @@ public class EditPublicComparisonTests extends TestBase {
                 .inputNewScenarioName(newScenarioName)
                 .selectContinue(ComparePage.class);
 
-        genericHeader = new GenericHeader(driver);
-        explorePage = genericHeader.selectExploreButton()
+        genericHeader.selectExploreButton()
                 .filter()
                 .setWorkspace("Private")
                 .setScenarioType("Comparison")
                 .setRowOne("Scenario Name", "Contains", newScenarioName)
                 .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName)
-                .openPreviewPanel(ExplorePage.class);
+                .openComparison(testComparisonName);
 
-        assertThat(explorePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
+        assertThat(comparePage.getDescriptionText(), is(equalTo(testComparisonDescription)));
     }
 }

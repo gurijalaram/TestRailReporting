@@ -81,6 +81,14 @@ public class ScenarioNotesPage extends LoadableComponent<ScenarioNotesPage> {
         return this;
     }
 
+    /**
+     * Enter scenario information and notes in comparison view
+     *
+     * @param status - the status
+     * @param costMaturity - the cost maturity
+     * @param description - the description
+     * @return current page object
+     */
     public ScenarioNotesPage enterScenarioInfoNotesForComparison(String status, String costMaturity, String description) {
         selectStatus(status);
         selectCostMaturity(costMaturity);

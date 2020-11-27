@@ -66,7 +66,15 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
         return new EvaluatePage(driver);
     }
 
-    public ComparePage openComparisonLink(String scenarioName, String comparisonName, String jobType){
+    /**
+     * Opens the comparison from the job queue
+     *
+     * @param scenarioName - the scenario name
+     * @param comparisonName - the comparison name
+     * @param jobType - the job type
+     * @return new page object
+     */
+    public ComparePage openComparisonLink(String scenarioName, String comparisonName, String jobType) {
         By scenario = By.xpath("//div[.='" + StringUtils.capitalize(jobType) + "']/ancestor::tr//a[contains(@href,'#openFromQueue::sk,comparisonState," + comparisonName.toUpperCase() + "," + scenarioName + "')]");
         pageUtils.waitForElementAndClick(scenario);
         return new ComparePage(driver);
