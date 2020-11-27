@@ -112,7 +112,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3042")
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropdown() {

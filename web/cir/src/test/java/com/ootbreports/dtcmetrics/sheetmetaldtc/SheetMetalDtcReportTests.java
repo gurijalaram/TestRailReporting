@@ -11,6 +11,7 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -114,7 +115,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3042")
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropdown() {
@@ -122,6 +122,32 @@ public class SheetMetalDtcReportTests extends TestBase {
         inputControlsTests.testRollupDropdown(
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
                 RollupEnum.SHEET_METAL_DTC.getRollupName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3043")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3043")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricInputControlFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 }

@@ -307,15 +307,12 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for cost metric input control
      */
-    public void testCostMetricInputControlMachiningDtc(String costMetric) {
-        testCostMetricCore(
-            ReportNamesEnum.MACHINING_DTC.getReportName(),
-            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
-            costMetric
-        );
+    public void testCostMetricInputControlMachiningSheetMetalDtc(String reportName, String exportSetName,
+                                                                 String costMetric) {
+        testCostMetricCore(reportName, exportSetName, costMetric);
         assertThat(genericReportPage.getCostMetricValueFromChartAxis(), is(equalTo(String.format("%s (USD)", costMetric))));
 
-        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
         genericReportPage.getCostMetricValueFromBubble();
 

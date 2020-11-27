@@ -25,6 +25,8 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 public class MachiningDtcReportTests extends TestBase {
@@ -182,21 +184,27 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3023")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlMachiningDtc(
+        inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
+            ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3023")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlMachiningDtc(
+        inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
+            ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
