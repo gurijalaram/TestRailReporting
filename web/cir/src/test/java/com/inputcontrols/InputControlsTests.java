@@ -14,6 +14,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -225,6 +226,8 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.invertExportSetSelection();
 
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(1)));
 
         genericReportPage.exportSetDeselectAll();

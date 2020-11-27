@@ -51,10 +51,6 @@ public class SheetMetalDtcReportPage extends GenericReportPage {
         By locator = By.xpath(
                 String.format("(//div[@title='Single export set selection.']//ul)[1]/li[@title='%s']", exportSetName));
         pageUtils.waitForElementToAppear(locator);
-        By locator2 = By.xpath("//li[@title='---01-sheet-metal-dtc']");
-        pageUtils.waitForElementToAppear(locator2);
-        pageUtils.isElementDisplayed(locator2);
-        pageUtils.isElementEnabled(driver.findElement(locator2));
     }
 
     /**
