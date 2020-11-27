@@ -6,13 +6,13 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -146,6 +146,32 @@ public class SheetMetalDtcReportTests extends TestBase {
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3044")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlFinishMass() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetricDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                MassMetricEnum.FINISH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3044")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlRoughMass() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetricDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 }

@@ -11,6 +11,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -126,7 +127,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3043")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricPpc() {
@@ -139,7 +139,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3043")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricFbc() {
@@ -148,6 +147,32 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3044")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlFinishMass() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetricDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                MassMetricEnum.FINISH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3044")
+    @Description("Verify Mass Metric input control functions correctly")
+    public void testMassMetricInputControlRoughMass() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMassMetricDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 }

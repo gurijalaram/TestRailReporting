@@ -336,7 +336,7 @@ public class InputControlsTests extends TestBase {
      * @param exportSet  - String
      * @param massMetric - String
      */
-    public void testMassMetric(String reportName, String exportSet, String massMetric) {
+    public void testMassMetricDtcReports(String reportName, String exportSet, String massMetric) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()

@@ -169,7 +169,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -181,7 +181,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()

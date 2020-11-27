@@ -25,8 +25,6 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 public class MachiningDtcReportTests extends TestBase {
@@ -212,7 +210,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -224,7 +222,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
