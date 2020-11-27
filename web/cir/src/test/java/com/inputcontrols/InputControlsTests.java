@@ -320,12 +320,12 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for Cost Metric Input Control on Machining DTC Details, Comparison and Casting DTC
+     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, Details and Comparison
      *
      * @param reportName - String
      * @param costMetric - String
      */
-    public void testCostMetricInputControlOtherMachiningDtcReports(String reportName, String exportSet, String costMetric) {
+    public void testCostMetricInputControlComparisonDetailsDtcReports(String reportName, String exportSet, String costMetric) {
         testCostMetricCore(reportName, exportSet, costMetric);
     }
 

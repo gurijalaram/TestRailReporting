@@ -9,6 +9,7 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -119,6 +120,32 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
         inputControlsTests.testRollupDropdown(
                 ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
                 RollupEnum.SHEET_METAL_DTC.getRollupName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3043")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3043")
+    @Description("Verify cost metric input control functions correctly")
+    public void testCostMetricFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 }
