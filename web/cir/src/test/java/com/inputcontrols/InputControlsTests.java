@@ -683,6 +683,11 @@ public class InputControlsTests extends TestBase {
         }
     }
 
+    /**
+     * Generic test for export set search (Sheet Metal DTC)
+     * @param reportName String
+     * @param exportSetName String
+     */
     public void testExportSetSearch(String reportName, String exportSetName) {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
                 .login()

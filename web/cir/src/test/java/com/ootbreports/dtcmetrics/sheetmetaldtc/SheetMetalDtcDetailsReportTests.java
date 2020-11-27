@@ -101,7 +101,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3040")
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetSearch() {
@@ -109,6 +108,18 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
         inputControlsTests.testExportSetSearch(
                 ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3042")
+    @Description("Verify Roll-up input control functions correctly")
+    public void testRollupDropdown() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testRollupDropdown(
+                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+                RollupEnum.SHEET_METAL_DTC.getRollupName()
         );
     }
 }

@@ -103,7 +103,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3040")
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetSearch() {
@@ -112,15 +111,17 @@ public class SheetMetalDtcReportTests extends TestBase {
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
         );
-        /*sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), SheetMetalDtcReportPage.class);
+    }
 
-        sheetMetalDtcReportPage.waitForInputControlsLoad();
-        sheetMetalDtcReportPage.searchForExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
-
-        assertThat(sheetMetalDtcReportPage.getFirstExportSetName(),
-                is(equalTo(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())));*/
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3042")
+    @Description("Verify Roll-up input control functions correctly")
+    public void testRollupDropdown() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testRollupDropdown(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                RollupEnum.SHEET_METAL_DTC.getRollupName()
+        );
     }
 }
