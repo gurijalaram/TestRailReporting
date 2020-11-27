@@ -95,7 +95,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3040")
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControls() {
@@ -104,10 +103,16 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3040")
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetSearch() {
-        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSearch(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
+        /*sheetMetalDtcReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), SheetMetalDtcReportPage.class);
@@ -116,6 +121,6 @@ public class SheetMetalDtcReportTests extends TestBase {
         sheetMetalDtcReportPage.searchForExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
 
         assertThat(sheetMetalDtcReportPage.getFirstExportSetName(),
-                is(equalTo(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())));
+                is(equalTo(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())));*/
     }
 }

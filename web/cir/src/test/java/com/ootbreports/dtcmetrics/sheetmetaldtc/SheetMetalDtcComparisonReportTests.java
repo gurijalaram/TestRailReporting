@@ -95,7 +95,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3040")
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControls() {
@@ -104,9 +103,14 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3040")
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetSearch() {
-
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetSearch(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
     }
 }

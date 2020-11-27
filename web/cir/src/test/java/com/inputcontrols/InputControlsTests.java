@@ -10,6 +10,7 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
@@ -29,6 +30,7 @@ import java.util.List;
 
 public class InputControlsTests extends TestBase {
 
+    private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private GenericReportPage genericReportPage;
     private WebDriver driver;
 
@@ -679,6 +681,19 @@ public class InputControlsTests extends TestBase {
         } else {
             assertThat(genericReportPage.getCountOfChartElements().compareTo(initialChartCount), is(equalTo(-1)));
         }
+    }
+
+    public void testExportSetSearch(String reportName, String exportSetName) {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, SheetMetalDtcReportPage.class);
+
+        sheetMetalDtcReportPage.waitForInputControlsLoad();
+        sheetMetalDtcReportPage.searchForExportSet(exportSetName);
+
+        assertThat(sheetMetalDtcReportPage.getFirstExportSetName(),
+                is(equalTo(exportSetName)));
     }
 
     private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
