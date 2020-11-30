@@ -174,7 +174,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderManufacturingIssues() {
@@ -194,7 +193,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderBends() {
@@ -214,7 +212,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderTolerances() {
@@ -234,7 +231,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderMachiningTime() {
@@ -254,7 +250,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderAnnualSpend() {
@@ -274,7 +269,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderDtcRank() {

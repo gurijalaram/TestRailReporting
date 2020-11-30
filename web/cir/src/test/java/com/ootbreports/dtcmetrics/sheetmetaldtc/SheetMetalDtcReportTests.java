@@ -178,7 +178,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderAnnualSpend() {
