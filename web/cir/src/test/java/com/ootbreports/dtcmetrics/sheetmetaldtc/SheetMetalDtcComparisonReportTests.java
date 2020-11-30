@@ -14,9 +14,11 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
+import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -27,6 +29,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
 
     public SheetMetalDtcComparisonReportTests() {
         super();
@@ -171,6 +174,66 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderManufacturingIssues() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum(),
+                "1271576 (Bulkload)",
+                "BRACKET_V1 (rev1)"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderBends() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.BENDS.getSortOrderEnum(),
+                "BRACKET_SHORTENED (rev1)",
+                "BRACKET_SHORTENED_ISSUES (Initial)"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderTolerances() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.TOLERANCES.getSortOrderEnum(),
+                "BRACKET_V1 (rev1)",
+                "BRACKET_V2 (rev1)"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderMachiningTime() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.MACHINING_TIME.getSortOrderEnum(),
+                "1271576 (Bulkload)",
+                "BRACKET_V3 (rev1)"
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderAnnualSpend() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.machiningDtcComparisonSortOrderTest(
+                SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
+                "1271576 (Bulkload)",
+                "3575137 (Bulkload)"
         );
     }
 }
