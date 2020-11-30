@@ -3,6 +3,7 @@ package com.ootbreports.dtcmetrics.sheetmetaldtc;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -15,6 +16,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
@@ -23,6 +25,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
+
+import java.math.BigDecimal;
 
 public class SheetMetalDtcReportTests extends TestBase {
 
@@ -171,5 +175,30 @@ public class SheetMetalDtcReportTests extends TestBase {
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderAnnualSpend() {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+
+        sheetMetalDtcReportPage.setReportName(ReportNamesEnum.SHEET_METAL_DTC.getReportName());
+        sheetMetalDtcReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal largerAnnualSpend = sheetMetalDtcReportPage.getAnnualSpendFromBubbleTooltip();
+
+        sheetMetalDtcReportPage.setReportName(ReportNamesEnum.SHEET_METAL_DTC.getReportName() + " 2");
+        sheetMetalDtcReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal smallerAnnualSpend = sheetMetalDtcReportPage.getAnnualSpendFromBubbleTooltip();
+
+        assertThat(smallerAnnualSpend.compareTo(largerAnnualSpend), is(equalTo(-1)));
     }
 }

@@ -76,6 +76,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[39]")
     private WebElement sheetMetalDtcBubble;
 
+    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[38]")
+    private WebElement sheetMetalDtcBubbleTwo;
+
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[8]")
     private WebElement plasticDtcBubble;
 
@@ -1433,6 +1436,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.build().perform();
+
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             elementToUse.click();
         }
@@ -2143,6 +2147,7 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcBubble);
         bubbleMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), castingDtcBubbleTwo);
         bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), sheetMetalDtcBubble);
+        bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName() + " 2", sheetMetalDtcBubbleTwo);
     }
 
     /**
