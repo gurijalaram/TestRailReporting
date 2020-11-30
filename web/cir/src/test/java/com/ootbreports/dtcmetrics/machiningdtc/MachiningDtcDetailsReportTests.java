@@ -277,9 +277,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCMACHINING_001")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("MACHININGDESIGN_TO_COST")));
     }
 
@@ -295,9 +295,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCMACHINING_001")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("PUNCH")));
     }
 
@@ -313,9 +313,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("PARTBODY_1")));
     }
 
@@ -331,9 +331,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("DTCMACHINING_001")));
     }
 
@@ -349,9 +349,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("PMI_ROUGHNESSCREO")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("PMI_PROFILEOFSURFACECREO")));
     }
 
@@ -367,9 +367,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("PUNCH")));
     }
 }

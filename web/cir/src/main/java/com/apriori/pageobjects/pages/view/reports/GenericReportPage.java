@@ -1988,7 +1988,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param getRowOnePartName boolean
      * @return String
      */
-    public String getPartNameCastingDtcDetails(boolean getRowOnePartName) {
+    public String getPartNameCastingSheetMetalDtcDetails(boolean getRowOnePartName) {
         String rowIndex = getRowOnePartName ? "1" : "2";
         By locator = By.xpath(String.format("(//span[@class='_jrHyperLink ReportExecution']/span)[%s]", rowIndex));
         pageUtils.waitForElementToAppear(locator);

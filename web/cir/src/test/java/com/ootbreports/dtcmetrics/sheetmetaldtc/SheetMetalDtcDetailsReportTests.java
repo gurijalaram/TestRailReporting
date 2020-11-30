@@ -14,6 +14,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
@@ -170,5 +171,125 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderManufacturingIssues() {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                is(equalTo("1271576")));
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                is(equalTo("BRACKET_V1")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderBends() {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.BENDS.getSortOrderEnum())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                is(equalTo("BRACKET_SHORTENED")));
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                is(equalTo("BRACKET_SHORTENED_ISSUES")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderTolerances() {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                is(equalTo("BRACKET_V1")));
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                is(equalTo("BRACKET_V2")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderMachiningTime() {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                is(equalTo("1271576")));
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                is(equalTo("BRACKET_V3")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderAnnualSpend() {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                is(equalTo("1271576")));
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                is(equalTo("3575137")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3045")
+    @Description("Verify Sort Order input control functions correctly")
+    public void testSortOrderDtcRank() {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                is(equalTo("BRACKET_SHORTENED")));
+        assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                is(equalTo("BRACKET_V1")));
     }
 }

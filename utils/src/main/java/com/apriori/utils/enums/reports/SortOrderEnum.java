@@ -1,16 +1,18 @@
 package com.apriori.utils.enums.reports;
 
 public enum SortOrderEnum {
-    MANUFACTURING_ISSUES("Manufacturing Issues"),
-    DESIGN_STANDARDS("Design Standards"),
-    TOLERANCES("Tolerances"),
-    SLOW_OPERATIONS("Slow Operations"),
     ANNUAL_SPEND("Annual Spend"),
-    DTC_RANK("DTC Rank"),
+    BENDS("Bends"),
     CASTING_ISSUES("Manufacturing - Casting Issues"),
+    DESIGN_STANDARDS("Design Standards"),
+    DTC_RANK("DTC Rank"),
     MACHINING_ISSUES("Manufacturing - Machining Issues"),
+    MACHINING_TIME("Machining Time"),
+    MANUFACTURING_ISSUES("Manufacturing Issues"),
     MATERIAL_SCRAP("Material Scrap"),
-    SPECIAL_TOOLING("Special Tooling");
+    SLOW_OPERATIONS("Slow Operations"),
+    SPECIAL_TOOLING("Special Tooling"),
+    TOLERANCES("Tolerances");
 
     private final String sortOrder;
 
