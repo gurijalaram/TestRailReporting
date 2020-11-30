@@ -1,4 +1,4 @@
-package evaluate;
+package com.evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
