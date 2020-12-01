@@ -286,4 +286,16 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
                 is(equalTo("BRACKET_V1")));
     }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3046")
+    @Description("Verify Currency Code input control functions correctly")
+    public void testCurrencyCodeInputControl() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCurrencyCodeDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
+    }
 }

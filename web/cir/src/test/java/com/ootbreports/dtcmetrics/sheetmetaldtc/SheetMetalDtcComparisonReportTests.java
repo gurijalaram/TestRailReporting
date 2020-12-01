@@ -178,7 +178,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderManufacturingIssues() {
@@ -192,7 +191,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderBends() {
@@ -206,7 +204,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderTolerances() {
@@ -220,7 +217,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderMachiningTime() {
@@ -234,7 +230,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderAnnualSpend() {
@@ -244,6 +239,18 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
                 partNames
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3046")
+    @Description("Verify Currency Code input control functions correctly")
+    public void testCurrencyCodeInputControl() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCurrencyCodeDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
         );
     }
 }
