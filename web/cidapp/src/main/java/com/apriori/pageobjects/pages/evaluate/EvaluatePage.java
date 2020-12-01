@@ -393,10 +393,11 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list as string
      */
     public List<String> getListOfVPEs() {
-        List< String > listOfVpes = new ArrayList<>();
+        List<String> listOfVpes = new ArrayList<>();
 
-        for (WebElement vpe : vpes)
+        for (WebElement vpe : vpes) {
             listOfVpes.add(vpe.getAttribute("textContent"));
+        }
         return listOfVpes;
     }
 }
