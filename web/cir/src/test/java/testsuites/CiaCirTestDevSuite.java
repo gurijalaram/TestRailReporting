@@ -17,7 +17,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
     MachiningDtcComparisonReportTests.class,
-    SheetMetalDtcDetailsReportTests.class
+    SheetMetalDtcComparisonReportTests.class
 })
 
 public class CiaCirTestDevSuite {
