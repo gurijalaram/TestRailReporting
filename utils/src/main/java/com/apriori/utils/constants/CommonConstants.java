@@ -211,13 +211,7 @@ public class CommonConstants {
         return cdsIdentityApplication;
     }
 
-    public static String getAtsServiceHost() {
-        if (atsServiceHost == null) {
-            atsServiceHost = System.getProperty("atsServiceHost", constantsInit.atsServiceHost());
-        }
 
-        return atsServiceHost;
-    }
 
     public static String getFmsServiceHost() {
         if (fmsServiceHost == null) {
