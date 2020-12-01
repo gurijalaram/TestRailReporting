@@ -24,6 +24,8 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
@@ -280,62 +282,72 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"DTCMACHINING_001 (Toleranced)", "MACHININGDESIGN_TO_COST (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum(),
-            "DTCMACHINING_001 (Toleranced)",
-            "MACHININGDESIGN_TO_COST (Initial)"
+            partNames
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDesignStandards() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"DTCMACHINING_001 (Toleranced)", "PUNCH (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum(),
-            "DTCMACHINING_001 (Toleranced)",
-            "PUNCH (Initial)"
+            partNames
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlTolerances() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"MACHININGDESIGN_TO_COST (Initial)", "PARTBODY_1 (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-            "MACHININGDESIGN_TO_COST (Initial)",
-            "PARTBODY_1 (Initial)"
+            partNames
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlSlowOperations() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"MACHININGDESIGN_TO_COST (Initial)", "DTCMACHINING_001 (Toleranced)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
-            "MACHININGDESIGN_TO_COST (Initial)",
-            "DTCMACHINING_001 (Toleranced)"
+            partNames
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3025")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlAnnualSpend() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"PMI_ROUGHNESSCREO (Initial)", "PMI_PROFILEOFSURFACECREO (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
-            "PMI_ROUGHNESSCREO (Initial)",
-            "PMI_PROFILEOFSURFACECREO (Initial)"
+            partNames
         );
     }
 }

@@ -178,62 +178,72 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderManufacturingIssues() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"1271576 (Bulkload)", "BRACKET_V1 (rev1)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum(),
-                "1271576 (Bulkload)",
-                "BRACKET_V1 (rev1)"
+                partNames
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderBends() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"BRACKET_SHORTENED (rev1)", "BRACKET_SHORTENED_ISSUES (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 SortOrderEnum.BENDS.getSortOrderEnum(),
-                "BRACKET_SHORTENED (rev1)",
-                "BRACKET_SHORTENED_ISSUES (Initial)"
+                partNames
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderTolerances() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"BRACKET_V1 (rev1)", "BRACKET_V2 (rev1)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-                "BRACKET_V1 (rev1)",
-                "BRACKET_V2 (rev1)"
+                partNames
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderMachiningTime() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"1271576 (Bulkload)", "BRACKET_V3 (rev1)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 SortOrderEnum.MACHINING_TIME.getSortOrderEnum(),
-                "1271576 (Bulkload)",
-                "BRACKET_V3 (rev1)"
+                partNames
         );
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderAnnualSpend() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"1271576 (Bulkload)", "3575137 (Bulkload)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
-                "1271576 (Bulkload)",
-                "3575137 (Bulkload)"
+                partNames
         );
     }
 }
