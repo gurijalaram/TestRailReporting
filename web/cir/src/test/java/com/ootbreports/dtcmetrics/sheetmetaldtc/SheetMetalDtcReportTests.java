@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.apibase.services.cis.objects.Report;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
@@ -202,12 +203,23 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3046")
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCodeInputControl() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCurrencyCodeDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3048")
+    @Description("Verify Process Group input control functions correctly")
+    public void testProcessGroupInputControlNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testProcessGroupInputControlNoSelection(
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
         );

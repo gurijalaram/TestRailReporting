@@ -307,6 +307,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//li[@title='Casting - Sand'])[1]/div/a")
     private WebElement sandCastingOption;
 
+    @FindBy(xpath = "//div[@id='processGroup']//span[@class='warning']")
+    private WebElement processGroupWarningMessage;
+
     @FindBy(xpath = "//span[contains(text(), '* Process Group')]/..//li[@title='Deselect All']/a")
     private WebElement deselectAllProcessGroupsButton;
 
@@ -603,6 +606,32 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(driver.findElement(locator));
+        return this;
+    }
+
+    /**
+     * Checks if Process Group warning message is displayed and enabled
+     * @return boolean
+     */
+    public boolean isProcessGroupWarningDisplayedAndEnabled() {
+        By locator = By.xpath("//div[@id='processGroup']//span[contains(text(), 'This field is mandatory')]");
+        pageUtils.waitForElementToAppear(locator);
+        return processGroupWarningMessage.isDisplayed() && processGroupWarningMessage.isEnabled();
+    }
+
+    /**
+     * Gets text of Process Group warning
+     * @return String
+     */
+    public String getProcessGroupWarningText() {
+        return  processGroupWarningMessage.getText();
+    }
+
+    /**
+     * Deselects any selected export sets
+     */
+    public GenericReportPage deselectAllProcessGroups() {
+        pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);
         return this;
     }
 

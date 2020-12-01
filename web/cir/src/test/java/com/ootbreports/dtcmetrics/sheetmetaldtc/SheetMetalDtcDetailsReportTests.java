@@ -288,12 +288,23 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3046")
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCodeInputControl() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCurrencyCodeDtcReports(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3048")
+    @Description("Verify Process Group input control functions correctly")
+    public void testProcessGroupInputControlNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testProcessGroupInputControlNoSelection(
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
         );

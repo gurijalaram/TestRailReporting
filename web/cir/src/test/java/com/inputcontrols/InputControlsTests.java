@@ -426,6 +426,22 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
+     * Generic test to ensure warning on Process Group input controls works correctly
+     */
+    public void testProcessGroupInputControlNoSelection(String reportName, String exportSetName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSetName)
+                .deselectAllProcessGroups()
+                .clickOk();
+
+        assertThat(genericReportPage.isProcessGroupWarningDisplayedAndEnabled(), is(equalTo(true)));
+        assertThat(genericReportPage.getProcessGroupWarningText(), is(equalTo(Constants.WARNING_TEXT)));
+    }
+
+    /**
      * Generic test for DTC Score Input Control - main reports
      *
      * @param reportName - String
@@ -548,8 +564,7 @@ public class InputControlsTests extends TestBase {
         genericReportPage.inputAssemblyNumberSearchCriteria("");
         assertThat(genericReportPage.getCurrentlySelectedAssembly(), is(equalTo("")));
         assertThat(genericReportPage.isAssemblyNumberSearchErrorVisible(), is(equalTo(true)));
-        assertThat(genericReportPage.getAssemblyNumberSearchErrorText(),
-            is(equalTo("This field is mandatory so you must enter data.")));
+        assertThat(genericReportPage.getAssemblyNumberSearchErrorText(), is(equalTo(Constants.WARNING_TEXT)));
     }
 
     /**
