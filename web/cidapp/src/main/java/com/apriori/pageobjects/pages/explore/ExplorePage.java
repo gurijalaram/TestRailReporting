@@ -64,8 +64,8 @@ public class ExplorePage extends ExploreToolbar {
     /**
      * Opens the scenario
      *
-     * @param componentName     - name of the part
-     * @param scenarioName - scenario name
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
      * @return a new page object
      */
     public EvaluatePage openScenario(String componentName, String scenarioName) {
@@ -76,8 +76,8 @@ public class ExplorePage extends ExploreToolbar {
     /**
      * Highlights the scenario in the table
      *
-     * @param componentName     - name of the part
-     * @param scenarioName - scenario name
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
      * @return current page object
      */
     public ExplorePage highlightScenario(String componentName, String scenarioName) {
