@@ -86,8 +86,8 @@ public class ProcessGroupsTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
-            .publish(ExplorePage.class)
-            .openScenario("350611", testScenarioName)
+            .publish(EvaluatePage.class)
+            .editScenario()
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
