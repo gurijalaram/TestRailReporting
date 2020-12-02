@@ -240,7 +240,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3051")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControlButtons() {
@@ -253,6 +252,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -265,6 +265,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -277,6 +278,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {

@@ -279,7 +279,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3051")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControlButtons() {

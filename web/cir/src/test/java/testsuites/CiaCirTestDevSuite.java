@@ -16,9 +16,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-    SheetMetalDtcReportTests.class,
-    SheetMetalDtcDetailsReportTests.class,
-    SheetMetalDtcComparisonReportTests.class
+    SheetMetalDtcReportTests.class
 })
 
 public class CiaCirTestDevSuite {
