@@ -89,7 +89,7 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
     }
 
     /**
-     * Select the pubish button
+     * Select the publish button
      *
      * @return generic page object
      */
