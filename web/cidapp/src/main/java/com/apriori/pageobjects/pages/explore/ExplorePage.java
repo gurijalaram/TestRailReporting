@@ -64,24 +64,24 @@ public class ExplorePage extends ExploreToolbar {
     /**
      * Opens the scenario
      *
-     * @param partName     - name of the part
+     * @param componentName     - name of the part
      * @param scenarioName - scenario name
      * @return a new page object
      */
-    public EvaluatePage openScenario(String partName, String scenarioName) {
-        scenarioTableController.openScenario(partName, scenarioName);
+    public EvaluatePage openScenario(String componentName, String scenarioName) {
+        scenarioTableController.openScenario(componentName, scenarioName);
         return new EvaluatePage(driver);
     }
 
     /**
      * Highlights the scenario in the table
      *
-     * @param partName     - name of the part
+     * @param componentName     - name of the part
      * @param scenarioName - scenario name
      * @return current page object
      */
-    public ExplorePage highlightScenario(String partName, String scenarioName) {
-        scenarioTableController.highlightScenario(partName, scenarioName);
+    public ExplorePage highlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
 }
