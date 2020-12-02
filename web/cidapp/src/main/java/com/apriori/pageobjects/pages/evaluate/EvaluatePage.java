@@ -400,4 +400,14 @@ public class EvaluatePage extends EvaluateToolbar {
         }
         return listOfVpes;
     }
+
+    /**
+     * Checks the dfm risk score
+     *
+     * @return dfm risk score
+     */
+    public boolean isDfmRisk(String riskFactor) {
+        By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor));
+        return pageUtils.waitForElementToAppear(risk).isDisplayed();
+    }
 }
