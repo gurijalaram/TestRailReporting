@@ -1,5 +1,8 @@
 package com.explore;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -16,9 +19,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.io.File;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PreviewPanelTests extends TestBase {
 

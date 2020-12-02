@@ -1,5 +1,11 @@
 package com.explore;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
+
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -29,12 +35,6 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-
 public class ActionsTests extends TestBase {
     private CidLoginPage loginPage;
     private ExplorePage explorePage;
@@ -60,21 +60,21 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "M3CapScrew");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "M3CapScrew");
 
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
-                .closeJobQueue(ExplorePage.class);
+            .enterScenarioInfoNotes("New", "Low", "Qa Description", "\u2022 QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectScenarioInfoNotes();
@@ -95,32 +95,32 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "M3CapScrew");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "M3CapScrew");
 
         explorePage = new ExplorePage(driver);
         explorePage.selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("Analysis", "Medium", "Qa Description", "Adding QA notes")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .openColumnsTable()
-                .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
-                .addColumn(ColumnsEnum.STATUS.getColumns())
-                .selectSaveButton(ExplorePage.class);
+            .enterScenarioInfoNotes("Analysis", "Medium", "Qa Description", "Adding QA notes")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("M3CapScrew", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openColumnsTable()
+            .addColumn(ColumnsEnum.COST_MATURITY.getColumns())
+            .addColumn(ColumnsEnum.STATUS.getColumns())
+            .selectSaveButton(ExplorePage.class);
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.STATUS.getColumns(), ColumnsEnum.COST_MATURITY.getColumns()));
 
         explorePage.openColumnsTable()
-                .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
-                .removeColumn(ColumnsEnum.STATUS.getColumns())
-                .selectSaveButton(ExplorePage.class);
+            .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
+            .removeColumn(ColumnsEnum.STATUS.getColumns())
+            .selectSaveButton(ExplorePage.class);
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -136,13 +136,13 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "bracket_basic");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "bracket_basic");
 
         new GenericHeader(driver).toggleLock();
         genericHeader = new GenericHeader(driver);
@@ -173,16 +173,16 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
-                .save(EvaluatePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("case_002_006-8611543_prt", scenarioName, "Update", "okay")
-                .closeJobQueue(EvaluatePage.class)
-                .costScenario(1)
-                .selectScenarioInfoNotes();
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectScenarioInfoNotes()
+            .enterScenarioInfoNotes("Complete", "Medium", "Qa Auto Test", "Uploaded and costed via automation")
+            .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("case_002_006-8611543_prt", scenarioName, "Update", "okay")
+            .closeJobQueue(EvaluatePage.class)
+            .costScenario(1)
+            .selectScenarioInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("Complete"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Medium"), is(true));
@@ -202,16 +202,16 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         scenarioNotesPage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .selectInfoNotes()
-                .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
-                .save(EvaluatePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("BasicScenario_Forging", scenarioName, "Update", "okay")
-                .closeJobQueue(EvaluatePage.class)
-                .costScenario()
-                .selectInfoNotes();
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectInfoNotes()
+            .enterScenarioInfoNotes("New", "High", "infoNotesPanel", "Panel Test")
+            .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("BasicScenario_Forging", scenarioName, "Update", "okay")
+            .closeJobQueue(EvaluatePage.class)
+            .costScenario()
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("High"), is(true));
@@ -231,23 +231,23 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "PowderMetalShaft");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "PowderMetalShaft");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectAssignScenario()
-                .selectAssignee("Moya Parker")
-                .update(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .openScenario(testScenarioName, "PowderMetalShaft")
-                .selectInfoNotes();
+            .selectAssignee("Moya Parker")
+            .update(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openScenario(testScenarioName, "PowderMetalShaft")
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isAssignee(), is("Moya Parker"));
     }
@@ -264,21 +264,21 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .openScenario(testScenarioName, "PowderMetalShaft");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .openScenario(testScenarioName, "PowderMetalShaft");
 
         genericHeader = new GenericHeader(driver);
         genericHeader.selectAssignScenario()
-                .selectAssignee("Sinead Plunkett")
-                .update(EvaluatePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
-                .closeJobQueue(EvaluatePage.class);
+            .selectAssignee("Sinead Plunkett")
+            .update(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("PowderMetalShaft", testScenarioName, "Update", "okay")
+            .closeJobQueue(EvaluatePage.class);
 
         genericHeader = new GenericHeader(driver);
         assignPage = genericHeader.selectAssignScenario();
@@ -298,16 +298,16 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario("New", "Low", "Ciene Frith")
-                .selectPublishButton()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Part")
-                .setRowOne("Assignee", "is", "Ciene Frith")
-                .apply(ExplorePage.class);
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario("New", "Low", "Ciene Frith")
+            .selectPublishButton()
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Assignee", "is", "Ciene Frith")
+            .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), equalTo(1));
     }
@@ -324,29 +324,29 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "BasicScenario_Forging");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "BasicScenario_Forging");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .openScenario(testScenarioName, "BasicScenario_Forging")
-                .selectInfoNotes()
-                .editNotes("Testing QA notes validating the ability to edit notes")
-                .save(EvaluatePage.class)
-                .openJobQueue()
-                .checkJobQueueRow("okay")
-                .closeJobQueue(EvaluatePage.class)
-                .selectInfoNotes();
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openScenario(testScenarioName, "BasicScenario_Forging")
+            .selectInfoNotes()
+            .editNotes("Testing QA notes validating the ability to edit notes")
+            .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueRow("okay")
+            .closeJobQueue(EvaluatePage.class)
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes validating the ability to edit notes"));
     }
@@ -363,26 +363,26 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "BasicScenario_Forging");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "BasicScenario_Forging");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .openScenario(testScenarioName, "BasicScenario_Forging")
-                .selectInfoNotes()
-                .editNotes("Validating the ability to edit notes")
-                .cancel(EvaluatePage.class)
-                .selectInfoNotes();
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("BasicScenario_Forging", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openScenario(testScenarioName, "BasicScenario_Forging")
+            .selectInfoNotes()
+            .editNotes("Validating the ability to edit notes")
+            .cancel(EvaluatePage.class)
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes"));
     }
@@ -400,29 +400,29 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "Push Pin");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "Push Pin");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .openScenario(testScenarioName, "Push Pin")
-                .selectInfoNotes()
-                .editNotes("")
-                .save(EvaluatePage.class)
-                .openJobQueue()
-                .checkJobQueueRow("okay")
-                .closeJobQueue(EvaluatePage.class)
-                .selectInfoNotes();
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openScenario(testScenarioName, "Push Pin")
+            .selectInfoNotes()
+            .editNotes("")
+            .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueRow("okay")
+            .closeJobQueue(EvaluatePage.class)
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getScenarioNotes(), is(""));
     }
@@ -440,29 +440,29 @@ public class ActionsTests extends TestBase {
         UserCredentials testUser2 = UserUtil.getUser();
 
         new CidLoginPage(driver).login(testUser1)
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "Push Pin");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "Push Pin");
 
         new GenericHeader(driver).selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("Push Pin", testScenarioName, "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .openAdminDropdown()
-                .selectLogOut();
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QA Test Description", "Testing QA notes")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("Push Pin", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openAdminDropdown()
+            .selectLogOut();
 
         new CidLoginPage(driver).login(testUser2);
 
         explorePage = new ExplorePage(driver);
         scenarioNotesPage = explorePage.selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .openScenario(testScenarioName, "Push Pin")
-                .selectInfoNotes();
+            .openScenario(testScenarioName, "Push Pin")
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getScenarioNotes(), is("Testing QA notes"));
     }
@@ -479,25 +479,25 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario("Complete", "Medium", "Moya Parker")
-                .selectPublishButton()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Part")
-                .setRowOne("Status", "is", "Complete")
-                .apply(ExplorePage.class);
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario("Complete", "Medium", "Moya Parker")
+            .selectPublishButton()
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Status", "is", "Complete")
+            .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "RAPID PROTOTYPING"), equalTo(1));
 
         explorePage = new ExplorePage(driver);
         explorePage.filter()
-                .setWorkspace("Public")
-                .setScenarioType("Part")
-                .setRowOne("Cost Maturity", "is", "Medium")
-                .apply(ExplorePage.class);
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Cost Maturity", "is", "Medium")
+            .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Rapid Prototyping"), equalTo(1));
     }
@@ -514,29 +514,29 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "Push Pin");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "Push Pin");
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QAutomation Test Remove Description", "")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .openScenario(testScenarioName, "Push Pin")
-                .selectInfoNotes()
-                .deleteDescription()
-                .save(EvaluatePage.class)
-                .openJobQueue()
-                .checkJobQueueRow("okay")
-                .closeJobQueue(EvaluatePage.class)
-                .selectInfoNotes();
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "QAutomation Test Remove Description", "")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus("PUSH PIN", testScenarioName, "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openScenario(testScenarioName, "Push Pin")
+            .selectInfoNotes()
+            .deleteDescription()
+            .save(EvaluatePage.class)
+            .openJobQueue()
+            .checkJobQueueRow("okay")
+            .closeJobQueue(EvaluatePage.class)
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.getDescription(), is(""));
     }
@@ -553,18 +553,18 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-                .highlightScenario(testScenarioName, "Push Pin");
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
+            .highlightScenario(testScenarioName, "Push Pin");
 
         genericHeader = new GenericHeader(driver);
         warningPage = genericHeader.selectScenarioInfoNotes()
-                .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "<script src=http://www.example.com/malicious-code.js></script>", "<script>alert(document.cookie)</script>")
-                .save(WarningPage.class);
+            .enterScenarioInfoNotes("Select Status", "Select Cost Maturity", "<script src=http://www.example.com/malicious-code.js></script>", "<script>alert(document.cookie)</script>")
+            .save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
@@ -579,25 +579,25 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class);
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-                .openComparison(testComparisonName);
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+            .openComparison(testComparisonName);
 
         new GenericHeader(driver).selectAssignScenario()
-                .selectAssignee("Nataliia Valieieva")
-                .update(ComparePage.class);
+            .selectAssignee("Nataliia Valieieva")
+            .update(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.openJobQueue()
-                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ComparePage.class)
-                .selectInfoNotes();
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ComparePage.class)
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isAssignee(), is("Nataliia Valieieva"));
     }
@@ -612,23 +612,23 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class);
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
-                .highlightComparison(testComparisonName)
-                .selectAssignScenario()
-                .selectAssignee("Nataliia Valieieva")
-                .update(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .openComparison(testComparisonName)
-                .selectInfoNotes();
+            .selectPublishButton()
+            .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
+            .highlightComparison(testComparisonName)
+            .selectAssignScenario()
+            .selectAssignee("Nataliia Valieieva")
+            .update(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .openComparison(testComparisonName)
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isAssignee(), is("Nataliia Valieieva"));
     }
@@ -648,37 +648,37 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class)
-                .addScenario()
-                .filter()
-                .setWorkspace("Private")
-                .setScenarioType("Assembly")
-                .setRowOne("Part Name", "Contains", testAssemblyName)
-                .apply(ScenarioTablePage.class)
-                .selectComparisonScenario(scenarioName, testAssemblyName)
-                .apply(ComparePage.class)
-                .addScenario()
-                .filter()
-                .setWorkspace("Private")
-                .setScenarioType("Part")
-                .setRowOne("Part Name", "Contains", partName)
-                .apply(ScenarioTablePage.class)
-                .selectComparisonScenario(scenarioName, partName)
-                .apply(ComparePage.class)
-                .selectInfoNotes()
-                .enterScenarioInfoNotesForComparison("New", "Low", "QA Test Description")
-                .save(ComparePage.class);
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Assembly")
+            .setRowOne("Part Name", "Contains", testAssemblyName)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(scenarioName, testAssemblyName)
+            .apply(ComparePage.class)
+            .addScenario()
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", partName)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(scenarioName, partName)
+            .apply(ComparePage.class)
+            .selectInfoNotes()
+            .enterScenarioInfoNotesForComparison("New", "Low", "QA Test Description")
+            .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.openJobQueue()
-                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ComparePage.class)
-                .selectInfoNotes();
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ComparePage.class)
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Low"), is(true));
@@ -700,48 +700,48 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class)
-                .addScenario()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Assembly")
-                .setRowOne("Part Name", "Contains", testAssemblyName)
-                .apply(ScenarioTablePage.class)
-                .selectComparisonScenario(scenarioName, testAssemblyName)
-                .apply(ComparePage.class)
-                .addScenario()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Part")
-                .setRowOne("Part Name", "Contains", partName)
-                .apply(ScenarioTablePage.class)
-                .selectComparisonScenario(scenarioName, partName)
-                .apply(ComparePage.class);
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Assembly")
+            .setRowOne("Part Name", "Contains", testAssemblyName)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(scenarioName, testAssemblyName)
+            .apply(ComparePage.class)
+            .addScenario()
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", partName)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(scenarioName, partName)
+            .apply(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Comparison")
-                .apply(ScenarioTablePage.class)
-                .openComparison(testComparisonName)
-                .selectInfoNotes()
-                .enterScenarioInfoNotesForComparison("Analysis", "Initial", "QA Test Description")
-                .save(ComparePage.class);
+            .selectPublishButton()
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .apply(ScenarioTablePage.class)
+            .openComparison(testComparisonName)
+            .selectInfoNotes()
+            .enterScenarioInfoNotesForComparison("Analysis", "Initial", "QA Test Description")
+            .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.openJobQueue()
-                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ComparePage.class)
-                .selectInfoNotes();
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ComparePage.class)
+            .selectInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("Analysis"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Initial"), is(true));
@@ -762,35 +762,35 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class)
-                .addScenario()
-                .filter()
-                .setWorkspace("Private")
-                .setScenarioType("Part")
-                .setRowOne("Part Name", "Contains", partName)
-                .apply(ScenarioTablePage.class)
-                .selectComparisonScenario(scenarioName, partName)
-                .apply(ComparePage.class);
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", partName)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(scenarioName, partName)
+            .apply(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectExploreButton()
-                .filter()
-                .setWorkspace("Private")
-                .setScenarioType("Comparison")
-                .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName)
-                .selectScenarioInfoNotes()
-                .enterScenarioInfoNotesForComparison("Analysis", "Initial", "QA Test Description")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .selectScenarioInfoNotes();
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Comparison")
+            .apply(ScenarioTablePage.class)
+            .highlightComparison(testComparisonName)
+            .selectScenarioInfoNotes()
+            .enterScenarioInfoNotesForComparison("Analysis", "Initial", "QA Test Description")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectScenarioInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("Analysis"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Initial"), is(true));
@@ -811,38 +811,38 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-                .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class)
-                .addScenario()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Part")
-                .setRowOne("Part Name", "Contains", partName)
-                .apply(ScenarioTablePage.class)
-                .selectComparisonScenario(scenarioName, partName)
-                .apply(ComparePage.class);
+            .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .selectPublishButton()
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", partName)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(scenarioName, partName)
+            .apply(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Comparison")
-                .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName)
-                .selectScenarioInfoNotes()
-                .enterScenarioInfoNotesForComparison("New", "Low", "QA Test Description")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .selectScenarioInfoNotes();
+            .selectPublishButton()
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .apply(ScenarioTablePage.class)
+            .highlightComparison(testComparisonName)
+            .selectScenarioInfoNotes()
+            .enterScenarioInfoNotesForComparison("New", "Low", "QA Test Description")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectScenarioInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Low"), is(true));
@@ -858,24 +858,24 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class);
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.selectExploreButton()
-                .filter()
-                .setWorkspace("Private")
-                .setScenarioType("Comparison")
-                .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName)
-                .selectScenarioInfoNotes()
-                .enterScenarioInfoNotesForComparison("Analysis", "Initial", "!£$%^&()_+{}~`1-=[]#';@")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .selectScenarioInfoNotes();
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Comparison")
+            .apply(ScenarioTablePage.class)
+            .highlightComparison(testComparisonName)
+            .selectScenarioInfoNotes()
+            .enterScenarioInfoNotesForComparison("Analysis", "Initial", "!£$%^&()_+{}~`1-=[]#';@")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectScenarioInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("Analysis"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Initial"), is(true));
@@ -891,25 +891,25 @@ public class ActionsTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         comparePage = loginPage.login(UserUtil.getUser())
-                .createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class);
+            .createNewComparison()
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class);
 
         genericHeader = new GenericHeader(driver);
         scenarioNotesPage = genericHeader.publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Comparison")
-                .apply(ScenarioTablePage.class)
-                .highlightComparison(testComparisonName)
-                .selectScenarioInfoNotes()
-                .enterScenarioInfoNotesForComparison("New", "Low", "!£$%^&()_+{}~`1-=[]#';@")
-                .save(ExplorePage.class)
-                .openJobQueue()
-                .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
-                .closeJobQueue(ExplorePage.class)
-                .selectScenarioInfoNotes();
+            .selectPublishButton()
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Comparison")
+            .apply(ScenarioTablePage.class)
+            .highlightComparison(testComparisonName)
+            .selectScenarioInfoNotes()
+            .enterScenarioInfoNotesForComparison("New", "Low", "!£$%^&()_+{}~`1-=[]#';@")
+            .save(ExplorePage.class)
+            .openJobQueue()
+            .checkJobQueueActionStatus(testComparisonName, "Initial", "Update", "okay")
+            .closeJobQueue(ExplorePage.class)
+            .selectScenarioInfoNotes();
 
         assertThat(scenarioNotesPage.isStatusSelected("New"), is(true));
         assertThat(scenarioNotesPage.isCostMaturitySelected("Low"), is(true));

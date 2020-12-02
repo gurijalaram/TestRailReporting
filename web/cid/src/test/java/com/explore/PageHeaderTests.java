@@ -1,5 +1,8 @@
 package com.explore;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -19,9 +22,6 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PageHeaderTests extends TestBase {
     private CidLoginPage loginPage;
@@ -46,7 +46,7 @@ public class PageHeaderTests extends TestBase {
 
         loginPage = new CidLoginPage(driver);
         pageHeader = loginPage.login(UserUtil.getUser())
-                .hoverOnEvaluateTab();
+            .hoverOnEvaluateTab();
 
         assertThat(pageHeader.getTitleEvaluateTab(), is(evaluateTooltipText));
 
@@ -56,26 +56,26 @@ public class PageHeaderTests extends TestBase {
 
         genericHeader = new GenericHeader(driver);
         pageHeader = genericHeader.uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .selectExploreButton()
-                .hoverOnEvaluateTab();
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .selectExploreButton()
+            .hoverOnEvaluateTab();
 
         assertThat(pageHeader.getTitleEvaluateTab(), is("Part  " + partName.toUpperCase() + " ,  " + "Scenario  " + testScenarioName + " "));
 
         pageHeader = genericHeader.createNewComparison()
-                .enterComparisonName(testComparisonName)
-                .save(ComparePage.class)
-                .addScenario()
-                .filter()
-                .setWorkspace("Private")
-                .setScenarioType("Part")
-                .setRowOne("Part Name", "Contains", partName)
-                .apply(ScenarioTablePage.class)
-                .selectComparisonScenario(testScenarioName, partName)
-                .apply(GenericHeader.class)
-                .selectExploreButton()
-                .hoverOnCompareTab();
+            .enterComparisonName(testComparisonName)
+            .save(ComparePage.class)
+            .addScenario()
+            .filter()
+            .setWorkspace("Private")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", partName)
+            .apply(ScenarioTablePage.class)
+            .selectComparisonScenario(testScenarioName, partName)
+            .apply(GenericHeader.class)
+            .selectExploreButton()
+            .hoverOnCompareTab();
 
         assertThat(pageHeader.getTitleCompareTab(), is("Comparison  " + testComparisonName.toUpperCase()));
     }
