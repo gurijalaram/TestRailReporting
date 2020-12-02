@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,6 +94,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//span")
     private List<WebElement> secondaryProcesses;
+
+    @FindBy(xpath = "//label[.='VPE']/following-sibling::div//div//button")
+    private List<WebElement> vpes;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -381,5 +385,19 @@ public class EvaluatePage extends EvaluateToolbar {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(costResult);
         return driver.findElement(costResult).isDisplayed();
+    }
+
+    /**
+     * Gets list of vpe's
+     *
+     * @return list as string
+     */
+    public List<String> getListOfVPEs() {
+        List<String> listOfVpes = new ArrayList<>();
+
+        for (WebElement vpe : vpes) {
+            listOfVpes.add(vpe.getAttribute("textContent"));
+        }
+        return listOfVpes;
     }
 }
