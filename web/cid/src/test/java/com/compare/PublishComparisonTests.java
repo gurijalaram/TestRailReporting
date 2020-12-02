@@ -506,6 +506,6 @@ public class PublishComparisonTests extends TestBase {
             .openComparisonLink("Initial", testComparisonName, "Publish");
 
         assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
-        assertThat(comparePage.isComparisonPublicWorkspace("public"), is(true));
+        assertThat(comparePage.isComparisonWorkspace("public"), is(true));
     }
 }

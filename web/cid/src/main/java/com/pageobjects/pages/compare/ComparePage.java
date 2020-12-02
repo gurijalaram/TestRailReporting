@@ -110,7 +110,12 @@ public class ComparePage extends LoadableComponent<ComparePage> {
         return pageUtils.waitForElementToAppear(lockedIcon).isDisplayed();
     }
 
-    public boolean isComparisonPublicWorkspace(String workspace) {
+    /**
+     *
+     * @param workspace - the workspace
+     * @return true/false
+     */
+    public boolean isComparisonWorkspace(String workspace) {
         By workspaceIcon = By.xpath(String.format("//div[@class='workspace-status-icon fa fa-users %s-workspace']", workspace));
         return pageUtils.waitForElementToAppear(workspaceIcon).isDisplayed();
     }
