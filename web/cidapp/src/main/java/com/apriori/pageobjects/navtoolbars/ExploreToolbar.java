@@ -103,8 +103,8 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public <T> T publishScenario(Class<T> className) {
+    public PublishPage publishScenario() {
         pageUtils.waitForElementAndClick(publishButton);
-        return PageFactory.initElements(driver, className);
+        return new PublishPage(driver);
     }
 }
