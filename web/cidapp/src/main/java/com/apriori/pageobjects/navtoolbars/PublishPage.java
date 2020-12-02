@@ -138,4 +138,14 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     public <T> T continues(Class<T> klass) {
         return modalDialogController.continues(klass);
     }
+
+    /**
+     * Select the back button
+     *
+     * @return generic page object
+     */
+    public PublishPage back() {
+        modalDialogController.back();
+        return this;
+    }
 }

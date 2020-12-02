@@ -44,6 +44,9 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Continue']")
     private WebElement continueButton;
 
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Back']")
+    private WebElement backButton;
+
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
 
@@ -106,6 +109,16 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
     public <T> T continues(Class<T> klass) {
         pageUtils.waitForElementAndClick(continueButton);
         return PageFactory.initElements(driver,klass);
+    }
+
+    /**
+     * Select the back button
+     *
+     * @return generic page object
+     */
+    public ModalDialogController back() {
+        pageUtils.waitForElementAndClick(backButton);
+        return this;
     }
 
     /**
