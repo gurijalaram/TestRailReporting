@@ -597,6 +597,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+            "",
             ListNameEnum.CREATED_BY.getListName()
         );
     }
@@ -648,6 +649,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+            "",
             ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
     }

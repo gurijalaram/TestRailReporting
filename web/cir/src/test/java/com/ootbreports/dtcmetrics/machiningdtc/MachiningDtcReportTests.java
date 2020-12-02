@@ -390,6 +390,7 @@ public class MachiningDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             ListNameEnum.PARTS.getListName()
         );
     }

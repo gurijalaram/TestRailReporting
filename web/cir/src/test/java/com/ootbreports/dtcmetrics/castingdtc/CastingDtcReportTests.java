@@ -203,6 +203,7 @@ public class CastingDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.CASTING_DTC.getReportName(),
+            "",
             ListNameEnum.PARTS.getListName()
         );
     }

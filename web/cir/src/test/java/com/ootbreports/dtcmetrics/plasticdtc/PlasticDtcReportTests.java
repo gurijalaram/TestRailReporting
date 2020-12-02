@@ -342,6 +342,7 @@ public class PlasticDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
+            "",
             ListNameEnum.PARTS.getListName()
         );
     }

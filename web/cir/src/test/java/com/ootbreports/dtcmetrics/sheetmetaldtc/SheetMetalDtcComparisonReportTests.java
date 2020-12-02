@@ -12,6 +12,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
@@ -266,7 +267,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3048")
     @Description("Verify Process Group input control functions correctly")
     public void testSingleProcessGroup() {
@@ -275,6 +275,19 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3051")
+    @Description("Verify Select Parts list controls function correctly")
+    public void testPartListInputControlButtons() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testListFilterButtons(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                ListNameEnum.PARTS.getListName()
         );
     }
 }

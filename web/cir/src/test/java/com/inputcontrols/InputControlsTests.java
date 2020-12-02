@@ -17,7 +17,6 @@ import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.By;
@@ -516,11 +515,17 @@ public class InputControlsTests extends TestBase {
      *
      * @param reportName String
      */
-    public void testListFilterButtons(String reportName, String listName) {
+    public void testListFilterButtons(String reportName, String exportSet, String listName) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
+
+        if (listName.contains("Parts") && !exportSet.isEmpty()) {
+            String expectedPartCount = reportName.contains("Sheet") ? "41" : "43";
+            genericReportPage.selectExportSet(exportSet);
+            genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Available: ", expectedPartCount);
+        }
 
         ArrayList<String> buttonNames = new ArrayList<String>() {
             {
