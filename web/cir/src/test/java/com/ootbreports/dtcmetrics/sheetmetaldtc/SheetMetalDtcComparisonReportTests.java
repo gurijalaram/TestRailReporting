@@ -9,6 +9,7 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
@@ -254,7 +255,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3048")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupInputControlNoSelection() {
@@ -262,6 +262,19 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
         inputControlsTests.testProcessGroupInputControlNoSelection(
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3048")
+    @Description("Verify Process Group input control functions correctly")
+    public void testSingleProcessGroup() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testSingleProcessGroup(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
     }
 }

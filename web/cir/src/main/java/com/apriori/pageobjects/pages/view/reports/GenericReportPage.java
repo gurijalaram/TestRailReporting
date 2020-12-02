@@ -2164,6 +2164,9 @@ public class GenericReportPage extends ReportsPageHeader {
         partNameMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), partNameDtcReports);
         partNameMap.put(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), machiningDtcComparisonPartName);
         partNameMap.put(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), machiningDtcDetailsPartNameLink);
+        partNameMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), partNameDtcReports);
+        partNameMap.put(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(), partNameDtcReports);
+        partNameMap.put(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), partNameDtcReports);
     }
 
     /**

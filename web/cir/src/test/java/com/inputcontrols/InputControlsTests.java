@@ -378,7 +378,8 @@ public class InputControlsTests extends TestBase {
         if (reportName.equals(ReportNamesEnum.MACHINING_DTC.getReportName()) &&
             processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
             assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
-        } else {
+        } else if (reportName.equals(ReportNamesEnum.CASTING_DTC.getReportName()) ||
+                reportName.equals(ReportNamesEnum.SHEET_METAL_DTC.getReportName())) {
             genericReportPage.setReportName(reportName);
             genericReportPage.hoverPartNameBubbleDtcReports();
             String partName = genericReportPage.getPartNameDtcReports();
