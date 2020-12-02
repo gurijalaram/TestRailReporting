@@ -58,6 +58,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[7][local-name() = 'path']")
     private WebElement dtcScoreMediumBubble;
 
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[4][local-name() = 'path']")
+    private WebElement dtcScoreSheetMetalMediumBubble;
+
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[5][local-name() = 'path']")
     private WebElement dtcScoreHighBubble;
 
@@ -2189,6 +2192,7 @@ public class GenericReportPage extends ReportsPageHeader {
         dtcScoreBubbleMap.put("Low", castingDtcBubbleTwo);
         dtcScoreBubbleMap.put("Medium", dtcScoreMediumBubble);
         dtcScoreBubbleMap.put("High", dtcScoreHighBubble);
+        dtcScoreBubbleMap.put("Sheet", dtcScoreSheetMetalMediumBubble);
     }
 
     /**

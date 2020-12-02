@@ -14,6 +14,7 @@ import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -453,6 +454,9 @@ public class InputControlsTests extends TestBase {
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             dtcScorePlasticAssertions(reportName, dtcScore);
+        } else if (reportName.equals(ReportNamesEnum.SHEET_METAL_DTC.getReportName()) &&
+                dtcScore.equals(DtcScoreEnum.MEDIUM.getDtcScoreName())) {
+            dtcScoreCastingMachiningAssertions("Sheet");
         } else {
             dtcScoreCastingMachiningAssertions(dtcScore);
         }
@@ -793,6 +797,7 @@ public class InputControlsTests extends TestBase {
 
         String dtcScoreValue = genericReportPage.getDtcScoreDtcReports().replace(" ", "");
 
+        dtcScore = dtcScore.equals("Sheet") ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScore;
         assertThat(dtcScore, is(equalTo(genericReportPage.getDtcScoreAboveChart())));
         assertThat(dtcScore, is(equalTo(dtcScoreValue)));
     }
