@@ -25,6 +25,18 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='checkbox-icon']")
     private WebElement lockTickBox;
 
+    @FindBy(css = "div[class='conflict-message']")
+    private WebElement conflictMessage;
+
+    @FindBy(xpath = "//label[.='Override']")
+    private WebElement overrideButton;
+
+    @FindBy(xpath = "//label[.='Change Name']")
+    private WebElement changeNameButton;
+
+    @FindBy(css = "input[name='scenarioName']")
+    private WebElement scenarioNameInput;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -68,6 +80,35 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public PublishPage lock() {
         pageUtils.waitForElementToAppear(lockTickBox).click();
+        return this;
+    }
+
+    /**
+     * Get conflict error message
+     * @return string
+     */
+    public String getConflictMessage() {
+        return pageUtils.waitForElementToAppear(conflictMessage).getAttribute("textContent");
+    }
+
+    /**
+     * Selects the override button
+     * @return current page object
+     */
+    public PublishPage override() {
+        pageUtils.waitForElementAndClick(overrideButton);
+        return this;
+    }
+
+    /**
+     * Change scenario name
+     * @param scenarioName - scenario name
+     * @return current page object
+     */
+    public PublishPage changeName(String scenarioName) {
+        pageUtils.waitForElementAndClick(changeNameButton);
+        pageUtils.waitForElementToBeClickable(scenarioNameInput).clear();
+        scenarioNameInput.sendKeys(scenarioName);
         return this;
     }
 
