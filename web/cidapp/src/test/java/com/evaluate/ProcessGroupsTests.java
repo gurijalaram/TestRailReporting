@@ -11,6 +11,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -43,7 +44,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupForging() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_001_006-8613190_2.prt.2");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_001_006-8613190_2.prt.2");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -61,7 +62,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupStockMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "42x1021_ref.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("42x1021_ref.prt.1");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -79,7 +80,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupBarTube() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "350611.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("350611.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -101,7 +102,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_012_009-0020647_hinge_2.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_012_009-0020647_hinge_2.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -123,7 +124,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupExtrusion() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "700-33770-01_A0.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("700-33770-01_A0.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -145,7 +146,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupFilleting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_005_flat end mill contouring.SLDPRT");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_005_flat end mill contouring.SLDPRT");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -167,7 +168,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupGearMaking() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Case_001_-_Rockwell_2075-0243G.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("Case_001_-_Rockwell_2075-0243G.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -189,7 +190,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachiningContouring() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_002_00400016-003M10_A.STP");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_002_00400016-003M10_A.STP");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -212,7 +213,7 @@ public class ProcessGroupsTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "GagePart_Case_011_gundrillgagepart-01.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("GagePart_Case_011_gundrillgagepart-01.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -234,7 +235,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachining4AxisMill() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "prt0001.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("prt0001.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -256,7 +257,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachining5AxisMill() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "7021021-2_rib.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("7021021-2_rib.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -278,7 +279,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachiningMillTurn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "ms16555-627_1.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("ms16555-627_1.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -300,7 +301,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPartiallyAutomatedMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "14100640.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("14100640.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -322,7 +323,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPerimeterMilling() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "14100640.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("14100640.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -344,7 +345,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPocketRecognitionSharedWalls() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_066_SpaceX_00128711-001_A.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_066_SpaceX_00128711-001_A.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -366,7 +367,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupRoughMilling() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "16-340053-00-04.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("16-340053-00-04.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -388,7 +389,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupSlotExamples() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_007_SpaceX_00088481-001_C.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_007_SpaceX_00088481-001_C.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -410,7 +411,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupTurning() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_002_006-8611543_prt.stp");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_002_006-8611543_prt.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -432,7 +433,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupBlowMolding() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "225_gasket-1-solid1.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("225_gasket-1-solid1.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -454,7 +455,7 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPowderMetal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_31_test_part_6_small.prt.2");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_31_test_part_6_small.prt.2");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -477,7 +478,7 @@ public class ProcessGroupsTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "AGCO _ 71421375.prt.1");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machined Box AMERICAS.SLDPRT");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -498,7 +499,7 @@ public class ProcessGroupsTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_011_CENA-009-A1-LH-Rear-Body-Mount.prt");
+        resourceFile = FileResourceUtil.getResourceAsFile("case_011_CENA-009-A1-LH-Rear-Body-Mount.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
