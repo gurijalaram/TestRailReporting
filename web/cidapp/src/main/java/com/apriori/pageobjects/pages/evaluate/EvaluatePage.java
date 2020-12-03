@@ -413,17 +413,17 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Checks the dfm risk icon
+     *
      * @param riskFactor - risk
      * @return boolean
      */
     public boolean isDfmRiskIcon(String riskFactor) {
-        String risk;
+        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success)"
+            : riskFactor.equalsIgnoreCase("Medium") ? "var(--info)"
+            : riskFactor.equalsIgnoreCase("High") ? "var(--warning)"
+            : null;
 
-        risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success-light)" : null;
-        risk = riskFactor.equalsIgnoreCase("Medium") ? "var(--info-light)" : null;
-        risk = riskFactor.equalsIgnoreCase("High") ? "var(--warning-light)" : null;
-
-        By riskIcon = By.xpath(String.format("//circle[@stroke='%s']", risk));
+        By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
         return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
     }
 }
