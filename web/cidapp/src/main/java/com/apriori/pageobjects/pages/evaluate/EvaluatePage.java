@@ -306,13 +306,11 @@ public class EvaluatePage extends EvaluateToolbar {
      * Checks the value of specified material
      *
      * @param label - the label
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMaterialDisplayed(String label, String value) {
-        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.waitForElementToAppear(result);
-        return driver.findElement(result).isDisplayed();
+    public String isMaterial(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
+        return pageUtils.waitForElementToAppear(result).getAttribute("textContent");
     }
 
     /**

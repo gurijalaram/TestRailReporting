@@ -93,7 +93,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      * Checks the specified contribution is displayed
      *
      * @param label - the label
-     * @return true/false
+     * @return string
      */
     public String isCostContribution(String label) {
         return costContributionAttr(label);
