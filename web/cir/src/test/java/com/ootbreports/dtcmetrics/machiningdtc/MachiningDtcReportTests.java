@@ -25,6 +25,8 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 public class MachiningDtcReportTests extends TestBase {
@@ -259,6 +261,18 @@ public class MachiningDtcReportTests extends TestBase {
     public void testProcessGroupSandAndDieCasting() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsMachining();
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
     }
 
     @Test

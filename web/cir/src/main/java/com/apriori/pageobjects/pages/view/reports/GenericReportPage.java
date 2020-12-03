@@ -310,9 +310,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//li[@title='Casting - Sand'])[1]/div/a")
     private WebElement sandCastingOption;
 
-    @FindBy(xpath = "//div[@id='processGroup']//span[@class='warning']")
-    private WebElement processGroupWarningMessage;
-
     @FindBy(xpath = "//span[contains(text(), '* Process Group')]/..//li[@title='Deselect All']/a")
     private WebElement deselectAllProcessGroupsButton;
 
@@ -321,6 +318,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement processGroupCurrentValueDtcPartSummary;
+
+    @FindBy(xpath = "//span[contains(text(), 'DTC Score')]/..//li[@title='Deselect All']/a")
+    private WebElement deselectAllDtcScoresButton;
 
     @FindBy(xpath = "//label[@title='Component Select']//a")
     private WebElement componentSelectDropdown;
@@ -616,18 +616,22 @@ public class GenericReportPage extends ReportsPageHeader {
      * Checks if Process Group warning message is displayed and enabled
      * @return boolean
      */
-    public boolean isProcessGroupWarningDisplayedAndEnabled() {
-        By locator = By.xpath("//div[@id='processGroup']//span[contains(text(), 'This field is mandatory')]");
+    public boolean isListWarningDisplayedAndEnabled(String listName) {
+        By locator = By.xpath(
+                String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
         pageUtils.waitForElementToAppear(locator);
-        return processGroupWarningMessage.isDisplayed() && processGroupWarningMessage.isEnabled();
+        return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
     }
 
     /**
      * Gets text of Process Group warning
      * @return String
      */
-    public String getProcessGroupWarningText() {
-        return  processGroupWarningMessage.getText();
+    public String getListWarningText(String listName) {
+        By locator = By.xpath(
+                String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 
     /**
@@ -1608,6 +1612,14 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getDtcScoreDtcReports() {
         pageUtils.waitForElementToAppear(dtcScoreValueOnBubble);
         return dtcScoreValueOnBubble.getAttribute("textContent");
+    }
+
+    /**
+     * Deselects any selected export sets
+     */
+    public GenericReportPage deselectAllDtcScores() {
+        pageUtils.waitForElementAndClick(deselectAllDtcScoresButton);
+        return this;
     }
 
     /**

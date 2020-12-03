@@ -227,6 +227,17 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(

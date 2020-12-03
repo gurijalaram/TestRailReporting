@@ -427,7 +427,7 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test to ensure warning on Process Group input controls works correctly
+     * Generic test to ensure warning on Process Group input control works correctly
      */
     public void testProcessGroupInputControlNoSelection(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
@@ -438,9 +438,28 @@ public class InputControlsTests extends TestBase {
                 .deselectAllProcessGroups()
                 .clickOk();
 
-        assertThat(genericReportPage.isProcessGroupWarningDisplayedAndEnabled(), is(equalTo(true)));
-        assertThat(genericReportPage.getProcessGroupWarningText(), is(equalTo(Constants.WARNING_TEXT)));
+        String listName = "processGroup";
+        assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
+        assertThat(genericReportPage.getListWarningText(listName), is(equalTo(Constants.WARNING_TEXT)));
     }
+
+    /**
+     * Generic test to ensure warning on Process Group input controls works correctly
+     */
+    public void testDtcScoreInputControlNoSelection(String reportName, String exportSetName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSetName)
+                .deselectAllDtcScores()
+                .clickOk();
+
+        String listName = "dtcScore";
+        assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
+        assertThat(genericReportPage.getListWarningText(listName), is(equalTo(Constants.WARNING_TEXT)));
+    }
+
 
     /**
      * Generic test for DTC Score Input Control - main reports

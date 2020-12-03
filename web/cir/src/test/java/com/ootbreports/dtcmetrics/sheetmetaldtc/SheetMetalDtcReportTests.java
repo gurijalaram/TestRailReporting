@@ -255,6 +255,17 @@ public class SheetMetalDtcReportTests extends TestBase {
     @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3049")
+    @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -265,7 +276,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -278,7 +288,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {

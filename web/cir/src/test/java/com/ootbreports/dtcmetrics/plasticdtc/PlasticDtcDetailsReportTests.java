@@ -21,6 +21,8 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
@@ -152,6 +154,18 @@ public class PlasticDtcDetailsReportTests extends TestBase {
             ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
 

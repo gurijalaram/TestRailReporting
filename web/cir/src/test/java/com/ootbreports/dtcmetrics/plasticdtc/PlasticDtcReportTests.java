@@ -26,6 +26,8 @@ import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -278,6 +280,29 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "1709")
+    @Description("Validate chart tool-tips")
+    public void testChartToolTips() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcChartTooltips(
+            ReportNamesEnum.PLASTIC_DTC.getReportName(),
+            ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
+
+    @Test
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -289,16 +314,6 @@ public class PlasticDtcReportTests extends TestBase {
         );
     }
 
-    @Test
-    @TestRail(testCaseId = "1709")
-    @Description("Validate chart tool-tips")
-    public void testChartToolTips() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcChartTooltips(
-            ReportNamesEnum.PLASTIC_DTC.getReportName(),
-            ExportSetEnum.ROLL_UP_A.getExportSetName()
-        );
-    }
 
     @Test
     @TestRail(testCaseId = "1701")
