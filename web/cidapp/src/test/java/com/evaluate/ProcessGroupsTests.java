@@ -486,7 +486,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
+        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
     }
 

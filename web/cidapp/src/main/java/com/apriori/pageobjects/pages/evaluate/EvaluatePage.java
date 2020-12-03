@@ -404,10 +404,26 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Checks the dfm risk score
      *
-     * @return dfm risk score
+     * @return true/false
      */
     public boolean isDfmRisk(String riskFactor) {
         By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor));
         return pageUtils.waitForElementToAppear(risk).isDisplayed();
+    }
+
+    /**
+     * Checks the dfm risk icon
+     * @param riskFactor - risk
+     * @return boolean
+     */
+    public boolean isDfmRiskIcon(String riskFactor) {
+        String risk;
+
+        risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success-light)" : null;
+        risk = riskFactor.equalsIgnoreCase("Medium") ? "var(--info-light)" : null;
+        risk = riskFactor.equalsIgnoreCase("High") ? "var(--warning-light)" : null;
+
+        By riskIcon = By.xpath(String.format("//circle[@stroke='%s']", risk));
+        return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
     }
 }
