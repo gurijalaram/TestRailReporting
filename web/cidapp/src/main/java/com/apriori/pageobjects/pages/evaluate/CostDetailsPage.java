@@ -86,21 +86,22 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      * @return double
      */
     public double getCostContribution(String label) {
-        By costDropdown = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/following-sibling::span", label));
-        return Double.parseDouble(pageUtils.waitForElementToAppear(costDropdown).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+        return Double.parseDouble(costContributionAttr(label).replaceAll("[^0-9?!\\.]", ""));
     }
 
     /**
      * Checks the specified contribution is displayed
      *
      * @param label - the label
-     * @param value - the value
      * @return true/false
      */
-    public boolean isCostContributionDisplayed(String label, String value) {
-        By costResult = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.waitForElementToAppear(costResult);
-        return driver.findElement(costResult).isDisplayed();
+    public String isCostContribution(String label) {
+        return costContributionAttr(label);
+    }
+
+    private String costContributionAttr(String label) {
+        By costResult = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/following-sibling::span", label));
+        return pageUtils.waitForElementToAppear(costResult).getAttribute("textContent");
     }
 
     /**
