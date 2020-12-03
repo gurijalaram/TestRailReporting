@@ -24,8 +24,6 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 public class SheetMetalDtcComparisonReportTests extends TestBase {
@@ -292,7 +290,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreNoSelection() {
@@ -304,7 +301,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreAll() {
@@ -317,7 +313,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -330,7 +325,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -343,7 +337,6 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {

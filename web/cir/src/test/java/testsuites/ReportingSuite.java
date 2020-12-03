@@ -16,6 +16,9 @@ import com.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import com.ootbreports.dtcmetrics.plasticdtc.PlasticDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.plasticdtc.PlasticDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.plasticdtc.PlasticDtcReportTests;
+import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcComparisonReportTests;
+import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
+import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.ootbreports.scenariocomparison.ScenarioComparisonReportTests;
 import org.junit.runner.RunWith;
@@ -28,17 +31,20 @@ import org.junit.runners.Suite;
     AssemblyCostReportTests.class,
     ComponentCostReportTests.class,
     MachiningDtcReportTests.class,
-    MachiningDtcComparisonReportTests.class,
     MachiningDtcDetailsReportTests.class,
+    MachiningDtcComparisonReportTests.class,
     CastingDtcReportTests.class,
-    CastingDtcComparisonReportTests.class,
     CastingDtcDetailsReportTests.class,
+    CastingDtcComparisonReportTests.class,
     LoginTests.class,
     PlasticDtcReportTests.class,
-    PlasticDtcComparisonReportTests.class,
     PlasticDtcDetailsReportTests.class,
+    PlasticDtcComparisonReportTests.class,
     ReportsNavigationTests.class,
-    ScenarioComparisonReportTests.class
+    ScenarioComparisonReportTests.class,
+    SheetMetalDtcReportTests.class,
+    SheetMetalDtcDetailsReportTests.class,
+    SheetMetalDtcComparisonReportTests.class
 })
 public class ReportingSuite {
 }
