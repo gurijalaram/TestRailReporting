@@ -5,7 +5,6 @@ public enum ReportNamesEnum {
     ASSEMBLY_COST_LETTER("Assembly Cost (Letter)"),
     ASSEMBLY_DETAILS("Assembly Details"),
     COMPONENT_COST("Component Cost"),
-    SCENARIO_COMPARISON("Scenario Comparison"),
     CASTING_DTC("Casting DTC"),
     CASTING_DTC_COMPARISON("Casting DTC Comparison"),
     CASTING_DTC_DETAILS("Casting DTC Details"),
@@ -16,7 +15,11 @@ public enum ReportNamesEnum {
     MACHINING_DTC_COMPARISON("Machining DTC Comparison"),
     PLASTIC_DTC("Plastic DTC"),
     PLASTIC_DTC_COMPARISON("Plastic DTC Comparison"),
-    PLASTIC_DTC_DETAILS("Plastic DTC Details");
+    PLASTIC_DTC_DETAILS("Plastic DTC Details"),
+    SCENARIO_COMPARISON("Scenario Comparison"),
+    SHEET_METAL_DTC("Sheet Metal DTC"),
+    SHEET_METAL_DTC_COMPARISON("Sheet Metal DTC Comparison"),
+    SHEET_METAL_DTC_DETAILS("Sheet Metal DTC Details");
 
     private final String reportName;
 
