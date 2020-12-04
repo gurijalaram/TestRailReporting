@@ -68,7 +68,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Secondary Process']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
-    @FindBy(xpath = "//label[.='Material']/following-sibling::div//div//button")
+    @FindBy(xpath = "//label[.='Material']/following-sibling::div//button")
     private WebElement materialsPencil;
 
     @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::[.='details']")
@@ -83,7 +83,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Cost Results']/following-sibling::div[.='details']")
     private WebElement costDetailsButton;
 
-    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::button")
+    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//button")
     private WebElement secondaryProcessesPencil;
 
     @FindBy(xpath = "//div[.='Inputs']/following-sibling::div[normalize-space()='more']")
