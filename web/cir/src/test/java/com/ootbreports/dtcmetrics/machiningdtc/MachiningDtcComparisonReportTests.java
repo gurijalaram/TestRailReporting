@@ -218,6 +218,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3029")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
