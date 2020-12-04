@@ -85,7 +85,6 @@ public class EditPublicComparisonTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.COMPARISONS.getWorkspace())
             .highlightComparison(testComparisonName);
 
-        genericHeader = new GenericHeader(driver);
         comparePage = genericHeader.editScenario(ComparePage.class);
 
         assertThat(comparePage.getComparisonName(), is(equalTo(testComparisonName.toUpperCase())));
@@ -160,21 +159,19 @@ public class EditPublicComparisonTests extends TestBase {
             .setRowOne("Part Name", "Contains", testAssemblyName)
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(scenarioName, testAssemblyName)
-            .apply(ComparePage.class);
-
-        new ComparePage(driver).addScenario()
+            .apply(ComparePage.class)
+            .addScenario()
             .filter()
             .setWorkspace("Private")
             .setScenarioType("Part")
             .setRowOne("Part Name", "Contains", partName)
             .apply(ScenarioTablePage.class)
             .selectComparisonScenario(scenarioName, partName)
-            .apply(ComparePage.class);
+            .apply(ComparePage.class)
+            .setBasis(partName, scenarioName);
 
-        new ComparePage(driver).setBasis(partName, scenarioName);
-
-        assertThat(new ComparePage(driver).isBasis(partName, scenarioName), is(true));
-        assertThat(new ComparePage(driver).isBasisButtonPresent(testAssemblyName, scenarioName), is(true));
+        assertThat(comparePage.isBasis(partName, scenarioName), is(true));
+        assertThat(comparePage.isBasisButtonPresent(testAssemblyName, scenarioName), is(true));
     }
 
     @Test
