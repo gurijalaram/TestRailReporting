@@ -67,10 +67,8 @@ public class NewScenarioNameTests extends TestBase {
         String testNewScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.READY_TO_COST.getCostingText()), is(true));
 
@@ -101,9 +99,8 @@ public class NewScenarioNameTests extends TestBase {
         String scenarioC = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser());
-        explorePage = new ExplorePage(driver);
-        explorePage = explorePage.uploadFileAndOk(scenarioA, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(UserUtil.getUser())
+            .uploadFileAndOk(scenarioA, resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
