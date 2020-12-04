@@ -204,7 +204,9 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlMachiningDtc(
+        inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
+            ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
@@ -215,7 +217,9 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlMachiningDtc(
+        inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
+            ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
@@ -226,7 +230,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -239,7 +243,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
@@ -283,6 +287,17 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
+    }
+
+    @Test
     @TestRail(testCaseId = "3029")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -420,6 +435,7 @@ public class MachiningDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             ListNameEnum.PARTS.getListName()
         );
     }

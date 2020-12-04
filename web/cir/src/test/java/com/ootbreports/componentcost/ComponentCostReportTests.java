@@ -214,8 +214,7 @@ public class ComponentCostReportTests extends TestBase {
         assertThat(componentCostReportPage.getComponentSelectDropdownText(),
                 is(equalTo("Click to select item...")));
 
-        assertThat(componentCostReportPage.getWarningMessageText(),
-                is(equalTo("This field is mandatory so you must enter data.")));
+        assertThat(componentCostReportPage.getWarningMessageText(), is(equalTo(Constants.WARNING_TEXT)));
 
         assertThat(componentCostReportPage.isWarningDisplayedAndEnabled(), is(equalTo(true)));
     }

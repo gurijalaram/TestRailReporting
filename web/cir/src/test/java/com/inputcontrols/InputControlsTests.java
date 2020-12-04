@@ -10,10 +10,13 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -28,6 +31,7 @@ import java.util.List;
 
 public class InputControlsTests extends TestBase {
 
+    private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private GenericReportPage genericReportPage;
     private WebDriver driver;
 
@@ -225,6 +229,8 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.invertExportSetSelection();
 
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(1)));
 
         genericReportPage.exportSetDeselectAll();
@@ -302,15 +308,12 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for cost metric input control
      */
-    public void testCostMetricInputControlMachiningDtc(String costMetric) {
-        testCostMetricCore(
-            ReportNamesEnum.MACHINING_DTC.getReportName(),
-            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
-            costMetric
-        );
+    public void testCostMetricInputControlMachiningSheetMetalDtc(String reportName, String exportSetName,
+                                                                 String costMetric) {
+        testCostMetricCore(reportName, exportSetName, costMetric);
         assertThat(genericReportPage.getCostMetricValueFromChartAxis(), is(equalTo(String.format("%s (USD)", costMetric))));
 
-        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
         genericReportPage.getCostMetricValueFromBubble();
 
@@ -318,12 +321,12 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for Cost Metric Input Control on Machining DTC Details, Comparison and Casting DTC
+     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, Details and Comparison
      *
      * @param reportName - String
      * @param costMetric - String
      */
-    public void testCostMetricInputControlOtherMachiningDtcReports(String reportName, String exportSet, String costMetric) {
+    public void testCostMetricInputControlComparisonDetailsDtcReports(String reportName, String exportSet, String costMetric) {
         testCostMetricCore(reportName, exportSet, costMetric);
     }
 
@@ -334,7 +337,7 @@ public class InputControlsTests extends TestBase {
      * @param exportSet  - String
      * @param massMetric - String
      */
-    public void testMassMetric(String reportName, String exportSet, String massMetric) {
+    public void testMassMetricDtcReports(String reportName, String exportSet, String massMetric) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
@@ -375,7 +378,8 @@ public class InputControlsTests extends TestBase {
         if (reportName.equals(ReportNamesEnum.MACHINING_DTC.getReportName()) &&
             processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
             assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
-        } else {
+        } else if (reportName.equals(ReportNamesEnum.CASTING_DTC.getReportName()) ||
+                reportName.equals(ReportNamesEnum.SHEET_METAL_DTC.getReportName())) {
             genericReportPage.setReportName(reportName);
             genericReportPage.hoverPartNameBubbleDtcReports();
             String partName = genericReportPage.getPartNameDtcReports();
@@ -423,6 +427,41 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
+     * Generic test to ensure warning on Process Group input control works correctly
+     */
+    public void testProcessGroupInputControlNoSelection(String reportName, String exportSetName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSetName)
+                .deselectAllProcessGroups()
+                .clickOk();
+
+        String listName = "processGroup";
+        assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
+        assertThat(genericReportPage.getListWarningText(listName), is(equalTo(Constants.WARNING_TEXT)));
+    }
+
+    /**
+     * Generic test to ensure warning on Process Group input controls works correctly
+     */
+    public void testDtcScoreInputControlNoSelection(String reportName, String exportSetName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(exportSetName)
+                .deselectAllDtcScores()
+                .clickOk();
+
+        String listName = "dtcScore";
+        assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
+        assertThat(genericReportPage.getListWarningText(listName), is(equalTo(Constants.WARNING_TEXT)));
+    }
+
+
+    /**
      * Generic test for DTC Score Input Control - main reports
      *
      * @param reportName - String
@@ -434,6 +473,9 @@ public class InputControlsTests extends TestBase {
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             dtcScorePlasticAssertions(reportName, dtcScore);
+        } else if (reportName.equals(ReportNamesEnum.SHEET_METAL_DTC.getReportName()) &&
+                dtcScore.equals(DtcScoreEnum.MEDIUM.getDtcScoreName())) {
+            dtcScoreCastingMachiningAssertions("Sheet");
         } else {
             dtcScoreCastingMachiningAssertions(dtcScore);
         }
@@ -496,11 +538,17 @@ public class InputControlsTests extends TestBase {
      *
      * @param reportName String
      */
-    public void testListFilterButtons(String reportName, String listName) {
+    public void testListFilterButtons(String reportName, String exportSet, String listName) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
+
+        if (listName.contains("Parts") && !exportSet.isEmpty()) {
+            String expectedPartCount = reportName.contains("Sheet") ? "41" : "43";
+            genericReportPage.selectExportSet(exportSet);
+            genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Available: ", expectedPartCount);
+        }
 
         ArrayList<String> buttonNames = new ArrayList<String>() {
             {
@@ -545,8 +593,7 @@ public class InputControlsTests extends TestBase {
         genericReportPage.inputAssemblyNumberSearchCriteria("");
         assertThat(genericReportPage.getCurrentlySelectedAssembly(), is(equalTo("")));
         assertThat(genericReportPage.isAssemblyNumberSearchErrorVisible(), is(equalTo(true)));
-        assertThat(genericReportPage.getAssemblyNumberSearchErrorText(),
-            is(equalTo("This field is mandatory so you must enter data.")));
+        assertThat(genericReportPage.getAssemblyNumberSearchErrorText(), is(equalTo(Constants.WARNING_TEXT)));
     }
 
     /**
@@ -678,6 +725,24 @@ public class InputControlsTests extends TestBase {
         }
     }
 
+    /**
+     * Generic test for export set search (Sheet Metal DTC)
+     * @param reportName String
+     * @param exportSetName String
+     */
+    public void testExportSetSearch(String reportName, String exportSetName) {
+        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, SheetMetalDtcReportPage.class);
+
+        sheetMetalDtcReportPage.waitForInputControlsLoad();
+        sheetMetalDtcReportPage.searchForExportSet(exportSetName);
+
+        assertThat(sheetMetalDtcReportPage.getFirstExportSetName(),
+                is(equalTo(exportSetName)));
+    }
+
     private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -751,6 +816,7 @@ public class InputControlsTests extends TestBase {
 
         String dtcScoreValue = genericReportPage.getDtcScoreDtcReports().replace(" ", "");
 
+        dtcScore = dtcScore.equals("Sheet") ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScore;
         assertThat(dtcScore, is(equalTo(genericReportPage.getDtcScoreAboveChart())));
         assertThat(dtcScore, is(equalTo(dtcScoreValue)));
     }

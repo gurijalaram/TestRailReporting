@@ -43,6 +43,7 @@ public class Constants {
         "require assistance, please send an email to support@apriori.com.";
     public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
     public static final String INVALID_ERROR_MESSAGE = "Invalid";
+    public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";

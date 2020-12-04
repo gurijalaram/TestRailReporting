@@ -1,4 +1,4 @@
-package com.ootbreports.dtcmetrics.casting;
+package com.ootbreports.dtcmetrics.castingdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -194,7 +194,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -207,7 +207,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
@@ -220,7 +220,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -233,7 +233,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
@@ -242,6 +242,17 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -304,9 +315,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.CASTING_ISSUES.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("JEEP WJ FRONT BRAKE DISC 99-04")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("GEAR HOUSING")));
     }
 
@@ -323,12 +334,12 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCCASTINGISSUES")));
         assertThat(genericReportPage.getScenarioNameCastingDtcDetails(true),
             is(equalTo("sand casting")));
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("DTCCASTINGISSUES")));
         assertThat(genericReportPage.getScenarioNameCastingDtcDetails(false),
             is(equalTo("Initial")));
@@ -347,9 +358,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("OBSTRUCTED MACHINING")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("B2315")));
     }
 
@@ -366,12 +377,12 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCCASTINGISSUES")));
         assertThat(genericReportPage.getScenarioNameCastingDtcDetails(true),
             is(equalTo("Initial")));
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("DTCCASTINGISSUES")));
         assertThat(genericReportPage.getScenarioNameCastingDtcDetails(false),
             is(equalTo("sand casting")));
@@ -390,12 +401,12 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCCASTINGISSUES")));
         assertThat(genericReportPage.getScenarioNameCastingDtcDetails(true),
             is(equalTo("Initial")));
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("DTCCASTINGISSUES")));
         assertThat(genericReportPage.getScenarioNameCastingDtcDetails(false),
             is(equalTo("sand casting")));
@@ -414,9 +425,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DU600051458")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("DU200068073_B")));
     }
 
@@ -433,9 +444,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("E3-241-4-N")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("40137441.MLDES.0002")));
     }
 
@@ -452,9 +463,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
             .clickOk();
 
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(true),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("BARCO_R8552931")));
-        assertThat(genericReportPage.getPartNameCastingDtcDetails(false),
+        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("BARCO_R8761310")));
     }
 

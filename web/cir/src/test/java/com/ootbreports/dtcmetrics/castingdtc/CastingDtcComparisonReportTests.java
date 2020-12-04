@@ -1,4 +1,4 @@
-package com.ootbreports.dtcmetrics.casting;
+package com.ootbreports.dtcmetrics.castingdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -195,7 +195,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -208,7 +208,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
@@ -221,7 +221,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -234,7 +234,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
@@ -243,6 +243,17 @@ public class CastingDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
