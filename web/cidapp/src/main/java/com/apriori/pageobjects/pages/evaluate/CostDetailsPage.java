@@ -74,7 +74,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
      * @param label - the label
      * @return double
      */
-    public double getChevronDropdownValue(String label) {
+    public double getCostSumValue(String label) {
         By value = By.xpath(String.format("//div[normalize-space(text())='%s']/following-sibling::div", label));
         return Double.parseDouble(pageUtils.waitForElementToAppear(value).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
