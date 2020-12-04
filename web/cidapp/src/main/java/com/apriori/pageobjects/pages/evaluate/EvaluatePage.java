@@ -71,7 +71,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Material']/following-sibling::div//button")
     private WebElement materialsPencil;
 
-    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::[.='details']")
+    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
     private WebElement materialsDetailsButton;
 
     @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
