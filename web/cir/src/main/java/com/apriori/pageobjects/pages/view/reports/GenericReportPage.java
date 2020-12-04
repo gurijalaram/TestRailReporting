@@ -310,17 +310,11 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//li[@title='Casting - Sand'])[1]/div/a")
     private WebElement sandCastingOption;
 
-    @FindBy(xpath = "//span[contains(text(), '* Process Group')]/..//li[@title='Deselect All']/a")
-    private WebElement deselectAllProcessGroupsButton;
-
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[2]/span")
     private WebElement processGroupCurrentValueCastingDtc;
 
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement processGroupCurrentValueDtcPartSummary;
-
-    @FindBy(xpath = "//span[contains(text(), 'DTC Score')]/..//li[@title='Deselect All']/a")
-    private WebElement deselectAllDtcScoresButton;
 
     @FindBy(xpath = "//label[@title='Component Select']//a")
     private WebElement componentSelectDropdown;
@@ -351,9 +345,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
     private WebElement componentCostReportPartNumber;
-
-    @FindBy(xpath = "//span[contains(text(), '* DTC Score')]/..//li[@title='Deselect All']/a")
-    private WebElement dtcScoreDeselectAllButton;
 
     @FindBy(xpath = "(//*[local-name() = 'tspan'])[9]")
     private WebElement dtcScoreValueOnBubble;
@@ -499,8 +490,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@title='Scenario Name']//ul)[1]/li[1]")
     private WebElement firstScenarioName;
 
-    @FindBy(xpath = "//div[@id='componentType']//li[@title='Deselect All']")
-    private WebElement componentTypeDeselectAll;
+    private String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -604,7 +594,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of current page object
      */
     public GenericReportPage setProcessGroup(String processGroupOption) {
-        pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);
+        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
         pageUtils.waitForSteadinessOfElement(locator);
@@ -638,7 +628,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Deselects any selected export sets
      */
     public GenericReportPage deselectAllProcessGroups() {
-        pageUtils.waitForElementAndClick(deselectAllProcessGroupsButton);
+        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Groups")));
         return this;
     }
 
@@ -1618,7 +1608,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Deselects any selected export sets
      */
     public GenericReportPage deselectAllDtcScores() {
-        pageUtils.waitForElementAndClick(deselectAllDtcScoresButton);
+        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
         return this;
     }
 
@@ -1820,7 +1810,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setDtcScore(String dtcScoreOption) {
         if (!dtcScoreOption.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
-            pageUtils.waitForElementAndClick(dtcScoreDeselectAllButton);
+            pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
             By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
             pageUtils.waitForSteadinessOfElement(locator);
@@ -2103,7 +2093,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of Scenario Comparison Report Page
      */
     public ScenarioComparisonReportPage selectComponentType(String componentType) {
-        pageUtils.waitForElementAndClick(componentTypeDeselectAll);
+        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Component Type")));
 
         By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']", componentType));
         pageUtils.waitForElementAndClick(locator);

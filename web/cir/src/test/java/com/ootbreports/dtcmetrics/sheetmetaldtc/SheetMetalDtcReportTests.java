@@ -69,7 +69,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3041")
-    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
+    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Apply")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
@@ -81,7 +81,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3041")
-    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
+    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Reset")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
@@ -92,7 +92,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3041")
-    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save)")
+    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Cancel")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCancelButton(ReportNamesEnum.SHEET_METAL_DTC.getReportName());
@@ -100,7 +100,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3040")
-    @Description("Verify Export Set list controls function correctly")
+    @Description("Verify Export Set list controls function correctly - Panel Buttons")
     public void testExportSetListControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(ReportNamesEnum.SHEET_METAL_DTC.getReportName());
@@ -108,7 +108,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3040")
-    @Description("Verify Export Set list controls function correctly")
+    @Description("Verify Export Set list controls function correctly - Search")
     public void testExportSetSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSearch(
@@ -130,7 +130,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3043")
-    @Description("Verify cost metric input control functions correctly")
+    @Description("Verify cost metric input control functions correctly - Piece Part Cost")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
@@ -142,7 +142,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3043")
-    @Description("Verify cost metric input control functions correctly")
+    @Description("Verify cost metric input control functions correctly - Fully Burdened Cost")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
@@ -154,7 +154,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3044")
-    @Description("Verify Mass Metric input control functions correctly")
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricDtcReports(
@@ -166,7 +166,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3044")
-    @Description("Verify Mass Metric input control functions correctly")
+    @Description("Verify Mass Metric input control functions correctly - Rough Mass")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricDtcReports(
@@ -178,7 +178,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3045")
-    @Description("Verify Sort Order input control functions correctly")
+    @Description("Verify Sort Order input control functions correctly - Annual Spend")
     public void testSortOrderAnnualSpend() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -213,7 +213,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3048")
-    @Description("Verify Process Group input control functions correctly")
+    @Description("Verify Process Group input control functions correctly - No Selection")
     public void testProcessGroupInputControlNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testProcessGroupInputControlNoSelection(
@@ -224,7 +224,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3048")
-    @Description("Verify Process Group input control functions correctly")
+    @Description("Verify Process Group input control functions correctly - Single Selection")
     public void testSingleProcessGroup() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSingleProcessGroup(
@@ -236,7 +236,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3051")
-    @Description("Verify Select Parts list controls function correctly")
+    @Description("Verify Select Parts list controls function correctly - Panel Buttons")
     public void testPartListInputControlButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
@@ -248,7 +248,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3049")
-    @Description("Verify DTC Score input control functions correctly")
+    @Description("Verify DTC Score input control functions correctly - No Selection")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -259,7 +259,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3049")
-    @Description("Verify DTC Score input control functions correctly")
+    @Description("Verify DTC Score input control functions correctly - Low")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -271,7 +271,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3049")
-    @Description("Verify DTC Score input control functions correctly")
+    @Description("Verify DTC Score input control functions correctly - Medium")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -283,7 +283,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "3049")
-    @Description("Verify DTC Score input control functions correctly")
+    @Description("Verify DTC Score input control functions correctly - High")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
