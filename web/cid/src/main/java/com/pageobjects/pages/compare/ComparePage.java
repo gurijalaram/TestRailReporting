@@ -116,7 +116,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return true/false
      */
     public boolean isComparisonWorkspace(String workspace) {
-        By workspaceIcon = By.xpath(String.format("//div[@class='workspace-status-icon fa fa-users %s-workspace']", workspace));
+        By workspaceIcon = By.xpath(String.format("//div[contains(@class,'%s-workspace')]", workspace));
         return pageUtils.waitForElementToAppear(workspaceIcon).isDisplayed();
     }
 
