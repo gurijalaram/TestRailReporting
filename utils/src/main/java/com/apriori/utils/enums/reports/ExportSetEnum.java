@@ -6,7 +6,8 @@ public enum ExportSetEnum {
     MACHINING_DTC_DATASET("---01-dtc-machiningdataset"),
     CASTING_DTC("---01-dtc-casting"),
     ROLL_UP_A("---01-roll-up-a"),
-    SUB_SUB_ASM("---01-sub-sub-asm");
+    SUB_SUB_ASM("---01-sub-sub-asm"),
+    SHEET_METAL_DTC("---01-sheet-metal-dtc");
 
     private final String exportSetName;
 

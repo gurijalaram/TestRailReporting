@@ -210,6 +210,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                "",
                 ListNameEnum.CREATED_BY.getListName()
         );
     }
@@ -266,6 +267,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                "",
                 ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
     }
