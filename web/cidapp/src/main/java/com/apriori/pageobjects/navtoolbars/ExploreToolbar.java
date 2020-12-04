@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
 
@@ -37,6 +38,9 @@ public class ExploreToolbar extends MainNavBar {
 
     @FindBy(xpath = "//button[.='Actions']")
     private WebElement actionsButton;
+
+    @FindBy(xpath = "//button[.='Edit']")
+    private WebElement editButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -106,5 +110,14 @@ public class ExploreToolbar extends MainNavBar {
     public PublishPage publishScenario() {
         pageUtils.waitForElementAndClick(publishButton);
         return new PublishPage(driver);
+    }
+
+    /**
+     * Edit the scenario
+     * @return new page object
+     */
+    public EvaluatePage editScenario() {
+        pageUtils.waitForElementAndClick(editButton);
+        return new EvaluatePage(driver);
     }
 }

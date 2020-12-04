@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
@@ -30,11 +31,13 @@ public class ExplorePage extends ExploreToolbar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
+    private ScenarioTableController scenarioTableController;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.scenarioTableController = new ScenarioTableController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(filtersButton);
@@ -51,14 +54,34 @@ public class ExplorePage extends ExploreToolbar {
 
     /**
      * Gets the count of scenarios found
+     *
      * @return string
      */
     public String getScenariosFound() {
         return pageUtils.waitForElementAppear(scenarioCount).getText();
     }
 
-    public EvaluatePage openScenario(String partName, String scenarioName) {
-
+    /**
+     * Opens the scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openScenario(String componentName, String scenarioName) {
+        scenarioTableController.openScenario(componentName, scenarioName);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Highlights the scenario in the table
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage highlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.highlightScenario(componentName, scenarioName);
+        return this;
     }
 }

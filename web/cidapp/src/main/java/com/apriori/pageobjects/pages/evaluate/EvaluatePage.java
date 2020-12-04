@@ -400,4 +400,31 @@ public class EvaluatePage extends EvaluateToolbar {
         }
         return listOfVpes;
     }
+
+    /**
+     * Checks the dfm risk score
+     *
+     * @return true/false
+     */
+    public boolean isDfmRisk(String riskFactor) {
+        By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor));
+        return pageUtils.waitForElementToAppear(risk).isDisplayed();
+    }
+
+    /**
+     * Checks the dfm risk icon
+     *
+     * @param riskFactor - risk
+     * @return boolean
+     */
+    public boolean isDfmRiskIcon(String riskFactor) {
+        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success)"
+            : riskFactor.equalsIgnoreCase("Medium") ? "var(--info)"
+            : riskFactor.equalsIgnoreCase("High") ? "var(--warning)"
+            : riskFactor.equalsIgnoreCase("Critical") ? "var(--danger)"
+            : null;
+
+        By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
+        return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
+    }
 }
