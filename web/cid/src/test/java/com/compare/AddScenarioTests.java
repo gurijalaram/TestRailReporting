@@ -549,7 +549,7 @@ public class AddScenarioTests extends TestBase {
             .apply(ComparePage.class);
 
         assertThat(comparePage.getDfmRisk(), is(equalTo("High")));
-        assertThat(comparePage.getWarningsCount(), is("0"));
-        assertThat(comparePage.getGuidanceIssuesCount(), is("26"));
+        assertThat(comparePage.getCount("Warning"), is("0"));
+        assertThat(comparePage.getCount("Guidance Issues"), is("26"));
     }
 }

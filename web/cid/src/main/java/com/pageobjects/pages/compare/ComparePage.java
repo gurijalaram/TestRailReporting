@@ -111,7 +111,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     }
 
     /**
-     *
      * @param workspace - the workspace
      * @return true/false
      */
@@ -129,7 +128,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public ComparePage removeScenarioFromCompareView(String partName, String scenarioName) {
         By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
-                partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
+            partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
         pageUtils.scrollToElement(removeComparisonButton, horizontalScroller, Constants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
@@ -259,20 +258,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      *
      * @return string
      */
-    public String getWarningsCount() {
-        By warnings = By.xpath("//div[contains(text(),'Warnings')]/ancestor::tr//div[@class = 'gwt-Label comparison-table-row-value-cell-table-formula-value comparison-table-ellipsis-value']");
-        pageUtils.scrollToElement(warnings, componentScroller, Constants.ARROW_DOWN);
-        return pageUtils.waitForElementToAppear(warnings).getAttribute("title");
-    }
-
-    /**
-     * Gets guidance issues count
-     *
-     * @return string
-     */
-    public String getGuidanceIssuesCount() {
-        By guidanceIssues = By.xpath("//div[contains(text(),'Guidance Issues')]/ancestor::tr//div[@class = 'gwt-Label comparison-table-row-value-cell-table-formula-value comparison-table-ellipsis-value']");
-        pageUtils.scrollToElement(guidanceIssues, componentScroller, Constants.ARROW_DOWN);
-        return pageUtils.waitForElementToAppear(guidanceIssues).getAttribute("title");
+    public String getCount(String label) {
+        By count = By.xpath(String.format("//div[contains(text(),'%s')]/ancestor::tr//div[contains(@class,'comparison-table-ellipsis-value')]", label));
+        pageUtils.scrollToElement(count, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(count).getAttribute("title");
     }
 }
