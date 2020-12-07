@@ -2,6 +2,8 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingDetailsTests;
+import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingTests;
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
@@ -14,9 +16,11 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-    SheetMetalDtcReportTests.class,
-    SheetMetalDtcDetailsReportTests.class,
-    SheetMetalDtcComparisonReportTests.class
+        CycleTimeValueTrackingTests.class,
+        CycleTimeValueTrackingDetailsTests.class,
+        SheetMetalDtcReportTests.class,
+        SheetMetalDtcDetailsReportTests.class,
+        SheetMetalDtcComparisonReportTests.class
 })
 
 public class CiaCirTestDevSuite {
