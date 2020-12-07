@@ -25,6 +25,18 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='checkbox-icon']")
     private WebElement lockTickBox;
 
+    @FindBy(css = "div[class='conflict-message']")
+    private WebElement conflictMessage;
+
+    @FindBy(xpath = "//label[.='Override']")
+    private WebElement overrideButton;
+
+    @FindBy(xpath = "//label[.='Change Name']")
+    private WebElement changeNameButton;
+
+    @FindBy(css = "input[name='scenarioName']")
+    private WebElement scenarioNameInput;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -72,6 +84,35 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     }
 
     /**
+     * Get conflict error message
+     * @return string
+     */
+    public String getConflictMessage() {
+        return pageUtils.waitForElementToAppear(conflictMessage).getAttribute("textContent");
+    }
+
+    /**
+     * Selects the override button
+     * @return current page object
+     */
+    public PublishPage override() {
+        pageUtils.waitForElementAndClick(overrideButton);
+        return this;
+    }
+
+    /**
+     * Change scenario name
+     * @param scenarioName - scenario name
+     * @return current page object
+     */
+    public PublishPage changeName(String scenarioName) {
+        pageUtils.waitForElementAndClick(changeNameButton);
+        pageUtils.waitForElementToBeClickable(scenarioNameInput).clear();
+        scenarioNameInput.sendKeys(scenarioName);
+        return this;
+    }
+
+    /**
      * Select the cancel button
      *
      * @return generic page object
@@ -87,5 +128,24 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public <T> T publish(Class<T> klass) {
         return modalDialogController.publish(klass);
+    }
+
+    /**
+     * Select the continue button
+     *
+     * @return generic page object
+     */
+    public <T> T continues(Class<T> klass) {
+        return modalDialogController.continues(klass);
+    }
+
+    /**
+     * Select the back button
+     *
+     * @return generic page object
+     */
+    public PublishPage back() {
+        modalDialogController.back();
+        return this;
     }
 }

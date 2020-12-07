@@ -68,10 +68,10 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Secondary Process']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
-    @FindBy(xpath = "//label[.='Material']/following-sibling::div//div//button")
+    @FindBy(xpath = "//label[.='Material']/following-sibling::div//button")
     private WebElement materialsPencil;
 
-    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::[.='details']")
+    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
     private WebElement materialsDetailsButton;
 
     @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
@@ -83,7 +83,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Cost Results']/following-sibling::div[.='details']")
     private WebElement costDetailsButton;
 
-    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::button")
+    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//button")
     private WebElement secondaryProcessesPencil;
 
     @FindBy(xpath = "//div[.='Inputs']/following-sibling::div[normalize-space()='more']")
@@ -399,5 +399,32 @@ public class EvaluatePage extends EvaluateToolbar {
             listOfVpes.add(vpe.getAttribute("textContent"));
         }
         return listOfVpes;
+    }
+
+    /**
+     * Checks the dfm risk score
+     *
+     * @return true/false
+     */
+    public boolean isDfmRisk(String riskFactor) {
+        By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor));
+        return pageUtils.waitForElementToAppear(risk).isDisplayed();
+    }
+
+    /**
+     * Checks the dfm risk icon
+     *
+     * @param riskFactor - risk
+     * @return boolean
+     */
+    public boolean isDfmRiskIcon(String riskFactor) {
+        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success)"
+            : riskFactor.equalsIgnoreCase("Medium") ? "var(--info)"
+            : riskFactor.equalsIgnoreCase("High") ? "var(--warning)"
+            : riskFactor.equalsIgnoreCase("Critical") ? "var(--danger)"
+            : null;
+
+        By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
+        return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
     }
 }

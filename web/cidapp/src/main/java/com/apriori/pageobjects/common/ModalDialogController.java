@@ -41,6 +41,12 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Publish']")
     private WebElement publishButton;
 
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Continue']")
+    private WebElement continueButton;
+
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Back']")
+    private WebElement backButton;
+
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
 
@@ -80,19 +86,39 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
      *
      * @return generic page object
      */
-    public <T> T cancel(Class<T> className) {
+    public <T> T cancel(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return PageFactory.initElements(driver, className);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
-     * Select the pubish button
+     * Select the publish button
      *
      * @return generic page object
      */
-    public <T> T publish(Class<T> className) {
+    public <T> T publish(Class<T> klass) {
         pageUtils.waitForElementAndClick(publishButton);
-        return PageFactory.initElements(driver, className);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Select the continue button
+     *
+     * @return generic page object
+     */
+    public <T> T continues(Class<T> klass) {
+        pageUtils.waitForElementAndClick(continueButton);
+        return PageFactory.initElements(driver,klass);
+    }
+
+    /**
+     * Select the back button
+     *
+     * @return generic page object
+     */
+    public ModalDialogController back() {
+        pageUtils.waitForElementAndClick(backButton);
+        return this;
     }
 
     /**
