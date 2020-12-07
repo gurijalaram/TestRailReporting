@@ -5,6 +5,7 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -68,7 +69,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     @FindBy(xpath = "//a[contains(text(), 'Scenario Comparison')]")
     private WebElement scenarioComparisonReport;
 
-    @FindBy(xpath = "//p[contains(text(), 'Casting')]/..")
+    @FindBy(xpath = "//p[contains(text(), 'Machining')]/..")
     private WebElement castingDtcFolder;
 
     @FindBy(xpath = "//p[contains(text(), 'Machining')]/..")
@@ -76,6 +77,9 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//p[contains(text(), 'Plastic')]/..")
     private WebElement plasticDtcFolder;
+
+    @FindBy(xpath = "//p[contains(text(), 'Sheet')]/..")
+    private WebElement sheetMetalDtcFolder;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -102,7 +106,8 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("Reports");
         navigateToFolder(afterReportsFolder);
         if (!afterReportsFolder.equals(Constants.GENERAL_FOLDER)) {
-            navigateToFolder(lastFolder);
+            By locator = By.xpath(String.format("//p[contains(text(), '%s')]/..", lastFolder.split(" ")[0]));
+            pageUtils.waitForElementAndClick(locator);
         }
         return new GenericReportPage(driver);
     }
@@ -193,15 +198,8 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         folderElementMap.put(Constants.GENERAL_FOLDER, generalFolder);
         folderElementMap.put("Solutions", solutionsFolder);
         folderElementMap.put("Upgrade Process", upgradeProcessFolder);
-        folderElementMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcFolder);
-        folderElementMap.put(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), castingDtcFolder);
-        folderElementMap.put(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), castingDtcFolder);
-        folderElementMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcFolder);
-        folderElementMap.put(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), machiningDtcFolder);
-        folderElementMap.put(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), machiningDtcFolder);
-        folderElementMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcFolder);
-        folderElementMap.put(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), plasticDtcFolder);
-        folderElementMap.put(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), plasticDtcFolder);
+        folderElementMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(), plasticDtcFolder);
+        folderElementMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(), plasticDtcFolder);
 
         folderElementMap.put("Organization", organizationFolder);
         folderElementMap.put("aPriori", aprioriSubFolder);
