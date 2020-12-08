@@ -32,7 +32,7 @@ public class ListProcessGroupTests extends TestBase {
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile( "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
