@@ -314,8 +314,8 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(" ", resourceFile, FileUploadPage.class);
+            .uploadComponentAndSubmit("", resourceFile, FileUploadPage.class);
 
-        assertThat(fileUploadPage.getFieldWarningText(), containsString("Scenario name is required."));
+        assertThat(fileUploadPage.getFieldWarningText(), containsString("Required."));
     }
 }
