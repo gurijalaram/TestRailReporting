@@ -46,7 +46,7 @@ public class Constants {
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "onprem";
     public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
