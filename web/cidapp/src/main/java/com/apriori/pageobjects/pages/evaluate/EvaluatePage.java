@@ -68,10 +68,10 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Secondary Process']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
-    @FindBy(xpath = "//label[.='Material']/following-sibling::div//div//button")
+    @FindBy(xpath = "//label[.='Material']/following-sibling::div//button")
     private WebElement materialsPencil;
 
-    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::[.='details']")
+    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
     private WebElement materialsDetailsButton;
 
     @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
@@ -83,7 +83,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Cost Results']/following-sibling::div[.='details']")
     private WebElement costDetailsButton;
 
-    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::button")
+    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//button")
     private WebElement secondaryProcessesPencil;
 
     @FindBy(xpath = "//div[.='Inputs']/following-sibling::div[normalize-space()='more']")
@@ -309,13 +309,11 @@ public class EvaluatePage extends EvaluateToolbar {
      * Checks the value of specified material
      *
      * @param label - the label
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMaterialDisplayed(String label, String value) {
-        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.waitForElementToAppear(result);
-        return driver.findElement(result).isDisplayed();
+    public String isMaterial(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
+        return pageUtils.waitForElementToAppear(result).getAttribute("textContent");
     }
 
     /**
