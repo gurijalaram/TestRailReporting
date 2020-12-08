@@ -97,9 +97,9 @@ public class DecimalPlaceTests extends TestBase {
             .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
         assertThat(costDetailsPage.getCostSumValue("Total Variable Cost"), closeTo(17.4, 1));
-        assertThat(costDetailsPage.getCostContribution("Indirect Overhead"), closeTo(0.3, 1));
-        assertThat(costDetailsPage.getCostContribution("SG&A"), closeTo(1.7, 1));
-        assertThat(costDetailsPage.getCostContribution("Margin"), closeTo(0.0, 1));
+        assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead"), closeTo(0.3, 1));
+        assertThat(costDetailsPage.getCostContributionValue("SG&A"), closeTo(1.7, 1));
+        assertThat(costDetailsPage.getCostContributionValue("Margin"), closeTo(0.0, 1));
         assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(19.5, 1));
 
         evaluatePage.openSettings()
@@ -125,9 +125,9 @@ public class DecimalPlaceTests extends TestBase {
             .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
         assertThat(costDetailsPage.getCostSumValue("Total Variable Cost"), closeTo(17.4366, 1));
-        assertThat(costDetailsPage.getCostContribution("Indirect Overhead"), closeTo(0.3146, 1));
-        assertThat(costDetailsPage.getCostContribution("SG&A"), closeTo(1.7272, 1));
-        assertThat(costDetailsPage.getCostContribution("Margin"), closeTo(0.0000, 1));
+        assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead"), closeTo(0.3146, 1));
+        assertThat(costDetailsPage.getCostContributionValue("SG&A"), closeTo(1.7272, 1));
+        assertThat(costDetailsPage.getCostContributionValue("Margin"), closeTo(0.0000, 1));
         assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(19.4785, 1));
         costDetailsPage.closePanel();
 
