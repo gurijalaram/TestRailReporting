@@ -91,7 +91,7 @@ public class CommonConstants {
     }
 
     private static String baseUrl;
-    public static final Level consoleLogLevel = Level.parse("OFF");
+    public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
     public static final String schemaBasePath = constantsInit.schemaBasePath();
     public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();
     public static final String internalApiURL = getBaseUrl() + constantsInit.internalApiURL();
