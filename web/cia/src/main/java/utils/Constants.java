@@ -21,7 +21,7 @@ public class Constants {
     public static final String REPORTS_LOGIN_LOCAL_SUFFIX = "jasperserver-pro/login.html";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cia-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "onprem";
     public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
