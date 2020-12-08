@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.explore;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,8 +22,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(FileUploadPage.class);
 
-    @FindBy(css = ".modal-content")
-    private WebElement modalDialog;
+    @FindBy(css = ".modal-content label")
+    private WebElement componentLabel;
 
     @FindBy(css = "input[type='file']")
     private WebElement fileInput;
@@ -55,7 +56,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(modalDialog);
+        pageUtils.waitForElementAppear(componentLabel);
     }
 
     /**
@@ -78,7 +79,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return current page object
      */
     private FileUploadPage inputScenarioName(String scenarioName) {
-        scenarioNameInput.clear();
+        scenarioNameInput.sendKeys(Keys.CONTROL + "a");
         scenarioNameInput.sendKeys(scenarioName);
         return this;
     }
