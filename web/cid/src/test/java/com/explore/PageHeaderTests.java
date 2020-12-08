@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -41,18 +42,16 @@ public class PageHeaderTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "PowderMetalShaft";
         String testComparisonName = new GenerateStringUtil().generateComparisonName();
-        String evaluateTooltipText = "There is no active scenario.\n- Select one in Explore\nOR\n- Use New to create a new one.";
-        String compareTooltipText = "There is no active comparison.\n- Select one in Explore\nOR\n- Use New to create a new one.";
 
         loginPage = new CidLoginPage(driver);
         pageHeader = loginPage.login(UserUtil.getUser())
             .hoverOnEvaluateTab();
 
-        assertThat(pageHeader.getTitleEvaluateTab(), is(evaluateTooltipText));
+        assertThat(pageHeader.getTitleEvaluateTab(), is(Constants.EVALUATE_TOOLTIP_TEXT));
 
         pageHeader.hoverOnCompareTab();
 
-        assertThat(pageHeader.getTitleCompareTab(), is(compareTooltipText));
+        assertThat(pageHeader.getTitleCompareTab(), is(Constants.COMPARE_TOOLTIP_TEXT));
 
         genericHeader = new GenericHeader(driver);
         pageHeader = genericHeader.uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
