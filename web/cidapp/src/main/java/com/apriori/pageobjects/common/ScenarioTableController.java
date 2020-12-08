@@ -37,12 +37,12 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Opens the scenario
      *
-     * @param partName     - name of the part
+     * @param componentName     - name of the part
      * @param scenarioName - scenario name
      * @return a new page object
      */
-    public ScenarioTableController openScenario(String partName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/..//div[@class='scenario-thumbnail small']", partName.toUpperCase(), scenarioName));
+    public ScenarioTableController openScenario(String componentName, String scenarioName) {
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/..//div[@class='scenario-thumbnail small']", componentName.toUpperCase(), scenarioName));
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
         return this;
@@ -51,12 +51,12 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Highlights the scenario in the table
      *
-     * @param partName     - name of the part
+     * @param componentName     - name of the part
      * @param scenarioName - scenario name
      * @return current page object
      */
-    public ScenarioTableController highlightScenario(String partName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", partName.toUpperCase(), scenarioName));
+    public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase(), scenarioName));
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
         return this;
