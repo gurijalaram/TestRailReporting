@@ -22,7 +22,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(xpath = "//button[.='Cost']")
     private WebElement costButton;
 
-    @FindBy(css = "div[class~='scenario-state-preview']")
+    @FindBy(css = ".alert")
     private WebElement costLabel;
 
     private PageUtils pageUtils;
