@@ -240,7 +240,7 @@ public class CostAllCadTests extends TestBase {
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Parasolid")
-    public void testCADFormatParasolid() {
+    public void testCADFormatParaSolid() {
 
         resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_steel_PMI.x_t");
 
