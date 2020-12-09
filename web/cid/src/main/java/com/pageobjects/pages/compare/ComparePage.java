@@ -6,6 +6,7 @@ import com.apriori.utils.constants.CommonConstants;
 import com.pageobjects.common.ScenarioTablePage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.explore.ScenarioNotesPage;
+import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
