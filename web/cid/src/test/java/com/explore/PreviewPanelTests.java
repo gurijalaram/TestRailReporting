@@ -53,7 +53,7 @@ public class PreviewPanelTests extends TestBase {
             .highlightScenario(testScenarioName, partName);
 
         explorePage = new ExplorePage(driver);
-        explorePage.openPreviewPanel();
+        explorePage.openPreviewPanel(ExplorePage.class);
 
         assertThat(explorePage.viewPreviewPanelData(), is(true));
     }
@@ -78,7 +78,7 @@ public class PreviewPanelTests extends TestBase {
             .highlightScenario(testScenarioName, "225_gasket-1-solid1");
 
         explorePage = new ExplorePage(driver);
-        previewPanelPage = explorePage.openPreviewPanel();
+        previewPanelPage = explorePage.openPreviewPanel(PreviewPanelPage.class);
 
         assertThat(previewPanelPage.isImageDisplayed(), is(true));
         assertThat(previewPanelPage.getPiecePartCost(), is("0.91"));

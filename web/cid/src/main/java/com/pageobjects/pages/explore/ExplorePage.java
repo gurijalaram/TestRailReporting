@@ -39,6 +39,9 @@ public class ExplorePage extends ExploreHeader {
     @FindBy(css = "[data-ap-comp='previewPanel']")
     private WebElement previewPanelData;
 
+    @FindBy(css = "[data-ap-field='description']")
+    private WebElement descriptionText;
+
     private ScenarioTablePage scenarioTablePage;
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -231,12 +234,12 @@ public class ExplorePage extends ExploreHeader {
      *
      * @return new page object
      */
-    public PreviewPanelPage openPreviewPanel() {
+    public <T> T openPreviewPanel(Class<T> className) {
         if (pageUtils.isElementDisplayed(closePreviewButton)) {
             closePreviewButton.click();
         }
         pageUtils.waitForElementToAppear(previewButton).click();
-        return new PreviewPanelPage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -308,5 +311,38 @@ public class ExplorePage extends ExploreHeader {
     public String getColumnOrder(String columnName) {
         By column = By.xpath("//div[.='" + columnName + "']/ancestor::th");
         return driver.findElement(column).getAttribute("outerHTML");
+    }
+
+    /**
+     * Gets the comparison description text
+     *
+     * @return the text as String
+     */
+    public String getDescriptionText() {
+        return descriptionText.getText();
+    }
+
+    /**
+     * Checks if type icon displayed
+     *
+     * @param comparisonName - name of comparison
+     * @return true/false
+     */
+    public boolean isComparisonIconDisplayedInTypeCell(String comparisonName) {
+        By comparisonIcon = By.xpath("//a[contains(@href,'#openFromSearch::sk,comparisonState," + comparisonName.toUpperCase() + "')]/ancestor::tr//div[@title='Comparison']");
+        findComparison(comparisonName);
+        return pageUtils.isElementDisplayed(comparisonIcon);
+    }
+
+    public boolean isPartIconDisplayedInTypeCell(String partName, String scenarioName) {
+        By partIcon = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//div[@title='Part']");
+        findScenario(scenarioName, partName);
+        return pageUtils.isElementDisplayed(partIcon);
+    }
+
+    public boolean isAssemblyIconDisplayedInTypeCell(String partName, String scenarioName) {
+        By assemblyIcon = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + partName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr//div[@title='Assembly']");
+        findAssembly(scenarioName, partName);
+        return pageUtils.isElementDisplayed(assemblyIcon);
     }
 }
