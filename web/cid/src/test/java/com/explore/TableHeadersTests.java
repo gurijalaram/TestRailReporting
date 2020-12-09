@@ -66,13 +66,13 @@ public class TableHeadersTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openColumnsTable()
             .addColumn(ColumnsEnum.TYPE.getColumns())
-            .selectSaveButton();
+            .selectSaveButton(ExplorePage.class);
 
         assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.TYPE.getColumns()));
 
         explorePage.openColumnsTable()
             .removeColumn(ColumnsEnum.TYPE.getColumns())
-            .selectSaveButton();
+            .selectSaveButton(ExplorePage.class);
     }
 
     @Test
@@ -85,13 +85,13 @@ public class TableHeadersTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openColumnsTable()
             .addColumn(ColumnsEnum.ASSIGNEE.getColumns())
-            .selectSaveButton();
+            .selectSaveButton(ExplorePage.class);
 
         assertThat(explorePage.getColumnHeaderNames(), hasItem(ColumnsEnum.ASSIGNEE.getColumns()));
 
         explorePage.openColumnsTable()
             .removeColumn(ColumnsEnum.ASSIGNEE.getColumns())
-            .selectSaveButton();
+            .selectSaveButton(ExplorePage.class);
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -104,14 +104,14 @@ public class TableHeadersTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openColumnsTable()
             .removeColumn(ColumnsEnum.THUMBNAIL.getColumns())
-            .selectSaveButton()
+            .selectSaveButton(ExplorePage.class)
             .openColumnsTable();
 
         assertThat(tableColumnsPage.getIncludedList(), not(containsString(ColumnsEnum.THUMBNAIL.getColumns())));
 
         tableColumnsPage.addColumn(ColumnsEnum.THUMBNAIL.getColumns())
             .moveColumnToTop(ColumnsEnum.THUMBNAIL.getColumns())
-            .selectSaveButton().openColumnsTable();
+            .selectSaveButton(ExplorePage.class).openColumnsTable();
 
         assertThat(tableColumnsPage.getIncludedList(), containsString(ColumnsEnum.THUMBNAIL.getColumns()));
     }
