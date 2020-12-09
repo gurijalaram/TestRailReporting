@@ -24,6 +24,9 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     @FindBy(css = "section[id='services_title_section'] > div > h1")
     private WebElement heading;
 
+    @FindBy(css = "a[href='https://www.apriori.com']")
+    private WebElement logo;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -42,7 +45,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(heading);
+        isPageLogoDisplayed();
     }
 
     /**
@@ -53,6 +56,16 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     public String getPageHeading() {
         pageUtils.windowHandler(1);
         return heading.getText();
+    }
+
+    /**
+     * Gets page logo
+     *
+     * @return - webelement
+     */
+    public WebElement isPageLogoDisplayed() {
+        pageUtils.windowHandler(1);
+        return pageUtils.waitForElementAppear(logo);
     }
 
     /**
