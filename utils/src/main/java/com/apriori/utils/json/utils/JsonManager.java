@@ -5,9 +5,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class JsonManager {
     private static ObjectMapper mapper = new ObjectMapper();
+
+
+    public static Object deserializeJsonFromStream(InputStream inputStream, Class klass) {
+
+        Object obj = null;
+        try {
+            obj = mapper.readValue(inputStream, klass);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return obj;
+    }
+
 
     public static Object deserializeJsonFromFile(String fileName, Class klass) {
 

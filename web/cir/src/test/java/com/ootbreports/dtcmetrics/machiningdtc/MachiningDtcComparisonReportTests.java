@@ -8,7 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
@@ -25,6 +24,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import utils.Constants;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
@@ -145,7 +145,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -157,7 +157,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
@@ -169,7 +169,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -181,10 +181,21 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
 
@@ -264,6 +275,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             ListNameEnum.PARTS.getListName()
         );
     }
@@ -284,10 +296,11 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"DTCMACHINING_001 (Toleranced)", "MACHININGDESIGN_TO_COST (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum(),
-            "DTCMACHINING_001 (Toleranced)",
-            "MACHININGDESIGN_TO_COST (Initial)"
+            partNames
         );
     }
 
@@ -296,10 +309,11 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDesignStandards() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"DTCMACHINING_001 (Toleranced)", "PUNCH (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum(),
-            "DTCMACHINING_001 (Toleranced)",
-            "PUNCH (Initial)"
+            partNames
         );
     }
 
@@ -308,10 +322,11 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlTolerances() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"MACHININGDESIGN_TO_COST (Initial)", "PARTBODY_1 (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-            "MACHININGDESIGN_TO_COST (Initial)",
-            "PARTBODY_1 (Initial)"
+            partNames
         );
     }
 
@@ -320,10 +335,11 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlSlowOperations() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"MACHININGDESIGN_TO_COST (Initial)", "DTCMACHINING_001 (Toleranced)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
-            "MACHININGDESIGN_TO_COST (Initial)",
-            "DTCMACHINING_001 (Toleranced)"
+            partNames
         );
     }
 
@@ -332,10 +348,11 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlAnnualSpend() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.machiningDtcComparisonSortOrderTest(
+        String[] partNames = new String[]{"PMI_ROUGHNESSCREO (Initial)", "PMI_PROFILEOFSURFACECREO (Initial)"};
+        commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
-            "PMI_ROUGHNESSCREO (Initial)",
-            "PMI_PROFILEOFSURFACECREO (Initial)"
+            partNames
         );
     }
 }

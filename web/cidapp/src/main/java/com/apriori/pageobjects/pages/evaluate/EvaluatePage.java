@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,10 +68,10 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Secondary Process']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement secondaryProcessDropdown;
 
-    @FindBy(xpath = "//label[.='Material']/following-sibling::button")
+    @FindBy(xpath = "//label[.='Material']/following-sibling::div//button")
     private WebElement materialsPencil;
 
-    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::[.='details']")
+    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
     private WebElement materialsDetailsButton;
 
     @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
@@ -82,7 +83,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Cost Results']/following-sibling::div[.='details']")
     private WebElement costDetailsButton;
 
-    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::button")
+    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//button")
     private WebElement secondaryProcessesPencil;
 
     @FindBy(xpath = "//div[.='Inputs']/following-sibling::div[normalize-space()='more']")
@@ -93,6 +94,12 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//span")
     private List<WebElement> secondaryProcesses;
+
+    @FindBy(xpath = "//label[.='VPE']/following-sibling::div//button")
+    private List<WebElement> vpes;
+
+    @FindBy(xpath = "//label[.='Process Group']/following-sibling::div//button")
+    private List<WebElement> processGroups;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -302,13 +309,11 @@ public class EvaluatePage extends EvaluateToolbar {
      * Checks the value of specified material
      *
      * @param label - the label
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMaterialDisplayed(String label, String value) {
-        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.waitForElementToAppear(result);
-        return driver.findElement(result).isDisplayed();
+    public String isMaterial(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
+        return pageUtils.waitForElementToAppear(result).getAttribute("textContent");
     }
 
     /**
@@ -365,7 +370,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @param label - the label
      * @return double
      */
-    public double getCostResult(String label) {
+    public double getCostResults(String label) {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
         return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
@@ -381,5 +386,59 @@ public class EvaluatePage extends EvaluateToolbar {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(costResult);
         return driver.findElement(costResult).isDisplayed();
+    }
+
+    /**
+     * Gets list of vpe's
+     *
+     * @return list as string
+     */
+    public List<String> getListOfVPEs() {
+        return getDropdownsInList(vpes);
+    }
+
+    /**
+     * Checks the dfm risk score
+     *
+     * @return true/false
+     */
+    public boolean isDfmRisk(String riskFactor) {
+        By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor));
+        return pageUtils.waitForElementToAppear(risk).isDisplayed();
+    }
+
+    /**
+     * Checks the dfm risk icon
+     *
+     * @param riskFactor - risk
+     * @return boolean
+     */
+    public boolean isDfmRiskIcon(String riskFactor) {
+        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success)"
+            : riskFactor.equalsIgnoreCase("Medium") ? "var(--info)"
+            : riskFactor.equalsIgnoreCase("High") ? "var(--warning)"
+            : riskFactor.equalsIgnoreCase("Critical") ? "var(--danger)"
+            : null;
+
+        By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
+        return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
+    }
+
+    /**
+     * Gets list of process groups
+     *
+     * @return list as string
+     */
+    public List<String> getListOfProcessGroups() {
+        return getDropdownsInList(processGroups);
+    }
+
+    private List<String> getDropdownsInList(List<WebElement> dropdownLists) {
+        List<String> listOfDropdown = new ArrayList<>();
+
+        for (WebElement dropdown : dropdownLists) {
+            listOfDropdown.add(dropdown.getAttribute("textContent"));
+        }
+        return listOfDropdown;
     }
 }

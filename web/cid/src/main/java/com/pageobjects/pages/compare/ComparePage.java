@@ -1,7 +1,7 @@
 package com.pageobjects.pages.compare;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 
 import com.pageobjects.common.ScenarioTablePage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
@@ -129,7 +129,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     public ComparePage removeScenarioFromCompareView(String partName, String scenarioName) {
         By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
             partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
-        pageUtils.scrollToElement(removeComparisonButton, horizontalScroller, Constants.HORIZONTAL_SCROLL);
+        pageUtils.scrollToElement(removeComparisonButton, horizontalScroller, CommonConstants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
     }
@@ -141,7 +141,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return current page object
      */
     public ComparePage setBasis(String partName, String scenarioName) {
-        pageUtils.scrollToElement(findBasisButton(partName, scenarioName), horizontalScroller, Constants.HORIZONTAL_SCROLL);
+        pageUtils.scrollToElement(findBasisButton(partName, scenarioName), horizontalScroller, CommonConstants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(findBasisButton(partName, scenarioName));
         return this;
     }

@@ -11,7 +11,6 @@ import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -32,6 +31,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import utils.Constants;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -55,28 +55,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuComponentCost() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
-                ReportNamesEnum.COMPONENT_COST.getReportName()
-        );
-    }
-
-    @Test
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
-                ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
-        );
-    }
-
-    @Test
-    @TestRail(testCaseId = "1915")
-    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -88,41 +66,9 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryComponentCost() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.COMPONENT_COST.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
-    public void testReportAvailabilityByLibraryScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "3060")
-    @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchComponentCost() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1916")
-    @Description("Validate report is available by search")
-    public void testReportAvailableBySearchScenarioComparison() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SCENARIO_COMPARISON.getReportName());
     }
 
     @Test
@@ -615,23 +561,23 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class);
 
-        String lastModifiedByAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+        String lastModifiedByAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
-        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         String nameToSelect = "Ben Hegan";
         genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), nameToSelect);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
 
-        String expectedLastModifiedCount = Constants.environment.equals("cid-qa") ? "2" : "1";
+        String expectedLastModifiedCount = Constants.DEFAULT_ENVIRONMENT_VALUE.equals("cir-qa") ? "2" : "1";
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
-        String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+        String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
-        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         assertThat(lastModifiedByAvailableCountPreSelection,
@@ -651,6 +597,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+            "",
             ListNameEnum.CREATED_BY.getListName()
         );
     }
@@ -675,16 +622,16 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class);
 
-        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableItems(
+        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         String nameToSelect = "Ben Hegan";
         genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), nameToSelect);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected: ", "1");
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
 
-        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableItems(
+        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         assertThat(scenarioNameAvailableCountPreSelection,
@@ -702,6 +649,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+            "",
             ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
     }
@@ -741,13 +689,13 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
-            .filter()
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setRowOne("Part Name", "Contains", reportsValues.get("Part Name"))
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario();
+                .filter()
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setRowOne("Part Name", "Contains", reportsValues.get("Part Name"))
+                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .apply(ExplorePage.class)
+                .openFirstScenario();
 
         Map<String, String> cidValues = new HashMap<>();
         cidValues.put("Cycle Time", String.valueOf(evaluatePage.getCycleTimeCount()));

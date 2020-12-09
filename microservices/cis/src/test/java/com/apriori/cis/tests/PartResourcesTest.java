@@ -6,6 +6,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cis.controller.PartResources;
 import com.apriori.cis.entity.request.NewPartRequest;
 
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -19,16 +20,16 @@ public class PartResourcesTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("property-store.json").getPath(), PropertyStore.class);
+        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromStream(
+                FileResourceUtil.getResourceFileStream("property-store.json"), PropertyStore.class);
     }
 
     @Test
     @TestRail(testCaseId = "4175")
     @Description("Create a new part using the CIS API")
     public void createNewPart() {
-        Object obj = JsonManager.deserializeJsonFromFile(
-                Thread.currentThread().getContextClassLoader().getResource("schemas/requests/CreatePartData.json").getPath(), NewPartRequest.class);
+        Object obj = JsonManager.deserializeJsonFromStream(
+                FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
         PartResources.createNewPart(obj);
     }

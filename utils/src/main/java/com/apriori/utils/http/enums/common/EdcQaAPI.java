@@ -1,12 +1,12 @@
 package com.apriori.utils.http.enums.common;
 
-import com.apriori.utils.constants.Constants;
+import com.apriori.utils.constants.CommonConstants;
 
 public interface EdcQaAPI extends ExternalEndpointEnum {
 
     @Override
     default String getEndpoint(Object... variables) {
-        return Constants.getBaseUrl() + String.format(getEndpointString(), variables);
+        return CommonConstants.getBaseUrl() + String.format(getEndpointString(), variables);
     }
 
     default String getSchemaLocation() {

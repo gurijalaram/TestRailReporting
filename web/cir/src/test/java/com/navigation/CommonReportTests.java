@@ -12,7 +12,6 @@ import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -24,6 +23,7 @@ import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import org.openqa.selenium.WebDriver;
+import utils.Constants;
 
 import java.util.ArrayList;
 
@@ -109,43 +109,52 @@ public class CommonReportTests extends TestBase {
     }
 
     /**
-     * Machining DTC Comparison Sort Order Test
+     * Machining and Sheet Metal DTC Comparison Sort Order Test
      *
+     * @param reportName     String
      * @param sortOrder      String
-     * @param elementNameOne String
-     * @param elementNameTwo String
+     * @param partNames      String[]
      */
-    public void machiningDtcComparisonSortOrderTest(String sortOrder, String elementNameOne, String elementNameTwo) {
+    public void machiningSheetMetalDtcComparisonSortOrderTest(String reportName, String sortOrder, String[] partNames) {
+        String exportSet = reportName.equals(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName())
+                ? ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+                : ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+            .navigateToReport(reportName, GenericReportPage.class)
+            .selectExportSet(exportSet)
             .selectSortOrder(sortOrder)
             .clickOk();
 
         genericReportPage.waitForReportToLoad();
-        String[] elementNames = {elementNameOne, elementNameTwo};
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
-            is(equalTo(elementNames[0])));
+        for (int i = 1; i < 5; i++) {
+            assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(1)),
+                    is(equalTo(partNames[0])));
+            assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(2)),
+                    is(equalTo(partNames[1])));
+        }
+
+        /*assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
+            is(equalTo(partNames[0])));
         assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
-            is(equalTo(elementNames[1])));
+            is(equalTo(partNames[1])));
 
         assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
-            is(equalTo(elementNames[0])));
+            is(equalTo(partNames[0])));
         assertThat(genericReportPage.getTableElementNameDtcComparison("2", "2"),
-            is(equalTo(elementNames[1])));
+            is(equalTo(partNames[1])));
 
         assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
-            is(equalTo(elementNames[0])));
+            is(equalTo(partNames[0])));
         assertThat(genericReportPage.getTableElementNameDtcComparison("3", "2"),
-            is(equalTo(elementNames[1])));
+            is(equalTo(partNames[1])));
 
         assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
-            is(equalTo(elementNames[0])));
+            is(equalTo(partNames[0])));
         assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
-            is(equalTo(elementNames[1])));
+            is(equalTo(partNames[1])));*/
     }
 
     /**

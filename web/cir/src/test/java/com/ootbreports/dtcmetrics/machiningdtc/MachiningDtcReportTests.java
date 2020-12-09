@@ -8,7 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -26,6 +25,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import utils.Constants;
 
 public class MachiningDtcReportTests extends TestBase {
 
@@ -186,7 +186,9 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlMachiningDtc(
+        inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
+            ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
@@ -196,7 +198,9 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlMachiningDtc(
+        inputControlsTests.testCostMetricInputControlMachiningSheetMetalDtc(
+            ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
@@ -206,7 +210,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -218,7 +222,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
@@ -255,6 +259,17 @@ public class MachiningDtcReportTests extends TestBase {
     public void testProcessGroupSandAndDieCasting() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsMachining();
+    }
+
+    @Test
+    @TestRail(testCaseId = "3029")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
     }
 
     @Test
@@ -306,7 +321,7 @@ public class MachiningDtcReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         genericReportPage.hoverMachiningBubbleTwice();
-        genericReportPage.waitForCorrectPartName(false);
+        genericReportPage.waitForCorrectPartNameMachiningDtc(false);
         genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
 
@@ -386,6 +401,7 @@ public class MachiningDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.MACHINING_DTC.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             ListNameEnum.PARTS.getListName()
         );
     }
@@ -416,7 +432,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("0")));
     }
 
@@ -433,7 +449,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("0")));
     }
 
@@ -450,7 +466,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("0")));
     }
 
@@ -474,7 +490,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "18");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("18")));
     }
 
@@ -492,7 +508,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("0")));
     }
 
@@ -514,7 +530,7 @@ public class MachiningDtcReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "31");
 
-        assertThat(genericReportPage.getCountOfListAvailableItems(ListNameEnum.PARTS.getListName(), "Available"),
+        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"),
             is(equalTo("31")));
     }
 }

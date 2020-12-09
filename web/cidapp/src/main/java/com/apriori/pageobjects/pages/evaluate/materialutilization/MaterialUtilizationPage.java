@@ -25,6 +25,9 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
     private WebElement panelDetails;
 
+    @FindBy(xpath = "//button[.='Stock']")
+    private WebElement stockPanel;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private PanelController panelController;
@@ -51,12 +54,21 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     /**
      * Gets material information
      *
-     * @param materialInfo
+     * @param label
      * @return string
      */
-    public String getUtilizationInfo(String materialInfo) {
-        By info = By.xpath(String.format("//span[.='%s']/following-sibling::span", materialInfo));
+    public String getUtilizationInfo(String label) {
+        By info = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
         return pageUtils.waitForElementToAppear(info).getAttribute("textContent");
+    }
+
+    /**
+     * Go to stock tab
+     * @return new page object
+     */
+    public StockPage goToStockTab() {
+        pageUtils.waitForElementAndClick(stockPanel);
+        return new StockPage(driver);
     }
 
     /**

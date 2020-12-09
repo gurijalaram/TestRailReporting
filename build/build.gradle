@@ -172,7 +172,7 @@ subprojects {
         //tried to update io.rest-assured:json-schema-validator to 4.3.0 but this is causing errors when running api tests.
         //this should be updated and comment deleted as soon as we can
         implementation 'io.rest-assured:json-schema-validator:3.2.0'
-        implementation 'io.rest-assured:rest-assured:4.3.0'
+        implementation 'io.rest-assured:rest-assured:4.2.0'
         implementation 'commons-io:commons-io:2.7'
         implementation 'commons-lang:commons-lang:2.6'
         implementation 'commons-cli:commons-cli:1.4'
@@ -191,7 +191,7 @@ subprojects {
         implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0'
         implementation 'commons-validator:commons-validator:1.6'
         implementation 'com.sun.mail:javax.mail:1.6.2'
-        implementation 'javax.activation:activation:1.1.1'
+        implementation 'com.sun.mail:smtp:1.6.5'
         implementation 'pl.pragmatists:JUnitParams:1.1.1'
     }
 }
