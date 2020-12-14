@@ -25,7 +25,7 @@ public class CommonConstants {
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "onprem";
 
     public static final String DEFAULT_USER_NAME_KEY = "username";
     public static final String DEFAULT_PASSWORD_KEY = "password";
