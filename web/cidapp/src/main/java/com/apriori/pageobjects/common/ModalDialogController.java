@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ModalDialogController extends LoadableComponent<ModalDialogController> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ModalDialogController.class);
+    private final Logger logger = LoggerFactory.getLogger(ModalDialogController.class);
 
     @FindBy(id = "secondary-process-select-all-btn")
     private WebElement selectAllButton;
@@ -56,7 +56,7 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
     public ModalDialogController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

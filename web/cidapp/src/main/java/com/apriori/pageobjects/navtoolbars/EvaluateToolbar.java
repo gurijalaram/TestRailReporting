@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class EvaluateToolbar extends ExploreToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(EvaluateToolbar.class);
+    private final Logger logger = LoggerFactory.getLogger(EvaluateToolbar.class);
 
     @FindBy(xpath = "//button[.='Cost']")
     private WebElement costButton;
@@ -32,7 +32,7 @@ public class EvaluateToolbar extends ExploreToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(costButton);
     }

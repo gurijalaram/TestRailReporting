@@ -19,7 +19,7 @@ import utils.Constants;
 
 public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CidAppLoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(CidAppLoginPage.class);
 
     private static String loginPageUrl = Constants.getDefaultUrl();
 
@@ -80,14 +80,14 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = loginPageUrl;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        LOGGER.info("CURRENTLY ON INSTANCE: " + url);
+        logger.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }

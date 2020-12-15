@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class StockPage extends LoadableComponent<StockPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(StockPage.class);
+    private final Logger logger = LoggerFactory.getLogger(StockPage.class);
 
     @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
     private WebElement panelDetails;
@@ -32,7 +32,7 @@ public class StockPage extends LoadableComponent<StockPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

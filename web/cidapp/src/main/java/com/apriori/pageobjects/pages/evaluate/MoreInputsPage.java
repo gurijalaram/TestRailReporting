@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(MoreInputsPage.class);
+    private final Logger logger = LoggerFactory.getLogger(MoreInputsPage.class);
 
     @FindBy(xpath = "//div[.='Basic Attributes']")
     private WebElement attributesText;
@@ -31,7 +31,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

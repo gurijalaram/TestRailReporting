@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcessesPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(SecondaryProcessesPage.class);
+    private final Logger logger = LoggerFactory.getLogger(SecondaryProcessesPage.class);
 
     @FindBy(xpath = "//div[normalize-space(@class)='tree selectable']")
     private WebElement processTree;
@@ -30,7 +30,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

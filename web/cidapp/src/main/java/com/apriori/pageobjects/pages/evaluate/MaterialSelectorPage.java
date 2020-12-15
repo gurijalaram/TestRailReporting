@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(MaterialSelectorPage.class);
+    private final Logger logger = LoggerFactory.getLogger(MaterialSelectorPage.class);
 
     @FindBy(xpath = "//label[.='Type']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement typeDropdown;
@@ -42,7 +42,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

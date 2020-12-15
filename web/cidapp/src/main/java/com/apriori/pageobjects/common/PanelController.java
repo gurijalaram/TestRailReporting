@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class PanelController extends LoadableComponent<PanelController> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(PanelController.class);
+    private final Logger logger = LoggerFactory.getLogger(PanelController.class);
 
     @FindBy(css = "svg[data-icon='question']")
     private WebElement questionButton;
@@ -35,7 +35,7 @@ public class PanelController extends LoadableComponent<PanelController> {
     public PanelController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizationPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(MaterialUtilizationPage.class);
+    private final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
     @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
     private WebElement panelDetails;
@@ -36,7 +36,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

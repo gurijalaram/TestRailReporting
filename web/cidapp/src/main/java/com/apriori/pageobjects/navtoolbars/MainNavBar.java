@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class MainNavBar extends LoadableComponent<MainNavBar> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
+    private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
@@ -49,7 +49,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     public MainNavBar(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
