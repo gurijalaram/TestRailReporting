@@ -1,7 +1,16 @@
 package com.ootbreports.cycletimevaluetracking;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringStartsWith.startsWith;
+
+import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -16,8 +25,7 @@ import utils.Constants;
 
 public class CycleTimeValueTrackingTests extends TestBase {
 
-    private InputControlsTests inputControlsTests;
-    private GenericReportPage genericReportPage;
+    private CycleTimeValueTrackingPage cycleTimeValueTrackingPage;
     private CommonReportTests commonReportTests;
 
     public CycleTimeValueTrackingTests() {
@@ -25,7 +33,6 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "92")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -37,7 +44,6 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -46,11 +52,30 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName());
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "2331")
+    @Description("Projects rollup drop list functionality test")
+    public void testProjectRollupDropdownList() {
+        cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(), CycleTimeValueTrackingPage.class);
+
+        assertThat(cycleTimeValueTrackingPage.getCountOfRollupItems(), is(equalTo("1")));
+        String expectedProjectRollup = "AC CYCLE TIME VT 1";
+        assertThat(cycleTimeValueTrackingPage.getFirstRollupName(), is(equalTo(expectedProjectRollup)));
+
+        cycleTimeValueTrackingPage.clickOk();
+
+        assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo(expectedProjectRollup)));
+        assertThat(cycleTimeValueTrackingPage.getRollupInUseInChart(), is(equalTo(expectedProjectRollup)));
     }
 }
