@@ -95,8 +95,11 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//span")
     private List<WebElement> secondaryProcesses;
 
-    @FindBy(xpath = "//label[.='VPE']/following-sibling::div//div//button")
+    @FindBy(xpath = "//label[.='VPE']/following-sibling::div//button")
     private List<WebElement> vpes;
+
+    @FindBy(xpath = "//label[.='Process Group']/following-sibling::div//button")
+    private List<WebElement> processGroups;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -306,13 +309,11 @@ public class EvaluatePage extends EvaluateToolbar {
      * Checks the value of specified material
      *
      * @param label - the label
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isMaterialDisplayed(String label, String value) {
-        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.waitForElementToAppear(result);
-        return driver.findElement(result).isDisplayed();
+    public String isMaterial(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
+        return pageUtils.waitForElementToAppear(result).getAttribute("textContent");
     }
 
     /**
@@ -393,12 +394,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list as string
      */
     public List<String> getListOfVPEs() {
-        List<String> listOfVpes = new ArrayList<>();
-
-        for (WebElement vpe : vpes) {
-            listOfVpes.add(vpe.getAttribute("textContent"));
-        }
-        return listOfVpes;
+        return getDropdownsInList(vpes);
     }
 
     /**
@@ -426,5 +422,23 @@ public class EvaluatePage extends EvaluateToolbar {
 
         By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
         return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
+    }
+
+    /**
+     * Gets list of process groups
+     *
+     * @return list as string
+     */
+    public List<String> getListOfProcessGroups() {
+        return getDropdownsInList(processGroups);
+    }
+
+    private List<String> getDropdownsInList(List<WebElement> dropdownLists) {
+        List<String> listOfDropdown = new ArrayList<>();
+
+        for (WebElement dropdown : dropdownLists) {
+            listOfDropdown.add(dropdown.getAttribute("textContent"));
+        }
+        return listOfDropdown;
     }
 }

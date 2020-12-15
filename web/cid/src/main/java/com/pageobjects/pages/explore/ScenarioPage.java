@@ -2,7 +2,6 @@ package com.pageobjects.pages.explore;
 
 import com.apriori.utils.PageUtils;
 
-import com.pageobjects.pages.evaluate.EvaluatePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -69,9 +68,9 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
      *
      * @return new page object
      */
-    public EvaluatePage save() {
+    public <T> T save(Class<T> className) {
         pageUtils.waitForElementAndClick(saveButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, className);
     }
 
     /**

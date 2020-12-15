@@ -23,7 +23,6 @@ public class Emails {
         NotificationService.sendEmail(subject);
         Boolean emailExists = NotificationService.validateEmail(subject);
         Assert.assertEquals(true, emailExists);
-
     }
 
 
@@ -33,12 +32,9 @@ public class Emails {
     public void getEmails() {
         GetEmailResponse getEmailResponse = NotificationService.getEmails();
         propertyStore.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
-        JsonManager.serializeJsonToFile(Thread.currentThread().getContextClassLoader().getResource("property-store" +
-                        ".json").getPath(),
+        JsonManager.serializeJsonToFile(FileResourceUtil.getResourceAsFile("property-store.json").getPath(),
                 propertyStore);
-
     }
-
 
     @Test
     @TestRail(testCaseId = "3881")
@@ -49,6 +45,5 @@ public class Emails {
                 PropertyStore.class);
         String identity = propertyStore.getEmailIdentity();
         NotificationService.getEmail(identity);
-
     }
 }

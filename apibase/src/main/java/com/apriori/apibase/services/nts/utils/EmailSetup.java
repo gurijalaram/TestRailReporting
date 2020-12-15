@@ -18,7 +18,7 @@ public class EmailSetup {
 
     public  void getCredentials() {
         String key = "lygtvxdsesdfhind";
-        InputStream credentialFile = getClass().getResourceAsStream("/crd");
+        InputStream credentialFile = FileResourceUtil.getResourceFileStream("crd");
 
         try {
             String content = EncryptionUtil.decryptFile(key, credentialFile);
