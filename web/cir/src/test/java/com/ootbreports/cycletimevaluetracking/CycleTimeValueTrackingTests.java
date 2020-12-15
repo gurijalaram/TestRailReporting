@@ -60,7 +60,6 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2331")
     @Description("Projects rollup drop list functionality test")
     public void testProjectRollupDropdownList() {
@@ -80,7 +79,6 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2332")
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
