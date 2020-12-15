@@ -69,10 +69,29 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(), CycleTimeValueTrackingPage.class);
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfRollupItems(), is(equalTo("2")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
         cycleTimeValueTrackingPage.selectProjectRollup("2")
                 .clickOk();
 
+        assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
+    }
+
+    @Test
+    @Category(CiaCirTestDevTest.class)
+    @TestRail(testCaseId = "2332")
+    @Description("Export date lists all available versions from selected export set rollup")
+    public void testExportDateFilterFunctionality() {
+        cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(), CycleTimeValueTrackingPage.class)
+                .selectProjectRollup("2");
+
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("4")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("3"), is(equalTo("1")));
+
+        cycleTimeValueTrackingPage.clickOk();
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
     }
 }

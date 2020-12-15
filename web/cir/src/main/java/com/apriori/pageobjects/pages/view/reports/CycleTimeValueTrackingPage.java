@@ -13,14 +13,8 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(CycleTimeValueTrackingPage.class);
 
-    @FindBy(xpath = "//div[contains(@class, 'dropdownContainer')][1]//ul")
-    private WebElement projectRollupDropdownList;
-
     @FindBy(xpath = "//div[contains(@class, 'dropdownContainer')][1]//ul/li[1]")
     private WebElement projectRollupDropdownFirstElement;
-
-    @FindBy(xpath = "//div[contains(@class, 'dropdownContainer')][1]//ul/li[2]")
-    private WebElement projectRollupDropdownSecondElement;
 
     @FindBy(xpath = "//span[contains(text(), 'Project Tracking Rollup:')]/../following-sibling::td[2]")
     private WebElement projectTrackingRollupAboveChart;
@@ -34,6 +28,8 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Project Name:')]/../following-sibling::td[2]")
     private WebElement projectName;
 
+    private String genericRollupListLocator = "//div[contains(@class, 'dropdownContainer')][1]//ul/li[%s]";
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -46,11 +42,12 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     }
 
     /**
-     * Gets count of project rollup dropdown items
+     * Gets count of items in a dropdown on either report
      * @return String
      */
-    public String getCountOfRollupItems() {
-        return projectRollupDropdownList.getAttribute("childElementCount");
+    public String getCountOfDropdownItems(String index) {
+        By locator = By.xpath(String.format("//div[contains(@class, 'dropdownContainer')][%s]//ul", index));
+        return driver.findElement(locator).getAttribute("childElementCount");
     }
 
     /**
@@ -58,7 +55,8 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
      * @return String
      */
     public String getFirstRollupName() {
-        return projectRollupDropdownFirstElement.getAttribute("title");
+        By locator = By.xpath(String.format(genericRollupListLocator, "1"));
+        return driver.findElement(locator).getAttribute("title");
     }
 
     /**
@@ -84,9 +82,10 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
      */
     public CycleTimeValueTrackingPage selectProjectRollup(String index) {
         pageUtils.waitForElementAndClick(projectRollupDropdown);
-        By locator = By.xpath(String.format("//div[contains(@class, 'dropdownContainer')][1]//ul/li[%s]", index));
+        By locator = By.xpath(String.format(genericRollupListLocator, index));
         pageUtils.waitForElementAndClick(locator);
-        //pageUtils.waitForElementAndClick(projectRollupDropdownSecondElement);
+        By locator2 = By.xpath("//a[@title='PROJECT 1']");
+        pageUtils.waitForElementToAppear(locator2);
         return this;
     }
 
