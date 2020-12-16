@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -73,6 +74,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
     private WebElement materialsDetailsButton;
+
+    @FindBy(xpath = "//div[.='Material']//input")
+    private WebElement materialName;
 
     @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
     private WebElement designGuidanceDetailsButton;
@@ -440,5 +444,22 @@ public class EvaluatePage extends EvaluateToolbar {
             listOfDropdown.add(dropdown.getAttribute("textContent"));
         }
         return listOfDropdown;
+    }
+
+    /**
+     * Get background colour
+     * @param element - the element
+     * @return hex colour as string
+     */
+    public String getColour(String element) {
+        WebElement elementColour = element.equalsIgnoreCase("Process Group") ? processGroupDropdown
+            : element.equalsIgnoreCase("VPE") ? vpeDropdown
+            : element.equalsIgnoreCase("Secondary Processes") ? secondaryProcessDropdown
+            : element.equalsIgnoreCase("Annual Volume") ? annualVolumeInput
+            : element.equalsIgnoreCase("Years") ? productionLifeInput
+            : element.equalsIgnoreCase("Material") ? materialName
+            : null;
+
+        return Color.fromString(pageUtils.waitForElementAppear(elementColour).getCssValue("background-color")).asHex();
     }
 }

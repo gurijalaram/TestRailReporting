@@ -6,6 +6,7 @@ import com.apriori.utils.enums.NewCostingLabelEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -77,5 +78,15 @@ public class EvaluateToolbar extends ExploreToolbar {
     public boolean isCostLabel(String text) {
         pageUtils.waitForElementToAppear(costLabel);
         return pageUtils.textPresentInElement(costLabel, text);
+    }
+
+    /**
+     * Get background colour
+     * @param element - the element
+     * @return hex colour as string
+     */
+    public String getColour(String element) {
+        WebElement elementColour = element.equalsIgnoreCase("Cost Label") ? costLabel : null;
+        return Color.fromString(pageUtils.waitForElementAppear(elementColour).getCssValue("background-color")).asHex();
     }
 }
