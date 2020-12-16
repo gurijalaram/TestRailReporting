@@ -95,7 +95,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement holeIssuesChartOneComparisonReport;
 
     @FindBy(xpath = "//span[contains(text(), 'Comparison')]")
-    private WebElement comparisonButton;
+    private WebElement comparisonTitle;
 
     @FindBy(xpath = "//span[contains(text(), 'MLDES')]")
     private WebElement partNameCastingDtcDetailsReport;
@@ -490,6 +490,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@title='Scenario Name']//ul)[1]/li[1]")
     private WebElement firstScenarioName;
 
+    @FindBy(xpath = "//span[contains(text(), 'Steel')]")
+    private WebElement cycleTimeValueTrackingDetailsMaterialComposition;
+
     private String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
 
     private WebDriver driver;
@@ -765,14 +768,8 @@ public class GenericReportPage extends ReportsPageHeader {
         return massMetricValueOnBubble.getAttribute("textContent");
     }
 
-    /**
-     * Moves to new tab (Casting DTC to Casting DTC Comparison)
-     * @return current page object
-     */
-    public GenericReportPage newTabTransfer() {
-        switchTab();
-        pageUtils.waitForElementToAppear(comparisonButton);
-        return this;
+    public void waitForNewTabSwitchCastingDtcToComparison() {
+        pageUtils.waitForElementToAppear(comparisonTitle);
     }
 
     /**
@@ -837,7 +834,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage clickComparison() {
         pageUtils.waitForElementToAppear(castingDtcBubble);
-        pageUtils.waitForElementAndClick(comparisonButton);
+        pageUtils.waitForElementAndClick(comparisonTitle);
         return this;
     }
 
@@ -1515,7 +1512,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public void clickMachiningBubbleAndSwitchTab() {
         pageUtils.actionClick(machiningDtcBubbleTwo);
 
-        switchTab();
+        switchTab(1);
         pageUtils.waitForElementToAppear(upperTitle);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
@@ -1536,7 +1533,7 @@ public class GenericReportPage extends ReportsPageHeader {
             builder.build().perform();
         }
 
-        switchTab();
+        switchTab(1);
         pageUtils.waitForElementToAppear(upperTitle);
         pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
         return partName;
@@ -1554,7 +1551,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         pageUtils.waitForElementAndClick(machiningDtcDetailsPartNameLink);
 
-        switchTab();
+        switchTab(1);
         pageUtils.waitForElementToAppear(upperTitle);
         pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
 
@@ -1722,7 +1719,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public void clickComponentLinkAssemblyDetails() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementAndClick(componentLinkAssemblyDetails);
-        switchTab();
+        switchTab(1);
         pageUtils.waitForElementToAppear(componentCostReportTitle);
     }
 
@@ -2124,11 +2121,18 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Switches tab, if second tab is open
+     * @return GenericReportPage instance
      */
-    private void switchTab() {
-        if (pageUtils.getCountOfOpenTabs() == 2) {
-            pageUtils.windowHandler(1);
-        }
+    public GenericReportPage switchTab(int index) {
+        pageUtils.windowHandler(index);
+        return this;
+    }
+
+    /**
+     * Waits for tab switch to occur from Cycle Time Value Tracking to Details or Component Cost Reports
+     */
+    public void waitForNewTabSwitchCycleTimeToDetailsOrComponentCost() {
+        pageUtils.waitForElementToAppear(cycleTimeValueTrackingDetailsMaterialComposition);
     }
 
     /**

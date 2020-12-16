@@ -42,6 +42,12 @@ public class ComponentCostReportPage extends GenericReportPage {
     @FindBy(xpath = "//label[@title='Component Select']/span[@class='warning']")
     private WebElement warningSpan;
 
+    @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[3]//span")
+    private WebElement componentCostReportTitle;
+
+    @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
+    private WebElement componentCostReportPartNumber;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -176,5 +182,23 @@ public class ComponentCostReportPage extends GenericReportPage {
      */
     public boolean isWarningDisplayedAndEnabled() {
         return warningSpan.isDisplayed() && warningSpan.isEnabled();
+    }
+
+    /**
+     * Gets Component Cost report title
+     * @return String
+     */
+    public String getComponentCostReportTitle() {
+        pageUtils.waitForElementToAppear(componentCostReportTitle);
+        return componentCostReportTitle.getText();
+    }
+
+    /**
+     * Gets Part Number from report
+     * @return String
+     */
+    public String getPartNumber() {
+        pageUtils.waitForElementToAppear(componentCostReportPartNumber);
+        return componentCostReportPartNumber.getText();
     }
 }

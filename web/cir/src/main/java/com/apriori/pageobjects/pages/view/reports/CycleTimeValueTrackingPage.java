@@ -28,6 +28,12 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Project Name:')]/../following-sibling::td[2]")
     private WebElement projectName;
 
+    @FindBy(xpath = "//*[local-name()='svg']")
+    private WebElement chartSvg;
+
+    @FindBy(xpath = "//table[@class='jrPage']/tbody/tr[3]/td[2]/span")
+    private WebElement reportTitle;
+
     private String genericRollupListLocator = "//div[contains(@class, 'dropdownContainer')][1]//ul/li[%s]";
 
     private PageUtils pageUtils;
@@ -96,5 +102,24 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     public String getProjectName() {
         pageUtils.waitForElementToAppear(projectName);
         return projectName.getText();
+    }
+
+    /**
+     * Gets Cycle Time Value Tracking or Details report title
+     * @return String
+     */
+    public String getCycleTimeReportTitle() {
+        return reportTitle.getText();
+    }
+
+    /**
+     * Clicks specified project name
+     * @param name - String
+     */
+    public <T> T clickHyperlink(String name, Class<T> className) {
+        pageUtils.waitForElementToAppear(chartSvg);
+        By locator = By.xpath(String.format("//span[contains(text(), '%s')]", name));
+        pageUtils.waitForElementAndClick(locator);
+        return PageFactory.initElements(driver, className);
     }
 }

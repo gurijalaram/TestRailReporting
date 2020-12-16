@@ -154,8 +154,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
             .clickOk()
             .clickComparison()
-            .newTabTransfer();
+            .switchTab(1);
 
+        genericReportPage.waitForNewTabSwitchCastingDtcToComparison();
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
