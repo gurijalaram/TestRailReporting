@@ -1,5 +1,9 @@
 package com.ootbreports.cycletimevaluetracking;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.utils.TestRail;
@@ -11,9 +15,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import utils.Constants;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
