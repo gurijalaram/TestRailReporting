@@ -23,6 +23,8 @@ import com.apriori.utils.web.driver.TestBase;
 import com.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 public class SheetMetalDtcDetailsReportTests extends TestBase {
@@ -151,6 +153,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "3044")
     @Description("Verify Mass Metric input control functions correctly - Finish Mass")
     public void testMassMetricInputControlFinishMass() {
