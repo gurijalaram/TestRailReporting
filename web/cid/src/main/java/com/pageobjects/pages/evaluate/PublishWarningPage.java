@@ -33,10 +33,10 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     private WebElement newScenarioButton;
 
     @FindBy(css = "div.panel-body div.gwt-Label")
-    private WebElement cannotPublishDuePrivateScenarioText;
+    private WebElement privateWarning;
 
     @FindBy(xpath = "//span[@class='warning-icon']/..")
-    private WebElement cannotPublishDueLockedComparisonText;
+    private WebElement publicWarning;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -119,7 +119,7 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      * @return the text as String
      */
     public String getLockedComparisonText() {
-        return pageUtils.waitForElementToAppear(cannotPublishDuePrivateScenarioText).getText();
+        return pageUtils.waitForElementToAppear(publicWarning).getText();
     }
 
     /**
@@ -128,6 +128,6 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
      * @return the text as String
      */
     public String getPrivateScenarioText() {
-        return pageUtils.waitForElementToAppear(cannotPublishDueLockedComparisonText).getText();
+        return pageUtils.waitForElementToAppear(privateWarning).getText();
     }
 }

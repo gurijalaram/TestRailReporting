@@ -170,6 +170,11 @@ public class EditPublicComparisonTests extends TestBase {
             .apply(ComparePage.class)
             .setBasis(partName, scenarioName);
 
+        genericHeader = new GenericHeader(driver);
+        comparePage = genericHeader.openJobQueue()
+             .checkJobQueueActionStatus(testComparisonName, "Initial", "Set Children to Comparison", "okay")
+             .closeJobQueue(ComparePage.class);
+
         assertThat(comparePage.isBasis(partName, scenarioName), is(true));
         assertThat(comparePage.isBasisButtonPresent(testAssemblyName, scenarioName), is(true));
     }
