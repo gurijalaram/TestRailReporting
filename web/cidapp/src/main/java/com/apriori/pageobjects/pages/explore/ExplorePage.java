@@ -57,7 +57,7 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return string
      */
-    public String getScenariosFound() {
+    public String getComponentsFound() {
         return pageUtils.waitForElementAppear(scenarioCount).getText();
     }
 
@@ -68,7 +68,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return a new page object
      */
-    public EvaluatePage openScenario(String componentName, String scenarioName) {
+    public EvaluatePage openComponent(String componentName, String scenarioName) {
         scenarioTableController.openScenario(componentName, scenarioName);
         return new EvaluatePage(driver);
     }
@@ -80,7 +80,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage highlightScenario(String componentName, String scenarioName) {
+    public ExplorePage highlightComponent(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
