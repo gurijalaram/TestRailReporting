@@ -24,6 +24,8 @@ import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 public class CastingDtcComparisonReportTests extends TestBase {
@@ -37,6 +39,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -95,6 +98,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Comparison input control panel works")
     public void testCancelButton() {

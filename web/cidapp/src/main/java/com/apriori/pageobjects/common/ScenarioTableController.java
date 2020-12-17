@@ -37,8 +37,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Opens the scenario
      *
-     * @param componentName     - name of the part
-     * @param scenarioName - scenario name
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
      * @return a new page object
      */
     public ScenarioTableController openScenario(String componentName, String scenarioName) {
@@ -51,8 +51,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Highlights the scenario in the table
      *
-     * @param componentName     - name of the part
-     * @param scenarioName - scenario name
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
      * @return current page object
      */
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
@@ -60,5 +60,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
         return this;
+    }
+
+    /**
+     * Checks if the component is present on the page by size > 0 or < 1
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public int getListOfScenarios(String componentName, String scenarioName) {
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase(), scenarioName));
+        return driver.findElements(scenario).size();
     }
 }

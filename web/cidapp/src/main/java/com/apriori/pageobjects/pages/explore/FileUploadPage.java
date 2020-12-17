@@ -80,6 +80,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      */
     private FileUploadPage inputScenarioName(String scenarioName) {
         scenarioNameInput.sendKeys(Keys.CONTROL + "a");
+        scenarioNameInput.sendKeys(Keys.DELETE);
         scenarioNameInput.sendKeys(scenarioName);
         return this;
     }
@@ -109,6 +110,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return string
      */
     public String getFieldWarningText() {
+        scenarioNameInput.sendKeys(Keys.TAB);
         return pageUtils.waitForElementToAppear(scenarioNameWarning).getText();
     }
 
