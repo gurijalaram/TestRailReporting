@@ -24,6 +24,8 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 public class MachiningDtcDetailsReportTests extends TestBase {
@@ -48,6 +50,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "3415")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -255,6 +258,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "3031")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {

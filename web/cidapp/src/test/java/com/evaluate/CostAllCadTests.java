@@ -240,7 +240,7 @@ public class CostAllCadTests extends TestBase {
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
     @Description("CAD file from all supported CAD formats - Parasolid")
-    public void testCADFormatParasolid() {
+    public void testCADFormatParaSolid() {
 
         resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_steel_PMI.x_t");
 
@@ -314,8 +314,8 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(" ", resourceFile, FileUploadPage.class);
+            .uploadComponentAndSubmit("", resourceFile, FileUploadPage.class);
 
-        assertThat(fileUploadPage.getFieldWarningText(), containsString("Scenario name is required."));
+        assertThat(fileUploadPage.getFieldWarningText(), containsString("Required."));
     }
 }
