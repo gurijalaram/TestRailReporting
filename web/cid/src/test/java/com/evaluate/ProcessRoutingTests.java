@@ -114,7 +114,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openProcessDetails();
 
-        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.02, Piece Part Cost (USD): 0.62, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,934.97"));
+        assertThat(processRoutingPage.getSelectionTableDetails(), containsString("Cycle Time (s): 54.14, Piece Part Cost (USD): 0.62, Fully Burdened Cost (USD): 1.06, Total Capital Investments (USD): 11,934.97"));
     }
 
     @Test
@@ -916,6 +916,6 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails();
 
         assertThat(processRoutingPage.getRoutingLabels(), containsInAnyOrder("Melting", "Coremaking", "Gravity Die Casting", "Core Refractory Coat", "Refractory Coat Oven Dry",
-            "Trim", "Cleaning", "Finishing", "Visual Inspection", "5 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder", "3 Axis Mill"));
+            "Trim", "Cleaning", "Finishing", "Visual Inspection", "3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder"));
     }
 }

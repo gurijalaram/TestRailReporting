@@ -160,7 +160,7 @@ public class ReferencePanelTests extends TestBase {
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
 
-        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()));
-        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
+        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.CASTING_DIE.getProcessGroup()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_MEXICO.getVpe()));
     }
 }
