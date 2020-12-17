@@ -82,7 +82,7 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     /**
      * Gets background colour of cost label
-     * @return hex colour as string
+     * @return hex code as string
      */
     public String getCostColour() {
         return Color.fromString(pageUtils.waitForElementAppear(costLabel).getCssValue("background-color")).asHex();

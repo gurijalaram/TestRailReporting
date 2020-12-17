@@ -449,7 +449,7 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Get background colour
      * @param element - the element
-     * @return hex colour as string
+     * @return hex code as string
      */
     public String getColour(String element) {
         WebElement elementColour = element.equalsIgnoreCase("Process Group") ? processGroupDropdown
