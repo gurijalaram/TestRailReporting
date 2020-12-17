@@ -26,6 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 public class SheetMetalDtcComparisonReportTests extends TestBase {
@@ -193,7 +194,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues")
     public void testSortOrderManufacturingIssues() {

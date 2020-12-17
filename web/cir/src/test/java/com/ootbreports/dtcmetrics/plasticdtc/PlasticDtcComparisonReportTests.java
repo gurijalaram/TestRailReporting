@@ -23,6 +23,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
@@ -36,7 +37,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -169,7 +170,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreNoSelection() {

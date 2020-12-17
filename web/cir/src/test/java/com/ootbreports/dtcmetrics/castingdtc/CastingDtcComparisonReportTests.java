@@ -26,6 +26,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 public class CastingDtcComparisonReportTests extends TestBase {
@@ -39,7 +40,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1676")
     @Description("Validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -103,7 +104,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Comparison input control panel works")
     public void testCancelButton() {

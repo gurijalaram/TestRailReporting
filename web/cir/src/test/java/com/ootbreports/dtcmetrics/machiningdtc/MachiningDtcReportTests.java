@@ -27,6 +27,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 public class MachiningDtcReportTests extends TestBase {
@@ -61,7 +62,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3416")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -70,7 +71,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3026")
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
@@ -82,7 +83,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3567")
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {

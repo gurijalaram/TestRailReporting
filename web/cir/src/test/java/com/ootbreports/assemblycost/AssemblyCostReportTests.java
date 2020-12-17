@@ -11,6 +11,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 public class AssemblyCostReportTests extends TestBase {
@@ -22,7 +23,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation (Assembly Cost A4 Report)")
     public void testReportAvailabilityByMenuAssemblyCostA4() {
@@ -34,7 +35,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation (Assembly Cost Letter Report)")
     public void testReportAvailabilityByMenuAssemblyCostLetter() {
@@ -107,7 +108,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly (Assembly Cost A4 Report)")
     public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
@@ -119,7 +120,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+	@Category({ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly (Assembly Cost Letter Report)")
     public void testAssemblySetDropdownFunctionalityAssemblyCostLetter() {
