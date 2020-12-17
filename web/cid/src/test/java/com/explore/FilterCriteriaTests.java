@@ -70,7 +70,7 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
@@ -93,7 +93,7 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectExploreButton()
             .filter()
@@ -114,7 +114,7 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectExploreButton()
             .filter()
@@ -135,7 +135,7 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Analysis", "High", "Test Description", "Test Notes")
@@ -186,7 +186,7 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectScenarioInfoNotes()
             .enterScenarioInfoNotes("Complete", "High", "Test Description", "Test Notes")
@@ -211,13 +211,11 @@ public class FilterCriteriaTests extends TestBase {
         String testComparisonName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .createNewComparison()
             .enterComparisonName(testComparisonName)
-            .save(ComparePage.class);
-
-        genericHeader = new GenericHeader(driver);
-        genericHeader.publishScenario(PublishPage.class)
+            .save(GenericHeader.class)
+            .publishScenario(PublishPage.class)
             .selectPublishButton()
             .filter()
             .setWorkspace("Public")
@@ -237,7 +235,7 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario("Analysis", "Initial", "Ciene Frith")
             .selectLock()
