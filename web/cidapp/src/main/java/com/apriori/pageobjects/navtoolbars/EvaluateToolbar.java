@@ -81,12 +81,10 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
-     * Get background colour
-     * @param element - the element
+     * Gets background colour of cost label
      * @return hex colour as string
      */
-    public String getColour(String element) {
-        WebElement elementColour = element.equalsIgnoreCase("Cost Label") ? costLabel : null;
-        return Color.fromString(pageUtils.waitForElementAppear(elementColour).getCssValue("background-color")).asHex();
+    public String getCostColour() {
+        return Color.fromString(pageUtils.waitForElementAppear(costLabel).getCssValue("background-color")).asHex();
     }
 }
