@@ -23,6 +23,8 @@ import com.apriori.utils.web.driver.TestBase;
 import com.inputcontrols.InputControlsTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -129,6 +131,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "3043")
     @Description("Verify cost metric input control functions correctly - Piece Part Cost")
     public void testCostMetricInputControlPpc() {
