@@ -22,7 +22,9 @@ public enum ColourEnum {
     SHAMROCK_GREEN("#009966"),
     CERULEAN("#006699"),
     INDIGO("#660099"),
-    BLACK("#000000");
+    BLACK("#000000"),
+    CHINA_IVORY_A("#fff3cd"),
+    CHINA_IVORY_B("#fff4d3");
 
     private final String colour;
 
