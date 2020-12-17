@@ -84,4 +84,15 @@ public class ExplorePage extends ExploreToolbar {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
+
+    /**
+     * Gets the number of elements present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public int getListOfComponents(String componentName, String scenarioName) {
+        return scenarioTableController.getListOfScenarios(componentName, scenarioName);
+    }
 }
