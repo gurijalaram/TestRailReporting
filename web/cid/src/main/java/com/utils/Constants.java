@@ -23,8 +23,7 @@ public class Constants {
     private static String baseUrl;
 
     static {
-        environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE) :
-            System.setProperty(DEFAULT_ENVIRONMENT_KEY, environment);
+        environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
         INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
 
