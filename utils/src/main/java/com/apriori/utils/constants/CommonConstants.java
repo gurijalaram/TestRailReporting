@@ -97,7 +97,6 @@ public class CommonConstants {
     public static final String internalApiURL = getBaseUrl() + constantsInit.internalApiURL();
     public static final String cidURL = getBaseUrl() + constantsInit.cidURL();
     public static final String cidAppURL = getBaseUrl();
-    public static final String headerText = constantsInit.logoutHeaderText();
 
     private static String csvFile;
     private static final Properties PROPERTIES = new Properties();
