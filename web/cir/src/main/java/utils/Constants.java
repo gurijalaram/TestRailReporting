@@ -68,6 +68,6 @@ public class Constants {
      * @return string
      */
     public static String getDefaultUrl() {
-        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional"));
+        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.cir"));
     }
 }
