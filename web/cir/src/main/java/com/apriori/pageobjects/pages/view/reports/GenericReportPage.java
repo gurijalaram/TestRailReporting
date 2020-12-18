@@ -783,7 +783,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.jsNewTab();
         pageUtils.windowHandler(index);
 
-        driver.get(Constants.getCidURL());
+        driver.get(Constants.getDefaultUrl());
         pageUtils.waitForElementToAppear(cidLogo);
 
         return new GenericReportPage(driver);

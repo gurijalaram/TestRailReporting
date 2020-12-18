@@ -141,15 +141,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     }
 
     /**
-     * Returns header to check
-     *
-     * @return
-     */
-    public String getExpectedHeader() {
-        return "title";
-    }
-
-    /**
      * General navigation method
      *
      * @param parentPage

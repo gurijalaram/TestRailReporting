@@ -70,12 +70,4 @@ public class Constants {
     public static String getDefaultUrl() {
         return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional"));
     }
-
-    /**
-     * Get default url
-     * @return string
-     */
-    public static String getCidURL() {
-        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.cid"));
-    }
 }
