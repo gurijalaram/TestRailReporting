@@ -41,6 +41,8 @@ public class Constants {
      */
     public static String getDefaultUrl() {
         baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY) == null ? PROPERTIES.getProperty("url.default") : System.getProperty(DEFAULT_BASE_URL_KEY);
+        System.setProperty("baseUrl", baseUrl);
+
         return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
     }
 }

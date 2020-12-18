@@ -1,7 +1,6 @@
 package com.apriori.apibase.utils;
 
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +12,8 @@ import org.slf4j.LoggerFactory;
 public class APIValue {
 
     private static final Logger logger = LoggerFactory.getLogger(APIValue.class);
+
+    private String baseURL = System.getProperty("baseURL");
 
     /**
      * Gets value from tolerance api
@@ -39,7 +40,7 @@ public class APIValue {
         String jsonResponse = new HTTPRequest()
             .unauthorized()
             .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
-            .setEndpoint(CommonConstants.getBaseUrl() + endpoint)
+            .setEndpoint(baseURL + endpoint)
             .setAutoLogin(false)
             .setReturnType(entityClass)
             .commitChanges()
