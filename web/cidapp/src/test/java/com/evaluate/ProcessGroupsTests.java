@@ -11,7 +11,6 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -110,7 +109,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("case_012_009-0020647_hinge_2", testScenarioName)
+            .openComponent("case_012_009-0020647_hinge_2", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -132,7 +131,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("700-33770-01_A0", testScenarioName)
+            .openComponent("700-33770-01_A0", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -154,7 +153,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("case_005_flat end mill contouring", testScenarioName)
+            .openComponent("case_005_flat end mill contouring", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -176,7 +175,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("Case_001_-_Rockwell_2075-0243G", testScenarioName)
+            .openComponent("Case_001_-_Rockwell_2075-0243G", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -198,7 +197,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("case_002_00400016-003M10_A", testScenarioName)
+            .openComponent("case_002_00400016-003M10_A", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -221,7 +220,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("GagePart_Case_011_gundrillgagepart-01", testScenarioName)
+            .openComponent("GagePart_Case_011_gundrillgagepart-01", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -243,7 +242,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("prt0001", testScenarioName)
+            .openComponent("prt0001", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -265,7 +264,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("7021021-2_rib", testScenarioName)
+            .openComponent("7021021-2_rib", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario(5);
 
@@ -287,7 +286,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("ms16555-627_1", testScenarioName)
+            .openComponent("ms16555-627_1", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -309,7 +308,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("14100640", testScenarioName)
+            .openComponent("14100640", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -331,7 +330,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("14100640", testScenarioName)
+            .openComponent("14100640", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -353,7 +352,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("case_066_SpaceX_00128711-001_A", testScenarioName)
+            .openComponent("case_066_SpaceX_00128711-001_A", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -375,7 +374,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("16-340053-00-04", testScenarioName)
+            .openComponent("16-340053-00-04", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -397,7 +396,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("case_007_SpaceX_00088481-001_C", testScenarioName)
+            .openComponent("case_007_SpaceX_00088481-001_C", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -419,7 +418,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("case_002_006-8611543_prt", testScenarioName)
+            .openComponent("case_002_006-8611543_prt", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -441,7 +440,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("225_gasket-1-solid1", testScenarioName)
+            .openComponent("225_gasket-1-solid1", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -463,7 +462,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("case_31_test_part_6_small", testScenarioName)
+            .openComponent("case_31_test_part_6_small", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -507,7 +506,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario("case_011_CENA-009-A1-LH-Rear-Body-Mount", testScenarioName)
+            .openComponent("case_011_CENA-009-A1-LH-Rear-Body-Mount", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 

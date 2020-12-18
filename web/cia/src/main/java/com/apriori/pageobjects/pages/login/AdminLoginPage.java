@@ -31,7 +31,7 @@ public class AdminLoginPage extends AdminHeader {
     private WebElement forgotPassword;
 
     @FindBy(css = "button[type='submit'")
-    private WebElement submitButton;
+    private WebElement loginButton;
 
     @FindBy(css = "span[class='animated fadeInUp']")
     private WebElement loginMsg;
@@ -116,7 +116,7 @@ public class AdminLoginPage extends AdminHeader {
      * Single action to submit login credentials
      */
     private void submitLogin() {
-        submitButton.click();
+        loginButton.click();
     }
 
     /**

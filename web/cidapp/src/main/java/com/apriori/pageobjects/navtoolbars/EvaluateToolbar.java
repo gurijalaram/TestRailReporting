@@ -6,6 +6,7 @@ import com.apriori.utils.enums.NewCostingLabelEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(xpath = "//button[.='Cost']")
     private WebElement costButton;
 
-    @FindBy(css = "div[class~='scenario-state-preview']")
+    @FindBy(css = ".alert")
     private WebElement costLabel;
 
     private PageUtils pageUtils;
@@ -77,5 +78,13 @@ public class EvaluateToolbar extends ExploreToolbar {
     public boolean isCostLabel(String text) {
         pageUtils.waitForElementToAppear(costLabel);
         return pageUtils.textPresentInElement(costLabel, text);
+    }
+
+    /**
+     * Gets background colour of cost label
+     * @return hex code as string
+     */
+    public String getCostColour() {
+        return Color.fromString(pageUtils.waitForElementAppear(costLabel).getCssValue("background-color")).asHex();
     }
 }
