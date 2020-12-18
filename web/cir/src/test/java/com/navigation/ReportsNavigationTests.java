@@ -14,7 +14,7 @@ import com.apriori.pageobjects.pages.create.CreateDomainPage;
 import com.apriori.pageobjects.pages.create.CreateReportPage;
 import com.apriori.pageobjects.pages.library.LibraryPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.logout.LogoutPage;
+import com.apriori.pageobjects.pages.logout.ReportsLogoutPage;
 import com.apriori.pageobjects.pages.manage.ManageRolesPage;
 import com.apriori.pageobjects.pages.manage.ManageUsersPage;
 import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
@@ -50,7 +50,7 @@ public class ReportsNavigationTests extends TestBase {
     private ManageRolesPage roles;
     private ManageUsersPage users;
     private LibraryPage library;
-    private LogoutPage logout;
+    private ReportsLogoutPage logout;
 
     public ReportsNavigationTests() {
         super();
@@ -81,9 +81,7 @@ public class ReportsNavigationTests extends TestBase {
             .login()
             .navigateToReportLogout();
 
-        String headerToCheck = logout.getHeaderToCheck();
-
-        assertThat(logout.getHeaderText(), startsWith(headerToCheck));
+        assertThat(logout.isLoginButtonDisplayedAndEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }

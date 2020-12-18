@@ -783,15 +783,6 @@ public class PageUtils {
     }
 
     /**
-     * Gets header to assert against
-     *
-     * @return String
-     */
-    public String getHeaderToCheck() {
-        return CommonConstants.headerText;
-    }
-
-    /**
      * Gets URL to assert against
      *
      * @return String

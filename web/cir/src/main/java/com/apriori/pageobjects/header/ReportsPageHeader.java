@@ -99,15 +99,6 @@ public class ReportsPageHeader extends PageHeader {
     }
 
     /**
-     * Returns header to check
-     *
-     * @return String
-     */
-    public String getHeaderToCheck() {
-        return pageUtils.getHeaderToCheck();
-    }
-
-    /**
      * Check if Create button is displayed
      *
      * @return Visibility of button

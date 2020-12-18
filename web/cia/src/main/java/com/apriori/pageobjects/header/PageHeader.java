@@ -2,12 +2,11 @@ package com.apriori.pageobjects.header;
 
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
-import com.apriori.pageobjects.pages.logout.Logout;
+import com.apriori.pageobjects.pages.logout.AdminLogoutPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -136,9 +135,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Logout Page Object Model
      */
-    public Logout navigateToAdminLogout() {
+    public AdminLogoutPage navigateToAdminLogout() {
         pageUtils.waitForElementToAppear(userButton);
-        return navigateToSubPage(userButton, logoutButton, Logout.class);
+        return navigateToSubPage(userButton, logoutButton, AdminLogoutPage.class);
     }
 
     /**
@@ -147,7 +146,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return
      */
     public String getExpectedHeader() {
-        return CommonConstants.headerText;
+        return "title";
     }
 
     /**
