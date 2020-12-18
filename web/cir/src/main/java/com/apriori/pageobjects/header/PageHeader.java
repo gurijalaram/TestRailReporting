@@ -6,7 +6,7 @@ import com.apriori.pageobjects.pages.create.CreateDataSourcePage;
 import com.apriori.pageobjects.pages.create.CreateDomainPage;
 import com.apriori.pageobjects.pages.create.CreateReportPage;
 import com.apriori.pageobjects.pages.library.LibraryPage;
-import com.apriori.pageobjects.pages.logout.LogoutPage;
+import com.apriori.pageobjects.pages.logout.ReportsLogoutPage;
 import com.apriori.pageobjects.pages.manage.ManageRolesPage;
 import com.apriori.pageobjects.pages.manage.ManageUsersPage;
 import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
@@ -293,9 +293,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      *
      * @return Logout page object model
      */
-    public LogoutPage navigateToReportLogout() {
+    public ReportsLogoutPage navigateToReportLogout() {
         pageUtils.waitForElementToAppear(dashboardsTitle);
-        return navigateToPage(logoutMenuOption, LogoutPage.class);
+        return navigateToPage(logoutMenuOption, ReportsLogoutPage.class);
     }
 
     /**

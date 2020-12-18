@@ -10,17 +10,20 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LogoutPage extends ReportsPageHeader {
+public class ReportsLogoutPage extends ReportsPageHeader {
 
     private final Logger logger = LoggerFactory.getLogger(com.pageobjects.pages.logout.LogoutPage.class);
 
     @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
     private WebElement loginPageTitle;
 
+    @FindBy(css = "button[type='submit'")
+    private WebElement loginButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public LogoutPage(WebDriver driver) {
+    public ReportsLogoutPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -60,12 +63,11 @@ public class LogoutPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets header text
-     *
-     * @return String - header text
+     * Checks if login button is displayed and enabled
+     * @return boolean
      */
-    public String getHeaderText() {
-        pageUtils.waitForElementToAppear(loginPageTitle);
-        return loginPageTitle.getText();
+    public boolean isLoginButtonDisplayedAndEnabled() {
+        pageUtils.waitForElementToAppear(loginButton);
+        return loginButton.isDisplayed() && loginButton.isEnabled();
     }
 }

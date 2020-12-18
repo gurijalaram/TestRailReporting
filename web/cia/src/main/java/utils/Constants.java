@@ -39,6 +39,14 @@ public class Constants {
      * Get default url
      * @return string
      */
+    public static String getBaseUrl() {
+        return PROPERTIES.getProperty("url.default");
+    }
+
+    /**
+     * Get default url
+     * @return string
+     */
     public static String getDefaultUrl() {
         return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.admin"));
     }
