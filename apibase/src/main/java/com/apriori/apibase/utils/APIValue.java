@@ -13,7 +13,7 @@ public class APIValue {
 
     private static final Logger logger = LoggerFactory.getLogger(APIValue.class);
 
-    private String baseURL = System.getProperty("baseURL");
+    private String baseUrl = System.getProperty("baseUrl");
 
     /**
      * Gets value from tolerance api
@@ -40,7 +40,7 @@ public class APIValue {
         String jsonResponse = new HTTPRequest()
             .unauthorized()
             .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
-            .setEndpoint(baseURL + endpoint)
+            .setEndpoint(baseUrl + endpoint)
             .setAutoLogin(false)
             .setReturnType(entityClass)
             .commitChanges()

@@ -13,7 +13,7 @@ public class APIAuthentication {
 
     private String accessToken = null;
     private int timeToLive = 0;
-    private String baseURL = System.getProperty("baseURL");
+    private String baseUrl = System.getProperty("baseUrl");
 
     /**
      * Fetch Authorization header for user
@@ -49,7 +49,7 @@ public class APIAuthentication {
             ResponseWrapper<AuthenticateJSON> tokenDetails =  new HTTPRequest().defaultFormAuthorization(username, password)
                 .customizeRequest()
                 .setReturnType(AuthenticateJSON.class)
-                .setEndpoint(baseURL + "ws/auth/token")
+                .setEndpoint(baseUrl + "ws/auth/token")
                 .setAutoLogin(false)
                 .commitChanges()
                 .connect()

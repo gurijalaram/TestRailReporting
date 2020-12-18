@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class WorkOrderRequestEntity {
 
-    private String baseURL = System.getProperty("baseURL");
+    private String baseUrl = System.getProperty("baseUrl");
     private String username;
     private String password;
     private String scenarioName;
@@ -29,11 +29,11 @@ public class WorkOrderRequestEntity {
     }
 
     public String getBaseURL() {
-        return baseURL;
+        return baseUrl;
     }
 
     public WorkOrderRequestEntity setBaseURL(String baseURL) {
-        this.baseURL = baseURL;
+        this.baseUrl = baseUrl;
         return this;
     }
 

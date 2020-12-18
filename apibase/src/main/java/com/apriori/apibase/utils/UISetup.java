@@ -14,7 +14,7 @@ public class UISetup {
 
     private APIAuthentication apiAuthentication = new APIAuthentication();
     private DisplayColumnsEntity displayColumns = new DisplayColumnsEntity();
-    private String baseURL = System.getProperty("baseURL");
+    private String baseUrl = System.getProperty("baseUrl");
 
     public void resetDisplayedColumns() {
         String userName = "qa-automation-01@apriori.com";
@@ -23,7 +23,7 @@ public class UISetup {
             .unauthorized()
             .customizeRequest()
             .setHeaders(apiAuthentication.initAuthorizationHeader(userName))
-            .setEndpoint(baseURL + "ws/workspace/users/me/table-views/workspaceTable")
+            .setEndpoint(baseUrl + "ws/workspace/users/me/table-views/workspaceTable")
             .setBody(displayColumns
                 .setChildren(generateDefaultColumnsList())
                 .setName("private"))
