@@ -797,6 +797,6 @@ public class PageUtils {
      * @return String
      */
     public String getUrlToCheck() {
-        return CommonConstants.getBaseUrl();
+        return System.getProperty("baseURL");
     }
 }
