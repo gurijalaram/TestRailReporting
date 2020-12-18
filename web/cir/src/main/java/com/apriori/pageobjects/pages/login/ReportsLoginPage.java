@@ -33,7 +33,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
     private WebElement forgotPassword;
 
     @FindBy(css = "button[id='submitButton']")
-    private WebElement submitButton;
+    private WebElement loginButton;
 
     @FindBy(css = "span[class='animated fadeInUp']")
     private WebElement loginMsg;
@@ -116,7 +116,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * Single action to submit login credentials
      */
     private void submitLogin() {
-        pageUtils.waitForElementAndClick(submitButton);
+        pageUtils.waitForElementAndClick(loginButton);
     }
 
     /**
