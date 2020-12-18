@@ -17,6 +17,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,6 +72,9 @@ public class EvaluatePage extends EvaluateHeader {
 
     @FindBy(css = "select[data-ap-field='processGroupSelection'] option")
     private List<WebElement> processGroupList;
+
+    @FindBy(xpath = "label[data-ap-field='materialName']")
+    private WebElement materialComposition;
 
     @FindBy(css = "select[data-ap-field='primaryVpeName']")
     private WebElement vpeDropdown;
@@ -641,6 +645,15 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public boolean getSelectedProcessGroup(String text) {
         return pageUtils.checkElementFirstOption(processGroupDropdown, text);
+    }
+
+    /**
+     * Gets currently selected process group name
+     * @return String
+     */
+    public String getSelectedProcessGroupName() {
+        Select processGroupDropdownSelect = new Select(processGroupDropdown);
+        return processGroupDropdownSelect.getFirstSelectedOption().getText();
     }
 
     /**

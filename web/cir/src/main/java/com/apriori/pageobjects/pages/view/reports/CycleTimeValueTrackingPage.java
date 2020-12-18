@@ -10,6 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     private final Logger logger = LoggerFactory.getLogger(CycleTimeValueTrackingPage.class);
@@ -35,7 +38,11 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "//table[@class='jrPage']/tbody/tr[3]/td[2]/span")
     private WebElement reportTitle;
 
+    @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[13]/td[3]/span/span")
+    private WebElement firstRowPartNumber;
+
     private String genericRollupListLocator = "//div[contains(@class, 'dropdownContainer')][1]//ul/li[%s]";
+    private Map<String, String> valueIndexes = new HashMap<String, String>();
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -46,6 +53,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        intialiseValueIndexesMap();
     }
 
     /**
@@ -87,9 +95,9 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
      * Selects project rollup
      * @return instance of current page object
      */
-    public CycleTimeValueTrackingPage selectProjectRollup(String index) {
+    public CycleTimeValueTrackingPage selectProjectRollup() {
         pageUtils.waitForElementAndClick(projectRollupDropdown);
-        By locator = By.xpath(String.format(genericRollupListLocator, index));
+        By locator = By.xpath(String.format(genericRollupListLocator, "2"));
         pageUtils.waitForElementAndClick(locator);
         By locator2 = By.xpath("//a[@title='PROJECT 1']");
         pageUtils.waitForElementToAppear(locator2);
@@ -122,5 +130,29 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
         By locator = By.xpath(String.format("//span[contains(text(), '%s')]", name));
         pageUtils.waitForElementAndClick(locator);
         return PageFactory.initElements(driver, className);
+    }
+
+    public String getPartNumber() {
+        pageUtils.waitForElementToAppear(firstRowPartNumber);
+        return firstRowPartNumber.getText();
+    }
+
+    public String getReportsValue(String valueToGet) {
+        By locator = By.xpath(
+                String.format(
+                        "//table[contains(@class, 'jrPage')]/tbody/tr[13]/td[%s]/span",
+                        valueIndexes.get(valueToGet))
+        );
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("textContent");
+    }
+
+    private void intialiseValueIndexesMap() {
+        valueIndexes.put("Scenario Name", "7");
+        valueIndexes.put("Finish Mass", "13");
+        valueIndexes.put("Process Group", "17");
+        valueIndexes.put("Material Composition", "20");
+        valueIndexes.put("Annual Volume", "25");
+        valueIndexes.put("Final Cycle Time", "29");
     }
 }
