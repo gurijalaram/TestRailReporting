@@ -100,7 +100,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Reports Page Object Model
      */
     public AdminHomePage navigateToReports() {
-        return navigateToPage(reportButton, AdminHomePage.class);
+        return navigateToPage(reportButton);
     }
 
     /**
@@ -143,21 +143,21 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     /**
      * General navigation method
      *
-     * @param parentPage
-     * @param className
-     * @param <T>
-     * @return Instance of specified page object class
+     * @param parentPage WebElement
+     * @return Instance of AdminHomePage
      */
-    private <T> T navigateToPage(WebElement parentPage, Class<T> className) {
+    private AdminHomePage navigateToPage(WebElement parentPage) {
         pageUtils.waitForElementAndClick(parentPage);
-        return PageFactory.initElements(driver, className);
+        return new AdminHomePage(driver);
     }
 
     /**
      * Another general navigation method
-     *
-     * @param parentPage
-     * @param childPage
+     * @param parentPage - WebElement
+     * @param childPage - WebElement
+     * @param className - Class
+     * @param <T> - Generic
+     * @return Instance of class
      */
     private <T> T navigateToSubPage(WebElement parentPage, WebElement childPage, Class<T> className) {
         pageUtils.waitForElementAndClick(parentPage);
