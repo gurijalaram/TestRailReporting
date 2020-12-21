@@ -143,7 +143,7 @@ public class CommonConstants {
 
     public static String getBaseUrl() {
         if (baseUrl == null) {
-            baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY, PROPERTIES.getProperty("url"));
+            baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY, PROPERTIES.getProperty("url.default"));
         }
 
         return baseUrl;
