@@ -100,15 +100,6 @@ public class ReportsPageHeader extends PageHeader {
     }
 
     /**
-     * Returns header to check
-     *
-     * @return String
-     */
-    public String getHeaderToCheck() {
-        return Constants.LOGOUT_HEADER;
-    }
-
-    /**
      * Check if Create button is displayed
      *
      * @return Visibility of button

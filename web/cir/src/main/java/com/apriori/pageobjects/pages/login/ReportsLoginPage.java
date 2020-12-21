@@ -30,7 +30,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
     private WebElement forgotPassword;
 
     @FindBy(css = "button[type='submit'")
-    private WebElement submitButton;
+    private WebElement loginButton;
 
     @FindBy(css = "span[class='animated fadeInUp']")
     private WebElement loginMsg;
@@ -115,7 +115,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * Single action to submit login credentials
      */
     private void submitLogin() {
-        submitButton.click();
+        loginButton.click();
     }
 
     /**
@@ -159,14 +159,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return new page object
      */
     public ReportsPageHeader login() {
-        UserCredentials userCredentials;
-
-        if (CommonConstants.PROP_USER_NAME != null && CommonConstants.PROP_USER_PASSWORD != null) {
-            userCredentials = new UserCredentials(CommonConstants.PROP_USER_NAME, CommonConstants.PROP_USER_PASSWORD);
-        } else {
-            userCredentials = UserUtil.getUser();
-        }
-
+        UserCredentials userCredentials = UserUtil.getUser();
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new ReportsPageHeader(driver);
     }

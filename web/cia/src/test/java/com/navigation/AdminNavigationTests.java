@@ -3,13 +3,12 @@ package com.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.pages.login.AdminLoginPage;
-import com.apriori.pageobjects.pages.logout.Logout;
+import com.apriori.pageobjects.pages.logout.AdminLogoutPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
@@ -30,7 +29,7 @@ public class AdminNavigationTests extends TestBase {
     private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
     private AdminHomePage homePage;
-    private Logout logout;
+    private AdminLogoutPage logout;
 
     public AdminNavigationTests() {
         super();
@@ -117,9 +116,7 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToAdminLogout();
 
-        String expectedHeader = logout.getExpectedHeader();
-
-        assertThat(logout.getActualHeaderText(), startsWith(expectedHeader));
+        assertThat(logout.isLoginButtonDisplayedAndEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
