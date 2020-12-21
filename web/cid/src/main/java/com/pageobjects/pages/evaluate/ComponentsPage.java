@@ -2,9 +2,9 @@ package com.pageobjects.pages.evaluate;
 
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 
 import com.pageobjects.common.ScenarioTablePage;
+import com.utils.Constants;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -112,7 +112,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      */
     public WebElement findSubcomponent(String scenarioName, String subcomponentName) {
         By subcomponent = By.cssSelector("a[href*='#openFromSearch::sk,partState," + subcomponentName.toUpperCase() + "," + scenarioName + "']");
-        return pageUtils.scrollToElement(subcomponent, componentScroller, CommonConstants.ARROW_DOWN);
+        return pageUtils.scrollToElement(subcomponent, componentScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -124,7 +124,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      */
     public ComponentsPage expandAssembly(String scenarioName, String assemblyName) {
         By assembly = By.xpath("//a[contains(@href,'#openFromSearch::sk,assemblyState," + assemblyName.toUpperCase() + "," + scenarioName + "')]/ancestor::td//span[@class]");
-        pageUtils.scrollToElement(assembly, componentScroller, CommonConstants.ARROW_DOWN);
+        pageUtils.scrollToElement(assembly, componentScroller, Constants.ARROW_DOWN);
 
         if (driver.findElement(assembly).getAttribute("outerHTML").contains("right")) {
             driver.findElement(assembly).click();
@@ -140,7 +140,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      */
     public ComponentsPage highlightSubcomponent(String scenarioName, String subcomponentName) {
         By subcomponent = By.xpath("//a[contains(@href,'#openFromSearch::sk,partState," + subcomponentName.toUpperCase() + "," + scenarioName + "')]/ancestor::tr");
-        pageUtils.scrollToElement(subcomponent, componentScroller, CommonConstants.ARROW_DOWN);
+        pageUtils.scrollToElement(subcomponent, componentScroller, Constants.ARROW_DOWN);
         pageUtils.waitForElementAndClick(subcomponent);
         return this;
     }

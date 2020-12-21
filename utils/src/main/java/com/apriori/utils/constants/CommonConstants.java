@@ -31,10 +31,6 @@ public class CommonConstants {
     public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
     public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
 
-    public static final String ARROW_DOWN = "arrow_down";
-    public static final String PAGE_DOWN = "page_down";
-    public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
-
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
     //public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
