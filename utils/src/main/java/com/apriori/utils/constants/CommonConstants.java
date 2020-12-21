@@ -94,7 +94,7 @@ public class CommonConstants {
 //    public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();
 //    public static final String internalApiURL = getBaseUrl() + constantsInit.internalApiURL();
 //    public static final String cidURL = getBaseUrl() + constantsInit.cidURL();
-    public static final String cidAppURL = getBaseUrl();
+//    public static final String cidAppURL = getBaseUrl();
 //    public static final String headerText = constantsInit.logoutHeaderText();
 
     private static String csvFile;
@@ -141,13 +141,13 @@ public class CommonConstants {
         return buildMode;
     }
 
-    public static String getBaseUrl() {
-        if (baseUrl == null) {
-            baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY, PROPERTIES.getProperty("url.default"));
-        }
-
-        return baseUrl;
-    }
+//    public static String getBaseUrl() {
+//        if (baseUrl == null) {
+//            baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY, PROPERTIES.getProperty("url.default"));
+//        }
+//
+//        return baseUrl;
+//    }
 
     public static String getServiceHost() {
         if (serviceHost == null) {
