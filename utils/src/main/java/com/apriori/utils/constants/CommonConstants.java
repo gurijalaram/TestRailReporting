@@ -16,14 +16,9 @@ public class CommonConstants {
     public static final String DEFAULT_BUILD_MODE_KEY = "mode";
     public static final String DEFAULT_BUILD_MODE_VALUE = "QA";
 
-    public static final String DEFAULT_BASE_URL_KEY = "url";
-
     public static final String DEFAULT_USER_NAME = "admin@apriori.com";
     public static final String DEFAULT_PASSWORD = "admin";
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
-
-    public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-qa";
 
     public static final String DEFAULT_USER_NAME_KEY = "username";
     public static final String DEFAULT_PASSWORD_KEY = "password";
@@ -32,8 +27,6 @@ public class CommonConstants {
     public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
-
-    //public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
     private static String serviceHost;
     private static String servicePort;
@@ -75,23 +68,6 @@ public class CommonConstants {
     public static final String defaultCdsIdentityRoleKey = "cdsIdentityRole";
     public static final String defaultCdsIdentityCustomerKey = "cdsIdentityCustomer";
     public static final String defaultCdsIdentityApplicationKey = "cdsIdentityApplication";
-
-//    private static final ConstantsInit constantsInit;
-
-    static {
-        //System.setProperty(DEFAULT_ENVIRONMENT_KEY, environment);
-
-//        constantsInit = ConfigFactory.create(ConstantsInit.class);
-    }
-
-    private static String baseUrl;
-
-
-//    public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();
-//    public static final String internalApiURL = getBaseUrl() + constantsInit.internalApiURL();
-//    public static final String cidURL = getBaseUrl() + constantsInit.cidURL();
-//    public static final String cidAppURL = getBaseUrl();
-//    public static final String headerText = constantsInit.logoutHeaderText();
 
     private static String csvFile;
     private static final Properties PROPERTIES = new Properties();
@@ -136,14 +112,6 @@ public class CommonConstants {
 
         return buildMode;
     }
-
-//    public static String getBaseUrl() {
-//        if (baseUrl == null) {
-//            baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY, PROPERTIES.getProperty("url.default"));
-//        }
-//
-//        return baseUrl;
-//    }
 
     public static String getServiceHost() {
         if (serviceHost == null) {
