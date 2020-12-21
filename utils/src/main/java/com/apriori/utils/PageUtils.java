@@ -3,8 +3,6 @@ package com.apriori.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
-import com.apriori.utils.constants.CommonConstants;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -780,15 +778,6 @@ public class PageUtils {
         By reportLinkLocator = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
         waitForElementToAppear(reportLinkLocator);
         return driver.findElement(reportLinkLocator);
-    }
-
-    /**
-     * Gets header to assert against
-     *
-     * @return String
-     */
-    public String getHeaderToCheck() {
-        return CommonConstants.headerText;
     }
 
     /**

@@ -10,6 +10,7 @@ import java.util.Properties;
 
 public class Constants {
 
+    public static final String LOGOUT_HEADER = "CI DESIGN AUTOMATION";
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
     public static final String SAVED_CONFIG_NAME = "Saved Config";
     public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
