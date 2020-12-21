@@ -10,6 +10,7 @@ import java.util.Properties;
 
 public class Constants {
 
+    public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String LOGOUT_HEADER = "CI DESIGN AUTOMATION";
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
     public static final String SAVED_CONFIG_NAME = "Saved Config";
@@ -51,9 +52,10 @@ public class Constants {
     public static String environment;
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
+    private static String baseUrl;
 
     static {
-        environment = environment == null ? System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE) : System.setProperty(DEFAULT_ENVIRONMENT_KEY, environment);
+        environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
         INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
 
@@ -69,6 +71,9 @@ public class Constants {
      * @return string
      */
     public static String getDefaultUrl() {
-        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.cir"));
+        baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY) == null ? PROPERTIES.getProperty("url.default") : System.getProperty(DEFAULT_BASE_URL_KEY);
+        System.setProperty("baseUrl", baseUrl);
+
+        return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
     }
 }
