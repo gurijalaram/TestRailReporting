@@ -9,14 +9,16 @@ import java.util.Properties;
 
 public class Constants {
 
+    public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cic-qa";
-    public static String environment;
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
+    public static String environment;
+    private static String baseUrl;
 
     static {
-        environment = environment == null ? System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE) : System.setProperty(DEFAULT_ENVIRONMENT_KEY, environment);
+        environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
         INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
 
@@ -29,9 +31,13 @@ public class Constants {
 
     /**
      * Get default url
+     *
      * @return string
      */
     public static String getDefaultUrl() {
-        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional"));
+        baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY) == null ? PROPERTIES.getProperty("url.default") : System.getProperty(DEFAULT_BASE_URL_KEY);
+        System.setProperty("baseUrl", baseUrl);
+
+        return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
     }
 }

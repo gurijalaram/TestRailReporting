@@ -49,9 +49,9 @@ public class Constants {
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
-    public static String environment;
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
+    public static String environment;
     private static String baseUrl;
 
     static {
@@ -68,6 +68,7 @@ public class Constants {
 
     /**
      * Get default url
+     *
      * @return string
      */
     public static String getDefaultUrl() {
