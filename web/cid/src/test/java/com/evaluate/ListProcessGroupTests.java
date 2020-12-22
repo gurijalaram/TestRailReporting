@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasItems;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.AssemblyProcessGroupEnum;
+import com.apriori.utils.enums.PartProcessGroupEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -38,7 +39,7 @@ public class ListProcessGroupTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class);
 
-        assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
+        assertThat(evaluatePage.getListOfProcessGroups(), hasItems(PartProcessGroupEnum.getNames()));
     }
 
     @Test
