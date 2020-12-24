@@ -1,8 +1,8 @@
 package com.pageobjects.pages.evaluate.analysis;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 
+import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -110,7 +110,7 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
      */
     public String getProperties(String properties) {
         By propertiesInfo = By.xpath("//tr[.='" + properties + "']/ancestor::tr");
-        pageUtils.scrollToElement(propertiesInfo, verticalScroller, CommonConstants.ARROW_DOWN);
+        pageUtils.scrollToElement(propertiesInfo, verticalScroller, Constants.ARROW_DOWN);
         return driver.findElement(propertiesInfo).getText();
     }
 }

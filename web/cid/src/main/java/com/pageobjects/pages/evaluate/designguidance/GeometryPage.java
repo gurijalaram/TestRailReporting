@@ -2,9 +2,9 @@ package com.pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 
 import com.pageobjects.toolbars.EvaluatePanelToolbar;
+import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -82,7 +82,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
     private WebElement findGCDType(String gcdParent) {
         By gcdParentElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdParent + "']//span[@class='fa fa-caret-right']");
         pageUtils.waitForElementToAppear(gcdParentElement);
-        return pageUtils.scrollToElement(gcdParentElement, gcdTableScroller, CommonConstants.ARROW_DOWN);
+        return pageUtils.scrollToElement(gcdParentElement, gcdTableScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -94,7 +94,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
     private WebElement findGCDChild(String gcdType) {
         By gcdChildElement = By.xpath("//div[@data-ap-comp='gcdTreeTable']//div[.='" + gcdType + "']");
         pageUtils.waitForElementToAppear(gcdChildElement);
-        return pageUtils.scrollToElement(gcdChildElement, gcdTableScroller, CommonConstants.ARROW_DOWN);
+        return pageUtils.scrollToElement(gcdChildElement, gcdTableScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -106,7 +106,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
     private GeometryPage selectGCDProperty(String gcdProperty) {
         By gcd = By.xpath("//div[@data-ap-comp='artifactProperties']//td[contains(text(),'" + gcdProperty + "')]");
         pageUtils.waitForElementToAppear(gcd);
-        pageUtils.scrollToElement(gcd, propertiesScroller, CommonConstants.ARROW_DOWN).click();
+        pageUtils.scrollToElement(gcd, propertiesScroller, Constants.ARROW_DOWN).click();
         return this;
     }
 
