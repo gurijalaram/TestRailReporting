@@ -85,7 +85,7 @@ public class FileUploadResources {
     public void uploadCostPublishApi(HashMap<String, String> token, Object fileObject, String fileName, String scenarioName, String processGroup) {
         checkValidProcessGroup(processGroup);
 
-        initializeFileUpload(token, fileName);
+        initializeFileUpload(token, fileName, processGroup);
         createFileUploadWorkOrder(token, fileName, scenarioName);
         submitFileUploadWorkOrder(token);
         checkFileWorkOrderSuccessful(token);
@@ -104,7 +104,7 @@ public class FileUploadResources {
      * @param token    - the user token
      * @param fileName - the filename
      */
-    private void initializeFileUpload(HashMap<String, String> token, String fileName) {
+    private void initializeFileUpload(HashMap<String, String> token, String fileName, String processGroup) {
         String url = baseUrl + "apriori/cost/session/ws/files";
 
         headers.put(CONTENT_TYPE, "multipart/form-data");
@@ -112,7 +112,7 @@ public class FileUploadResources {
         RequestEntity requestEntity = RequestEntity.init(url, FileResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(fileName)))
+            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup),fileName)))
             .setFormParams(new FormParams().use("filename", fileName));
 
         identity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");

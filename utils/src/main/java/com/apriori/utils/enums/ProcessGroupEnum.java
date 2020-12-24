@@ -1,5 +1,6 @@
 package com.apriori.utils.enums;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public enum ProcessGroupEnum {
@@ -37,5 +38,12 @@ public enum ProcessGroupEnum {
 
     public static String[] getNames() {
         return Stream.of(ProcessGroupEnum.values()).map(ProcessGroupEnum::getProcessGroup).toArray(String[]::new);
+    }
+
+    public static ProcessGroupEnum fromString(String pg) throws IllegalArgumentException {
+        return Arrays.stream(ProcessGroupEnum.values())
+            .filter(v -> v.processGroup.equals(pg))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(String.format("'%s' doesn't exist in enum ",  pg)));
     }
 }
