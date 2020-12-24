@@ -42,7 +42,7 @@ public enum ProcessGroupEnum {
 
     public static ProcessGroupEnum fromString(String pg) throws IllegalArgumentException {
         return Arrays.stream(ProcessGroupEnum.values())
-            .filter(v -> v.processGroup.equals(pg))
+            .filter(value -> value.processGroup.equals(pg))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("'%s' doesn't exist in enum ",  pg)));
     }
