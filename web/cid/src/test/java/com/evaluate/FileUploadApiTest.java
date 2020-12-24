@@ -9,6 +9,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.users.UserUtil;
 
+import com.utils.Constants;
 import io.qameta.allure.Description;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
@@ -31,6 +32,7 @@ public class FileUploadApiTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
+        Constants.getDefaultUrl();
         propertyStore = (PropertyStore) JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile("property-store.json").getPath(), PropertyStore.class);
     }
