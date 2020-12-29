@@ -331,7 +331,7 @@ public class CommonConstants {
 
     public static String getNtsTargetCloudContext() {
         if (ntsTargetCloudContext == null) {
-            ntsTargetCloudContext = System.getProperty("ntsTargetCloudContext", PROPERTIES.getProperty("nts.targetCloudContext"));
+            ntsTargetCloudContext = System.getProperty("ntsTargetCloudContext", PROPERTIES.getProperty("nts.auth.targetCloudContext"));
         }
 
         return ntsTargetCloudContext;
