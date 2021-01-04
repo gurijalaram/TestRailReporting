@@ -1,4 +1,4 @@
-package com.ootbreports.dtcmetrics.plastic;
+package com.ootbreports.dtcmetrics.plasticdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -26,6 +26,8 @@ import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -62,6 +64,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
@@ -138,6 +141,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
@@ -234,7 +238,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -246,7 +250,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
@@ -258,7 +262,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -270,10 +274,32 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1709")
+    @Description("Validate chart tool-tips")
+    public void testChartToolTips() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcChartTooltips(
+            ReportNamesEnum.PLASTIC_DTC.getReportName(),
+            ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
 
@@ -289,16 +315,6 @@ public class PlasticDtcReportTests extends TestBase {
         );
     }
 
-    @Test
-    @TestRail(testCaseId = "1709")
-    @Description("Validate chart tool-tips")
-    public void testChartToolTips() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcChartTooltips(
-            ReportNamesEnum.PLASTIC_DTC.getReportName(),
-            ExportSetEnum.ROLL_UP_A.getExportSetName()
-        );
-    }
 
     @Test
     @TestRail(testCaseId = "1701")
@@ -342,6 +358,7 @@ public class PlasticDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
+            "",
             ListNameEnum.PARTS.getListName()
         );
     }

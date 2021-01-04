@@ -3,8 +3,6 @@ package com.apriori.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
-import com.apriori.utils.constants.CommonConstants;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -783,20 +781,11 @@ public class PageUtils {
     }
 
     /**
-     * Gets header to assert against
-     *
-     * @return String
-     */
-    public String getHeaderToCheck() {
-        return CommonConstants.headerText;
-    }
-
-    /**
      * Gets URL to assert against
      *
      * @return String
      */
     public String getUrlToCheck() {
-        return CommonConstants.getBaseUrl();
+        return System.getProperty("baseURL");
     }
 }

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 public class ReportsPageHeader extends PageHeader {
 
@@ -96,15 +97,6 @@ public class ReportsPageHeader extends PageHeader {
         pageUtils.waitForElementToAppear(optionsButton);
         optionsButton.click();
         return new GenericReportPage(driver);
-    }
-
-    /**
-     * Returns header to check
-     *
-     * @return String
-     */
-    public String getHeaderToCheck() {
-        return pageUtils.getHeaderToCheck();
     }
 
     /**

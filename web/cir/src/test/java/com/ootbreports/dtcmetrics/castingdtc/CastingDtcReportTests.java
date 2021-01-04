@@ -1,4 +1,4 @@
-package com.ootbreports.dtcmetrics.casting;
+package com.ootbreports.dtcmetrics.castingdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -9,7 +9,6 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -28,6 +27,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -62,6 +62,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -204,6 +205,7 @@ public class CastingDtcReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
             ReportNamesEnum.CASTING_DTC.getReportName(),
+            "",
             ListNameEnum.PARTS.getListName()
         );
     }
@@ -213,7 +215,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -225,7 +227,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
@@ -233,11 +235,12 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "1696")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -249,7 +252,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
+        inputControlsTests.testMassMetricDtcReports(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
@@ -296,6 +299,17 @@ public class CastingDtcReportTests extends TestBase {
         inputControlsTests.testDtcChartTooltips(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1372")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
         );
     }
 

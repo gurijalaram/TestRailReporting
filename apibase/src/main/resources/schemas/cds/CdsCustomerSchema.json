@@ -14,10 +14,11 @@
         "description",
         "emailRegexPatterns",
         "active",
-        "customerType",
+        "maxCadFileRetentionDays",
         "useExternalIdentityProvider",
         "mfaRequired",
-        "oneTimePasswordApplications"
+        "oneTimePasswordApplications",
+        "customerType"
       ],
       "properties": {
         "mfarequired": {
@@ -43,13 +44,11 @@
         },
         "updatedAt": {
           "type": "string"
-
         },
         "updatedBy": {
           "type": "string",
           "pattern": "^(.*)$"
         },
-
         "name": {
           "type": "string",
           "pattern": "^(.*)$"
@@ -72,6 +71,9 @@
         },
         "active": {
           "type": "boolean"
+        },
+        "maxCadFileRetentionDays": {
+          "type": "integer"
         },
         "customerType": {
           "type": "string",

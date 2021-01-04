@@ -1,9 +1,11 @@
 package com.pageobjects.pages.compare;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 
 import com.pageobjects.common.ScenarioTablePage;
+import com.pageobjects.pages.evaluate.EvaluatePage;
+import com.pageobjects.pages.explore.ScenarioNotesPage;
+import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,6 +40,12 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     @FindBy(css = "div[data-ap-comp='scenarioTiles'] div.v-grid-scroller-horizontal")
     private WebElement horizontalScroller;
+
+    @FindBy(css = "a.gwt-Anchor.comparison-table-header-scenario-state")
+    private WebElement infoNotes;
+
+    @FindBy(css = ".v-grid-scroller.v-grid-scroller-vertical")
+    private WebElement componentScroller;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -77,7 +85,9 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return the text as String
      */
     public String getDescriptionText() {
-        return descriptionText.getText();
+        By descriptionText = By.cssSelector("textarea.gwt-TextArea.full-width");
+        pageUtils.waitForElementToAppear(descriptionText);
+        return driver.findElement(descriptionText).getAttribute("value");
     }
 
     /**
@@ -96,8 +106,17 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return true/false
      */
     public boolean isComparisonLockStatus(String lockStatus) {
-        By lockedIcon = By.xpath(String.format("//div[@class='locked-status-icon fa fa-%s']",lockStatus));
+        By lockedIcon = By.xpath(String.format("//div[@class='locked-status-icon fa fa-%s']", lockStatus));
         return pageUtils.waitForElementToAppear(lockedIcon).isDisplayed();
+    }
+
+    /**
+     * @param workspace - the workspace
+     * @return true/false
+     */
+    public boolean isComparisonWorkspace(String workspace) {
+        By workspaceIcon = By.xpath(String.format("//div[contains(@class,'%s-workspace')]", workspace));
+        return pageUtils.waitForElementToAppear(workspaceIcon).isDisplayed();
     }
 
     /**
@@ -110,7 +129,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
     public ComparePage removeScenarioFromCompareView(String partName, String scenarioName) {
         By removeComparisonButton = By.xpath(String.format("//button[contains(@id,'rm_comp_btn_part_" + "%s" + "_" + "%s')]",
             partName.replace(" ", "_"), scenarioName.replace("-", "_")).toLowerCase());
-        pageUtils.scrollToElement(removeComparisonButton, horizontalScroller, CommonConstants.HORIZONTAL_SCROLL);
+        pageUtils.scrollToElement(removeComparisonButton, horizontalScroller, Constants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(removeComparisonButton);
         return this;
     }
@@ -122,7 +141,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return current page object
      */
     public ComparePage setBasis(String partName, String scenarioName) {
-        pageUtils.scrollToElement(findBasisButton(partName, scenarioName), horizontalScroller, CommonConstants.HORIZONTAL_SCROLL);
+        pageUtils.scrollToElement(findBasisButton(partName, scenarioName), horizontalScroller, Constants.HORIZONTAL_SCROLL);
         pageUtils.waitForElementAndClick(findBasisButton(partName, scenarioName));
         return this;
     }
@@ -139,19 +158,20 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     /**
      * Checks if the scenario is a basis
-     * @param partName - the part name
+     *
+     * @param partName     - the part name
      * @param scenarioName - the scenario name
      * @return true/false
      */
     public boolean isBasisButtonPresent(String partName, String scenarioName) {
-        return  pageUtils.isElementDisplayed(driver.findElement(findBasisButton(partName, scenarioName)));
+        return pageUtils.isElementDisplayed(driver.findElement(findBasisButton(partName, scenarioName)));
     }
 
     /**
      * Gets list of scenarios in comparison view
      *
      * @param scenarioName - the scenario name
-     * @param partName     the part name
+     * @param partName     - the part name
      * @return size of element as int
      */
     public boolean scenarioIsNotInComparisonView(String scenarioName, String partName) {
@@ -161,5 +181,86 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     private By findBasisButton(String partName, String scenarioName) {
         return By.xpath(String.format("//div[@title='%s']/ancestor::th//a[contains(text(),'%s')]/ancestor::th//button[.='Basis']", partName.toUpperCase(), scenarioName));
+    }
+
+    /**
+     * Opens scenarios from comparison view
+     *
+     * @param scenarioName - the scenario name
+     * @param partName     - the part name
+     * @return new page object
+     */
+    public EvaluatePage openScenarioFromComparison(String partName, String scenarioName) {
+        By scenarioNameLink = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
+        driver.findElement(scenarioNameLink).click();
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Clicks on Info&Notes link
+     *
+     * @return new page object
+     */
+    public ScenarioNotesPage selectInfoNotes() {
+        pageUtils.waitForElementAndClick(infoNotes);
+        return new ScenarioNotesPage(driver);
+    }
+
+    /**
+     * Expands or collapses section of the comparison
+     *
+     * @param sectionName - name of the section
+     * @return current page object
+     */
+    public ComparePage toggleSection(String sectionName) {
+        By sectionDropdown = By.xpath(String.format("//div[.='%s']/ancestor::tr//label[@class='glyphicon']", sectionName));
+        pageUtils.scrollToElement(sectionDropdown, componentScroller, Constants.ARROW_DOWN);
+        pageUtils.waitForElementAndClick(sectionDropdown);
+        return this;
+    }
+
+    /**
+     * Checks if info of appropriate section displayed
+     *
+     * @param columnName - name of column from section
+     * @return true/false
+     */
+    public boolean isComparisonInfoDisplayed(String columnName) {
+        By arrowInfoInput = By.xpath(String.format("//div[.='%s']", columnName));
+        pageUtils.scrollToElement(arrowInfoInput, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.isElementDisplayed(arrowInfoInput);
+    }
+
+    /**
+     * Checks if sections are collapsed
+     *
+     * @param sectionName - name of the section
+     * @return attribute
+     */
+    public String isComparisonInfoNotDisplayed(String sectionName) {
+        By sectionDropdown = By.xpath(String.format("//div[.='%s']/ancestor::tr//label[@class='glyphicon']/span", sectionName));
+        return pageUtils.waitForElementToAppear(sectionDropdown).getAttribute("outerHTML");
+    }
+
+    /**
+     * Checks the dfm risk score
+     *
+     * @return dfm risk score
+     */
+    public String getDfmRisk() {
+        By dfmRisk = By.cssSelector("td.v-grid-cell .dfm-label");
+        pageUtils.scrollToElement(dfmRisk, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(dfmRisk).getText();
+    }
+
+    /**
+     * Gets warning count
+     *
+     * @return string
+     */
+    public String getCount(String label) {
+        By count = By.xpath(String.format("//div[contains(text(),'%s')]/ancestor::tr//div[contains(@class,'comparison-table-ellipsis-value')]", label));
+        pageUtils.scrollToElement(count, componentScroller, Constants.ARROW_DOWN);
+        return pageUtils.waitForElementToAppear(count).getAttribute("title");
     }
 }

@@ -361,7 +361,7 @@ public class ConnectionManager<T> {
         InputStream inputStream;
         if (status != HttpStatus.SC_CREATED) {
             inputStream = conn.getErrorStream();
-            Assert.fail("Error code was not exoected (" + status + ")");
+            Assert.fail("Error code was not expected (" + status + ")");
         } else {
             inputStream = conn.getInputStream();
         }

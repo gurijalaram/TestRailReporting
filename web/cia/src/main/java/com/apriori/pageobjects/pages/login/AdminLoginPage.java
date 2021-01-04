@@ -31,7 +31,7 @@ public class AdminLoginPage extends AdminHeader {
     private WebElement forgotPassword;
 
     @FindBy(css = "button[type='submit'")
-    private WebElement submitButton;
+    private WebElement loginButton;
 
     @FindBy(css = "span[class='animated fadeInUp']")
     private WebElement loginMsg;
@@ -116,7 +116,7 @@ public class AdminLoginPage extends AdminHeader {
      * Single action to submit login credentials
      */
     private void submitLogin() {
-        submitButton.click();
+        loginButton.click();
     }
 
     /**
@@ -160,14 +160,7 @@ public class AdminLoginPage extends AdminHeader {
      * @return new page object
      */
     public AdminHomePage login() {
-        UserCredentials userCredentials;
-
-        if (CommonConstants.PROP_USER_NAME != null && CommonConstants.PROP_USER_PASSWORD != null) {
-            userCredentials = new UserCredentials(CommonConstants.PROP_USER_NAME, CommonConstants.PROP_USER_PASSWORD);
-        } else {
-            userCredentials = UserUtil.getUser();
-        }
-
+        UserCredentials userCredentials = UserUtil.getUser();
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new AdminHomePage(driver);
     }

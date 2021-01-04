@@ -134,7 +134,7 @@ public class ReferencePanelTests extends TestBase {
             .costScenario()
             .createNewScenario()
             .enterScenarioName(scenarioName2)
-            .save()
+            .save(EvaluatePage.class)
             .selectExploreButton()
             .openJobQueue()
             .checkJobQueueActionStatus(componentName, scenarioName2, "Save As", "okay")
@@ -146,7 +146,7 @@ public class ReferencePanelTests extends TestBase {
             .costScenario(2)
             .createNewScenario()
             .enterScenarioName(scenarioName3)
-            .save()
+            .save(EvaluatePage.class)
             .selectExploreButton()
             .openJobQueue()
             .checkJobQueueActionStatus(componentName, scenarioName3, "Save As", "okay")
@@ -160,7 +160,7 @@ public class ReferencePanelTests extends TestBase {
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
 
-        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()));
-        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
+        assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.CASTING_DIE.getProcessGroup()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_MEXICO.getVpe()));
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 public class Customer extends CustomerBase {
     private Customer response;
     private Boolean useExternalIdentityProvider;
+    private Integer maxCadFileRetentionDays;
     private Boolean mfaRequired;
     private List<String> oneTimePasswordApplications;
 
@@ -51,6 +52,15 @@ public class Customer extends CustomerBase {
 
     public Customer setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
         this.useExternalIdentityProvider = useExternalIdentityProvider;
+        return this;
+    }
+
+    public Integer getMaxCadFileRetentionDays() {
+        return maxCadFileRetentionDays;
+    }
+
+    public Customer setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
+        this.maxCadFileRetentionDays = maxCadFileRetentionDays;
         return this;
     }
 

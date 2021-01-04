@@ -9,6 +9,7 @@ import java.util.Properties;
 
 public class Constants {
 
+    public static final String LOGOUT_HEADER = "CI DESIGN AUTOMATION";
     public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
     public static final String CIA_USER_GUIDE_URL_SUBSTRING = "CI_ADMIN_USER_GUIDE";
     public static final String SCENARIO_EXPORT_CHAPTER_URL_PART_ONE = "https://www.apriori.com/Collateral/Documents/English-US/online_help/apriori-platform/";
@@ -19,14 +20,16 @@ public class Constants {
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cia-qa";
-    public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
+    public static final String DEFAULT_BASE_URL_KEY = "url";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
+    public static String environment;
+    private static String baseUrl;
 
     static {
-        System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
+        environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile(DEFAULT_ENVIRONMENT_VALUE.concat(".properties"));
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
@@ -37,9 +40,22 @@ public class Constants {
 
     /**
      * Get default url
+     *
+     * @return string
+     */
+    public static String getBaseUrl() {
+        return PROPERTIES.getProperty("url.default");
+    }
+
+    /**
+     * Get default url
+     *
      * @return string
      */
     public static String getDefaultUrl() {
-        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.admin"));
+        baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY) == null ? PROPERTIES.getProperty("url.default") : System.getProperty(DEFAULT_BASE_URL_KEY);
+        System.setProperty("baseUrl", baseUrl);
+
+        return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
     }
 }

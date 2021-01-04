@@ -1,10 +1,10 @@
 package com.pageobjects.pages.evaluate.process.secondaryprocess;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.process.ProcessSetupOptionsPage;
+import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -119,7 +119,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
 
         for (String process : processTypes) {
             By secondaryProcess = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + process.trim() + "']/ancestor::tr//span[@class='fa fa-caret-right']");
-            pageUtils.scrollToElement(secondaryProcess, processScroller, CommonConstants.ARROW_DOWN).click();
+            pageUtils.scrollToElement(secondaryProcess, processScroller, Constants.ARROW_DOWN).click();
         }
         return this;
     }
@@ -153,7 +153,7 @@ public class SecondaryProcessPage extends LoadableComponent<SecondaryProcessPage
      */
     private WebElement findProcessName(String processName) {
         By processBox = By.xpath("//div[@data-ap-comp='secondaryTreatmentsTable']//div[.='" + processName + "']/ancestor::tr//input[@class='gwt-SimpleCheckBox']");
-        return pageUtils.scrollToElement(processBox, processScroller, CommonConstants.ARROW_DOWN);
+        return pageUtils.scrollToElement(processBox, processScroller, Constants.ARROW_DOWN);
     }
 
     /**

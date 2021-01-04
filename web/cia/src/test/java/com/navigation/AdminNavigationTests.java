@@ -3,13 +3,12 @@ package com.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.pages.login.AdminLoginPage;
-import com.apriori.pageobjects.pages.logout.Logout;
+import com.apriori.pageobjects.pages.logout.AdminLogoutPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
@@ -19,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdminSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import utils.Constants;
 
@@ -29,14 +29,14 @@ public class AdminNavigationTests extends TestBase {
     private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
     private AdminHomePage homePage;
-    private Logout logout;
+    private AdminLogoutPage logout;
 
     public AdminNavigationTests() {
         super();
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, AdminSmokeTest.class})
     @TestRail(testCaseId = "2980")
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -49,6 +49,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = "2981")
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
@@ -61,6 +62,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = "2982")
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
@@ -76,6 +78,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = "2983")
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
@@ -89,6 +92,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = "2984")
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
@@ -104,6 +108,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = "2985")
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
@@ -111,15 +116,13 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToAdminLogout();
 
-        String expectedHeader = logout.getExpectedHeader();
-
-        assertThat(logout.getActualHeaderText(), startsWith(expectedHeader));
+        assertThat(logout.isLoginButtonDisplayedAndEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({CustomerSmokeTests.class, AdminSmokeTest.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {

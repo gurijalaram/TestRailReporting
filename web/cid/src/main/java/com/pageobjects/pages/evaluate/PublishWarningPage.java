@@ -32,6 +32,12 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     @FindBy(css = "[data-ap-comp='saveAsNew']")
     private WebElement newScenarioButton;
 
+    @FindBy(css = "div.panel-body div.gwt-Label")
+    private WebElement privateWarning;
+
+    @FindBy(xpath = "//span[@class='warning-icon']/..")
+    private WebElement publicWarning;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -105,5 +111,23 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     public PublishWarningPage selectPublishAsNew() {
         pageUtils.waitForElementAndClick(newScenarioButton);
         return this;
+    }
+
+    /**
+     * Gets a message about comparison is locked
+     *
+     * @return the text as String
+     */
+    public String getLockedComparisonText() {
+        return pageUtils.waitForElementToAppear(publicWarning).getText();
+    }
+
+    /**
+     * Gets a message about scenario is private
+     *
+     * @return the text as String
+     */
+    public String getPrivateScenarioText() {
+        return pageUtils.waitForElementToAppear(privateWarning).getText();
     }
 }

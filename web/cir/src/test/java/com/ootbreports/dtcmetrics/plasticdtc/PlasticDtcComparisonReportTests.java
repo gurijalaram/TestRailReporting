@@ -1,8 +1,8 @@
-package com.ootbreports.dtcmetrics.plastic;
+package com.ootbreports.dtcmetrics.plasticdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
@@ -21,26 +21,29 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
-public class PlasticDtcDetailsReportTests extends TestBase {
+public class PlasticDtcComparisonReportTests extends TestBase {
 
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
 
-    public PlasticDtcDetailsReportTests() {
+    public PlasticDtcComparisonReportTests() {
         super();
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
             Constants.DTC_METRICS_FOLDER,
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
         );
     }
 
@@ -50,7 +53,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     public void testPlasticDtcReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
         );
     }
 
@@ -60,17 +63,17 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     public void testPlasticDtcReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName()
         );
     }
 
     @Test
     @TestRail(testCaseId = "1693")
-    @Description("Verify apply button on Plastic DTC Details input control panel functions correctly")
+    @Description("Verify apply button on Plastic DTC Comparison input control panel functions correctly")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             RollupEnum.ROLL_UP_A.getRollupName()
         );
@@ -78,19 +81,19 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "1693")
-    @Description("Verify cancel button on Plastic DTC Details input control panel works")
+    @Description("Verify cancel button on Plastic DTC Comparison input control panel works")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCancelButton(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName());
+        inputControlsTests.testCancelButton(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName());
     }
 
     @Test
     @TestRail(testCaseId = "1693")
-    @Description("Verify reset button on Plastic DTC Details input control panel works")
+    @Description("Verify reset button on Plastic DTC Comparison input control panel works")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
@@ -98,11 +101,11 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Test
     @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "1693")
-    @Description("Verify save button on Plastic DTC Details input control panel functions correctly")
+    @Description("Verify save button on Plastic DTC Comparison input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSaveAndRemoveButtons(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
@@ -112,8 +115,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -124,8 +127,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlOtherMachiningDtcReports(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -136,8 +139,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+        inputControlsTests.testMassMetricDtcReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -148,10 +151,22 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetric(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+        inputControlsTests.testMassMetricDtcReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @Category(ReportsSmokeTest.class)
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreNoSelection() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreInputControlNoSelection(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
 
@@ -160,8 +175,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScoreDetailsReports(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+        inputControlsTests.testDtcScoreComparisonReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             DtcScoreEnum.LOW.getDtcScoreName()
         );
@@ -172,8 +187,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScoreDetailsReports(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+        inputControlsTests.testDtcScoreComparisonReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
@@ -184,10 +199,22 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScoreDetailsReports(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+        inputControlsTests.testDtcScoreComparisonReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "1701")
+    @Description("Verify DTC Score input control functions correctly")
+    public void testDtcScoreAll() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreComparisonReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+            ExportSetEnum.ROLL_UP_A.getExportSetName(),
+            DtcScoreEnum.ALL.getDtcScoreName()
         );
     }
 
@@ -196,8 +223,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinimumAnnualSpendDetailsReports(
-            ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+        inputControlsTests.testMinimumAnnualSpendComparisonReports(
+            ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName()
         );
     }
@@ -209,15 +236,26 @@ public class PlasticDtcDetailsReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), GenericReportPage.class)
+            .navigateToReport(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
             .clickOk();
 
         genericReportPage.waitForReportToLoad();
+        String[] tableNames = {"Manufacturing Issues", "Slow Operations", "Design Standards", "Tolerances"};
+        String elementName = "PLASTIC MOULDED CAP THICKPART";
 
-        assertThat(genericReportPage.getPlasticDtcDetailsRowOnePartName(),
-            is(equalTo("PLASTIC MOULDED CAP THICKPART")));
+        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
+            is(equalTo(elementName)));
+
+        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
+            is(equalTo(elementName)));
+
+        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
+            is(equalTo(elementName)));
+
+        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
+            is(equalTo(elementName)));
     }
 
     @Test
@@ -225,6 +263,6 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {
         commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testPlasticDtcIssueCounts(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName());
+        commonReportTests.testPlasticDtcIssueCounts(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName());
     }
 }

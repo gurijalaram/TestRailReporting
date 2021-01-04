@@ -20,6 +20,8 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -36,6 +38,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "3245")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -152,6 +155,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterSearch() {
@@ -163,6 +167,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterOperation() {
@@ -204,12 +209,14 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsSmokeTest.class)
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                "",
                 ListNameEnum.CREATED_BY.getListName()
         );
     }
@@ -266,6 +273,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                "",
                 ListNameEnum.LAST_MODIFIED_BY.getListName()
         );
     }
