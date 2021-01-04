@@ -146,15 +146,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
 
-    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) [assembly]'] > div > a")
-    private WebElement subAssemblyOption;
-
-    @FindBy(xpath = "//a[contains(text(), 'SUB-SUB-ASM (Initial) [assembly]')]")
-    private WebElement subSubAsmOption;
-
-    @FindBy(xpath = "//a[contains(text(), 'TOP-LEVEL (Initial) [assembly]')]")
-    private WebElement topLevelOption;
-
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
     private WebElement currentCurrencyElement;
 
