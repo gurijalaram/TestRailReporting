@@ -340,6 +340,8 @@ public class AddScenarioTests extends TestBase {
         scenarioTablePage.openColumnsTable()
             .removeColumn(ColumnsEnum.ASSIGNEE.getColumns())
             .removeColumn(ColumnsEnum.COST_MATURITY.getColumns())
+            .removeColumn(ColumnsEnum.TYPE.getColumns())
+            .removeColumn(ColumnsEnum.STATUS.getColumns())
             .selectSaveButton(ScenarioTablePage.class);
     }
 

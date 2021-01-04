@@ -29,7 +29,6 @@ import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -72,7 +71,7 @@ public class FileUploadResources {
     private final String APPLICATION_JSON = "application/json";
     Map<String, String> headers = new HashMap<>();
     NewPartRequest newPartRequest = null;
-
+    private String baseUrl = System.getProperty("baseUrl");
 
     /**
      * Method to upload, cost and publish a scenario
@@ -86,7 +85,7 @@ public class FileUploadResources {
     public void uploadCostPublishApi(HashMap<String, String> token, Object fileObject, String fileName, String scenarioName, String processGroup) {
         checkValidProcessGroup(processGroup);
 
-        initializeFileUpload(token, fileName);
+        initializeFileUpload(token, fileName, processGroup);
         createFileUploadWorkOrder(token, fileName, scenarioName);
         submitFileUploadWorkOrder(token);
         checkFileWorkOrderSuccessful(token);
@@ -105,15 +104,15 @@ public class FileUploadResources {
      * @param token    - the user token
      * @param fileName - the filename
      */
-    private void initializeFileUpload(HashMap<String, String> token, String fileName) {
-        String url = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/files";
+    private void initializeFileUpload(HashMap<String, String> token, String fileName, String processGroup) {
+        String url = baseUrl + "apriori/cost/session/ws/files";
 
         headers.put(CONTENT_TYPE, "multipart/form-data");
 
         RequestEntity requestEntity = RequestEntity.init(url, FileResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(fileName)))
+            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup),fileName)))
             .setFormParams(new FormParams().use("filename", fileName));
 
         identity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");
@@ -127,7 +126,7 @@ public class FileUploadResources {
      * @param scenarioName - the scenario name
      */
     private void createFileUploadWorkOrder(HashMap<String, String> token, String fileName, String scenarioName) {
-        String fileURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
+        String fileURL = baseUrl + "apriori/cost/session/ws/workorder/orders";
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
@@ -159,7 +158,7 @@ public class FileUploadResources {
      * @param token - the user token
      */
     private void checkFileWorkOrderSuccessful(HashMap<String, String> token) {
-        String orderURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + orderId;
+        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders/" + orderId;
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
@@ -182,7 +181,7 @@ public class FileUploadResources {
      */
     private void initializeCostScenario(HashMap<String, String> token, Object fileObject, String processGroup) {
         iteration = getLatestIteration(token);
-        String orderURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations/" + iteration + "/production-info";
+        String orderURL = baseUrl + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations/" + iteration + "/production-info";
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
@@ -202,7 +201,7 @@ public class FileUploadResources {
      */
     private void createCostWorkOrder(HashMap<String, String> token) {
         iteration = getLatestIteration(token);
-        String orderURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
+        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders";
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
@@ -246,7 +245,7 @@ public class FileUploadResources {
      * @return
      */
     private int getLatestIteration(HashMap<String, String> token) {
-        String orderURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations";
+        String orderURL = baseUrl + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations";
 
         RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, ListOfCostIterations.class)
             .setHeaders(headers)
@@ -262,7 +261,7 @@ public class FileUploadResources {
      */
     private void initializePublishScenario(HashMap<String, String> token) {
         iteration = getLatestIteration(token);
-        String orderURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders";
+        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders";
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
@@ -299,7 +298,7 @@ public class FileUploadResources {
      * @return request entity
      */
     private RequestEntity checkCostOrder(HashMap<String, String> token) {
-        String orderURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
+        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
 
         return RequestEntity.init(orderURL, ListOfCostOrderStatuses.class)
             .setHeaders(headers)
@@ -314,7 +313,7 @@ public class FileUploadResources {
      * @return request entity
      */
     private RequestEntity checkPublishOrder(HashMap<String, String> token, Class klass) {
-        String orderURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workorder/orders/" + publishWorkOrderId;
+        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders/" + publishWorkOrderId;
 
         return RequestEntity.init(orderURL, klass)
             .setHeaders(headers)
@@ -371,7 +370,7 @@ public class FileUploadResources {
      * @param orderId - the order id
      */
     private void submitOrder(HashMap<String, String> token, String orderId) {
-        String orderURL = CommonConstants.getBaseUrl() + "apriori/cost/session/ws/workorder/orderstatus";
+        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orderstatus";
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 

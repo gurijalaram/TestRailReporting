@@ -1,6 +1,5 @@
 package com.apriori.apibase.utils;
 
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -14,6 +13,7 @@ public class APIAuthentication {
 
     private String accessToken = null;
     private int timeToLive = 0;
+    private String baseUrl = System.getProperty("baseUrl");
 
     /**
      * Fetch Authorization header for user
@@ -49,7 +49,7 @@ public class APIAuthentication {
             ResponseWrapper<AuthenticateJSON> tokenDetails =  new HTTPRequest().defaultFormAuthorization(username, password)
                 .customizeRequest()
                 .setReturnType(AuthenticateJSON.class)
-                .setEndpoint(CommonConstants.getBaseUrl() + "ws/auth/token")
+                .setEndpoint(baseUrl + "ws/auth/token")
                 .setAutoLogin(false)
                 .commitChanges()
                 .connect()

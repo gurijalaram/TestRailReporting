@@ -1,9 +1,8 @@
 package com.apriori.utils.enums;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
-public enum ProcessGroupEnum {
+public enum PartProcessGroupEnum {
 
     ADDITIVE_MANUFACTURING("Additive Manufacturing"),
     BAR_TUBE_FAB("Bar & Tube Fab"),
@@ -22,28 +21,19 @@ public enum ProcessGroupEnum {
     SHEET_METAL_TRANSFER_DIE("Sheet Metal - Transfer Die"),
     SHEET_PLASTIC("Sheet Plastic"),
     STOCK_MACHINING("Stock Machining"),
-    TWO_MODEL_MACHINING("2-Model Machining"),
-    WITHOUT_PG("Without PG"),
-    ASSEMBLY("Assembly");
+    TWO_MODEL_MACHINING("2-Model Machining");
 
     private final String processGroup;
 
-    ProcessGroupEnum(String processGroup) {
+    PartProcessGroupEnum(String processGroup) {
         this.processGroup = processGroup;
     }
 
-    public String getProcessGroup() {
+    public String getPartProcessGroup() {
         return this.processGroup;
     }
 
     public static String[] getNames() {
-        return Stream.of(ProcessGroupEnum.values()).map(ProcessGroupEnum::getProcessGroup).toArray(String[]::new);
-    }
-
-    public static ProcessGroupEnum fromString(String pg) throws IllegalArgumentException {
-        return Arrays.stream(ProcessGroupEnum.values())
-            .filter(value -> value.processGroup.equals(pg))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(String.format("'%s' doesn't exist in enum ",  pg)));
+        return Stream.of(PartProcessGroupEnum.values()).map(PartProcessGroupEnum::getPartProcessGroup).toArray(String[]::new);
     }
 }
