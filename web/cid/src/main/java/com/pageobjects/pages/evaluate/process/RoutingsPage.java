@@ -1,8 +1,8 @@
 package com.pageobjects.pages.evaluate.process;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 
+import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -146,7 +146,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
      */
     public WebElement findRouting(String routingName) {
         By routing = By.xpath("//div[@data-ap-comp='routingSelectionTable']//td[contains(text(),'" + routingName + "')]/ancestor::tr");
-        return pageUtils.scrollToElement(routing, routingScroller, CommonConstants.PAGE_DOWN);
+        return pageUtils.scrollToElement(routing, routingScroller, Constants.PAGE_DOWN);
     }
 
     /**

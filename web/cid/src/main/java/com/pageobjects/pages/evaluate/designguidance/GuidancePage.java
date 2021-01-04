@@ -2,9 +2,9 @@ package com.pageobjects.pages.evaluate.designguidance;
 
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 
 import com.pageobjects.toolbars.EvaluatePanelToolbar;
+import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -82,7 +82,7 @@ public class GuidancePage extends EvaluatePanelToolbar {
     private GuidancePage collapseIssueDropdown() {
         By dropdown = By.cssSelector(".fa.fa-caret-down");
         while (pageUtils.isElementDisplayed(dropdown)) {
-            pageUtils.scrollToElement(dropdown, guidanceTableScroller, CommonConstants.ARROW_DOWN);
+            pageUtils.scrollToElement(dropdown, guidanceTableScroller, Constants.ARROW_DOWN);
             pageUtils.waitForElementToAppear(dropdown).click();
         }
         return this;
@@ -100,7 +100,7 @@ public class GuidancePage extends EvaluatePanelToolbar {
 
         for (String parent : parents) {
             By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + parent.trim() + "')]/ancestor::tr//span[@class]");
-            pageUtils.scrollToElement(issue, guidanceTableScroller, CommonConstants.ARROW_DOWN);
+            pageUtils.scrollToElement(issue, guidanceTableScroller, Constants.ARROW_DOWN);
 
             if (driver.findElement(issue).getAttribute("class").contains("right")) {
                 driver.findElement(issue).click();
@@ -117,7 +117,7 @@ public class GuidancePage extends EvaluatePanelToolbar {
      */
     private WebElement findIssueType(String issueType) {
         By issue = By.xpath("//div[@data-ap-comp='guidanceIssuesTable']//div[contains(text(),'" + issueType.trim() + "')]");
-        return pageUtils.scrollToElement(issue, guidanceTableScroller, CommonConstants.ARROW_DOWN);
+        return pageUtils.scrollToElement(issue, guidanceTableScroller, Constants.ARROW_DOWN);
     }
 
     /**
@@ -142,7 +142,7 @@ public class GuidancePage extends EvaluatePanelToolbar {
      */
     private WebElement findGCD(String gcdType) {
         By gcd = By.xpath("//div[@data-ap-comp='guidanceIssuesDetailsTable']//td[contains(text(),'" + gcdType + "')]");
-        return pageUtils.scrollToElement(gcd, detailsTableScroller, CommonConstants.ARROW_DOWN);
+        return pageUtils.scrollToElement(gcd, detailsTableScroller, Constants.ARROW_DOWN);
     }
 
     /**
