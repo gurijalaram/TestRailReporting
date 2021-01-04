@@ -761,4 +761,33 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(actualLifetimeProjectedCostDifference.compareTo(new BigDecimal("2194578.82")),
             is(equalTo(0)));
     }
+
+    @Test
+    @TestRail(testCaseId = "1927")
+    @Description("Validate multiple VPE usage aligns to CID usage")
+    public void testMultiVPEAgainstCID() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName())
+                .setAssembly(AssemblySetEnum.TOP_LEVEL_MULTI_VPE.getAssemblySetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        /**
+         * Continue from step 6 through 10
+         * 1. Log in
+         * 2. Go to Assembly Details report
+         * 3. Select top level multi vpe export set
+         * 4. Assembly Select - top level
+         * 5. Click ok
+         * 6. Assert that China VPE used for Sub Assembly and rest are USA
+         * 7. Store all reports VPE's
+         * 8. Go to CID in new tab
+         * 9. Filter to get right part (Top Level)
+         * 10. Get VPE's and assert that all match reports VPE's
+         */
+    }
 }

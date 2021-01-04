@@ -132,11 +132,21 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
         return PageFactory.initElements(driver, className);
     }
 
+    /**
+     * Gets Part Number
+     *
+     * @return String
+     */
     public String getPartNumber() {
         pageUtils.waitForElementToAppear(firstRowPartNumber);
         return firstRowPartNumber.getText();
     }
 
+    /**
+     * Gets specified value from the Report
+     * @param valueToGet - String
+     * @return String
+     */
     public String getReportsValue(String valueToGet) {
         By locator = By.xpath(
                 String.format(

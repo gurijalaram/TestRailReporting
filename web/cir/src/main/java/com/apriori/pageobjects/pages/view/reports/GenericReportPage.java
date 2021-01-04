@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.view.reports;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -40,7 +39,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
     private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
     private Map<String, WebElement> tooltipElementMap = new HashMap<>();
-    private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
     private Map<String, WebElement> bubbleMap = new HashMap<>();
@@ -494,6 +492,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement cycleTimeValueTrackingDetailsMaterialComposition;
 
     private String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
+    private String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -507,7 +506,6 @@ public class GenericReportPage extends ReportsPageHeader {
         initialiseDtcComparisonDtcIssueMap();
         initialiseTooltipElementMap();
         initialiseDtcScoreBubbleMap();
-        initialiseAssemblyHashMap();
         initialiseCurrencyMap();
         initialisePartNameMap();
         initialiseBubbleMap();
@@ -530,7 +528,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
+        exportSetSearchInput.sendKeys(exportSet);
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
@@ -655,7 +655,9 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            assemblyMap.get(assemblyName).click();
+            //assemblyMap.get(assemblyName).click();
+            By locator = By.xpath(String.format(genericAssemblySetLocator, assemblyName));
+            pageUtils.waitForElementAndClick(locator);
         }
         return this;
     }
@@ -664,7 +666,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets assembly name from set assembly dropdown
      */
     public String getAssemblyNameFromSetAssemblyDropdown(String assemblyName) {
-        return assemblyMap.get(assemblyName).getAttribute("textContent");
+        return driver.findElement(By.xpath(String.format(genericAssemblySetLocator, assemblyName)))
+                .getAttribute("textContent");
     }
 
     /**
@@ -2150,15 +2153,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseCurrencyMap() {
         currencyMap.put(CurrencyEnum.GBP.getCurrency(), gbpCurrencyOption);
         currencyMap.put(CurrencyEnum.USD.getCurrency(), usdCurrencyOption);
-    }
-
-    /**
-     * Initialises assembly hash map
-     */
-    private void initialiseAssemblyHashMap() {
-        assemblyMap.put(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName(), subAssemblyOption);
-        assemblyMap.put(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName(), subSubAsmOption);
-        assemblyMap.put(AssemblySetEnum.TOP_LEVEL.getAssemblySetName(), topLevelOption);
     }
 
     /**

@@ -49,7 +49,7 @@ public class Constants {
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-staging";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
@@ -79,6 +79,11 @@ public class Constants {
         return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
     }
 
+    /**
+     * Gets CID url
+     *
+     * @return String
+     */
     public static String getCidUrl() {
         return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.cid"));
     }

@@ -87,7 +87,8 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(), CycleTimeValueTrackingPage.class)
+                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                        CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
@@ -106,7 +107,8 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(), CycleTimeValueTrackingPage.class)
+                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                        CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 
         cycleTimeValueTrackingPage.clickOk()
@@ -118,7 +120,8 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
         String reportsProcessGroup = cycleTimeValueTrackingPage.getReportsValue("Process Group");
         String reportsMaterialComposition = cycleTimeValueTrackingPage.getReportsValue("Material Composition");
         String reportsAnnualVolume = cycleTimeValueTrackingPage.getReportsValue("Annual Volume");
-        String reportsFinalCycleTime = cycleTimeValueTrackingPage.getReportsValue("Final Cycle Time").replace(",", "");
+        String reportsFinalCycleTime = cycleTimeValueTrackingPage.getReportsValue("Final Cycle Time")
+                .replace(",", "");
 
         cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
 
