@@ -9,6 +9,11 @@ import java.util.Properties;
 
 public class Constants {
 
+    public static final String DEFAULT_ENVIRONMENT_KEY = "env";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "ats";
+    public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
+    private static final Properties PROPERTIES = new Properties();
+    private static final File INPUT_STREAM;
     private static String atsServiceHost;
     private static String atsTokenUsername;
     private static String atsTokenEmail;
@@ -16,12 +21,6 @@ public class Constants {
     private static String atsTokenSubject;
     private static String atsAuthApplication;
     private static String atsAuthTargetCloudContext;
-
-    public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "ats";
-    public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
-    private static final Properties PROPERTIES = new Properties();
-    private static final File INPUT_STREAM;
 
     static {
         System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
@@ -41,7 +40,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsServiceHost() {
-        return atsServiceHost = atsServiceHost == null ? System.getProperty("atsServiceHost", PROPERTIES.getProperty("ats.service.host")) : atsServiceHost;
+        return atsServiceHost = atsServiceHost == null ? PROPERTIES.getProperty("service.host") : System.getProperty("atsServiceHost");
     }
 
     /**
@@ -50,7 +49,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsTokenUsername() {
-        return atsTokenUsername = atsTokenUsername == null ? System.getProperty("atsTokenUsername", PROPERTIES.getProperty("ats.token.username")) : atsTokenUsername;
+        return atsTokenUsername = atsTokenUsername == null ? PROPERTIES.getProperty("ats.token.username") : System.getProperty("atsTokenUsername");
     }
 
     /**
@@ -59,7 +58,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsTokenEmail() {
-        return atsTokenEmail = atsTokenEmail == null ? System.getProperty("atsTokenEmail", PROPERTIES.getProperty("ats.token.email")) : atsTokenEmail;
+        return atsTokenEmail = atsTokenEmail == null ? PROPERTIES.getProperty("ats.token.email") : System.getProperty("atsTokenEmail");
     }
 
     /**
@@ -68,7 +67,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsTokenIssuer() {
-        return atsTokenIssuer = atsTokenIssuer == null ? System.getProperty("atsTokenIssuer", PROPERTIES.getProperty("ats.token.issuer")) : atsTokenIssuer;
+        return atsTokenIssuer = atsTokenIssuer == null ? PROPERTIES.getProperty("ats.token.issuer") : System.getProperty("atsTokenIssuer");
     }
 
     /**
@@ -77,7 +76,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsTokenSubject() {
-        return atsTokenSubject = atsTokenSubject == null ? System.getProperty("atsTokenSubject", PROPERTIES.getProperty("ats.token.subject")) : atsTokenSubject;
+        return atsTokenSubject = atsTokenSubject == null ? PROPERTIES.getProperty("ats.token.subject") : System.getProperty("atsTokenSubject");
     }
 
     /**
@@ -86,7 +85,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsAuthApplication() {
-        return atsAuthApplication = atsAuthApplication == null ? System.getProperty("atsAuthApplication", PROPERTIES.getProperty("ats.auth.application")) : atsAuthApplication;
+        return atsAuthApplication = atsAuthApplication == null ? PROPERTIES.getProperty("ats.auth.application") : System.getProperty("atsAuthApplication");
     }
 
     /**
@@ -95,6 +94,6 @@ public class Constants {
      * @return string
      */
     public static String getAtsAuthTargetCloudContext() {
-        return atsAuthTargetCloudContext = atsAuthTargetCloudContext == null ? System.getProperty("atsAuthTargetCloudContext", PROPERTIES.getProperty("ats.auth.targetCloudContext")) : atsAuthTargetCloudContext;
+        return atsAuthTargetCloudContext = atsAuthTargetCloudContext == null ? PROPERTIES.getProperty("ats.auth.targetCloudContext") : System.getProperty("atsAuthTargetCloudContext");
     }
 }
