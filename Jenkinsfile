@@ -12,7 +12,7 @@ def folder = "web"
 pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
-        choice(name: 'MODULE', choices: ['cid', 'apitests', 'ciconnect', 'cas', 'cir', 'cia', 'cidapp'], description: 'What target module to run?')
+        choice(name: 'TARGET_MODULE', choices: ['cid', 'apitests', 'ciconnect', 'cas', 'cir', 'cia', 'cidapp'], description: 'What target module to run?')
         choice(name: 'MODULE_PROP', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa', 'cidapp-int'], description: 'What is the module properties file?')
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
@@ -87,7 +87,7 @@ pipeline {
                 echo "Building.."
                 sh """
                     docker build \
-                        --build-arg MODULE=${MODULE} \
+                        --build-arg MODULE=${TARGET_MODULE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
                         --build-arg FOLDER=${folder} \
                         --no-cache \
