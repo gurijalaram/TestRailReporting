@@ -24,7 +24,7 @@ public class AtsAuthorization extends TestUtil {
     @TestRail(testCaseId = "3581")
     @Description("Retrieve a JWT from the ATS Token endpoint")
     public void getToken() {
-        SecurityManager.retriveJwtToken(
+        SecurityManager.retrieveJwtToken(
                 Constants.getAtsServiceHost(),
                 HttpStatus.SC_CREATED,
             Constants.getAtsTokenUsername(),
@@ -37,7 +37,7 @@ public class AtsAuthorization extends TestUtil {
     @TestRail(testCaseId = "3913")
     @Description("Authorize a user to access a specified application")
     public void authorizeUser() {
-        String token = SecurityManager.retriveJwtToken(
+        String token = SecurityManager.retrieveJwtToken(
             Constants.getAtsServiceHost(),
                 HttpStatus.SC_CREATED,
             Constants.getAtsTokenUsername(),
