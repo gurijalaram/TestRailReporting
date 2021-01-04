@@ -35,30 +35,65 @@ public class Constants {
         }
     }
 
+    /**
+     * Get service host
+     *
+     * @return string
+     */
     public static String getAtsServiceHost() {
         return atsServiceHost = atsServiceHost == null ? System.getProperty("atsServiceHost", PROPERTIES.getProperty("ats.service.host")) : atsServiceHost;
     }
 
+    /**
+     * Get token username
+     *
+     * @return string
+     */
     public static String getAtsTokenUsername() {
         return atsTokenUsername = atsTokenUsername == null ? System.getProperty("atsTokenUsername", PROPERTIES.getProperty("ats.token.username")) : atsTokenUsername;
     }
 
+    /**
+     * Get token email
+     *
+     * @return string
+     */
     public static String getAtsTokenEmail() {
         return atsTokenEmail = atsTokenEmail == null ? System.getProperty("atsTokenEmail", PROPERTIES.getProperty("ats.token.email")) : atsTokenEmail;
     }
 
+    /**
+     * Get token issuer
+     *
+     * @return string
+     */
     public static String getAtsTokenIssuer() {
         return atsTokenIssuer = atsTokenIssuer == null ? System.getProperty("atsTokenIssuer", PROPERTIES.getProperty("ats.token.issuer")) : atsTokenIssuer;
     }
 
+    /**
+     * Get token subject
+     *
+     * @return string
+     */
     public static String getAtsTokenSubject() {
         return atsTokenSubject = atsTokenSubject == null ? System.getProperty("atsTokenSubject", PROPERTIES.getProperty("ats.token.subject")) : atsTokenSubject;
     }
 
+    /**
+     * Get auth application
+     *
+     * @return string
+     */
     public static String getAtsAuthApplication() {
         return atsAuthApplication = atsAuthApplication == null ? System.getProperty("atsAuthApplication", PROPERTIES.getProperty("ats.auth.application")) : atsAuthApplication;
     }
 
+    /**
+     * Get auth target cloud context
+     *
+     * @return string
+     */
     public static String getAtsAuthTargetCloudContext() {
         return atsAuthTargetCloudContext = atsAuthTargetCloudContext == null ? System.getProperty("atsAuthTargetCloudContext", PROPERTIES.getProperty("ats.auth.targetCloudContext")) : atsAuthTargetCloudContext;
     }
