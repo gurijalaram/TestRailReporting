@@ -19,6 +19,8 @@ import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 
@@ -97,6 +99,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2334")
     @Description("Validate Cycle Time Value Tracking Details report aligns to aP desktop values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
@@ -111,11 +114,11 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
         String reportsPartNumber = cycleTimeValueTrackingPage.getPartNumber();
         String reportsScenarioName = cycleTimeValueTrackingPage.getReportsValue("Scenario Name");
-        String reportsFinishMass = cycleTimeValueTrackingPage.getReportsValue("Finish Mass");
+        String reportsFinishMass = cycleTimeValueTrackingPage.getReportsValue("Finish Mass").substring(0, 4);
         String reportsProcessGroup = cycleTimeValueTrackingPage.getReportsValue("Process Group");
         String reportsMaterialComposition = cycleTimeValueTrackingPage.getReportsValue("Material Composition");
         String reportsAnnualVolume = cycleTimeValueTrackingPage.getReportsValue("Annual Volume");
-        String reportsFinalCycleTime = cycleTimeValueTrackingPage.getReportsValue("Final Cycle Time");
+        String reportsFinalCycleTime = cycleTimeValueTrackingPage.getReportsValue("Final Cycle Time").replace(",", "");
 
         cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
 

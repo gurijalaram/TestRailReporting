@@ -524,7 +524,7 @@ public class EvaluatePage extends EvaluateHeader {
      */
     public double getCycleTimeCount() {
         pageUtils.waitForElementToAppear(cycleTimeCount);
-        return Double.parseDouble(cycleTimeCount.getAttribute("title"));
+        return Double.parseDouble(cycleTimeCount.getAttribute("title").replace(",", ""));
     }
 
     /**

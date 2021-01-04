@@ -78,4 +78,8 @@ public class Constants {
 
         return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
     }
+
+    public static String getCidUrl() {
+        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.cid"));
+    }
 }
