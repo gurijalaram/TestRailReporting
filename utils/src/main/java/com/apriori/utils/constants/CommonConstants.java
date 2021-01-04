@@ -2,8 +2,6 @@ package com.apriori.utils.constants;
 
 import com.apriori.utils.FileResourceUtil;
 
-import org.aeonbits.owner.ConfigFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,14 +16,9 @@ public class CommonConstants {
     public static final String DEFAULT_BUILD_MODE_KEY = "mode";
     public static final String DEFAULT_BUILD_MODE_VALUE = "QA";
 
-    public static final String DEFAULT_BASE_URL_KEY = "url";
-
     public static final String DEFAULT_USER_NAME = "admin@apriori.com";
     public static final String DEFAULT_PASSWORD = "admin";
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
-
-    public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "onprem";
 
     public static final String DEFAULT_USER_NAME_KEY = "username";
     public static final String DEFAULT_PASSWORD_KEY = "password";
@@ -33,13 +26,7 @@ public class CommonConstants {
     public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
     public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
 
-    public static final String ARROW_DOWN = "arrow_down";
-    public static final String PAGE_DOWN = "page_down";
-    public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
-
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
-
-    public static String environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
 
     private static String serviceHost;
     private static String servicePort;
@@ -82,22 +69,6 @@ public class CommonConstants {
     public static final String defaultCdsIdentityCustomerKey = "cdsIdentityCustomer";
     public static final String defaultCdsIdentityApplicationKey = "cdsIdentityApplication";
 
-    private static final ConstantsInit constantsInit;
-
-    static {
-        System.setProperty(DEFAULT_ENVIRONMENT_KEY, environment);
-
-        constantsInit = ConfigFactory.create(ConstantsInit.class);
-    }
-
-    private static String baseUrl;
-    public static final Level consoleLogLevel = Level.parse(constantsInit.consoleLogLevelData());
-    public static final String schemaBasePath = constantsInit.schemaBasePath();
-    public static final String GRID_SERVER_URL = constantsInit.gridServerUrl();
-    public static final String internalApiURL = getBaseUrl() + constantsInit.internalApiURL();
-    public static final String cidURL = getBaseUrl() + constantsInit.cidURL();
-    public static final String cidAppURL = getBaseUrl();
-
     private static String csvFile;
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
@@ -112,6 +83,9 @@ public class CommonConstants {
             e.printStackTrace();
         }
     }
+
+    public static final Level consoleLogLevel = Level.parse(PROPERTIES.getProperty("console.log.level"));
+    public static final String schemaBasePath = PROPERTIES.getProperty("schema.base.path");
 
     /**
      * Get true/false value of whether to use different user
@@ -139,17 +113,9 @@ public class CommonConstants {
         return buildMode;
     }
 
-    public static String getBaseUrl() {
-        if (baseUrl == null) {
-            baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY, constantsInit.url());
-        }
-
-        return baseUrl;
-    }
-
     public static String getServiceHost() {
         if (serviceHost == null) {
-            serviceHost = System.getProperty(defaultServiceHostKey, constantsInit.serviceHost());
+            serviceHost = System.getProperty(defaultServiceHostKey, PROPERTIES.getProperty("service.host"));
         }
 
         return serviceHost;
@@ -157,14 +123,14 @@ public class CommonConstants {
 
     public static String getServicePort() {
         if (servicePort == null) {
-            servicePort = System.getProperty(defaultServicePortKey, constantsInit.servicePort());
+            servicePort = System.getProperty(defaultServicePortKey, PROPERTIES.getProperty("service.port"));
         }
         return servicePort;
     }
 
     public static String getServiceName() {
         if (serviceName == null) {
-            serviceName = System.getProperty(defaultServiceNameKey, constantsInit.serviceName());
+            serviceName = System.getProperty(defaultServiceNameKey, PROPERTIES.getProperty("service.name"));
         }
 
         return serviceName;
@@ -172,7 +138,7 @@ public class CommonConstants {
 
     public static String getSecretKey() {
         if (secretKey == null) {
-            secretKey = System.getProperty(defaultSecretKeyKey, constantsInit.secretKey());
+            secretKey = System.getProperty(defaultSecretKeyKey, PROPERTIES.getProperty("secret.key"));
         }
 
         return secretKey;
@@ -180,7 +146,7 @@ public class CommonConstants {
 
     public static String getCdsIdentityUser() {
         if (cdsIdentityUser == null) {
-            cdsIdentityUser = System.getProperty(defaultCdsIdentityUserKey, constantsInit.cdsIdentityUser());
+            cdsIdentityUser = System.getProperty(defaultCdsIdentityUserKey, PROPERTIES.getProperty("cds.identity.user"));
         }
 
         return cdsIdentityUser;
@@ -188,7 +154,7 @@ public class CommonConstants {
 
     public static String getCdsIdentityRole() {
         if (cdsIdentityRole == null) {
-            cdsIdentityRole = System.getProperty(defaultCdsIdentityRoleKey, constantsInit.cdsIdentityRole());
+            cdsIdentityRole = System.getProperty(defaultCdsIdentityRoleKey, PROPERTIES.getProperty("cds.identity.role"));
         }
 
         return cdsIdentityRole;
@@ -196,7 +162,7 @@ public class CommonConstants {
 
     public static String getCdsIdentityCustomer() {
         if (cdsIdentityCustomer == null) {
-            cdsIdentityCustomer = System.getProperty(defaultCdsIdentityCustomerKey, constantsInit.cdsIdentityCustomer());
+            cdsIdentityCustomer = System.getProperty(defaultCdsIdentityCustomerKey, PROPERTIES.getProperty("cds.identity.customer"));
         }
 
         return cdsIdentityCustomer;
@@ -204,7 +170,7 @@ public class CommonConstants {
 
     public static String getCdsIdentityApplication() {
         if (cdsIdentityApplication == null) {
-            cdsIdentityApplication = System.getProperty(defaultCdsIdentityApplicationKey, constantsInit.cdsIdentityApplication());
+            cdsIdentityApplication = System.getProperty(defaultCdsIdentityApplicationKey, PROPERTIES.getProperty("cds.identity.application"));
         }
 
         return cdsIdentityApplication;
@@ -212,7 +178,7 @@ public class CommonConstants {
 
     public static String getAtsServiceHost() {
         if (atsServiceHost == null) {
-            atsServiceHost = System.getProperty("atsServiceHost", constantsInit.atsServiceHost());
+            atsServiceHost = System.getProperty("atsServiceHost", PROPERTIES.getProperty("ats.service.host"));
         }
 
         return atsServiceHost;
@@ -220,7 +186,7 @@ public class CommonConstants {
 
     public static String getFmsServiceHost() {
         if (fmsServiceHost == null) {
-            fmsServiceHost = System.getProperty("fmsServiceHost", constantsInit.fmsServiceHost());
+            fmsServiceHost = System.getProperty("fmsServiceHost", PROPERTIES.getProperty("fms.service.host"));
         }
 
         return fmsServiceHost;
@@ -228,7 +194,7 @@ public class CommonConstants {
 
     public static String getFmsFileIdentity() {
         if (fmsFileIdentity == null) {
-            fmsFileIdentity = System.getProperty("fmsFileIdentity", constantsInit.fmsFileIdentity());
+            fmsFileIdentity = System.getProperty("fmsFileIdentity", PROPERTIES.getProperty("fms.file.identity"));
         }
 
         return fmsFileIdentity;
@@ -236,7 +202,7 @@ public class CommonConstants {
 
     public static String getAtsTokenUsername() {
         if (atsTokenUsername == null) {
-            atsTokenUsername = System.getProperty("atsTokenUsername", constantsInit.atsTokenUsername());
+            atsTokenUsername = System.getProperty("atsTokenUsername", PROPERTIES.getProperty("ats.token.username"));
         }
 
         return atsTokenUsername;
@@ -244,7 +210,7 @@ public class CommonConstants {
 
     public static String getAtsTokenEmail() {
         if (atsTokenEmail == null) {
-            atsTokenEmail = System.getProperty("atsTokenEmail", constantsInit.atsTokenEmail());
+            atsTokenEmail = System.getProperty("atsTokenEmail", PROPERTIES.getProperty("ats.token.email"));
         }
 
         return atsTokenEmail;
@@ -252,7 +218,7 @@ public class CommonConstants {
 
     public static String getAtsTokenIssuer() {
         if (atsTokenIssuer == null) {
-            atsTokenIssuer = System.getProperty("atsTokenIssuer", constantsInit.atsTokenIssuer());
+            atsTokenIssuer = System.getProperty("atsTokenIssuer", PROPERTIES.getProperty("ats.token.issuer"));
         }
 
         return atsTokenIssuer;
@@ -260,7 +226,7 @@ public class CommonConstants {
 
     public static String getAtsTokenSubject() {
         if (atsTokenSubject == null) {
-            atsTokenSubject = System.getProperty("atsTokenSubject", constantsInit.atsTokenSubject());
+            atsTokenSubject = System.getProperty("atsTokenSubject", PROPERTIES.getProperty("ats.token.subject"));
         }
 
         return atsTokenSubject;
@@ -268,7 +234,7 @@ public class CommonConstants {
 
     public static String getAtsAuthApplication() {
         if (atsAuthApplication == null) {
-            atsAuthApplication = System.getProperty("atsAuthApplication", constantsInit.atsAuthApplication());
+            atsAuthApplication = System.getProperty("atsAuthApplication", PROPERTIES.getProperty("ats.auth.application"));
         }
 
         return atsAuthApplication;
@@ -276,7 +242,7 @@ public class CommonConstants {
 
     public static String getAtsAuthTargetCloudContext() {
         if (atsAuthTargetCloudContext == null) {
-            atsAuthTargetCloudContext = System.getProperty("atsAuthTargetCloudContext", constantsInit.atsAuthTargetCloudContext());
+            atsAuthTargetCloudContext = System.getProperty("atsAuthTargetCloudContext", PROPERTIES.getProperty("ats.auth.targetCloudContext"));
         }
 
         return atsAuthTargetCloudContext;
@@ -284,7 +250,7 @@ public class CommonConstants {
 
     public static String getCisCustomerIdentity() {
         if (cisCustomerIdentity == null) {
-            cisCustomerIdentity = System.getProperty("cisCustomerIdentity", constantsInit.cisCustomerIdentity());
+            cisCustomerIdentity = System.getProperty("cisCustomerIdentity", PROPERTIES.getProperty("cis.customer.identity"));
         }
 
         return cisCustomerIdentity;
@@ -292,7 +258,7 @@ public class CommonConstants {
 
     public static String getCisServiceHost() {
         if (cisServiceHost == null) {
-            cisServiceHost = System.getProperty("cisServiceHost", constantsInit.cisServiceHost());
+            cisServiceHost = System.getProperty("cisServiceHost", PROPERTIES.getProperty("cis.service.host"));
         }
 
         return cisServiceHost;
@@ -300,7 +266,7 @@ public class CommonConstants {
 
     public static String getCisPartIdentity() {
         if (cisPartIdentity == null) {
-            cisPartIdentity = System.getProperty("cisPartIdentity", constantsInit.cisPartIdentity());
+            cisPartIdentity = System.getProperty("cisPartIdentity", PROPERTIES.getProperty("cis.part.identity"));
         }
 
         return cisPartIdentity;
@@ -313,7 +279,7 @@ public class CommonConstants {
 
     public static String getCisReportIdentity() {
         if (cisReportIdentity == null) {
-            cisReportIdentity = System.getProperty("cisReportIdentity", constantsInit.cisReportIdentity());
+            cisReportIdentity = System.getProperty("cisReportIdentity", PROPERTIES.getProperty("cis.report.identity"));
         }
 
         return cisReportIdentity;
@@ -327,7 +293,7 @@ public class CommonConstants {
 
     public static String getCisReportTypeIdentity() {
         if (cisReportTypeIdentity == null) {
-            cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity", constantsInit.cisReportTypeIdentity());
+            cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity", PROPERTIES.getProperty("cis.reportType.identity"));
         }
 
         return cisReportTypeIdentity;
@@ -339,7 +305,7 @@ public class CommonConstants {
 
     public static String getCisBatchIdentity() {
         if (cisBatchIdentity == null) {
-            cisBatchIdentity = System.getProperty("cisBatchIdentity", constantsInit.cisBatchIdentity());
+            cisBatchIdentity = System.getProperty("cisBatchIdentity", PROPERTIES.getProperty(".cis.batch.identity"));
         }
 
         return cisBatchIdentity;
@@ -347,7 +313,7 @@ public class CommonConstants {
 
     public static String getApitestsBasePath() {
         if (apitestsBasePath == null) {
-            apitestsBasePath = System.getProperty("apitestsBasePath", constantsInit.apitestsBasePath());
+            apitestsBasePath = System.getProperty("apitestsBasePath", PROPERTIES.getProperty("apitests.base.path"));
         }
 
         return apitestsBasePath;
@@ -356,7 +322,7 @@ public class CommonConstants {
 
     public static String getApitestsResourcePath() {
         if (apitestsResourcePath == null) {
-            apitestsResourcePath = System.getProperty("apitestsResourcePath", constantsInit.apitestsResourcePath());
+            apitestsResourcePath = System.getProperty("apitestsResourcePath", PROPERTIES.getProperty("apitests.resource.path"));
         }
 
         return apitestsResourcePath;
@@ -365,7 +331,7 @@ public class CommonConstants {
 
     public static String getNtsTargetCloudContext() {
         if (ntsTargetCloudContext == null) {
-            ntsTargetCloudContext = System.getProperty("ntsTargetCloudContext", constantsInit.ntsTargetCloudContext());
+            ntsTargetCloudContext = System.getProperty("ntsTargetCloudContext", PROPERTIES.getProperty("nts.auth.targetCloudContext"));
         }
 
         return ntsTargetCloudContext;
@@ -374,7 +340,7 @@ public class CommonConstants {
 
     public static String getNtsServiceHost() {
         if (ntsServiceHost == null) {
-            ntsServiceHost = System.getProperty("ntsServiceHost", constantsInit.ntsServiceHost());
+            ntsServiceHost = System.getProperty("ntsServiceHost", PROPERTIES.getProperty("nts.service.host"));
         }
 
         return ntsServiceHost;
@@ -384,7 +350,7 @@ public class CommonConstants {
     public static String getNtsEmailRecipientAddress() {
         if (ntsEmailRecipientAddress == null) {
             ntsEmailRecipientAddress = System.getProperty("ntsEmailRecipientAddress",
-                    constantsInit.ntsEmailRecipientAddress());
+                PROPERTIES.getProperty("nts.email.recipientAddress"));
         }
 
         return ntsEmailRecipientAddress;
@@ -393,7 +359,7 @@ public class CommonConstants {
 
     public static String getNtsEmailSubject() {
         if (ntsEmailSubject == null) {
-            ntsEmailSubject = System.getProperty("ntsEmailSubject", constantsInit.ntsEmailSubject());
+            ntsEmailSubject = System.getProperty("ntsEmailSubject", PROPERTIES.getProperty("nts.email.subject"));
         }
 
         return ntsEmailSubject;
@@ -401,7 +367,7 @@ public class CommonConstants {
 
     public static String getNtsEmailContent() {
         if (ntsEmailContent == null) {
-            ntsEmailContent = System.getProperty("ntsEmailContent", constantsInit.ntsEmailContent());
+            ntsEmailContent = System.getProperty("ntsEmailContent", PROPERTIES.getProperty("nts.email.content"));
         }
 
         return ntsEmailContent;
@@ -409,7 +375,7 @@ public class CommonConstants {
 
     public static String getNtsEmailAttachment() {
         if (ntsEmailAttachment == null) {
-            ntsEmailAttachment = System.getProperty("ntsEmailAttachment", constantsInit.ntsEmailAttachment());
+            ntsEmailAttachment = System.getProperty("ntsEmailAttachment", PROPERTIES.getProperty("nts.email.attachment"));
         }
 
         return ntsEmailAttachment;
