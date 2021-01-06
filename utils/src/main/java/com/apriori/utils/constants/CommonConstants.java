@@ -13,9 +13,6 @@ public class CommonConstants {
     public static final String DEFAULT_PROJECT_ID_VALUE = "177";
     public static final String DEFAULT_PROJECT_ID_KEY = "RUN_ID";
 
-    public static final String DEFAULT_BUILD_MODE_KEY = "mode";
-    public static final String DEFAULT_BUILD_MODE_VALUE = "QA";
-
     public static final String DEFAULT_USER_NAME = "admin@apriori.com";
     public static final String DEFAULT_PASSWORD = "admin";
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
@@ -24,35 +21,24 @@ public class CommonConstants {
 
     private static String serviceHost;
     private static String servicePort;
-    private static String serviceName;
     private static String secretKey;
     private static String atsServiceHost;
-    private static String atsTokenUsername;
-    private static String atsTokenEmail;
     private static String atsTokenIssuer;
     private static String atsTokenSubject;
-    private static String atsAuthApplication;
     private static String atsAuthTargetCloudContext;
     private static String fmsServiceHost;
-    private static String fmsFileIdentity;
     private static String cisCustomerIdentity;
     private static String cisServiceHost;
     private static String cisPartIdentity;
     private static String cisReportIdentity;
     private static String cisReportTypeIdentity;
     private static String cisBatchIdentity;
-    private static String apitestsBasePath;
-    private static String apitestsResourcePath;
     private static String ntsTargetCloudContext;
     private static String ntsServiceHost;
-    private static String ntsEmailRecipientAddress;
-    private static String ntsEmailSubject;
     private static String ntsEmailContent;
-    private static String ntsEmailAttachment;
 
     public static final String defaultServiceHostKey = "serverHost";
     public static final String defaultServicePortKey = "serverPort";
-    public static final String defaultServiceNameKey = "serverName";
     public static final String defaultSecretKeyKey = "secretKey";
 
     private static String csvFile;
