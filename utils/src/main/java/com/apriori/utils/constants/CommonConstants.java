@@ -144,38 +144,6 @@ public class CommonConstants {
         return secretKey;
     }
 
-    public static String getCdsIdentityUser() {
-        if (cdsIdentityUser == null) {
-            cdsIdentityUser = System.getProperty(defaultCdsIdentityUserKey, PROPERTIES.getProperty("cds.identity.user"));
-        }
-
-        return cdsIdentityUser;
-    }
-
-    public static String getCdsIdentityRole() {
-        if (cdsIdentityRole == null) {
-            cdsIdentityRole = System.getProperty(defaultCdsIdentityRoleKey, PROPERTIES.getProperty("cds.identity.role"));
-        }
-
-        return cdsIdentityRole;
-    }
-
-    public static String getCdsIdentityCustomer() {
-        if (cdsIdentityCustomer == null) {
-            cdsIdentityCustomer = System.getProperty(defaultCdsIdentityCustomerKey, PROPERTIES.getProperty("cds.identity.customer"));
-        }
-
-        return cdsIdentityCustomer;
-    }
-
-    public static String getCdsIdentityApplication() {
-        if (cdsIdentityApplication == null) {
-            cdsIdentityApplication = System.getProperty(defaultCdsIdentityApplicationKey, PROPERTIES.getProperty("cds.identity.application"));
-        }
-
-        return cdsIdentityApplication;
-    }
-
     public static String getAtsServiceHost() {
         if (atsServiceHost == null) {
             atsServiceHost = System.getProperty("atsServiceHost", PROPERTIES.getProperty("ats.service.host"));
