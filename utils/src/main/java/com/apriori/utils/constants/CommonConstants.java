@@ -20,12 +20,6 @@ public class CommonConstants {
     public static final String DEFAULT_PASSWORD = "admin";
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
-    public static final String DEFAULT_USER_NAME_KEY = "username";
-    public static final String DEFAULT_PASSWORD_KEY = "password";
-
-    public static final String PROP_USER_NAME = System.getProperty(DEFAULT_USER_NAME_KEY);
-    public static final String PROP_USER_PASSWORD = System.getProperty(DEFAULT_PASSWORD_KEY);
-
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
     private static String serviceHost;
