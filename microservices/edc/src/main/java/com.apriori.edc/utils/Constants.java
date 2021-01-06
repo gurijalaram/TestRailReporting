@@ -14,6 +14,9 @@ public class Constants {
     public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
+    private static String edcTokenSubject;
+    private static String edcTokenIssuer;
+    private static String edcServiceHost;
 
     static {
         System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
@@ -27,4 +30,30 @@ public class Constants {
         }
     }
 
+    /**
+     * Get service host
+     *
+     * @return string
+     */
+    public static String getEdcServiceHost() {
+        return edcServiceHost = edcServiceHost == null ? PROPERTIES.getProperty("edc.service.host") : System.getProperty("edcServiceHost");
+    }
+
+    /**
+     * Get token issuer
+     *
+     * @return string
+     */
+    public static String getEdcTokenIssuer() {
+        return edcTokenIssuer = edcTokenIssuer == null ? PROPERTIES.getProperty("edc.token.issuer") : System.getProperty("edcTokenIssuer");
+    }
+
+    /**
+     * Get token subject
+     *
+     * @return string
+     */
+    public static String getEdcTokenSubject() {
+        return edcTokenSubject = edcTokenSubject == null ? PROPERTIES.getProperty("edc.token.subject") : System.getProperty("edcTokenSubject");
+    }
 }
