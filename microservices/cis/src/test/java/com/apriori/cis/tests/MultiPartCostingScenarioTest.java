@@ -10,26 +10,20 @@ import com.apriori.cis.controller.PartResources;
 import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
-import com.apriori.cis.utils.CisProperties;
 import com.apriori.cis.utils.CisUtils;
+import com.apriori.cis.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,7 +33,6 @@ import java.util.Stack;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
@@ -69,7 +62,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
         this.getPartsFromFileSystem();
 
         //upload parts
-        Integer threads = CisProperties.getCostingThreads();
+        Integer threads = Constants.getCostingThreads();
         this.initThreadExecution(threads, partList.size());
 
         // start costing
@@ -81,7 +74,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
         }
 
         // poll for part state/batch state
-        Integer maximumPollingIntervals = CisProperties.getPollingTimeout() * partIdentities.size();
+        Integer maximumPollingIntervals = Constants.getPollingTimeout() * partIdentities.size();
         CostingElementStatus partElementStatus = CostingElementStatus.INCOMPLETE;
         for (String identity : partIdentities) {
 
@@ -95,7 +88,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
         Assert.assertEquals(partElementStatus, CostingElementStatus.COMPLETE);
 
         CostingElementStatus batchElementStatus = CostingElementStatus.INCOMPLETE;
-        batchElementStatus = waitingForBatchProcessingComplete(CisProperties.getPollingTimeout());
+        batchElementStatus = waitingForBatchProcessingComplete(Constants.getPollingTimeout());
         Assert.assertEquals(batchElementStatus, CostingElementStatus.COMPLETE);
 
         PartResources.getPartCosting(partIdentity);
