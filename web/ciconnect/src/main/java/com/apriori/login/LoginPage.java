@@ -16,9 +16,8 @@ import utils.Constants;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
-
     private static String loginPageURL = Constants.getDefaultUrl();
+    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     protected String url;
 
     @FindBy(css = "input[name='email']")

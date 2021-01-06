@@ -26,10 +26,6 @@ public class CommonConstants {
     private static String servicePort;
     private static String serviceName;
     private static String secretKey;
-    private static String cdsIdentityUser;
-    private static String cdsIdentityRole;
-    private static String cdsIdentityCustomer;
-    private static String cdsIdentityApplication;
     private static String atsServiceHost;
     private static String atsTokenUsername;
     private static String atsTokenEmail;
@@ -58,10 +54,6 @@ public class CommonConstants {
     public static final String defaultServicePortKey = "serverPort";
     public static final String defaultServiceNameKey = "serverName";
     public static final String defaultSecretKeyKey = "secretKey";
-    public static final String defaultCdsIdentityUserKey = "cdsIdentityUser";
-    public static final String defaultCdsIdentityRoleKey = "cdsIdentityRole";
-    public static final String defaultCdsIdentityCustomerKey = "cdsIdentityCustomer";
-    public static final String defaultCdsIdentityApplicationKey = "cdsIdentityApplication";
 
     private static String csvFile;
     private static final Properties PROPERTIES = new Properties();
@@ -122,14 +114,6 @@ public class CommonConstants {
         return servicePort;
     }
 
-    public static String getServiceName() {
-        if (serviceName == null) {
-            serviceName = System.getProperty(defaultServiceNameKey, PROPERTIES.getProperty("service.name"));
-        }
-
-        return serviceName;
-    }
-
     public static String getSecretKey() {
         if (secretKey == null) {
             secretKey = System.getProperty(defaultSecretKeyKey, PROPERTIES.getProperty("secret.key"));
@@ -154,30 +138,6 @@ public class CommonConstants {
         return fmsServiceHost;
     }
 
-    public static String getFmsFileIdentity() {
-        if (fmsFileIdentity == null) {
-            fmsFileIdentity = System.getProperty("fmsFileIdentity", PROPERTIES.getProperty("fms.file.identity"));
-        }
-
-        return fmsFileIdentity;
-    }
-
-    public static String getAtsTokenUsername() {
-        if (atsTokenUsername == null) {
-            atsTokenUsername = System.getProperty("atsTokenUsername", PROPERTIES.getProperty("ats.token.username"));
-        }
-
-        return atsTokenUsername;
-    }
-
-    public static String getAtsTokenEmail() {
-        if (atsTokenEmail == null) {
-            atsTokenEmail = System.getProperty("atsTokenEmail", PROPERTIES.getProperty("ats.token.email"));
-        }
-
-        return atsTokenEmail;
-    }
-
     public static String getAtsTokenIssuer() {
         if (atsTokenIssuer == null) {
             atsTokenIssuer = System.getProperty("atsTokenIssuer", PROPERTIES.getProperty("ats.token.issuer"));
@@ -192,14 +152,6 @@ public class CommonConstants {
         }
 
         return atsTokenSubject;
-    }
-
-    public static String getAtsAuthApplication() {
-        if (atsAuthApplication == null) {
-            atsAuthApplication = System.getProperty("atsAuthApplication", PROPERTIES.getProperty("ats.auth.application"));
-        }
-
-        return atsAuthApplication;
     }
 
     public static String getAtsAuthTargetCloudContext() {
@@ -232,11 +184,6 @@ public class CommonConstants {
         }
 
         return cisPartIdentity;
-    }
-
-
-    public static void setCisPartIdentity(String identity) {
-        cisPartIdentity = System.setProperty("cisPartIdentity", identity);
     }
 
     public static String getCisReportIdentity() {
@@ -273,24 +220,6 @@ public class CommonConstants {
         return cisBatchIdentity;
     }
 
-    public static String getApitestsBasePath() {
-        if (apitestsBasePath == null) {
-            apitestsBasePath = System.getProperty("apitestsBasePath", PROPERTIES.getProperty("apitests.base.path"));
-        }
-
-        return apitestsBasePath;
-
-    }
-
-    public static String getApitestsResourcePath() {
-        if (apitestsResourcePath == null) {
-            apitestsResourcePath = System.getProperty("apitestsResourcePath", PROPERTIES.getProperty("apitests.resource.path"));
-        }
-
-        return apitestsResourcePath;
-
-    }
-
     public static String getNtsTargetCloudContext() {
         if (ntsTargetCloudContext == null) {
             ntsTargetCloudContext = System.getProperty("ntsTargetCloudContext", PROPERTIES.getProperty("nts.auth.targetCloudContext"));
@@ -309,24 +238,6 @@ public class CommonConstants {
 
     }
 
-    public static String getNtsEmailRecipientAddress() {
-        if (ntsEmailRecipientAddress == null) {
-            ntsEmailRecipientAddress = System.getProperty("ntsEmailRecipientAddress",
-                PROPERTIES.getProperty("nts.email.recipientAddress"));
-        }
-
-        return ntsEmailRecipientAddress;
-
-    }
-
-    public static String getNtsEmailSubject() {
-        if (ntsEmailSubject == null) {
-            ntsEmailSubject = System.getProperty("ntsEmailSubject", PROPERTIES.getProperty("nts.email.subject"));
-        }
-
-        return ntsEmailSubject;
-    }
-
     public static String getNtsEmailContent() {
         if (ntsEmailContent == null) {
             ntsEmailContent = System.getProperty("ntsEmailContent", PROPERTIES.getProperty("nts.email.content"));
@@ -334,13 +245,4 @@ public class CommonConstants {
 
         return ntsEmailContent;
     }
-
-    public static String getNtsEmailAttachment() {
-        if (ntsEmailAttachment == null) {
-            ntsEmailAttachment = System.getProperty("ntsEmailAttachment", PROPERTIES.getProperty("nts.email.attachment"));
-        }
-
-        return ntsEmailAttachment;
-    }
-
 }
