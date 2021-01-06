@@ -134,21 +134,12 @@ public class CommonConstants {
         return cisPartIdentity;
     }
 
-    public static void setCisReportIdentity(String identity) {
-        cisReportIdentity = System.setProperty("cisReportIdentity", identity);
-
-    }
-
     public static String getCisReportTypeIdentity() {
         if (cisReportTypeIdentity == null) {
             cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity", PROPERTIES.getProperty("cis.reportType.identity"));
         }
 
         return cisReportTypeIdentity;
-    }
-
-    public static void setCisBatchIdentity(String identity) {
-        cisBatchIdentity = System.getProperty("cisBatchIdentity", identity);
     }
 
     public static String getCisBatchIdentity() {

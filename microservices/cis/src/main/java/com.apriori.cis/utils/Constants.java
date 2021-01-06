@@ -155,8 +155,20 @@ public class Constants {
         return cisReportIdentity;
     }
 
+    /**
+     * Set report identity
+     * @param identity - the identity
+     */
     public static void setCisReportIdentity(String identity) {
-        Constants.cisReportIdentity = System.setProperty("cisReportIdentity", identity);
+        cisReportIdentity = System.setProperty("cisReportIdentity", identity);
+    }
+
+    /**
+     * Set batch identity
+     * @param identity - the identity
+     */
+    public static void setCisBatchIdentity(String identity) {
+        cisBatchIdentity = System.getProperty("cisBatchIdentity", identity);
     }
 }
 
