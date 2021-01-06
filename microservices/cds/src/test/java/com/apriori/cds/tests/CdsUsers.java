@@ -3,8 +3,8 @@ package com.apriori.cds.tests;
 import com.apriori.cds.entity.response.User;
 import com.apriori.cds.entity.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.dao.ServiceConnector;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -43,7 +43,7 @@ public class CdsUsers extends CdsTestUtil {
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
         url = String.format(url,
-                String.format("users/%s", CommonConstants.getCdsIdentityUser()));
+                String.format("users/%s", Constants.getCdsIdentityUser()));
         ResponseWrapper<User> response = getCommonRequest(url, true, User.class);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
