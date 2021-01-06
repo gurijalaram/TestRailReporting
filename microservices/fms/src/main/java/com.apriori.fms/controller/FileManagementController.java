@@ -2,6 +2,7 @@ package com.apriori.fms.controller;
 
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.fms.entity.response.FilesResponse;
+import com.apriori.fms.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -20,11 +21,11 @@ public class FileManagementController {
     private static String finalUrl = "https://%s/files/";
 
     public static ResponseWrapper<FilesResponse> getFiles(String token) {
-        return getFileInfo(FilesResponse.class,  CommonConstants.getFmsServiceHost(), token, null);
+        return getFileInfo(FilesResponse.class,  Constants.getFmsServiceHost(), token, null);
     }
 
     public static ResponseWrapper<FileResponse> getFileByIdentity(String token, String fileIdentity) {
-        return getFileInfo(FileResponse.class,  CommonConstants.getFmsServiceHost(), token, fileIdentity);
+        return getFileInfo(FileResponse.class,  Constants.getFmsServiceHost(), token, fileIdentity);
     }
 
     public static <T> ResponseWrapper<T> getFileInfo(Class klass, String url, String token,  String fileIdentity) {
@@ -43,7 +44,7 @@ public class FileManagementController {
 
     public static ResponseWrapper<FileResponse> uploadFile(String token, ProcessGroupEnum processGroup, String fileName) {
 
-        RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, CommonConstants.getFmsServiceHost()), FileResponse.class)
+        RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, Constants.getFmsServiceHost()), FileResponse.class)
                 .setHeaders(initHeaders(token, true))
                 .setMultiPartFiles(new MultiPartFiles()
                         .use("data", FileResourceUtil.getCloudFile(processGroup, fileName))
