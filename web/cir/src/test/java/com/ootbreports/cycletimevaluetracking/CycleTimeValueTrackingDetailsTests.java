@@ -2,27 +2,21 @@ package com.ootbreports.cycletimevaluetracking;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.navigation.CommonReportTests;
 import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
-
 
 public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
@@ -100,9 +94,8 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "2334")
-    @Description("Validate Cycle Time Value Tracking Details report aligns to aP desktop values (where appropriate)")
+    @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
                 .login()

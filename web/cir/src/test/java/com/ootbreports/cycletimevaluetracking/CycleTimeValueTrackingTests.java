@@ -15,8 +15,6 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import utils.Constants;
 
 public class CycleTimeValueTrackingTests extends TestBase {

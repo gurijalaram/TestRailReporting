@@ -30,6 +30,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import utils.Constants;
 
@@ -763,6 +764,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1927")
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
@@ -776,18 +778,22 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        /**
-         * Continue from step 6 through 10
-         * 1. Log in
-         * 2. Go to Assembly Details report
-         * 3. Select top level multi vpe export set
-         * 4. Assembly Select - top level
-         * 5. Click ok
-         * 6. Assert that China VPE used for Sub Assembly and rest are USA
-         * 7. Store all reports VPE's
-         * 8. Go to CID in new tab
-         * 9. Filter to get right part (Top Level)
-         * 10. Get VPE's and assert that all match reports VPE's
-         */
+        ArrayList<String> reportsVpeValues = genericReportPage.getAllVpeValuesAssemblyDetailsReport();
+
+        genericReportPage.openNewCidTabAndFocus(1);
+
+        ComponentsPage componentsPage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PRIVATE_WORKSPACE)
+                .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
+                .setRowTwo("Scenario Name", "Contains", "Multi VPE")
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openComponentsTable();
+
+        ArrayList<String> cidVpeValues = componentsPage.getVpeValues();
+
+        assertThat(reportsVpeValues.equals(cidVpeValues), is(equalTo(true)));
     }
 }

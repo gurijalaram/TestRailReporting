@@ -2130,6 +2130,25 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Gets all VPE Values from Assembly Details Report
+     * @return ArrayList of type String
+     */
+    public ArrayList<String> getAllVpeValuesAssemblyDetailsReport() {
+        ArrayList<String> vpeValues = new ArrayList<>();
+
+        String[] partNames = { "3570823", "3570824", "3574255", "SUB-SUB-ASM", "3571050", "3575132", "3575133",
+                "3575134", "0200613", "0362752", "3538968", "SUB-ASSEMBLY", "3575135" };
+
+        String locator = "//span[contains(text(), '%s')]/ancestor::tr[@style='height:15px']/td[16]/span";
+
+        for (String partName : partNames) {
+            vpeValues.add(driver.findElement(By.xpath(String.format(locator, partName))).getText());
+        }
+
+        return vpeValues;
+    }
+
+    /**
      * Gets dropdown index from date
      * @param date - date to use
      * @return int - index value
