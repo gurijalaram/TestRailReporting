@@ -89,16 +89,6 @@ public class CommonConstants {
         return csvFile = csvFile == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
     }
 
-    private static String buildMode;
-
-    public static String getBuildMode() {
-        if (buildMode == null) {
-            buildMode = System.getProperty(DEFAULT_BUILD_MODE_KEY, DEFAULT_BUILD_MODE_VALUE);
-        }
-
-        return buildMode;
-    }
-
     public static String getServiceHost() {
         if (serviceHost == null) {
             serviceHost = System.getProperty(defaultServiceHostKey, PROPERTIES.getProperty("service.host"));
