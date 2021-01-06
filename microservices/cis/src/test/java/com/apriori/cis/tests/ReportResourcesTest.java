@@ -7,7 +7,6 @@ import com.apriori.cis.controller.ReportResources;
 import com.apriori.cis.entity.request.NewReportRequest;
 import com.apriori.cis.entity.response.Report;
 import com.apriori.cis.utils.CisUtils;
-
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.CommonConstants;
@@ -107,11 +106,7 @@ public class ReportResourcesTest extends TestUtil {
                 }
                 count += 1;
             }
-
         }
-
         ReportResources.exportReport(reportIdentity);
-
     }
-
 }
