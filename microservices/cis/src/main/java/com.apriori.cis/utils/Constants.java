@@ -124,5 +124,25 @@ public class Constants {
         cisCustomerIdentity = cisCustomerIdentity == null ? PROPERTIES.getProperty("cis.customer.identity") : System.getProperty("cisCustomerIdentity");
         return cisCustomerIdentity;
     }
+
+    /**
+     * Get part identity
+     *
+     * @return string
+     */
+    public static String getCisPartIdentity() {
+        cisPartIdentity = cisPartIdentity == null ? PROPERTIES.getProperty("cis.part.identity") : System.getProperty("cisPartIdentity");
+        return cisPartIdentity;
+    }
+
+    /**
+     * Get report type identity
+     *
+     * @return string
+     */
+    public static String getCisReportTypeIdentity() {
+        cisReportTypeIdentity = cisReportTypeIdentity == null ? PROPERTIES.getProperty("cis.reportType.identity") : System.getProperty("cisReportTypeIdentity");
+        return cisReportTypeIdentity;
+    }
 }
 
