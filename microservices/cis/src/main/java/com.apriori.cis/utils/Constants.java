@@ -17,6 +17,12 @@ public class Constants {
     public static String environment;
     private static String costingThreads;
     private static String pollingTimeout;
+    private static String cisServiceHost;
+    private static String cisPartIdentity;
+    private static String cisReportIdentity;
+    private static String cisReportTypeIdentity;
+    private static String cisBatchIdentity;
+    private static String secretKey;
     private static String baseUrl;
 
     static {
@@ -76,6 +82,36 @@ public class Constants {
      */
     public static void setPollingTimeout(Integer pollingTimeout) {
         Constants.pollingTimeout = pollingTimeout.toString();
+    }
+
+    /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        secretKey = secretKey == null ? PROPERTIES.getProperty("secretKey") : System.getProperty("secret.key");
+        return secretKey;
+    }
+
+    /**
+     * Get service host
+     *
+     * @return string
+     */
+    public static String getCisServiceHost() {
+        cisServiceHost = cisServiceHost == null ? PROPERTIES.getProperty("cisServiceHost") : System.getProperty("cis.service.host");
+        return secretKey;
+    }
+
+    /**
+     * Get batch identity
+     *
+     * @return string
+     */
+    public static String getCisBatchIdentity() {
+        cisBatchIdentity = cisBatchIdentity == null ? PROPERTIES.getProperty("cis.batch.identity") : System.getProperty("cisBatchIdentity");
+        return secretKey;
     }
 }
 
