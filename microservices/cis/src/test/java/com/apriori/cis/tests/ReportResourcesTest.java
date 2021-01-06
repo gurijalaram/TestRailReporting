@@ -67,7 +67,7 @@ public class ReportResourcesTest extends TestUtil {
 
         try {
             String reportIdentity = CisUtils.getIdentity(report, Report.class);
-            CommonConstants.setCisReportIdentity(reportIdentity);
+            Constants.setCisReportIdentity(reportIdentity);
         } catch (Exception e) {
             logger.error(e.getMessage());
             logger.error(Arrays.toString(e.getStackTrace()));
