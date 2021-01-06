@@ -21,6 +21,7 @@ public class Constants {
     private static String cisPartIdentity;
     private static String cisReportIdentity;
     private static String cisReportTypeIdentity;
+    private static String cisCustomerIdentity;
     private static String cisBatchIdentity;
     private static String secretKey;
     private static String baseUrl;
@@ -101,7 +102,7 @@ public class Constants {
      */
     public static String getCisServiceHost() {
         cisServiceHost = cisServiceHost == null ? PROPERTIES.getProperty("cisServiceHost") : System.getProperty("cis.service.host");
-        return secretKey;
+        return cisServiceHost;
     }
 
     /**
@@ -111,7 +112,17 @@ public class Constants {
      */
     public static String getCisBatchIdentity() {
         cisBatchIdentity = cisBatchIdentity == null ? PROPERTIES.getProperty("cis.batch.identity") : System.getProperty("cisBatchIdentity");
-        return secretKey;
+        return cisBatchIdentity;
+    }
+
+    /**
+     * Get customer identity
+     *
+     * @return string
+     */
+    public static String getCisCustomerIdentity() {
+        cisCustomerIdentity = cisCustomerIdentity == null ? PROPERTIES.getProperty("cis.customer.identity") : System.getProperty("cisCustomerIdentity");
+        return cisCustomerIdentity;
     }
 }
 

@@ -11,7 +11,7 @@ public class CisBase {
     }
 
     public static String getCisUrl() {
-        StringBuilder url = new StringBuilder(baseUrl).append("/").append(CommonConstants.getCisCustomerIdentity())
+        StringBuilder url = new StringBuilder(baseUrl).append("/").append(Constants.getCisCustomerIdentity())
                 .append("/%s?key=").append(Constants.getSecretKey());
         return url.toString();
     }

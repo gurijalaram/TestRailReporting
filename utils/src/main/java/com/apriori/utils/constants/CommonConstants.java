@@ -22,8 +22,6 @@ public class CommonConstants {
     private static String serviceHost;
     private static String servicePort;
     private static String secretKey;
-    private static String atsTokenIssuer;
-    private static String atsTokenSubject;
     private static String atsAuthTargetCloudContext;
     private static String fmsServiceHost;
     private static String cisCustomerIdentity;
@@ -103,22 +101,6 @@ public class CommonConstants {
         }
 
         return fmsServiceHost;
-    }
-
-    public static String getAtsTokenIssuer() {
-        if (atsTokenIssuer == null) {
-            atsTokenIssuer = System.getProperty("atsTokenIssuer", PROPERTIES.getProperty("ats.token.issuer"));
-        }
-
-        return atsTokenIssuer;
-    }
-
-    public static String getAtsTokenSubject() {
-        if (atsTokenSubject == null) {
-            atsTokenSubject = System.getProperty("atsTokenSubject", PROPERTIES.getProperty("ats.token.subject"));
-        }
-
-        return atsTokenSubject;
     }
 
     public static String getAtsAuthTargetCloudContext() {
