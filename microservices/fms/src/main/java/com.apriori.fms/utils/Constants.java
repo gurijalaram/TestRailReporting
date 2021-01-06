@@ -16,6 +16,8 @@ public class Constants {
     private static final File INPUT_STREAM;
     private static String fmsServiceHost;
     private static String fmsFileIdentity;
+    private static String fmsTokenIssuer;
+    private static String fmsTokenSubject;
 
     static {
         System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
@@ -47,4 +49,21 @@ public class Constants {
         return fmsFileIdentity = fmsFileIdentity == null ? PROPERTIES.getProperty("fms.file.identity") : System.getProperty("fmsFileIdentity");
     }
 
+    /**
+     * Get token issuer
+     *
+     * @return string
+     */
+    public static String getFmsTokenIssuer() {
+        return fmsTokenIssuer = fmsTokenIssuer == null ? PROPERTIES.getProperty("fms.token.issuer") : System.getProperty("fmsTokenIssuer");
+    }
+
+    /**
+     * Get token subject
+     *
+     * @return string
+     */
+    public static String getFmsTokenSubject() {
+        return fmsTokenSubject = fmsTokenSubject == null ? PROPERTIES.getProperty("fms.token.subject") : System.getProperty("fmsTokenSubject");
+    }
 }
