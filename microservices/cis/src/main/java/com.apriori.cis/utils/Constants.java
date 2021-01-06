@@ -144,5 +144,19 @@ public class Constants {
         cisReportTypeIdentity = cisReportTypeIdentity == null ? PROPERTIES.getProperty("cis.reportType.identity") : System.getProperty("cisReportTypeIdentity");
         return cisReportTypeIdentity;
     }
+
+    /**
+     * Get report identity
+     *
+     * @return string
+     */
+    public static String getCisReportIdentity() {
+        cisReportIdentity = cisReportIdentity == null ? PROPERTIES.getProperty("cis.report.identity") : System.getProperty("cisReportIdentity");
+        return cisReportIdentity;
+    }
+
+    public static void setCisReportIdentity(String identity) {
+        Constants.cisReportIdentity = System.setProperty("cisReportIdentity", identity);
+    }
 }
 

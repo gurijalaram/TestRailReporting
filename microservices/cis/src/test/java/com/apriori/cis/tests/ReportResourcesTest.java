@@ -7,6 +7,7 @@ import com.apriori.cis.controller.ReportResources;
 import com.apriori.cis.entity.request.NewReportRequest;
 import com.apriori.cis.entity.response.Report;
 import com.apriori.cis.utils.CisUtils;
+import com.apriori.cis.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.CommonConstants;
@@ -37,7 +38,7 @@ public class ReportResourcesTest extends TestUtil {
     @TestRail(testCaseId = "4182")
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
-        ReportResources.getReportRepresentation(CommonConstants.getCisReportIdentity());
+        ReportResources.getReportRepresentation(Constants.getCisReportIdentity());
     }
 
     @Test

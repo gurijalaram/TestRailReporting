@@ -27,7 +27,6 @@ public class CommonConstants {
     private static String cisCustomerIdentity;
     private static String cisServiceHost;
     private static String cisPartIdentity;
-    private static String cisReportIdentity;
     private static String cisReportTypeIdentity;
     private static String cisBatchIdentity;
     private static String ntsTargetCloudContext;
@@ -134,15 +133,6 @@ public class CommonConstants {
 
         return cisPartIdentity;
     }
-
-    public static String getCisReportIdentity() {
-        if (cisReportIdentity == null) {
-            cisReportIdentity = System.getProperty("cisReportIdentity", PROPERTIES.getProperty("cis.report.identity"));
-        }
-
-        return cisReportIdentity;
-    }
-
 
     public static void setCisReportIdentity(String identity) {
         cisReportIdentity = System.setProperty("cisReportIdentity", identity);
