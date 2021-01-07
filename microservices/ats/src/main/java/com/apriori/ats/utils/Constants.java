@@ -40,7 +40,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsServiceHost() {
-        return atsServiceHost = atsServiceHost == null ? PROPERTIES.getProperty("service.host") : System.getProperty("atsServiceHost");
+        return atsServiceHost = atsServiceHost == null ? PROPERTIES.getProperty("ats.service.host") : System.getProperty("atsServiceHost");
     }
 
     /**
