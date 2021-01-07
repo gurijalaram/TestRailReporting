@@ -40,7 +40,8 @@ public class Constants {
      * @return string
      */
     public static String getAtsServiceHost() {
-        return atsServiceHost = atsServiceHost == null ? PROPERTIES.getProperty("ats.service.host") : System.getProperty("atsServiceHost");
+        atsServiceHost = System.getProperty("atsServiceHost") == null ? PROPERTIES.getProperty("ats.service.host") : System.getProperty("atsServiceHost");
+        return atsServiceHost;
     }
 
     /**
@@ -49,7 +50,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsTokenUsername() {
-        return atsTokenUsername = atsTokenUsername == null ? PROPERTIES.getProperty("ats.token.username") : System.getProperty("atsTokenUsername");
+        return atsTokenUsername = System.getProperty("atsTokenUsername") == null ? PROPERTIES.getProperty("ats.token.username") : System.getProperty("atsTokenUsername");
     }
 
     /**
@@ -58,7 +59,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsTokenEmail() {
-        return atsTokenEmail = atsTokenEmail == null ? PROPERTIES.getProperty("ats.token.email") : System.getProperty("atsTokenEmail");
+        return atsTokenEmail = System.getProperty("atsTokenEmail") == null ? PROPERTIES.getProperty("ats.token.email") : System.getProperty("atsTokenEmail");
     }
 
     /**
@@ -67,7 +68,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsTokenIssuer() {
-        return atsTokenIssuer = atsTokenIssuer == null ? PROPERTIES.getProperty("ats.token.issuer") : System.getProperty("atsTokenIssuer");
+        return atsTokenIssuer = System.getProperty("atsTokenIssuer") == null ? PROPERTIES.getProperty("ats.token.issuer") : System.getProperty("atsTokenIssuer");
     }
 
     /**
@@ -76,7 +77,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsTokenSubject() {
-        return atsTokenSubject = atsTokenSubject == null ? PROPERTIES.getProperty("ats.token.subject") : System.getProperty("atsTokenSubject");
+        return atsTokenSubject = System.getProperty("atsTokenSubject") == null ? PROPERTIES.getProperty("ats.token.subject") : System.getProperty("atsTokenSubject");
     }
 
     /**
@@ -85,7 +86,7 @@ public class Constants {
      * @return string
      */
     public static String getAtsAuthApplication() {
-        return atsAuthApplication = atsAuthApplication == null ? PROPERTIES.getProperty("ats.auth.application") : System.getProperty("atsAuthApplication");
+        return atsAuthApplication = System.getProperty("atsAuthApplication") == null ? PROPERTIES.getProperty("ats.auth.application") : System.getProperty("atsAuthApplication");
     }
 
     /**
@@ -94,6 +95,6 @@ public class Constants {
      * @return string
      */
     public static String getAtsAuthTargetCloudContext() {
-        return atsAuthTargetCloudContext = atsAuthTargetCloudContext == null ? PROPERTIES.getProperty("ats.auth.targetCloudContext") : System.getProperty("atsAuthTargetCloudContext");
+        return atsAuthTargetCloudContext = System.getProperty("atsAuthTargetCloudContext") == null ? PROPERTIES.getProperty("ats.auth.targetCloudContext") : System.getProperty("atsAuthTargetCloudContext");
     }
 }
