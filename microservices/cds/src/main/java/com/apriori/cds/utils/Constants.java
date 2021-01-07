@@ -51,7 +51,7 @@ public class Constants {
      * @return string
      */
     public static String getCdsIdentityUser() {
-        return cdsIdentityUser = cdsIdentityUser == null ? PROPERTIES.getProperty("cds.identity.user") : System.getProperty("cdsIdentityUser");
+        return cdsIdentityUser = System.getProperty("cdsIdentityUser") == null ? PROPERTIES.getProperty("cds.identity.user") : System.getProperty("cdsIdentityUser");
     }
 
     /**
@@ -60,7 +60,7 @@ public class Constants {
      * @return string
      */
     public static String getCdsIdentityRole() {
-        return cdsIdentityRole = cdsIdentityRole == null ? PROPERTIES.getProperty("cds.identity.role") : System.getProperty("cdsIdentityRole");
+        return cdsIdentityRole = System.getProperty("cdsIdentityRole") == null ? PROPERTIES.getProperty("cds.identity.role") : System.getProperty("cdsIdentityRole");
     }
 
     /**
@@ -69,7 +69,7 @@ public class Constants {
      * @return string
      */
     public static String getCdsIdentityCustomer() {
-        return cdsIdentityCustomer = cdsIdentityCustomer == null ? PROPERTIES.getProperty("cds.identity.customer") : System.getProperty("cdsIdentityCustomer");
+        return cdsIdentityCustomer = System.getProperty("cdsIdentityCustomer") == null ? PROPERTIES.getProperty("cds.identity.customer") : System.getProperty("cdsIdentityCustomer");
     }
 
     /**
@@ -78,6 +78,6 @@ public class Constants {
      * @return string
      */
     public static String getCdsIdentityApplication() {
-        return cdsIdentityApplication = cdsIdentityApplication == null ? PROPERTIES.getProperty("cds.identity.application") : System.getProperty("cdsIdentityApplication");
+        return cdsIdentityApplication = System.getProperty("cdsIdentityApplication") == null ? PROPERTIES.getProperty("cds.identity.application") : System.getProperty("cdsIdentityApplication");
     }
 }
