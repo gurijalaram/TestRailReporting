@@ -238,8 +238,10 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
         WebElement scroller =
                 driver.findElement(By.cssSelector("div[data-ap-comp='part-viewer-panel'] div.v-grid-scroller-vertical"));
-        By locator = By.xpath("//div[@title='0362752']");
-        pageUtils.scrollToElement(locator, scroller, Constants.PAGE_DOWN);
+        By locator = By.xpath("//div[@title='3571050']");
+        //pageUtils.scrollToElement(locator, scroller, Constants.PAGE_DOWN);
+        pageUtils.scrollDown(By.cssSelector("div[data-ap-comp='part-viewer-panel'] div.v-grid-scroller-vertical"));
+        //pageUtils.waitForElementToAppear(By.xpath("div[title='3575135']"));
 
         getAndStoreVpeValue("3575132");
         getAndStoreVpeValue("3575133");

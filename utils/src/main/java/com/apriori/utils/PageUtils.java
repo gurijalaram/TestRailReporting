@@ -446,6 +446,13 @@ public class PageUtils {
         throw new AssertionError("Element is not clickable: " + element);
     }
 
+    public void scrollDown(By scroller) {
+        for (int i = 0; i < 3; i++) {
+            driver.findElement(scroller)
+                    .sendKeys(Keys.PAGE_DOWN);
+        }
+    }
+
     /**
      * Finds element in a table by scrolling.
      *
