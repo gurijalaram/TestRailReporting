@@ -18,6 +18,7 @@ public class Constants {
     private static String fmsFileIdentity;
     private static String fmsTokenIssuer;
     private static String fmsTokenSubject;
+    private static String serviceHost;
 
     static {
         System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
@@ -38,6 +39,15 @@ public class Constants {
      */
     public static String getFmsServiceHost() {
         return fmsServiceHost = System.getProperty("fmsServiceHost") == null ? PROPERTIES.getProperty("fms.service.host") : System.getProperty("fmsServiceHost");
+    }
+
+    /**
+     * Get service host
+     *
+     * @return string
+     */
+    public static String getServiceHost() {
+        return serviceHost = System.getProperty("serviceHost") == null ? PROPERTIES.getProperty("service.host") : System.getProperty("serviceHost");
     }
 
     /**
