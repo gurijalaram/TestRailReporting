@@ -78,7 +78,6 @@ public class AssemblyUploadTests extends TestBase {
 
     @Test
     @Issue("AP-60916")
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2655", "2647", "2643"})
     @Description("Uploaded STEP assembly and components can be recosted")
     public void costAssembly() {

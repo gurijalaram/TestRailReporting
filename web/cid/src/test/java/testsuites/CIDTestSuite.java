@@ -100,6 +100,7 @@ import testsuites.suiteinterface.SmokeTests;
     TwoModelMachiningTests.class,
     DecimalPlaceTests.class,
     UploadTests.class,
+    ListOfVPETests.class,
 })
 public class CIDTestSuite {
 }
