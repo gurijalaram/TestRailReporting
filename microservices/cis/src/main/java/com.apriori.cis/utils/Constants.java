@@ -56,8 +56,7 @@ public class Constants {
      * @return integer
      */
     public static Integer getCostingThreads() {
-        costingThreads = costingThreads == null ? PROPERTIES.getProperty("costing.threads") : System.getProperty("costingThreads");
-
+        costingThreads = System.getProperty("costingThreads") == null ? PROPERTIES.getProperty("costing.threads") : System.getProperty("costingThreads");
         return Integer.valueOf(costingThreads);
     }
 
@@ -74,7 +73,7 @@ public class Constants {
      * @return integer
      */
     public static Integer getPollingTimeout() {
-        pollingTimeout = pollingTimeout == null ? PROPERTIES.getProperty("polling.timeout") : System.getProperty("pollingTimeout");
+        pollingTimeout = System.getProperty("pollingTimeout") == null ? PROPERTIES.getProperty("polling.timeout") : System.getProperty("pollingTimeout");
         return Integer.valueOf(pollingTimeout);
     }
 
@@ -91,8 +90,7 @@ public class Constants {
      * @return string
      */
     public static String getSecretKey() {
-        secretKey = secretKey == null ? PROPERTIES.getProperty("secretKey") : System.getProperty("secret.key");
-        return secretKey;
+        return secretKey = System.getProperty("secret.key") == null ? PROPERTIES.getProperty("secretKey") : System.getProperty("secret.key");
     }
 
     /**
@@ -101,8 +99,7 @@ public class Constants {
      * @return string
      */
     public static String getCisServiceHost() {
-        cisServiceHost = cisServiceHost == null ? PROPERTIES.getProperty("cisServiceHost") : System.getProperty("cis.service.host");
-        return cisServiceHost;
+        return cisServiceHost = System.getProperty("cis.service.host") == null ? PROPERTIES.getProperty("cisServiceHost") : System.getProperty("cis.service.host");
     }
 
     /**
@@ -111,8 +108,16 @@ public class Constants {
      * @return string
      */
     public static String getCisBatchIdentity() {
-        cisBatchIdentity = cisBatchIdentity == null ? PROPERTIES.getProperty("cis.batch.identity") : System.getProperty("cisBatchIdentity");
-        return cisBatchIdentity;
+        return cisBatchIdentity = System.getProperty("cisBatchIdentity") == null ? PROPERTIES.getProperty("cis.batch.identity") : System.getProperty("cisBatchIdentity");
+    }
+
+    /**
+     * Set batch identity
+     *
+     * @param identity - the identity
+     */
+    public static void setCisBatchIdentity(String identity) {
+        cisBatchIdentity = System.getProperty("cisBatchIdentity", identity);
     }
 
     /**
@@ -121,8 +126,7 @@ public class Constants {
      * @return string
      */
     public static String getCisCustomerIdentity() {
-        cisCustomerIdentity = cisCustomerIdentity == null ? PROPERTIES.getProperty("cis.customer.identity") : System.getProperty("cisCustomerIdentity");
-        return cisCustomerIdentity;
+        return cisCustomerIdentity = System.getProperty("cisCustomerIdentity") == null ? PROPERTIES.getProperty("cis.customer.identity") : System.getProperty("cisCustomerIdentity");
     }
 
     /**
@@ -131,8 +135,7 @@ public class Constants {
      * @return string
      */
     public static String getCisPartIdentity() {
-        cisPartIdentity = cisPartIdentity == null ? PROPERTIES.getProperty("cis.part.identity") : System.getProperty("cisPartIdentity");
-        return cisPartIdentity;
+        return cisPartIdentity = System.getProperty("cisPartIdentity") == null ? PROPERTIES.getProperty("cis.part.identity") : System.getProperty("cisPartIdentity");
     }
 
     /**
@@ -141,8 +144,7 @@ public class Constants {
      * @return string
      */
     public static String getCisReportTypeIdentity() {
-        cisReportTypeIdentity = cisReportTypeIdentity == null ? PROPERTIES.getProperty("cis.reportType.identity") : System.getProperty("cisReportTypeIdentity");
-        return cisReportTypeIdentity;
+        return cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity") == null ? PROPERTIES.getProperty("cis.reportType.identity") : System.getProperty("cisReportTypeIdentity");
     }
 
     /**
@@ -151,24 +153,16 @@ public class Constants {
      * @return string
      */
     public static String getCisReportIdentity() {
-        cisReportIdentity = cisReportIdentity == null ? PROPERTIES.getProperty("cis.report.identity") : System.getProperty("cisReportIdentity");
-        return cisReportIdentity;
+        return cisReportIdentity = System.getProperty("cisReportIdentity") == null ? PROPERTIES.getProperty("cis.report.identity") : System.getProperty("cisReportIdentity");
     }
 
     /**
      * Set report identity
+     *
      * @param identity - the identity
      */
     public static void setCisReportIdentity(String identity) {
         cisReportIdentity = System.setProperty("cisReportIdentity", identity);
-    }
-
-    /**
-     * Set batch identity
-     * @param identity - the identity
-     */
-    public static void setCisBatchIdentity(String identity) {
-        cisBatchIdentity = System.getProperty("cisBatchIdentity", identity);
     }
 }
 
