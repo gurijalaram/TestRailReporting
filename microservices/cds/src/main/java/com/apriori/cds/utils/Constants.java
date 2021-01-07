@@ -20,6 +20,9 @@ public class Constants {
     private static String cdsIdentityCustomer;
     private static String cdsIdentityApplication;
     private static String baseUrl;
+    private static String serviceUrl;
+    private static String serviceHost;
+    private static String secretKey;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -43,6 +46,15 @@ public class Constants {
         System.setProperty("baseUrl", baseUrl);
 
         return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
+    }
+
+    /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("cdSecretKey") == null ? PROPERTIES.getProperty("cds.secret.key") : System.getProperty("cdSecretKey");
     }
 
     /**
@@ -79,5 +91,23 @@ public class Constants {
      */
     public static String getCdsIdentityApplication() {
         return cdsIdentityApplication = System.getProperty("cdsIdentityApplication") == null ? PROPERTIES.getProperty("cds.identity.application") : System.getProperty("cdsIdentityApplication");
+    }
+
+    /**
+     * Get service host
+     *
+     * @return string
+     */
+    public static String getServiceHost() {
+        return serviceHost = System.getProperty("cdsServiceHost") == null ? PROPERTIES.getProperty("cds.service.host") : System.getProperty("cdsServiceHost");
+    }
+
+    /**
+     * Builds the service url
+     *
+     * @return string
+     */
+    public static String getServiceUrl() {
+        return serviceUrl = "https://".concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
     }
 }
