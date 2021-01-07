@@ -17,16 +17,16 @@ public class SecurityManager {
         TokenRequest body = new TokenRequest();
         TokenInformation information = new TokenInformation();
         information
-                .setIssuer(issuer)
-                .setSubject(subject)
-                .setNameAndEmail(username, email);
+            .setIssuer(issuer)
+            .setSubject(subject)
+            .setNameAndEmail(username, email);
         body.setToken(information);
 
         Token token = (Token) GenericRequestUtil.postMultipart(
-                RequestEntity.init(url, Token.class)
-                        .setBody(body)
-                        .setStatusCode(statusCode),
-                new RequestAreaApi()
+            RequestEntity.init(url, Token.class)
+                .setBody(body)
+                .setStatusCode(statusCode),
+            new RequestAreaApi()
         ).getResponseEntity();
 
         return token.getToken();
@@ -41,10 +41,10 @@ public class SecurityManager {
         AuthorizeRequest body = request.setApplication(application).setTargetCloudContext(targetCloudContext).setToken(token);
 
         return (AuthorizationResponse) GenericRequestUtil.postMultipart(
-                RequestEntity.init(url, AuthorizationResponse.class)
-                        .setBody(body)
-                        .setStatusCode(statusCode),
-                new RequestAreaApi()
+            RequestEntity.init(url, AuthorizationResponse.class)
+                .setBody(body)
+                .setStatusCode(statusCode),
+            new RequestAreaApi()
         ).getResponseEntity();
     }
 }
