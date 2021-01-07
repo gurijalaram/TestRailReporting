@@ -45,7 +45,7 @@ public class CdsApplications extends CdsTestUtil {
     public void getApplicationById() {
         url = String.format(url, String.format("applications/%s", Constants.getCdsIdentityApplication()));
 
-        ResponseWrapper<Application> response =  getRequest(Application.class, false);
+        ResponseWrapper<Application> response = getRequest(Application.class, false);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
         validateApplication(response.getResponseEntity());
@@ -53,8 +53,8 @@ public class CdsApplications extends CdsTestUtil {
 
     private <T> ResponseWrapper<T> getRequest(Class klass, boolean urlEncoding) {
         return GenericRequestUtil.get(
-                RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
-                new RequestAreaApi()
+            RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
+            new RequestAreaApi()
         );
     }
 
@@ -64,7 +64,7 @@ public class CdsApplications extends CdsTestUtil {
     private void validateApplications(Applications applicationsResponse) {
         Object[] applications = applicationsResponse.getResponse().getItems().toArray();
         Arrays.stream(applications)
-                .forEach(this::validate);
+            .forEach(this::validate);
     }
 
     private void validateApplication(Application applicationResponse) {
