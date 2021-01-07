@@ -5,20 +5,12 @@ import com.apriori.ats.entity.response.AuthorizationResponse;
 import com.apriori.ats.service.SecurityManager;
 import com.apriori.ats.utils.Constants;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.dao.ServiceConnector;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
 import org.junit.Test;
 
 public class AtsAuthorization extends TestUtil {
-    private String url;
-
-    @Before
-    public void setServiceUrl() {
-        url = ServiceConnector.getServiceUrl();
-    }
 
     @Test
     @TestRail(testCaseId = "3581")
