@@ -19,6 +19,7 @@ public class Constants {
     private static String fmsTokenIssuer;
     private static String fmsTokenSubject;
     private static String serviceHost;
+    private static String fmsAuthTargetCloudContext;
 
     static {
         System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
@@ -75,5 +76,14 @@ public class Constants {
      */
     public static String getFmsTokenSubject() {
         return fmsTokenSubject = System.getProperty("fmsTokenSubject") == null ? PROPERTIES.getProperty("fms.token.subject") : System.getProperty("fmsTokenSubject");
+    }
+
+    /**
+     * Get target cloud context
+     *
+     * @return string
+     */
+    public static String getFmsAuthTargetCloudContext() {
+        return fmsAuthTargetCloudContext = System.getProperty("fmsAuthTargetCloudContext") == null ? PROPERTIES.getProperty("fms.auth.targetCloudContext") : System.getProperty("fmsAuthTargetCloudContext");
     }
 }
