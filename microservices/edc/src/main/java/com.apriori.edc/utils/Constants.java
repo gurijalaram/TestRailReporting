@@ -36,7 +36,7 @@ public class Constants {
      * @return string
      */
     public static String getEdcServiceHost() {
-        return edcServiceHost = edcServiceHost == null ? PROPERTIES.getProperty("edc.service.host") : System.getProperty("edcServiceHost");
+        return edcServiceHost = System.getProperty("edcServiceHost") == null ? PROPERTIES.getProperty("edc.service.host") : System.getProperty("edcServiceHost");
     }
 
     /**
@@ -45,7 +45,7 @@ public class Constants {
      * @return string
      */
     public static String getEdcTokenIssuer() {
-        return edcTokenIssuer = edcTokenIssuer == null ? PROPERTIES.getProperty("edc.token.issuer") : System.getProperty("edcTokenIssuer");
+        return edcTokenIssuer = System.getProperty("edcTokenIssuer") == null ? PROPERTIES.getProperty("edc.token.issuer") : System.getProperty("edcTokenIssuer");
     }
 
     /**
@@ -54,6 +54,6 @@ public class Constants {
      * @return string
      */
     public static String getEdcTokenSubject() {
-        return edcTokenSubject = edcTokenSubject == null ? PROPERTIES.getProperty("edc.token.subject") : System.getProperty("edcTokenSubject");
+        return edcTokenSubject = System.getProperty("edcTokenSubject") == null ? PROPERTIES.getProperty("edc.token.subject") : System.getProperty("edcTokenSubject");
     }
 }
