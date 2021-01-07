@@ -99,7 +99,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Casting")
     @TestRail(testCaseId = {"1591"})
     public void testProcessGroupCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getResourceAsFile("case_012_009-0020647_hinge_2.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();

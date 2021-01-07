@@ -330,7 +330,7 @@ public class ThreadTests extends TestBase {
     @Description("Testing a public thread cannot be edited")
     public void cannotEditPublicThread() {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
         currentUser = UserUtil.getUser();
