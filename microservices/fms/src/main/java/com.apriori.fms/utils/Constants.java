@@ -10,7 +10,7 @@ import java.util.Properties;
 public class Constants {
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "ats";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "fms";
     public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
@@ -37,7 +37,7 @@ public class Constants {
      * @return string
      */
     public static String getFmsServiceHost() {
-        return fmsServiceHost = fmsServiceHost == null ? PROPERTIES.getProperty("fms.service.host") : System.getProperty("fmsServiceHost");
+        return fmsServiceHost = System.getProperty("fmsServiceHost") == null ? PROPERTIES.getProperty("fms.service.host") : System.getProperty("fmsServiceHost");
     }
 
     /**
@@ -46,7 +46,7 @@ public class Constants {
      * @return string
      */
     public static String getFmsFileIdentity() {
-        return fmsFileIdentity = fmsFileIdentity == null ? PROPERTIES.getProperty("fms.file.identity") : System.getProperty("fmsFileIdentity");
+        return fmsFileIdentity = System.getProperty("fmsFileIdentity") == null ? PROPERTIES.getProperty("fms.file.identity") : System.getProperty("fmsFileIdentity");
     }
 
     /**
@@ -55,7 +55,7 @@ public class Constants {
      * @return string
      */
     public static String getFmsTokenIssuer() {
-        return fmsTokenIssuer = fmsTokenIssuer == null ? PROPERTIES.getProperty("fms.token.issuer") : System.getProperty("fmsTokenIssuer");
+        return fmsTokenIssuer = System.getProperty("fmsTokenIssuer") == null ? PROPERTIES.getProperty("fms.token.issuer") : System.getProperty("fmsTokenIssuer");
     }
 
     /**
@@ -64,6 +64,6 @@ public class Constants {
      * @return string
      */
     public static String getFmsTokenSubject() {
-        return fmsTokenSubject = fmsTokenSubject == null ? PROPERTIES.getProperty("fms.token.subject") : System.getProperty("fmsTokenSubject");
+        return fmsTokenSubject = System.getProperty("fmsTokenSubject") == null ? PROPERTIES.getProperty("fms.token.subject") : System.getProperty("fmsTokenSubject");
     }
 }
