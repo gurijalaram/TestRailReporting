@@ -73,7 +73,7 @@ public class RevertScenarioTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario(3)
-            .selectProcessGroup(ProcessGroupEnum.CASTING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .revert()
             .revertScenario();
 
