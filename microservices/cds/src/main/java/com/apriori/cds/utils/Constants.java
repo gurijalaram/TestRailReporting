@@ -23,6 +23,7 @@ public class Constants {
     private static String serviceUrl;
     private static String serviceHost;
     private static String secretKey;
+    private static String protocol;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -103,11 +104,20 @@ public class Constants {
     }
 
     /**
+     * Get protocol
+     *
+     * @return string
+     */
+    public static String getProtocol() {
+        return protocol = System.getProperty("cdsProtocol") == null ? PROPERTIES.getProperty("cds.protocol") : System.getProperty("cdsProtocol");
+    }
+
+    /**
      * Builds the service url
      *
      * @return string
      */
     public static String getServiceUrl() {
-        return serviceUrl = "https://".concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
+        return serviceUrl = getProtocol().concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
     }
 }
