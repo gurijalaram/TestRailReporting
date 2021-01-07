@@ -10,7 +10,7 @@ import java.util.Properties;
 public class Constants {
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "ats";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "nts";
     public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
@@ -38,7 +38,7 @@ public class Constants {
      * @return string
      */
     public static String getNtsServiceHost() {
-        return ntsServiceHost = ntsServiceHost == null ? PROPERTIES.getProperty("nts.service.host") : System.getProperty("ntsServiceHost");
+        return ntsServiceHost = System.getProperty("ntsServiceHost") == null ? PROPERTIES.getProperty("nts.service.host") : System.getProperty("ntsServiceHost");
     }
 
     /**
@@ -47,7 +47,7 @@ public class Constants {
      * @return string
      */
     public static String getNtsEmailRecipientAddress() {
-        return ntsEmailRecipientAddress = ntsEmailRecipientAddress == null ? PROPERTIES.getProperty("nts.email.recipientAddress") : System.getProperty("ntsRecipientAddress");
+        return ntsEmailRecipientAddress = System.getProperty("ntsRecipientAddress") == null ? PROPERTIES.getProperty("nts.email.recipientAddress") : System.getProperty("ntsRecipientAddress");
     }
 
     /**
@@ -56,7 +56,7 @@ public class Constants {
      * @return string
      */
     public static String getNtsEmailSubject() {
-        return ntsEmailSubject = ntsEmailSubject == null ? PROPERTIES.getProperty("nts.email.subject") : System.getProperty("ntsEmailSubject");
+        return ntsEmailSubject = System.getProperty("ntsEmailSubject") == null ? PROPERTIES.getProperty("nts.email.subject") : System.getProperty("ntsEmailSubject");
     }
 
     /**
@@ -65,7 +65,7 @@ public class Constants {
      * @return string
      */
     public static String getNtsEmailContent() {
-        return ntsEmailContent = ntsEmailContent == null ? PROPERTIES.getProperty("nts.email.content") : System.getProperty("ntsEmailContent");
+        return ntsEmailContent = System.getProperty("ntsEmailContent") == null ? PROPERTIES.getProperty("nts.email.content") : System.getProperty("ntsEmailContent");
     }
 
     /**
@@ -74,6 +74,6 @@ public class Constants {
      * @return string
      */
     public static String getNtsEmailAttachment() {
-        return ntsEmailAttachment = ntsEmailAttachment == null ? PROPERTIES.getProperty("nts.email.attachment") : System.getProperty("ntsEmailAttachment");
+        return ntsEmailAttachment = System.getProperty("ntsEmailAttachment") == null ? PROPERTIES.getProperty("nts.email.attachment") : System.getProperty("ntsEmailAttachment");
     }
 }
