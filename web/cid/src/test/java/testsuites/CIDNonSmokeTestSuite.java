@@ -102,5 +102,5 @@ import testsuites.suiteinterface.SmokeTests;
     UploadTests.class,
     ListOfVPETests.class,
 })
-public class CIDTestSuite {
+public class CIDNonSmokeTestSuite {
 }
