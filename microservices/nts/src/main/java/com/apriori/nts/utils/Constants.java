@@ -19,6 +19,7 @@ public class Constants {
     private static String ntsEmailSubject;
     private static String ntsEmailContent;
     private static String ntsEmailAttachment;
+    private static String secretKey;
 
     static {
         System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
@@ -39,6 +40,15 @@ public class Constants {
      */
     public static String getNtsServiceHost() {
         return ntsServiceHost = System.getProperty("ntsServiceHost") == null ? PROPERTIES.getProperty("nts.service.host") : System.getProperty("ntsServiceHost");
+    }
+
+    /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("ntsSecretKey") == null ? PROPERTIES.getProperty("nts.secret.key") : System.getProperty("ntsSecretKey");
     }
 
     /**

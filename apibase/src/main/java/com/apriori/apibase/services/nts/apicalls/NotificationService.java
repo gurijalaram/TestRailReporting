@@ -146,8 +146,8 @@ public class NotificationService {
         ).getResponseEntity();
     }
 
-    public static Notifications getNotifications() {
-        String url = "https://" + CommonConstants.getNtsServiceHost() + "/notifications?key=" + CommonConstants.getSecretKey();
+    public static Notifications getNotifications(String serviceHost, String secretKey) {
+        String url = "https://" + serviceHost + "/notifications?key=" + secretKey;
         return (Notifications) GenericRequestUtil.get(
                 RequestEntity.init(url, Notifications.class),
                 new RequestAreaApi()
