@@ -1,6 +1,5 @@
 package testsuites;
 
-
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.compare.EditPublicComparisonTests;
