@@ -18,7 +18,7 @@ public class FileManagementControllerTest extends TestUtil {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        token = SecurityManager.retrieveJwtToken(
+        token = SecurityManager.retrieveJwtToken(Constants.getSecretKey(),
             Constants.getServiceHost(),
             HttpStatus.SC_CREATED,
             "splunkett",

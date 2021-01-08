@@ -55,7 +55,7 @@ public class Constants {
      * @return string
      */
     public static String getSecretKey() {
-        return secretKey = System.getProperty("cdSecretKey") == null ? PROPERTIES.getProperty("cds.secret.key") : System.getProperty("cdSecretKey");
+        return secretKey = System.getProperty("cdsSecretKey") == null ? PROPERTIES.getProperty("cds.secret.key") : System.getProperty("cdsSecretKey");
     }
 
     /**

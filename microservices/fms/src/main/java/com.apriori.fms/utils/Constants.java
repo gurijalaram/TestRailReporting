@@ -20,6 +20,7 @@ public class Constants {
     private static String fmsTokenSubject;
     private static String serviceHost;
     private static String fmsAuthTargetCloudContext;
+    private static String secretKey;
 
     static {
         System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
@@ -85,5 +86,14 @@ public class Constants {
      */
     public static String getFmsAuthTargetCloudContext() {
         return fmsAuthTargetCloudContext = System.getProperty("fmsAuthTargetCloudContext") == null ? PROPERTIES.getProperty("fms.auth.targetCloudContext") : System.getProperty("fmsAuthTargetCloudContext");
+    }
+
+    /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("fmsSecretKey") == null ? PROPERTIES.getProperty("fms.secret.key") : System.getProperty("fmsSecretKey");
     }
 }

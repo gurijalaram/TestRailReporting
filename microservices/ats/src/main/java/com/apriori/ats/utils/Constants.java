@@ -21,6 +21,7 @@ public class Constants {
     private static String atsTokenSubject;
     private static String atsAuthApplication;
     private static String atsAuthTargetCloudContext;
+    private static String secretKey;
 
     static {
         System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
@@ -96,5 +97,14 @@ public class Constants {
      */
     public static String getAtsAuthTargetCloudContext() {
         return atsAuthTargetCloudContext = System.getProperty("atsAuthTargetCloudContext") == null ? PROPERTIES.getProperty("ats.auth.targetCloudContext") : System.getProperty("atsAuthTargetCloudContext");
+    }
+
+    /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("atsSecretKey") == null ? PROPERTIES.getProperty("ats.secret.key") : System.getProperty("atsSecretKey");
     }
 }
