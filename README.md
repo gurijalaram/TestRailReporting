@@ -73,7 +73,7 @@
 
 ## How to run multiple suites
 1. Open Terminal to root `build` directory
-Run `gradle clean :cid:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDTestSuite" --tests "testsuites.SmokeTestSuite"`
+Run `gradle clean :cid:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDTestSuite" --tests "testsuites.CIDSmokeTestSuite"`
 
 ## Build Gradle jar files
 1. Download and install Gradle 6.1.1 (this is the version that was first used on the project)

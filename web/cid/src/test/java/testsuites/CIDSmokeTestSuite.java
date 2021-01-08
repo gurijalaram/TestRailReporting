@@ -95,5 +95,5 @@ import testsuites.suiteinterface.SmokeTests;
     ChangeStockSelectionTests.class,
     CostAllCadTests.class,
 })
-public class SmokeTestSuite {
+public class CIDSmokeTestSuite {
 }
