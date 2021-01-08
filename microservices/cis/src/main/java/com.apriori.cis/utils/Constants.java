@@ -90,7 +90,7 @@ public class Constants {
      * @return string
      */
     public static String getSecretKey() {
-        return secretKey = System.getProperty("secret.key") == null ? PROPERTIES.getProperty("secretKey") : System.getProperty("secret.key");
+        return secretKey = System.getProperty("secretKey") == null ? PROPERTIES.getProperty("secret.key") : System.getProperty("secretKey");
     }
 
     /**
@@ -99,7 +99,7 @@ public class Constants {
      * @return string
      */
     public static String getCisServiceHost() {
-        return cisServiceHost = System.getProperty("cis.service.host") == null ? PROPERTIES.getProperty("cisServiceHost") : System.getProperty("cis.service.host");
+        return cisServiceHost = System.getProperty("cisServiceHost") == null ? PROPERTIES.getProperty("cis.service.host") : System.getProperty("cisServiceHost");
     }
 
     /**

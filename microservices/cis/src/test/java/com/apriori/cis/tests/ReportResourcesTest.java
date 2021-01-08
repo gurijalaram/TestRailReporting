@@ -10,7 +10,6 @@ import com.apriori.cis.utils.CisUtils;
 import com.apriori.cis.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
@@ -82,7 +81,7 @@ public class ReportResourcesTest extends TestUtil {
         Object rptObj = JsonManager.deserializeJsonFromStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"), NewReportRequest.class);
 
-        Report report = ReportResources.createReport(rptObj, CommonConstants.getCisPartIdentity());
+        Report report = ReportResources.createReport(rptObj, Constants.getCisPartIdentity());
         String reportIdentity = report.getResponse().getIdentity();
         String reportState;
 
