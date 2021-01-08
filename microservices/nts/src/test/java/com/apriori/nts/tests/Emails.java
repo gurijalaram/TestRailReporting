@@ -19,7 +19,7 @@ public class Emails {
 
     @Before
     public void setServiceUrl() {
-        baseUrl =             "https://" + Constants.getNtsServiceHost() + "/emails%s?key=" + Constants.getSecretKey();
+        baseUrl = "https://" + Constants.getNtsServiceHost() + "/emails%s?key=" + Constants.getSecretKey();
     }
 
     @Test
@@ -40,7 +40,7 @@ public class Emails {
         GetEmailResponse getEmailResponse = NotificationService.getEmails(baseUrl, Constants.getTargetCloudContext());
         propertyStore.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
         JsonManager.serializeJsonToFile(FileResourceUtil.getResourceAsFile("property-store.json").getPath(),
-                propertyStore);
+            propertyStore);
     }
 
     @Test
@@ -48,8 +48,8 @@ public class Emails {
     @Description("Get a single email using the NTS API")
     public void getEmail() {
         propertyStore = (PropertyStore) JsonManager.deserializeJsonFromStream(
-                FileResourceUtil.getResourceFileStream("property-store.json"),
-                PropertyStore.class);
+            FileResourceUtil.getResourceFileStream("property-store.json"),
+            PropertyStore.class);
         String identity = propertyStore.getEmailIdentity();
         NotificationService.getEmail(baseUrl, identity, Constants.getTargetCloudContext());
     }
