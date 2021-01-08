@@ -91,7 +91,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(testCaseId = {"3844", "3941"})
     public void testOpenSourceModel() {
@@ -127,7 +126,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
     @TestRail(testCaseId = {"3940", "3946", "4133"})
     public void multiLevel2Model() {
@@ -182,7 +180,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"4178", "4138"})
     public void testOpenPublicSourceModel() {

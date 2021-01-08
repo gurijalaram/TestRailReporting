@@ -12,7 +12,6 @@ import com.evaluate.CostAllCadTests;
 import com.evaluate.DeletePrivateScenarioTests;
 import com.evaluate.DeletePublicScenarioTests;
 import com.evaluate.DeleteScenarioIterationsTests;
-import com.evaluate.ListOfVPETests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
@@ -65,14 +64,11 @@ import testsuites.suiteinterface.SmokeTests;
     GeometryTests.class,
     ThreadTests.class,
     ToleranceTests.class,
-    ChangeStockSelectionTests.class,
     ChangeMaterialSelectionTests.class,
     AssemblyUploadTests.class,
-    CostAllCadTests.class,
     DeletePrivateScenarioTests.class,
     DeletePublicScenarioTests.class,
     DeleteScenarioIterationsTests.class,
-    ListOfVPETests.class,
     ListProcessGroupTests.class,
     NewScenarioNameTests.class,
     ProcessGroupsTests.class,
@@ -96,6 +92,8 @@ import testsuites.suiteinterface.SmokeTests;
     MaterialPMITests.class,
     RevertScenarioTests.class,
     TwoModelMachiningTests.class,
+    ChangeStockSelectionTests.class,
+    CostAllCadTests.class,
 })
 public class SmokeTestSuite {
 }

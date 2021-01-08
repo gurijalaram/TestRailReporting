@@ -60,7 +60,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"679", "653", "670"})
     @Description("Test secondary process leak test")
     public void secondaryProcessLeakTest() {
@@ -821,7 +820,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"665"})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
@@ -844,7 +842,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"671", "672", "677"})
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {

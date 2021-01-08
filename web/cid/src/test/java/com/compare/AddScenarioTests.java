@@ -45,7 +45,6 @@ public class AddScenarioTests extends TestBase {
 
     @Test
     @Issue("AP-61539")
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"3847", "412", "1171"})
     @Description("Test filtering and adding a private scenario then searching component table for the scenario")
     public void filterAddPrivateScenario() {
@@ -231,7 +230,6 @@ public class AddScenarioTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"441"})
     @Description("In comparison view, user can access any scenario included in the comparison")
     public void accessScenarioIncludedInComparison() {
@@ -346,7 +344,6 @@ public class AddScenarioTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"445"})
     @Description("While in an open private comparison, user is able to expand and collapse each section of the comparison")
     public void expandCollapseSectionsInPrivateComparison() {
@@ -399,7 +396,6 @@ public class AddScenarioTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"445"})
     @Description("While in an open public comparison, user is able to expand and collapse each section of the comparison")
     public void expandCollapseSectionsInPublicComparison() {
