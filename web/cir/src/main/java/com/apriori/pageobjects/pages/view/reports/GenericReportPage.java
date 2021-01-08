@@ -2137,7 +2137,7 @@ public class GenericReportPage extends ReportsPageHeader {
         ArrayList<String> vpeValues = new ArrayList<>();
 
         String[] partNames = { "3570823", "3570824", "3574255", "SUB-SUB-ASM", "3571050", "3575132", "3575133",
-                "3575134", "0200613", "0362752", "3538968", "SUB-ASSEMBLY", "3575135" };
+            "3575134", "0200613", "0362752", "3538968", "SUB-ASSEMBLY", "3575135" };
 
         String locator = "//span[contains(text(), '%s')]/ancestor::tr[@style='height:15px']/td[16]/span";
 

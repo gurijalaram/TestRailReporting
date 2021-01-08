@@ -3,14 +3,12 @@ package com.pageobjects.pages.evaluate;
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 
-import com.pageobjects.common.ScenarioTablePage;
 import com.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.utils.Constants;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -59,7 +57,6 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private ScenarioTablePage scenarioTablePage;
     private ColumnUtils columnUtils;
     private ComponentsPage componentsPage;
     private ArrayList<String> vpeValues = new ArrayList<>();
