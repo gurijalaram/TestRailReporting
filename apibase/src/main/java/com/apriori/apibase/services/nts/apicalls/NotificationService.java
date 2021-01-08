@@ -59,7 +59,7 @@ public class NotificationService {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("recipientAddress", emailSetup.getUsername());
         params.put("subject", subject);
         params.put("content", CommonConstants.getNtsEmailContent());
@@ -86,13 +86,13 @@ public class NotificationService {
     }
 
     public static SendEmailResponse sendEmailWithTemplate(String subject, String templateName) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("templateName", templateName);
         return sendEmail(subject, params);
     }
 
     public static SendEmailResponse sendEmailAsBatch(String subject, String batchIdentifier) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("sendAsBatch", "true");
         params.put("batchIdentifier", batchIdentifier);
 
@@ -103,7 +103,7 @@ public class NotificationService {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("recipientAddress", emailSetup.getUsername());
         params.put("subject", subject);
         params.put("content", CommonConstants.getNtsEmailContent());
