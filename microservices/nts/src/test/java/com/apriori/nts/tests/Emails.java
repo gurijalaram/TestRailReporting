@@ -10,17 +10,24 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class Emails {
     private PropertyStore propertyStore = new PropertyStore();
+    private String baseUrl;
+
+    @Before
+    public void setServiceUrl() {
+        baseUrl =             "https://" + Constants.getNtsServiceHost() + "/emails%s?key=" + Constants.getSecretKey();
+    }
 
     @Test
     @TestRail(testCaseId = "3828")
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         String subject = String.format("%s_%d", Constants.getNtsEmailSubject(), System.currentTimeMillis());
-        NotificationService.sendEmail(subject);
+        NotificationService.sendEmail(baseUrl, subject, Constants.getNtsEmailContent());
         Boolean emailExists = NotificationService.validateEmail(subject);
         Assert.assertEquals(true, emailExists);
     }
@@ -30,7 +37,7 @@ public class Emails {
     @TestRail(testCaseId = "3880")
     @Description("Get a list of emails using the NTS API")
     public void getEmails() {
-        GetEmailResponse getEmailResponse = NotificationService.getEmails();
+        GetEmailResponse getEmailResponse = NotificationService.getEmails(baseUrl, Constants.getTargetCloudContext());
         propertyStore.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
         JsonManager.serializeJsonToFile(FileResourceUtil.getResourceAsFile("property-store.json").getPath(),
                 propertyStore);
@@ -44,6 +51,6 @@ public class Emails {
                 FileResourceUtil.getResourceFileStream("property-store.json"),
                 PropertyStore.class);
         String identity = propertyStore.getEmailIdentity();
-        NotificationService.getEmail(identity);
+        NotificationService.getEmail(baseUrl, identity, Constants.getTargetCloudContext());
     }
 }

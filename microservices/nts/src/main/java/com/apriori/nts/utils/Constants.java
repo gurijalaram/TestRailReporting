@@ -86,4 +86,13 @@ public class Constants {
     public static String getNtsEmailAttachment() {
         return ntsEmailAttachment = System.getProperty("ntsEmailAttachment") == null ? PROPERTIES.getProperty("nts.email.attachment") : System.getProperty("ntsEmailAttachment");
     }
+
+    /**
+     * Get target cloud context
+     *
+     * @return string
+     */
+    public static String getTargetCloudContext() {
+        return ntsEmailAttachment = System.getProperty("ntsTargetCloudContext") == null ? PROPERTIES.getProperty("nts.auth.targetCloudContext") : System.getProperty("ntsTargetCloudContext");
+    }
 }
