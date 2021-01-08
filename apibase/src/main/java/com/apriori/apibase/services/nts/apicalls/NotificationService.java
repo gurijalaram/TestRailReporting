@@ -6,7 +6,6 @@ import com.apriori.apibase.services.nts.objects.Notifications;
 import com.apriori.apibase.services.nts.objects.SendEmailResponse;
 import com.apriori.apibase.services.nts.utils.EmailSetup;
 import com.apriori.utils.EmailUtil;
-import com.apriori.utils.EncryptionUtil;
 import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.ConnectionManager;
@@ -23,7 +22,7 @@ import javax.mail.Message;
 
 public class NotificationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EncryptionUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
     private static String baseUrl =
             "https://" + CommonConstants.getNtsServiceHost() + "/emails%s?key=" + CommonConstants.getSecretKey();
 
@@ -100,7 +99,7 @@ public class NotificationService {
         return sendEmail(subject, params);
     }
 
-    public static SendEmailResponse sendEmailWithAttacment(String subject, String attacmentFile) {
+    public static SendEmailResponse sendEmailWithAttachment(String subject, String attachmentFile) {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
@@ -112,7 +111,7 @@ public class NotificationService {
         String url = String.format(baseUrl, "");
 
         SendEmailResponse smr = null;
-        File attachment = new File(attacmentFile);
+        File attachment = new File(attachmentFile);
         try {
             smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class, attachment);
         } catch (Exception e) {
