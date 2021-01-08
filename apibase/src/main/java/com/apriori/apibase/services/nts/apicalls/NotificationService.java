@@ -125,7 +125,7 @@ public class NotificationService {
     public static GetEmailResponse getEmails() {
 
         String url = String.format(baseUrl, "");
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put("ap-cloud-context", CommonConstants.getNtsTargetCloudContext());
 
         return (GetEmailResponse) GenericRequestUtil.get(
