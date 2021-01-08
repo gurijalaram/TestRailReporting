@@ -10,6 +10,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -236,12 +237,9 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
         new EvaluatePanelToolbar(driver)
                 .expandPanel();
 
-        WebElement scroller =
-                driver.findElement(By.cssSelector("div[data-ap-comp='part-viewer-panel'] div.v-grid-scroller-vertical"));
-        By locator = By.xpath("//div[@title='3571050']");
-        //pageUtils.scrollToElement(locator, scroller, Constants.PAGE_DOWN);
-        pageUtils.scrollDown(By.cssSelector("div[data-ap-comp='part-viewer-panel'] div.v-grid-scroller-vertical"));
-        //pageUtils.waitForElementToAppear(By.xpath("div[title='3575135']"));
+        By scrollerLocator = By.cssSelector("div[data-ap-comp='part-viewer-panel'] div.v-grid-scroller-vertical");
+        By partLocator = By.cssSelector("div[title='3575135']");
+        pageUtils.scrollToElement(partLocator, driver.findElement(scrollerLocator), Constants.PAGE_DOWN);
 
         getAndStoreVpeValue("3575132");
         getAndStoreVpeValue("3575133");
