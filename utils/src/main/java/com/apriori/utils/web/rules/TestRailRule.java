@@ -19,7 +19,6 @@ import java.util.Map;
  */
 public class TestRailRule extends TestWatcher {
 
-    private TestRail testRail = null;
     private static final String STATUS_ID = "status_id";
     private static final String COMMENT = "comment";
     private static final Integer FAILED_STATUS = 5;
@@ -30,6 +29,7 @@ public class TestRailRule extends TestWatcher {
     private static final String USERNAME = "kpatel+1@apriori.com";
     private static final String PASSWORD = "cAnKTFzwhgxS9TJxV09p-9XkAs5FMPEiE352kv0nY";
     private static final String DEFAULT_TEST_MODE = "QA";
+    private TestRail testRail = null;
 
     /*
      * (non-Javadoc)

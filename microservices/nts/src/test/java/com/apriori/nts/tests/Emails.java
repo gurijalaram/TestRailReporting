@@ -27,7 +27,7 @@ public class Emails {
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         String subject = String.format("%s_%d", Constants.getNtsEmailSubject(), System.currentTimeMillis());
-        NotificationService.sendEmail(baseUrl, subject, Constants.getNtsEmailContent());
+        NotificationService.sendEmail(baseUrl, subject, Constants.getNtsEmailContent(), Constants.getTargetCloudContext());
         Boolean emailExists = NotificationService.validateEmail(subject);
         Assert.assertEquals(true, emailExists);
     }
