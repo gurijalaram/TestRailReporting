@@ -5,6 +5,7 @@ import com.apriori.utils.users.UserCredentials;
 
 import com.pageobjects.pages.explore.ExplorePage;
 import com.utils.Constants;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -145,6 +146,7 @@ public class CidLoginPage extends LoadableComponent<CidLoginPage> {
      * @param email    - the email
      * @param password - the password
      */
+    @Step("Verify sign with uname {0} and password {1}")
     private void executeLogin(String email, String password) {
         enterEmail(email);
         enterPassword(password);
