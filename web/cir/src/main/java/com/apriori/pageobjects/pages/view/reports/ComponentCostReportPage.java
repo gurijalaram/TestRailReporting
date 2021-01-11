@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ComponentCostReportPage extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(ComponentCostReportPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ComponentCostReportPage.class);
 
     @FindBy(xpath = "(//ul[@class='jr-mSelectlist jr'])[2]")
     private WebElement componentSelectDropdownList;
@@ -42,6 +42,12 @@ public class ComponentCostReportPage extends GenericReportPage {
     @FindBy(xpath = "//label[@title='Component Select']/span[@class='warning']")
     private WebElement warningSpan;
 
+    @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[3]//span")
+    private WebElement componentCostReportTitle;
+
+    @FindBy(xpath = "//span[contains(text(), 'Part Number:')]/../following-sibling::td[1]/span")
+    private WebElement componentCostReportPartNumber;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -49,7 +55,7 @@ public class ComponentCostReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -176,5 +182,23 @@ public class ComponentCostReportPage extends GenericReportPage {
      */
     public boolean isWarningDisplayedAndEnabled() {
         return warningSpan.isDisplayed() && warningSpan.isEnabled();
+    }
+
+    /**
+     * Gets Component Cost report title
+     * @return String
+     */
+    public String getComponentCostReportTitle() {
+        pageUtils.waitForElementToAppear(componentCostReportTitle);
+        return componentCostReportTitle.getText();
+    }
+
+    /**
+     * Gets Part Number from report
+     * @return String
+     */
+    public String getPartNumber() {
+        pageUtils.waitForElementToAppear(componentCostReportPartNumber);
+        return componentCostReportPartNumber.getText();
     }
 }

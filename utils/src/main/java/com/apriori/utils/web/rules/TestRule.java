@@ -36,7 +36,7 @@ import java.time.ZoneId;
  */
 public class TestRule implements MethodRule {
 
-    private static final Logger logger = LoggerFactory.getLogger(TestRule.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestRule.class);
 
     private int times = 0;
 
@@ -57,7 +57,7 @@ public class TestRule implements MethodRule {
                     MDC.put("methodName", frameworkMethod.getMethod().getDeclaringClass().getSimpleName() + "." + frameworkMethod.getName());
 
                     if (testBaseNew.getMode().equals(TestMode.QA) || (StringUtils.isNotEmpty(System.getProperty("repeatTests")) && System.getProperty("repeatTests").equalsIgnoreCase("true"))) {
-                        logger.debug("Running test: ' " + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "." + frameworkMethod.getName() + "' through retry with retry count: " + times);
+                        LOGGER.debug("Running test: ' " + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "." + frameworkMethod.getName() + "' through retry with retry count: " + times);
                         retry = true;
                         repeatTest(statement, times, frameworkMethod, testBaseNew);
                     } else {
@@ -68,13 +68,13 @@ public class TestRule implements MethodRule {
                 } catch (Throwable t) {
                     MDC.put("methodName", frameworkMethod.getMethod().getDeclaringClass().getSimpleName() + "." + frameworkMethod.getName());
                     if (t instanceof MultipleFailureException) {
-                        ((MultipleFailureException) t).getFailures().forEach(exception -> logger.error("Exception caught: ", exception));
+                        ((MultipleFailureException) t).getFailures().forEach(exception -> LOGGER.error("Exception caught: ", exception));
                     } else {
-                        logger.error("Exception caught: ", t);
+                        LOGGER.error("Exception caught: ", t);
                     }
 
                     String driverHash = testBaseNew.getDriver() != null ? testBaseNew.getDriver().hashCode() + "" : "null";
-                    logger.debug("FAILURE IN " + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "." + frameworkMethod.getName() + " with driver: " + driverHash);
+                    LOGGER.debug("FAILURE IN " + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "." + frameworkMethod.getName() + " with driver: " + driverHash);
                     String retryingScreenshot = captureScreenshot(testBaseNew.getClass().getCanonicalName(), frameworkMethod.getName(), testBaseNew, times + 1);
                     saveImageAttach(new File(retryingScreenshot).getPath(), frameworkMethod.getMethod().getDeclaringClass().getName() + "." + frameworkMethod.getName());
 
@@ -92,16 +92,16 @@ public class TestRule implements MethodRule {
                         try {
                             ConsoleLogger.printConsoleEntries(logs, frameworkMethod);
                         } catch (NullPointerException ex) {
-                            logger.error("No console logs were available.");
+                            LOGGER.error("No console logs were available.");
                         }
                     }
-                    logger.debug("Closing driver" + " for "
+                    LOGGER.debug("Closing driver" + " for "
                         + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "."
                         + frameworkMethod.getName() + ": " +
                         (testBaseNew.getDriver() != null ? testBaseNew.getDriver().hashCode() : "null"));
 
                     if (testBaseNew.getDriver() == null) {
-                        logger.debug("Driver object was not created");
+                        LOGGER.debug("Driver object was not created");
                     } else if (testBaseNew.getBrowser().value().equalsIgnoreCase("firefox")) {
                         testBaseNew.getDriver().close();
                     } else {
@@ -134,13 +134,13 @@ public class TestRule implements MethodRule {
                 originalException = t;
                 int retryNo = i + 1;
                 if (retryNo < repeat + 1) {
-                    logger.debug("Original issue with test " + fm.getMethod().getDeclaringClass().getCanonicalName() + "." + fm.getName() + ": \n");
-                    logger.debug("Exception: ", t);
+                    LOGGER.debug("Original issue with test " + fm.getMethod().getDeclaringClass().getCanonicalName() + "." + fm.getName() + ": \n");
+                    LOGGER.debug("Exception: ", t);
                     originalScreenshot = captureScreenshot(testBaseNew.getClass().getCanonicalName(), fm.getName(), testBaseNew, i + 1);
-                    logger.debug("RETRY NO. " + retryNo);
+                    LOGGER.debug("RETRY NO. " + retryNo);
 
                     if (testBaseNew.getDriver() == null) {
-                        logger.debug("Driver object was not created");
+                        LOGGER.debug("Driver object was not created");
                     } else if (testBaseNew.getBrowser().value().equalsIgnoreCase("firefox")) {
                         testBaseNew.getDriver().close();
                     } else {
@@ -168,7 +168,7 @@ public class TestRule implements MethodRule {
         String filePath = null;
         try {
             File screenshot;
-            logger.debug("FAILURE TIME: " + LocalDateTime.now(ZoneId.of("UTC")).toString());
+            LOGGER.debug("FAILURE TIME: " + LocalDateTime.now(ZoneId.of("UTC")).toString());
             if (testBase.getDriver() instanceof RemoteWebDriver) {
                 WebDriver webdriver = new Augmenter().augment(testBase.getDriver());
                 screenshot = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.FILE);
@@ -180,7 +180,7 @@ public class TestRule implements MethodRule {
             FileUtils.copyFile(screenshot, new File(filename));
             Allure.addAttachment(filename, FileUtils.openInputStream(screenshot));
         } catch (Exception e) {
-            logger.debug(e.getMessage());
+            LOGGER.debug(e.getMessage());
         }
         return filePath;
     }
@@ -190,7 +190,7 @@ public class TestRule implements MethodRule {
         try {
             return toByteArray(screenshotUrl);
         } catch (Exception e) {
-            logger.debug(e.getMessage());
+            LOGGER.debug(e.getMessage());
         }
         return new byte[0];
     }

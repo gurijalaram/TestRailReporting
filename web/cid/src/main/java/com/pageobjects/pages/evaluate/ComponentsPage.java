@@ -3,7 +3,7 @@ package com.pageobjects.pages.evaluate;
 import com.apriori.utils.ColumnUtils;
 import com.apriori.utils.PageUtils;
 
-import com.pageobjects.common.ScenarioTablePage;
+import com.pageobjects.toolbars.EvaluatePanelToolbar;
 import com.utils.Constants;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ComponentsPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ComponentsPage.class);
 
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
@@ -57,14 +57,15 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private ScenarioTablePage scenarioTablePage;
     private ColumnUtils columnUtils;
+    private ComponentsPage componentsPage;
+    private ArrayList<String> vpeValues = new ArrayList<>();
 
     public ComponentsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.columnUtils = new ColumnUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -202,19 +203,54 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
     /**
      * Gets table values by specified row index
      *
-     * @param row - the row
+     * @param index - the index to use
      * @return ArrayList of BigDecimals
      */
-    public ArrayList<BigDecimal> getTableValsByRow(String row) {
+    public ArrayList<BigDecimal> getTableValsByRow(String index) {
         Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
 
-        String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td";
-        ArrayList<Element> elements;
+        String baseCssSelector =
+                String.format("div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) > td", index);
 
-        baseCssSelector = String.format(baseCssSelector, row);
-        elements = evaluateComponentView.select(baseCssSelector);
+        ArrayList<Element> elements = evaluateComponentView.select(baseCssSelector);
 
-        return elements.stream().filter(element -> !element.text().isEmpty() && element.text().contains(".")).map(element -> new BigDecimal(element.text())).collect(Collectors.toCollection(ArrayList::new));
+        return elements.stream().filter(element -> !element.text().isEmpty() && element.text().contains("."))
+                .map(element -> new BigDecimal(element.text())).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    /**
+     * Gets VPE Values for specific assembly
+     *
+     * @return ArrayList of String
+     */
+    public ArrayList<String> getVpeValues() {
+        componentsPage = new ComponentsPage(driver);
+        getAndStoreVpeValue("3570823");
+        getAndStoreVpeValue("3570824");
+        getAndStoreVpeValue("3574255");
+        getAndStoreVpeValue("SUB-SUB-ASM");
+        getAndStoreVpeValue("3571050");
+
+        new EvaluatePanelToolbar(driver)
+                .expandPanel();
+
+        By scrollerLocator = By.cssSelector("div[data-ap-comp='part-viewer-panel'] div.v-grid-scroller-vertical");
+        By partLocator = By.cssSelector("div[title='3575135']");
+        pageUtils.scrollToElement(partLocator, driver.findElement(scrollerLocator), Constants.PAGE_DOWN);
+
+        getAndStoreVpeValue("3575132");
+        getAndStoreVpeValue("3575133");
+        getAndStoreVpeValue("3575134");
+        getAndStoreVpeValue("0200613");
+        getAndStoreVpeValue("0362752");
+        getAndStoreVpeValue("3538968");
+        getAndStoreVpeValue("SUB-ASSEMBLY");
+        getAndStoreVpeValue("3575135");
+        return vpeValues;
+    }
+
+    private void getAndStoreVpeValue(String partName) {
+        vpeValues.add(componentsPage.getComponentCell(partName, "Process Group"));
     }
 
     /**

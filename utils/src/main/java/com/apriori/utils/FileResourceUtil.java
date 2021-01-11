@@ -19,7 +19,7 @@ import java.net.URLDecoder;
 
 public class FileResourceUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileResourceUtil.class);
     private static final int TEMP_DIR_ATTEMPTS = 50;
     private static final String S3_BUCKET_NAME = "qa-test-parts";
     private static final Regions S3_REGION_NAME = Regions.US_EAST_1;
@@ -49,7 +49,7 @@ public class FileResourceUtil {
                     )
             );
         } catch (UnsupportedEncodingException e) {
-            logger.error(String.format("Resource file: %s was not found", resourceFileName));
+            LOGGER.error(String.format("Resource file: %s was not found", resourceFileName));
             throw new IllegalArgumentException();
         }
     }

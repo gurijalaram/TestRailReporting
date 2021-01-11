@@ -7,6 +7,7 @@ public enum AssemblySetEnum {
     SUB_SUB_ASM_SHORT("SUB-SUB-ASM"),
     TOP_LEVEL("TOP-LEVEL (Initial)"),
     TOP_LEVEL_SHORT("TOP-LEVEL"),
+    TOP_LEVEL_MULTI_VPE("TOP-LEVEL (Multi VPE)"),
     PISTON_ASSEMBLY("PISTON_ASSEMBLY");
 
     private final String assemblySetName;

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class CreateReportPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(CreateReportPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CreateReportPage.class);
 
     @FindBy(id = "reportGeneratorProperties")
     private WebElement createReportDialog;
@@ -24,7 +24,7 @@ public class CreateReportPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

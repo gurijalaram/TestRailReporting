@@ -30,6 +30,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import utils.Constants;
 
@@ -760,5 +761,38 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(actualLifetimeCost.compareTo(new BigDecimal("2332078.82")), is(equalTo(0)));
         assertThat(actualLifetimeProjectedCostDifference.compareTo(new BigDecimal("2194578.82")),
             is(equalTo(0)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1927")
+    @Description("Validate multiple VPE usage aligns to CID usage")
+    public void testMultiVPEAgainstCID() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName())
+                .setAssembly(AssemblySetEnum.TOP_LEVEL_MULTI_VPE.getAssemblySetName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        ArrayList<String> reportsVpeValues = genericReportPage.getAllVpeValuesAssemblyDetailsReport();
+
+        genericReportPage.openNewCidTabAndFocus(1);
+
+        ComponentsPage componentsPage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PRIVATE_WORKSPACE)
+                .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
+                .setRowTwo("Scenario Name", "Contains", "Multi VPE")
+                .apply(ExplorePage.class)
+                .openFirstScenario()
+                .openComponentsTable();
+
+        ArrayList<String> cidVpeValues = componentsPage.getVpeValues();
+
+        assertThat(reportsVpeValues.equals(cidVpeValues), is(equalTo(true)));
     }
 }

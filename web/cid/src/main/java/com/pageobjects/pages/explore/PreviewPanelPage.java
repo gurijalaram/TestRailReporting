@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PreviewPanelPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(PreviewPanelPage.class);
 
     @FindBy(css = "[data-ap-field='totalCost']")
     private WebElement totalCost;
@@ -39,7 +39,7 @@ public class PreviewPanelPage extends LoadableComponent<PreviewPanelPage> {
     public PreviewPanelPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

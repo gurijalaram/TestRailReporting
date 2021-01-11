@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ComparisonPage extends CompareHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(ComparisonPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ComparisonPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -40,7 +40,7 @@ public class ComparisonPage extends CompareHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -16,7 +16,7 @@ import java.util.HashSet;
 
 public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ToleranceSettingsPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ToleranceSettingsPage.class);
 
     @FindBy(css = "input[data-ap-field='scenarioName']")
     private WebElement scenarioNameInput;
@@ -54,7 +54,7 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
     public ProductionDefaultPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

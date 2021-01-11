@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class UserTestDataUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserTestDataUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserTestDataUtil.class);
     private String token;
 
     public UserDataEDC initEmptyUser() {

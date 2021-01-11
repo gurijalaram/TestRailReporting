@@ -7,6 +7,8 @@ import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
 import com.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.ootbreports.componentcost.ComponentCostReportTests;
+import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingDetailsTests;
+import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcReportTests;
@@ -29,14 +31,16 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
-    ComponentCostReportTests.class,
-    MachiningDtcReportTests.class,
-    MachiningDtcDetailsReportTests.class,
-    MachiningDtcComparisonReportTests.class,
     CastingDtcReportTests.class,
     CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
+    ComponentCostReportTests.class,
+    CycleTimeValueTrackingTests.class,
+    CycleTimeValueTrackingDetailsTests.class,
     LoginTests.class,
+    MachiningDtcReportTests.class,
+    MachiningDtcDetailsReportTests.class,
+    MachiningDtcComparisonReportTests.class,
     PlasticDtcReportTests.class,
     PlasticDtcDetailsReportTests.class,
     PlasticDtcComparisonReportTests.class,

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class CicUserGuide extends LoadableComponent<CicUserGuide> {
 
-    private final Logger logger = LoggerFactory.getLogger(CicUserGuide.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CicUserGuide.class);
 
     @FindBy(css = "div[id='wwpID0ELHA']")
     private WebElement userGuideTitle;
@@ -26,7 +26,7 @@ public class CicUserGuide extends LoadableComponent<CicUserGuide> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.pageHeader = new PageHeader(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(EncryptionUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EncryptionUtil.class);
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES";
 
@@ -49,7 +48,7 @@ public class EncryptionUtil {
             }
 
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return null;

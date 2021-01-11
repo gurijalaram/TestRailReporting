@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(SelectionSettingsPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(SelectionSettingsPage.class);
     private final String colourLocator = "div[class='sp-container sp-light sp-input-disabled sp-palette-buttons-disabled sp-palette-only sp-initial-disabled']";
 
     @FindBy(css = "div[data-ap-field='selectionColor'] input")
@@ -95,7 +95,7 @@ public class SelectionSettingsPage extends LoadableComponent<SelectionSettingsPa
     public SelectionSettingsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

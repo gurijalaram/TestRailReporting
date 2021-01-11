@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 class InitUsersData {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitUsersData.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InitUsersData.class);
 
     static Map<String, Queue<UserCredentials>> initUsersWithAccessLevels() {
         Map<String, Queue<UserCredentials>> users = new HashMap<>();
@@ -102,13 +102,13 @@ class InitUsersData {
     }
 
     private static UserCredentials logErrorAndCreateDefaultUser(String errorText) {
-        logger.error(errorText);
+        LOGGER.error(errorText);
 
         return createDefaultUser();
     }
 
     private static UserCredentials createDefaultUser() {
-        logger.info(String.format("Creating default user %s/%s/%s", CommonConstants.DEFAULT_USER_NAME, CommonConstants.DEFAULT_PASSWORD, CommonConstants.DEFAULT_ACCESS_LEVEL));
+        LOGGER.info(String.format("Creating default user %s/%s/%s", CommonConstants.DEFAULT_USER_NAME, CommonConstants.DEFAULT_PASSWORD, CommonConstants.DEFAULT_ACCESS_LEVEL));
 
         return new UserCredentials(CommonConstants.DEFAULT_USER_NAME, CommonConstants.DEFAULT_PASSWORD, CommonConstants.DEFAULT_ACCESS_LEVEL);
     }

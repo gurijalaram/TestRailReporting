@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PropertiesDialogPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(PropertiesDialogPage.class);
 
     @FindBy(id = "propertiesPanel")
     private WebElement propertyPanel;
@@ -31,7 +31,7 @@ public class PropertiesDialogPage extends LoadableComponent<PropertiesDialogPage
     public PropertiesDialogPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

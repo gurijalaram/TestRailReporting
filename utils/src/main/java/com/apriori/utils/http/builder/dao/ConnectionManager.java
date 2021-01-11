@@ -70,7 +70,7 @@ public class ConnectionManager<T> {
 
     private RequestEntity requestEntity;
 
-    private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
 
     public ConnectionManager(RequestEntity requestEntity, Class<T> returnType) {
         this.requestEntity = requestEntity;
@@ -179,7 +179,7 @@ public class ConnectionManager<T> {
         }
 
         if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
-            logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
+            LOGGER.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
             RequestEntity authEntity = RequestEntity
                     .initDefaultFormAuthorizationData(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
                             requestEntity.getUserAuthenticationEntity().getPassword()

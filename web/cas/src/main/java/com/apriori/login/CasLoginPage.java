@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(CasLoginPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CasLoginPage.class);
     private static String loginPageUrl = Constants.getDefaultUrl();
 
     @FindBy(css = "input[name='email']")
@@ -79,14 +79,14 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = loginPageUrl;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        logger.info("CURRENTLY ON INSTANCE: " + url);
+        LOGGER.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -6,6 +6,7 @@ import com.apriori.apibase.services.nts.objects.Notifications;
 import com.apriori.apibase.services.nts.objects.SendEmailResponse;
 import com.apriori.apibase.services.nts.utils.EmailSetup;
 import com.apriori.utils.EmailUtil;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.ConnectionManager;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -21,7 +22,9 @@ import javax.mail.Message;
 
 public class NotificationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotificationService.class);
+    private static String baseUrl =
+            "https://" + CommonConstants.getNtsServiceHost() + "/emails%s?key=" + CommonConstants.getSecretKey();
 
     public static Boolean validateEmail(String subject) {
         EmailSetup emailSetup = new EmailSetup();
@@ -46,7 +49,7 @@ public class NotificationService {
                 count += 1;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return false;
@@ -71,7 +74,7 @@ public class NotificationService {
         try {
             smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return smr;
@@ -112,7 +115,7 @@ public class NotificationService {
         try {
             smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class, attachment);
         } catch (Exception e) {
-            logger.error(e.getMessage());;
+            LOGGER.error(e.getMessage());;
         }
 
         return smr;

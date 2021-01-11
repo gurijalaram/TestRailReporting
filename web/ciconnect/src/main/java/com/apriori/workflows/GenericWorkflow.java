@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
 
-    private final Logger logger = LoggerFactory.getLogger(GenericWorkflow.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(GenericWorkflow.class);
 
     @FindBy(xpath = "//div[contains(@class,'tabsv2-tab') and contains(@tab-number,'1')]")
     private WebElement scheduleTab;
@@ -36,7 +36,7 @@ public class GenericWorkflow extends LoadableComponent<GenericWorkflow> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.pageHeader = new PageHeader(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -22,7 +22,7 @@ import java.util.logging.Level;
  */
 public class ConsoleLogHandler implements WebDriverEventListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(ConsoleLogHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleLogHandler.class);
     private Level levelOfThrowingAssertion;
     private List<String> blacklistedURLs = Arrays.asList(
         "pbs.twimg.com",
