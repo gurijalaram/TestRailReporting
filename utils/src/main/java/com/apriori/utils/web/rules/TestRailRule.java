@@ -84,7 +84,7 @@ public class TestRailRule extends TestWatcher {
     public void addResultForCase(Map<String, Object> parameterData)
         throws IOException, APIException {
 
-        if (!DEFAULT_TEST_MODE.equals(TestMode.QA.value())) {
+        if (!System.getProperty("mode", DEFAULT_TEST_MODE).equals(TestMode.QA.value())) {
             return;
         }
 
