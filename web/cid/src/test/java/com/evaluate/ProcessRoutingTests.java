@@ -207,7 +207,7 @@ public class ProcessRoutingTests extends TestBase {
     @TestRail(testCaseId = {"1665", "1666"})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CastedPart.CATPart");
 

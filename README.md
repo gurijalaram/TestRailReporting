@@ -65,7 +65,7 @@
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
 2. Run `gradle clean :cid:test --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDTestSuite"`
-3. To pass in JVM args `gradle clean :cid:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :cid:test --tests "testsuites.CIDTestSuite" -DthreadCounts=3 -Denv=cid-te`
+3. To pass in JVM args `gradle clean :cid:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :cid:test --tests "testsuites.CIDTestSuite" -DthreadCounts=3 -Denv=cid-te -Dcsv=nameOfCsv.csv`
 
 ## How to run single suite
 1. Open Terminal to root `build` directory

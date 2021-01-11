@@ -11,7 +11,7 @@ import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 
 public class SecurityManager {
-    public static String retriveJwtToken(String url, int statusCode, String username, String email, String issuer, String subject) {
+    public static String retrieveJwtToken(String url, int statusCode, String username, String email, String issuer, String subject) {
         url = "https://" + url;
         url = url.concat(String.format("/tokens?key=%s", CommonConstants.getSecretKey()));
         TokenRequest body = new TokenRequest();

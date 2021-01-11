@@ -3,6 +3,7 @@ package com.apriori.fms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.service.SecurityManager;
 import com.apriori.fms.controller.FileManagementController;
+import com.apriori.fms.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -18,7 +19,7 @@ public class FileManagementControllerTest extends TestUtil {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        token = SecurityManager.retriveJwtToken(
+        token = SecurityManager.retrieveJwtToken(
                 CommonConstants.getAtsServiceHost(),
                 HttpStatus.SC_CREATED,
                 "splunkett",
@@ -44,7 +45,7 @@ public class FileManagementControllerTest extends TestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
                 FileManagementController.getFileByIdentity(
                         token,
-                        CommonConstants.getFmsFileIdentity()
+                        Constants.getFmsFileIdentity()
                 ).getStatusCode());
     }
 
