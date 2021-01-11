@@ -41,6 +41,34 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(OnPremTest.class)
+    @TestRail(testCaseId = "92")
+    @Description("validate report available by navigation")
+    public void testReportAvailabilityByNavigation() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "92")
+    @Description("Verify report availability by library")
+    public void testReportAvailabilityByLibrary() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "92")
+    @Description("Verify report availability by search")
+    public void testReportAvailabilityBySearch() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName());
+    }
+
+
+    @Test
     @TestRail(testCaseId = "3038")
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {

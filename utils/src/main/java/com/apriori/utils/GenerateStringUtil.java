@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class GenerateStringUtil {
 
-    static final Logger logger = LoggerFactory.getLogger(GenerateStringUtil.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(GenerateStringUtil.class);
 
     /**
      * Generates the scenario name and adds random number and nano time

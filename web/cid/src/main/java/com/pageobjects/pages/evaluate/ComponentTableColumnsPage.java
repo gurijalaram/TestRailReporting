@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableColumnsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ComponentTableColumnsPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ComponentTableColumnsPage.class);
 
     private Map<String, String> columnSelectorMap = new HashMap<>();
 
@@ -64,7 +64,7 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
     public ComponentTableColumnsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseColumnSelectorMap();
         this.get();

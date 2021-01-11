@@ -4,24 +4,21 @@ import static org.junit.Assert.fail;
 
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.utils.TestUtil;
-
 import com.apriori.cis.controller.BatchPartResources;
 import com.apriori.cis.controller.BatchResources;
 import com.apriori.cis.controller.PartResources;
 import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
-import com.apriori.cis.utils.CisProperties;
 import com.apriori.cis.utils.CisUtils;
+import com.apriori.cis.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +26,7 @@ import java.util.Arrays;
 
 public class CostingScenarioTest extends TestUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(CostingScenarioTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CostingScenarioTest.class);
     private static Boolean exitTest = false;
 
     @Test
@@ -37,7 +34,7 @@ public class CostingScenarioTest extends TestUtil {
     @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
             "process to complete. Then retrieve costing results.")
     public void costPart() {
-        Integer defaultTimeout = CisProperties.getPollingTimeout();
+        Integer defaultTimeout = Constants.getPollingTimeout();
 
         // create batch
         Batch batch = BatchResources.createNewBatch();
@@ -46,8 +43,8 @@ public class CostingScenarioTest extends TestUtil {
         try {
             batchIdentity = CisUtils.getIdentity(batch, Batch.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         // create batch part
@@ -61,8 +58,8 @@ public class CostingScenarioTest extends TestUtil {
         try {
             partIdentity = CisUtils.getIdentity(batchPart, Part.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         // start costing
@@ -83,7 +80,7 @@ public class CostingScenarioTest extends TestUtil {
 
             if (exitTest) {
                 String errors = CisUtils.getErrors(batchPart, Part.class);
-                logger.error(errors);
+                LOGGER.error(errors);
                 fail("Part was in state 'ERRORED'");
                 return;
             }
@@ -135,8 +132,8 @@ public class CostingScenarioTest extends TestUtil {
                 return exitTest;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         if (state.toUpperCase().equals("COMPLETED")) {
@@ -145,8 +142,8 @@ public class CostingScenarioTest extends TestUtil {
             try {
                 Thread.sleep(10000);
             } catch (Exception e) {
-                logger.error(e.getMessage());
-                logger.error(Arrays.toString(e.getStackTrace()));
+                LOGGER.error(e.getMessage());
+                LOGGER.error(Arrays.toString(e.getStackTrace()));
             }
         }
 

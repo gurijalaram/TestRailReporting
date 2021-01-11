@@ -18,8 +18,9 @@ public class Constants {
     public static final String REPORTING_HELP_URL = "https://help.jaspersoft.com/Default";
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
-    public static final String DTC_METRICS_FOLDER = "DTC Metrics";
     public static final String GENERAL_FOLDER = "General";
+    public static final String SOLUTIONS_FOLDER = "Solutions";
+    public static final String DTC_METRICS_FOLDER = "DTC Metrics";
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
     public static final String ASSEMBLY_STRING = "[assembly]";
@@ -48,7 +49,7 @@ public class Constants {
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-staging";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
@@ -76,5 +77,14 @@ public class Constants {
         System.setProperty("baseUrl", baseUrl);
 
         return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
+    }
+
+    /**
+     * Gets CID url
+     *
+     * @return String
+     */
+    public static String getCidUrl() {
+        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.cid"));
     }
 }

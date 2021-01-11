@@ -31,6 +31,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.MigrationTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -60,7 +61,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"679", "653", "670"})
     @Description("Test secondary process leak test")
     public void secondaryProcessLeakTest() {
@@ -430,6 +430,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(MigrationTests.class)
     @Description("Test secondary process Passivation")
     public void secondaryProcessPassivation() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -821,7 +822,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"665"})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
@@ -844,7 +844,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"671", "672", "677"})
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {

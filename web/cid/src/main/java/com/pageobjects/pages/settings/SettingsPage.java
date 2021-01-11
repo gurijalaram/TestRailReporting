@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class SettingsPage extends LoadableComponent<SettingsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(SettingsPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(SettingsPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
@@ -61,7 +61,7 @@ public class SettingsPage extends LoadableComponent<SettingsPage> {
     public SettingsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

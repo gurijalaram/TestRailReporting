@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 
 public class EmailSetup {
-    private  final Logger logger = LoggerFactory.getLogger(EmailSetup.class);
+    private  final Logger LOGGER = LoggerFactory.getLogger(EmailSetup.class);
 
     private  Credentials credentials = null;
 
@@ -22,7 +22,7 @@ public class EmailSetup {
             String content = EncryptionUtil.decryptFile(key, credentialFile);
             credentials = (Credentials) JsonManager.deserializeJsonFromString(content, Credentials.class);
         } catch (Exception ex) {
-            logger.error(ex.getMessage());
+            LOGGER.error(ex.getMessage());
         }
     }
 

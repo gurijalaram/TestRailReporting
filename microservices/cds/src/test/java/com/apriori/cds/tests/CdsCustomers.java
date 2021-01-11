@@ -6,9 +6,8 @@ import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.Customers;
 import com.apriori.cds.entity.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.CommonConstants;
-import com.apriori.utils.http.builder.dao.ServiceConnector;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -26,7 +25,7 @@ public class CdsCustomers extends CdsTestUtil {
 
     @Before
     public void setServiceUrl() {
-        url = ServiceConnector.getServiceUrl();
+        url = Constants.getServiceUrl();
     }
 
 
@@ -48,7 +47,7 @@ public class CdsCustomers extends CdsTestUtil {
     @Description("API returns a customer's information based on the supplied identity")
     public void getCustomerById() {
         url = String.format(url,
-            String.format("customers/%s", CommonConstants.getCdsIdentityCustomer()));
+            String.format("customers/%s", Constants.getCdsIdentityCustomer()));
 
         ResponseWrapper<Customer> response = getCommonRequest(url, true, Customer.class);
 
@@ -61,7 +60,7 @@ public class CdsCustomers extends CdsTestUtil {
     @Description("API returns a list of all available users for the customer")
     public void getCustomerUsers() {
         url = String.format(url,
-            String.format("customers/%s/users", CommonConstants.getCdsIdentityCustomer()));
+            String.format("customers/%s/users", Constants.getCdsIdentityCustomer()));
 
         ResponseWrapper<Users> response = getCommonRequest(url, true, Users.class);
 

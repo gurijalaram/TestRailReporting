@@ -23,7 +23,7 @@ import javax.mail.Message;
 
 public class NotificationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EncryptionUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EncryptionUtil.class);
     private static String url =
             "https://" + CommonConstants.getNtsServiceHost() + "/emails%s?key=" + CommonConstants.getSecretKey();
 
@@ -53,7 +53,7 @@ public class NotificationService {
                 count += 1;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return false;
@@ -78,7 +78,7 @@ public class NotificationService {
         try {
             smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return smr;
@@ -119,7 +119,7 @@ public class NotificationService {
         try {
             smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class, attachment);
         } catch (Exception e) {
-            logger.error(e.getMessage());;
+            LOGGER.error(e.getMessage());;
         }
 
         return smr;

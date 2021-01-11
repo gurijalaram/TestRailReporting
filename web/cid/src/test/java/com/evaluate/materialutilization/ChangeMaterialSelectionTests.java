@@ -88,7 +88,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
 

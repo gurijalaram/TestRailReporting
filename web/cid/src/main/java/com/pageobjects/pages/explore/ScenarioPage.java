@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ScenarioPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ScenarioPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -36,7 +36,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
     public ScenarioPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

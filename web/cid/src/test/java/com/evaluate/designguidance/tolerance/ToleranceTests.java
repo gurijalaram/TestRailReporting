@@ -31,11 +31,11 @@ import com.pageobjects.pages.settings.ToleranceSettingsPage;
 import com.pageobjects.pages.settings.ToleranceValueSettingsPage;
 import com.pageobjects.toolbars.PageHeader;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.MigrationTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -66,9 +66,8 @@ public class ToleranceTests extends TestBase {
         }
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("BA-1029")
+    @Category({CustomerSmokeTests.class, SmokeTests.class, MigrationTests.class})
     @TestRail(testCaseId = {"3842", "707", "1607", "1285"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
@@ -149,9 +148,8 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString(""));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class})
     @Test
-    @Issue("BA-1029")
     @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
@@ -184,9 +182,8 @@ public class ToleranceTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class})
     @Test
-    @Issue("BA-1029")
     @TestRail(testCaseId = {"717", "1608"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
@@ -220,7 +217,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"726", "712", "1295", "1297"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
@@ -263,7 +259,7 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString("0.44"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"3833", "1595"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
@@ -350,7 +346,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"730", "709", "713", "714", "722"})
     @Description("Validate tolerance edits are maintained when user adds a secondary process group")
     public void testMaintainingSecondaryPG() {
@@ -493,7 +488,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1286"})
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
@@ -573,7 +567,6 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1294"})
     @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {

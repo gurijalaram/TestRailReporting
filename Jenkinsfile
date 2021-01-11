@@ -12,9 +12,9 @@ def folder = "web"
 pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
-        choice(name: 'TARGET_ENV', choices: ['cid-aut', 'cid-te', 'cid-perf', 'customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa', 'cidapp-qa'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_TYPE', choices: ['cid', 'apitests', 'ciconnect', 'cas', 'cir', 'cia', 'cidapp'], description: 'What type of test is running?')
-        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'SmokeTestSuite', 'CIDTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
+        choice(name: 'TARGET_MODULE', choices: ['cid', 'apitests', 'ciconnect', 'cas', 'cir', 'cia', 'cidapp'], description: 'What target module to run?')
+        choice(name: 'MODULE_PROP', choices: ['customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa', 'cidapp-qa', 'staging'], description: 'What is the module properties file?')
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
@@ -47,7 +47,7 @@ pipeline {
 
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
-                    javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
+                    javaOpts = javaOpts + " -Denv=${params.MODULE_PROP}"
 
                     url = params.TARGET_URL
                     if (url != "none") {
@@ -87,7 +87,7 @@ pipeline {
                 echo "Building.."
                 sh """
                     docker build \
-                        --build-arg MODULE=${TEST_TYPE} \
+                        --build-arg MODULE=${TARGET_MODULE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
                         --build-arg FOLDER=${folder} \
                         --no-cache \

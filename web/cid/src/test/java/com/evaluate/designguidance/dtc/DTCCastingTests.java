@@ -61,7 +61,6 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"3846", "1045", "1050", "1054", "1056", "1058", "1049", "286"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {

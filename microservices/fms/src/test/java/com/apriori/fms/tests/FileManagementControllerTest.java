@@ -3,8 +3,8 @@ package com.apriori.fms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.service.SecurityManager;
 import com.apriori.fms.controller.FileManagementController;
+import com.apriori.fms.utils.Constants;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
@@ -18,13 +18,13 @@ public class FileManagementControllerTest extends TestUtil {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        token = SecurityManager.retriveJwtToken(
-                CommonConstants.getAtsServiceHost(),
-                HttpStatus.SC_CREATED,
-                "splunkett",
-                "splunkett@apriori.com",
-                CommonConstants.getAtsTokenIssuer(),
-                CommonConstants.getAtsTokenSubject());
+        token = SecurityManager.retrieveJwtToken(Constants.getSecretKey(),
+            Constants.getServiceHost(),
+            HttpStatus.SC_CREATED,
+            "splunkett",
+            "splunkett@apriori.com",
+            Constants.getFmsTokenIssuer(),
+            Constants.getFmsTokenSubject());
     }
 
     @Test
@@ -32,9 +32,9 @@ public class FileManagementControllerTest extends TestUtil {
     @Description("Get files for a targetCloudContext with an authorized user")
     public void getFiles() {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                FileManagementController.getFiles(
-                        token
-                ).getStatusCode());
+            FileManagementController.getFiles(
+                token
+            ).getStatusCode());
     }
 
     @Test
@@ -42,10 +42,10 @@ public class FileManagementControllerTest extends TestUtil {
     @Description("Get file by identity for a targetCloudContext with an authorized user")
     public void getFileByIdentity() {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                FileManagementController.getFileByIdentity(
-                        token,
-                        CommonConstants.getFmsFileIdentity()
-                ).getStatusCode());
+            FileManagementController.getFileByIdentity(
+                token,
+                Constants.getFmsFileIdentity()
+            ).getStatusCode());
     }
 
     @Test
@@ -53,10 +53,10 @@ public class FileManagementControllerTest extends TestUtil {
     @Description("Upload a file for a targetCloudContext with an authorized user")
     public void upLoadFile() {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED,
-                FileManagementController.uploadFile(
-                        token,
-                        ProcessGroupEnum.SHEET_METAL,
-                        "bracket_basic.prt"
-                ).getStatusCode());
+            FileManagementController.uploadFile(
+                token,
+                ProcessGroupEnum.SHEET_METAL,
+                "bracket_basic.prt"
+            ).getStatusCode());
     }
 }

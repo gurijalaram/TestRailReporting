@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class NewUserPage extends LoadableComponent<NewUserPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(NewUserPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(NewUserPage.class);
 
     @FindBy(css = "input[name='username']")
     private WebElement usernameInput;
@@ -81,7 +81,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

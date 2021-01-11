@@ -9,6 +9,8 @@ import java.util.Properties;
 
 public class Constants {
 
+    public static final String DEFAULT_USER_NAME_KEY = System.getProperty("username");
+    public static final String DEFAULT_PASSWORD_KEY = System.getProperty("password");
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cic-qa";
