@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class PublishPage extends LoadableComponent<PublishPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PublishPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(PublishPage.class);
 
     @FindBy(xpath = "//h5[.='Publish Scenario']")
     private WebElement headerDialog;
@@ -45,7 +45,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class ScenarioTableController extends LoadableComponent<ScenarioTableController> {
 
-    private final Logger logger = LoggerFactory.getLogger(ScenarioTableController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ScenarioTableController.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -19,7 +19,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
