@@ -7,7 +7,6 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.dao.ServiceConnector;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -24,7 +23,7 @@ public class CdsApplications extends CdsTestUtil {
 
     @Before
     public void setServiceUrl() {
-        url = ServiceConnector.getServiceUrl();
+        url = Constants.getServiceUrl();
     }
 
 
@@ -44,10 +43,9 @@ public class CdsApplications extends CdsTestUtil {
     @TestRail(testCaseId = "3700")
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
-        url = String.format(url,
-                String.format("applications/%s", Constants.getCdsIdentityApplication()));
+        url = String.format(url, String.format("applications/%s", Constants.getCdsIdentityApplication()));
 
-        ResponseWrapper<Application> response =  getRequest(Application.class, false);
+        ResponseWrapper<Application> response = getRequest(Application.class, false);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
         validateApplication(response.getResponseEntity());
@@ -55,8 +53,8 @@ public class CdsApplications extends CdsTestUtil {
 
     private <T> ResponseWrapper<T> getRequest(Class klass, boolean urlEncoding) {
         return GenericRequestUtil.get(
-                RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
-                new RequestAreaApi()
+            RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
+            new RequestAreaApi()
         );
     }
 
@@ -66,7 +64,7 @@ public class CdsApplications extends CdsTestUtil {
     private void validateApplications(Applications applicationsResponse) {
         Object[] applications = applicationsResponse.getResponse().getItems().toArray();
         Arrays.stream(applications)
-                .forEach(this::validate);
+            .forEach(this::validate);
     }
 
     private void validateApplication(Application applicationResponse) {
