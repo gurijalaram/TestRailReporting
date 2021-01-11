@@ -5,6 +5,8 @@ import com.apriori.utils.runner.CategorySuiteRunner;
 import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
 import com.ootbreports.assemblycost.AssemblyCostReportTests;
+import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingDetailsTests;
+import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcReportTests;
@@ -28,6 +30,8 @@ import testsuites.suiteinterface.OnPremTest;
         CastingDtcReportTests.class,
         CastingDtcDetailsReportTests.class,
         CastingDtcComparisonReportTests.class,
+        CycleTimeValueTrackingTests.class,
+        CycleTimeValueTrackingDetailsTests.class,
         LoginTests.class,
         MachiningDtcReportTests.class,
         MachiningDtcDetailsReportTests.class,

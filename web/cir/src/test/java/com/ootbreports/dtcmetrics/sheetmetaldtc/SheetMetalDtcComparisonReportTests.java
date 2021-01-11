@@ -52,6 +52,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -60,6 +61,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -69,6 +71,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
 
     @Test
+    @Category(OnPremTest.class)
     @TestRail(testCaseId = "3038")
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
