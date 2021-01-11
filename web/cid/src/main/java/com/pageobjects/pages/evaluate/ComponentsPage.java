@@ -257,6 +257,6 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
      * Switches to other tab
      */
     public void switchBackToTabOne() {
-        pageUtils.switchBackToInitialTab();
+        pageUtils.windowHandler(0);
     }
 }

@@ -7,9 +7,9 @@ import com.apriori.cis.controller.ReportResources;
 import com.apriori.cis.entity.request.NewReportRequest;
 import com.apriori.cis.entity.response.Report;
 import com.apriori.cis.utils.CisUtils;
+import com.apriori.cis.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
@@ -37,7 +37,7 @@ public class ReportResourcesTest extends TestUtil {
     @TestRail(testCaseId = "4182")
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
-        ReportResources.getReportRepresentation(CommonConstants.getCisReportIdentity());
+        ReportResources.getReportRepresentation(Constants.getCisReportIdentity());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ReportResourcesTest extends TestUtil {
 
         try {
             String reportIdentity = CisUtils.getIdentity(report, Report.class);
-            CommonConstants.setCisReportIdentity(reportIdentity);
+            Constants.setCisReportIdentity(reportIdentity);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error(Arrays.toString(e.getStackTrace()));
@@ -81,7 +81,7 @@ public class ReportResourcesTest extends TestUtil {
         Object rptObj = JsonManager.deserializeJsonFromStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"), NewReportRequest.class);
 
-        Report report = ReportResources.createReport(rptObj, CommonConstants.getCisPartIdentity());
+        Report report = ReportResources.createReport(rptObj, Constants.getCisPartIdentity());
         String reportIdentity = report.getResponse().getIdentity();
         String reportState;
 

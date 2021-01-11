@@ -31,6 +31,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.MigrationTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -429,6 +430,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(MigrationTests.class)
     @Description("Test secondary process Passivation")
     public void secondaryProcessPassivation() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;

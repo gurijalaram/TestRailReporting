@@ -8,7 +8,6 @@ import com.apriori.cds.entity.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.dao.ServiceConnector;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -26,7 +25,7 @@ public class CdsCustomers extends CdsTestUtil {
 
     @Before
     public void setServiceUrl() {
-        url = ServiceConnector.getServiceUrl();
+        url = Constants.getServiceUrl();
     }
 
 

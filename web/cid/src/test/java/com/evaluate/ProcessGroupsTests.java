@@ -20,10 +20,12 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.MigrationTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
+@Category(MigrationTests.class)
 public class ProcessGroupsTests extends TestBase {
 
     private CidLoginPage loginPage;

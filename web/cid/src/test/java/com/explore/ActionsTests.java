@@ -31,6 +31,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.MigrationTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -123,9 +124,9 @@ public class ActionsTests extends TestBase {
             .selectSaveButton(ExplorePage.class);
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Issue("AP-61858")
     @Test
+    @Issue("AP-61858")
+    @Category({CustomerSmokeTests.class, SmokeTests.class, MigrationTests.class})
     @TestRail(testCaseId = {"1610", "592", "593"})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
@@ -191,7 +192,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, MigrationTests.class})
     @TestRail(testCaseId = {"732", "737", "741", "744"})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
@@ -287,7 +288,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, MigrationTests.class})
     @TestRail(testCaseId = {"532", "736", "734"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {

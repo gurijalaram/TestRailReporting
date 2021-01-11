@@ -35,6 +35,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.MigrationTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -65,8 +66,8 @@ public class ToleranceTests extends TestBase {
         }
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class, MigrationTests.class})
     @TestRail(testCaseId = {"3842", "707", "1607", "1285"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
