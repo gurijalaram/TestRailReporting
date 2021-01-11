@@ -29,6 +29,7 @@ public class TestRailRule extends TestWatcher {
     private static final String API_URL = "https://apriori3.testrail.net";
     private static final String USERNAME = "kpatel+1@apriori.com";
     private static final String PASSWORD = "cAnKTFzwhgxS9TJxV09p-9XkAs5FMPEiE352kv0nY";
+    private static final String DEFAULT_TEST_MODE = "QA";
 
     /*
      * (non-Javadoc)
@@ -83,7 +84,7 @@ public class TestRailRule extends TestWatcher {
     public void addResultForCase(Map<String, Object> parameterData)
         throws IOException, APIException {
 
-        if (!System.getProperty("mode").equals(TestMode.QA.value())) {
+        if (!DEFAULT_TEST_MODE.equals(TestMode.QA.value())) {
             return;
         }
 
