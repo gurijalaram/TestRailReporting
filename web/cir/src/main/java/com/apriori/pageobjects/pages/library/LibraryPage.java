@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class LibraryPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(LibraryPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(LibraryPage.class);
 
     @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
     private WebElement libraryPageTitle;
@@ -24,7 +24,7 @@ public class LibraryPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

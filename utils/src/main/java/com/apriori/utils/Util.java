@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class Util {
 
-    static final Logger logger = LoggerFactory.getLogger(Util.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(Util.class);
 
     /**
      * highlights given element. This would be mainly used for debugging
@@ -33,7 +33,7 @@ public class Util {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.debug("Failed to highlight element");
+            LOGGER.debug("Failed to highlight element");
         }
         js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
     }

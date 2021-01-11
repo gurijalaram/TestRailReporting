@@ -15,7 +15,7 @@ import utils.Constants;
 
 public class ViewRepositoryPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ViewRepositoryPage.class);
 
     @FindBy(xpath = "//div[contains(text(), 'Repository')]")
     private WebElement repositoryPageTitle;
@@ -30,7 +30,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

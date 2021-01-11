@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ManageUsersPage extends ReportsPageHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(ManageUsersPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ManageUsersPage.class);
 
     @FindBy(xpath = "//div[@id='users']/div/div[1]/div[contains(@class, 'title')]")
     private WebElement usersPageTitle;
@@ -24,7 +24,7 @@ public class ManageUsersPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

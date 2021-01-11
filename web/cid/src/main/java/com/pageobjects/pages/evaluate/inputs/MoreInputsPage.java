@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class MoreInputsPage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(MoreInputsPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(MoreInputsPage.class);
 
     @FindBy(css = ".details-viewport-part .panel-details")
     private WebElement inputTable;
@@ -62,7 +62,7 @@ public class MoreInputsPage extends EvaluatePanelToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

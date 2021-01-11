@@ -26,7 +26,7 @@ import java.util.Arrays;
 
 public class CostingScenarioTest extends TestUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(CostingScenarioTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CostingScenarioTest.class);
     private static Boolean exitTest = false;
 
     @Test
@@ -43,8 +43,8 @@ public class CostingScenarioTest extends TestUtil {
         try {
             batchIdentity = CisUtils.getIdentity(batch, Batch.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         // create batch part
@@ -58,8 +58,8 @@ public class CostingScenarioTest extends TestUtil {
         try {
             partIdentity = CisUtils.getIdentity(batchPart, Part.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         // start costing
@@ -80,7 +80,7 @@ public class CostingScenarioTest extends TestUtil {
 
             if (exitTest) {
                 String errors = CisUtils.getErrors(batchPart, Part.class);
-                logger.error(errors);
+                LOGGER.error(errors);
                 fail("Part was in state 'ERRORED'");
                 return;
             }
@@ -132,8 +132,8 @@ public class CostingScenarioTest extends TestUtil {
                 return exitTest;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         if (state.toUpperCase().equals("COMPLETED")) {
@@ -142,8 +142,8 @@ public class CostingScenarioTest extends TestUtil {
             try {
                 Thread.sleep(10000);
             } catch (Exception e) {
-                logger.error(e.getMessage());
-                logger.error(Arrays.toString(e.getStackTrace()));
+                LOGGER.error(e.getMessage());
+                LOGGER.error(Arrays.toString(e.getStackTrace()));
             }
         }
 

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class UserList extends LoadableComponent<UserList> {
 
-    private final Logger logger = LoggerFactory.getLogger(UserList.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(UserList.class);
 
     @FindBy(css = "div.objbox tr")
     private List<WebElement> userListTable;
@@ -52,7 +52,7 @@ public class UserList extends LoadableComponent<UserList> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.pageHeader = new PageHeader(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

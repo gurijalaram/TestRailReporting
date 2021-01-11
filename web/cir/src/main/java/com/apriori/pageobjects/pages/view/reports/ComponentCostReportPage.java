@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ComponentCostReportPage extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(ComponentCostReportPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ComponentCostReportPage.class);
 
     @FindBy(xpath = "(//ul[@class='jr-mSelectlist jr'])[2]")
     private WebElement componentSelectDropdownList;
@@ -55,7 +55,7 @@ public class ComponentCostReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

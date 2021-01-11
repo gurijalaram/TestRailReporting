@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.login;
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
@@ -18,7 +17,7 @@ import utils.Constants;
 
 public class AdminLoginPage extends AdminHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(AdminLoginPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(AdminLoginPage.class);
     private static String loginPageURL = Constants.getDefaultUrl();
 
     @FindBy(css = "input[name='email']")
@@ -66,14 +65,14 @@ public class AdminLoginPage extends AdminHeader {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = loginPageURL;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        logger.info("CURRENTLY ON INSTANCE: " + url);
+        LOGGER.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }

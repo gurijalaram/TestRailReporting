@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(TableColumnsPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(TableColumnsPage.class);
 
     @FindBy(css = "[data-ap-scope='tableViewSelection'] .modal-content")
     private WebElement tableDialog;
@@ -52,7 +52,7 @@ public class TableColumnsPage extends LoadableComponent<TableColumnsPage> {
     public TableColumnsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

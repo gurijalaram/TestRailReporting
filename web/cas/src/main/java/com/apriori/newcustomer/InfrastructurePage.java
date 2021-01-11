@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(InfrastructurePage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(InfrastructurePage.class);
 
     @FindBy(xpath = "//div[contains(text(),'Please select infrastructure within the Tree View')]")
     private WebElement noContentMessage;
@@ -27,7 +27,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

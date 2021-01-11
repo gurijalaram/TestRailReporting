@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class PublishPage extends LoadableComponent<PublishPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PublishPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(PublishPage.class);
 
     @FindBy(css = "a[data-ap-comp='exploreButton']")
     private WebElement exploreButton;
@@ -54,7 +54,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     public PublishPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

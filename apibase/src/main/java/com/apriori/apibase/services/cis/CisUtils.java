@@ -9,15 +9,15 @@ import java.util.Arrays;
 
 public class CisUtils extends ApiUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(CisUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CisUtils.class);
 
     public static String getIdentity(Object obj, Class klass) {
         String value = null;
         try {
             value = getPropertyValue(obj, klass, "getIdentity");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         return value;
@@ -28,8 +28,8 @@ public class CisUtils extends ApiUtils {
         try {
             value = getPropertyValue(obj, klass, "getState");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         return value;
@@ -40,8 +40,8 @@ public class CisUtils extends ApiUtils {
         try {
             value = getPropertyValue(obj, klass, "getErrors");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         return value;
@@ -52,8 +52,8 @@ public class CisUtils extends ApiUtils {
         try {
             value = getPropertyValue(obj, klass, "getReportIdentity");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         return value;
@@ -70,8 +70,8 @@ public class CisUtils extends ApiUtils {
                 Thread.sleep(10000);
             }
         }  catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
 
         return false;

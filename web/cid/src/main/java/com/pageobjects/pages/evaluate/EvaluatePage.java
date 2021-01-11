@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 public class EvaluatePage extends EvaluateHeader {
 
-    private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(EvaluatePage.class);
 
     private Map<String, String> columnSelectorMap = new HashMap<>();
 
@@ -227,7 +227,7 @@ public class EvaluatePage extends EvaluateHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseColumnSelectorMap();
         this.get();

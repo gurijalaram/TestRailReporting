@@ -24,7 +24,7 @@ import java.util.Arrays;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReportResourcesTest extends TestUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReportResourcesTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportResourcesTest.class);
 
     @Test
     @TestRail(testCaseId = "4180")
@@ -68,8 +68,8 @@ public class ReportResourcesTest extends TestUtil {
             String reportIdentity = CisUtils.getIdentity(report, Report.class);
             CommonConstants.setCisReportIdentity(reportIdentity);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(e.getMessage());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -98,11 +98,11 @@ public class ReportResourcesTest extends TestUtil {
                 break;
             } else {
                 try {
-                    logger.error("CURRENT STATE: " + reportState);
+                    LOGGER.error("CURRENT STATE: " + reportState);
                     Thread.sleep(10000);
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
-                    logger.error(Arrays.toString(e.getStackTrace()));
+                    LOGGER.error(e.getMessage());
+                    LOGGER.error(Arrays.toString(e.getStackTrace()));
                 }
                 count += 1;
             }

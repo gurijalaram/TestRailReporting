@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class EvaluatePage extends EvaluateToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(EvaluatePage.class);
 
     @FindBy(css = ".left-panel.p-3")
     private WebElement leftPanel;
@@ -112,7 +112,7 @@ public class EvaluatePage extends EvaluateToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
         pageUtils.waitForElementAppear(leftPanel);

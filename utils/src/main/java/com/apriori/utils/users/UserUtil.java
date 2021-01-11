@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UserUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserUtil.class);
 
     /**
      * Return common user
@@ -64,7 +64,7 @@ public class UserUtil {
     }
 
     private static void logInfo(UserCredentials user) {
-        logger.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getUsername(), user.getPassword(), user.getAccessLevel()));
+        LOGGER.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getUsername(), user.getPassword(), user.getAccessLevel()));
     }
 
 }

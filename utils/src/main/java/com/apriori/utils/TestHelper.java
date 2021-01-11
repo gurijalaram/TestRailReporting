@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class TestHelper {
 
-    public static final Logger logger = LoggerFactory.getLogger(TestHelper.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(TestHelper.class);
 
     @Rule
     public TestName name = new TestName();
@@ -39,7 +39,7 @@ public class TestHelper {
         TestMode result;
 
         if (testMode == null || testMode.isEmpty()) {
-            TestHelper.logger.info("Test mode was null. Setting LOCAL mode.");
+            TestHelper.LOGGER.info("Test mode was null. Setting LOCAL mode.");
             return TestMode.LOCAL;
         }
 
@@ -60,14 +60,14 @@ public class TestHelper {
                 throw new IllegalStateException("testMode could not be identified");
         }
 
-        TestHelper.logger.info("Test mode set to: " + result.toString());
+        TestHelper.LOGGER.info("Test mode set to: " + result.toString());
         return result;
     }
 
     private TestType getTestType(String testType) {
         TestType type;
         if (StringUtils.isEmpty(testType)) {
-            TestHelper.logger.debug("Test Type was not defined, assuming it to be :" + TestType.UI);
+            TestHelper.LOGGER.debug("Test Type was not defined, assuming it to be :" + TestType.UI);
             return TestType.UI;
         }
         switch (testType) {

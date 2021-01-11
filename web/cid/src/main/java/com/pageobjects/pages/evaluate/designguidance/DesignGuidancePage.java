@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class DesignGuidancePage extends EvaluatePanelToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(DesignGuidancePage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DesignGuidancePage.class);
 
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
@@ -64,7 +64,7 @@ public class DesignGuidancePage extends EvaluatePanelToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class ExplorePage extends ExploreToolbar {
 
-    private final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(xpath = "//button[.='Filters']")
     private WebElement filtersButton;
@@ -38,7 +38,7 @@ public class ExplorePage extends ExploreToolbar {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(filtersButton);
     }

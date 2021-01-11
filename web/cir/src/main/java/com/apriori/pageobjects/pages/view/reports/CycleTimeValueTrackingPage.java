@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class CycleTimeValueTrackingPage extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(CycleTimeValueTrackingPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CycleTimeValueTrackingPage.class);
 
     @FindBy(xpath = "//div[contains(@class, 'dropdownContainer')][1]//ul/li[1]")
     private WebElement projectRollupDropdownFirstElement;
@@ -51,7 +51,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         intialiseValueIndexesMap();
     }

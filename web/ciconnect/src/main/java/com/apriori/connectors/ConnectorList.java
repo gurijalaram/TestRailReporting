@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ConnectorList extends LoadableComponent<ConnectorList> {
 
-    private final Logger logger = LoggerFactory.getLogger(ConnectorList.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ConnectorList.class);
 
     @FindBy(css = "div.objbox tr")
     private List<WebElement> connectorListTable;
@@ -59,7 +59,7 @@ public class ConnectorList extends LoadableComponent<ConnectorList> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.pageHeader = new PageHeader(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

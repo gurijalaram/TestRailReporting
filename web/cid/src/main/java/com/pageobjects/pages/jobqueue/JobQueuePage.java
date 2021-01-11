@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class JobQueuePage extends LoadableComponent<JobQueuePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(JobQueuePage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(JobQueuePage.class);
 
     @FindBy(css = ".table.table-striped")
     private WebElement jobQueueTable;
@@ -37,7 +37,7 @@ public class JobQueuePage extends LoadableComponent<JobQueuePage> {
     public JobQueuePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

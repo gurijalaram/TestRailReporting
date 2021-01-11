@@ -11,7 +11,7 @@ import java.io.File;
 
 public class FileImport {
 
-    private final Logger logger = LoggerFactory.getLogger(FileImport.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(FileImport.class);
 
     @FindBy(css = "input[type='file']")
     private WebElement fileInput;
