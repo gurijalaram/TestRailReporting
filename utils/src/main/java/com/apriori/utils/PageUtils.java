@@ -742,16 +742,6 @@ public class PageUtils {
     }
 
     /**
-     * Gets list of current windows and switches back to first tab
-     *
-     * @return webdriver functions
-     */
-    public WebDriver switchBackToInitialTab() {
-        List<String> windowList = new ArrayList<>(driver.getWindowHandles());
-        return driver.switchTo().window(windowList.get(0));
-    }
-
-    /**
      * Gets count of open tabs
      *
      * @return int - number of open tabs
