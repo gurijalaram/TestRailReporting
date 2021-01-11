@@ -1,7 +1,6 @@
 package com.apriori.login;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.workflows.GenericWorkflow;
@@ -17,9 +16,8 @@ import utils.Constants;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
-
     private static String loginPageURL = Constants.getDefaultUrl();
+    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     protected String url;
 
     @FindBy(css = "input[name='email']")
@@ -79,8 +77,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     public GenericWorkflow login() {
         UserCredentials userCredentials;
 
-        if (CommonConstants.PROP_USER_NAME != null && CommonConstants.PROP_USER_PASSWORD != null) {
-            userCredentials = new UserCredentials(CommonConstants.PROP_USER_NAME, CommonConstants.PROP_USER_PASSWORD);
+        if (Constants.DEFAULT_USER_NAME_KEY != null && Constants.DEFAULT_PASSWORD_KEY != null) {
+            userCredentials = new UserCredentials(Constants.DEFAULT_USER_NAME_KEY, Constants.DEFAULT_PASSWORD_KEY);
         } else {
             userCredentials = UserUtil.getUser();
         }
