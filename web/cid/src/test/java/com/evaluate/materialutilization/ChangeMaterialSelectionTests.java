@@ -36,7 +36,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"864", "866", "867"})
     @Description("Test making changes to the Material for Additive Manufacturing, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestAdditive() {
