@@ -21,9 +21,11 @@ import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
+import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
 
@@ -31,9 +33,37 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private InputControlsTests inputControlsTests;
+    private CommonReportTests commonReportTests;
 
     public SheetMetalDtcDetailsReportTests() {
         super();
+    }
+
+    @Test
+    @TestRail(testCaseId = "92")
+    @Description("validate report available by navigation")
+    public void testReportAvailabilityByNavigation() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
+                Constants.DTC_METRICS_FOLDER,
+                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "92")
+    @Description("Verify report availability by library")
+    public void testReportAvailabilityByLibrary() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName());
+    }
+
+    @Test
+    @TestRail(testCaseId = "92")
+    @Description("Verify report availability by search")
+    public void testReportAvailabilityBySearch() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName());
     }
 
     @Test

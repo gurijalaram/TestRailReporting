@@ -17,6 +17,13 @@ public class Constants {
     public static String environment;
     private static String costingThreads;
     private static String pollingTimeout;
+    private static String cisServiceHost;
+    private static String cisPartIdentity;
+    private static String cisReportIdentity;
+    private static String cisReportTypeIdentity;
+    private static String cisCustomerIdentity;
+    private static String cisBatchIdentity;
+    private static String secretKey;
     private static String baseUrl;
 
     static {
@@ -49,8 +56,7 @@ public class Constants {
      * @return integer
      */
     public static Integer getCostingThreads() {
-        costingThreads = costingThreads == null ? PROPERTIES.getProperty("costing.threads") : System.getProperty("costingThreads");
-
+        costingThreads = System.getProperty("costingThreads") == null ? PROPERTIES.getProperty("costing.threads") : System.getProperty("costingThreads");
         return Integer.valueOf(costingThreads);
     }
 
@@ -67,7 +73,7 @@ public class Constants {
      * @return integer
      */
     public static Integer getPollingTimeout() {
-        pollingTimeout = pollingTimeout == null ? PROPERTIES.getProperty("polling.timeout") : System.getProperty("pollingTimeout");
+        pollingTimeout = System.getProperty("pollingTimeout") == null ? PROPERTIES.getProperty("polling.timeout") : System.getProperty("pollingTimeout");
         return Integer.valueOf(pollingTimeout);
     }
 
@@ -76,6 +82,87 @@ public class Constants {
      */
     public static void setPollingTimeout(Integer pollingTimeout) {
         Constants.pollingTimeout = pollingTimeout.toString();
+    }
+
+    /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("secretKey") == null ? PROPERTIES.getProperty("secret.key") : System.getProperty("secretKey");
+    }
+
+    /**
+     * Get service host
+     *
+     * @return string
+     */
+    public static String getCisServiceHost() {
+        return cisServiceHost = System.getProperty("cisServiceHost") == null ? PROPERTIES.getProperty("cis.service.host") : System.getProperty("cisServiceHost");
+    }
+
+    /**
+     * Get batch identity
+     *
+     * @return string
+     */
+    public static String getCisBatchIdentity() {
+        return cisBatchIdentity = System.getProperty("cisBatchIdentity") == null ? PROPERTIES.getProperty("cis.batch.identity") : System.getProperty("cisBatchIdentity");
+    }
+
+    /**
+     * Set batch identity
+     *
+     * @param identity - the identity
+     */
+    public static void setCisBatchIdentity(String identity) {
+        cisBatchIdentity = System.getProperty("cisBatchIdentity", identity);
+    }
+
+    /**
+     * Get customer identity
+     *
+     * @return string
+     */
+    public static String getCisCustomerIdentity() {
+        return cisCustomerIdentity = System.getProperty("cisCustomerIdentity") == null ? PROPERTIES.getProperty("cis.customer.identity") : System.getProperty("cisCustomerIdentity");
+    }
+
+    /**
+     * Get part identity
+     *
+     * @return string
+     */
+    public static String getCisPartIdentity() {
+        return cisPartIdentity = System.getProperty("cisPartIdentity") == null ? PROPERTIES.getProperty("cis.part.identity") : System.getProperty("cisPartIdentity");
+    }
+
+    /**
+     * Get report type identity
+     *
+     * @return string
+     */
+    public static String getCisReportTypeIdentity() {
+        return cisReportTypeIdentity = System.getProperty("cisReportTypeIdentity") == null ? PROPERTIES.getProperty("cis.reportType.identity") : System.getProperty("cisReportTypeIdentity");
+    }
+
+    /**
+     * Get report identity
+     *
+     * @return string
+     */
+    public static String getCisReportIdentity() {
+        return cisReportIdentity = System.getProperty("cisReportIdentity") == null ? PROPERTIES.getProperty("cis.report.identity") : System.getProperty("cisReportIdentity");
+    }
+
+    /**
+     * Set report identity
+     *
+     * @param identity - the identity
+     */
+    public static void setCisReportIdentity(String identity) {
+        cisReportIdentity = System.setProperty("cisReportIdentity", identity);
     }
 }
 

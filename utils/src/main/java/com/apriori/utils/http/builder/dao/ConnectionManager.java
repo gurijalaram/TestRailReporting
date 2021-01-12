@@ -63,14 +63,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ConnectionManager<T> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
     private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
     private static Map<String, String> authTokens = new ConcurrentHashMap<>();
     private Class<T> returnType;
-
-
     private RequestEntity requestEntity;
-
-    private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
 
     public ConnectionManager(RequestEntity requestEntity, Class<T> returnType) {
         this.requestEntity = requestEntity;
@@ -78,6 +75,84 @@ public class ConnectionManager<T> {
         RestAssured.defaultParser = Parser.JSON;
         RestAssured.urlEncodingEnabled = requestEntity.isUrlEncodingEnabled();
 
+    }
+
+    public static Object postMultiPartFormData(String uri, Map<String, String> params, Class klass, String cloudContext) throws IOException {
+        return postMultiPartFormData(uri, params, klass, null, cloudContext);
+
+    }
+
+    public static Object postMultiPartFormData(String uri, Map<String, String> params, Class klass, File file, String cloudContext)
+        throws IOException {
+        URL url = new URL(uri);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        conn.setRequestMethod("POST");
+        String boundary = "----------------------------544615151549871231842369";
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type",
+            "multipart/form-data; boundary=" + boundary);
+        conn.setRequestProperty("ap-cloud-context", cloudContext);
+
+        OutputStream outputStream = conn.getOutputStream();
+        BufferedWriter bodyWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+
+        for (Object key : params.keySet()) {
+            bodyWriter.write("--" + boundary + "\r\n");
+            bodyWriter.write("Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n" + params.get(key));
+            bodyWriter.write("\r\n");
+            bodyWriter.flush();
+        }
+
+        if (file != null) {
+
+            bodyWriter.write("--" + boundary + "\r\n");
+            bodyWriter.write("Content-Disposition: form-data; name=\"attachment\"; filename=\""
+                + file.getName() + "\"");
+            bodyWriter.write("\r\n\r\n");
+            bodyWriter.flush();
+
+            InputStream istreamFile = new FileInputStream(file);
+            Integer bytesRead;
+            byte[] buffer = new byte[1024];
+            while ((bytesRead = istreamFile.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            outputStream.flush();
+        }
+
+
+        bodyWriter.write("--" + boundary + "-\r\n");
+        bodyWriter.flush();
+
+        outputStream.close();
+        bodyWriter.close();
+
+        int status = conn.getResponseCode();
+
+        InputStream inputStream;
+        if (status != HttpStatus.SC_CREATED) {
+            inputStream = conn.getErrorStream();
+            Assert.fail("Error code was not expected (" + status + ")");
+        } else {
+            inputStream = conn.getInputStream();
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+            inputStream, StandardCharsets.UTF_8));
+
+        String line;
+        StringBuilder sb = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+            sb.append(System.getProperty("line.separator"));
+        }
+
+        reader.close();
+
+        Object response = JsonManager.deserializeJsonFromString(sb.toString(), klass);
+        return response;
     }
 
     private RequestSpecification createRequestSpecification() {
@@ -137,32 +212,32 @@ public class ConnectionManager<T> {
          *                          after connection is established.
          */
         builder
-                .setConfig(RestAssuredConfig.config()
-                        .httpClient(
-                                HttpClientConfig.httpClientConfig()
-                                        .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
-                                        .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
-                        )
-                        .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
+            .setConfig(RestAssuredConfig.config()
+                .httpClient(
+                    HttpClientConfig.httpClientConfig()
+                        .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
+                        .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
                 )
-                .setBaseUri(requestEntity.buildEndpoint());
+                .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
+            )
+            .setBaseUri(requestEntity.buildEndpoint());
 
 
         if (requestEntity.getStatusCode() != null) {
             return RestAssured.given()
-                    .spec(builder.build())
-                    .expect().statusCode(isOneOf(requestEntity.getStatusCode())).request()
-                    .redirects().follow(requestEntity.isFollowRedirection())
-                    .log()
-                    .all();
-        }
-
-        return  RestAssured.given()
                 .spec(builder.build())
-
+                .expect().statusCode(isOneOf(requestEntity.getStatusCode())).request()
                 .redirects().follow(requestEntity.isFollowRedirection())
                 .log()
                 .all();
+        }
+
+        return RestAssured.given()
+            .spec(builder.build())
+
+            .redirects().follow(requestEntity.isFollowRedirection())
+            .log()
+            .all();
     }
 
     private boolean ignoreSslCheck() {
@@ -179,20 +254,20 @@ public class ConnectionManager<T> {
         }
 
         if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
-            logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
+            LOGGER.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
             RequestEntity authEntity = RequestEntity
-                    .initDefaultFormAuthorizationData(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
-                            requestEntity.getUserAuthenticationEntity().getPassword()
-                    )
-                    .setReturnType(AuthenticateJSON.class)
-                    .setEndpoint(AuthEndpointEnum.POST_AUTH)
-                    .setAutoLogin(false)
-                    .setFollowRedirection(false);
+                .initDefaultFormAuthorizationData(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
+                    requestEntity.getUserAuthenticationEntity().getPassword()
+                )
+                .setReturnType(AuthenticateJSON.class)
+                .setEndpoint(AuthEndpointEnum.POST_AUTH)
+                .setAutoLogin(false)
+                .setFollowRedirection(false);
 
             String authToken =
-                    ((AuthenticateJSON) GenericRequestUtil.post(authEntity, new RequestAreaClearRequest())
-                            .getResponseEntity()
-                    ).getAccessToken();
+                ((AuthenticateJSON) GenericRequestUtil.post(authEntity, new RequestAreaClearRequest())
+                    .getResponseEntity()
+                ).getAccessToken();
 
             authTokens.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), authToken);
         }
@@ -203,14 +278,14 @@ public class ConnectionManager<T> {
 
     private UserAuthenticationEntity initUserConnectionData(final String username, final String password) {
         return new UserAuthenticationEntity(
-                username,
-                password,
-                null,
-                "password",
-                "apriori-web-cost",
-                "donotusethiskey",
-                "tenantGroup%3Ddefault%20tenant%3Ddefault",
-                false
+            username,
+            password,
+            null,
+            "password",
+            "apriori-web-cost",
+            "donotusethiskey",
+            "tenantGroup%3Ddefault%20tenant%3Ddefault",
+            false
         );
     }
 
@@ -232,15 +307,15 @@ public class ConnectionManager<T> {
             final URL resource = Thread.currentThread().getContextClassLoader().getResource(CommonConstants.schemaBasePath + schemaLocation);
             if (resource == null) {
                 throw new RuntimeException(
-                        String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
-                                returnType.getName()));
+                    String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
+                        returnType.getName()));
             }
 
             T responseEntity = response.assertThat()
-                    .body(matchesJsonSchema(resource))
-                    .extract()
-                    .response()
-                    .as((Type) returnType);
+                .body(matchesJsonSchema(resource))
+                .extract()
+                .response()
+                .as((Type) returnType);
 
             return ResponseWrapper.build(responseCode, responseHeaders, responseBody, responseEntity);
         } else {
@@ -255,12 +330,12 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> get() {
         return resultOf(
-                createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .get(requestEntity.buildEndpoint())
-                        .then()
-                        .log().all()
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .get(requestEntity.buildEndpoint())
+                .then()
+                .log().all()
         );
     }
 
@@ -271,12 +346,12 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> post() {
         return resultOf(
-                createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .post(requestEntity.buildEndpoint())
-                        .then()
-                        .log().all()
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .post(requestEntity.buildEndpoint())
+                .then()
+                .log().all()
         );
     }
 
@@ -289,97 +364,19 @@ public class ConnectionManager<T> {
     public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
 
-                createRequestSpecification()
-                        .given()
+            createRequestSpecification()
+                .given()
 
-                        .config(
-                        RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
-                                ContentType.TEXT)))
-                        .relaxedHTTPSValidation()
-                        .expect()
-                        .when()
-                        .post(requestEntity.buildEndpoint())
-                        .then()
-                        .log().all()
+                .config(
+                    RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
+                        ContentType.TEXT)))
+                .relaxedHTTPSValidation()
+                .expect()
+                .when()
+                .post(requestEntity.buildEndpoint())
+                .then()
+                .log().all()
         );
-    }
-
-    public static Object  postMultPartFormData(String uri, Map<String, String> params, Class klass) throws IOException {
-        return postMultPartFormData(uri, params, klass, null);
-
-    }
-
-    public static Object  postMultPartFormData(String uri, Map<String, String> params, Class klass, File file)
-            throws IOException {
-        URL url = new URL(uri);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-        conn.setRequestMethod("POST");
-        String boundary = "----------------------------544615151549871231842369";
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Content-Type",
-                "multipart/form-data; boundary=" + boundary);
-        conn.setRequestProperty("ap-cloud-context", CommonConstants.getNtsTargetCloudContext());
-
-        OutputStream outputStream = conn.getOutputStream();
-        BufferedWriter bodyWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-
-        for (Object key : params.keySet()) {
-            bodyWriter.write("--" + boundary + "\r\n");
-            bodyWriter.write("Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n" + params.get(key));
-            bodyWriter.write("\r\n");
-            bodyWriter.flush();
-        }
-
-        if (file != null) {
-
-            bodyWriter.write("--" + boundary + "\r\n");
-            bodyWriter.write("Content-Disposition: form-data; name=\"attachment\"; filename=\""
-                        + file.getName() + "\"");
-            bodyWriter.write("\r\n\r\n");
-            bodyWriter.flush();
-
-            InputStream istreamFile = new FileInputStream(file);
-            Integer bytesRead;
-            byte[] buffer = new byte[1024];
-            while ((bytesRead = istreamFile.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-
-            outputStream.flush();
-        }
-
-
-        bodyWriter.write("--" + boundary + "-\r\n");
-        bodyWriter.flush();
-
-        outputStream.close();
-        bodyWriter.close();
-
-        int status = conn.getResponseCode();
-
-        InputStream inputStream;
-        if (status != HttpStatus.SC_CREATED) {
-            inputStream = conn.getErrorStream();
-            Assert.fail("Error code was not expected (" + status + ")");
-        } else {
-            inputStream = conn.getInputStream();
-        }
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                inputStream, StandardCharsets.UTF_8));
-
-        String line;
-        StringBuilder sb = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-            sb.append(System.getProperty("line.separator"));
-        }
-
-        reader.close();
-
-        Object response = JsonManager.deserializeJsonFromString(sb.toString(), klass);
-        return response;
     }
 
     /**
@@ -389,24 +386,24 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> put() {
         return resultOf(
-                createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .put(requestEntity.buildEndpoint())
-                        .then()
-                        .log().all()
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .put(requestEntity.buildEndpoint())
+                .then()
+                .log().all()
         );
     }
 
     public <T> ResponseWrapper<T> patch() {
         return resultOf(
-                createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .patch(requestEntity.buildEndpoint())
-                        .then()
-                        .log()
-                        .all()
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .patch(requestEntity.buildEndpoint())
+                .then()
+                .log()
+                .all()
         );
     }
 
@@ -417,12 +414,12 @@ public class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> delete() {
         return resultOf(
-                createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .delete(requestEntity.buildEndpoint())
-                        .then()
-                        .log().all()
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .delete(requestEntity.buildEndpoint())
+                .then()
+                .log().all()
         );
     }
 }

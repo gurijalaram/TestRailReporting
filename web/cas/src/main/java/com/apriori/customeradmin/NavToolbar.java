@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class NavToolbar extends LoadableComponent<NavToolbar> {
 
-    private final Logger logger = LoggerFactory.getLogger(NavToolbar.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(NavToolbar.class);
 
     @FindBy(css = "[alt='aPriori Logo']")
     private WebElement aprioriLogo;
@@ -48,7 +48,7 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
     public NavToolbar(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

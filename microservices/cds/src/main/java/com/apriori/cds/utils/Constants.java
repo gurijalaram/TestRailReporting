@@ -20,6 +20,10 @@ public class Constants {
     private static String cdsIdentityCustomer;
     private static String cdsIdentityApplication;
     private static String baseUrl;
+    private static String serviceUrl;
+    private static String serviceHost;
+    private static String secretKey;
+    private static String protocol;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -46,12 +50,21 @@ public class Constants {
     }
 
     /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("cdsSecretKey") == null ? PROPERTIES.getProperty("cds.secret.key") : System.getProperty("cdsSecretKey");
+    }
+
+    /**
      * Get identity user
      *
      * @return string
      */
     public static String getCdsIdentityUser() {
-        return cdsIdentityUser = cdsIdentityUser == null ? PROPERTIES.getProperty("cds.identity.user") : System.getProperty("cdsIdentityUser");
+        return cdsIdentityUser = System.getProperty("cdsIdentityUser") == null ? PROPERTIES.getProperty("cds.identity.user") : System.getProperty("cdsIdentityUser");
     }
 
     /**
@@ -60,7 +73,7 @@ public class Constants {
      * @return string
      */
     public static String getCdsIdentityRole() {
-        return cdsIdentityRole = cdsIdentityRole == null ? PROPERTIES.getProperty("cds.identity.role") : System.getProperty("cdsIdentityRole");
+        return cdsIdentityRole = System.getProperty("cdsIdentityRole") == null ? PROPERTIES.getProperty("cds.identity.role") : System.getProperty("cdsIdentityRole");
     }
 
     /**
@@ -69,7 +82,7 @@ public class Constants {
      * @return string
      */
     public static String getCdsIdentityCustomer() {
-        return cdsIdentityCustomer = cdsIdentityCustomer == null ? PROPERTIES.getProperty("cds.identity.customer") : System.getProperty("cdsIdentityCustomer");
+        return cdsIdentityCustomer = System.getProperty("cdsIdentityCustomer") == null ? PROPERTIES.getProperty("cds.identity.customer") : System.getProperty("cdsIdentityCustomer");
     }
 
     /**
@@ -78,6 +91,33 @@ public class Constants {
      * @return string
      */
     public static String getCdsIdentityApplication() {
-        return cdsIdentityApplication = cdsIdentityApplication == null ? PROPERTIES.getProperty("cds.identity.application") : System.getProperty("cdsIdentityApplication");
+        return cdsIdentityApplication = System.getProperty("cdsIdentityApplication") == null ? PROPERTIES.getProperty("cds.identity.application") : System.getProperty("cdsIdentityApplication");
+    }
+
+    /**
+     * Get service host
+     *
+     * @return string
+     */
+    public static String getServiceHost() {
+        return serviceHost = System.getProperty("cdsServiceHost") == null ? PROPERTIES.getProperty("cds.service.host") : System.getProperty("cdsServiceHost");
+    }
+
+    /**
+     * Get protocol
+     *
+     * @return string
+     */
+    public static String getProtocol() {
+        return protocol = System.getProperty("cdsProtocol") == null ? PROPERTIES.getProperty("cds.protocol") : System.getProperty("cdsProtocol");
+    }
+
+    /**
+     * Builds the service url
+     *
+     * @return string
+     */
+    public static String getServiceUrl() {
+        return serviceUrl = getProtocol().concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
     }
 }

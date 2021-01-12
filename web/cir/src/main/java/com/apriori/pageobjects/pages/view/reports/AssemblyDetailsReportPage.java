@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 
 public class AssemblyDetailsReportPage extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
 
     @FindBy(css = "a[id='logo']")
     private WebElement cidLogo;
@@ -63,7 +63,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
 
         initialiseSubAssemblyRowMap();

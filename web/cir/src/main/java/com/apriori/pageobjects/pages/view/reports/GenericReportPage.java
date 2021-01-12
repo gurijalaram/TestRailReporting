@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.view.reports;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -36,11 +35,10 @@ import java.util.Map;
 
 public class GenericReportPage extends ReportsPageHeader {
 
-    private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
     private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
     private Map<String, WebElement> tooltipElementMap = new HashMap<>();
-    private Map<String, WebElement> assemblyMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
     private Map<String, WebElement> partNameMap = new HashMap<>();
     private Map<String, WebElement> bubbleMap = new HashMap<>();
@@ -95,7 +93,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement holeIssuesChartOneComparisonReport;
 
     @FindBy(xpath = "//span[contains(text(), 'Comparison')]")
-    private WebElement comparisonButton;
+    private WebElement comparisonTitle;
 
     @FindBy(xpath = "//span[contains(text(), 'MLDES')]")
     private WebElement partNameCastingDtcDetailsReport;
@@ -147,15 +145,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//label[@title='Assembly Select']//input")
     private WebElement inputBox;
-
-    @FindBy(css = "li[title='SUB-ASSEMBLY (Initial) [assembly]'] > div > a")
-    private WebElement subAssemblyOption;
-
-    @FindBy(xpath = "//a[contains(text(), 'SUB-SUB-ASM (Initial) [assembly]')]")
-    private WebElement subSubAsmOption;
-
-    @FindBy(xpath = "//a[contains(text(), 'TOP-LEVEL (Initial) [assembly]')]")
-    private WebElement topLevelOption;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
     private WebElement currentCurrencyElement;
@@ -490,7 +479,11 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@title='Scenario Name']//ul)[1]/li[1]")
     private WebElement firstScenarioName;
 
+    @FindBy(xpath = "//span[contains(text(), 'Steel')]")
+    private WebElement cycleTimeValueTrackingDetailsMaterialComposition;
+
     private String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
+    private String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -499,12 +492,11 @@ public class GenericReportPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseDtcComparisonDtcIssueMap();
         initialiseTooltipElementMap();
         initialiseDtcScoreBubbleMap();
-        initialiseAssemblyHashMap();
         initialiseCurrencyMap();
         initialisePartNameMap();
         initialiseBubbleMap();
@@ -527,7 +519,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
+        exportSetSearchInput.sendKeys(exportSet);
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
@@ -652,7 +646,9 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setAssembly(String assemblyName) {
         currentAssemblyElement.click();
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            assemblyMap.get(assemblyName).click();
+            //assemblyMap.get(assemblyName).click();
+            By locator = By.xpath(String.format(genericAssemblySetLocator, assemblyName));
+            pageUtils.waitForElementAndClick(locator);
         }
         return this;
     }
@@ -661,7 +657,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets assembly name from set assembly dropdown
      */
     public String getAssemblyNameFromSetAssemblyDropdown(String assemblyName) {
-        return assemblyMap.get(assemblyName).getAttribute("textContent");
+        return driver.findElement(By.xpath(String.format(genericAssemblySetLocator, assemblyName)))
+                .getAttribute("textContent");
     }
 
     /**
@@ -765,14 +762,8 @@ public class GenericReportPage extends ReportsPageHeader {
         return massMetricValueOnBubble.getAttribute("textContent");
     }
 
-    /**
-     * Moves to new tab (Casting DTC to Casting DTC Comparison)
-     * @return current page object
-     */
-    public GenericReportPage newTabTransfer() {
-        switchTab();
-        pageUtils.waitForElementToAppear(comparisonButton);
-        return this;
+    public void waitForNewTabSwitchCastingDtcToComparison() {
+        pageUtils.waitForElementToAppear(comparisonTitle);
     }
 
     /**
@@ -783,7 +774,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.jsNewTab();
         pageUtils.windowHandler(index);
 
-        driver.get(Constants.getDefaultUrl());
+        driver.get(Constants.getCidUrl());
         pageUtils.waitForElementToAppear(cidLogo);
 
         return new GenericReportPage(driver);
@@ -837,7 +828,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage clickComparison() {
         pageUtils.waitForElementToAppear(castingDtcBubble);
-        pageUtils.waitForElementAndClick(comparisonButton);
+        pageUtils.waitForElementAndClick(comparisonTitle);
         return this;
     }
 
@@ -1515,7 +1506,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public void clickMachiningBubbleAndSwitchTab() {
         pageUtils.actionClick(machiningDtcBubbleTwo);
 
-        switchTab();
+        switchTab(1);
         pageUtils.waitForElementToAppear(upperTitle);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
@@ -1536,7 +1527,7 @@ public class GenericReportPage extends ReportsPageHeader {
             builder.build().perform();
         }
 
-        switchTab();
+        switchTab(1);
         pageUtils.waitForElementToAppear(upperTitle);
         pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
         return partName;
@@ -1554,7 +1545,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         pageUtils.waitForElementAndClick(machiningDtcDetailsPartNameLink);
 
-        switchTab();
+        switchTab(1);
         pageUtils.waitForElementToAppear(upperTitle);
         pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
 
@@ -1722,7 +1713,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public void clickComponentLinkAssemblyDetails() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementAndClick(componentLinkAssemblyDetails);
-        switchTab();
+        switchTab(1);
         pageUtils.waitForElementToAppear(componentCostReportTitle);
     }
 
@@ -2124,11 +2115,37 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Switches tab, if second tab is open
+     * @return GenericReportPage instance
      */
-    private void switchTab() {
-        if (pageUtils.getCountOfOpenTabs() == 2) {
-            pageUtils.windowHandler(1);
+    public GenericReportPage switchTab(int index) {
+        pageUtils.windowHandler(index);
+        return this;
+    }
+
+    /**
+     * Waits for tab switch to occur from Cycle Time Value Tracking to Details or Component Cost Reports
+     */
+    public void waitForNewTabSwitchCycleTimeToDetailsOrComponentCost() {
+        pageUtils.waitForElementToAppear(cycleTimeValueTrackingDetailsMaterialComposition);
+    }
+
+    /**
+     * Gets all VPE Values from Assembly Details Report
+     * @return ArrayList of type String
+     */
+    public ArrayList<String> getAllVpeValuesAssemblyDetailsReport() {
+        ArrayList<String> vpeValues = new ArrayList<>();
+
+        String[] partNames = { "3570823", "3570824", "3574255", "SUB-SUB-ASM", "3571050", "3575132", "3575133",
+            "3575134", "0200613", "0362752", "3538968", "SUB-ASSEMBLY", "3575135" };
+
+        String locator = "//span[contains(text(), '%s')]/ancestor::tr[@style='height:15px']/td[16]/span";
+
+        for (String partName : partNames) {
+            vpeValues.add(driver.findElement(By.xpath(String.format(locator, partName))).getText());
         }
+
+        return vpeValues;
     }
 
     /**
@@ -2146,15 +2163,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseCurrencyMap() {
         currencyMap.put(CurrencyEnum.GBP.getCurrency(), gbpCurrencyOption);
         currencyMap.put(CurrencyEnum.USD.getCurrency(), usdCurrencyOption);
-    }
-
-    /**
-     * Initialises assembly hash map
-     */
-    private void initialiseAssemblyHashMap() {
-        assemblyMap.put(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName(), subAssemblyOption);
-        assemblyMap.put(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName(), subSubAsmOption);
-        assemblyMap.put(AssemblySetEnum.TOP_LEVEL.getAssemblySetName(), topLevelOption);
     }
 
     /**

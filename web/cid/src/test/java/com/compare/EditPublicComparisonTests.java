@@ -25,6 +25,7 @@ import io.qameta.allure.Issue;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.MigrationTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -127,6 +128,7 @@ public class EditPublicComparisonTests extends TestBase {
     @Test
     @Issue("BA-999")
     @Issue("AP-61539")
+    @Category(MigrationTests.class)
     @TestRail(testCaseId = {"2279"})
     @Description("Test you can change the basis of your comparison")
     public void testChangeComparisonBasis() {
@@ -180,6 +182,7 @@ public class EditPublicComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(MigrationTests.class)
     @TestRail(testCaseId = {"428"})
     @Description("Private comparison can be overwritten by public comparison with the same name")
     public void testOverwritePrivateComparison() {
@@ -222,7 +225,7 @@ public class EditPublicComparisonTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, MigrationTests.class})
     @TestRail(testCaseId = {"435"})
     @Description("In explore view, the user can lock and unlock the currently open public comparison")
     public void testLockUnlockPublishComparison() {

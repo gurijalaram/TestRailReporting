@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class AssemblyCostReportPage extends GenericReportPage {
 
-    private final Logger logger = LoggerFactory.getLogger(AssemblyCostReportPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(AssemblyCostReportPage.class);
 
     @FindBy(xpath = "//label[@title='Single export set selection.']/div/div/div/a")
     private WebElement exportSetDropdown;
@@ -39,7 +39,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

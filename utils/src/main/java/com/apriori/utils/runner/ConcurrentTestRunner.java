@@ -11,11 +11,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ConcurrentTestRunner extends BlockJUnit4ClassRunner {
 
-    private static final Logger logger_ConcurrentTestRunner = LoggerFactory.getLogger(ConcurrentTestRunner.class);
+    private static final Logger LOGGER_CONCURRENT_TEST_RUNNER = LoggerFactory.getLogger(ConcurrentTestRunner.class);
 
     public ConcurrentTestRunner(Class<?> klass) throws InitializationError {
         super(klass);
-        logger_ConcurrentTestRunner.debug("ConcurrentTestRunner constructor");
+        LOGGER_CONCURRENT_TEST_RUNNER.debug("ConcurrentTestRunner constructor");
         String threads = "1";
         if (StringUtils.isNotEmpty(System.getProperty("threadCount"))) {
             threads = System.getProperty("threadCount");

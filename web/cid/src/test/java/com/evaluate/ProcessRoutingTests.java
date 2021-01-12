@@ -39,6 +39,7 @@ import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.MigrationTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -139,7 +140,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, MigrationTests.class})
     @TestRail(testCaseId = {"1649", "1656"})
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {

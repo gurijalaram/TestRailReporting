@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class WebDriverUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebDriverUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverUtils.class);
 
 
     private static final String xpathAprioriLogo = ".//img[@class='logo']";
@@ -50,7 +50,7 @@ public class WebDriverUtils {
 
             token = ((ChromeDriver) driver).getLocalStorage().getItem("ID_TOKEN");
         } catch (Exception e) {
-            logger.error(String.format("Can't login as valid user. User credentials: email %s, password %s", email, password));
+            LOGGER.error(String.format("Can't login as valid user. User credentials: email %s, password %s", email, password));
             throw new IllegalArgumentException(e);
         } finally {
             driver.quit();

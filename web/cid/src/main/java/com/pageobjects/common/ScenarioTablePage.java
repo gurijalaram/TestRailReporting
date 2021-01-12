@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
 
-    private final Logger logger = LoggerFactory.getLogger(ScenarioTablePage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ScenarioTablePage.class);
 
     @FindBy(css = "select[data-ap-field='filter'] option")
     private List<WebElement> workspaceDropdownList;
@@ -65,7 +65,7 @@ public class ScenarioTablePage extends LoadableComponent<ScenarioTablePage> {
     public ScenarioTablePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

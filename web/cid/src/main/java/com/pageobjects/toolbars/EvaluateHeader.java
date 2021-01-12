@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EvaluateHeader extends GenericHeader {
 
-    private static final Logger logger = LoggerFactory.getLogger(EvaluateHeader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateHeader.class);
 
     @FindBy(css = "button[data-ap-comp='costButton']")
     private WebElement costButton;
@@ -47,7 +47,7 @@ public class EvaluateHeader extends GenericHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

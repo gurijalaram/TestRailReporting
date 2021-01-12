@@ -5,6 +5,7 @@ import com.apriori.utils.users.UserCredentials;
 
 import com.pageobjects.pages.explore.ExplorePage;
 import com.utils.Constants;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class CidLoginPage extends LoadableComponent<CidLoginPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(CidLoginPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CidLoginPage.class);
     private static String loginPageUrl = Constants.getDefaultUrl();
 
     @FindBy(css = "input[name='email']")
@@ -79,14 +80,14 @@ public class CidLoginPage extends LoadableComponent<CidLoginPage> {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = loginPageUrl;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        logger.info("CURRENTLY ON INSTANCE: " + url);
+        LOGGER.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -145,6 +146,7 @@ public class CidLoginPage extends LoadableComponent<CidLoginPage> {
      * @param email    - the email
      * @param password - the password
      */
+    @Step("Verify sign with uname {0} and password {1}")
     private void executeLogin(String email, String password) {
         enterEmail(email);
         enterPassword(password);

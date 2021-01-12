@@ -23,8 +23,8 @@ public class BatchPartResourcesTest extends TestUtil {
         batch = BatchResources.createNewBatch();
 
         NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.deserializeJsonFromStream(
-                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+            (NewPartRequest) JsonManager.deserializeJsonFromStream(
+                FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
         part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getResponse().getIdentity());
 
@@ -35,8 +35,8 @@ public class BatchPartResourcesTest extends TestUtil {
     @Description("API returns a list of Parts per Batch in the CIS DB")
     public void createBatchParts() {
         NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.deserializeJsonFromStream(
-                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+            (NewPartRequest) JsonManager.deserializeJsonFromStream(
+                FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
         BatchPartResources.createNewBatchPart(newPartRequest, batch.getResponse().getIdentity());
     }
@@ -53,6 +53,6 @@ public class BatchPartResourcesTest extends TestUtil {
     @Description("API returns a representation of a single Batch-Part in the CIS DB")
     public void getBatchPart() {
         BatchPartResources.getBatchPartRepresentation(batch.getResponse().getIdentity(),
-                part.getResponse().getIdentity());
+            part.getResponse().getIdentity());
     }
 }

@@ -6,8 +6,8 @@ import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
 import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper;
 import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
+import com.apriori.edc.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class UserTestDataUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserTestDataUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserTestDataUtil.class);
     private String token;
 
     public UserDataEDC initEmptyUser() {
@@ -48,12 +48,12 @@ public class UserTestDataUtil {
 
     public String initToken(UserCredentials userCredentials) {
         return SecurityManager.retriveJwtToken(
-                CommonConstants.getAtsServiceHost(),
+                Constants.getEdcServiceHost(),
                 HttpStatus.SC_CREATED,
                 userCredentials.getUsername().split("@")[0],
                 userCredentials.getUsername(),
-                CommonConstants.getAtsTokenIssuer(),
-                CommonConstants.getAtsTokenSubject());
+                Constants.getEdcTokenIssuer(),
+                Constants.getEdcTokenSubject());
     }
 
     public UserDataEDC initBillOfMaterials() {

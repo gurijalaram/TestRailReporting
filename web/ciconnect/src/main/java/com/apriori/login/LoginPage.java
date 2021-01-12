@@ -1,7 +1,6 @@
 package com.apriori.login;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.workflows.GenericWorkflow;
@@ -17,8 +16,7 @@ import utils.Constants;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
-
+    private final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.getDefaultUrl();
     protected String url;
 
@@ -39,14 +37,14 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = "https://" + loginPageURL;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        logger.info("CURRENTLY ON INSTANCE: " + url);
+        LOGGER.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -79,8 +77,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     public GenericWorkflow login() {
         UserCredentials userCredentials;
 
-        if (CommonConstants.PROP_USER_NAME != null && CommonConstants.PROP_USER_PASSWORD != null) {
-            userCredentials = new UserCredentials(CommonConstants.PROP_USER_NAME, CommonConstants.PROP_USER_PASSWORD);
+        if (Constants.DEFAULT_USER_NAME_KEY != null && Constants.DEFAULT_PASSWORD_KEY != null) {
+            userCredentials = new UserCredentials(Constants.DEFAULT_USER_NAME_KEY, Constants.DEFAULT_PASSWORD_KEY);
         } else {
             userCredentials = UserUtil.getUser();
         }
