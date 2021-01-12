@@ -165,7 +165,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
-            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY_LOWERCASE.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
@@ -198,16 +198,16 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk()
-            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+                .clickOk()
+                .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),

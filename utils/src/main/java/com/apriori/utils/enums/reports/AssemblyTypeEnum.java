@@ -1,9 +1,9 @@
 package com.apriori.utils.enums.reports;
 
 public enum AssemblyTypeEnum {
-    TOP_LEVEL("Top Level"),
+    SUB_ASSEMBLY("Sub Assembly"),
     SUB_SUB_ASM("Sub Sub ASM"),
-    SUB_ASSEMBLY("Sub Assembly");
+    TOP_LEVEL("Top Level");
 
     private final String assemblyType;
 

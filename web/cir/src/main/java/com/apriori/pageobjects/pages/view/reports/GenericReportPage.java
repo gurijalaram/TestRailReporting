@@ -131,7 +131,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a")
     protected WebElement exportSetToSelect;
 
-    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
+    @FindBy(xpath = "//label[@title='Assembly Select']/div")
     private WebElement currentAssemblyElement;
 
     @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
@@ -644,9 +644,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
-        currentAssemblyElement.click();
+        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            //assemblyMap.get(assemblyName).click();
+            currentAssemblyElement.click();
             By locator = By.xpath(String.format(genericAssemblySetLocator, assemblyName));
             pageUtils.waitForElementAndClick(locator);
         }
@@ -835,16 +835,18 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
      *
-     * @param assemblyToCheck
+     * @param assemblyToCheck String - assembly name to wait on
      * @return Generic - instance of specified class
      */
     public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(currentAssembly);
         // if not top level, add -
-        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) ||
+                assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
-            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+            By locator = By.xpath(String.format("//span[contains(text(), '%s')]", newVal));
+            pageUtils.waitForElementToAppear(locator);
         }
         return this;
     }
