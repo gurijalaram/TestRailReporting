@@ -47,7 +47,7 @@ public class UserTestDataUtil {
     }
 
     public String initToken(UserCredentials userCredentials) {
-        return SecurityManager.retriveJwtToken(
+        return SecurityManager.retrieveJwtToken(
                 Constants.getEdcServiceHost(),
                 HttpStatus.SC_CREATED,
                 userCredentials.getUsername().split("@")[0],
