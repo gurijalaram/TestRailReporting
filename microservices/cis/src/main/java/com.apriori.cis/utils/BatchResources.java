@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cis.apicalls;
+package com.apriori.cis.utils;
 
 import com.apriori.apibase.services.cis.objects.Batch;
 import com.apriori.apibase.services.cis.objects.Batches;
