@@ -171,7 +171,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1667", "1668"})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testRoutingCheckBox() {
@@ -204,7 +203,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1665", "1666"})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
@@ -273,7 +271,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1659", "765", "766", "767"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
@@ -485,7 +482,6 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1658", "1254"})
     @Description("Validate the properties dialogue box updates with a newly selected and costed routing.")
     public void propertiesRouting() {
