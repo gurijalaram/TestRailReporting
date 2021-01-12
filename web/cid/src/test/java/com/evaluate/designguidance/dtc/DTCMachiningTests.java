@@ -241,7 +241,6 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1792", "1795", "1796"})
     @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
     public void stockMachineDTC() {

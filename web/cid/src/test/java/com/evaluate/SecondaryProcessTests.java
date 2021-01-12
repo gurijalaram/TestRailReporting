@@ -92,7 +92,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"658", "659", "661"})
     @Description("Test secondary process xray")
     public void secondaryProcessXray() {
@@ -489,7 +488,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1614", "655", "656"})
     @Description("Multiple Secondary Processes after Costing")
@@ -744,7 +743,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"698", "667"})
     @Description("Test secondary process High Temp Vacuum Anneal")
     public void secondaryProcessHighTempVacuumAnneal() {

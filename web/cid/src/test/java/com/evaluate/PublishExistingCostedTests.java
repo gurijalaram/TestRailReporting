@@ -19,7 +19,6 @@ import com.pageobjects.pages.explore.ExplorePage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -77,7 +76,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"390", "569", "403"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
@@ -123,8 +121,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issue("TE-5553")
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"391"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
@@ -157,7 +153,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"393"})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {

@@ -78,7 +78,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         assertThat(guidancePage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("22")));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"1067", "1593", "1068"})
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
@@ -145,7 +145,6 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"3841", "1076", "1070", "1081", "1082"})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
@@ -240,7 +239,6 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1075", "1077"})
     @Description("Testing DTC Moulding Thickness Min")
     public void plasticMinWallThickness() {
