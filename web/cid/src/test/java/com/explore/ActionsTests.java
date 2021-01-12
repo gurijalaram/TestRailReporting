@@ -27,7 +27,6 @@ import com.pageobjects.pages.explore.ScenarioNotesPage;
 import com.pageobjects.pages.login.CidLoginPage;
 import com.pageobjects.toolbars.GenericHeader;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -49,7 +48,6 @@ public class ActionsTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @Issue("AP-61858")
     @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
@@ -124,7 +122,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Issue("AP-61858")
     @Test
     @TestRail(testCaseId = {"1610", "592", "593"})
     @Description("User can lock and unlock a scenario")
@@ -162,7 +159,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"733", "739", "743", "746"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
@@ -191,7 +187,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"732", "737", "741", "744"})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
@@ -253,7 +248,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"528", "527"})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
@@ -287,7 +281,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"532", "736", "734"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
@@ -313,7 +306,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"543"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
@@ -352,7 +344,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"544"})
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
@@ -389,7 +380,6 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @Issue("BA-932")
     @TestRail(testCaseId = {"542", "546"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
@@ -428,7 +418,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"574"})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
@@ -468,7 +457,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"556", "594"})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
@@ -503,7 +491,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-932")
     @TestRail(testCaseId = {"740", "595"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
@@ -603,7 +590,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"437"})
     @Description("In explore view, the user can assign the currently selected public comparison")
     public void actionsAssignComparisonExploreView() {
@@ -634,7 +620,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"438"})
     @Description("In private comparison view, the user can add Info & notes to the currently open comparison")
     public void addInfoNotesInPrivateComparisonView() {
@@ -686,7 +671,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"438"})
     @Description("In public comparison view, the user can add Info & notes to the currently open comparison")
     public void addInfoNotesInPublicComparisonView() {
@@ -749,7 +733,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"439"})
     @Description("In explore view, the user can add Info & notes to the currently selected private comparison")
     public void addInfoNotesFofPrivateComparisonExploreView() {
@@ -798,7 +781,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"439"})
     @Description("In explore view, the user can add Info & notes to the currently selected public comparison")
     public void addInfoNotesFofComparisonExploreView() {
