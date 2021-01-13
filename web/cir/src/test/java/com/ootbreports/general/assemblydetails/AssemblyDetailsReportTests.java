@@ -847,6 +847,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1933")
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
@@ -898,7 +899,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         ComponentsPage componentsPage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PRIVATE_WORKSPACE)
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
                 .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains",
                         AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
