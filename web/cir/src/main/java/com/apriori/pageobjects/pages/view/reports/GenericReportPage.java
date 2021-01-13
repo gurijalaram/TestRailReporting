@@ -999,7 +999,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage exportSetSelectAll() {
         pageUtils.waitForElementAndClick(exportSetSelectAll);
         String exportSetCount = getCountOfExportSets();
-        pageUtils.checkElementAttribute(selectedExportSets, "title", exportSetCount);
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", exportSetCount);
         return this;
     }
 
@@ -1126,9 +1126,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage deselectExportSet() {
-        int expected = getSelectedExportSetCount() - 1;
+        String expectedCount = String.valueOf(getSelectedExportSetCount() - 1);
         pageUtils.waitForElementAndClick(exportSetToSelect);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.EXPORT_SET.getListName(),
+                "Selected: ",
+                expectedCount
+        );
         return this;
     }
 
@@ -1138,9 +1142,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage invertExportSetSelection() {
-        int expected = getAvailableExportSetCount() - getSelectedExportSetCount();
+        String expectedCount = String.valueOf(getAvailableExportSetCount() - getSelectedExportSetCount());
         pageUtils.waitForElementAndClick(exportSetInvert);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.EXPORT_SET.getListName(),
+                "Selected: ",
+                expectedCount
+        );
         return this;
     }
 
@@ -1151,7 +1159,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage exportSetDeselectAll() {
         pageUtils.waitForElementAndClick(exportSetDeselect);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + "0");
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "0");
         return this;
     }
 
