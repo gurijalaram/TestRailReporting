@@ -20,7 +20,6 @@ public class CommonConstants {
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
     private static String secretKey;
-    private static String fmsServiceHost;
     private static String cisPartIdentity;
 
     public static final String defaultSecretKeyKey = "secretKey";
@@ -65,14 +64,6 @@ public class CommonConstants {
         }
 
         return secretKey;
-    }
-
-    public static String getFmsServiceHost() {
-        if (fmsServiceHost == null) {
-            fmsServiceHost = System.getProperty("fmsServiceHost", PROPERTIES.getProperty("fms.service.host"));
-        }
-
-        return fmsServiceHost;
     }
 
     public static String getCisPartIdentity() {
