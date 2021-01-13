@@ -623,6 +623,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export Set search function works (plus other filters)")
     public void testExportSetSearch() {
@@ -634,8 +635,9 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         genericReportPage.searchForExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
-        assertThat(genericReportPage.getExportSetOptionCount(), is(equalTo("1")));
+        assertThat(genericReportPage.getExportSetOptionCount(), is(equalTo("2")));
         assertThat(genericReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL.getExportSetName()), is(true));
+        assertThat(genericReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName()), is(true));
     }
 
     @Test
@@ -847,7 +849,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1933")
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
@@ -875,7 +876,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1927")
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {

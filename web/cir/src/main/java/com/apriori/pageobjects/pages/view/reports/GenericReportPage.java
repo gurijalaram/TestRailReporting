@@ -1775,8 +1775,13 @@ public class GenericReportPage extends ReportsPageHeader {
     public void searchForExportSet(String exportSet) {
         pageUtils.waitForElementAndClick(exportSetSearchInput);
         exportSetSearchInput.sendKeys(exportSet);
-        pageUtils.checkElementAttribute(exportSetSearchInput, "value", exportSet);
-        pageUtils.checkElementAttribute(exportSetList, "childElementCount", "1");
+
+        By listLocator = By.xpath(
+                "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr' and count(./li/*) = 2]");
+        pageUtils.waitForElementToAppear(listLocator);
+
+        By topLevelOptionLocator = By.xpath("//li[@title='---01-top-level-multi-vpe']/div/a");
+        pageUtils.waitForElementToAppear(topLevelOptionLocator);
     }
 
     /**
