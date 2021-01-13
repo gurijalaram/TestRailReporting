@@ -19,10 +19,7 @@ public class CommonConstants {
 
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
-    private static String secretKey;
     private static String cisPartIdentity;
-
-    public static final String defaultSecretKeyKey = "secretKey";
 
     private static String csvFile;
     private static final Properties PROPERTIES = new Properties();
@@ -56,14 +53,6 @@ public class CommonConstants {
      */
     public static String getCsvFile() {
         return csvFile = csvFile == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
-    }
-
-    public static String getSecretKey() {
-        if (secretKey == null) {
-            secretKey = System.getProperty(defaultSecretKeyKey, PROPERTIES.getProperty("secret.key"));
-        }
-
-        return secretKey;
     }
 
     public static String getCisPartIdentity() {

@@ -19,6 +19,7 @@ public class Constants {
     private static String edcTokenSubject;
     private static String edcTokenIssuer;
     private static String edcServiceHost;
+    private static String secretKey;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -69,5 +70,14 @@ public class Constants {
      */
     public static String getEdcTokenSubject() {
         return edcTokenSubject = System.getProperty("edcTokenSubject") == null ? PROPERTIES.getProperty("edc.token.subject") : System.getProperty("edcTokenSubject");
+    }
+
+    /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("edcSecretKey") == null ? PROPERTIES.getProperty("secret.key") : System.getProperty("edcSecretKey");
     }
 }
