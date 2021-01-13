@@ -942,7 +942,8 @@ public class GenericReportPage extends ReportsPageHeader {
 
         if (datePickerDiv.getAttribute("style").contains("display: block;")) {
             datePickerCloseButton.click();
-            pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
+            By locator = By.cssSelector("span[class='button picker calTriggerWrapper']");
+            pageUtils.waitForElementToAppear(locator);
         }
 
         return this;

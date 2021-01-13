@@ -623,7 +623,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export Set search function works (plus other filters)")
     public void testExportSetSearch() {
