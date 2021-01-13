@@ -1403,7 +1403,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Wait for expected export count
      */
     public GenericReportPage waitForExpectedExportCount(String expected) {
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", expected);
         return this;
     }
 

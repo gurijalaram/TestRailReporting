@@ -26,6 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.CiaCirTestDevSuite;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import utils.Constants;
@@ -135,6 +136,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(CiaCirTestDevTest.class)
     @TestRail(testCaseId = "3021")
     @Description("Verify reset button on Machining DTC input control panel works")
     public void testResetButton() {
