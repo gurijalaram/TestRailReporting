@@ -3,6 +3,7 @@ package com.apriori.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+import com.apriori.utils.constants.CommonConstants;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -786,17 +787,5 @@ public class PageUtils {
      */
     public String getUrlToCheck() {
         return System.getProperty("baseUrl");
-    }
-
-    /**
-     * Gets url of MSSQL or Oracle install
-     * @return String of main part of url, minus 1 or 2 at end as can't tel which it is
-     */
-    public String getLocalUrlToCheck() {
-        String returnVal = CommonConstants.getBaseUrl();
-        if (returnVal.contains("localhost")) {
-            returnVal = returnVal.replace("localhost/", "conqbaci0");
-        }
-        return returnVal;
     }
 }
