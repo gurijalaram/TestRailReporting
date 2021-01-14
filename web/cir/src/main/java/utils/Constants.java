@@ -62,6 +62,7 @@ public class Constants {
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
+            PROPERTIES.list(System.out);
         } catch (IOException e) {
             e.printStackTrace();
         }
