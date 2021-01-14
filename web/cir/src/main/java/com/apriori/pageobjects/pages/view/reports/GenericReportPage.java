@@ -1395,7 +1395,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return boolean
      */
     public boolean isOptionInDropDown(String optionName, int expected) {
-        pageUtils.checkElementAttribute(savedOptionsDropDown, "childElementCount", Integer.toString(expected));
+        pageUtils.waitForElementToAppear(
+                By.xpath(String.format("//select[@id='reportOptionsSelect' and count(option) = %s]", expected)));
         if (driver.findElements(By.xpath("//div[@id='inputControls']//div[@class='sub header hidden']")).size() > 0) {
             return false;
         } else {
