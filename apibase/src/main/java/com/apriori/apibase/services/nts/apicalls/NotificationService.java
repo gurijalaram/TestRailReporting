@@ -6,7 +6,6 @@ import com.apriori.apibase.services.nts.objects.Notifications;
 import com.apriori.apibase.services.nts.objects.SendEmailResponse;
 import com.apriori.apibase.services.nts.utils.EmailSetup;
 import com.apriori.utils.EmailUtil;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.ConnectionManager;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -23,8 +22,6 @@ import javax.mail.Message;
 public class NotificationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NotificationService.class);
-    private static String baseUrl =
-            "https://" + CommonConstants.getNtsServiceHost() + "/emails%s?key=" + CommonConstants.getSecretKey();
 
     public static Boolean validateEmail(String subject) {
         EmailSetup emailSetup = new EmailSetup();
@@ -35,9 +32,9 @@ public class NotificationService {
             int defaultTimeout = 12;
             while (count <= defaultTimeout) {
                 Message[] messages = EmailUtil.getEmail(
-                        emailSetup.getHost(),
-                        emailSetup.getUsername(),
-                        emailSetup.getPassword()
+                    emailSetup.getHost(),
+                    emailSetup.getUsername(),
+                    emailSetup.getPassword()
                 );
                 Message message = messages[messages.length - 1];
 
@@ -55,7 +52,7 @@ public class NotificationService {
         return false;
     }
 
-    private static SendEmailResponse sendEmail(String baseUrl, String subject, Map<String, String> parameters, String emailContent) {
+    private static SendEmailResponse sendEmail(String baseUrl, String subject, Map<String, String> parameters, String emailContent, String cloudContext) {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
@@ -72,7 +69,7 @@ public class NotificationService {
 
         SendEmailResponse smr = null;
         try {
-            smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class);
+            smr = (SendEmailResponse) ConnectionManager.postMultiPartFormData(url, params, SendEmailResponse.class, cloudContext);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
@@ -81,25 +78,25 @@ public class NotificationService {
 
     }
 
-    public static SendEmailResponse sendEmail(String baseUrl, String subject, String cloudContent) {
-        return sendEmail(baseUrl, subject, null, cloudContent);
+    public static SendEmailResponse sendEmail(String baseUrl, String subject, String emailContent, String cloudContext) {
+        return sendEmail(baseUrl, subject, null, emailContent, cloudContext);
     }
 
-    public static SendEmailResponse sendEmailWithTemplate(String baseUrl, String subject, String templateName, String cloudContent) {
+    public static SendEmailResponse sendEmailWithTemplate(String baseUrl, String subject, String templateName, String emailContent, String cloudContext) {
         Map<String, String> params = new HashMap<>();
         params.put("templateName", templateName);
-        return sendEmail(baseUrl, subject, params, cloudContent);
+        return sendEmail(baseUrl, subject, params, emailContent, cloudContext);
     }
 
-    public static SendEmailResponse sendEmailAsBatch(String baseUrl, String subject, String batchIdentifier, String cloudContent) {
+    public static SendEmailResponse sendEmailAsBatch(String baseUrl, String subject, String batchIdentifier, String emailContent, String cloudContext) {
         Map<String, String> params = new HashMap<>();
         params.put("sendAsBatch", "true");
         params.put("batchIdentifier", batchIdentifier);
 
-        return sendEmail(baseUrl, subject, params, cloudContent);
+        return sendEmail(baseUrl, subject, params, emailContent, cloudContext);
     }
 
-    public static SendEmailResponse sendEmailWithAttachment(String baseUrl, String subject, String attachmentFile, String emailContent) {
+    public static SendEmailResponse sendEmailWithAttachment(String baseUrl, String subject, String attachmentFile, String emailContent, String cloudContext) {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
@@ -113,13 +110,11 @@ public class NotificationService {
         SendEmailResponse smr = null;
         File attachment = new File(attachmentFile);
         try {
-            smr = (SendEmailResponse)ConnectionManager.postMultPartFormData(url, params, SendEmailResponse.class, attachment);
+            smr = (SendEmailResponse) ConnectionManager.postMultiPartFormData(url, params, SendEmailResponse.class, attachment, cloudContext);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());;
+            LOGGER.error(e.getMessage());
         }
-
         return smr;
-
     }
 
     public static GetEmailResponse getEmails(String baseUrl, String cloudContext) {
@@ -129,8 +124,8 @@ public class NotificationService {
         headers.put("ap-cloud-context", cloudContext);
 
         return (GetEmailResponse) GenericRequestUtil.get(
-                RequestEntity.init(url, GetEmailResponse.class).setHeaders(headers),
-                new RequestAreaApi()
+            RequestEntity.init(url, GetEmailResponse.class).setHeaders(headers),
+            new RequestAreaApi()
         ).getResponseEntity();
     }
 
@@ -141,17 +136,16 @@ public class NotificationService {
         headers.put("ap-cloud-context", cloudContext);
 
         return (Email) GenericRequestUtil.get(
-                RequestEntity.init(url, Email.class).setHeaders(headers),
-                new RequestAreaApi()
+            RequestEntity.init(url, Email.class).setHeaders(headers),
+            new RequestAreaApi()
         ).getResponseEntity();
     }
 
     public static Notifications getNotifications(String serviceHost, String secretKey) {
         String url = "https://" + serviceHost + "/notifications?key=" + secretKey;
         return (Notifications) GenericRequestUtil.get(
-                RequestEntity.init(url, Notifications.class),
-                new RequestAreaApi()
+            RequestEntity.init(url, Notifications.class),
+            new RequestAreaApi()
         ).getResponseEntity();
     }
-
 }

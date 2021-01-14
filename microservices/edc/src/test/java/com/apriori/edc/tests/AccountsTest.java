@@ -8,6 +8,7 @@ import com.apriori.apibase.services.response.objects.AccountsStatusWrapper;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.edc.tests.util.UserDataEDC;
 import com.apriori.edc.tests.util.UserTestDataUtil;
+import com.apriori.edc.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -31,8 +32,10 @@ public class AccountsTest extends TestUtil {
     private String token = "";
     private UserDataEDC userData = new UserDataEDC(UserUtil.getUser());
 
+
     @Before
     public void initUser() {
+        Constants.getDefaultUrl();
         token = new UserTestDataUtil().initToken(userData.getUserCredentials());
         userData.setIdentity(createAndActivateNewAccount(userData.getUsername(), "TestSecretForTesting").getIdentity());
     }

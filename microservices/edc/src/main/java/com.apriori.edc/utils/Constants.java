@@ -9,25 +9,40 @@ import java.util.Properties;
 
 public class Constants {
 
+    public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "edc";
-    public static final String ENVIRONMENT = System.getProperty(DEFAULT_ENVIRONMENT_KEY, DEFAULT_ENVIRONMENT_VALUE);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
+    public static String environment;
+    private static String baseUrl;
     private static String edcTokenSubject;
     private static String edcTokenIssuer;
     private static String edcServiceHost;
+    private static String secretKey;
 
     static {
-        System.setProperty(DEFAULT_ENVIRONMENT_KEY, ENVIRONMENT);
+        environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile(DEFAULT_ENVIRONMENT_VALUE.concat(".properties"));
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Get default url
+     *
+     * @return string
+     */
+    public static String getDefaultUrl() {
+        baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY) == null ? PROPERTIES.getProperty("url.default") : System.getProperty(DEFAULT_BASE_URL_KEY);
+        System.setProperty("baseUrl", baseUrl);
+
+        return baseUrl;
     }
 
     /**
@@ -55,5 +70,14 @@ public class Constants {
      */
     public static String getEdcTokenSubject() {
         return edcTokenSubject = System.getProperty("edcTokenSubject") == null ? PROPERTIES.getProperty("edc.token.subject") : System.getProperty("edcTokenSubject");
+    }
+
+    /**
+     * Get secret key
+     *
+     * @return string
+     */
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("edcSecretKey") == null ? PROPERTIES.getProperty("secret.key") : System.getProperty("edcSecretKey");
     }
 }

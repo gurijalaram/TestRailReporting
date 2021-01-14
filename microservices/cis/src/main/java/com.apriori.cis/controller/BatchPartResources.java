@@ -3,8 +3,8 @@ package com.apriori.cis.controller;
 import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Part;
 import com.apriori.cis.entity.response.Parts;
+import com.apriori.cis.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -19,7 +19,7 @@ public class BatchPartResources extends CisBase {
 
     private static final String endpointBatchPart = String.format(getBatchUrlWithIdentity(), "/parts");
     private static final String endpointBatchPartWithIdentity = String.format(getBatchUrlWithIdentity(),
-            String.format("/parts/%s", CommonConstants.getCisPartIdentity()));
+            String.format("/parts/%s", Constants.getCisPartIdentity()));
 
     public static <T> ResponseWrapper<T> getBatchParts() {
         return GenericRequestUtil.get(

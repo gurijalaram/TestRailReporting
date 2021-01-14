@@ -785,7 +785,7 @@ public class PageUtils {
      * @return String
      */
     public String getUrlToCheck() {
-        return System.getProperty("baseURL");
+        return System.getProperty("baseUrl");
     }
 
     /**

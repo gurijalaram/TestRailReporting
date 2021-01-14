@@ -1,6 +1,4 @@
-package com.apriori.cis.controller;
-
-import com.apriori.cis.utils.Constants;
+package com.apriori.cis.utils;
 
 public class CisBase {
     private static String baseUrl;
@@ -43,6 +41,4 @@ public class CisBase {
         String url = String.format(getBatchUrl(), "/" + identity + "%s");
         return url;
     }
-
-
 }
