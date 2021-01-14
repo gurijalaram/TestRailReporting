@@ -4,7 +4,7 @@ public interface EdcQaAPI extends ExternalEndpointEnum {
 
     @Override
     default String getEndpoint(Object... variables) {
-        return System.getProperty("baseURL") + String.format(getEndpointString(), variables);
+        return System.getProperty("baseUrl") + String.format(getEndpointString(), variables);
     }
 
     default String getSchemaLocation() {

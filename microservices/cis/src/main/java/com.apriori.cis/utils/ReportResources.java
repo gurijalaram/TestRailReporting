@@ -59,8 +59,8 @@ public class ReportResources extends CisBase {
         );
     }
 
-    public static <T> ResponseWrapper<T> getSpecificReportType() {
-        String url = String.format(getReportTypesUrl(), "/" + CommonConstants.getCisReportTypeIdentity());
+    public static <T> ResponseWrapper<T> getSpecificReportType(String reportTypeIdentity) {
+        String url = String.format(getReportTypesUrl(), "/" + reportTypeIdentity);
         return GenericRequestUtil.get(
                 RequestEntity.init(url, ReportType.class),
                 new RequestAreaApi()

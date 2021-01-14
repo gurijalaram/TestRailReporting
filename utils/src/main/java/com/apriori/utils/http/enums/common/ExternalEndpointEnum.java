@@ -8,7 +8,7 @@ import com.apriori.utils.http.enums.EndpointEnum;
 public interface ExternalEndpointEnum extends EndpointEnum {
 
     default String getEndpoint(Object... variables) {
-        return System.getProperty("baseURL") + "ws" + String.format(getEndpointString(), variables);
+        return System.getProperty("baseUrl") + "ws" + String.format(getEndpointString(), variables);
     }
 
     default String getSchemaLocation() {
