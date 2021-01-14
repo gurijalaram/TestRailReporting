@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
