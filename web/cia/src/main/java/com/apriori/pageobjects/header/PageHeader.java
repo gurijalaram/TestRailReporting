@@ -150,7 +150,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      */
     public AdminLogoutPage navigateToAdminLogout() {
         pageUtils.waitForElementToAppear(userButton);
-        return navigateToSubPage(userButton, logoutButton, Logout.class);
+        return navigateToSubPage(userButton, logoutButton, AdminLogoutPage.class);
     }
 
     /**

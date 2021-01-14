@@ -8,12 +8,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.pages.login.AdminLoginPage;
-import com.apriori.pageobjects.pages.logout.Logout;
+import com.apriori.pageobjects.pages.logout.AdminLogoutPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.enums.ComponentTypeEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -32,7 +31,7 @@ public class ExportSetTests extends TestBase {
     private CirUserGuidePage cirUserGuide;
     private CiaUserGuide ciaUserGuide;
     private AdminHomePage adminHomePage;
-    private Logout logout;
+    private AdminLogoutPage logout;
     private NewExportSet newExportSet;
 
     public ExportSetTests() {
@@ -119,7 +118,7 @@ public class ExportSetTests extends TestBase {
 
         String headerToCheck = logout.getHeaderToCheck();
 
-        assertThat(logout.getActualHeaderText(), equalTo(headerToCheck));
+        assertThat(logout.getExpectedHeader(), equalTo(headerToCheck));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
