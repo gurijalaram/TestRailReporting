@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class SheetMetalDtcDetailsReportTests extends TestBase {
@@ -40,6 +41,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -51,6 +53,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -59,6 +62,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -67,6 +71,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3038")
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
@@ -90,6 +95,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3039")
     @Description("Verify earliest and latest export date calendar widgets correctly filter the list of export sets")
     public void testExportSetDateFilterDatePicker() {
@@ -98,6 +104,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3041")
     @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Apply")
     public void testApplyButton() {
@@ -110,6 +117,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3041")
     @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Reset")
     public void testResetButton() {
@@ -121,6 +129,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3041")
     @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Cancel")
     public void testCancelButton() {
@@ -129,6 +138,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3040")
     @Description("Verify Export Set list controls function correctly - Panel Buttons")
     public void testExportSetListControls() {
@@ -137,6 +147,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3040")
     @Description("Verify Export Set list controls function correctly - Search")
     public void testExportSetSearch() {
@@ -148,6 +159,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3042")
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropdown() {
@@ -159,6 +171,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3043")
     @Description("Verify cost metric input control functions correctly - Piece Part Cost")
     public void testCostMetricPpc() {
@@ -171,6 +184,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3043")
     @Description("Verify cost metric input control functions correctly - Fully Burdened Cost")
     public void testCostMetricFbc() {
@@ -183,7 +197,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "3044")
     @Description("Verify Mass Metric input control functions correctly - Finish Mass")
     public void testMassMetricInputControlFinishMass() {
@@ -196,6 +210,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3044")
     @Description("Verify Mass Metric input control functions correctly - Rough Mass")
     public void testMassMetricInputControlRoughMass() {
@@ -208,6 +223,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues")
     public void testSortOrderManufacturingIssues() {
@@ -227,6 +243,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly - Bends")
     public void testSortOrderBends() {
@@ -246,6 +263,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly - Tolerances")
     public void testSortOrderTolerances() {
@@ -265,6 +283,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly - Machining Time")
     public void testSortOrderMachiningTime() {
@@ -284,6 +303,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly - Annual Spend")
     public void testSortOrderAnnualSpend() {
@@ -303,6 +323,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3045")
     @Description("Verify Sort Order input control functions correctly - DTC Rank")
     public void testSortOrderDtcRank() {
@@ -322,6 +343,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3046")
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCodeInputControl() {
@@ -333,6 +355,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3048")
     @Description("Verify Process Group input control functions correctly - No Selection")
     public void testProcessGroupInputControlNoSelection() {
@@ -344,6 +367,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3048")
     @Description("Verify Process Group input control functions correctly - Single Selection")
     public void testSingleProcessGroup() {
@@ -356,6 +380,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3051")
     @Description("Verify Select Parts list controls function correctly - Panel Buttons")
     public void testPartListInputControlButtons() {
@@ -368,6 +393,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly - No Selection")
     public void testDtcScoreNoSelection() {
@@ -379,6 +405,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly - Low")
     public void testDtcScoreLow() {
@@ -391,6 +418,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly - Medium")
     public void testDtcScoreMedium() {
@@ -403,6 +431,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly - High")
     public void testDtcScoreHigh() {
