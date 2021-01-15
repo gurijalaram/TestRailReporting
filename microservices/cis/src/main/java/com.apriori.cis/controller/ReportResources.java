@@ -75,9 +75,9 @@ public class ReportResources extends CisBase {
         NewReportRequest nrr = (NewReportRequest)obj;
 
         if (identity != null) {
-            nrr.addPart(identity);
+            nrr.setScopedIdentity(identity);
         } else {
-            nrr.addPart(Constants.getCisPartIdentity());
+            nrr.setScopedIdentity(Constants.getCisPartIdentity());
         }
 
         String url = String.format(getCisUrl(), endpointReports);
@@ -88,8 +88,9 @@ public class ReportResources extends CisBase {
                 .setExternalId(String.format(nrr.getExternalId(), System.currentTimeMillis()))
                 .setReportFormat(nrr.getReportFormat())
                 .setReportType(nrr.getReportType())
-                .setRoundToNearest(nrr.getRoundToNearest())
-                .setPartIdentities(nrr.getPartIdentities());
+                .setReportTemplateIdentity(nrr.getReportTemplateIdentity())
+                .setScopedIdentity(nrr.getScopedIdentity())
+                .setReportParameters(nrr.getReportParameters());
 
         return (Report) GenericRequestUtil.post(
                 RequestEntity.init(url, Report.class)

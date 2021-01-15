@@ -3,6 +3,7 @@ package com.apriori.cis.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cis.controller.BatchPartResources;
 import com.apriori.cis.controller.BatchResources;
+import com.apriori.cis.controller.PartResources;
 import com.apriori.cis.entity.request.NewPartRequest;
 import com.apriori.cis.entity.response.Batch;
 import com.apriori.cis.entity.response.Part;
@@ -23,8 +24,8 @@ public class BatchPartResourcesTest extends TestUtil {
         batch = BatchResources.createNewBatch();
 
         NewPartRequest newPartRequest =
-            (NewPartRequest) JsonManager.deserializeJsonFromStream(
-                FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+            (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
+                    FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
         part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getResponse().getIdentity());
 
@@ -35,7 +36,7 @@ public class BatchPartResourcesTest extends TestUtil {
     @Description("API returns a list of Parts per Batch in the CIS DB")
     public void createBatchParts() {
         NewPartRequest newPartRequest =
-            (NewPartRequest) JsonManager.deserializeJsonFromStream(
+            (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
         BatchPartResources.createNewBatchPart(newPartRequest, batch.getResponse().getIdentity());

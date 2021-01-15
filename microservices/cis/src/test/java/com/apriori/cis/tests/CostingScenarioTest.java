@@ -49,7 +49,7 @@ public class CostingScenarioTest extends TestUtil {
 
         // create batch part
         NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.deserializeJsonFromStream(
+                (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
                         FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
         Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
@@ -119,7 +119,7 @@ public class CostingScenarioTest extends TestUtil {
         propertyStore.setPartIdentity(partIdentity);
 
         JsonManager.serializeJsonToFile(
-            Thread.currentThread().getContextClassLoader().getResource("property-store.json").getPath(), propertyStore);
+            FileResourceUtil.getResourceAsFile("property-store.json").getPath(), propertyStore);
 
     }
 

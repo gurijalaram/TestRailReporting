@@ -1,57 +1,60 @@
 package com.apriori.cis.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
+import java.time.LocalDateTime;
 
 @Schema(location = "PartCostingSchema.json")
 public class PartCosting {
-    private Integer dtcMessagesCount;
-    private Integer failedGcdsCount;
-    private Integer failuresWarningsCount;
-    private Integer gcdWithTolerancesCount;
-    private Integer notSupportedGcdsCount;
+    private PartCosting response;
     private String partIdentity;
     private String url;
-    private PartCosting response;
-    private String costingStatus;
-    private String currencyCode;
-    private String processGroupName;
-    private String processRoutingName;
-    private String vpeName;
+
     private Double additionalAmortizedInvestment;
     private Double additionalDirectCosts;
-    private Double numberOfParts;
-    private Double numOperators;
-    private Double numPartsPerSheet;
-    private Double numScrapParts;
-    private Double partsPerHour;
-    private Double periodOverhead;
-    private Double pieceAndPeriod;
-    private Double pieceCost;
-    private Double productionLife;
-    private Double programmingCost;
-    private Double programmingCostPerPart;
-    private Double roughMass;
-    private Double scrapMass;
-    private Double setupCostPerPart;
-    private Double sgaCost;
-    private Double stockPropertyLength;
-    private Double stockPropertyThickness;
-    private Double stockPropertyHeight;
-    private Double stockPropertyWidth;
-    private Double stripNestingPitch;
-    private Double toolingCostPerPart;
-    private Double totalCost;
-    private Double totalProductionVolume;
-    private Double otherDirectCosts;
-    private Double utilization;
-    private Double utilizationWithAddendum;
-    private Double utilizationWithoutAddendum;
-    private Double width;
+    private Double amortizedInvestment;
+    private Double annualCost;
+    private Integer annualVolume;
+    private Double batchCost;
+    private Double batchSetupTime;
+    private Integer batchSize;
+    private Double cadSerLength;
+    private Double cadSerWidth;
+    private Double capitalInvestment;
+    private String costingStatus;
+    private String currencyCode;
+    private Double cycleTime;
+    private String description;
+    private String dfmRisk;
+    private Integer dfmScore;
+    private Double directOverheadCost;
+    private Integer dtcMessagesCount;
+    private Double elapsedTime;
+    private Double expendableToolingCostPerPart;
+    private Double extraCosts;
+    private Integer failedGcdsCount;
+    private Integer failuresWarningsCount;
+    private Double finalYield;
+    private Double finishMass;
+    private Double fixtureCost;
+    private Double fixtureCostPerPart;
+    private Double fullyBurdenedCost;
+    private Integer gcdWithTolerancesCount;
     private Double goodPartYield;
     private Double hardToolingCost;
     private Double height;
     private Double laborCost;
     private Double laborTime;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime lastCosted;
+
     private Double length;
     private Double lifetimeCost;
     private Double logisticsCost;
@@ -63,34 +66,53 @@ public class PartCosting {
     private String materialStockFormName;
     private String materialStockName;
     private Double materialUnitCost;
-    private Double finalYield;
-    private Double finishMass;
-    private Double fixtureCost;
-    private Double fixtureCostPerPart;
-    private Double fullyBurdenedCost;
-    private Double elapsedTime;
-    private Double expendableToolingCostPerPart;
-    private Double extraCosts;
-    private Double amortizedInvestment;
-    private Double annualCost;
-    private Integer annualVolume;
-    private Double batchCost;
-    private Double batchSetupTime;
-    private Integer batchSize;
-    private Double cadSerLength;
-    private Double cadSerWidth;
-    private Double capitalInvestment;
-    private Double cycleTime;
-    private String dfmRisk;
-    private Double directOverheadCost;
-    private Double stockPropertyInsideDia;
-    private Double stockPropertyOutsideDia;
-    private Double stockPropertyWallThickness;
-    private String virtualMaterialStockName;
-    private Object userDefinedAttributes;
-    private String description;
-    private Integer dfmScore;
+    private Integer notSupportedGcdsCount;
+    private Double numberOfParts;
+    private Double numOperators;
+    private Double numPartsPerSheet;
+    private Double numScrapParts;
+    private Double otherDirectCosts;
+    private Double partsPerHour;
+    private Double periodOverhead;
+    private Double pieceAndPeriod;
+    private Double pieceCost;
+    private String processGroupName;
+    private String processRoutingName;
+    private Double productionLife;
+    private Double programmingCost;
+    private Double programmingCostPerPart;
+    private Double roughMass;
     private String scenarioName;
+    private Double scrapMass;
+    private Double setupCostPerPart;
+    private Double sgaCost;
+    private Double stockPropertyHeight;
+    private Double stockPropertyInsideDia;
+    private Double stockPropertyLength;
+    private Double stockPropertyOutsideDia;
+    private Double stockPropertyThickness;
+    private Double stockPropertyWallThickness;
+    private Double stockPropertyWidth;
+    private Double stripNestingPitch;
+    private Double toolingCostPerPart;
+    private Double totalCost;
+    private Double totalProductionVolume;
+    private Object userDefinedAttributes;
+    private Double utilization;
+    private Double utilizationWithAddendum;
+    private Double utilizationWithoutAddendum;
+    private String virtualMaterialStockName;
+    private String vpeName;
+    private Double width;
+
+    public LocalDateTime setLastCosted() {
+        return this.lastCosted;
+    }
+
+    public PartCosting setCreatedAt(LocalDateTime lastCosted) {
+        this.lastCosted = lastCosted;
+        return this;
+    }
 
     public String getScenarioName() {
         return scenarioName;

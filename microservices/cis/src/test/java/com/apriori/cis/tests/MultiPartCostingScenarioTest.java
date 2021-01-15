@@ -107,7 +107,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
 
             // create batch part
             NewPartRequest newPartRequest =
-                    (NewPartRequest)JsonManager.deserializeJsonFromStream(
+                    (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
                             FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
             newPartRequest.setFilename(part);

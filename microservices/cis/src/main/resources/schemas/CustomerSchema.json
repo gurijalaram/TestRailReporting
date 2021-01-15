@@ -31,13 +31,11 @@
         },
         "updatedAt": {
           "type": "string"
-
         },
         "updatedBy": {
           "type": "string",
           "pattern": "^(.*)$"
         },
-
         "name": {
           "type": "string",
           "pattern": "^(.*)$"
@@ -73,8 +71,10 @@
         },
         "oneTimePasswordApplications": {
           "type": "array"
+        },
+        "maxCadFileRetentionDays": {
+          "type": "integer"
         }
-
       },
       "if": {
         "properties": {
