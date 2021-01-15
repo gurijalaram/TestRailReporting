@@ -80,43 +80,43 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(), is(testNewScenarioName));
     }
 
-//    @Category({CustomerSmokeTests.class, SmokeTests.class})
-//    @Test
-//    @TestRail(testCaseId = {"1588"})
-//    @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
-//    public void multipleUpload() {
-//        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-//
-//        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
-//        String scenarioA = new GenerateStringUtil().generateScenarioName();
-//        String scenarioB = new GenerateStringUtil().generateScenarioName();
-//        String scenarioC = new GenerateStringUtil().generateScenarioName();
-//
-//        loginPage = new CidAppLoginPage(driver);
-//        explorePage = loginPage.login(UserUtil.getUser())
-//            .uploadComponentAndSubmit(scenarioA, resourceFile, EvaluatePage.class)
-//            .selectProcessGroup(processGroupEnum.getProcessGroup())
-//            .costScenario()
-//            .publishScenario()
-//            .publish(EvaluatePage.class)
-//            .uploadComponentAndSubmit(scenarioB, FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp"), EvaluatePage.class)
-//            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-//            .costScenario()
-//            .publishScenario()
-//            .publish(EvaluatePage.class)
-//            .uploadComponentAndSubmit(scenarioC, FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp"), EvaluatePage.class)
-//            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-//            .costScenario()
-//            .publishScenario()
-//            .publish(ExplorePage.class);
-//            .filter()
-//            .setWorkspace("Public")
-//            .setScenarioType("Part")
-//            .setRowOne("Part Name", "Contains", "MultiUpload")
-//            .apply(ExplorePage.class);
+    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Test
+    @TestRail(testCaseId = {"1588"})
+    @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
+    public void multipleUpload() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-//        assertThat(explorePage.getListOfComponents(scenarioA, "MultiUpload"), equalTo(1));
-//        assertThat(explorePage.getListOfComponents(scenarioB, "MultiUpload"), equalTo(1));
-//        assertThat(explorePage.getListOfComponents(scenarioC, "MultiUpload"), equalTo(1));
-//    }
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
+        String scenarioA = new GenerateStringUtil().generateScenarioName();
+        String scenarioB = new GenerateStringUtil().generateScenarioName();
+        String scenarioC = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser())
+            .uploadComponentAndSubmit(scenarioA, resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .publish(EvaluatePage.class)
+            .uploadComponentAndSubmit(scenarioB, FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp"), EvaluatePage.class)
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .publish(EvaluatePage.class)
+            .uploadComponentAndSubmit(scenarioC, FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp"), EvaluatePage.class)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .costScenario()
+            .publishScenario()
+            .publish(ExplorePage.class);
+            .filter()
+            .setWorkspace("Public")
+            .setScenarioType("Part")
+            .setRowOne("Part Name", "Contains", "MultiUpload")
+            .apply(ExplorePage.class);
+
+        assertThat(explorePage.getListOfComponents(scenarioA, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfComponents(scenarioB, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfComponents(scenarioC, "MultiUpload"), equalTo(1));
+    }*/
 }
