@@ -41,9 +41,10 @@ public class Constants {
     public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
     public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
     public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
-    public static final String FORGOT_PWD_MESSAGE = "If the supplied email address is valid, you will receive an " +
-        "email shortly with instructions on resetting your password. If you did not receive an email and still " +
-        "require assistance, please send an email to support@apriori.com.";
+    public static final String FORGOT_PWD_MSG_QA_ENV = "IF THE SUPPLIED EMAIL ADDRESS IS VALID, YOU WILL RECEIVE AN " +
+            "EMAIL SHORTLY WITH INSTRUCTIONS ON RESETTING YOUR PASSWORD. IF YOU DID NOT RECEIVE AN EMAIL AND STILL " +
+            "REQUIRE ASSISTANCE, PLEASE SEND AN EMAIL TO SUPPORT@APRIORI.COM.";
+    public static final String FORGOT_PWD_MSG_STAGING_ENV = "WE'VE JUST SENT YOU AN EMAIL TO RESET YOUR PASSWORD.";
     public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
     public static final String INVALID_ERROR_MESSAGE = "Invalid";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";

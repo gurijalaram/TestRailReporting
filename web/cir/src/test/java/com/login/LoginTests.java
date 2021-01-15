@@ -57,7 +57,10 @@ public class LoginTests extends TestBase {
             .clickForgotPassword()
             .submitEmail("fakeEmail@apriori.com");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FORGOT_PWD_MESSAGE.toUpperCase())));
+        String forgotPwdMsg = Constants.environment.equals("cir-qa") ?
+                Constants.FORGOT_PWD_MSG_QA_ENV : Constants.FORGOT_PWD_MSG_STAGING_ENV;
+
+        assertThat(loginPage.getLoginMessage(), is(equalTo(forgotPwdMsg)));
     }
 
     @Test
