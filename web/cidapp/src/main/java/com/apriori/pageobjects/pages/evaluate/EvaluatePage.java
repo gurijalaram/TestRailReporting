@@ -448,6 +448,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Get background colour
+     *
      * @param element - the element
      * @return hex code as string
      */
@@ -461,5 +462,15 @@ public class EvaluatePage extends EvaluateToolbar {
             : null;
 
         return Color.fromString(pageUtils.waitForElementAppear(elementColour).getCssValue("background-color")).asHex();
+    }
+
+    /**
+     * Gets the scenario name
+     *
+     * @return current page object
+     */
+    public String getCurrentScenarioName() {
+        By byScenario = By.xpath("//label[.='Current Scenario']/following-sibling::div//button[contains(@class,'secondary')]");
+        return pageUtils.waitForElementToAppear(byScenario).getAttribute("textContent");
     }
 }
