@@ -47,6 +47,8 @@ public class Part {
     private String partName;
     private String batchIdentity;
     private String errors;
+    private Boolean generateReport;
+    private String s3_etag;
 
     public String getInstallationIdentity() {
         return installationIdentity;
@@ -308,4 +310,23 @@ public class Part {
         this.annualVolume = annualVolume;
         return this;
     }
+
+    public Boolean getGenerateReport() {
+        return this.generateReport;
+    }
+
+    public Part setGenerateReport(Boolean generateReport) {
+        this.generateReport = generateReport;
+        return this;
+    }
+
+    public String getS3_etag() {
+        return this.s3_etag;
+    }
+
+    public Part setS3_etag(String s3_etag) {
+        this.s3_etag = s3_etag;
+        return this;
+    }
+
 }

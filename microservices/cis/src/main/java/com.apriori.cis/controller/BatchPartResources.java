@@ -72,13 +72,14 @@ public class BatchPartResources extends CisBase {
                         .use("AnnualVolume", npr.getAnnualVolume().toString())
                         .use("BatchSize", npr.getBatchSize().toString())
                         .use("Description", npr.getDescription())
-                        .use("PinnedRouting", npr.getPinnedRouting())
-                        .use("ProcessGroup", npr.getProcessGroup())
+                        //.use("PinnedRouting", npr.getPinnedRouting())
+                        //.use("ProcessGroup", npr.getProcessGroup())
                         .use("ProductionLife", npr.getProductionLife().toString())
                         .use("ScenarioName", npr.getScenarioName())
                         .use("Udas", npr.getUdas())
                         .use("VpeName", npr.getVpeName())
-                        .use("MaterialName", npr.getMaterialName()));
+                //.use("MaterialName", npr.getMaterialName())
+                );
 
 
         return (Part)GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
