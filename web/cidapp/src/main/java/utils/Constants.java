@@ -11,7 +11,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-int";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
@@ -38,6 +38,6 @@ public class Constants {
         baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY) == null ? PROPERTIES.getProperty("url.default") : System.getProperty(DEFAULT_BASE_URL_KEY);
         System.setProperty("baseUrl", baseUrl);
 
-        return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
+        return baseUrl;
     }
 }
