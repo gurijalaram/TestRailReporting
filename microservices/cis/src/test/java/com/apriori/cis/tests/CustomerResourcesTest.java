@@ -59,7 +59,7 @@ public class CustomerResourcesTest extends CustomerBase {
     public void patchCostingPreferences() {
         Random rand = new Random();
         PatchCostingPreferenceRequest cp =
-                (PatchCostingPreferenceRequest) JsonManager.deserializeJsonFromStream(
+                (PatchCostingPreferenceRequest) JsonManager.deserializeJsonFromInputStream(
                         FileResourceUtil.getResourceFileStream("schemas/requests/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
         Double value = rand.nextDouble();
         cp.setCadToleranceReplacement(100.00);

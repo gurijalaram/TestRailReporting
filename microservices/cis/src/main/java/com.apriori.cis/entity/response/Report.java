@@ -1,5 +1,6 @@
 package com.apriori.cis.entity.response;
 
+import com.apriori.cis.entity.request.ReportParameters;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
@@ -25,18 +26,18 @@ public class Report {
 
     private String customerIdentity;
     private String deploymentIdentity;
+    private String installationIdentity;
+    private String reportTemplate;
     private String userIdentity;
-    private String reportType;
-    private String roundToNearest;
     private String externalId;
     private String state;
     private String reportFormat;
-    private String[] parts;
+    private ReportParameters reportParameters;
     private Report response;
     private String fileName;
     private String contentType;
     private String batchIdentity;
-    private String installationIdentity;
+
     private String errors;
 
     public String getErrors() {
@@ -166,21 +167,12 @@ public class Report {
         return this;
     }
 
-    public String getReportType() {
-        return this.reportType;
+    public String getReportTemplate() {
+        return this.reportTemplate;
     }
 
-    public Report setReportType(String reportType) {
-        this.reportType = reportType;
-        return this;
-    }
-
-    public String getRoundToNearest() {
-        return this.roundToNearest;
-    }
-
-    public Report setRoundToNearest(String roundToNearest) {
-        this.roundToNearest = roundToNearest;
+    public Report setReportTemplate(String reportTemplate) {
+        this.reportTemplate = reportTemplate;
         return this;
     }
 
@@ -211,12 +203,12 @@ public class Report {
         return this;
     }
 
-    public String[] getParts() {
-        return this.parts;
+    public ReportParameters getReportParameters() {
+        return this.reportParameters;
     }
 
-    public Report setParts(String[] parts) {
-        this.parts = parts;
+    public Report setReportParameters(ReportParameters reportParameters) {
+        this.reportParameters = reportParameters;
         return this;
     }
 }

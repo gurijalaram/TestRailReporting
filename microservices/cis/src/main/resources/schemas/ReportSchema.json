@@ -9,9 +9,11 @@
         "createdAt",
         "customerIdentity",
         "deploymentIdentity",
-        "reportType",
+        "reportTemplate",
+        "externalId",
         "state",
-        "reportFormat"
+        "reportFormat",
+        "reportParameters"
       ],
       "properties": {
         "identity": {
@@ -62,13 +64,34 @@
         "installationIdentity": {
           "type": "string"
         },
+        "reportTemplate": {
+          "type": "string"
+        },
         "errors": {
           "type": "string"
         },
-        "parts": {
-          "type": "array",
-          "items": {
-            "type": "string"
+        "reportParameters": {
+          "type": "object",
+          "required": [
+            "roundToDollar",
+            "currencyCode"
+          ],
+          "properties": {
+            "roundToDollar": {
+              "type": "boolean"
+            },
+            "currencyCode": {
+              "type": "string"
+            },
+            "partNumber": {
+              "type": "string"
+            },
+            "exportSetName": {
+              "type": "string"
+            },
+            "scenarioName": {
+              "type": "string"
+            }
           }
         }
       }

@@ -116,6 +116,10 @@
         "laborTime": {
           "type": "number"
         },
+        "lastCosted": {
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
         "length": {
           "type": "number"
         },
