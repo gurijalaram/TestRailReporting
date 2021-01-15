@@ -33,7 +33,7 @@ public class Constants {
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + ": " + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            LOGGER.info(String.format("Listing properties for %s ", properties));
+            LOGGER.info(String.format("Listing properties for '%s' ", environment));
               } catch (IOException e) {
             e.printStackTrace();
         }
