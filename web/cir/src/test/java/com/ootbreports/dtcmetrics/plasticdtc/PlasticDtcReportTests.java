@@ -28,6 +28,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -43,6 +44,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -54,6 +56,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByLibrary() {
@@ -64,7 +67,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
@@ -75,6 +78,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1344")
     @Description("Test Plastic DTC Reports Export Set Availability")
     public void testPlasticDtcReportExportSetAvailability() {
@@ -83,6 +87,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1365")
     @Description("Verify rollup dropdown input control functions correctly")
     public void testRollupDropdown() {
@@ -94,6 +99,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1370")
     @Description("Verify currency code functionality works correctly")
     public void testCurrencyCodeFunctionality() {
@@ -133,6 +139,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
@@ -141,7 +148,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1345")
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
@@ -150,6 +157,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1346")
     @Description("Test Plastic DTC Export Set Selection")
     public void testPlasticDtcExportSetSelection() {
@@ -158,6 +166,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1376")
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
@@ -191,6 +200,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -203,6 +213,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC input control panel works")
     public void testCancelButton() {
@@ -211,6 +222,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC input control panel works")
     public void testResetButton() {
@@ -234,6 +246,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1366")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -246,6 +259,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1366")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
@@ -258,6 +272,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1368")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
@@ -270,6 +285,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1368")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
@@ -282,6 +298,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1709")
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
@@ -293,6 +310,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreNoSelection() {
@@ -304,6 +322,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -315,8 +334,8 @@ public class PlasticDtcReportTests extends TestBase {
         );
     }
 
-
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -329,6 +348,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -341,6 +361,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1380")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {
@@ -352,6 +373,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1374")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -364,6 +386,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1371")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -375,6 +398,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2320")
     @Description("Verify minimum annual spend input control correctly filters list of available parts")
     public void testMinimumAnnualSpendFiltersPartList() {

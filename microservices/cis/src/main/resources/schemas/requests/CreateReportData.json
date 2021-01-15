@@ -2,6 +2,10 @@
   "externalId": "Auto-Report-%s",
   "reportFormat": "pdf",
   "reportType": "DTC Part Summary",
-  "roundToNearest": true,
-  "partIdentities": []
+  "reportTemplateIdentity": "L48JB31BD801",
+  "scopedIdentity": "",
+  "reportParameters": {
+    "roundToDollar": true,
+    "currencyCode": "USD"
+  }
 }

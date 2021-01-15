@@ -11,6 +11,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class AssemblyCostReportTests extends TestBase {
@@ -22,7 +23,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation (Assembly Cost A4 Report)")
     public void testReportAvailabilityByMenuAssemblyCostA4() {
@@ -34,7 +35,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation (Assembly Cost Letter Report)")
     public void testReportAvailabilityByMenuAssemblyCostLetter() {
@@ -46,6 +47,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search (Assembly Cost A4 Report)")
     public void testReportAvailableBySearchAssemblyCostA4() {
@@ -54,6 +56,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search (Assembly Cost Letter Report)")
     public void testReportAvailableBySearchAssemblyCostLetter() {
@@ -63,6 +66,7 @@ public class AssemblyCostReportTests extends TestBase {
 
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library (Assembly Cost A4 Report)")
     public void testReportAvailabilityByLibraryAssemblyCostA4() {
@@ -71,6 +75,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library (Assembly Cost Letter Report)")
     public void testReportAvailabilityByLibraryAssemblyCostLetter() {
@@ -79,6 +84,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly (Assembly Cost A4 Report)")
     public void testExportSetDropdownFunctionalityAssemblyCostA4() {
@@ -90,6 +96,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly (Assembly Cost Letter Report)")
     public void testExportSetDropdownFunctionalityAssemblyCostLetter() {
@@ -101,7 +108,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly (Assembly Cost A4 Report)")
     public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
@@ -113,7 +120,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "3008")
     @Description("Verify Export Set drop-down functions correctly (Assembly Cost Letter Report)")
     public void testAssemblySetDropdownFunctionalityAssemblyCostLetter() {
@@ -125,6 +132,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3010")
     @Description("Verify Scenario Name drop-down functions correctly (Assembly Cost A4 Report)")
     public void testScenarioNameDropdownFunctionalityAssemblyCostA4() {
@@ -136,6 +144,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3010")
     @Description("Verify Scenario Name drop-down functions correctly (Assembly Cost Letter Report)")
     public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
@@ -147,6 +156,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3002")
     @Description("Verify the user can select sub assemblies from within assembly Export Sets (Assembly Cost A4 Report)")
     public void testSubAssemblySelectionAssemblyCostA4() {
@@ -155,6 +165,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3002")
     @Description("Verify the user can select sub assemblies from within assembly Export Sets (Assembly Cost Letter Report)")
     public void testSubAssemblySelectionAssemblyCostLetter() {
@@ -163,6 +174,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2998")
     @Description("Validate report content aligns to aP desktop values (simple case) (Assembly Cost A4 Report)")
     public void testDataIntegrityAssemblyCostA4() {
@@ -171,6 +183,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2998")
     @Description("Validate report content aligns to aP desktop values (simple case) (Assembly Cost Letter Report)")
     public void testDataIntegrityAssemblyCostLetter() {

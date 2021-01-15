@@ -14,6 +14,7 @@ public class CustomerBase extends TestUtil {
     private String description;
     private List<String> emailRegexPatterns;
     private Boolean active;
+    private Integer maxCadFileRetentionDays;
     private String customerType;
     private CisCustomer response;
     private String salesforceId;
@@ -109,6 +110,15 @@ public class CustomerBase extends TestUtil {
 
     public CustomerBase setActive(Boolean active) {
         this.active = active;
+        return this;
+    }
+
+    public Integer getMaxCadFileRetentionDays() {
+        return this.maxCadFileRetentionDays;
+    }
+
+    public CustomerBase setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
+        this.maxCadFileRetentionDays = maxCadFileRetentionDays;
         return this;
     }
 

@@ -19,4 +19,3 @@
 700-33770-01_A0.stp
 7021021-2_rib.prt.1
 bracket_basic.prt
-parts-list.txt
