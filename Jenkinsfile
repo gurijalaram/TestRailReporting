@@ -127,7 +127,7 @@ pipeline {
                 }
 
                 sh """
-                    sleep 15s
+                    sleep 10s
                     docker exec \
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
