@@ -18,9 +18,9 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.AdminSmokeTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.OnPremTest;
 import utils.Constants;
 
 public class AdminNavigationTests extends TestBase {
@@ -93,7 +93,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-	@Category({AdminSmokeTest.class, OnPremTest.class})
+    @Category({AdminSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2984")
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
@@ -109,7 +109,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-	@Category({AdminSmokeTest.class, OnPremTest.class})
+    @Category({AdminSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2985")
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
