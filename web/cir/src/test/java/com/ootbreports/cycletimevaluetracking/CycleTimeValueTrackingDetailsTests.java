@@ -16,6 +16,8 @@ import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class CycleTimeValueTrackingDetailsTests extends TestBase {
@@ -28,6 +30,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -39,6 +42,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -49,6 +53,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -59,6 +64,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2331")
     @Description("Projects rollup drop list functionality test")
     public void testProjectRollupDropdownList() {
@@ -75,6 +81,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2332")
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
@@ -94,6 +101,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2334")
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {

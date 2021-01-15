@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -43,6 +44,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -54,6 +56,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -62,7 +65,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -71,6 +74,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1692")
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcExportSetInputControls() {
@@ -79,7 +83,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(CustomerSmokeTests.class)
+    @Category({ReportsTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
     public void testRollupDropDown() {
@@ -91,6 +95,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -103,6 +108,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC input control panel works")
     public void testCancelButton() {
@@ -111,6 +117,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC input control panel works")
     public void testResetButton() {
@@ -134,6 +141,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
@@ -142,6 +150,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingInputField() {
@@ -150,6 +159,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
@@ -188,6 +198,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1699")
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
@@ -199,6 +210,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1703")
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -211,6 +223,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -223,6 +236,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
@@ -235,7 +249,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1696")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
@@ -248,6 +262,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1696")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
@@ -260,6 +275,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupDieCastingOnly() {
@@ -272,6 +288,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandCastingOnly() {
@@ -284,6 +301,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandAndDieCasting() {
@@ -292,6 +310,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1709")
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
@@ -303,6 +322,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreNoSelection() {
@@ -314,6 +334,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -326,6 +347,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -338,6 +360,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -350,6 +373,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1710")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {
@@ -361,6 +385,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1700")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
