@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class LoginTests extends TestBase {
@@ -27,7 +28,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2695")
     @Description("Successful login to CI Report")
     public void testLogin() {
@@ -38,7 +39,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2696")
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
@@ -49,7 +50,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2697")
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
@@ -61,7 +62,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2698")
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
@@ -72,7 +73,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2699")
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {

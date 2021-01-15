@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class CycleTimeValueTrackingTests extends TestBase {
@@ -30,7 +31,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "92")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -42,7 +43,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -51,7 +52,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -60,7 +61,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2331")
     @Description("Projects rollup drop list functionality test")
     public void testProjectRollupDropdownList() {
@@ -80,7 +81,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2332")
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
@@ -100,7 +101,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2335")
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {

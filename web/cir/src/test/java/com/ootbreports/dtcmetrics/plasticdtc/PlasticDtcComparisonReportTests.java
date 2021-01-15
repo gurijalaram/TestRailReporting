@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
@@ -37,7 +38,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -49,7 +50,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityByLibrary() {
@@ -60,7 +61,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1343")
     @Description("Test Plastic DTC Reports Availability")
     public void testPlasticDtcReportAvailabilityBySearch() {
@@ -71,7 +72,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Plastic DTC Comparison input control panel functions correctly")
     public void testApplyButton() {
@@ -84,7 +85,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Plastic DTC Comparison input control panel works")
     public void testCancelButton() {
@@ -93,7 +94,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Plastic DTC Comparison input control panel works")
     public void testResetButton() {
@@ -105,7 +106,6 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
     @Ignore("not applicable due to reports configuration")
     @TestRail(testCaseId = "1693")
     @Description("Verify save button on Plastic DTC Comparison input control panel functions correctly")
@@ -118,7 +118,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1366")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -131,7 +131,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1366")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
@@ -144,7 +144,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1368")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
@@ -157,7 +157,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1368")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
@@ -170,7 +170,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreNoSelection() {
@@ -182,7 +182,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -195,7 +195,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -208,7 +208,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -221,7 +221,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1701")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreAll() {
@@ -234,7 +234,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1371")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -246,7 +246,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1369")
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
@@ -276,7 +276,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1378")
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {

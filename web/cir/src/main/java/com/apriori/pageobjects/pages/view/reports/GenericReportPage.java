@@ -131,7 +131,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a")
     protected WebElement exportSetToSelect;
 
-    @FindBy(xpath = "//label[@title='Assembly Select']/div/div/div/a")
+    @FindBy(xpath = "//label[@title='Assembly Select']/div")
     private WebElement currentAssemblyElement;
 
     @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
@@ -644,9 +644,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage setAssembly(String assemblyName) {
-        currentAssemblyElement.click();
+        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            //assemblyMap.get(assemblyName).click();
+            currentAssemblyElement.click();
             By locator = By.xpath(String.format(genericAssemblySetLocator, assemblyName));
             pageUtils.waitForElementAndClick(locator);
         }
@@ -835,16 +835,18 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
      *
-     * @param assemblyToCheck
+     * @param assemblyToCheck String - assembly name to wait on
      * @return Generic - instance of specified class
      */
     public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementToAppear(currentAssembly);
         // if not top level, add -
-        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) || assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) ||
+                assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
             String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
-            pageUtils.checkElementAttribute(currentAssembly, "innerText", newVal);
+            By locator = By.xpath(String.format("//span[contains(text(), '%s')]", newVal));
+            pageUtils.waitForElementToAppear(locator);
         }
         return this;
     }
@@ -940,7 +942,8 @@ public class GenericReportPage extends ReportsPageHeader {
 
         if (datePickerDiv.getAttribute("style").contains("display: block;")) {
             datePickerCloseButton.click();
-            pageUtils.checkElementAttribute(datePickerDiv, "style", "display: none;");
+            By locator = By.cssSelector("span[class='button picker calTriggerWrapper']");
+            pageUtils.waitForElementToAppear(locator);
         }
 
         return this;
@@ -996,7 +999,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage exportSetSelectAll() {
         pageUtils.waitForElementAndClick(exportSetSelectAll);
         String exportSetCount = getCountOfExportSets();
-        pageUtils.checkElementAttribute(selectedExportSets, "title", exportSetCount);
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", exportSetCount);
         return this;
     }
 
@@ -1123,9 +1126,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage deselectExportSet() {
-        int expected = getSelectedExportSetCount() - 1;
+        String expectedCount = String.valueOf(getSelectedExportSetCount() - 1);
         pageUtils.waitForElementAndClick(exportSetToSelect);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.EXPORT_SET.getListName(),
+                "Selected: ",
+                expectedCount
+        );
         return this;
     }
 
@@ -1135,9 +1142,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage invertExportSetSelection() {
-        int expected = getAvailableExportSetCount() - getSelectedExportSetCount();
+        String expectedCount = String.valueOf(getAvailableExportSetCount() - getSelectedExportSetCount());
         pageUtils.waitForElementAndClick(exportSetInvert);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.EXPORT_SET.getListName(),
+                "Selected: ",
+                expectedCount
+        );
         return this;
     }
 
@@ -1148,7 +1159,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage exportSetDeselectAll() {
         pageUtils.waitForElementAndClick(exportSetDeselect);
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + "0");
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "0");
         return this;
     }
 
@@ -1384,7 +1395,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return boolean
      */
     public boolean isOptionInDropDown(String optionName, int expected) {
-        pageUtils.checkElementAttribute(savedOptionsDropDown, "childElementCount", Integer.toString(expected));
+        pageUtils.waitForElementToAppear(
+                By.xpath(String.format("//select[@id='reportOptionsSelect' and count(option) = %s]", expected)));
         if (driver.findElements(By.xpath("//div[@id='inputControls']//div[@class='sub header hidden']")).size() > 0) {
             return false;
         } else {
@@ -1400,7 +1412,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Wait for expected export count
      */
     public GenericReportPage waitForExpectedExportCount(String expected) {
-        pageUtils.checkElementAttribute(selectedExportSets, "title", "Selected: " + expected);
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", expected);
         return this;
     }
 
@@ -1774,8 +1786,13 @@ public class GenericReportPage extends ReportsPageHeader {
     public void searchForExportSet(String exportSet) {
         pageUtils.waitForElementAndClick(exportSetSearchInput);
         exportSetSearchInput.sendKeys(exportSet);
-        pageUtils.checkElementAttribute(exportSetSearchInput, "value", exportSet);
-        pageUtils.checkElementAttribute(exportSetList, "childElementCount", "1");
+
+        By listLocator = By.xpath(
+                "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr' and count(./li/*) = 2]");
+        pageUtils.waitForElementToAppear(listLocator);
+
+        By topLevelOptionLocator = By.xpath("//li[@title='---01-top-level-multi-vpe']/div/a");
+        pageUtils.waitForElementToAppear(topLevelOptionLocator);
     }
 
     /**

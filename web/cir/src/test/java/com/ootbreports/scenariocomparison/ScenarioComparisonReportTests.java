@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -39,7 +40,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3245")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenu() {
@@ -51,7 +52,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3245")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -60,7 +61,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3245")
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
@@ -69,7 +70,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3246")
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -102,7 +103,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3305")
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
@@ -138,7 +139,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3249")
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -161,7 +162,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterSearch() {
@@ -173,7 +174,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterOperation() {
@@ -215,7 +216,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3349")
     @Description("Verify Created By input control works correctly")
     public void testCreatedByFilterButtons() {
@@ -228,7 +229,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterSearch() {
@@ -240,7 +241,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterOperation() {
@@ -275,7 +276,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3349")
     @Description("Verify Last Modified By input control works correctly")
     public void testLastModifiedByFilterButtons() {
@@ -288,7 +289,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3247")
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
@@ -318,7 +319,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3248")
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
@@ -342,7 +343,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3304")
     @Description("Verify export date input controls functions correctly")
     public void testExportSetInputControlEarliestDateFilterFunctionality() {
@@ -368,7 +369,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3306")
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
