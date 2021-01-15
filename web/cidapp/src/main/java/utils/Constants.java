@@ -29,10 +29,7 @@ public class Constants {
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
-            LOGGER.info("-- listing properties --");
-            for (String key: PROPERTIES.stringPropertyNames()) {
-                LOGGER.debug(PROPERTIES.getProperty(key), "=" + key);
-            }
+            PROPERTIES.list(System.out);
         } catch (IOException e) {
             e.printStackTrace();
         }
