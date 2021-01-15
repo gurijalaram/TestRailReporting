@@ -20,7 +20,7 @@ public class PartResourcesTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromStream(
+        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("property-store.json"), PropertyStore.class);
     }
 
@@ -28,7 +28,7 @@ public class PartResourcesTest extends TestUtil {
     @TestRail(testCaseId = "4175")
     @Description("Create a new part using the CIS API")
     public void createNewPart() {
-        Object obj = JsonManager.deserializeJsonFromStream(
+        Object obj = JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
         PartResources.createNewPart(obj);

@@ -119,6 +119,9 @@
         },
         "errors": {
           "type": "string"
+        },
+        "s3_etag ": {
+          "type": "string"
         }
       }
     }

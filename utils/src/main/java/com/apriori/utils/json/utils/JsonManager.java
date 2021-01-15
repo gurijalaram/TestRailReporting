@@ -10,9 +10,7 @@ import java.io.InputStream;
 public class JsonManager {
     private static ObjectMapper mapper = new ObjectMapper();
 
-
-    public static Object deserializeJsonFromStream(InputStream inputStream, Class klass) {
-
+    public static Object deserializeJsonFromInputStream(InputStream inputStream, Class klass) {
         Object obj = null;
         try {
             obj = mapper.readValue(inputStream, klass);

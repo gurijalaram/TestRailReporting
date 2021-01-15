@@ -8,8 +8,9 @@ public class NewReportRequest {
     private String externalId;
     private String reportFormat;
     private String reportType;
-    private Boolean roundToNearest;
-    private ArrayList<String> partIdentities;
+    private String reportTemplateIdentity;
+    private String scopedIdentity;
+    private ReportParameters reportParameters;
 
     public String getExternalId() {
         return this.externalId;
@@ -29,6 +30,24 @@ public class NewReportRequest {
         return this;
     }
 
+    public String getReportTemplateIdentity() {
+        return this.reportTemplateIdentity;
+    }
+
+    public NewReportRequest setReportTemplateIdentity(String reportTemplateIdentity) {
+        this.reportTemplateIdentity = reportTemplateIdentity;
+        return this;
+    }
+
+    public String getScopedIdentity() {
+        return this.scopedIdentity;
+    }
+
+    public NewReportRequest setScopedIdentity(String scopedIdentity) {
+        this.scopedIdentity = scopedIdentity;
+        return this;
+    }
+
     public String getReportType() {
         return this.reportType;
     }
@@ -38,27 +57,13 @@ public class NewReportRequest {
         return this;
     }
 
-    public Boolean getRoundToNearest() {
-        return this.roundToNearest;
+    public ReportParameters getReportParameters() {
+        return this.reportParameters;
     }
 
-    public NewReportRequest setRoundToNearest(Boolean roundToNearest) {
-        this.roundToNearest = roundToNearest;
+    public NewReportRequest setReportParameters(ReportParameters reportParameters) {
+        this.reportParameters = reportParameters;
         return this;
     }
 
-    public ArrayList<String> getPartIdentities() {
-        return this.partIdentities;
-    }
-
-    public NewReportRequest setPartIdentities(ArrayList<String> partIdentities) {
-        this.partIdentities = partIdentities;
-        return this;
-    }
-
-    @JsonIgnore
-    public NewReportRequest addPart(String identity) {
-        this.partIdentities.add(identity);
-        return this;
-    }
 }

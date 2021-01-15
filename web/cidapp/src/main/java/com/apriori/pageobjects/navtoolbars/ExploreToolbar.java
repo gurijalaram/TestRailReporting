@@ -42,6 +42,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(xpath = "//button[.='Edit']")
     private WebElement editButton;
 
+    @FindBy(xpath = "//button[.='Scenario']")
+    private WebElement scenarioButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -119,5 +122,15 @@ public class ExploreToolbar extends MainNavBar {
     public EvaluatePage editScenario() {
         pageUtils.waitForElementAndClick(editButton);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Create new scenario
+     * @return new page object
+     */
+    public ScenarioPage createScenario() {
+        pageUtils.waitForElementAndClick(newButton);
+        pageUtils.waitForElementAndClick(scenarioButton);
+        return new ScenarioPage(driver);
     }
 }

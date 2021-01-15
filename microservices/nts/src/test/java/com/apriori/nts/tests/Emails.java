@@ -47,7 +47,7 @@ public class Emails {
     @TestRail(testCaseId = "3881")
     @Description("Get a single email using the NTS API")
     public void getEmail() {
-        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromStream(
+        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromInputStream(
             FileResourceUtil.getResourceFileStream("property-store.json"),
             PropertyStore.class);
         String identity = propertyStore.getEmailIdentity();

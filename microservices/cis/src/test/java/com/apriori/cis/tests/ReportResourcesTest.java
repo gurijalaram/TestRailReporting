@@ -14,6 +14,7 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
@@ -41,25 +42,10 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "4184")
-    @Description("API returns report types in the CIS DB")
-    public void getReportTypes() {
-        ReportResources.getReportTypes();
-    }
-
-    @Test
-    @TestRail(testCaseId = "4185")
-    @Description("API returns a single repport type in the CIS DB")
-    public void getReportType() {
-        ReportResources.getSpecificReportType();
-    }
-
-
-    @Test
     @TestRail(testCaseId = "4181")
     @Description("Create a new report using the CIS API")
     public void createNewReport() {
-        Object obj = JsonManager.deserializeJsonFromStream(
+        Object obj = JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"), NewReportRequest.class);
 
         Report report  = ReportResources.createReport(obj);
@@ -78,7 +64,7 @@ public class ReportResourcesTest extends TestUtil {
     @Description("Export a report using the CIS API")
     public void exportReport() {
         Integer count = 0;
-        Object rptObj = JsonManager.deserializeJsonFromStream(
+        Object rptObj = JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"), NewReportRequest.class);
 
         Report report = ReportResources.createReport(rptObj, Constants.getCisPartIdentity());

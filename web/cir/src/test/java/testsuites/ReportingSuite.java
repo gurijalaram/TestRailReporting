@@ -1,7 +1,7 @@
 package testsuites;
 
 import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
@@ -23,11 +23,14 @@ import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.ootbreports.scenariocomparison.ScenarioComparisonReportTests;
+import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import testsuites.suiteinterface.ReportsTest;
 
 @ProjectRunID("261")
-@RunWith(ConcurrentSuiteRunner.class)
+@RunWith(CategorySuiteRunner.class)
+@Categories.IncludeCategory(ReportsTest.class)
 @Suite.SuiteClasses({
     AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,

@@ -26,6 +26,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class CastingDtcComparisonReportTests extends TestBase {
@@ -39,7 +40,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -51,6 +52,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -59,6 +61,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -67,6 +70,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1692")
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcComparisonExportSetInputControls() {
@@ -75,6 +79,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC Comparison report")
     public void testRollupDropDown() {
@@ -86,6 +91,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify apply button on Casting DTC input control panel functions correctly")
     public void testApplyButton() {
@@ -98,7 +104,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsSmokeTest.class)
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1693")
     @Description("Verify cancel button on Casting DTC Comparison input control panel works")
     public void testCancelButton() {
@@ -107,6 +113,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC Comparison input control panel works")
     public void testResetButton() {
@@ -130,6 +137,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
@@ -138,6 +146,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingInputField() {
@@ -146,6 +155,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "102990")
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
@@ -182,6 +192,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -194,6 +205,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
@@ -206,6 +218,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1696")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
@@ -218,6 +231,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1696")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
@@ -230,6 +244,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreNoSelection() {
@@ -241,6 +256,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
@@ -253,6 +269,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -265,6 +282,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
@@ -277,6 +295,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1972")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreAll() {
@@ -289,6 +308,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1700")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -300,6 +320,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderManufacturingCastingIssues() {
@@ -312,6 +333,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderManufacturingMachiningIssues() {
@@ -324,6 +346,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderMaterialScrap() {
@@ -336,6 +359,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderTolerances() {
@@ -348,6 +372,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderSlowOperations() {
@@ -360,6 +385,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderSpecialTooling() {
@@ -372,6 +398,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderAnnualSpend() {
@@ -384,6 +411,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1708")
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {
