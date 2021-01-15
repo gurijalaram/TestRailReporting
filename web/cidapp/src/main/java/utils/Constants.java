@@ -30,7 +30,7 @@ public class Constants {
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
             String properties = PROPERTIES.stringPropertyNames().stream()
-                .map(key -> key + ": " + PROPERTIES.getProperty(key) + "\n")
+                .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
             LOGGER.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
