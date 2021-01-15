@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class Constants {
 
@@ -29,8 +30,13 @@ public class Constants {
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
-            PROPERTIES.list(System.out);
-        } catch (IOException e) {
+
+            String keyValue = PROPERTIES.stringPropertyNames().stream()
+                .map(key -> key + ": " + PROPERTIES.getProperty(key) + "\n")
+                .collect(Collectors.joining());
+            LOGGER.info(keyValue);
+
+              } catch (IOException e) {
             e.printStackTrace();
         }
     }
