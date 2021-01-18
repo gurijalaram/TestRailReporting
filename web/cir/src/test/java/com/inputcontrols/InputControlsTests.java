@@ -460,7 +460,6 @@ public class InputControlsTests extends TestBase {
         assertThat(genericReportPage.getListWarningText(listName), is(equalTo(Constants.WARNING_TEXT)));
     }
 
-
     /**
      * Generic test for DTC Score Input Control - main reports
      *

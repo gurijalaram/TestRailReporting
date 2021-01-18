@@ -166,7 +166,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({CiaCirTestDevTest.class, ReportsTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3002")
     @Description("Verify the user can select sub assemblies from within assembly Export Sets (Assembly Cost Letter Report)")
     public void testSubAssemblySelectionAssemblyCostLetter() {
@@ -175,7 +175,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({CiaCirTestDevTest.class, ReportsTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2998")
     @Description("Validate report content aligns to aP desktop values (simple case) (Assembly Cost A4 Report)")
     public void testDataIntegrityAssemblyCostA4() {

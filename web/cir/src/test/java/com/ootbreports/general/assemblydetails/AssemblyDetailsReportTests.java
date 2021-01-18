@@ -30,6 +30,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.CiaCirTestDevSuite;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -790,7 +792,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({CiaCirTestDevTest.class, ReportsTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testAssemblyNumberSearchCriteria() {
@@ -874,7 +876,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({CiaCirTestDevTest.class, ReportsTest.class})
     @TestRail(testCaseId = "1933")
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {

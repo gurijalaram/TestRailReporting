@@ -2,8 +2,9 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import com.login.LoginTests;
-import com.ootbreports.assemblycost.AssemblyCostReportTests;
+import com.ootbreports.dtcmetrics.castingdtc.CastingDtcReportTests;
+import com.ootbreports.dtcmetrics.plasticdtc.PlasticDtcDetailsReportTests;
+import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -13,8 +14,10 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        AssemblyCostReportTests.class,
-        LoginTests.class
+        AssemblyDetailsReportTests.class,
+        PlasticDtcDetailsReportTests.class,
+        CastingDtcReportTests.class,
+        SheetMetalDtcReportTests.class
 })
 
 public class CiaCirTestDevSuite {

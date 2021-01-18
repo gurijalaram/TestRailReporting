@@ -131,11 +131,8 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a")
     protected WebElement exportSetToSelect;
 
-    @FindBy(xpath = "//label[@title='Assembly Select']/div")
+    @FindBy(xpath = "//label[@title='Assembly Select']//a")
     private WebElement currentAssemblyElement;
-
-    @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
-    private WebElement currentAssElement;
 
     @FindBy(xpath = "//a[contains(text(), 'SUB-ASSEMBLY')]")
     private WebElement subAssOption;
@@ -604,7 +601,9 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath(
                 String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
         pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
+        WebElement warningMessage = driver.findElement(locator);
+        pageUtils.scrollWithJavaScript(warningMessage, true);
+        return warningMessage.isDisplayed() && warningMessage.isEnabled();
     }
 
     /**
@@ -622,7 +621,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Deselects any selected export sets
      */
     public GenericReportPage deselectAllProcessGroups() {
-        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Groups")));
+        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
         return this;
     }
 
@@ -1445,8 +1444,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getMinimumAnnualSpendFromAboveChart() {
-        pageUtils.waitForElementToAppear(minimumAnnualSpend);
-        return minimumAnnualSpend.getText();
+        By locator = By.xpath("//span[contains(text(), 'Minimum Annual Spend:')]/../following-sibling::td[2]/span");
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 
     /**
@@ -1944,8 +1944,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getCurrentlySelectedAssembly() {
-        pageUtils.waitForElementToAppear(currentAssemblyElement);
-        return currentAssemblyElement.getAttribute("title");
+        By locator = By.xpath("//label[@title='Assembly Select']//a");
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("title");
     }
 
     /**
