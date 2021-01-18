@@ -221,17 +221,17 @@ public class ProcessRoutingTests extends TestBase {
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getCostedRouting("Die Casting"), is(true));
+        assertThat(routingsPage.getCostedRouting("High Pressure Die Cast"), is(true));
 
-        routingsPage.selectRouting("Sand Casting")
+        routingsPage.selectRouting("Gravity Die Cast")
             .apply()
             .closePanel()
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
 
-        assertThat(routingsPage.getCostedRouting("Sand Casting"), is(true));
-        assertThat(routingsPage.getSelectedRouting("Sand Casting"), is(true));
+        assertThat(routingsPage.getCostedRouting("Gravity Die Cast"), is(true));
+        assertThat(routingsPage.getSelectedRouting("Gravity Die Cast"), is(true));
     }
 
     @Test
