@@ -13,6 +13,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -49,7 +50,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({CiaCirTestDevTest.class, ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "2697")
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
@@ -57,8 +58,8 @@ public class LoginTests extends TestBase {
             .clickForgotPassword()
             .submitEmail("fakeEmail@apriori.com");
 
-        String forgotPwdMsg = Constants.environment.equals("cir-qa") ?
-                Constants.FORGOT_PWD_MSG_QA_ENV : Constants.FORGOT_PWD_MSG_STAGING_ENV;
+        String forgotPwdMsg = Constants.environment.equals("cir-qa")
+                ? Constants.FORGOT_PWD_MSG_QA_ENV : Constants.FORGOT_PWD_MSG_STAGING_ENV;
 
         assertThat(loginPage.getLoginMessage(), is(equalTo(forgotPwdMsg)));
     }
