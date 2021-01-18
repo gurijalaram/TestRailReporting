@@ -45,7 +45,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1676")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -57,7 +57,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -75,7 +75,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1692")
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcExportSetInputControls() {
@@ -142,7 +142,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
@@ -151,7 +151,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1691")
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingInputField() {
@@ -199,7 +199,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1699")
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
@@ -311,7 +311,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1709")
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
@@ -374,7 +374,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1710")
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {

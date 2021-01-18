@@ -11,7 +11,7 @@ import testsuites.suiteinterface.OnPremTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(OnPremTest.class)
 @Suite.SuiteClasses({
-    AdminNavigationTests.class,
+    AdminNavigationTests.class
 })
 
 public class OnPremCiaSuite {

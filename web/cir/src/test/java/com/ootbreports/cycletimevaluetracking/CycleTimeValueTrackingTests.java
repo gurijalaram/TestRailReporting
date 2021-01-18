@@ -31,7 +31,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -43,7 +43,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -52,7 +52,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "92")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
@@ -61,7 +61,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2331")
     @Description("Projects rollup drop list functionality test")
     public void testProjectRollupDropdownList() {
