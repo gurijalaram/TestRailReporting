@@ -13,10 +13,11 @@ import java.util.stream.Collectors;
 
 public class Constants {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
+
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-int";
-    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
