@@ -182,8 +182,11 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return String
      */
     public String getLoginMessage() {
-        pageUtils.waitForElementToAppear(loginMsg);
-        return loginMsg.getText();
+        String genericErrorLocator = "(//p[@class='errorMessage'])[%s]";
+        WebElement firstErrorMsg = driver.findElement(By.xpath(String.format(genericErrorLocator, "1")));
+        WebElement secondErrorMsg = driver.findElement(By.xpath(String.format(genericErrorLocator, "2")));
+        pageUtils.waitForElementToAppear(firstErrorMsg);
+        return firstErrorMsg.getText().concat(" ").concat(secondErrorMsg.getText());
     }
 
     /**

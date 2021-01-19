@@ -131,7 +131,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a")
     protected WebElement exportSetToSelect;
 
-    @FindBy(xpath = "//label[@title='Assembly Select']/div")
+    @FindBy(xpath = "//label[@title='Assembly Select']//a")
     private WebElement currentAssemblyElement;
 
     @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
@@ -1938,6 +1938,9 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//label[@title='Assembly Select']//a")), true);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementToAppear(locator);
+        if (inputString.equals("random")) {
+            pageUtils.waitForElementToAppear(By.xpath("//span[@class='warning' and contains(text(), 'This field')]"));
+        }
     }
 
     /**

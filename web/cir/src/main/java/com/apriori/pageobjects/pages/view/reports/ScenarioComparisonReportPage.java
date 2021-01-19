@@ -184,9 +184,11 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
      * Gets name of first scenario to compare
      */
     public String getNameOfFirstScenarioToCompare(boolean substringName) {
+        By locator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0200613 (Initial) [part]']");
+        pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForElementToAppear(firstScenarioToCompare);
         String scenarioName = firstScenarioToCompare.getAttribute("title");
-        return substringName ? scenarioName.substring(0, 9) : scenarioName;
+        return substringName ? scenarioName.substring(0, 7) : scenarioName;
     }
 
     /**

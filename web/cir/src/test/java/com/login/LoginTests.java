@@ -46,11 +46,11 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
                 .failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE.toUpperCase())));
+        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.INVALID_ERROR_MESSAGE)));
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "2697")
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
@@ -69,7 +69,7 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin("", "");
 
-        assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(Constants.EMPTY_FIELDS_MESSAGE)));
+        assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(Constants.INVALID_ERROR_MESSAGE)));
     }
 
     @Test
@@ -80,6 +80,6 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getInputErrorMsg(), is(equalTo(Constants.INVALID_ERROR_MESSAGE)));
+        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.INVALID_ERROR_MESSAGE)));
     }
 }

@@ -17,7 +17,7 @@ public class ReportsLogoutPage extends ReportsPageHeader {
     @FindBy(css = "h2[class='textAccent']")
     private WebElement loginPageTitle;
 
-    @FindBy(css = "button[type='submit'")
+    @FindBy(css = "button[type='submit']")
     private WebElement loginButton;
 
     private WebDriver driver;
@@ -63,11 +63,10 @@ public class ReportsLogoutPage extends ReportsPageHeader {
     }
 
     /**
-     * Checks if login button is displayed and enabled
+     * Checks if login button is enabled
      * @return boolean
      */
-    public boolean isLoginButtonDisplayedAndEnabled() {
-        pageUtils.waitForElementToAppear(loginButton);
-        return loginButton.isDisplayed() && loginButton.isEnabled();
+    public boolean isLoginButtonEnabled() {
+        return loginButton.isEnabled();
     }
 }

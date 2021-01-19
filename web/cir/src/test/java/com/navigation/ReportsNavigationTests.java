@@ -80,7 +80,7 @@ public class ReportsNavigationTests extends TestBase {
             .login()
             .navigateToReportLogout();
 
-        assertThat(logout.isLoginButtonDisplayedAndEnabled(), is(equalTo(true)));
+        assertThat(logout.isLoginButtonEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
         assertThat(logout.isHeaderDisplayed(), is(true));
     }
