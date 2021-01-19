@@ -2,6 +2,7 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,14 +53,36 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * Search for component
      *
      * @param componentName - the component name
+     * @return new page object
+     */
+    public ScenarioTableController clickSearch(String componentName) {
+        search(componentName);
+        submitButton.click();
+        return new ScenarioTableController(driver);
+    }
+
+    /**
+     * Search for component
+     *
+     * @param componentName - the component name
+     * @return new page object
+     */
+    public ScenarioTableController enterSearch(String componentName) {
+        search(componentName);
+        searchInput.sendKeys(Keys.ENTER);
+        return new ScenarioTableController(driver);
+    }
+
+    /**
+     * Search for component
+     *@param componentName - the component name
      * @return current page object
      */
-    public ScenarioTableController search(String componentName) {
+    private ComponentTableActions search(String componentName) {
         pageUtils.waitForElementToAppear(submitButton);
         searchInput.clear();
         searchInput.sendKeys(componentName);
-        submitButton.click();
-        return new ScenarioTableController(driver);
+        return this;
     }
 
     /**
