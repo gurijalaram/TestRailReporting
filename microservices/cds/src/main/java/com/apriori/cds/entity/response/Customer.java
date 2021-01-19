@@ -18,6 +18,7 @@ public class Customer extends CustomerBase {
     private Boolean useExternalIdentityProvider;
     private Boolean mfaRequired;
     private List<String> oneTimePasswordApplications;
+    private Integer maxCadFileRetentionDays;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -78,6 +79,15 @@ public class Customer extends CustomerBase {
 
     public Customer setResponse(Customer response) {
         this.response = response;
+        return this;
+    }
+
+    public Integer getMaxCadFileRetentionDays() {
+        return this.maxCadFileRetentionDays;
+    }
+
+    public Customer setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
+        this.maxCadFileRetentionDays = maxCadFileRetentionDays;
         return this;
     }
 }

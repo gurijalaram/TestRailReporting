@@ -45,7 +45,7 @@ subprojects {
 
     // Copy allure properties into each module test resources
     processTestResources {
-        from project(":apibase").projectDir.path + "/src/test/resources/allure.properties"
+        from project(":utils").projectDir.path + "/src/test/resources/allure.properties"
     }
 
     repositories {
@@ -156,7 +156,6 @@ subprojects {
 
     //declare all dependencies
     dependencies {
-
         implementation 'com.amazonaws:aws-java-sdk-s3:1.11.861'
         implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
         implementation 'org.seleniumhq.selenium:selenium-server:3.141.59'
