@@ -75,7 +75,8 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
 
     /**
      * Search for component
-     *@param componentName - the component name
+     *
+     * @param componentName - the component name
      * @return current page object
      */
     private ComponentTableActions search(String componentName) {
