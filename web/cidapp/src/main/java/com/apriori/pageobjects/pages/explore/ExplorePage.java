@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.common.ComponentTableActions;
+import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -29,12 +31,14 @@ public class ExplorePage extends ExploreToolbar {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
+    private ComponentTableActions componentTableActions;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
+        this.componentTableActions = new ComponentTableActions(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(scenarioCount);
@@ -91,5 +95,14 @@ public class ExplorePage extends ExploreToolbar {
      */
     public int getListOfComponents(String componentName, String scenarioName) {
         return scenarioTableController.getListOfScenarios(componentName, scenarioName);
+    }
+
+    /**
+     * Open configure page
+     *
+     * @return new page object
+     */
+    public ConfigurePage configure() {
+        return componentTableActions.configure();
     }
 }
