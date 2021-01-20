@@ -140,7 +140,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
         pageUtils.waitForElementAndClick(processGroupDropdown);
-        By group = By.xpath(String.format("//button[.='%s']", processGroup));
+        By group = By.cssSelector(String.format("button[value='%s']", processGroup));
         pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
         return this;
     }
@@ -153,7 +153,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public EvaluatePage selectVPE(String vpe) {
         pageUtils.waitForElementAndClick(vpeDropdown);
-        By vp = By.xpath(String.format("//button[.='%s']", vpe));
+        By vp = By.cssSelector(String.format("button[value='%s']", vpe));
         pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
         return this;
     }
@@ -190,7 +190,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isMaterialInfoDisplayed(String material) {
-        By materialsInfo = By.xpath(String.format("//label[.='Material']/following-sibling::div//input[@value='%s']", material));
+        By materialsInfo = By.cssSelector(String.format("div[id='qa-material-modal-select-field'] input[value='%s']", material));
         return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
     }
 
@@ -291,7 +291,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return double
      */
     public double getMaterialResult(String label) {
-        By result = By.xpath(String.format("//div[@class='display-property vertical']//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
         pageUtils.waitForElementToAppear(result);
         return Double.parseDouble(driver.findElement(result).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
