@@ -631,11 +631,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getProcessGroupValueDtc(String reportName) {
-        WebElement elementToUse = reportName.equals(ReportNamesEnum.DTC_PART_SUMMARY.getReportName())
-                ? processGroupCurrentValueDtcPartSummary
-                : processGroupCurrentValueCastingDtc;
-        pageUtils.waitForElementToAppear(elementToUse);
-        return elementToUse.getText();
+        String indexToUse = reportName.equals(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()) ? "1" : "2";
+        By genericLocator = By.xpath(String.format(
+                "//span[contains(text(), 'Process Group:')]/../following-sibling::td[%s]/span", indexToUse));
+        pageUtils.waitForElementToAppear(genericLocator);
+        return driver.findElement(genericLocator).getText();
     }
 
     /**
