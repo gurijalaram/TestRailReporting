@@ -330,15 +330,15 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectComponentType("assembly");
 
-        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(),
                 containsString("[assembly]"));
 
         scenarioComparisonReportPage.selectComponentType("part");
-        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(),
                 containsString("[part]"));
 
         scenarioComparisonReportPage.selectComponentType("rollup");
-        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(),
                 containsString("[rollup]"));
     }
 
@@ -389,6 +389,6 @@ public class ScenarioComparisonReportTests extends TestBase {
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
-                is(equalTo("000002736 (Initial) [part]")));
+                is(equalTo("0200613 (Initial) [part]")));
     }
 }
