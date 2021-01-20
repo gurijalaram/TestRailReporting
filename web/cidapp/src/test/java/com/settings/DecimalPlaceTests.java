@@ -24,7 +24,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.SmokeTestSuite;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -43,7 +43,7 @@ public class DecimalPlaceTests extends TestBase {
         }
     }
 
-    @Category({SmokeTestSuite.class})
+    @Category({SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295"})
     @Description("User can change the default Displayed Decimal Places")
