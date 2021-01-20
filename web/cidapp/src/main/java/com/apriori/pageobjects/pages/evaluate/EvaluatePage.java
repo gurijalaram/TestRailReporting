@@ -389,7 +389,7 @@ public class EvaluatePage extends EvaluateToolbar {
         return pageUtils.waitForElementToAppear(risk).isDisplayed();
     }
 
-        /**
+    /**
      * Checks the dfm risk icon
      *
      * @param riskFactor - risk
@@ -413,7 +413,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfProcessGroups() {
         return processGroups.stream().map(processGroup -> processGroup.getAttribute("textContent")).collect(Collectors.toList());
-}
+    }
 
     /**
      * Gets list of vpe's
