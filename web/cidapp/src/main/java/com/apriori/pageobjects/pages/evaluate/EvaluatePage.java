@@ -69,6 +69,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
 
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .badge-pill")
+    private List<WebElement> secondaryProcesses;
+
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .input-group-append")
     private WebElement secondaryProcessesPencil;
 
@@ -78,31 +81,28 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
     private WebElement materialsDetailsButton;
 
-    @FindBy(css = "div[id='qa-material-modal-select-field'] input")
+    @FindBy(className = ".material-summary-card.card .pill-text")
     private WebElement materialName;
 
-    @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
+    @FindBy(className = ".design-guidance-summary-card.card .pill-text")
     private WebElement designGuidanceDetailsButton;
 
-    @FindBy(xpath = "//div[.='Processes']/following-sibling::div[.='details']")
+    @FindBy(className = ".process-summary-card.card .pill-text")
     private WebElement processesDetailsButton;
 
-    @FindBy(xpath = "//div[.='Cost Results']/following-sibling::div[.='details']")
+    @FindBy(className = ".cost-result-summary-card.card .pill-text")
     private WebElement costDetailsButton;
 
-    @FindBy(xpath = "//div[.='Inputs']/following-sibling::div[normalize-space()='more']")
+    @FindBy(className = ".production-info-summary-card.card .pill.action-button")
     private WebElement inputDetailsButton;
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
 
-    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//span")
-    private List<WebElement> secondaryProcesses;
-
-    @FindBy(xpath = "//label[.='VPE']/following-sibling::div//button")
+    @FindBy(css = "[id='qa-vpe-select-field'] [name='vpeName']")
     private List<WebElement> vpes;
 
-    @FindBy(xpath = "//label[.='Process Group']/following-sibling::div//button")
+    @FindBy(css = "[id='qa-process-group-select-field'] [name='processGroupName']")
     private List<WebElement> processGroups;
 
     private PageUtils pageUtils;
@@ -155,19 +155,6 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.waitForElementAndClick(vpeDropdown);
         By vp = By.xpath(String.format("//button[.='%s']", vpe));
         pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
-        return this;
-    }
-
-    /**
-     * Selects the secondary process
-     *
-     * @param secondaryProcess - the secondary process
-     * @return current page object
-     */
-    public EvaluatePage selectSecondaryProcess(String secondaryProcess) {
-        pageUtils.waitForElementAndClick(secondaryProcessBox);
-        By secProcess = By.xpath(String.format("//button[.='%s']", secondaryProcess));
-        pageUtils.scrollWithJavaScript(driver.findElement(secProcess), true).click();
         return this;
     }
 
@@ -393,15 +380,6 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets list of vpe's
-     *
-     * @return list as string
-     */
-    public List<String> getListOfVPEs() {
-        return getDropdownsInList(vpes);
-    }
-
-    /**
      * Checks the dfm risk score
      *
      * @return true/false
@@ -411,7 +389,7 @@ public class EvaluatePage extends EvaluateToolbar {
         return pageUtils.waitForElementToAppear(risk).isDisplayed();
     }
 
-    /**
+        /**
      * Checks the dfm risk icon
      *
      * @param riskFactor - risk
@@ -434,7 +412,16 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list as string
      */
     public List<String> getListOfProcessGroups() {
-        return getDropdownsInList(processGroups);
+        return processGroups.stream().map(processGroup -> processGroup.getAttribute("textContent")).collect(Collectors.toList());
+}
+
+    /**
+     * Gets list of vpe's
+     *
+     * @return list as string
+     */
+    public List<String> getListOfVPEs() {
+        return vpes.stream().map(vpe -> vpe.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     private List<String> getDropdownsInList(List<WebElement> dropdownLists) {
