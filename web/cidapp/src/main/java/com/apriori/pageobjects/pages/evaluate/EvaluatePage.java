@@ -15,7 +15,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -422,15 +421,6 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfVPEs() {
         return vpes.stream().map(vpe -> vpe.getAttribute("textContent")).collect(Collectors.toList());
-    }
-
-    private List<String> getDropdownsInList(List<WebElement> dropdownLists) {
-        List<String> listOfDropdown = new ArrayList<>();
-
-        for (WebElement dropdown : dropdownLists) {
-            listOfDropdown.add(dropdown.getAttribute("textContent"));
-        }
-        return listOfDropdown;
     }
 
     /**
