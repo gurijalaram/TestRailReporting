@@ -57,25 +57,28 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "input[name='productionLife']")
     private WebElement productionLifeInput;
 
-    @FindBy(xpath = "//label[.='Current Scenario']/following-sibling::div[contains(@class,'apriori-select form-control')]")
+    @FindBy(id = "qa-scenario-select-field")
     private WebElement currentScenarioDropdown;
 
-    @FindBy(xpath = "//label[.='Process Group']/following-sibling::div[contains(@class,'apriori-select form-control')]")
+    @FindBy(css = "div[id='qa-process-group-select-field'] [class='apriori-select form-control dropdown']")
     private WebElement processGroupDropdown;
 
-    @FindBy(xpath = "//label[.='VPE']/following-sibling::div[contains(@class,'apriori-select form-control')]")
+    @FindBy(css = "div[id='qa-vpe-select-field'] [class='apriori-select form-control dropdown']")
     private WebElement vpeDropdown;
 
-    @FindBy(xpath = "//label[.='Secondary Process']/following-sibling::div[contains(@class,'apriori-select form-control')]")
-    private WebElement secondaryProcessDropdown;
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
+    private WebElement secondaryProcessBox;
 
-    @FindBy(xpath = "//label[.='Material']/following-sibling::div//button")
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .input-group-append")
+    private WebElement secondaryProcessesPencil;
+
+    @FindBy(css = "div[id='qa-material-modal-select-field'] .input-group-append")
     private WebElement materialsPencil;
 
     @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
     private WebElement materialsDetailsButton;
 
-    @FindBy(xpath = "//div[.='Material']//input")
+    @FindBy(css = "div[id='qa-material-modal-select-field'] input")
     private WebElement materialName;
 
     @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
@@ -86,9 +89,6 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(xpath = "//div[.='Cost Results']/following-sibling::div[.='details']")
     private WebElement costDetailsButton;
-
-    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//button")
-    private WebElement secondaryProcessesPencil;
 
     @FindBy(xpath = "//div[.='Inputs']/following-sibling::div[normalize-space()='more']")
     private WebElement inputDetailsButton;
@@ -165,7 +165,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectSecondaryProcess(String secondaryProcess) {
-        pageUtils.waitForElementAndClick(secondaryProcessDropdown);
+        pageUtils.waitForElementAndClick(secondaryProcessBox);
         By secProcess = By.xpath(String.format("//button[.='%s']", secondaryProcess));
         pageUtils.scrollWithJavaScript(driver.findElement(secProcess), true).click();
         return this;
@@ -455,7 +455,7 @@ public class EvaluatePage extends EvaluateToolbar {
     public String getColour(String element) {
         WebElement elementColour = element.equalsIgnoreCase("Process Group") ? processGroupDropdown
             : element.equalsIgnoreCase("VPE") ? vpeDropdown
-            : element.equalsIgnoreCase("Secondary Processes") ? secondaryProcessDropdown
+            : element.equalsIgnoreCase("Secondary Processes") ? secondaryProcessBox
             : element.equalsIgnoreCase("Annual Volume") ? annualVolumeInput
             : element.equalsIgnoreCase("Years") ? productionLifeInput
             : element.equalsIgnoreCase("Material") ? materialName
