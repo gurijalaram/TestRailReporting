@@ -78,22 +78,22 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-material-modal-select-field'] .input-group-append")
     private WebElement materialsPencil;
 
-    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
+    @FindBy(css = ".material-summary-card.card .pill-text")
     private WebElement materialsDetailsButton;
 
-    @FindBy(className = ".material-summary-card.card .pill-text")
+    @FindBy(css = ".material-summary-card.card input")
     private WebElement materialName;
 
-    @FindBy(className = ".design-guidance-summary-card.card .pill-text")
+    @FindBy(css = ".design-guidance-summary-card.card .pill-text")
     private WebElement designGuidanceDetailsButton;
 
-    @FindBy(className = ".process-summary-card.card .pill-text")
+    @FindBy(css = ".process-summary-card.card .pill-text")
     private WebElement processesDetailsButton;
 
-    @FindBy(className = ".cost-result-summary-card.card .pill-text")
+    @FindBy(css = ".cost-result-summary-card.card .pill-text")
     private WebElement costDetailsButton;
 
-    @FindBy(className = ".production-info-summary-card.card .pill.action-button")
+    @FindBy(css = ".production-info-summary-card.card .pill.action-button")
     private WebElement inputDetailsButton;
 
     @FindBy(xpath = "//button[.='Explore']")
