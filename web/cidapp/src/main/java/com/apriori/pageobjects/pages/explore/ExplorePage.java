@@ -20,9 +20,6 @@ public class ExplorePage extends ExploreToolbar {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
 
-    @FindBy(xpath = "//button[.='Filters']")
-    private WebElement filtersButton;
-
     @FindBy(css = "button[class='dropdown-toggle btn btn-primary']")
     private WebElement paginatorDropdown;
 
@@ -40,16 +37,16 @@ public class ExplorePage extends ExploreToolbar {
         this.scenarioTableController = new ScenarioTableController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementAppear(filtersButton);
+        pageUtils.waitForElementAppear(scenarioCount);
     }
 
     /**
-     * Checks filter button is displayed
+     * Checks scenario count is displayed
      *
      * @return visibility of button
      */
-    public boolean isFilterButtonPresent() {
-        return filtersButton.isDisplayed();
+    public boolean isScenarioCountPresent() {
+        return scenarioCount.isDisplayed();
     }
 
     /**
