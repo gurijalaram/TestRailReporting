@@ -30,7 +30,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.CiaCirTestDevSuite;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsTest;
@@ -56,7 +55,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyDetails() {
@@ -68,7 +67,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3060")
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
@@ -77,7 +76,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1916")
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyDetails() {
@@ -86,7 +85,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CustomerSmokeTests.class})
+    @Category({ReportsTest.class, CustomerSmokeTests.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1922")
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -126,7 +125,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3205")
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
@@ -174,7 +173,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3067", "1929"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -218,7 +217,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3068", "1929"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -271,7 +270,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1934", "1929"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
@@ -322,7 +321,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3231", "1929"})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -365,7 +364,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3232", "1929"})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -417,7 +416,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3233", "1929"})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
@@ -469,7 +468,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1919")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
@@ -478,7 +477,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3244")
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
@@ -487,7 +486,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1930")
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
@@ -575,7 +574,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1918")
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -603,7 +602,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1920")
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
@@ -612,7 +611,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1931")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
@@ -641,7 +640,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export Set search function works (plus other filters)")
     public void testExportSetSearch() {
@@ -659,7 +658,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterSearch() {
@@ -671,7 +670,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterOperation() {
@@ -717,7 +716,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterButtons() {
@@ -730,7 +729,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilter() {
@@ -742,7 +741,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterOperation() {
@@ -779,7 +778,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterButtons() {
@@ -792,7 +791,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({CiaCirTestDevTest.class, ReportsTest.class})
+    @Category({CiaCirTestDevTest.class, ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
     public void testAssemblyNumberSearchCriteria() {
@@ -804,7 +803,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1924")
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
@@ -849,7 +848,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1928")
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
@@ -876,7 +875,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({CiaCirTestDevTest.class, ReportsTest.class})
+    @Category({CiaCirTestDevTest.class, ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1933")
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
@@ -904,7 +903,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1927")
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
