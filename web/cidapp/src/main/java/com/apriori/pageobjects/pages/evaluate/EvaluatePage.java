@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.utils.PageUtils;
@@ -104,6 +105,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(xpath = "//label[.='Process Group']/following-sibling::div//button")
     private List<WebElement> processGroups;
+
+    @FindBy(css = ".sub-components-summary.card .pill-text")
+    private WebElement componentsDetailsButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -265,6 +269,16 @@ public class EvaluatePage extends EvaluateToolbar {
     public ProcessesPage openProcesses() {
         pageUtils.waitForElementAndClick(processesDetailsButton);
         return new ProcessesPage(driver);
+    }
+
+    /**
+     * Opens the components panel
+     *
+     * @return new page object
+     */
+    public ComponentsPage openComponents() {
+        pageUtils.waitForElementAndClick(componentsDetailsButton);
+        return new ComponentsPage(driver);
     }
 
     /**
