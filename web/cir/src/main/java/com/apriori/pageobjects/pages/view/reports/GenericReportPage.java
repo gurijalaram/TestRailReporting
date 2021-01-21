@@ -1937,6 +1937,10 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//label[@title='Assembly Select']//a")), true);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementToAppear(locator);
+
+        if (inputString.equals("random")) {
+            pageUtils.waitForElementToAppear(By.xpath("//label[@title='Assembly Select']/span[@class='warning']"));
+        }
     }
 
     /**
