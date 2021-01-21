@@ -15,7 +15,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,52 +56,52 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "input[name='productionLife']")
     private WebElement productionLifeInput;
 
-    @FindBy(xpath = "//label[.='Current Scenario']/following-sibling::div[contains(@class,'apriori-select form-control')]")
+    @FindBy(id = "qa-scenario-select-field")
     private WebElement currentScenarioDropdown;
 
-    @FindBy(xpath = "//label[.='Process Group']/following-sibling::div[contains(@class,'apriori-select form-control')]")
+    @FindBy(css = "div[id='qa-process-group-select-field'] [class='apriori-select form-control dropdown']")
     private WebElement processGroupDropdown;
 
-    @FindBy(xpath = "//label[.='VPE']/following-sibling::div[contains(@class,'apriori-select form-control')]")
+    @FindBy(css = "div[id='qa-vpe-select-field'] [class='apriori-select form-control dropdown']")
     private WebElement vpeDropdown;
 
-    @FindBy(xpath = "//label[.='Secondary Process']/following-sibling::div[contains(@class,'apriori-select form-control')]")
-    private WebElement secondaryProcessDropdown;
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
+    private WebElement secondaryProcessBox;
 
-    @FindBy(xpath = "//label[.='Material']/following-sibling::div//button")
-    private WebElement materialsPencil;
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .badge-pill")
+    private List<WebElement> secondaryProcesses;
 
-    @FindBy(xpath = "//div[.='Material & Utilization']/following-sibling::div[.='details']")
-    private WebElement materialsDetailsButton;
-
-    @FindBy(xpath = "//div[.='Material']//input")
-    private WebElement materialName;
-
-    @FindBy(xpath = "//div[.='Design Guidance']/following-sibling::div[.='details']")
-    private WebElement designGuidanceDetailsButton;
-
-    @FindBy(xpath = "//div[.='Processes']/following-sibling::div[.='details']")
-    private WebElement processesDetailsButton;
-
-    @FindBy(xpath = "//div[.='Cost Results']/following-sibling::div[.='details']")
-    private WebElement costDetailsButton;
-
-    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//button")
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .input-group-append")
     private WebElement secondaryProcessesPencil;
 
-    @FindBy(xpath = "//div[.='Inputs']/following-sibling::div[normalize-space()='more']")
+    @FindBy(css = "div[id='qa-material-modal-select-field'] .input-group-append")
+    private WebElement materialsPencil;
+
+    @FindBy(css = ".material-summary-card.card .pill-text")
+    private WebElement materialsDetailsButton;
+
+    @FindBy(css = ".material-summary-card.card input")
+    private WebElement materialName;
+
+    @FindBy(css = ".design-guidance-summary-card.card .pill-text")
+    private WebElement designGuidanceDetailsButton;
+
+    @FindBy(css = ".process-summary-card.card .pill-text")
+    private WebElement processesDetailsButton;
+
+    @FindBy(css = ".cost-result-summary-card.card .pill-text")
+    private WebElement costDetailsButton;
+
+    @FindBy(css = ".production-info-summary-card.card .pill.action-button")
     private WebElement inputDetailsButton;
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
 
-    @FindBy(xpath = "//label[.='Secondary Processes']/following-sibling::div//span")
-    private List<WebElement> secondaryProcesses;
-
-    @FindBy(xpath = "//label[.='VPE']/following-sibling::div//button")
+    @FindBy(css = "[id='qa-vpe-select-field'] [name='vpeName']")
     private List<WebElement> vpes;
 
-    @FindBy(xpath = "//label[.='Process Group']/following-sibling::div//button")
+    @FindBy(css = "[id='qa-process-group-select-field'] [name='processGroupName']")
     private List<WebElement> processGroups;
 
     private PageUtils pageUtils;
@@ -140,7 +139,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
         pageUtils.waitForElementAndClick(processGroupDropdown);
-        By group = By.xpath(String.format("//button[.='%s']", processGroup));
+        By group = By.cssSelector(String.format("button[value='%s']", processGroup));
         pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
         return this;
     }
@@ -153,21 +152,8 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public EvaluatePage selectVPE(String vpe) {
         pageUtils.waitForElementAndClick(vpeDropdown);
-        By vp = By.xpath(String.format("//button[.='%s']", vpe));
+        By vp = By.cssSelector(String.format("button[value='%s']", vpe));
         pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
-        return this;
-    }
-
-    /**
-     * Selects the secondary process
-     *
-     * @param secondaryProcess - the secondary process
-     * @return current page object
-     */
-    public EvaluatePage selectSecondaryProcess(String secondaryProcess) {
-        pageUtils.waitForElementAndClick(secondaryProcessDropdown);
-        By secProcess = By.xpath(String.format("//button[.='%s']", secondaryProcess));
-        pageUtils.scrollWithJavaScript(driver.findElement(secProcess), true).click();
         return this;
     }
 
@@ -203,7 +189,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isMaterialInfoDisplayed(String material) {
-        By materialsInfo = By.xpath(String.format("//label[.='Material']/following-sibling::div//input[@value='%s']", material));
+        By materialsInfo = By.cssSelector(String.format("div[id='qa-material-modal-select-field'] input[value='%s']", material));
         return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
     }
 
@@ -304,7 +290,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return double
      */
     public double getMaterialResult(String label) {
-        By result = By.xpath(String.format("//div[@class='display-property vertical']//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
         pageUtils.waitForElementToAppear(result);
         return Double.parseDouble(driver.findElement(result).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
@@ -393,15 +379,6 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets list of vpe's
-     *
-     * @return list as string
-     */
-    public List<String> getListOfVPEs() {
-        return getDropdownsInList(vpes);
-    }
-
-    /**
      * Checks the dfm risk score
      *
      * @return true/false
@@ -434,16 +411,16 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list as string
      */
     public List<String> getListOfProcessGroups() {
-        return getDropdownsInList(processGroups);
+        return processGroups.stream().map(processGroup -> processGroup.getAttribute("textContent")).collect(Collectors.toList());
     }
 
-    private List<String> getDropdownsInList(List<WebElement> dropdownLists) {
-        List<String> listOfDropdown = new ArrayList<>();
-
-        for (WebElement dropdown : dropdownLists) {
-            listOfDropdown.add(dropdown.getAttribute("textContent"));
-        }
-        return listOfDropdown;
+    /**
+     * Gets list of vpe's
+     *
+     * @return list as string
+     */
+    public List<String> getListOfVPEs() {
+        return vpes.stream().map(vpe -> vpe.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
@@ -455,7 +432,7 @@ public class EvaluatePage extends EvaluateToolbar {
     public String getColour(String element) {
         WebElement elementColour = element.equalsIgnoreCase("Process Group") ? processGroupDropdown
             : element.equalsIgnoreCase("VPE") ? vpeDropdown
-            : element.equalsIgnoreCase("Secondary Processes") ? secondaryProcessDropdown
+            : element.equalsIgnoreCase("Secondary Processes") ? secondaryProcessBox
             : element.equalsIgnoreCase("Annual Volume") ? annualVolumeInput
             : element.equalsIgnoreCase("Years") ? productionLifeInput
             : element.equalsIgnoreCase("Material") ? materialName
