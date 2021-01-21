@@ -21,10 +21,10 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     @FindBy(css = "button[type='submit']")
     private WebElement submitButton;
 
-    @FindBy(xpath = "//button[.='Filters']")
+    @FindBy(id = "qa-scenario-list-filter-button")
     private WebElement filtersButton;
 
-    @FindBy(xpath = "//button[.='Configure']")
+    @FindBy(id = "qa-scenario-list-configure-button")
     private WebElement configureButton;
 
     private PageUtils pageUtils;

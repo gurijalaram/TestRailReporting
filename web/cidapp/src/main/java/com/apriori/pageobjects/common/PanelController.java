@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class PanelController extends LoadableComponent<PanelController> {
+public class PanelController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(PanelController.class);
 
@@ -37,18 +36,6 @@ public class PanelController extends LoadableComponent<PanelController> {
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(questionButton);
-        pageUtils.waitForElementAppear(closeButton);
     }
 
     /**
