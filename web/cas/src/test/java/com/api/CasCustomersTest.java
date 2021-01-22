@@ -29,8 +29,8 @@ public class CasCustomersTest extends TestUtil {
     @Test
     @Description("Get a list of CAS customers")
     public void getCustomers() {
-
         String apiUrl = String.format(Constants.getApiUrl(), "customers?sortBy[ASC]=name");
+
         token = retrieveJwtToken(Constants.getSecretKey(),
             Constants.getCasServiceHost(),
             HttpStatus.SC_CREATED,
@@ -44,6 +44,7 @@ public class CasCustomersTest extends TestUtil {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
 
+    // TODO: 22/01/2021 (ciene) to be refactored
     private HashMap<String, String> initAuthorizationHeaderNoContent() {
         return new HashMap<String, String>() {{
             put("Authorization", "Bearer " + token);
@@ -51,6 +52,7 @@ public class CasCustomersTest extends TestUtil {
         }};
     }
 
+    // TODO: 22/01/2021 (ciene) to be refactored
     private  <T> ResponseWrapper<T> getCommonRequest(String url, String username, String password, Class klass) {
         return GenericRequestUtil.get(
             RequestEntity.init(url, UserCredentials.init(username, password), klass)
@@ -58,6 +60,7 @@ public class CasCustomersTest extends TestUtil {
         );
     }
 
+    // TODO: 22/01/2021 (ciene) to be refactored
     private static String retrieveJwtToken(String secretKey, String url, int statusCode, String username, String email, String issuer, String subject) {
         url = "https://" + url;
         url = url.concat(String.format("/tokens?key=%s", secretKey));
