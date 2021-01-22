@@ -28,7 +28,7 @@ public class CasCustomersTest extends TestUtil {
 
     @Test
     @Description("Get a list of CAS customers")
-    public void getUsers() {
+    public void getCustomers() {
 
         String apiUrl = String.format(Constants.getApiUrl(), "customers?sortBy[ASC]=name");
         token = retrieveJwtToken(Constants.getSecretKey(),
