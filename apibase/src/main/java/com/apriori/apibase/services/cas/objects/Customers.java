@@ -1,7 +1,6 @@
 package com.apriori.apibase.services.cas.objects;
 
 import com.apriori.apibase.services.Pagination;
-import com.apriori.apibase.services.cds.objects.Customer;
 import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
