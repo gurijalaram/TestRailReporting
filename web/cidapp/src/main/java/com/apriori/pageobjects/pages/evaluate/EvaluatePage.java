@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.utils.PageUtils;
@@ -103,6 +104,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = "[id='qa-process-group-select-field'] [name='processGroupName']")
     private List<WebElement> processGroups;
+
+    @FindBy(css = ".sub-components-summary.card .pill-text")
+    private WebElement componentsDetailsButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -254,6 +258,16 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Opens the components panel
+     *
+     * @return new page object
+     */
+    public ComponentsPage openComponents() {
+        pageUtils.waitForElementAndClick(componentsDetailsButton);
+        return new ComponentsPage(driver);
+    }
+
+    /**
      * Opens the secondary processes page
      *
      * @return new page object
@@ -284,7 +298,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets material details
+     * Gets material details - result is returned as a double with strings and special characters parsed
      *
      * @param label - the label
      * @return double
@@ -331,7 +345,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets processes result
+     * Gets processes result - result is returned as a double with strings and special characters parsed
      *
      * @param label - the label
      * @return double
@@ -355,7 +369,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets cost result
+     * Gets cost result - result is returned as a double with strings and special characters parsed
      *
      * @param label - the label
      * @return double
@@ -449,5 +463,16 @@ public class EvaluatePage extends EvaluateToolbar {
     public String getCurrentScenarioName() {
         By byScenario = By.xpath("//label[.='Current Scenario']/following-sibling::div//button[contains(@class,'secondary')]");
         return pageUtils.waitForElementToAppear(byScenario).getAttribute("textContent");
+    }
+
+    /**
+     * Gets component result - result is returned as a double with strings and special characters parsed
+     *
+     * @param label - the label
+     * @return double
+     */
+    public double getComponentResults(String label) {
+        By componentResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(componentResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
 }
