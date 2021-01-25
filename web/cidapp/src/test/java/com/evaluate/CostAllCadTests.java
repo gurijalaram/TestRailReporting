@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -50,7 +51,6 @@ public class CostAllCadTests extends TestBase {
         costDetailsPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -59,9 +59,9 @@ public class CostAllCadTests extends TestBase {
             .openCostDetails()
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$15.87")));
-        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.81")));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.88")));
+        assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$17.66")));
+        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.30")));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.74")));
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app
@@ -259,7 +259,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
 
