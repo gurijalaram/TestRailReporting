@@ -33,7 +33,7 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    //@TestRail(testCaseId = {"578", "5429", "598"})
+    //@TestRail(testCaseId = {"578", "5429", "5441"})
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -52,7 +52,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "598"})
+    //@TestRail(testCaseId = {"578", "5429", "5441"})
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -71,7 +71,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "598"})
+    //@TestRail(testCaseId = {"578", "5429", "5441"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -90,7 +90,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "598"})
+    //@TestRail(testCaseId = {"578", "5429", "5441"})
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -109,7 +109,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "598"})
+    //@TestRail(testCaseId = {"578", "5429", "5441"})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -128,7 +128,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "598"})
+    //@TestRail(testCaseId = {"578", "5429", "5441"})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
