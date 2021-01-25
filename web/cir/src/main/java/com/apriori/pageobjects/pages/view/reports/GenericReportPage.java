@@ -601,9 +601,7 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath(
                 String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
         pageUtils.waitForElementToAppear(locator);
-        WebElement warningMessage = driver.findElement(locator);
-        pageUtils.scrollWithJavaScript(warningMessage, true);
-        return warningMessage.isDisplayed() && warningMessage.isEnabled();
+        return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
     }
 
     /**
@@ -2140,7 +2138,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return GenericReportPage instance
      */
     public GenericReportPage switchTab(int index) {
-        pageUtils.windowHandler(index);
+        if (driver.getWindowHandles().size() == (index + 1)) {
+            pageUtils.windowHandler(index);
+        }
         return this;
     }
 
