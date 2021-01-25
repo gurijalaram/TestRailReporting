@@ -40,7 +40,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574", "565", "567"})
+    @TestRail(testCaseId = {"5421", "565", "567"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
 
@@ -92,7 +92,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - par")
     public void testCADFormatPar() {
 
@@ -113,7 +113,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
 
@@ -133,7 +133,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
 
@@ -154,7 +154,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
 
@@ -175,7 +175,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
 
@@ -196,7 +196,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
 
@@ -217,7 +217,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
 
@@ -238,7 +238,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParaSolid() {
 
@@ -306,7 +306,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"580"})
+    @TestRail(testCaseId = {"5426"})
     @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
     public void failedBlankScenarioName() {
 

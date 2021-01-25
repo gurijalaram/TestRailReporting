@@ -36,7 +36,7 @@ public class NewScenarioNameTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"577"})
+    @TestRail(testCaseId = {"5424"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
 
