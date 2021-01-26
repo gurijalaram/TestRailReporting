@@ -262,7 +262,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({CiaCirTestDevTest.class, ReportsTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3048")
     @Description("Verify Process Group input control functions correctly - No Selection")
     public void testProcessGroupInputControlNoSelection() {
@@ -300,7 +300,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly - No Selection")
     public void testDtcScoreNoSelection() {

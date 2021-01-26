@@ -221,7 +221,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({CiaCirTestDevTest.class, ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = "1371")
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {

@@ -600,6 +600,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public boolean isListWarningDisplayedAndEnabled(String listName) {
         By locator = By.xpath(
                 String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
+        driver.findElement(By.xpath("//div[@title='Select Parts']/span[@class='wrap']")).click();
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
     }
