@@ -308,7 +308,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3048")
     @Description("Verify Process Group input control functions correctly - No Selection")
     public void testProcessGroupInputControlNoSelection() {
