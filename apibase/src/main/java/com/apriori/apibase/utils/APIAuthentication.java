@@ -21,12 +21,14 @@ public class APIAuthentication {
      * @return Authorization Header
      */
     public HashMap<String, String> initAuthorizationHeader(String username) {
-        return new HashMap<String, String>() {{
+        return new HashMap<String, String>() {
+            {
                 put("Authorization", "Bearer " + getCachedToken(username));
                 put("apriori.tenantgroup", "default");
                 put("apriori.tenant", "default");
                 put("Content-Type", "application/vnd.apriori.v1+json");
-            }};
+            }
+        };
     }
 
     /**
@@ -35,11 +37,13 @@ public class APIAuthentication {
      * @return Authorization Header
      */
     public HashMap<String, String> initAuthorizationHeaderNoContent(String username) {
-        return new HashMap<String, String>() {{
+        return new HashMap<String, String>() {
+            {
                 put("Authorization", "Bearer " + getCachedToken(username));
                 put("apriori.tenantgroup", "default");
                 put("apriori.tenant", "default");
-            }};
+            }
+        };
     }
 
     /**
@@ -48,17 +52,19 @@ public class APIAuthentication {
      * @return Authorization Header
      */
     public HashMap<String, String> initAuthorizationHeaderContent(String token) {
-        return new HashMap<String, String>() {{
-            put("Authorization", "Bearer " + token);
-            put("Content-Type", "application/json");
-        }};
+        return new HashMap<String, String>() {
+            {
+                put("Authorization", "Bearer " + token);
+                put("Content-Type", "application/json");
+            }
+        };
     }
 
     private String getCachedToken(String username) {
         String password = username.split("@")[0];
 
         if (accessToken == null && timeToLive < 1) {
-            ResponseWrapper<AuthenticateJSON> tokenDetails =  new HTTPRequest().defaultFormAuthorization(username, password)
+            ResponseWrapper<AuthenticateJSON> tokenDetails = new HTTPRequest().defaultFormAuthorization(username, password)
                 .customizeRequest()
                 .setReturnType(AuthenticateJSON.class)
                 .setEndpoint(baseUrl + "ws/auth/token")
