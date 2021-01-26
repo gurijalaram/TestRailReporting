@@ -42,6 +42,18 @@ public class APIAuthentication {
             }};
     }
 
+    /**
+     * Fetch Authorization header for user
+     *
+     * @return Authorization Header
+     */
+    public HashMap<String, String> initAuthorizationHeaderContent(String token) {
+        return new HashMap<String, String>() {{
+            put("Authorization", "Bearer " + token);
+            put("Content-Type", "application/json");
+        }};
+    }
+
     private String getCachedToken(String username) {
         String password = username.split("@")[0];
 
