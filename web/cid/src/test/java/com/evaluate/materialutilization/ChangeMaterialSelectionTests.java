@@ -100,11 +100,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(evaluatePage.getMaterialInfo(), is("Aluminum, Cast, ANSI AL380.0"));
 
         evaluatePage.openMaterialCompositionTable()
-            .selectMaterialComposition("ISO JMB 800-1")
+            .selectMaterialComposition("Magnesium AZ91D")
             .apply()
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo(), is("ISO JMB 800-1"));
+        assertThat(evaluatePage.getMaterialInfo(), is("Magnesium AZ91D"));
     }
 
     @Test

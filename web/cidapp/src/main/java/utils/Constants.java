@@ -2,12 +2,18 @@ package utils;
 
 import com.apriori.utils.FileResourceUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class Constants {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
@@ -24,6 +30,10 @@ public class Constants {
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
+            String properties = PROPERTIES.stringPropertyNames().stream()
+                .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
+                .collect(Collectors.joining());
+            LOGGER.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

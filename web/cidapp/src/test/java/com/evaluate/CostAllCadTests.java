@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -40,7 +41,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574", "565", "567"})
+    @TestRail(testCaseId = {"5421", "565", "567"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
 
@@ -50,7 +51,6 @@ public class CostAllCadTests extends TestBase {
         costDetailsPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -59,9 +59,9 @@ public class CostAllCadTests extends TestBase {
             .openCostDetails()
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$15.87")));
-        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.81")));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.88")));
+        assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$17.66")));
+        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.30")));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.74")));
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app
@@ -92,7 +92,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - par")
     public void testCADFormatPar() {
 
@@ -113,7 +113,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
 
@@ -133,7 +133,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
 
@@ -154,7 +154,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
 
@@ -175,7 +175,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
 
@@ -196,7 +196,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
 
@@ -217,7 +217,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
 
@@ -238,7 +238,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParaSolid() {
 
@@ -259,7 +259,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
 
@@ -292,7 +292,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2316", "2317"})
+    @TestRail(testCaseId = {"5447", "2317"})
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
 
@@ -306,7 +306,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"580"})
+    @TestRail(testCaseId = {"5426"})
     @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
     public void failedBlankScenarioName() {
 

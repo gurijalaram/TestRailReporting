@@ -6,11 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ModalDialogController extends LoadableComponent<ModalDialogController> {
+public class ModalDialogController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ModalDialogController.class);
 
@@ -58,17 +57,6 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(cancelButton);
-        pageUtils.waitForElementAppear(closePanel);
     }
 
     /**
@@ -77,7 +65,7 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        pageUtils.javaScriptClick(submitButton);
+        pageUtils.waitForElementAndClick(submitButton);
         return PageFactory.initElements(driver, klass);
     }
 
@@ -108,7 +96,7 @@ public class ModalDialogController extends LoadableComponent<ModalDialogControll
      */
     public <T> T continues(Class<T> klass) {
         pageUtils.waitForElementAndClick(continueButton);
-        return PageFactory.initElements(driver,klass);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**

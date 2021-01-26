@@ -40,7 +40,7 @@ public class LoginTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
-        assertThat(explorePage.isFilterButtonPresent(), is(true));
+        assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
 
     @Test
