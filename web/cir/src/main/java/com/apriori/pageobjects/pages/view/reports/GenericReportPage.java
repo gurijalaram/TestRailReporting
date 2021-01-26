@@ -44,6 +44,9 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> bubbleMap = new HashMap<>();
     private String reportName = "";
 
+    @FindBy(xpath = "//span[contains(text(), 'Select Parts')]")
+    private WebElement selectPartsControlTitle;
+
     @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
     private WebElement upperTitle;
 
@@ -600,7 +603,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public boolean isListWarningDisplayedAndEnabled(String listName) {
         By locator = By.xpath(
                 String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
-        driver.findElement(By.xpath("//div[@title='Select Parts']/span[@class='wrap']")).click();
+        selectPartsControlTitle.click();
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
     }
