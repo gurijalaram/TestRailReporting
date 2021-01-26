@@ -24,7 +24,7 @@ public class UploadTests extends TestBase {
     private File resourceFile;
 
     /*@Test
-    @TestRail(testCaseId = {"575"})
+    @TestRail(testCaseId = {"5422"})
     @Description("Failed upload of any other types of files")
     public void invalidFile() {
 
@@ -39,7 +39,7 @@ public class UploadTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"576"})
+    @TestRail(testCaseId = {"5423"})
     @Description("Nothing uploaded or translated if user select a file but then cancels the new component dialog")
     public void cancelUpload() {
 

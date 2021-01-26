@@ -38,7 +38,7 @@ public class ProcessGroupsTests extends TestBase {
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Issue("TE-5553")
-    @TestRail(testCaseId = {"598", "1591"})
+    @TestRail(testCaseId = {"5441", "1591"})
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -56,7 +56,7 @@ public class ProcessGroupsTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"598"})
+    @TestRail(testCaseId = {"5441"})
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;

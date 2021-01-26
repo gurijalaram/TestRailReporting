@@ -24,6 +24,15 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
     @FindBy(css = "div[dir='ltr']")
     private WebElement chartContainer;
 
+    @FindBy(css = "[id='qa-process-totals-section'] div.left")
+    private WebElement totalChevron;
+
+    @FindBy(css = "[id='qa-process-details-section'] div.left")
+    private WebElement processDetailsChevron;
+
+    @FindBy(css = "[id='qa-process-options-section'] div.left")
+    private WebElement optionsChevron;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;

@@ -3,12 +3,18 @@ package utils;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class Constants {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String LOGOUT_HEADER = "CI DESIGN AUTOMATION";
@@ -48,7 +54,6 @@ public class Constants {
     public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
     public static final String INVALID_ERROR_MESSAGE = "Invalid";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
-
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-staging";
     private static final Properties PROPERTIES = new Properties();
@@ -63,6 +68,10 @@ public class Constants {
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
+            String properties = PROPERTIES.stringPropertyNames().stream()
+                .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
+                .collect(Collectors.joining());
+            LOGGER.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

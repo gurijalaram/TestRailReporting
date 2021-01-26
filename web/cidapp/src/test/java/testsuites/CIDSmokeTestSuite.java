@@ -19,7 +19,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
-//@Categories.IncludeCategory(SmokeTests.class)
+@Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses ({
     LoginTests.class,
     CostScenarioTests.class,
@@ -31,5 +31,5 @@ import testsuites.suiteinterface.SmokeTests;
     HelpTests.class,
     DecimalPlaceTests.class
 })
-public class SmokeTestSuite {
+public class CIDSmokeTestSuite {
 }
