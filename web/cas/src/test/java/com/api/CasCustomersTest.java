@@ -18,7 +18,7 @@ import org.junit.Test;
 
 public class CasCustomersTest extends TestUtil {
 
-    private static String token;
+    private String token;
 
     @Test
     @Description("Get a list of CAS customers")
