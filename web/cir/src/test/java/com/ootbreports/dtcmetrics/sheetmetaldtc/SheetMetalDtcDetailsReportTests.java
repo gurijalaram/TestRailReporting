@@ -25,7 +25,6 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -355,7 +354,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3048")
     @Description("Verify Process Group input control functions correctly - No Selection")
     public void testProcessGroupInputControlNoSelection() {
@@ -393,7 +392,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3049")
     @Description("Verify DTC Score input control functions correctly - No Selection")
     public void testDtcScoreNoSelection() {

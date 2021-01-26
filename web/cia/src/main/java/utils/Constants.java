@@ -19,7 +19,7 @@ public class Constants {
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
 
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cia-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cia-staging-sprockets";
     public static final String DEFAULT_BASE_URL_KEY = "url";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
