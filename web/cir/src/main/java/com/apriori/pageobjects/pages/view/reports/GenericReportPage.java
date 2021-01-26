@@ -47,6 +47,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Select Parts')]")
     private WebElement selectPartsControlTitle;
 
+    @FindBy(xpath = "//span[contains(text(), '* DTC Score')]")
+    private WebElement dtcScoreControlTitle;
+
     @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
     private WebElement upperTitle;
 
@@ -603,7 +606,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public boolean isListWarningDisplayedAndEnabled(String listName) {
         By locator = By.xpath(
                 String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
-        selectPartsControlTitle.click();
+        WebElement elementToClick = listName.equals("processGroup") ? dtcScoreControlTitle : selectPartsControlTitle;
+        elementToClick.click();
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
     }
