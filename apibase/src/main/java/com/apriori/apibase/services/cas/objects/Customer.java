@@ -57,204 +57,184 @@ public class Customer {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("identity")
     public String getIdentity() {
         return identity;
     }
 
-    @JsonProperty("identity")
-    public void setIdentity(String identity) {
+    public Customer setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
-    @JsonProperty("createdAt")
     public String getCreatedAt() {
         return createdAt;
     }
 
-    @JsonProperty("createdAt")
-    public void setCreatedAt(String createdAt) {
+    public Customer setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
-    @JsonProperty("createdBy")
     public String getCreatedBy() {
         return createdBy;
     }
 
-    @JsonProperty("createdBy")
-    public void setCreatedBy(String createdBy) {
+    public Customer setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
-    @JsonProperty("updatedAt")
     public String getUpdatedAt() {
         return updatedAt;
     }
 
-    @JsonProperty("updatedAt")
-    public void setUpdatedAt(String updatedAt) {
+    public Customer setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+        return this;
     }
 
-    @JsonProperty("updatedBy")
     public String getUpdatedBy() {
         return updatedBy;
     }
 
-    @JsonProperty("updatedBy")
-    public void setUpdatedBy(String updatedBy) {
+    public Customer setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+        return this;
     }
 
-    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
-    @JsonProperty("name")
-    public void setName(String name) {
+    public Customer setName(String name) {
         this.name = name;
+        return this;
     }
 
-    @JsonProperty("cloudReference")
     public String getCloudReference() {
         return cloudReference;
     }
 
-    @JsonProperty("cloudReference")
-    public void setCloudReference(String cloudReference) {
+    public Customer setCloudReference(String cloudReference) {
         this.cloudReference = cloudReference;
+        return this;
     }
 
-    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
 
-    @JsonProperty("description")
-    public void setDescription(String description) {
+    public Customer setDescription(String description) {
         this.description = description;
+        return this;
     }
 
-    @JsonProperty("customerType")
     public String getCustomerType() {
         return customerType;
     }
 
-    @JsonProperty("customerType")
-    public void setCustomerType(String customerType) {
+    public Customer setCustomerType(String customerType) {
         this.customerType = customerType;
+        return this;
     }
 
-    @JsonProperty("salesforceId")
     public String getSalesforceId() {
         return salesforceId;
     }
 
-    @JsonProperty("salesforceId")
-    public void setSalesforceId(String salesforceId) {
+    public Customer setSalesforceId(String salesforceId) {
         this.salesforceId = salesforceId;
+        return this;
     }
 
-    @JsonProperty("active")
     public Boolean getActive() {
         return active;
     }
 
-    @JsonProperty("active")
-    public void setActive(Boolean active) {
+    public Customer setActive(Boolean active) {
         this.active = active;
+        return this;
     }
 
-    @JsonProperty("maxCadFileRetentionDays")
     public Integer getMaxCadFileRetentionDays() {
         return maxCadFileRetentionDays;
     }
 
-    @JsonProperty("maxCadFileRetentionDays")
-    public void setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
+    public Customer setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
         this.maxCadFileRetentionDays = maxCadFileRetentionDays;
+        return this;
     }
 
-    @JsonProperty("useExternalIdentityProvider")
     public Boolean getUseExternalIdentityProvider() {
         return useExternalIdentityProvider;
     }
 
-    @JsonProperty("useExternalIdentityProvider")
-    public void setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
+    public Customer setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
         this.useExternalIdentityProvider = useExternalIdentityProvider;
+        return this;
     }
 
-    @JsonProperty("mfaRequired")
     public Boolean getMfaRequired() {
         return mfaRequired;
     }
 
-    @JsonProperty("mfaRequired")
-    public void setMfaRequired(Boolean mfaRequired) {
+    public Customer setMfaRequired(Boolean mfaRequired) {
         this.mfaRequired = mfaRequired;
+        return this;
     }
 
-    @JsonProperty("oneTimePasswordApplications")
     public List<Object> getOneTimePasswordApplications() {
         return oneTimePasswordApplications;
     }
 
-    @JsonProperty("oneTimePasswordApplications")
-    public void setOneTimePasswordApplications(List<Object> oneTimePasswordApplications) {
+    public Customer setOneTimePasswordApplications(List<Object> oneTimePasswordApplications) {
         this.oneTimePasswordApplications = oneTimePasswordApplications;
+        return this;
     }
 
-    @JsonProperty("createdByName")
     public String getCreatedByName() {
         return createdByName;
     }
 
-    @JsonProperty("createdByName")
-    public void setCreatedByName(String createdByName) {
+    public Customer setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+        return this;
     }
 
-    @JsonProperty("updatedByName")
     public String getUpdatedByName() {
         return updatedByName;
     }
 
-    @JsonProperty("updatedByName")
-    public void setUpdatedByName(String updatedByName) {
+    public Customer setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
+        return this;
     }
 
-    @JsonProperty("identityProviders")
     public List<Object> getIdentityProviders() {
         return identityProviders;
     }
 
-    @JsonProperty("identityProviders")
-    public void setIdentityProviders(List<Object> identityProviders) {
+    public Customer setIdentityProviders(List<Object> identityProviders) {
         this.identityProviders = identityProviders;
+        return this;
     }
 
-    @JsonProperty("emailDomains")
     public List<String> getEmailDomains() {
         return emailDomains;
     }
 
-    @JsonProperty("emailDomains")
-    public void setEmailDomains(List<String> emailDomains) {
+    public Customer setEmailDomains(List<String> emailDomains) {
         this.emailDomains = emailDomains;
+        return this;
     }
 
-    @JsonProperty("authenticationType")
     public String getAuthenticationType() {
         return authenticationType;
     }
 
-    @JsonProperty("authenticationType")
-    public void setAuthenticationType(String authenticationType) {
+    public Customer setAuthenticationType(String authenticationType) {
         this.authenticationType = authenticationType;
+        return this;
     }
 
     @JsonAnyGetter
