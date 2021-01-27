@@ -65,7 +65,7 @@ public class ModalDialogController {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        pageUtils.javaScriptClick(submitButton);
+        pageUtils.waitForElementAndClick(submitButton);
         return PageFactory.initElements(driver, klass);
     }
 
