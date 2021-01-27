@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @author kpatel
@@ -114,6 +115,10 @@ public class GenericHeader extends PageHeader {
         return uploadFile(scenarioName, filePath).selectOkButton(className);
     }
 
+    public <T> T uploadFileAndOk(String scenarioName, List<File> filePath, Class<T> className) {
+        return uploadFile(scenarioName, filePath).selectOkButton(className);
+    }
+
     /**
      * Collective method to upload a file then select Cancel
      *
@@ -134,6 +139,12 @@ public class GenericHeader extends PageHeader {
      * @return current page object
      */
     public FileUploadPage uploadFile(String scenarioName, File filePath) {
+        pageUtils.waitForElementAndClick(newFileDropdown);
+        pageUtils.waitForElementAndClick(componentButton);
+        return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath);
+    }
+
+    public FileUploadPage uploadFile(String scenarioName, List<File> filePath) {
         pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(componentButton);
         return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath);

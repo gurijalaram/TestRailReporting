@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @author cfrith
@@ -70,6 +71,12 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         return this;
     }
 
+    public FileUploadPage inputFileDetails(String scenarioName, List<File> filePath) {
+        inputScenarioName(scenarioName)
+            .enterFilePath(filePath);
+        return this;
+    }
+
     /**
      * Input scenario name
      *
@@ -92,6 +99,14 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     private FileUploadPage enterFilePath(File filePath) {
         fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
         fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
+        return this;
+    }
+
+    private FileUploadPage enterFilePath(List<File> filePath) {
+        for (File file:filePath) {
+            fileInput.sendKeys(file.getAbsolutePath().replace("%20", " "));
+            fileInput.sendKeys(file.getAbsolutePath().replace("%20", " "));
+        }
         return this;
     }
 
