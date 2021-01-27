@@ -3,6 +3,7 @@ package com.api;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.apibase.services.cas.objects.Customers;
@@ -38,6 +39,8 @@ public class CasCustomersTest extends TestUtil {
             new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat((int) response.getResponseEntity().getResponse().getItems().stream().filter(item -> item.getIdentity() != null).count(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
