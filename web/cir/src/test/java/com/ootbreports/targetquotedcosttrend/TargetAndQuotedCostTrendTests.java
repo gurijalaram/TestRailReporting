@@ -80,8 +80,10 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
         assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownItemCount(), is(equalTo("2")));
         assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText("1"),
                 is(equalTo("AC CYCLE TIME VT 1")));
+        String secondValue = Constants.environment.equals("cir-qa") ? "SPEND ANALYSIS VALUE TRACKING" :
+                "CYCLE TIME VALUE TRACKING ROLLUP";
         assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText("2"),
-                is(equalTo("CYCLE TIME VALUE TRACKING ROLLUP")));
+                is(equalTo(secondValue)));
 
         targetQuotedCostTrendReportPage.clickOk();
         assertThat(targetQuotedCostTrendReportPage.isChartDisplayedAndEnabled(), is(equalTo(true)));
