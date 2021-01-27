@@ -59,7 +59,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Uploads a file
-     * //* @param fileName - file name
      *
      * @param scenarioName - scenario name
      * @param filePath     - file path
@@ -71,6 +70,13 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         return this;
     }
 
+    /**
+     * Uploads a file
+     *
+     * @param scenarioName - scenario name
+     * @param filePath     - file path
+     * @return current page object
+     */
     public FileUploadPage inputFileDetails(String scenarioName, List<File> filePath) {
         inputScenarioName(scenarioName)
             .enterFilePath(filePath);
@@ -102,11 +108,17 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         return this;
     }
 
+    /**
+     * Gets details of file for upload
+     *
+     * @param filePath - the file path
+     * @return current page object
+     */
     private FileUploadPage enterFilePath(List<File> filePath) {
-        for (File file:filePath) {
+        filePath.forEach(file -> {
             fileInput.sendKeys(file.getAbsolutePath().replace("%20", " "));
             fileInput.sendKeys(file.getAbsolutePath().replace("%20", " "));
-        }
+        });
         return this;
     }
 
@@ -127,6 +139,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      */
     public <T> T selectCancelButton(Class<T> className) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return PageFactory.initElements(driver,className);
+        return PageFactory.initElements(driver, className);
     }
 }

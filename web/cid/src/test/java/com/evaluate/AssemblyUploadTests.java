@@ -1,13 +1,19 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnsEnum;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -16,11 +22,16 @@ import com.pageobjects.pages.evaluate.ComponentsPage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.evaluate.inputs.VPESelectionPage;
 import com.pageobjects.pages.explore.ExplorePage;
+import com.pageobjects.pages.explore.FileOpenError;
 import com.pageobjects.pages.explore.FileUploadPage;
 import com.pageobjects.pages.login.CidLoginPage;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SanityTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 import java.io.InputStream;
@@ -48,7 +59,7 @@ public class AssemblyUploadTests extends TestBase {
         super();
     }
 
-    /*@Test
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2628", "2647", "2653"})
     @Description("Assembly File Upload - STEP")
@@ -328,7 +339,7 @@ public class AssemblyUploadTests extends TestBase {
             .uploadFile(new GenerateStringUtil().generateScenarioName(), resourceFile);
 
         assertThat(new FileOpenError(driver).getErrorText(), containsString("The selected file type is not supported"));
-    }*/
+    }
 
     @Test
     @TestRail(testCaseId = {"2631", "2632"})
@@ -343,15 +354,15 @@ public class AssemblyUploadTests extends TestBase {
         resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
         resourceFile4 = FileResourceUtil.getCloudFile(processGroupEnum, "CastedPart.CATPart");
 
-        List<File> files = new ArrayList<>();
-        files.add(resourceFile);
-        files.add(resourceFile2);
-        files.add(resourceFile3);
-        files.add(resourceFile4);
+        List<File> multiFiles = new ArrayList<>();
+        multiFiles.add(resourceFile);
+        multiFiles.add(resourceFile2);
+        multiFiles.add(resourceFile3);
+        multiFiles.add(resourceFile4);
 
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, files, ExplorePage.class)
+            .uploadFileAndOk(scenarioName, multiFiles, ExplorePage.class)
             .openJobQueue()
             .checkJobQueueActionStatus("Assembly2", scenarioName, "Translate", "okay")
             .closeJobQueue(ExplorePage.class)

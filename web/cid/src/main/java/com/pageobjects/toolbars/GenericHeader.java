@@ -115,6 +115,15 @@ public class GenericHeader extends PageHeader {
         return uploadFile(scenarioName, filePath).selectOkButton(className);
     }
 
+    /**
+     * Collective method to upload a file then select OK
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath     - location of the file
+     * @param className    - the class name
+     * @param <T>          - list of files
+     * @return new page object
+     */
     public <T> T uploadFileAndOk(String scenarioName, List<File> filePath, Class<T> className) {
         return uploadFile(scenarioName, filePath).selectOkButton(className);
     }
@@ -144,6 +153,13 @@ public class GenericHeader extends PageHeader {
         return new FileUploadPage(driver).inputFileDetails(scenarioName, filePath);
     }
 
+    /**
+     * Selects the file dropdown and enters file details
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath     - location of the file
+     * @return current page object
+     */
     public FileUploadPage uploadFile(String scenarioName, List<File> filePath) {
         pageUtils.waitForElementAndClick(newFileDropdown);
         pageUtils.waitForElementAndClick(componentButton);
