@@ -44,6 +44,12 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> bubbleMap = new HashMap<>();
     private String reportName = "";
 
+    @FindBy(xpath = "//span[contains(text(), 'Select Parts')]")
+    private WebElement selectPartsControlTitle;
+
+    @FindBy(xpath = "//span[contains(text(), '* DTC Score')]")
+    private WebElement dtcScoreControlTitle;
+
     @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
     private WebElement upperTitle;
 
@@ -133,9 +139,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//label[@title='Assembly Select']//a")
     private WebElement currentAssemblyElement;
-
-    @FindBy(xpath = "//div[@id='partNumber']/label/div/div/div/a")
-    private WebElement currentAssElement;
 
     @FindBy(xpath = "//a[contains(text(), 'SUB-ASSEMBLY')]")
     private WebElement subAssOption;
@@ -603,6 +606,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public boolean isListWarningDisplayedAndEnabled(String listName) {
         By locator = By.xpath(
                 String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
+        WebElement elementToClick = listName.equals("processGroup") ? dtcScoreControlTitle : selectPartsControlTitle;
+        elementToClick.click();
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
     }
@@ -622,7 +627,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Deselects any selected export sets
      */
     public GenericReportPage deselectAllProcessGroups() {
-        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Groups")));
+        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
         return this;
     }
 
@@ -1445,8 +1450,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getMinimumAnnualSpendFromAboveChart() {
-        pageUtils.waitForElementToAppear(minimumAnnualSpend);
-        return minimumAnnualSpend.getText();
+        By locator = By.xpath("//span[contains(text(), 'Minimum Annual Spend:')]/../following-sibling::td[2]/span");
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 
     /**
@@ -1948,8 +1954,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getCurrentlySelectedAssembly() {
-        pageUtils.waitForElementToAppear(currentAssemblyElement);
-        return currentAssemblyElement.getAttribute("title");
+        By locator = By.xpath("//label[@title='Assembly Select']//a");
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getAttribute("title");
     }
 
     /**
@@ -2139,7 +2146,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return GenericReportPage instance
      */
     public GenericReportPage switchTab(int index) {
-        pageUtils.windowHandler(index);
+        if (driver.getWindowHandles().size() == (index + 1)) {
+            pageUtils.windowHandler(index);
+        }
         return this;
     }
 
