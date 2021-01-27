@@ -64,7 +64,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3355")
     @Description("Validate Projects Rollup drop-down Input Control functionality")
     public void testProjectRollupDropdown() {
@@ -82,7 +82,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3356")
     @Description("Validate Project Name drop-down Input Control functionality")
     public void testProjectNameDropdown() {
