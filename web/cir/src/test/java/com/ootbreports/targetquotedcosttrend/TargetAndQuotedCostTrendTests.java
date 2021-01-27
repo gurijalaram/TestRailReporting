@@ -23,9 +23,6 @@ import utils.Constants;
 public class TargetAndQuotedCostTrendTests extends TestBase {
 
     private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
-    private ScenarioComparisonReportPage scenarioComparisonReportPage;
-    private InputControlsTests inputControlsTests;
-    private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
     public TargetAndQuotedCostTrendTests() {
@@ -33,7 +30,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3352")
     @Description("Validate Target and Quoted Cost Trend report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -44,7 +41,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3352")
     @Description("Validate Target and Quoted Cost Trend report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -56,7 +53,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3354")
     @Description("Validate Target and Quoted Cost Trend report is available by search")
     public void testReportAvailabilityBySearch() {
