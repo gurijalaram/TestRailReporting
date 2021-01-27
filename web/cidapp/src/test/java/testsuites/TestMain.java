@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TestMain {
-    public static Class defaultTest = NewCIDTestSuite.class;
+    public static Class defaultTest = CIDSmokeTestSuite.class;
 
     public static void main(String[] args) {
 
