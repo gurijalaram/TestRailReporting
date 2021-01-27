@@ -51,7 +51,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         } else if (lastFolder.contains("Cycle Time")) {
             navigateToFolder("Design To Cost");
             navigateToFolder("Cycle Time");
-        } else if (lastFolder.contains("Target and Quoted Cost Trend")) {
+        } else if (lastFolder.contains("Target and Quoted Cost")) {
             navigateToFolder("Design To Cost");
             navigateToFolder("Target And Quoted Cost");
         }

@@ -14,49 +14,48 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
-public class TargetAndQuotedCostTrendTests extends TestBase {
+public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     private ScenarioComparisonReportPage scenarioComparisonReportPage;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
-    public TargetAndQuotedCostTrendTests() {
+    public TargetAndQuotedCostValueTrackingTests() {
         super();
     }
 
     @Test
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
-    @TestRail(testCaseId = "3352")
-    @Description("Validate Target and Quoted Cost Trend report is available by library")
+    @TestRail(testCaseId = "3363")
+    @Description("Validate Target and Quoted Cost Value Tracking report is available by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
         );
     }
 
     @Test
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
-    @TestRail(testCaseId = "3352")
-    @Description("Validate Target and Quoted Cost Trend report is available by navigation")
+    @TestRail(testCaseId = "3363")
+    @Description("Validate Target and Quoted Cost Value Tracking report is available by navigation")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
                 Constants.SOLUTIONS_FOLDER,
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
         );
     }
 
     @Test
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
-    @TestRail(testCaseId = "3354")
-    @Description("Validate Target and Quoted Cost Trend report is available by search")
+    @TestRail(testCaseId = "3363")
+    @Description("Validate Target and Quoted Cost Value Tracking report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
         );
     }
-
 }
