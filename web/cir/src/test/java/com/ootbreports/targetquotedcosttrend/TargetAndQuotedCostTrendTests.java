@@ -74,13 +74,8 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);
 
-        assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownItemCount(), is(equalTo("2")));
         assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText("1"),
                 is(equalTo("AC CYCLE TIME VT 1")));
-        String secondValue = Constants.environment.equals("cir-qa") ? "SPEND ANALYSIS VALUE TRACKING" :
-                "CYCLE TIME VALUE TRACKING ROLLUP";
-        assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText("2"),
-                is(equalTo(secondValue)));
 
         targetQuotedCostTrendReportPage.clickOk();
         assertThat(targetQuotedCostTrendReportPage.isChartDisplayedAndEnabled(), is(equalTo(true)));
@@ -101,7 +96,8 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
         assertThat(itemCount, is(equalTo(4)));
 
         for (int i = 0; i == itemCount; i++) {
-            assertThat(targetQuotedCostTrendReportPage.getProjectNameDropdownOptionText(String.valueOf(i)), is(equalTo(String.format("PROJECT %d", i))));
+            assertThat(targetQuotedCostTrendReportPage.getProjectNameDropdownOptionText(String.valueOf(i)),
+                    is(equalTo(String.format("PROJECT %d", i))));
         }
 
         String projectToSelect = "PROJECT 4";

@@ -13,12 +13,6 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     private final Logger LOGGER = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
 
-    @FindBy(xpath = "//div[@id='projectRollup']//a")
-    private WebElement projectRollupDropdown;
-
-    @FindBy(xpath = "(//div[@class='jr-mSingleselect-dropdownContainer jr'])[1]//ul")
-    private WebElement projectRollupDropdownOptionList;
-
     @FindBy(xpath = "//div[@id='projectName']//a")
     private WebElement projectNameDropdown;
 
@@ -40,15 +34,6 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-    }
-
-    /**
-     * Gets project rollup dropdown item count
-     * @return String
-     */
-    public String getProjectRollupDropdownItemCount() {
-        pageUtils.waitForElementToAppear(projectRollupDropdown);
-        return projectRollupDropdownOptionList.getAttribute("childElementCount");
     }
 
     /**
