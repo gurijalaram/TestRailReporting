@@ -11,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -103,8 +106,12 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return current page object
      */
     private FileUploadPage enterFilePath(File filePath) {
-        fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
-        fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
+        try {
+            fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+            fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
@@ -116,8 +123,12 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      */
     private FileUploadPage enterFilePath(List<File> filePath) {
         filePath.forEach(file -> {
-            fileInput.sendKeys(file.getAbsolutePath().replace("%20", " "));
-            fileInput.sendKeys(file.getAbsolutePath().replace("%20", " "));
+            try {
+                fileInput.sendKeys(URLDecoder.decode(file.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+                fileInput.sendKeys(URLDecoder.decode(file.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         });
         return this;
     }
