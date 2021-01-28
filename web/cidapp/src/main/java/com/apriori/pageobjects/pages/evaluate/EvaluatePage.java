@@ -168,7 +168,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Checks the current dropdown in case it has already been select
+     * Checks the current dropdown in case its already selected
      *
      * @param dropdown - the dropdown
      * @param field    - the field
