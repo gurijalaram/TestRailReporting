@@ -64,7 +64,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3355")
     @Description("Validate Projects Rollup drop-down Input Control functionality")
     public void testProjectRollupDropdown() {
@@ -74,7 +74,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);
 
-        assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText("1"),
+        assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText(),
                 is(equalTo("AC CYCLE TIME VT 1")));
 
         targetQuotedCostTrendReportPage.clickOk();
@@ -82,7 +82,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3356")
     @Description("Validate Project Name drop-down Input Control functionality")
     public void testProjectNameDropdown() {

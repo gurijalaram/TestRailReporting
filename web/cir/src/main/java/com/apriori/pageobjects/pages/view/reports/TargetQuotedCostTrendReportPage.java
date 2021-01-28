@@ -13,6 +13,9 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     private final Logger LOGGER = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
 
+    @FindBy(xpath = "(//div[@class='jr-mSingleselect-dropdownContainer jr'])[1]//ul/li[1]")
+    private WebElement projectRollupDropdownFirstOption;
+
     @FindBy(xpath = "//div[@id='projectName']//a")
     private WebElement projectNameDropdown;
 
@@ -37,14 +40,11 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets project rollup dropdown option text
-     * @param optionIndex index of item text to get
+     * Gets project rollup dropdown first option text
      * @return String
      */
-    public String getProjectRollupDropdownOptionText(String optionIndex) {
-        By locator = By.xpath(
-                String.format("(//div[@class='jr-mSingleselect-dropdownContainer jr'])[1]//ul/li[%s]", optionIndex));
-        return driver.findElement(locator).getAttribute("title");
+    public String getProjectRollupDropdownOptionText() {
+        return projectRollupDropdownFirstOption.getAttribute("title");
     }
 
     /**
