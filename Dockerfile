@@ -52,3 +52,4 @@ FROM runtime AS final
 ARG MODULE
 ARG FOLDER
 COPY --from=sdk automation-workspace/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./automation-tests.jar
+COPY --from=sdk automation-workspace/aspectjweaver-1.8.10.jar ./aspectjweaver-1.8.10.jar

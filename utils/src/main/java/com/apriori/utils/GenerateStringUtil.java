@@ -1,5 +1,7 @@
 package com.apriori.utils;
 
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ public class GenerateStringUtil {
      *
      * @return string
      */
+    @Attachment
     public String generateScenarioName() {
         return "AutoScenario" + new Random().nextInt(1000) + "-" + System.nanoTime();
     }
