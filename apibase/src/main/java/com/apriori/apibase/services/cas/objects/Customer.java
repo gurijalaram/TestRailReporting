@@ -1,12 +1,17 @@
 package com.apriori.apibase.services.cas.objects;
 
 import com.apriori.utils.http.enums.Schema;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +22,15 @@ public class Customer {
     @JsonProperty("identity")
     private String identity;
     @JsonProperty("createdAt")
-    private String createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime createdAt;
     @JsonProperty("createdBy")
     private String createdBy;
     @JsonProperty("updatedAt")
-    private String updatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
     @JsonProperty("updatedBy")
     private String updatedBy;
     @JsonProperty("name")
@@ -66,11 +75,11 @@ public class Customer {
         return this;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public Customer setCreatedAt(String createdAt) {
+    public Customer setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -84,11 +93,11 @@ public class Customer {
         return this;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public Customer setUpdatedAt(String updatedAt) {
+    public Customer setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }
