@@ -81,6 +81,7 @@ pipeline {
                         ${buildInfo.name}-build-${timeStamp} \
                         java \
                         ${javaOpts} \
+                        -javaagent:aspectjweaver-1.8.10.jar \
                         -jar automation-tests.jar \
                         --tests ${testSuite}
                 """
