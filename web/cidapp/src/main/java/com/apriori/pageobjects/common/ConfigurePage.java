@@ -20,10 +20,12 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
 
     private PageUtils pageUtils;
     private WebDriver driver;
+    private ModalDialogController modalDialogController;
 
     public ConfigurePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -74,5 +76,23 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
         By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
         pageUtils.waitForElementAndClick(column);
         return this;
+    }
+
+    /**
+     * Selects the submit button
+     *
+     * @return generic page object
+     */
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public <T> T cancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
     }
 }
