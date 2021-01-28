@@ -3,6 +3,7 @@ package com.ootbreports.targetquotedcosttrend;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
+
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;

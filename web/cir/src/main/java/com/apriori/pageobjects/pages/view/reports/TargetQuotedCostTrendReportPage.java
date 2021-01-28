@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
 
 public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
@@ -27,6 +30,18 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     @FindBy(xpath = "//span[contains(text(), 'Project Name:')]/../following-sibling::td[2]/span")
     private WebElement projectNameAboveChart;
+
+    @FindBy(xpath = "//div[@id='exportDate']//a")
+    private WebElement exportDateDropdown;
+
+    @FindBy(xpath = "(//div[@class='jr-mSingleselect-dropdownContainer jr'])[3]//ul")
+    private WebElement exportDateDropdownOptionlist;
+
+    @FindBy(xpath = "(//div[@class='jr-mSingleselect-dropdownContainer jr'])[3]//ul/li")
+    private WebElement exportDateDropdownFirstOption;
+
+    @FindBy(xpath = "(//span[contains(text(), 'Export Date')])[1]/../following-sibling::td[2]/span")
+    private WebElement exportDateAboveChart;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -96,5 +111,46 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     public String getProjectNameAboveChart() {
         pageUtils.waitForElementToAppear(projectNameAboveChart);
         return projectNameAboveChart.getText();
+    }
+
+    /**
+     * Gets count of export date dropdown options
+     * @return String
+     */
+    public String getCountOfExportDateOptions() {
+        return exportDateDropdownOptionlist.getAttribute("childElementCount");
+    }
+
+    /**
+     * Gets currently selected export date
+     * @return String
+     */
+    public String getCurrentExportDate() {
+        pageUtils.waitForElementToAppear(exportDateDropdown);
+        return exportDateDropdown.getAttribute("title");
+    }
+
+    /**
+     * Checks if export date is this year or last year
+     * @return boolean
+     */
+    public boolean isExportDateRecent() {
+        String currentExportDate = getCurrentExportDate();
+        int year = LocalDateTime.now().getYear();
+        int lastYear = LocalDateTime.now().minusYears(1).getYear();
+        boolean recent = false;
+        if (currentExportDate.contains(String.valueOf(year)) || currentExportDate.contains(String.valueOf(lastYear))) {
+            recent = true;
+        }
+        return recent;
+    }
+
+    /**
+     * Gets export date from above chart
+     * @return String
+     */
+    public String getExportDateFromAboveChart() {
+        pageUtils.waitForElementToAppear(exportDateAboveChart);
+        return exportDateAboveChart.getText().substring(0, 19);
     }
 }

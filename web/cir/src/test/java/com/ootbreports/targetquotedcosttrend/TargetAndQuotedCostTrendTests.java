@@ -1,17 +1,17 @@
 package com.ootbreports.targetquotedcosttrend;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.pageobjects.pages.view.reports.ScenarioComparisonReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
-import com.inputcontrols.InputControlsTests;
+
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -106,5 +106,24 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
         assertThat(targetQuotedCostTrendReportPage.isChartDisplayedAndEnabled(), is(equalTo(true)));
         assertThat(targetQuotedCostTrendReportPage.getProjectNameAboveChart(), is(equalTo(projectToSelect)));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3357")
+    @Description("Validate Export Date drop-down Input Control")
+    public void testExportDateDropdown() {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                        TargetQuotedCostTrendReportPage.class);
+
+        assertThat(targetQuotedCostTrendReportPage.getCountOfExportDateOptions(), is(equalTo("1")));
+        assertThat(targetQuotedCostTrendReportPage.isExportDateRecent(), is(equalTo(true)));
+
+        String exportDateSelected = targetQuotedCostTrendReportPage.getCurrentExportDate().replace("T", " ");
+        targetQuotedCostTrendReportPage.clickOk();
+        assertThat(targetQuotedCostTrendReportPage.getExportDateFromAboveChart(), is(equalTo(exportDateSelected)));
     }
 }
