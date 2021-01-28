@@ -53,13 +53,26 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     }
 
     /**
-     * Move column
+     * Move the column
+     *
      * @param direction - the direction
      * @return current page object
      */
     public ConfigurePage moveColumn(String direction) {
         By arrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction));
         pageUtils.waitForElementAndClick(arrow);
+        return this;
+    }
+
+    /**
+     * Select the column
+     *
+     * @param columnName - the column
+     * @return current page object
+     */
+    public ConfigurePage selectColumn(String columnName) {
+        By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+        pageUtils.waitForElementAndClick(column);
         return this;
     }
 }
