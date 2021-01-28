@@ -169,8 +169,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Checks the current dropdown in case it has already been select
+     *
      * @param dropdown - the dropdown
-     * @param field - the field
+     * @param field    - the field
      * @return true/false
      */
     private boolean checkCurrentDropdown(String dropdown, String field) {
