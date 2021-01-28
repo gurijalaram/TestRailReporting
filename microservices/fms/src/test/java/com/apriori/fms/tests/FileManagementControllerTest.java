@@ -1,7 +1,7 @@
 package com.apriori.fms.tests;
 
+import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.service.SecurityManager;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.utils.Constants;
 import com.apriori.utils.TestRail;
@@ -18,7 +18,7 @@ public class FileManagementControllerTest extends TestUtil {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        token = SecurityManager.retrieveJwtToken(Constants.getSecretKey(),
+        token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
             Constants.getServiceHost(),
             HttpStatus.SC_CREATED,
             "splunkett",
