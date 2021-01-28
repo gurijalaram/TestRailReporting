@@ -40,7 +40,6 @@ public class CasCustomersTest extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat((int) response.getResponseEntity().getResponse().getItems().stream().filter(item -> item.getIdentity() != null).count(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
