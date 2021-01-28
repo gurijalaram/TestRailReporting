@@ -16,6 +16,9 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     private final Logger LOGGER = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
 
+    @FindBy(xpath = "//div[@id='projectRollup']//a")
+    private WebElement projectRollupDropdown;
+
     @FindBy(xpath = "(//div[@class='jr-mSingleselect-dropdownContainer jr'])[1]//ul/li[1]")
     private WebElement projectRollupDropdownFirstOption;
 
@@ -152,5 +155,19 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     public String getExportDateFromAboveChart() {
         pageUtils.waitForElementToAppear(exportDateAboveChart);
         return exportDateAboveChart.getText().substring(0, 19);
+    }
+
+    /**
+     * Expand rollup drop-down
+     *
+     * @return current page object
+     */
+    public GenericReportPage selectProjectRollup(String rollupName) {
+        if (!projectRollupDropdown.getAttribute("title").equals(rollupName)) {
+            pageUtils.waitForElementAndClick(projectRollupDropdown);
+            By rollupLocator = By.xpath(String.format("//li[@title='%s']/div/a", rollupName));
+            pageUtils.waitForElementAndClick(rollupLocator);
+        }
+        return this;
     }
 }

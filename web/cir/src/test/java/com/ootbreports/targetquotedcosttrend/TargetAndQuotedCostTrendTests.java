@@ -1,17 +1,19 @@
 package com.ootbreports.targetquotedcosttrend;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -23,6 +25,7 @@ import utils.Constants;
 public class TargetAndQuotedCostTrendTests extends TestBase {
 
     private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
+    private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
     public TargetAndQuotedCostTrendTests() {
@@ -64,7 +67,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3355")
     @Description("Validate Projects Rollup drop-down Input Control functionality")
     public void testProjectRollupDropdown() {
@@ -82,7 +85,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3356")
     @Description("Validate Project Name drop-down Input Control functionality")
     public void testProjectNameDropdown() {
@@ -125,5 +128,31 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
         String exportDateSelected = targetQuotedCostTrendReportPage.getCurrentExportDate().replace("T", " ");
         targetQuotedCostTrendReportPage.clickOk();
         assertThat(targetQuotedCostTrendReportPage.getExportDateFromAboveChart(), is(equalTo(exportDateSelected)));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3358")
+    @Description("Validate Cost Metric drop-down Input Control")
+    public void testCostMetricFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3358")
+    @Description("Validate Cost Metric drop-down Input Control")
+    public void testCostMetricPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
     }
 }

@@ -11,13 +11,16 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
+import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.By;
@@ -31,6 +34,7 @@ import java.util.List;
 
 public class InputControlsTests extends TestBase {
 
+    private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
     private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private GenericReportPage genericReportPage;
     private WebDriver driver;
@@ -321,13 +325,37 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, Details and Comparison
+     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, Details and
+     * Comparison
      *
      * @param reportName - String
      * @param costMetric - String
      */
-    public void testCostMetricInputControlComparisonDetailsDtcReports(String reportName, String exportSet, String costMetric) {
+    public void testCostMetricInputControlComparisonDetailsDtcReports(String reportName, String exportSet,
+                                                                      String costMetric) {
         testCostMetricCore(reportName, exportSet, costMetric);
+    }
+
+    /**
+     * Generic test for Cost Metric Input Control on Target and Quoted Cost Trend reports
+     * @param reportName - String
+     * @param rollupName - String
+     * @param costMetric - String
+     */
+    public void testCostMetricInputControlTargetQuotedCostTrendReports(String reportName, String rollupName,
+                                                                       String costMetric) {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, TargetQuotedCostTrendReportPage.class);
+
+        targetQuotedCostTrendReportPage.selectProjectRollup(rollupName)
+                .selectCostMetric(costMetric)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        assertThat(targetQuotedCostTrendReportPage.getCostMetricValueFromAboveChart(),
+                is(equalTo(String.format("\n%s", costMetric))));
     }
 
     /**
