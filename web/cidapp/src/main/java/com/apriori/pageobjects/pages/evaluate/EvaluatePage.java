@@ -144,7 +144,10 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage selectProcessGroup(String processGroup) {
         pageUtils.waitForElementAndClick(processGroupDropdown);
         By group = By.cssSelector(String.format("button[value='%s']", processGroup));
-        pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
+
+        if (!checkCurrentDropdown("qa-process-group-select-field", processGroup)) {
+            pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
+        }
         return this;
     }
 
@@ -157,8 +160,22 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage selectVPE(String vpe) {
         pageUtils.waitForElementAndClick(vpeDropdown);
         By vp = By.cssSelector(String.format("button[value='%s']", vpe));
-        pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
+
+        if (!checkCurrentDropdown("qa-vpe-select-field", vpe)) {
+            pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
+        }
         return this;
+    }
+
+    /**
+     * Checks the current dropdown in case its already selected
+     *
+     * @param dropdown - the dropdown
+     * @param field    - the field
+     * @return true/false
+     */
+    private boolean checkCurrentDropdown(String dropdown, String field) {
+        return driver.findElement(By.cssSelector(String.format("[id='%s'] button div", dropdown))).getAttribute("textContent").equals(field);
     }
 
     /**
