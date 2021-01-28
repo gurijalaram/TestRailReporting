@@ -12,6 +12,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcessesPage> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(SecondaryProcessesPage.class);
@@ -71,16 +75,18 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     /**
      * Selects the secondary types dropdowns in the process tree
      *
-     * @param processType - the secondary process type
+     * @param processTypes - the secondary process type
      * @return current page object
      */
-    private SecondaryProcessesPage selectProcessType(String processType) {
-        String[] processTypes = processType.split(",");
-
-        for (String process : processTypes) {
-            By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
-            pageUtils.scrollWithJavaScript(driver.findElement(secondaryProcess), true).click();
-        }
+    private SecondaryProcessesPage selectProcessType(String processTypes) {
+        Arrays.stream(Stream.of(processTypes)
+            .map(processType -> processType.split(","))
+            .collect(Collectors.toList())
+            .get(0))
+            .forEach(process -> {
+                By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
+                pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(secondaryProcess), true).click();
+            });
         return this;
     }
 
