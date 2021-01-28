@@ -11,6 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * @author cfrith
@@ -58,13 +62,25 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Uploads a file
-     * //* @param fileName - file name
      *
      * @param scenarioName - scenario name
      * @param filePath     - file path
      * @return current page object
      */
     public FileUploadPage inputFileDetails(String scenarioName, File filePath) {
+        inputScenarioName(scenarioName)
+            .enterFilePath(filePath);
+        return this;
+    }
+
+    /**
+     * Uploads a file
+     *
+     * @param scenarioName - scenario name
+     * @param filePath     - file path
+     * @return current page object
+     */
+    public FileUploadPage inputFileDetails(String scenarioName, List<File> filePath) {
         inputScenarioName(scenarioName)
             .enterFilePath(filePath);
         return this;
@@ -90,8 +106,30 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return current page object
      */
     private FileUploadPage enterFilePath(File filePath) {
-        fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
-        fileInput.sendKeys(filePath.getAbsolutePath().replace("%20", " "));
+        try {
+            fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+            fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Gets details of file for upload
+     *
+     * @param filePath - the file path
+     * @return current page object
+     */
+    private FileUploadPage enterFilePath(List<File> filePath) {
+        filePath.forEach(file -> {
+            try {
+                fileInput.sendKeys(URLDecoder.decode(file.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+                fileInput.sendKeys(URLDecoder.decode(file.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        });
         return this;
     }
 
@@ -112,6 +150,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      */
     public <T> T selectCancelButton(Class<T> className) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return PageFactory.initElements(driver,className);
+        return PageFactory.initElements(driver, className);
     }
 }

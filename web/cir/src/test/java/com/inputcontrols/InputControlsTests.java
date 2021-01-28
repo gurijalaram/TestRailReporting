@@ -460,7 +460,6 @@ public class InputControlsTests extends TestBase {
         assertThat(genericReportPage.getListWarningText(listName), is(equalTo(Constants.WARNING_TEXT)));
     }
 
-
     /**
      * Generic test for DTC Score Input Control - main reports
      *
@@ -692,8 +691,8 @@ public class InputControlsTests extends TestBase {
         } else {
             BigDecimal valueForAssert = new BigDecimal("6631000.00");
             assertThat(
-                genericReportPage.getMinimumAnnualSpendFromAboveChart(),
-                is(equalTo(valueForAssert))
+                genericReportPage.getMinimumAnnualSpendFromAboveChart().replace(",", ""),
+                is(equalTo(valueForAssert.toString()))
             );
             assertThat(
                 genericReportPage.getAnnualSpendValueDetailsReports().compareTo(valueForAssert),
