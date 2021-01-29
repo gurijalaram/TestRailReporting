@@ -2,6 +2,7 @@ package com.ootbreports.targetquotedcosttrend;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -16,6 +17,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
@@ -154,5 +156,32 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
                 RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
                 CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3359")
+    @Description("Validate Currency drop-down Input Control")
+    public void testCurrencyCodeInputControl() {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                        TargetQuotedCostTrendReportPage.class);
+
+        targetQuotedCostTrendReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        String usdFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
+
+        targetQuotedCostTrendReportPage.clickInputControlsButton()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        String gbpFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
+
+        assertThat(usdFinalAprioriCost, is(not(equalTo(gbpFinalAprioriCost))));
     }
 }

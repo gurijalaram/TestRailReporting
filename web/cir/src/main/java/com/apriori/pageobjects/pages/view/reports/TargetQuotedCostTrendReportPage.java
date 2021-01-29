@@ -49,6 +49,9 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     @FindBy(xpath = "//table[@class='jrPage']//tr[15]/td[17]/span")
     private WebElement costAvoidedFinal;
 
+    @FindBy(xpath = "//table[@class='jrPage']//tr[15]/td[10]/span")
+    private WebElement finalAprioriCost;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -175,11 +178,20 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets cost avoided final value as string
+     * Gets cost avoided final value as a string
      * @return String
      */
     public String getCostAvoidedFinal() {
         pageUtils.waitForElementToAppear(costAvoidedFinal);
         return costAvoidedFinal.getText();
+    }
+
+    /**
+     * Gets final apriori cost value as a string
+     * @return String
+     */
+    public String getFinalAprioriCost() {
+        pageUtils.waitForElementToAppear(finalAprioriCost);
+        return finalAprioriCost.getText();
     }
 }
