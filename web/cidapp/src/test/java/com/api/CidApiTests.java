@@ -16,7 +16,7 @@ import utils.Constants;
 public class CidApiTests extends TestUtil {
 
     private static String token;
-    private ResponseWrapper<Object> imageViewer;
+    private ResponseWrapper<Object> image;
 
     @BeforeClass
     public static void getToken() {
@@ -34,6 +34,7 @@ public class CidApiTests extends TestUtil {
     public void cadViewerValues() {
         final String apiUrl = String.format(Constants.getApiUrl(), "components");
 
-        imageViewer = new CidApiObject().uploadFile(token, apiUrl, UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
+        image = new CidApiObject().uploadFile(token, apiUrl, UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
+
     }
 }

@@ -1,6 +1,7 @@
 package com.apriori.api.objects;
 
 import com.apriori.apibase.utils.APIAuthentication;
+import com.apriori.apibase.utils.JsonNodeUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -14,8 +15,11 @@ import java.util.Map;
 
 public class CidApiObject {
 
+    private static String componentIdentity;
+    private static String scenarioIdentity;
     String CONTENT_TYPE = "Content-Type";
     Map<String, String> headers = new HashMap<>();
+    ;
 
     public ResponseWrapper<Object> uploadFile(String token, String apiUrl, Class klass, String scenarioName, String partName) {
         headers.put(CONTENT_TYPE, "multipart/form-data");
@@ -28,6 +32,11 @@ public class CidApiObject {
                 .use("override", "false")
                 .use("scenarioName", scenarioName));
 
-        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+        ResponseWrapper<Object> request = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+
+        componentIdentity = new JsonNodeUtil().jsonNode(request.getBody(), "componentIdentity");
+        scenarioIdentity = new JsonNodeUtil().jsonNode(request.getBody(), "scenarioIdentity");
+        return request;
     }
+
 }
