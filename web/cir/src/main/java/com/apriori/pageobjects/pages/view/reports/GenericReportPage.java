@@ -726,7 +726,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCostMetricValueFromAboveChart() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return costMetricElementAboveChart.getAttribute("textContent");
+        return costMetricElementAboveChart.getText();
     }
 
     /**

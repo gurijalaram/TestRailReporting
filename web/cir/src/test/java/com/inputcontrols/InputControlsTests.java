@@ -355,7 +355,9 @@ public class InputControlsTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         assertThat(targetQuotedCostTrendReportPage.getCostMetricValueFromAboveChart(),
-                is(equalTo(String.format("\n%s", costMetric))));
+                is(equalTo(costMetric)));
+        String costAvoidedFinalValue = costMetric.contains("Fully") ? "(0.19)" : "(0.11)";
+        assertThat(targetQuotedCostTrendReportPage.getCostAvoidedFinal(), is(equalTo(costAvoidedFinalValue)));
     }
 
     /**
