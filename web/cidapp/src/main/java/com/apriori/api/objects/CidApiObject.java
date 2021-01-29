@@ -1,7 +1,6 @@
 package com.apriori.api.objects;
 
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -17,14 +16,8 @@ public class CidApiObject {
 
     String CONTENT_TYPE = "Content-Type";
     Map<String, String> headers = new HashMap<>();
-    String token;
 
-    public CidApiObject getToken(String secretKey, String serviceHost, int httpStatus, String tokenUsername, String tokenEmail, String tokenIssuer, String tokenSubject) {
-        token = new JwtTokenUtil().retrieveJwtToken(secretKey, serviceHost, httpStatus, tokenUsername, tokenEmail, tokenIssuer, tokenSubject);
-        return this;
-    }
-
-    public ResponseWrapper<Object> uploadFile(String apiUrl, Class klass, String scenarioName, String partName) {
+    public ResponseWrapper<Object> uploadFile(String token, String apiUrl, Class klass, String scenarioName, String partName) {
         headers.put(CONTENT_TYPE, "multipart/form-data");
 
         RequestEntity requestEntity = RequestEntity.init(apiUrl, klass)
