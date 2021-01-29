@@ -112,7 +112,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3357")
     @Description("Validate Export Date drop-down Input Control")
     public void testExportDateDropdown() {
