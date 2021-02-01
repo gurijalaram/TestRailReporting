@@ -676,7 +676,6 @@ public class GenericReportPage extends ReportsPageHeader {
         currentCurrencyElement.click();
         pageUtils.waitForElementAndClick(currentCurrencyElement);
         if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
-            //currencyMap.get(currency).click();
             pageUtils.waitForElementAndClick(currencyMap.get(currency));
         }
         return this;
