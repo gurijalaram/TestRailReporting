@@ -133,7 +133,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3358")
     @Description("Validate Cost Metric drop-down Input Control")
     public void testCostMetricFbc() {
@@ -146,7 +146,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3358")
     @Description("Validate Cost Metric drop-down Input Control")
     public void testCostMetricPpc() {
@@ -183,5 +183,23 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
         String gbpFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
         assertThat(usdFinalAprioriCost, is(not(equalTo(gbpFinalAprioriCost))));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3361")
+    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
+    public void testHyperlinksToDetailsReportBaseMilestone() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testTargetQuotedCostTrendReportHyperlinks("Base");
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3361")
+    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
+    public void testHyperlinksToDetailsReportFinalMilestone() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testTargetQuotedCostTrendReportHyperlinks("Final");
     }
 }

@@ -5,6 +5,7 @@ import com.apriori.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -51,6 +52,9 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     @FindBy(xpath = "//table[@class='jrPage']//tr[15]/td[10]/span")
     private WebElement finalAprioriCost;
+
+    @FindBy(xpath = "(//div[@class='highcharts_parent_container']/div//*[local-name() = 'tspan'])[3]")
+    private WebElement milestoneName;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -193,5 +197,27 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     public String getFinalAprioriCost() {
         pageUtils.waitForElementToAppear(finalAprioriCost);
         return finalAprioriCost.getText();
+    }
+
+    /**
+     * Clicks the specified milestone link
+     * @param milestoneName String
+     * @return instance of page object
+     */
+    public TargetQuotedCostTrendReportPage clickMilestoneLink(String milestoneName) {
+        By locatorToClick = By.xpath(String.format("//span[contains(text(), '%s')]", milestoneName));
+        By locatorToWaitFor = By.xpath("(//div[@class='highcharts_parent_container']/div//*[local-name()='rect'])[5]");
+        pageUtils.waitForElementToAppear(locatorToWaitFor);
+        pageUtils.waitForElementAndClick(locatorToClick);
+        return this;
+    }
+
+    /**
+     * Gets milestone name
+     * @return String
+     */
+    public String getMilestoneName() {
+        pageUtils.waitForElementToAppear(milestoneName);
+        return milestoneName.getAttribute("textContent");
     }
 }

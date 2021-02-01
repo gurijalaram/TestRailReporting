@@ -772,6 +772,29 @@ public class InputControlsTests extends TestBase {
                 is(equalTo(exportSetName)));
     }
 
+    /**
+     *
+     * @param milestoneName
+     */
+    public void testTargetQuotedCostTrendReportHyperlinks(String milestoneName) {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                        TargetQuotedCostTrendReportPage.class);
+
+        targetQuotedCostTrendReportPage.selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        targetQuotedCostTrendReportPage.clickMilestoneLink(milestoneName)
+                .switchTab(1)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        assertThat(targetQuotedCostTrendReportPage.getMilestoneName(),
+                is(equalTo(String.format("Milestone: %s", milestoneName))));
+    }
+
     private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
