@@ -483,6 +483,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSetName)
                 .deselectAllDtcScores()
+                .clickOk()
                 .clickOk();
 
         String listName = "dtcScore";

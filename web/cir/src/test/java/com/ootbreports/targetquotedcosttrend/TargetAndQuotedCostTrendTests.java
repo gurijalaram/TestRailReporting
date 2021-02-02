@@ -16,9 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.CostDetailsPage;
 import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.checkerframework.checker.units.qual.C;
