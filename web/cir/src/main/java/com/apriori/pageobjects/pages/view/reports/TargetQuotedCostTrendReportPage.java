@@ -5,7 +5,6 @@ import com.apriori.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -219,5 +218,27 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     public String getMilestoneName() {
         pageUtils.waitForElementToAppear(milestoneName);
         return milestoneName.getAttribute("textContent");
+    }
+
+    /**
+     * Gets part name
+     * @param index - String index of value to get
+     * @return String
+     */
+    public String getPartName(String index) {
+        By locator = By.xpath(String.format("(//span[@class='_jrHyperLink ReportExecution'])[%s]/span", index));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Gets specified value from report
+     * @param index String - index of value to get
+     * @return String
+     */
+    public String getValueFromReport(String index) {
+        By locator = By.xpath(String.format("//table[contains(@class, 'jrPage')]//tr[22]/td[%s]/span", index));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 }

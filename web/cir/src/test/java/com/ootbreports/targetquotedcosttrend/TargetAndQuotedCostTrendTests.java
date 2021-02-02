@@ -16,6 +16,10 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
+import com.pageobjects.pages.evaluate.CostDetailsPage;
+import com.pageobjects.pages.evaluate.EvaluatePage;
+import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
@@ -187,6 +191,58 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3360")
+    @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
+    public void testDataIntegrityInCidBase() {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                        TargetQuotedCostTrendReportPage.class)
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class)
+                .clickMilestoneLink("Base")
+                .switchTab(1)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);;
+
+        String partName = targetQuotedCostTrendReportPage.getPartName("1");
+
+        String reportsScenarioName = targetQuotedCostTrendReportPage.getValueFromReport("5");
+        String reportsVpe = targetQuotedCostTrendReportPage.getValueFromReport("11");
+        String reportsProcessGroup = targetQuotedCostTrendReportPage.getValueFromReport("14");
+        String reportsMaterialComposition = targetQuotedCostTrendReportPage.getValueFromReport("17")
+                .replace("\n", " ");
+        String reportsAnnualVolume = targetQuotedCostTrendReportPage.getValueFromReport("22");
+        String reportsCurrentCost = targetQuotedCostTrendReportPage.getValueFromReport("24");
+
+        targetQuotedCostTrendReportPage.openNewCidTabAndFocus(2);
+
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", partName)
+                .apply(ExplorePage.class)
+                .openFirstScenario();
+
+        String cidScenarioName = evaluatePage.getScenarioName();
+        String cidVPE = evaluatePage.getVpe();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
+        String cidMaterialComposition = evaluatePage.getMaterialInfo();
+        String cidAnnualVolume = evaluatePage.getAnnualVolume();
+        String cidFbc = evaluatePage.getFullyBurdenedCostValueRoundedUp();
+
+        assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
+        assertThat(reportsVpe, is(equalTo(cidVPE)));
+        assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
+        assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
+        assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
+        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
+    }
+
+    @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3361")
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
     public void testHyperlinksToDetailsReportBaseMilestone() {
@@ -195,7 +251,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3361")
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
     public void testHyperlinksToDetailsReportFinalMilestone() {

@@ -773,21 +773,19 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     *
-     * @param milestoneName
+     * Generic test for Target Quoted Cost Trend Report Links
+     * @param milestoneName String
      */
     public void testTargetQuotedCostTrendReportHyperlinks(String milestoneName) {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                        TargetQuotedCostTrendReportPage.class);
-
-        targetQuotedCostTrendReportPage.selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                        TargetQuotedCostTrendReportPage.class)
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
                 .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
-
-        targetQuotedCostTrendReportPage.clickMilestoneLink(milestoneName)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class)
+                .clickMilestoneLink(milestoneName)
                 .switchTab(1)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
