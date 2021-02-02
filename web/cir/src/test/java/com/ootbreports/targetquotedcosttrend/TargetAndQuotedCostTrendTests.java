@@ -19,7 +19,6 @@ import com.navigation.CommonReportTests;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
@@ -161,7 +160,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3359")
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
@@ -188,7 +187,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3360")
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidBase() {
