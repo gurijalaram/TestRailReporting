@@ -17,8 +17,9 @@ public class ActiveAxis {
     }
 
     @JsonProperty("additionalProp1")
-    public void setAdditionalProp1(ActiveAdditionalProp1 additionalProp1) {
+    public ActiveAxis setAdditionalProp1(ActiveAdditionalProp1 additionalProp1) {
         this.additionalProp1 = additionalProp1;
+        return this;
     }
 
     @JsonProperty("additionalProp2")
@@ -27,8 +28,9 @@ public class ActiveAxis {
     }
 
     @JsonProperty("additionalProp2")
-    public void setAdditionalProp2(ActiveAdditionalProp2 additionalProp2) {
+    public ActiveAxis setAdditionalProp2(ActiveAdditionalProp2 additionalProp2) {
         this.additionalProp2 = additionalProp2;
+        return this;
     }
 
     @JsonProperty("additionalProp3")
@@ -37,7 +39,8 @@ public class ActiveAxis {
     }
 
     @JsonProperty("additionalProp3")
-    public void setAdditionalProp3(ActiveAdditionalProp3 additionalProp3) {
+    public ActiveAxis setAdditionalProp3(ActiveAdditionalProp3 additionalProp3) {
         this.additionalProp3 = additionalProp3;
+        return this;
     }
 }
