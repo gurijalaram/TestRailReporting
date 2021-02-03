@@ -96,8 +96,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("blankBoxLength")
-    public void setBlankBoxLength(Integer blankBoxLength) {
+    public ScenarioGcd setBlankBoxLength(Integer blankBoxLength) {
         this.blankBoxLength = blankBoxLength;
+        return this;
     }
 
     @JsonProperty("blankBoxWidth")
@@ -106,8 +107,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("blankBoxWidth")
-    public void setBlankBoxWidth(Integer blankBoxWidth) {
+    public ScenarioGcd setBlankBoxWidth(Integer blankBoxWidth) {
         this.blankBoxWidth = blankBoxWidth;
+        return this;
     }
 
     @JsonProperty("cadConfiguration")
@@ -116,8 +118,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("cadConfiguration")
-    public void setCadConfiguration(String cadConfiguration) {
+    public ScenarioGcd setCadConfiguration(String cadConfiguration) {
         this.cadConfiguration = cadConfiguration;
+        return this;
     }
 
     @JsonProperty("cadKeyText")
@@ -126,8 +129,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("cadKeyText")
-    public void setCadKeyText(String cadKeyText) {
+    public ScenarioGcd setCadKeyText(String cadKeyText) {
         this.cadKeyText = cadKeyText;
+        return this;
     }
 
     @JsonProperty("cadMaterialName")
@@ -136,8 +140,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("cadMaterialName")
-    public void setCadMaterialName(String cadMaterialName) {
+    public ScenarioGcd setCadMaterialName(String cadMaterialName) {
         this.cadMaterialName = cadMaterialName;
+        return this;
     }
 
     @JsonProperty("cadVersion")
@@ -146,8 +151,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("cadVersion")
-    public void setCadVersion(Integer cadVersion) {
+    public ScenarioGcd setCadVersion(Integer cadVersion) {
         this.cadVersion = cadVersion;
+        return this;
     }
 
     @JsonProperty("childArtifactCount")
@@ -156,8 +162,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("childArtifactCount")
-    public void setChildArtifactCount(Integer childArtifactCount) {
+    public ScenarioGcd setChildArtifactCount(Integer childArtifactCount) {
         this.childArtifactCount = childArtifactCount;
+        return this;
     }
 
     @JsonProperty("childGcds")
@@ -166,8 +173,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("childGcds")
-    public void setChildGcds(String childGcds) {
+    public ScenarioGcd setChildGcds(String childGcds) {
         this.childGcds = childGcds;
+        return this;
     }
 
     @JsonProperty("createdAt")
@@ -176,8 +184,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("createdAt")
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public ScenarioGcd setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     @JsonProperty("createdBy")
@@ -186,8 +195,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("createdBy")
-    public void setCreatedBy(String createdBy) {
+    public ScenarioGcd setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     @JsonProperty("createdByName")
@@ -196,8 +206,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("createdByName")
-    public void setCreatedByName(String createdByName) {
+    public ScenarioGcd setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+        return this;
     }
 
     @JsonProperty("deletedAt")
@@ -206,8 +217,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("deletedAt")
-    public void setDeletedAt(LocalDateTime deletedAt) {
+    public ScenarioGcd setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+        return this;
     }
 
     @JsonProperty("deletedBy")
@@ -216,8 +228,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("deletedBy")
-    public void setDeletedBy(String deletedBy) {
+    public ScenarioGcd setDeletedBy(String deletedBy) {
         this.deletedBy = deletedBy;
+        return this;
     }
 
     @JsonProperty("deletedByName")
@@ -226,8 +239,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("deletedByName")
-    public void setDeletedByName(String deletedByName) {
+    public ScenarioGcd setDeletedByName(String deletedByName) {
         this.deletedByName = deletedByName;
+        return this;
     }
 
     @JsonProperty("descriptor")
@@ -236,8 +250,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("descriptor")
-    public void setDescriptor(String descriptor) {
+    public ScenarioGcd setDescriptor(String descriptor) {
         this.descriptor = descriptor;
+        return this;
     }
 
     @JsonProperty("distanceUnits")
@@ -246,8 +261,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("distanceUnits")
-    public void setDistanceUnits(Integer distanceUnits) {
+    public ScenarioGcd setDistanceUnits(Integer distanceUnits) {
         this.distanceUnits = distanceUnits;
+        return this;
     }
 
     @JsonProperty("engineType")
@@ -256,8 +272,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("engineType")
-    public void setEngineType(String engineType) {
+    public ScenarioGcd setEngineType(String engineType) {
         this.engineType = engineType;
+        return this;
     }
 
     @JsonProperty("fileFormat")
@@ -266,8 +283,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("fileFormat")
-    public void setFileFormat(String fileFormat) {
+    public ScenarioGcd setFileFormat(String fileFormat) {
         this.fileFormat = fileFormat;
+        return this;
     }
 
     @JsonProperty("height")
@@ -276,8 +294,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("height")
-    public void setHeight(Integer height) {
+    public ScenarioGcd setHeight(Integer height) {
         this.height = height;
+        return this;
     }
 
     @JsonProperty("identity")
@@ -286,8 +305,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("identity")
-    public void setIdentity(String identity) {
+    public ScenarioGcd setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     @JsonProperty("length")
@@ -296,8 +316,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("length")
-    public void setLength(Integer length) {
+    public ScenarioGcd setLength(Integer length) {
         this.length = length;
+        return this;
     }
 
     @JsonProperty("massUnitName")
@@ -306,8 +327,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("massUnitName")
-    public void setMassUnitName(String massUnitName) {
+    public ScenarioGcd setMassUnitName(String massUnitName) {
         this.massUnitName = massUnitName;
+        return this;
     }
 
     @JsonProperty("minGcdVersion")
@@ -316,8 +338,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("minGcdVersion")
-    public void setMinGcdVersion(Integer minGcdVersion) {
+    public ScenarioGcd setMinGcdVersion(Integer minGcdVersion) {
         this.minGcdVersion = minGcdVersion;
+        return this;
     }
 
     @JsonProperty("nonSolidSurfaceArea")
@@ -326,8 +349,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("nonSolidSurfaceArea")
-    public void setNonSolidSurfaceArea(Integer nonSolidSurfaceArea) {
+    public ScenarioGcd setNonSolidSurfaceArea(Integer nonSolidSurfaceArea) {
         this.nonSolidSurfaceArea = nonSolidSurfaceArea;
+        return this;
     }
 
     @JsonProperty("partModelName")
@@ -336,8 +360,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("partModelName")
-    public void setPartModelName(String partModelName) {
+    public ScenarioGcd setPartModelName(String partModelName) {
         this.partModelName = partModelName;
+        return this;
     }
 
     @JsonProperty("surfaceArea")
@@ -346,8 +371,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("surfaceArea")
-    public void setSurfaceArea(Integer surfaceArea) {
+    public ScenarioGcd setSurfaceArea(Integer surfaceArea) {
         this.surfaceArea = surfaceArea;
+        return this;
     }
 
     @JsonProperty("temperatureUnitName")
@@ -356,8 +382,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("temperatureUnitName")
-    public void setTemperatureUnitName(String temperatureUnitName) {
+    public ScenarioGcd setTemperatureUnitName(String temperatureUnitName) {
         this.temperatureUnitName = temperatureUnitName;
+        return this;
     }
 
     @JsonProperty("thickness")
@@ -366,8 +393,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("thickness")
-    public void setThickness(Integer thickness) {
+    public ScenarioGcd setThickness(Integer thickness) {
         this.thickness = thickness;
+        return this;
     }
 
     @JsonProperty("timeUnitName")
@@ -376,8 +404,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("timeUnitName")
-    public void setTimeUnitName(String timeUnitName) {
+    public ScenarioGcd setTimeUnitName(String timeUnitName) {
         this.timeUnitName = timeUnitName;
+        return this;
     }
 
     @JsonProperty("updatedAt")
@@ -386,8 +415,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("updatedAt")
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public ScenarioGcd setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+        return this;
     }
 
     @JsonProperty("updatedBy")
@@ -396,8 +426,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("updatedBy")
-    public void setUpdatedBy(String updatedBy) {
+    public ScenarioGcd setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+        return this;
     }
 
     @JsonProperty("updatedByName")
@@ -406,8 +437,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("updatedByName")
-    public void setUpdatedByName(String updatedByName) {
+    public ScenarioGcd setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
+        return this;
     }
 
     @JsonProperty("volume")
@@ -416,8 +448,9 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("volume")
-    public void setVolume(Integer volume) {
+    public ScenarioGcd setVolume(Integer volume) {
         this.volume = volume;
+        return this;
     }
 
     @JsonProperty("width")
@@ -426,7 +459,8 @@ public class ScenarioGcd {
     }
 
     @JsonProperty("width")
-    public void setWidth(Integer width) {
+    public ScenarioGcd setWidth(Integer width) {
         this.width = width;
+        return this;
     }
 }

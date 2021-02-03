@@ -15,24 +15,27 @@ public class Thumbnail {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public Thumbnail setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     public String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public Thumbnail setImage(String image) {
         this.image = image;
+        return this;
     }
 
     public String getImageType() {
         return imageType;
     }
 
-    public void setImageType(String imageType) {
+    public Thumbnail setImageType(String imageType) {
         this.imageType = imageType;
+        return this;
     }
 
 }

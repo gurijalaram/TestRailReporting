@@ -59,8 +59,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("activeAxes")
-    public void setActiveAxes(List<ActiveAxis> activeAxes) {
+    public ScenarioMetadata setActiveAxes(List<ActiveAxis> activeAxes) {
         this.activeAxes = activeAxes;
+        return this;
     }
 
     @JsonProperty("activeDimensions")
@@ -69,8 +70,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("activeDimensions")
-    public void setActiveDimensions(ActiveDimensions activeDimensions) {
+    public ScenarioMetadata setActiveDimensions(ActiveDimensions activeDimensions) {
         this.activeDimensions = activeDimensions;
+        return this;
     }
 
     @JsonProperty("axesEntries")
@@ -79,8 +81,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("axesEntries")
-    public void setAxesEntries(List<AxesEntries> axesEntries) {
+    public ScenarioMetadata setAxesEntries(List<AxesEntries> axesEntries) {
         this.axesEntries = axesEntries;
+        return this;
     }
 
     @JsonProperty("boundingBox")
@@ -89,8 +92,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("boundingBox")
-    public void setBoundingBox(List<Integer> boundingBox) {
+    public ScenarioMetadata setBoundingBox(List<Integer> boundingBox) {
         this.boundingBox = boundingBox;
+        return this;
     }
 
     @JsonProperty("createdAt")
@@ -99,8 +103,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("createdAt")
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public ScenarioMetadata setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     @JsonProperty("createdBy")
@@ -109,8 +114,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("createdBy")
-    public void setCreatedBy(String createdBy) {
+    public ScenarioMetadata setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     @JsonProperty("createdByName")
@@ -119,8 +125,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("createdByName")
-    public void setCreatedByName(String createdByName) {
+    public ScenarioMetadata setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+        return this;
     }
 
     @JsonProperty("deletedAt")
@@ -129,8 +136,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("deletedAt")
-    public void setDeletedAt(LocalDateTime deletedAt) {
+    public ScenarioMetadata setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+        return this;
     }
 
     @JsonProperty("deletedBy")
@@ -139,8 +147,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("deletedBy")
-    public void setDeletedBy(String deletedBy) {
+    public ScenarioMetadata setDeletedBy(String deletedBy) {
         this.deletedBy = deletedBy;
+        return this;
     }
 
     @JsonProperty("deletedByName")
@@ -149,8 +158,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("deletedByName")
-    public void setDeletedByName(String deletedByName) {
+    public ScenarioMetadata setDeletedByName(String deletedByName) {
         this.deletedByName = deletedByName;
+        return this;
     }
 
     @JsonProperty("drawableNodes")
@@ -159,8 +169,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("drawableNodes")
-    public void setDrawableNodes(List<DrawableNode> drawableNodes) {
+    public ScenarioMetadata setDrawableNodes(List<DrawableNode> drawableNodes) {
         this.drawableNodes = drawableNodes;
+        return this;
     }
 
     @JsonProperty("faceIndices")
@@ -169,8 +180,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("faceIndices")
-    public void setFaceIndices(List<FaceIndex> faceIndices) {
+    public ScenarioMetadata setFaceIndices(List<FaceIndex> faceIndices) {
         this.faceIndices = faceIndices;
+        return this;
     }
 
     @JsonProperty("identity")
@@ -179,8 +191,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("identity")
-    public void setIdentity(String identity) {
+    public ScenarioMetadata setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     @JsonProperty("nodeEntries")
@@ -189,8 +202,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("nodeEntries")
-    public void setNodeEntries(List<NodeEntry> nodeEntries) {
+    public ScenarioMetadata setNodeEntries(List<NodeEntry> nodeEntries) {
         this.nodeEntries = nodeEntries;
+        return this;
     }
 
     @JsonProperty("updatedAt")
@@ -199,8 +213,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("updatedAt")
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public ScenarioMetadata setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+        return this;
     }
 
     @JsonProperty("updatedBy")
@@ -209,8 +224,9 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("updatedBy")
-    public void setUpdatedBy(String updatedBy) {
+    public ScenarioMetadata setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+        return this;
     }
 
     @JsonProperty("updatedByName")
@@ -219,7 +235,8 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("updatedByName")
-    public void setUpdatedByName(String updatedByName) {
+    public ScenarioMetadata setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
+        return this;
     }
 }
