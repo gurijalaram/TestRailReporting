@@ -878,7 +878,7 @@ public class InputControlsTests extends TestBase {
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
-        String expectedCostMetric = "";
+        String expectedCostMetric = costMetric;
         if (reportName.contains("Details") && costMetric.contains("Fully")) {
             expectedCostMetric = "Fully Burdened";
         }
