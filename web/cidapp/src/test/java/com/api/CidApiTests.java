@@ -1,10 +1,14 @@
 package com.api;
 
-import com.apriori.api.entity.reponse.UploadComponent;
-import com.apriori.api.objects.CidApiObject;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import com.apriori.api.entity.reponse.componentiteration.CostingIteration;
+import com.apriori.apibase.utils.APIAuthentication;
+import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -34,7 +38,15 @@ public class CidApiTests extends TestUtil {
     public void cadViewerValues() {
         final String apiUrl = String.format(Constants.getApiUrl(), "components");
 
-        image = new CidApiObject().uploadFile(token, apiUrl, UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
+        //image = new CidApiObject().uploadFile(token, apiUrl, UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
 
+        final String apiUrl2 = String.format(Constants.getApiUrl(), "components/8K7J06NI3169/scenarios/8K7JM61BH0F5/iterations/latest");
+        ResponseWrapper<CostingIteration> responseWrapper = new CommonRequestUtil().getCommonRequest(apiUrl2, true, CostingIteration.class,
+            new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        responseWrapper.getResponseEntity();
+        responseWrapper.getBody();
+
+        assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
 }

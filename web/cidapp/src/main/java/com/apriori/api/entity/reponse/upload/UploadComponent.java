@@ -1,4 +1,4 @@
-package com.apriori.api.entity.reponse;
+package com.apriori.api.entity.reponse.upload;
 
 import com.apriori.utils.http.enums.Schema;
 

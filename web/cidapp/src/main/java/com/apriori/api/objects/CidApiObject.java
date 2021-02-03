@@ -19,7 +19,6 @@ public class CidApiObject {
     private static String scenarioIdentity;
     String CONTENT_TYPE = "Content-Type";
     Map<String, String> headers = new HashMap<>();
-    ;
 
     public ResponseWrapper<Object> uploadFile(String token, String apiUrl, Class klass, String scenarioName, String partName) {
         headers.put(CONTENT_TYPE, "multipart/form-data");
@@ -38,5 +37,4 @@ public class CidApiObject {
         scenarioIdentity = new JsonNodeUtil().jsonNode(request.getBody(), "scenarioIdentity");
         return request;
     }
-
 }
