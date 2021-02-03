@@ -1,8 +1,8 @@
 import com.apriori.apibase.services.cid.objects.response.ExportSchedulesResponse;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.web.cir.utils.Constants;
 import com.apriori.database.actions.cloud.DbMigration;
 import com.apriori.database.entity.MigrationEntity;
-import com.apriori.utils.constants.Constants;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import com.fbc.datamodel.shared.ScenarioType;
@@ -34,7 +34,6 @@ public class DataBaseActions extends TestUtil {
                         Constants.EXPORT_SET_NAME
                 )
         );
-
         this.validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
