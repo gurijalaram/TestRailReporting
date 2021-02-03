@@ -25,8 +25,9 @@ public class DrawableNode {
     }
 
     @JsonProperty("additionalProp1")
-    public void setAdditionalProp1(DrawableAdditionalProp1 additionalProp1) {
+    public DrawableNode setAdditionalProp1(DrawableAdditionalProp1 additionalProp1) {
         this.additionalProp1 = additionalProp1;
+        return this;
     }
 
     @JsonProperty("additionalProp2")
@@ -35,8 +36,9 @@ public class DrawableNode {
     }
 
     @JsonProperty("additionalProp2")
-    public void setAdditionalProp2(DrawableAdditionalProp2 additionalProp2) {
+    public DrawableNode setAdditionalProp2(DrawableAdditionalProp2 additionalProp2) {
         this.additionalProp2 = additionalProp2;
+        return this;
     }
 
     @JsonProperty("additionalProp3")
@@ -45,7 +47,8 @@ public class DrawableNode {
     }
 
     @JsonProperty("additionalProp3")
-    public void setAdditionalProp3(DrawableAdditionalProp3 additionalProp3) {
+    public DrawableNode setAdditionalProp3(DrawableAdditionalProp3 additionalProp3) {
         this.additionalProp3 = additionalProp3;
+        return this;
     }
 }
