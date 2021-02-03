@@ -27,8 +27,9 @@ public class CostingInput {
     }
 
     @JsonProperty("identity")
-    public void setIdentity(String identity) {
+    public CostingInput setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     @JsonProperty("annualVolume")
@@ -37,8 +38,9 @@ public class CostingInput {
     }
 
     @JsonProperty("annualVolume")
-    public void setAnnualVolume(Integer annualVolume) {
+    public CostingInput setAnnualVolume(Integer annualVolume) {
         this.annualVolume = annualVolume;
+        return this;
     }
 
     @JsonProperty("batchSize")
@@ -47,8 +49,9 @@ public class CostingInput {
     }
 
     @JsonProperty("batchSize")
-    public void setBatchSize(Integer batchSize) {
+    public CostingInput setBatchSize(Integer batchSize) {
         this.batchSize = batchSize;
+        return this;
     }
 
     @JsonProperty("customAttributes")
@@ -57,8 +60,9 @@ public class CostingInput {
     }
 
     @JsonProperty("customAttributes")
-    public void setCustomAttributes(CustomAttributes customAttributes) {
+    public CostingInput setCustomAttributes(CustomAttributes customAttributes) {
         this.customAttributes = customAttributes;
+        return this;
     }
 
     @JsonProperty("materialName")
@@ -67,8 +71,9 @@ public class CostingInput {
     }
 
     @JsonProperty("materialName")
-    public void setMaterialName(String materialName) {
+    public CostingInput setMaterialName(String materialName) {
         this.materialName = materialName;
+        return this;
     }
 
     @JsonProperty("processGroupName")
@@ -77,8 +82,9 @@ public class CostingInput {
     }
 
     @JsonProperty("processGroupName")
-    public void setProcessGroupName(String processGroupName) {
+    public CostingInput setProcessGroupName(String processGroupName) {
         this.processGroupName = processGroupName;
+        return this;
     }
 
     @JsonProperty("productionLife")
@@ -87,8 +93,9 @@ public class CostingInput {
     }
 
     @JsonProperty("productionLife")
-    public void setProductionLife(Integer productionLife) {
+    public CostingInput setProductionLife(Integer productionLife) {
         this.productionLife = productionLife;
+        return this;
     }
 
     @JsonProperty("vpeName")
@@ -97,7 +104,8 @@ public class CostingInput {
     }
 
     @JsonProperty("vpeName")
-    public void setVpeName(String vpeName) {
+    public CostingInput setVpeName(String vpeName) {
         this.vpeName = vpeName;
+        return this;
     }
 }

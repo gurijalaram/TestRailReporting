@@ -81,143 +81,161 @@ public class CostingIteration {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public CostingIteration setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public CostingIteration setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public CostingIteration setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+        return this;
     }
 
     public String getCreatedByName() {
         return createdByName;
     }
 
-    public void setCreatedByName(String createdByName) {
+    public CostingIteration setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+        return this;
     }
 
     public String getCustomerIdentity() {
         return customerIdentity;
     }
 
-    public void setCustomerIdentity(String customerIdentity) {
+    public CostingIteration setCustomerIdentity(String customerIdentity) {
         this.customerIdentity = customerIdentity;
+        return this;
     }
 
     public Integer getIteration() {
         return iteration;
     }
 
-    public void setIteration(Integer iteration) {
+    public CostingIteration setIteration(Integer iteration) {
         this.iteration = iteration;
+        return this;
     }
 
     public String getScenarioIterationKey() {
         return scenarioIterationKey;
     }
 
-    public void setScenarioIterationKey(String scenarioIterationKey) {
+    public CostingIteration setScenarioIterationKey(String scenarioIterationKey) {
         this.scenarioIterationKey = scenarioIterationKey;
+        return this;
     }
 
     public CostingInput getCostingInput() {
         return costingInput;
     }
 
-    public void setCostingInput(CostingInput costingInput) {
+    public CostingIteration setCostingInput(CostingInput costingInput) {
         this.costingInput = costingInput;
+        return this;
     }
 
     public ScenarioAnalysis getScenarioAnalysis() {
         return scenarioAnalysis;
     }
 
-    public void setScenarioAnalysis(ScenarioAnalysis scenarioAnalysis) {
+    public CostingIteration setScenarioAnalysis(ScenarioAnalysis scenarioAnalysis) {
         this.scenarioAnalysis = scenarioAnalysis;
+        return this;
     }
 
     public List<ScenarioCustomAttribute> getScenarioCustomAttributes() {
         return scenarioCustomAttributes;
     }
 
-    public void setScenarioCustomAttributes(List<ScenarioCustomAttribute> scenarioCustomAttributes) {
+    public CostingIteration setScenarioCustomAttributes(List<ScenarioCustomAttribute> scenarioCustomAttributes) {
         this.scenarioCustomAttributes = scenarioCustomAttributes;
+        return this;
     }
 
     public List<ScenarioDtcIssue> getScenarioDtcIssues() {
         return scenarioDtcIssues;
     }
 
-    public void setScenarioDtcIssues(List<ScenarioDtcIssue> scenarioDtcIssues) {
+    public CostingIteration setScenarioDtcIssues(List<ScenarioDtcIssue> scenarioDtcIssues) {
         this.scenarioDtcIssues = scenarioDtcIssues;
+        return this;
     }
 
     public ScenarioGcd getScenarioGcd() {
         return scenarioGcd;
     }
 
-    public void setScenarioGcd(ScenarioGcd scenarioGcd) {
+    public CostingIteration setScenarioGcd(ScenarioGcd scenarioGcd) {
         this.scenarioGcd = scenarioGcd;
+        return this;
     }
 
     public ScenarioMetadata getScenarioMetadata() {
         return scenarioMetadata;
     }
 
-    public void setScenarioMetadata(ScenarioMetadata scenarioMetadata) {
+    public CostingIteration setScenarioMetadata(ScenarioMetadata scenarioMetadata) {
         this.scenarioMetadata = scenarioMetadata;
+        return this;
     }
 
     public List<ScenarioProcess> getScenarioProcesses() {
         return scenarioProcesses;
     }
 
-    public void setScenarioProcesses(List<ScenarioProcess> scenarioProcesses) {
+    public CostingIteration setScenarioProcesses(List<ScenarioProcess> scenarioProcesses) {
         this.scenarioProcesses = scenarioProcesses;
+        return this;
     }
 
     public Boolean getHasThumbnail() {
         return hasThumbnail;
     }
 
-    public void setHasThumbnail(Boolean hasThumbnail) {
+    public CostingIteration setHasThumbnail(Boolean hasThumbnail) {
         this.hasThumbnail = hasThumbnail;
+        return this;
     }
 
     public Boolean getHasWebImage() {
         return hasWebImage;
     }
 
-    public void setHasWebImage(Boolean hasWebImage) {
+    public CostingIteration setHasWebImage(Boolean hasWebImage) {
         this.hasWebImage = hasWebImage;
+        return this;
     }
 
     public Thumbnail getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(Thumbnail thumbnail) {
+    public CostingIteration setThumbnail(Thumbnail thumbnail) {
         this.thumbnail = thumbnail;
+        return this;
     }
 
     public Material getMaterial() {
         return material;
     }
 
-    public void setMaterial(Material material) {
+    public CostingIteration setMaterial(Material material) {
         this.material = material;
+        return this;
     }
 }
