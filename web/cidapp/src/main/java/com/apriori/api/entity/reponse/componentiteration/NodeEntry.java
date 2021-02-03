@@ -17,8 +17,9 @@ public class NodeEntry {
     }
 
     @JsonProperty("additionalProp1")
-    public void setAdditionalProp1(NodeAdditionalProp1 additionalProp1) {
+    public NodeEntry setAdditionalProp1(NodeAdditionalProp1 additionalProp1) {
         this.additionalProp1 = additionalProp1;
+        return this;
     }
 
     @JsonProperty("additionalProp2")
@@ -27,8 +28,9 @@ public class NodeEntry {
     }
 
     @JsonProperty("additionalProp2")
-    public void setAdditionalProp2(NodeAdditionalProp2 additionalProp2) {
+    public NodeEntry setAdditionalProp2(NodeAdditionalProp2 additionalProp2) {
         this.additionalProp2 = additionalProp2;
+        return this;
     }
 
     @JsonProperty("additionalProp3")
@@ -37,7 +39,8 @@ public class NodeEntry {
     }
 
     @JsonProperty("additionalProp3")
-    public void setAdditionalProp3(NodeAdditionalProp3 additionalProp3) {
+    public NodeEntry setAdditionalProp3(NodeAdditionalProp3 additionalProp3) {
         this.additionalProp3 = additionalProp3;
+        return this;
     }
 }
