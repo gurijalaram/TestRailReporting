@@ -2,17 +2,12 @@ package com.apriori.api.entity.reponse.componentiteration;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ScenarioAnalysis {
 
@@ -368,8 +363,6 @@ public class ScenarioAnalysis {
     private Integer workCenterCapacity;
     @JsonProperty("workCenterFootprint")
     private Integer workCenterFootprint;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("addFacilityCostToDirOverhead")
     public Boolean getAddFacilityCostToDirOverhead() {
@@ -377,8 +370,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("addFacilityCostToDirOverhead")
-    public void setAddFacilityCostToDirOverhead(Boolean addFacilityCostToDirOverhead) {
+    public ScenarioAnalysis setAddFacilityCostToDirOverhead(Boolean addFacilityCostToDirOverhead) {
         this.addFacilityCostToDirOverhead = addFacilityCostToDirOverhead;
+        return this;
     }
 
     @JsonProperty("additionalAmortizedInvestment")
@@ -387,8 +381,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("additionalAmortizedInvestment")
-    public void setAdditionalAmortizedInvestment(Integer additionalAmortizedInvestment) {
+    public ScenarioAnalysis setAdditionalAmortizedInvestment(Integer additionalAmortizedInvestment) {
         this.additionalAmortizedInvestment = additionalAmortizedInvestment;
+        return this;
     }
 
     @JsonProperty("additionalDirectCosts")
@@ -397,8 +392,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("additionalDirectCosts")
-    public void setAdditionalDirectCosts(Integer additionalDirectCosts) {
+    public ScenarioAnalysis setAdditionalDirectCosts(Integer additionalDirectCosts) {
         this.additionalDirectCosts = additionalDirectCosts;
+        return this;
     }
 
     @JsonProperty("amortizedInvestment")
@@ -407,8 +403,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("amortizedInvestment")
-    public void setAmortizedInvestment(Integer amortizedInvestment) {
+    public ScenarioAnalysis setAmortizedInvestment(Integer amortizedInvestment) {
         this.amortizedInvestment = amortizedInvestment;
+        return this;
     }
 
     @JsonProperty("annualCost")
@@ -417,8 +414,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("annualCost")
-    public void setAnnualCost(Integer annualCost) {
+    public ScenarioAnalysis setAnnualCost(Integer annualCost) {
         this.annualCost = annualCost;
+        return this;
     }
 
     @JsonProperty("annualEarnedMachineHours")
@@ -427,8 +425,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("annualEarnedMachineHours")
-    public void setAnnualEarnedMachineHours(Integer annualEarnedMachineHours) {
+    public ScenarioAnalysis setAnnualEarnedMachineHours(Integer annualEarnedMachineHours) {
         this.annualEarnedMachineHours = annualEarnedMachineHours;
+        return this;
     }
 
     @JsonProperty("annualMaintenanceFactor")
@@ -437,8 +436,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("annualMaintenanceFactor")
-    public void setAnnualMaintenanceFactor(Integer annualMaintenanceFactor) {
+    public ScenarioAnalysis setAnnualMaintenanceFactor(Integer annualMaintenanceFactor) {
         this.annualMaintenanceFactor = annualMaintenanceFactor;
+        return this;
     }
 
     @JsonProperty("annualVolume")
@@ -447,8 +447,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("annualVolume")
-    public void setAnnualVolume(Integer annualVolume) {
+    public ScenarioAnalysis setAnnualVolume(Integer annualVolume) {
         this.annualVolume = annualVolume;
+        return this;
     }
 
     @JsonProperty("batchCost")
@@ -457,8 +458,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("batchCost")
-    public void setBatchCost(Integer batchCost) {
+    public ScenarioAnalysis setBatchCost(Integer batchCost) {
         this.batchCost = batchCost;
+        return this;
     }
 
     @JsonProperty("batchSetupTime")
@@ -467,8 +469,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("batchSetupTime")
-    public void setBatchSetupTime(Integer batchSetupTime) {
+    public ScenarioAnalysis setBatchSetupTime(Integer batchSetupTime) {
         this.batchSetupTime = batchSetupTime;
+        return this;
     }
 
     @JsonProperty("batchSize")
@@ -477,8 +480,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("batchSize")
-    public void setBatchSize(Integer batchSize) {
+    public ScenarioAnalysis setBatchSize(Integer batchSize) {
         this.batchSize = batchSize;
+        return this;
     }
 
     @JsonProperty("cadSerLength")
@@ -487,8 +491,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("cadSerLength")
-    public void setCadSerLength(Integer cadSerLength) {
+    public ScenarioAnalysis setCadSerLength(Integer cadSerLength) {
         this.cadSerLength = cadSerLength;
+        return this;
     }
 
     @JsonProperty("cadSerWidth")
@@ -497,8 +502,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("cadSerWidth")
-    public void setCadSerWidth(Integer cadSerWidth) {
+    public ScenarioAnalysis setCadSerWidth(Integer cadSerWidth) {
         this.cadSerWidth = cadSerWidth;
+        return this;
     }
 
     @JsonProperty("capitalInvestment")
@@ -507,8 +513,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("capitalInvestment")
-    public void setCapitalInvestment(Integer capitalInvestment) {
+    public ScenarioAnalysis setCapitalInvestment(Integer capitalInvestment) {
         this.capitalInvestment = capitalInvestment;
+        return this;
     }
 
     @JsonProperty("costingStatus")
@@ -517,8 +524,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("costingStatus")
-    public void setCostingStatus(String costingStatus) {
+    public ScenarioAnalysis setCostingStatus(String costingStatus) {
         this.costingStatus = costingStatus;
+        return this;
     }
 
     @JsonProperty("createdAt")
@@ -527,8 +535,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("createdAt")
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public ScenarioAnalysis setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     @JsonProperty("createdBy")
@@ -537,8 +546,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("createdBy")
-    public void setCreatedBy(String createdBy) {
+    public ScenarioAnalysis setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     @JsonProperty("createdByName")
@@ -547,8 +557,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("createdByName")
-    public void setCreatedByName(String createdByName) {
+    public ScenarioAnalysis setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+        return this;
     }
 
     @JsonProperty("cycleTime")
@@ -557,8 +568,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("cycleTime")
-    public void setCycleTime(Integer cycleTime) {
+    public ScenarioAnalysis setCycleTime(Integer cycleTime) {
         this.cycleTime = cycleTime;
+        return this;
     }
 
     @JsonProperty("deletedAt")
@@ -567,8 +579,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("deletedAt")
-    public void setDeletedAt(LocalDateTime deletedAt) {
+    public ScenarioAnalysis setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+        return this;
     }
 
     @JsonProperty("deletedBy")
@@ -577,8 +590,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("deletedBy")
-    public void setDeletedBy(String deletedBy) {
+    public ScenarioAnalysis setDeletedBy(String deletedBy) {
         this.deletedBy = deletedBy;
+        return this;
     }
 
     @JsonProperty("deletedByName")
@@ -587,8 +601,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("deletedByName")
-    public void setDeletedByName(String deletedByName) {
+    public ScenarioAnalysis setDeletedByName(String deletedByName) {
         this.deletedByName = deletedByName;
+        return this;
     }
 
     @JsonProperty("depreciationCost")
@@ -597,8 +612,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("depreciationCost")
-    public void setDepreciationCost(Integer depreciationCost) {
+    public ScenarioAnalysis setDepreciationCost(Integer depreciationCost) {
         this.depreciationCost = depreciationCost;
+        return this;
     }
 
     @JsonProperty("dfmRisk")
@@ -607,8 +623,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("dfmRisk")
-    public void setDfmRisk(Integer dfmRisk) {
+    public ScenarioAnalysis setDfmRisk(Integer dfmRisk) {
         this.dfmRisk = dfmRisk;
+        return this;
     }
 
     @JsonProperty("directOverheadCost")
@@ -617,8 +634,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("directOverheadCost")
-    public void setDirectOverheadCost(Integer directOverheadCost) {
+    public ScenarioAnalysis setDirectOverheadCost(Integer directOverheadCost) {
         this.directOverheadCost = directOverheadCost;
+        return this;
     }
 
     @JsonProperty("directOverheadRate")
@@ -627,8 +645,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("directOverheadRate")
-    public void setDirectOverheadRate(Integer directOverheadRate) {
+    public ScenarioAnalysis setDirectOverheadRate(Integer directOverheadRate) {
         this.directOverheadRate = directOverheadRate;
+        return this;
     }
 
     @JsonProperty("dtcMessagesCount")
@@ -637,8 +656,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("dtcMessagesCount")
-    public void setDtcMessagesCount(Integer dtcMessagesCount) {
+    public ScenarioAnalysis setDtcMessagesCount(Integer dtcMessagesCount) {
         this.dtcMessagesCount = dtcMessagesCount;
+        return this;
     }
 
     @JsonProperty("elapsedTime")
@@ -647,8 +667,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("elapsedTime")
-    public void setElapsedTime(Integer elapsedTime) {
+    public ScenarioAnalysis setElapsedTime(Integer elapsedTime) {
         this.elapsedTime = elapsedTime;
+        return this;
     }
 
     @JsonProperty("electricityRate")
@@ -657,8 +678,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("electricityRate")
-    public void setElectricityRate(Integer electricityRate) {
+    public ScenarioAnalysis setElectricityRate(Integer electricityRate) {
         this.electricityRate = electricityRate;
+        return this;
     }
 
     @JsonProperty("energyCost")
@@ -667,8 +689,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("energyCost")
-    public void setEnergyCost(Integer energyCost) {
+    public ScenarioAnalysis setEnergyCost(Integer energyCost) {
         this.energyCost = energyCost;
+        return this;
     }
 
     @JsonProperty("engineeringDepartmentCost")
@@ -677,8 +700,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("engineeringDepartmentCost")
-    public void setEngineeringDepartmentCost(Integer engineeringDepartmentCost) {
+    public ScenarioAnalysis setEngineeringDepartmentCost(Integer engineeringDepartmentCost) {
         this.engineeringDepartmentCost = engineeringDepartmentCost;
+        return this;
     }
 
     @JsonProperty("engineeringSupportAllocation")
@@ -687,8 +711,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("engineeringSupportAllocation")
-    public void setEngineeringSupportAllocation(Integer engineeringSupportAllocation) {
+    public ScenarioAnalysis setEngineeringSupportAllocation(Integer engineeringSupportAllocation) {
         this.engineeringSupportAllocation = engineeringSupportAllocation;
+        return this;
     }
 
     @JsonProperty("engineeringSupportRate")
@@ -697,8 +722,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("engineeringSupportRate")
-    public void setEngineeringSupportRate(Integer engineeringSupportRate) {
+    public ScenarioAnalysis setEngineeringSupportRate(Integer engineeringSupportRate) {
         this.engineeringSupportRate = engineeringSupportRate;
+        return this;
     }
 
     @JsonProperty("expendableToolingCost")
@@ -707,8 +733,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("expendableToolingCost")
-    public void setExpendableToolingCost(Integer expendableToolingCost) {
+    public ScenarioAnalysis setExpendableToolingCost(Integer expendableToolingCost) {
         this.expendableToolingCost = expendableToolingCost;
+        return this;
     }
 
     @JsonProperty("expendableToolingCostPerCore")
@@ -717,8 +744,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("expendableToolingCostPerCore")
-    public void setExpendableToolingCostPerCore(Integer expendableToolingCostPerCore) {
+    public ScenarioAnalysis setExpendableToolingCostPerCore(Integer expendableToolingCostPerCore) {
         this.expendableToolingCostPerCore = expendableToolingCostPerCore;
+        return this;
     }
 
     @JsonProperty("expendableToolingCostPerPart")
@@ -727,8 +755,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("expendableToolingCostPerPart")
-    public void setExpendableToolingCostPerPart(Integer expendableToolingCostPerPart) {
+    public ScenarioAnalysis setExpendableToolingCostPerPart(Integer expendableToolingCostPerPart) {
         this.expendableToolingCostPerPart = expendableToolingCostPerPart;
+        return this;
     }
 
     @JsonProperty("extraCosts")
@@ -737,8 +766,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("extraCosts")
-    public void setExtraCosts(Integer extraCosts) {
+    public ScenarioAnalysis setExtraCosts(Integer extraCosts) {
         this.extraCosts = extraCosts;
+        return this;
     }
 
     @JsonProperty("facilityDirectOverheadCost")
@@ -747,8 +777,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("facilityDirectOverheadCost")
-    public void setFacilityDirectOverheadCost(Integer facilityDirectOverheadCost) {
+    public ScenarioAnalysis setFacilityDirectOverheadCost(Integer facilityDirectOverheadCost) {
         this.facilityDirectOverheadCost = facilityDirectOverheadCost;
+        return this;
     }
 
     @JsonProperty("facilityElectricityCost")
@@ -757,8 +788,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("facilityElectricityCost")
-    public void setFacilityElectricityCost(Integer facilityElectricityCost) {
+    public ScenarioAnalysis setFacilityElectricityCost(Integer facilityElectricityCost) {
         this.facilityElectricityCost = facilityElectricityCost;
+        return this;
     }
 
     @JsonProperty("facilityElectricityFactor")
@@ -767,8 +799,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("facilityElectricityFactor")
-    public void setFacilityElectricityFactor(Integer facilityElectricityFactor) {
+    public ScenarioAnalysis setFacilityElectricityFactor(Integer facilityElectricityFactor) {
         this.facilityElectricityFactor = facilityElectricityFactor;
+        return this;
     }
 
     @JsonProperty("facilityHeatAndGasCost")
@@ -777,8 +810,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("facilityHeatAndGasCost")
-    public void setFacilityHeatAndGasCost(Integer facilityHeatAndGasCost) {
+    public ScenarioAnalysis setFacilityHeatAndGasCost(Integer facilityHeatAndGasCost) {
         this.facilityHeatAndGasCost = facilityHeatAndGasCost;
+        return this;
     }
 
     @JsonProperty("facilityHeatAndGasFactor")
@@ -787,8 +821,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("facilityHeatAndGasFactor")
-    public void setFacilityHeatAndGasFactor(Integer facilityHeatAndGasFactor) {
+    public ScenarioAnalysis setFacilityHeatAndGasFactor(Integer facilityHeatAndGasFactor) {
         this.facilityHeatAndGasFactor = facilityHeatAndGasFactor;
+        return this;
     }
 
     @JsonProperty("facilityIndirectOverheadCost")
@@ -797,8 +832,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("facilityIndirectOverheadCost")
-    public void setFacilityIndirectOverheadCost(Integer facilityIndirectOverheadCost) {
+    public ScenarioAnalysis setFacilityIndirectOverheadCost(Integer facilityIndirectOverheadCost) {
         this.facilityIndirectOverheadCost = facilityIndirectOverheadCost;
+        return this;
     }
 
     @JsonProperty("facilityWaterCost")
@@ -807,8 +843,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("facilityWaterCost")
-    public void setFacilityWaterCost(Integer facilityWaterCost) {
+    public ScenarioAnalysis setFacilityWaterCost(Integer facilityWaterCost) {
         this.facilityWaterCost = facilityWaterCost;
+        return this;
     }
 
     @JsonProperty("facilityWaterFactor")
@@ -817,8 +854,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("facilityWaterFactor")
-    public void setFacilityWaterFactor(Integer facilityWaterFactor) {
+    public ScenarioAnalysis setFacilityWaterFactor(Integer facilityWaterFactor) {
         this.facilityWaterFactor = facilityWaterFactor;
+        return this;
     }
 
     @JsonProperty("failedGcdsCount")
@@ -827,8 +865,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("failedGcdsCount")
-    public void setFailedGcdsCount(Integer failedGcdsCount) {
+    public ScenarioAnalysis setFailedGcdsCount(Integer failedGcdsCount) {
         this.failedGcdsCount = failedGcdsCount;
+        return this;
     }
 
     @JsonProperty("failuresWarningsCount")
@@ -837,8 +876,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("failuresWarningsCount")
-    public void setFailuresWarningsCount(Integer failuresWarningsCount) {
+    public ScenarioAnalysis setFailuresWarningsCount(Integer failuresWarningsCount) {
         this.failuresWarningsCount = failuresWarningsCount;
+        return this;
     }
 
     @JsonProperty("finalYield")
@@ -847,8 +887,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("finalYield")
-    public void setFinalYield(Integer finalYield) {
+    public ScenarioAnalysis setFinalYield(Integer finalYield) {
         this.finalYield = finalYield;
+        return this;
     }
 
     @JsonProperty("finishMass")
@@ -857,8 +898,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("finishMass")
-    public void setFinishMass(Integer finishMass) {
+    public ScenarioAnalysis setFinishMass(Integer finishMass) {
         this.finishMass = finishMass;
+        return this;
     }
 
     @JsonProperty("fireInsuranceCost")
@@ -867,8 +909,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("fireInsuranceCost")
-    public void setFireInsuranceCost(Integer fireInsuranceCost) {
+    public ScenarioAnalysis setFireInsuranceCost(Integer fireInsuranceCost) {
         this.fireInsuranceCost = fireInsuranceCost;
+        return this;
     }
 
     @JsonProperty("fireInsuranceFactor")
@@ -877,8 +920,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("fireInsuranceFactor")
-    public void setFireInsuranceFactor(Integer fireInsuranceFactor) {
+    public ScenarioAnalysis setFireInsuranceFactor(Integer fireInsuranceFactor) {
         this.fireInsuranceFactor = fireInsuranceFactor;
+        return this;
     }
 
     @JsonProperty("fixtureCost")
@@ -887,8 +931,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("fixtureCost")
-    public void setFixtureCost(Integer fixtureCost) {
+    public ScenarioAnalysis setFixtureCost(Integer fixtureCost) {
         this.fixtureCost = fixtureCost;
+        return this;
     }
 
     @JsonProperty("fixtureCostPerPart")
@@ -897,8 +942,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("fixtureCostPerPart")
-    public void setFixtureCostPerPart(Integer fixtureCostPerPart) {
+    public ScenarioAnalysis setFixtureCostPerPart(Integer fixtureCostPerPart) {
         this.fixtureCostPerPart = fixtureCostPerPart;
+        return this;
     }
 
     @JsonProperty("footprintAllowanceFactor")
@@ -907,8 +953,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("footprintAllowanceFactor")
-    public void setFootprintAllowanceFactor(Integer footprintAllowanceFactor) {
+    public ScenarioAnalysis setFootprintAllowanceFactor(Integer footprintAllowanceFactor) {
         this.footprintAllowanceFactor = footprintAllowanceFactor;
+        return this;
     }
 
     @JsonProperty("fullyBurdenedCost")
@@ -917,8 +964,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("fullyBurdenedCost")
-    public void setFullyBurdenedCost(Integer fullyBurdenedCost) {
+    public ScenarioAnalysis setFullyBurdenedCost(Integer fullyBurdenedCost) {
         this.fullyBurdenedCost = fullyBurdenedCost;
+        return this;
     }
 
     @JsonProperty("gasRate")
@@ -927,8 +975,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("gasRate")
-    public void setGasRate(Integer gasRate) {
+    public ScenarioAnalysis setGasRate(Integer gasRate) {
         this.gasRate = gasRate;
+        return this;
     }
 
     @JsonProperty("gcdWithTolerancesCount")
@@ -937,8 +986,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("gcdWithTolerancesCount")
-    public void setGcdWithTolerancesCount(Integer gcdWithTolerancesCount) {
+    public ScenarioAnalysis setGcdWithTolerancesCount(Integer gcdWithTolerancesCount) {
         this.gcdWithTolerancesCount = gcdWithTolerancesCount;
+        return this;
     }
 
     @JsonProperty("goodPartYield")
@@ -947,8 +997,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("goodPartYield")
-    public void setGoodPartYield(Integer goodPartYield) {
+    public ScenarioAnalysis setGoodPartYield(Integer goodPartYield) {
         this.goodPartYield = goodPartYield;
+        return this;
     }
 
     @JsonProperty("hardToolingCost")
@@ -957,8 +1008,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("hardToolingCost")
-    public void setHardToolingCost(Integer hardToolingCost) {
+    public ScenarioAnalysis setHardToolingCost(Integer hardToolingCost) {
         this.hardToolingCost = hardToolingCost;
+        return this;
     }
 
     @JsonProperty("hardToolingCostPerPart")
@@ -967,8 +1019,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("hardToolingCostPerPart")
-    public void setHardToolingCostPerPart(Integer hardToolingCostPerPart) {
+    public ScenarioAnalysis setHardToolingCostPerPart(Integer hardToolingCostPerPart) {
         this.hardToolingCostPerPart = hardToolingCostPerPart;
+        return this;
     }
 
     @JsonProperty("height")
@@ -977,8 +1030,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("height")
-    public void setHeight(Integer height) {
+    public ScenarioAnalysis setHeight(Integer height) {
         this.height = height;
+        return this;
     }
 
     @JsonProperty("hoursPerShift")
@@ -987,8 +1041,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("hoursPerShift")
-    public void setHoursPerShift(Integer hoursPerShift) {
+    public ScenarioAnalysis setHoursPerShift(Integer hoursPerShift) {
         this.hoursPerShift = hoursPerShift;
+        return this;
     }
 
     @JsonProperty("identity")
@@ -997,8 +1052,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("identity")
-    public void setIdentity(String identity) {
+    public ScenarioAnalysis setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     @JsonProperty("imputedInterestCost")
@@ -1007,8 +1063,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("imputedInterestCost")
-    public void setImputedInterestCost(Integer imputedInterestCost) {
+    public ScenarioAnalysis setImputedInterestCost(Integer imputedInterestCost) {
         this.imputedInterestCost = imputedInterestCost;
+        return this;
     }
 
     @JsonProperty("imputedInterestRate")
@@ -1017,8 +1074,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("imputedInterestRate")
-    public void setImputedInterestRate(Integer imputedInterestRate) {
+    public ScenarioAnalysis setImputedInterestRate(Integer imputedInterestRate) {
         this.imputedInterestRate = imputedInterestRate;
+        return this;
     }
 
     @JsonProperty("indirectOverheadPercent")
@@ -1027,8 +1085,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("indirectOverheadPercent")
-    public void setIndirectOverheadPercent(Integer indirectOverheadPercent) {
+    public ScenarioAnalysis setIndirectOverheadPercent(Integer indirectOverheadPercent) {
         this.indirectOverheadPercent = indirectOverheadPercent;
+        return this;
     }
 
     @JsonProperty("indirectOverheadRate")
@@ -1037,8 +1096,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("indirectOverheadRate")
-    public void setIndirectOverheadRate(Integer indirectOverheadRate) {
+    public ScenarioAnalysis setIndirectOverheadRate(Integer indirectOverheadRate) {
         this.indirectOverheadRate = indirectOverheadRate;
+        return this;
     }
 
     @JsonProperty("installationCost")
@@ -1047,8 +1107,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("installationCost")
-    public void setInstallationCost(Integer installationCost) {
+    public ScenarioAnalysis setInstallationCost(Integer installationCost) {
         this.installationCost = installationCost;
+        return this;
     }
 
     @JsonProperty("installationFactor")
@@ -1057,8 +1118,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("installationFactor")
-    public void setInstallationFactor(Integer installationFactor) {
+    public ScenarioAnalysis setInstallationFactor(Integer installationFactor) {
         this.installationFactor = installationFactor;
+        return this;
     }
 
     @JsonProperty("insuranceCost")
@@ -1067,8 +1129,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("insuranceCost")
-    public void setInsuranceCost(Integer insuranceCost) {
+    public ScenarioAnalysis setInsuranceCost(Integer insuranceCost) {
         this.insuranceCost = insuranceCost;
+        return this;
     }
 
     @JsonProperty("laborCost")
@@ -1077,8 +1140,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("laborCost")
-    public void setLaborCost(Integer laborCost) {
+    public ScenarioAnalysis setLaborCost(Integer laborCost) {
         this.laborCost = laborCost;
+        return this;
     }
 
     @JsonProperty("laborRate")
@@ -1087,8 +1151,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("laborRate")
-    public void setLaborRate(Integer laborRate) {
+    public ScenarioAnalysis setLaborRate(Integer laborRate) {
         this.laborRate = laborRate;
+        return this;
     }
 
     @JsonProperty("laborTime")
@@ -1097,8 +1162,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("laborTime")
-    public void setLaborTime(Integer laborTime) {
+    public ScenarioAnalysis setLaborTime(Integer laborTime) {
         this.laborTime = laborTime;
+        return this;
     }
 
     @JsonProperty("lastCosted")
@@ -1107,8 +1173,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("lastCosted")
-    public void setLastCosted(String lastCosted) {
+    public ScenarioAnalysis setLastCosted(String lastCosted) {
         this.lastCosted = lastCosted;
+        return this;
     }
 
     @JsonProperty("length")
@@ -1117,8 +1184,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("length")
-    public void setLength(Integer length) {
+    public ScenarioAnalysis setLength(Integer length) {
         this.length = length;
+        return this;
     }
 
     @JsonProperty("liabilityInsuranceCost")
@@ -1127,8 +1195,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("liabilityInsuranceCost")
-    public void setLiabilityInsuranceCost(Integer liabilityInsuranceCost) {
+    public ScenarioAnalysis setLiabilityInsuranceCost(Integer liabilityInsuranceCost) {
         this.liabilityInsuranceCost = liabilityInsuranceCost;
+        return this;
     }
 
     @JsonProperty("liabilityInsuranceFactor")
@@ -1137,8 +1206,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("liabilityInsuranceFactor")
-    public void setLiabilityInsuranceFactor(Integer liabilityInsuranceFactor) {
+    public ScenarioAnalysis setLiabilityInsuranceFactor(Integer liabilityInsuranceFactor) {
         this.liabilityInsuranceFactor = liabilityInsuranceFactor;
+        return this;
     }
 
     @JsonProperty("lifetimeCost")
@@ -1147,8 +1217,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("lifetimeCost")
-    public void setLifetimeCost(Integer lifetimeCost) {
+    public ScenarioAnalysis setLifetimeCost(Integer lifetimeCost) {
         this.lifetimeCost = lifetimeCost;
+        return this;
     }
 
     @JsonProperty("logisticsCost")
@@ -1157,8 +1228,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("logisticsCost")
-    public void setLogisticsCost(Integer logisticsCost) {
+    public ScenarioAnalysis setLogisticsCost(Integer logisticsCost) {
         this.logisticsCost = logisticsCost;
+        return this;
     }
 
     @JsonProperty("lossInsuranceCost")
@@ -1167,8 +1239,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("lossInsuranceCost")
-    public void setLossInsuranceCost(Integer lossInsuranceCost) {
+    public ScenarioAnalysis setLossInsuranceCost(Integer lossInsuranceCost) {
         this.lossInsuranceCost = lossInsuranceCost;
+        return this;
     }
 
     @JsonProperty("lossInsuranceFactor")
@@ -1177,8 +1250,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("lossInsuranceFactor")
-    public void setLossInsuranceFactor(Integer lossInsuranceFactor) {
+    public ScenarioAnalysis setLossInsuranceFactor(Integer lossInsuranceFactor) {
         this.lossInsuranceFactor = lossInsuranceFactor;
+        return this;
     }
 
     @JsonProperty("machineLaborRateAdjustmentFactor")
@@ -1187,8 +1261,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("machineLaborRateAdjustmentFactor")
-    public void setMachineLaborRateAdjustmentFactor(Integer machineLaborRateAdjustmentFactor) {
+    public ScenarioAnalysis setMachineLaborRateAdjustmentFactor(Integer machineLaborRateAdjustmentFactor) {
         this.machineLaborRateAdjustmentFactor = machineLaborRateAdjustmentFactor;
+        return this;
     }
 
     @JsonProperty("machineLength")
@@ -1197,8 +1272,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("machineLength")
-    public void setMachineLength(Integer machineLength) {
+    public ScenarioAnalysis setMachineLength(Integer machineLength) {
         this.machineLength = machineLength;
+        return this;
     }
 
     @JsonProperty("machineLife")
@@ -1207,8 +1283,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("machineLife")
-    public void setMachineLife(Integer machineLife) {
+    public ScenarioAnalysis setMachineLife(Integer machineLife) {
         this.machineLife = machineLife;
+        return this;
     }
 
     @JsonProperty("machinePower")
@@ -1217,8 +1294,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("machinePower")
-    public void setMachinePower(Integer machinePower) {
+    public ScenarioAnalysis setMachinePower(Integer machinePower) {
         this.machinePower = machinePower;
+        return this;
     }
 
     @JsonProperty("machinePrice")
@@ -1227,8 +1305,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("machinePrice")
-    public void setMachinePrice(Integer machinePrice) {
+    public ScenarioAnalysis setMachinePrice(Integer machinePrice) {
         this.machinePrice = machinePrice;
+        return this;
     }
 
     @JsonProperty("machineUptime")
@@ -1237,8 +1316,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("machineUptime")
-    public void setMachineUptime(Integer machineUptime) {
+    public ScenarioAnalysis setMachineUptime(Integer machineUptime) {
         this.machineUptime = machineUptime;
+        return this;
     }
 
     @JsonProperty("machineWidth")
@@ -1247,8 +1327,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("machineWidth")
-    public void setMachineWidth(Integer machineWidth) {
+    public ScenarioAnalysis setMachineWidth(Integer machineWidth) {
         this.machineWidth = machineWidth;
+        return this;
     }
 
     @JsonProperty("maintenanceCost")
@@ -1257,8 +1338,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("maintenanceCost")
-    public void setMaintenanceCost(Integer maintenanceCost) {
+    public ScenarioAnalysis setMaintenanceCost(Integer maintenanceCost) {
         this.maintenanceCost = maintenanceCost;
+        return this;
     }
 
     @JsonProperty("maintenanceDepartmentCost")
@@ -1267,8 +1349,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("maintenanceDepartmentCost")
-    public void setMaintenanceDepartmentCost(Integer maintenanceDepartmentCost) {
+    public ScenarioAnalysis setMaintenanceDepartmentCost(Integer maintenanceDepartmentCost) {
         this.maintenanceDepartmentCost = maintenanceDepartmentCost;
+        return this;
     }
 
     @JsonProperty("maintenanceSupportAllocation")
@@ -1277,8 +1360,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("maintenanceSupportAllocation")
-    public void setMaintenanceSupportAllocation(Integer maintenanceSupportAllocation) {
+    public ScenarioAnalysis setMaintenanceSupportAllocation(Integer maintenanceSupportAllocation) {
         this.maintenanceSupportAllocation = maintenanceSupportAllocation;
+        return this;
     }
 
     @JsonProperty("maintenanceSupportRate")
@@ -1287,8 +1371,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("maintenanceSupportRate")
-    public void setMaintenanceSupportRate(Integer maintenanceSupportRate) {
+    public ScenarioAnalysis setMaintenanceSupportRate(Integer maintenanceSupportRate) {
         this.maintenanceSupportRate = maintenanceSupportRate;
+        return this;
     }
 
     @JsonProperty("margin")
@@ -1297,8 +1382,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("margin")
-    public void setMargin(Integer margin) {
+    public ScenarioAnalysis setMargin(Integer margin) {
         this.margin = margin;
+        return this;
     }
 
     @JsonProperty("marginPercent")
@@ -1307,8 +1393,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("marginPercent")
-    public void setMarginPercent(Integer marginPercent) {
+    public ScenarioAnalysis setMarginPercent(Integer marginPercent) {
         this.marginPercent = marginPercent;
+        return this;
     }
 
     @JsonProperty("materialCost")
@@ -1317,8 +1404,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("materialCost")
-    public void setMaterialCost(Integer materialCost) {
+    public ScenarioAnalysis setMaterialCost(Integer materialCost) {
         this.materialCost = materialCost;
+        return this;
     }
 
     @JsonProperty("materialName")
@@ -1327,8 +1415,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("materialName")
-    public void setMaterialName(String materialName) {
+    public ScenarioAnalysis setMaterialName(String materialName) {
         this.materialName = materialName;
+        return this;
     }
 
     @JsonProperty("materialOverheadCost")
@@ -1337,8 +1426,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("materialOverheadCost")
-    public void setMaterialOverheadCost(Integer materialOverheadCost) {
+    public ScenarioAnalysis setMaterialOverheadCost(Integer materialOverheadCost) {
         this.materialOverheadCost = materialOverheadCost;
+        return this;
     }
 
     @JsonProperty("materialOverheadPercent")
@@ -1347,8 +1437,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("materialOverheadPercent")
-    public void setMaterialOverheadPercent(Integer materialOverheadPercent) {
+    public ScenarioAnalysis setMaterialOverheadPercent(Integer materialOverheadPercent) {
         this.materialOverheadPercent = materialOverheadPercent;
+        return this;
     }
 
     @JsonProperty("materialStockFormName")
@@ -1357,8 +1448,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("materialStockFormName")
-    public void setMaterialStockFormName(String materialStockFormName) {
+    public ScenarioAnalysis setMaterialStockFormName(String materialStockFormName) {
         this.materialStockFormName = materialStockFormName;
+        return this;
     }
 
     @JsonProperty("materialStockName")
@@ -1367,8 +1459,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("materialStockName")
-    public void setMaterialStockName(String materialStockName) {
+    public ScenarioAnalysis setMaterialStockName(String materialStockName) {
         this.materialStockName = materialStockName;
+        return this;
     }
 
     @JsonProperty("materialUnitCost")
@@ -1377,8 +1470,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("materialUnitCost")
-    public void setMaterialUnitCost(Integer materialUnitCost) {
+    public ScenarioAnalysis setMaterialUnitCost(Integer materialUnitCost) {
         this.materialUnitCost = materialUnitCost;
+        return this;
     }
 
     @JsonProperty("materialYield")
@@ -1387,8 +1481,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("materialYield")
-    public void setMaterialYield(Integer materialYield) {
+    public ScenarioAnalysis setMaterialYield(Integer materialYield) {
         this.materialYield = materialYield;
+        return this;
     }
 
     @JsonProperty("nonProductionFootprintFactor")
@@ -1397,8 +1492,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("nonProductionFootprintFactor")
-    public void setNonProductionFootprintFactor(Integer nonProductionFootprintFactor) {
+    public ScenarioAnalysis setNonProductionFootprintFactor(Integer nonProductionFootprintFactor) {
         this.nonProductionFootprintFactor = nonProductionFootprintFactor;
+        return this;
     }
 
     @JsonProperty("notSupportedGcdsCount")
@@ -1407,8 +1503,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("notSupportedGcdsCount")
-    public void setNotSupportedGcdsCount(Integer notSupportedGcdsCount) {
+    public ScenarioAnalysis setNotSupportedGcdsCount(Integer notSupportedGcdsCount) {
         this.notSupportedGcdsCount = notSupportedGcdsCount;
+        return this;
     }
 
     @JsonProperty("numOperators")
@@ -1417,8 +1514,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("numOperators")
-    public void setNumOperators(Integer numOperators) {
+    public ScenarioAnalysis setNumOperators(Integer numOperators) {
         this.numOperators = numOperators;
+        return this;
     }
 
     @JsonProperty("numPartsPerSheet")
@@ -1427,8 +1525,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("numPartsPerSheet")
-    public void setNumPartsPerSheet(Integer numPartsPerSheet) {
+    public ScenarioAnalysis setNumPartsPerSheet(Integer numPartsPerSheet) {
         this.numPartsPerSheet = numPartsPerSheet;
+        return this;
     }
 
     @JsonProperty("numScrapParts")
@@ -1437,8 +1536,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("numScrapParts")
-    public void setNumScrapParts(Integer numScrapParts) {
+    public ScenarioAnalysis setNumScrapParts(Integer numScrapParts) {
         this.numScrapParts = numScrapParts;
+        return this;
     }
 
     @JsonProperty("numScrapPartsDownStream")
@@ -1447,8 +1547,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("numScrapPartsDownStream")
-    public void setNumScrapPartsDownStream(Integer numScrapPartsDownStream) {
+    public ScenarioAnalysis setNumScrapPartsDownStream(Integer numScrapPartsDownStream) {
         this.numScrapPartsDownStream = numScrapPartsDownStream;
+        return this;
     }
 
     @JsonProperty("numberOfParts")
@@ -1457,8 +1558,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("numberOfParts")
-    public void setNumberOfParts(Integer numberOfParts) {
+    public ScenarioAnalysis setNumberOfParts(Integer numberOfParts) {
         this.numberOfParts = numberOfParts;
+        return this;
     }
 
     @JsonProperty("otherDirectCosts")
@@ -1467,8 +1569,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("otherDirectCosts")
-    public void setOtherDirectCosts(Integer otherDirectCosts) {
+    public ScenarioAnalysis setOtherDirectCosts(Integer otherDirectCosts) {
         this.otherDirectCosts = otherDirectCosts;
+        return this;
     }
 
     @JsonProperty("overheadRate")
@@ -1477,8 +1580,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("overheadRate")
-    public void setOverheadRate(Integer overheadRate) {
+    public ScenarioAnalysis setOverheadRate(Integer overheadRate) {
         this.overheadRate = overheadRate;
+        return this;
     }
 
     @JsonProperty("partsPerHour")
@@ -1487,8 +1591,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("partsPerHour")
-    public void setPartsPerHour(Integer partsPerHour) {
+    public ScenarioAnalysis setPartsPerHour(Integer partsPerHour) {
         this.partsPerHour = partsPerHour;
+        return this;
     }
 
     @JsonProperty("periodOverhead")
@@ -1497,8 +1602,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("periodOverhead")
-    public void setPeriodOverhead(Integer periodOverhead) {
+    public ScenarioAnalysis setPeriodOverhead(Integer periodOverhead) {
         this.periodOverhead = periodOverhead;
+        return this;
     }
 
     @JsonProperty("pieceAndPeriod")
@@ -1507,8 +1613,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("pieceAndPeriod")
-    public void setPieceAndPeriod(Integer pieceAndPeriod) {
+    public ScenarioAnalysis setPieceAndPeriod(Integer pieceAndPeriod) {
         this.pieceAndPeriod = pieceAndPeriod;
+        return this;
     }
 
     @JsonProperty("pieceCost")
@@ -1517,8 +1624,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("pieceCost")
-    public void setPieceCost(Integer pieceCost) {
+    public ScenarioAnalysis setPieceCost(Integer pieceCost) {
         this.pieceCost = pieceCost;
+        return this;
     }
 
     @JsonProperty("plantLaborRateAdjustmentFactor")
@@ -1527,8 +1635,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("plantLaborRateAdjustmentFactor")
-    public void setPlantLaborRateAdjustmentFactor(Integer plantLaborRateAdjustmentFactor) {
+    public ScenarioAnalysis setPlantLaborRateAdjustmentFactor(Integer plantLaborRateAdjustmentFactor) {
         this.plantLaborRateAdjustmentFactor = plantLaborRateAdjustmentFactor;
+        return this;
     }
 
     @JsonProperty("processRoutingName")
@@ -1537,8 +1646,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("processRoutingName")
-    public void setProcessRoutingName(String processRoutingName) {
+    public ScenarioAnalysis setProcessRoutingName(String processRoutingName) {
         this.processRoutingName = processRoutingName;
+        return this;
     }
 
     @JsonProperty("productionDaysPerYear")
@@ -1547,8 +1657,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("productionDaysPerYear")
-    public void setProductionDaysPerYear(Integer productionDaysPerYear) {
+    public ScenarioAnalysis setProductionDaysPerYear(Integer productionDaysPerYear) {
         this.productionDaysPerYear = productionDaysPerYear;
+        return this;
     }
 
     @JsonProperty("productionLife")
@@ -1557,8 +1668,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("productionLife")
-    public void setProductionLife(Integer productionLife) {
+    public ScenarioAnalysis setProductionLife(Integer productionLife) {
         this.productionLife = productionLife;
+        return this;
     }
 
     @JsonProperty("programmingCost")
@@ -1567,8 +1679,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("programmingCost")
-    public void setProgrammingCost(Integer programmingCost) {
+    public ScenarioAnalysis setProgrammingCost(Integer programmingCost) {
         this.programmingCost = programmingCost;
+        return this;
     }
 
     @JsonProperty("programmingCostPerPart")
@@ -1577,8 +1690,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("programmingCostPerPart")
-    public void setProgrammingCostPerPart(Integer programmingCostPerPart) {
+    public ScenarioAnalysis setProgrammingCostPerPart(Integer programmingCostPerPart) {
         this.programmingCostPerPart = programmingCostPerPart;
+        return this;
     }
 
     @JsonProperty("purchasingDepartmentCost")
@@ -1587,8 +1701,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("purchasingDepartmentCost")
-    public void setPurchasingDepartmentCost(Integer purchasingDepartmentCost) {
+    public ScenarioAnalysis setPurchasingDepartmentCost(Integer purchasingDepartmentCost) {
         this.purchasingDepartmentCost = purchasingDepartmentCost;
+        return this;
     }
 
     @JsonProperty("purchasingPowerFactor")
@@ -1597,8 +1712,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("purchasingPowerFactor")
-    public void setPurchasingPowerFactor(Integer purchasingPowerFactor) {
+    public ScenarioAnalysis setPurchasingPowerFactor(Integer purchasingPowerFactor) {
         this.purchasingPowerFactor = purchasingPowerFactor;
+        return this;
     }
 
     @JsonProperty("purchasingSupportAllocation")
@@ -1607,8 +1723,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("purchasingSupportAllocation")
-    public void setPurchasingSupportAllocation(Integer purchasingSupportAllocation) {
+    public ScenarioAnalysis setPurchasingSupportAllocation(Integer purchasingSupportAllocation) {
         this.purchasingSupportAllocation = purchasingSupportAllocation;
+        return this;
     }
 
     @JsonProperty("purchasingSupportRate")
@@ -1617,8 +1734,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("purchasingSupportRate")
-    public void setPurchasingSupportRate(Integer purchasingSupportRate) {
+    public ScenarioAnalysis setPurchasingSupportRate(Integer purchasingSupportRate) {
         this.purchasingSupportRate = purchasingSupportRate;
+        return this;
     }
 
     @JsonProperty("qualityDepartmentCost")
@@ -1627,8 +1745,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("qualityDepartmentCost")
-    public void setQualityDepartmentCost(Integer qualityDepartmentCost) {
+    public ScenarioAnalysis setQualityDepartmentCost(Integer qualityDepartmentCost) {
         this.qualityDepartmentCost = qualityDepartmentCost;
+        return this;
     }
 
     @JsonProperty("qualitySupportAllocation")
@@ -1637,8 +1756,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("qualitySupportAllocation")
-    public void setQualitySupportAllocation(Integer qualitySupportAllocation) {
+    public ScenarioAnalysis setQualitySupportAllocation(Integer qualitySupportAllocation) {
         this.qualitySupportAllocation = qualitySupportAllocation;
+        return this;
     }
 
     @JsonProperty("qualitySupportRate")
@@ -1647,8 +1767,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("qualitySupportRate")
-    public void setQualitySupportRate(Integer qualitySupportRate) {
+    public ScenarioAnalysis setQualitySupportRate(Integer qualitySupportRate) {
         this.qualitySupportRate = qualitySupportRate;
+        return this;
     }
 
     @JsonProperty("rentCost")
@@ -1657,8 +1778,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("rentCost")
-    public void setRentCost(Integer rentCost) {
+    public ScenarioAnalysis setRentCost(Integer rentCost) {
         this.rentCost = rentCost;
+        return this;
     }
 
     @JsonProperty("rentRate")
@@ -1667,8 +1789,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("rentRate")
-    public void setRentRate(Integer rentRate) {
+    public ScenarioAnalysis setRentRate(Integer rentRate) {
         this.rentRate = rentRate;
+        return this;
     }
 
     @JsonProperty("roughLength")
@@ -1677,8 +1800,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("roughLength")
-    public void setRoughLength(Integer roughLength) {
+    public ScenarioAnalysis setRoughLength(Integer roughLength) {
         this.roughLength = roughLength;
+        return this;
     }
 
     @JsonProperty("roughMass")
@@ -1687,8 +1811,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("roughMass")
-    public void setRoughMass(Integer roughMass) {
+    public ScenarioAnalysis setRoughMass(Integer roughMass) {
         this.roughMass = roughMass;
+        return this;
     }
 
     @JsonProperty("salvageValue")
@@ -1697,8 +1822,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("salvageValue")
-    public void setSalvageValue(Integer salvageValue) {
+    public ScenarioAnalysis setSalvageValue(Integer salvageValue) {
         this.salvageValue = salvageValue;
+        return this;
     }
 
     @JsonProperty("salvageValueFactor")
@@ -1707,8 +1833,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("salvageValueFactor")
-    public void setSalvageValueFactor(Integer salvageValueFactor) {
+    public ScenarioAnalysis setSalvageValueFactor(Integer salvageValueFactor) {
         this.salvageValueFactor = salvageValueFactor;
+        return this;
     }
 
     @JsonProperty("scrapMass")
@@ -1717,8 +1844,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("scrapMass")
-    public void setScrapMass(Integer scrapMass) {
+    public ScenarioAnalysis setScrapMass(Integer scrapMass) {
         this.scrapMass = scrapMass;
+        return this;
     }
 
     @JsonProperty("scrapPartCredit")
@@ -1727,8 +1855,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("scrapPartCredit")
-    public void setScrapPartCredit(Integer scrapPartCredit) {
+    public ScenarioAnalysis setScrapPartCredit(Integer scrapPartCredit) {
         this.scrapPartCredit = scrapPartCredit;
+        return this;
     }
 
     @JsonProperty("setupCostPerCore")
@@ -1737,8 +1866,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("setupCostPerCore")
-    public void setSetupCostPerCore(Integer setupCostPerCore) {
+    public ScenarioAnalysis setSetupCostPerCore(Integer setupCostPerCore) {
         this.setupCostPerCore = setupCostPerCore;
+        return this;
     }
 
     @JsonProperty("setupCostPerPart")
@@ -1747,8 +1877,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("setupCostPerPart")
-    public void setSetupCostPerPart(Integer setupCostPerPart) {
+    public ScenarioAnalysis setSetupCostPerPart(Integer setupCostPerPart) {
         this.setupCostPerPart = setupCostPerPart;
+        return this;
     }
 
     @JsonProperty("sgaCost")
@@ -1757,8 +1888,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("sgaCost")
-    public void setSgaCost(Integer sgaCost) {
+    public ScenarioAnalysis setSgaCost(Integer sgaCost) {
         this.sgaCost = sgaCost;
+        return this;
     }
 
     @JsonProperty("sgaPercent")
@@ -1767,8 +1899,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("sgaPercent")
-    public void setSgaPercent(Integer sgaPercent) {
+    public ScenarioAnalysis setSgaPercent(Integer sgaPercent) {
         this.sgaPercent = sgaPercent;
+        return this;
     }
 
     @JsonProperty("shiftsPerDay")
@@ -1777,8 +1910,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("shiftsPerDay")
-    public void setShiftsPerDay(Integer shiftsPerDay) {
+    public ScenarioAnalysis setShiftsPerDay(Integer shiftsPerDay) {
         this.shiftsPerDay = shiftsPerDay;
+        return this;
     }
 
     @JsonProperty("skillLevel")
@@ -1787,8 +1921,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("skillLevel")
-    public void setSkillLevel(Integer skillLevel) {
+    public ScenarioAnalysis setSkillLevel(Integer skillLevel) {
         this.skillLevel = skillLevel;
+        return this;
     }
 
     @JsonProperty("stockPropertyHeight")
@@ -1797,8 +1932,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("stockPropertyHeight")
-    public void setStockPropertyHeight(Integer stockPropertyHeight) {
+    public ScenarioAnalysis setStockPropertyHeight(Integer stockPropertyHeight) {
         this.stockPropertyHeight = stockPropertyHeight;
+        return this;
     }
 
     @JsonProperty("stockPropertyInsideDia")
@@ -1807,8 +1943,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("stockPropertyInsideDia")
-    public void setStockPropertyInsideDia(Integer stockPropertyInsideDia) {
+    public ScenarioAnalysis setStockPropertyInsideDia(Integer stockPropertyInsideDia) {
         this.stockPropertyInsideDia = stockPropertyInsideDia;
+        return this;
     }
 
     @JsonProperty("stockPropertyLength")
@@ -1817,8 +1954,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("stockPropertyLength")
-    public void setStockPropertyLength(Integer stockPropertyLength) {
+    public ScenarioAnalysis setStockPropertyLength(Integer stockPropertyLength) {
         this.stockPropertyLength = stockPropertyLength;
+        return this;
     }
 
     @JsonProperty("stockPropertyOutsideDia")
@@ -1827,8 +1965,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("stockPropertyOutsideDia")
-    public void setStockPropertyOutsideDia(Integer stockPropertyOutsideDia) {
+    public ScenarioAnalysis setStockPropertyOutsideDia(Integer stockPropertyOutsideDia) {
         this.stockPropertyOutsideDia = stockPropertyOutsideDia;
+        return this;
     }
 
     @JsonProperty("stockPropertyThickness")
@@ -1837,8 +1976,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("stockPropertyThickness")
-    public void setStockPropertyThickness(Integer stockPropertyThickness) {
+    public ScenarioAnalysis setStockPropertyThickness(Integer stockPropertyThickness) {
         this.stockPropertyThickness = stockPropertyThickness;
+        return this;
     }
 
     @JsonProperty("stockPropertyWallThickness")
@@ -1847,8 +1987,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("stockPropertyWallThickness")
-    public void setStockPropertyWallThickness(Integer stockPropertyWallThickness) {
+    public ScenarioAnalysis setStockPropertyWallThickness(Integer stockPropertyWallThickness) {
         this.stockPropertyWallThickness = stockPropertyWallThickness;
+        return this;
     }
 
     @JsonProperty("stockPropertyWidth")
@@ -1857,8 +1998,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("stockPropertyWidth")
-    public void setStockPropertyWidth(Integer stockPropertyWidth) {
+    public ScenarioAnalysis setStockPropertyWidth(Integer stockPropertyWidth) {
         this.stockPropertyWidth = stockPropertyWidth;
+        return this;
     }
 
     @JsonProperty("stripNestingPitch")
@@ -1867,8 +2009,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("stripNestingPitch")
-    public void setStripNestingPitch(Integer stripNestingPitch) {
+    public ScenarioAnalysis setStripNestingPitch(Integer stripNestingPitch) {
         this.stripNestingPitch = stripNestingPitch;
+        return this;
     }
 
     @JsonProperty("suppliesCost")
@@ -1877,8 +2020,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("suppliesCost")
-    public void setSuppliesCost(Integer suppliesCost) {
+    public ScenarioAnalysis setSuppliesCost(Integer suppliesCost) {
         this.suppliesCost = suppliesCost;
+        return this;
     }
 
     @JsonProperty("supportAllocation")
@@ -1887,8 +2031,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("supportAllocation")
-    public void setSupportAllocation(Integer supportAllocation) {
+    public ScenarioAnalysis setSupportAllocation(Integer supportAllocation) {
         this.supportAllocation = supportAllocation;
+        return this;
     }
 
     @JsonProperty("supportServicesCost")
@@ -1897,8 +2042,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("supportServicesCost")
-    public void setSupportServicesCost(Integer supportServicesCost) {
+    public ScenarioAnalysis setSupportServicesCost(Integer supportServicesCost) {
         this.supportServicesCost = supportServicesCost;
+        return this;
     }
 
     @JsonProperty("toolCribDepartmentCost")
@@ -1907,8 +2053,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("toolCribDepartmentCost")
-    public void setToolCribDepartmentCost(Integer toolCribDepartmentCost) {
+    public ScenarioAnalysis setToolCribDepartmentCost(Integer toolCribDepartmentCost) {
         this.toolCribDepartmentCost = toolCribDepartmentCost;
+        return this;
     }
 
     @JsonProperty("toolCribSupportAllocation")
@@ -1917,8 +2064,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("toolCribSupportAllocation")
-    public void setToolCribSupportAllocation(Integer toolCribSupportAllocation) {
+    public ScenarioAnalysis setToolCribSupportAllocation(Integer toolCribSupportAllocation) {
         this.toolCribSupportAllocation = toolCribSupportAllocation;
+        return this;
     }
 
     @JsonProperty("toolCribSupportRate")
@@ -1927,8 +2075,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("toolCribSupportRate")
-    public void setToolCribSupportRate(Integer toolCribSupportRate) {
+    public ScenarioAnalysis setToolCribSupportRate(Integer toolCribSupportRate) {
         this.toolCribSupportRate = toolCribSupportRate;
+        return this;
     }
 
     @JsonProperty("toolingCostPerPart")
@@ -1937,8 +2086,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("toolingCostPerPart")
-    public void setToolingCostPerPart(Integer toolingCostPerPart) {
+    public ScenarioAnalysis setToolingCostPerPart(Integer toolingCostPerPart) {
         this.toolingCostPerPart = toolingCostPerPart;
+        return this;
     }
 
     @JsonProperty("totalCost")
@@ -1947,8 +2097,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("totalCost")
-    public void setTotalCost(Integer totalCost) {
+    public ScenarioAnalysis setTotalCost(Integer totalCost) {
         this.totalCost = totalCost;
+        return this;
     }
 
     @JsonProperty("totalMachineCost")
@@ -1957,8 +2108,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("totalMachineCost")
-    public void setTotalMachineCost(Integer totalMachineCost) {
+    public ScenarioAnalysis setTotalMachineCost(Integer totalMachineCost) {
         this.totalMachineCost = totalMachineCost;
+        return this;
     }
 
     @JsonProperty("totalProductionVolume")
@@ -1967,8 +2119,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("totalProductionVolume")
-    public void setTotalProductionVolume(Integer totalProductionVolume) {
+    public ScenarioAnalysis setTotalProductionVolume(Integer totalProductionVolume) {
         this.totalProductionVolume = totalProductionVolume;
+        return this;
     }
 
     @JsonProperty("updatedAt")
@@ -1977,8 +2130,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("updatedAt")
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public ScenarioAnalysis setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+        return this;
     }
 
     @JsonProperty("updatedBy")
@@ -1987,8 +2141,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("updatedBy")
-    public void setUpdatedBy(String updatedBy) {
+    public ScenarioAnalysis setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+        return this;
     }
 
     @JsonProperty("updatedByName")
@@ -1997,8 +2152,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("updatedByName")
-    public void setUpdatedByName(String updatedByName) {
+    public ScenarioAnalysis setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
+        return this;
     }
 
     @JsonProperty("useComputedOverheadRate")
@@ -2007,8 +2163,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("useComputedOverheadRate")
-    public void setUseComputedOverheadRate(Boolean useComputedOverheadRate) {
+    public ScenarioAnalysis setUseComputedOverheadRate(Boolean useComputedOverheadRate) {
         this.useComputedOverheadRate = useComputedOverheadRate;
+        return this;
     }
 
     @JsonProperty("useIndirectOverheadPercentage")
@@ -2017,8 +2174,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("useIndirectOverheadPercentage")
-    public void setUseIndirectOverheadPercentage(Boolean useIndirectOverheadPercentage) {
+    public ScenarioAnalysis setUseIndirectOverheadPercentage(Boolean useIndirectOverheadPercentage) {
         this.useIndirectOverheadPercentage = useIndirectOverheadPercentage;
+        return this;
     }
 
     @JsonProperty("utilitiesCost")
@@ -2027,8 +2185,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("utilitiesCost")
-    public void setUtilitiesCost(Integer utilitiesCost) {
+    public ScenarioAnalysis setUtilitiesCost(Integer utilitiesCost) {
         this.utilitiesCost = utilitiesCost;
+        return this;
     }
 
     @JsonProperty("utilization")
@@ -2037,8 +2196,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("utilization")
-    public void setUtilization(Integer utilization) {
+    public ScenarioAnalysis setUtilization(Integer utilization) {
         this.utilization = utilization;
+        return this;
     }
 
     @JsonProperty("utilizationWithAddendum")
@@ -2047,8 +2207,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("utilizationWithAddendum")
-    public void setUtilizationWithAddendum(Integer utilizationWithAddendum) {
+    public ScenarioAnalysis setUtilizationWithAddendum(Integer utilizationWithAddendum) {
         this.utilizationWithAddendum = utilizationWithAddendum;
+        return this;
     }
 
     @JsonProperty("utilizationWithoutAddendum")
@@ -2057,8 +2218,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("utilizationWithoutAddendum")
-    public void setUtilizationWithoutAddendum(Integer utilizationWithoutAddendum) {
+    public ScenarioAnalysis setUtilizationWithoutAddendum(Integer utilizationWithoutAddendum) {
         this.utilizationWithoutAddendum = utilizationWithoutAddendum;
+        return this;
     }
 
     @JsonProperty("virtualMaterialStockName")
@@ -2067,8 +2229,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("virtualMaterialStockName")
-    public void setVirtualMaterialStockName(String virtualMaterialStockName) {
+    public ScenarioAnalysis setVirtualMaterialStockName(String virtualMaterialStockName) {
         this.virtualMaterialStockName = virtualMaterialStockName;
+        return this;
     }
 
     @JsonProperty("width")
@@ -2077,8 +2240,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("width")
-    public void setWidth(Integer width) {
+    public ScenarioAnalysis setWidth(Integer width) {
         this.width = width;
+        return this;
     }
 
     @JsonProperty("workCenterCapacity")
@@ -2087,8 +2251,9 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("workCenterCapacity")
-    public void setWorkCenterCapacity(Integer workCenterCapacity) {
+    public ScenarioAnalysis setWorkCenterCapacity(Integer workCenterCapacity) {
         this.workCenterCapacity = workCenterCapacity;
+        return this;
     }
 
     @JsonProperty("workCenterFootprint")
@@ -2097,18 +2262,8 @@ public class ScenarioAnalysis {
     }
 
     @JsonProperty("workCenterFootprint")
-    public void setWorkCenterFootprint(Integer workCenterFootprint) {
+    public ScenarioAnalysis setWorkCenterFootprint(Integer workCenterFootprint) {
         this.workCenterFootprint = workCenterFootprint;
+        return this;
     }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
 }

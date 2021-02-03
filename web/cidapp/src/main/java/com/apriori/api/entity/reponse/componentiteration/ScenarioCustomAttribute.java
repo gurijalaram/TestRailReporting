@@ -33,103 +33,116 @@ public class ScenarioCustomAttribute {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public ScenarioCustomAttribute setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public ScenarioCustomAttribute setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     public String getCreatedByName() {
         return createdByName;
     }
 
-    public void setCreatedByName(String createdByName) {
+    public ScenarioCustomAttribute setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+        return this;
     }
 
     public LocalDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(LocalDateTime deletedAt) {
+    public ScenarioCustomAttribute setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+        return this;
     }
 
     public String getDeletedBy() {
         return deletedBy;
     }
 
-    public void setDeletedBy(String deletedBy) {
+    public ScenarioCustomAttribute setDeletedBy(String deletedBy) {
         this.deletedBy = deletedBy;
+        return this;
     }
 
     public String getDeletedByName() {
         return deletedByName;
     }
 
-    public void setDeletedByName(String deletedByName) {
+    public ScenarioCustomAttribute setDeletedByName(String deletedByName) {
         this.deletedByName = deletedByName;
+        return this;
     }
 
     public String getIdentity() {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public ScenarioCustomAttribute setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public ScenarioCustomAttribute setKey(String key) {
         this.key = key;
+        return this;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public ScenarioCustomAttribute setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+        return this;
     }
 
     public String getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(String updatedBy) {
+    public ScenarioCustomAttribute setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+        return this;
     }
 
     public String getUpdatedByName() {
         return updatedByName;
     }
 
-    public void setUpdatedByName(String updatedByName) {
+    public ScenarioCustomAttribute setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
+        return this;
     }
 
     public String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public ScenarioCustomAttribute setValue(String value) {
         this.value = value;
+        return this;
     }
 
     public String getValueType() {
         return valueType;
     }
 
-    public void setValueType(String valueType) {
+    public ScenarioCustomAttribute setValueType(String valueType) {
         this.valueType = valueType;
+        return this;
     }
 }

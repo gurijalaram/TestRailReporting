@@ -55,271 +55,305 @@ public class ScenarioDtcIssue {
         return attributeId;
     }
 
-    public void setAttributeId(String attributeId) {
+    public ScenarioDtcIssue setAttributeId(String attributeId) {
         this.attributeId = attributeId;
+        return this;
     }
 
     public String getAttributeText() {
         return attributeText;
     }
 
-    public void setAttributeText(String attributeText) {
+    public ScenarioDtcIssue setAttributeText(String attributeText) {
         this.attributeText = attributeText;
+        return this;
     }
 
     public String getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public ScenarioDtcIssue setCategory(String category) {
         this.category = category;
+        return this;
     }
 
     public String getCategoryText() {
         return categoryText;
     }
 
-    public void setCategoryText(String categoryText) {
+    public ScenarioDtcIssue setCategoryText(String categoryText) {
         this.categoryText = categoryText;
+        return this;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public ScenarioDtcIssue setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public ScenarioDtcIssue setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     public String getCreatedByName() {
         return createdByName;
     }
 
-    public void setCreatedByName(String createdByName) {
+    public ScenarioDtcIssue setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+        return this;
     }
 
     public Integer getCurrentValue() {
         return currentValue;
     }
 
-    public void setCurrentValue(Integer currentValue) {
+    public ScenarioDtcIssue setCurrentValue(Integer currentValue) {
         this.currentValue = currentValue;
+        return this;
     }
 
     public String getCurrentValueText() {
         return currentValueText;
     }
 
-    public void setCurrentValueText(String currentValueText) {
+    public ScenarioDtcIssue setCurrentValueText(String currentValueText) {
         this.currentValueText = currentValueText;
+        return this;
     }
 
     public Integer getDecimalPlaces() {
         return decimalPlaces;
     }
 
-    public void setDecimalPlaces(Integer decimalPlaces) {
+    public ScenarioDtcIssue setDecimalPlaces(Integer decimalPlaces) {
         this.decimalPlaces = decimalPlaces;
+        return this;
     }
 
     public LocalDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(LocalDateTime deletedAt) {
+    public ScenarioDtcIssue setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+        return this;
     }
 
     public String getDeletedBy() {
         return deletedBy;
     }
 
-    public void setDeletedBy(String deletedBy) {
+    public ScenarioDtcIssue setDeletedBy(String deletedBy) {
         this.deletedBy = deletedBy;
+        return this;
     }
 
     public String getDeletedByName() {
         return deletedByName;
     }
 
-    public void setDeletedByName(String deletedByName) {
+    public ScenarioDtcIssue setDeletedByName(String deletedByName) {
         this.deletedByName = deletedByName;
+        return this;
     }
 
     public String getDtcIssueType() {
         return dtcIssueType;
     }
 
-    public void setDtcIssueType(String dtcIssueType) {
+    public ScenarioDtcIssue setDtcIssueType(String dtcIssueType) {
         this.dtcIssueType = dtcIssueType;
+        return this;
     }
 
     public String getGcdArtifactTypeName() {
         return gcdArtifactTypeName;
     }
 
-    public void setGcdArtifactTypeName(String gcdArtifactTypeName) {
+    public ScenarioDtcIssue setGcdArtifactTypeName(String gcdArtifactTypeName) {
         this.gcdArtifactTypeName = gcdArtifactTypeName;
+        return this;
     }
 
     public String getGcdDisplayName() {
         return gcdDisplayName;
     }
 
-    public void setGcdDisplayName(String gcdDisplayName) {
+    public ScenarioDtcIssue setGcdDisplayName(String gcdDisplayName) {
         this.gcdDisplayName = gcdDisplayName;
+        return this;
     }
 
     public Integer getGcdSequenceNumber() {
         return gcdSequenceNumber;
     }
 
-    public void setGcdSequenceNumber(Integer gcdSequenceNumber) {
+    public ScenarioDtcIssue setGcdSequenceNumber(Integer gcdSequenceNumber) {
         this.gcdSequenceNumber = gcdSequenceNumber;
+        return this;
     }
 
     public String getIdentity() {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public ScenarioDtcIssue setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     public String getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(String messageId) {
+    public ScenarioDtcIssue setMessageId(String messageId) {
         this.messageId = messageId;
+        return this;
     }
 
     public String getMessageText() {
         return messageText;
     }
 
-    public void setMessageText(String messageText) {
+    public ScenarioDtcIssue setMessageText(String messageText) {
         this.messageText = messageText;
+        return this;
     }
 
     public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(Integer priority) {
+    public ScenarioDtcIssue setPriority(Integer priority) {
         this.priority = priority;
+        return this;
     }
 
     public String getProcessDisplayName() {
         return processDisplayName;
     }
 
-    public void setProcessDisplayName(String processDisplayName) {
+    public ScenarioDtcIssue setProcessDisplayName(String processDisplayName) {
         this.processDisplayName = processDisplayName;
+        return this;
     }
 
     public String getProcessGroupName() {
         return processGroupName;
     }
 
-    public void setProcessGroupName(String processGroupName) {
+    public ScenarioDtcIssue setProcessGroupName(String processGroupName) {
         this.processGroupName = processGroupName;
+        return this;
     }
 
     public Integer getProcessIndex() {
         return processIndex;
     }
 
-    public void setProcessIndex(Integer processIndex) {
+    public ScenarioDtcIssue setProcessIndex(Integer processIndex) {
         this.processIndex = processIndex;
+        return this;
     }
 
     public String getProcessName() {
         return processName;
     }
 
-    public void setProcessName(String processName) {
+    public ScenarioDtcIssue setProcessName(String processName) {
         this.processName = processName;
+        return this;
     }
 
     public String getRule() {
         return rule;
     }
 
-    public void setRule(String rule) {
+    public ScenarioDtcIssue setRule(String rule) {
         this.rule = rule;
+        return this;
     }
 
     public Integer getSuggestedMinValue() {
         return suggestedMinValue;
     }
 
-    public void setSuggestedMinValue(Integer suggestedMinValue) {
+    public ScenarioDtcIssue setSuggestedMinValue(Integer suggestedMinValue) {
         this.suggestedMinValue = suggestedMinValue;
+        return this;
     }
 
     public String getSuggestedMinValueText() {
         return suggestedMinValueText;
     }
 
-    public void setSuggestedMinValueText(String suggestedMinValueText) {
+    public ScenarioDtcIssue setSuggestedMinValueText(String suggestedMinValueText) {
         this.suggestedMinValueText = suggestedMinValueText;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public ScenarioDtcIssue setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getUnitType() {
         return unitType;
     }
 
-    public void setUnitType(String unitType) {
+    public ScenarioDtcIssue setUnitType(String unitType) {
         this.unitType = unitType;
+        return this;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public ScenarioDtcIssue setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+        return this;
     }
 
     public String getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(String updatedBy) {
+    public ScenarioDtcIssue setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+        return this;
     }
 
     public String getUpdatedByName() {
         return updatedByName;
     }
 
-    public void setUpdatedByName(String updatedByName) {
+    public ScenarioDtcIssue setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
+        return this;
     }
 
     public String getVpeName() {
         return vpeName;
     }
 
-    public void setVpeName(String vpeName) {
+    public ScenarioDtcIssue setVpeName(String vpeName) {
         this.vpeName = vpeName;
+        return this;
     }
 }
