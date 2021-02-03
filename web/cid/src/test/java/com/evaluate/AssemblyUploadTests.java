@@ -34,6 +34,9 @@ import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AssemblyUploadTests extends TestBase {
 
@@ -49,6 +52,8 @@ public class AssemblyUploadTests extends TestBase {
     private File resourceFile4;
     private String scenarioName;
     private FileUploadPage fileUploadPage;
+
+    private InputStream resourceFiles;
 
     public AssemblyUploadTests() {
         super();
@@ -343,14 +348,21 @@ public class AssemblyUploadTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Assembly2.stp");
         resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
         resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
         resourceFile4 = FileResourceUtil.getCloudFile(processGroupEnum, "CastedPart.CATPart");
 
+        List<File> multiFiles = new ArrayList<>();
+        multiFiles.add(resourceFile);
+        multiFiles.add(resourceFile2);
+        multiFiles.add(resourceFile3);
+        multiFiles.add(resourceFile4);
+
         loginPage = new CidLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadFileAndOk(scenarioName, new File(resourceFile + "\n" + resourceFile2 + "\n" + resourceFile3 + "\n" + resourceFile4), ExplorePage.class)
+            .uploadFileAndOk(scenarioName, multiFiles, ExplorePage.class)
             .openJobQueue()
             .checkJobQueueActionStatus("Assembly2", scenarioName, "Translate", "okay")
             .closeJobQueue(ExplorePage.class)
