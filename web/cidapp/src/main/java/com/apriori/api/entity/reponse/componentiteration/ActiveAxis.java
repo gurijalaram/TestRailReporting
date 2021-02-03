@@ -1,15 +1,7 @@
 package com.apriori.api.entity.reponse.componentiteration;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "additionalProp1",
-    "additionalProp2",
-    "additionalProp3"
-})
 public class ActiveAxis {
 
     @JsonProperty("additionalProp1")
