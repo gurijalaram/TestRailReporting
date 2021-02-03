@@ -187,7 +187,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3360")
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidBase() {
@@ -196,7 +196,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3360")
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidFinal() {
