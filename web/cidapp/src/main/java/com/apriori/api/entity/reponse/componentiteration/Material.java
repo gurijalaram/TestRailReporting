@@ -58,159 +58,179 @@ public class Material {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public Material setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public Material setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public Material setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     public String getAltName1() {
         return altName1;
     }
 
-    public void setAltName1(String altName1) {
+    public Material setAltName1(String altName1) {
         this.altName1 = altName1;
+        return this;
     }
 
     public String getAltName2() {
         return altName2;
     }
 
-    public void setAltName2(String altName2) {
+    public Material setAltName2(String altName2) {
         this.altName2 = altName2;
+        return this;
     }
 
     public String getAltName3() {
         return altName3;
     }
 
-    public void setAltName3(String altName3) {
+    public Material setAltName3(String altName3) {
         this.altName3 = altName3;
+        return this;
     }
 
     public String getAltName4() {
         return altName4;
     }
 
-    public void setAltName4(String altName4) {
+    public Material setAltName4(String altName4) {
         this.altName4 = altName4;
+        return this;
     }
 
     public String getAltName5() {
         return altName5;
     }
 
-    public void setAltName5(String altName5) {
+    public Material setAltName5(String altName5) {
         this.altName5 = altName5;
+        return this;
     }
 
     public String getCostUnits() {
         return costUnits;
     }
 
-    public void setCostUnits(String costUnits) {
+    public Material setCostUnits(String costUnits) {
         this.costUnits = costUnits;
+        return this;
     }
 
     public String getDataSource() {
         return dataSource;
     }
 
-    public void setDataSource(String dataSource) {
+    public Material setDataSource(String dataSource) {
         this.dataSource = dataSource;
+        return this;
     }
 
     public Integer getDensity() {
         return density;
     }
 
-    public void setDensity(Integer density) {
+    public Material setDensity(Integer density) {
         this.density = density;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Material setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public Integer getHardness() {
         return hardness;
     }
 
-    public void setHardness(Integer hardness) {
+    public Material setHardness(Integer hardness) {
         this.hardness = hardness;
+        return this;
     }
 
     public String getHardnessSystem() {
         return hardnessSystem;
     }
 
-    public void setHardnessSystem(String hardnessSystem) {
+    public Material setHardnessSystem(String hardnessSystem) {
         this.hardnessSystem = hardnessSystem;
+        return this;
     }
 
     public Double getMaterialCutCodeName() {
         return materialCutCodeName;
     }
 
-    public void setMaterialCutCodeName(Double materialCutCodeName) {
+    public Material setMaterialCutCodeName(Double materialCutCodeName) {
         this.materialCutCodeName = materialCutCodeName;
+        return this;
     }
 
     public String getMaterialTypeName() {
         return materialTypeName;
     }
 
-    public void setMaterialTypeName(String materialTypeName) {
+    public Material setMaterialTypeName(String materialTypeName) {
         this.materialTypeName = materialTypeName;
+        return this;
     }
 
     public Integer getMillingSpeed() {
         return millingSpeed;
     }
 
-    public void setMillingSpeed(Integer millingSpeed) {
+    public Material setMillingSpeed(Integer millingSpeed) {
         this.millingSpeed = millingSpeed;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Material setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Double getScrapCostPercent() {
         return scrapCostPercent;
     }
 
-    public void setScrapCostPercent(Double scrapCostPercent) {
+    public Material setScrapCostPercent(Double scrapCostPercent) {
         this.scrapCostPercent = scrapCostPercent;
+        return this;
     }
 
     public Integer getShearStrength() {
         return shearStrength;
     }
 
-    public void setShearStrength(Integer shearStrength) {
+    public Material setShearStrength(Integer shearStrength) {
         this.shearStrength = shearStrength;
+        return this;
     }
 }
