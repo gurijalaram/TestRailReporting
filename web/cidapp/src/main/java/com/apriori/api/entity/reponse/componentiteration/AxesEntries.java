@@ -18,8 +18,9 @@ public class AxesEntries {
     }
 
     @JsonProperty("additionalProp1")
-    public void setAdditionalProp1(AxesAdditionalProp1 additionalProp1) {
+    public AxesEntries setAdditionalProp1(AxesAdditionalProp1 additionalProp1) {
         this.additionalProp1 = additionalProp1;
+        return this;
     }
 
     @JsonProperty("additionalProp2")
@@ -28,8 +29,9 @@ public class AxesEntries {
     }
 
     @JsonProperty("additionalProp2")
-    public void setAdditionalProp2(AxesAdditionalProp2 additionalProp2) {
+    public AxesEntries setAdditionalProp2(AxesAdditionalProp2 additionalProp2) {
         this.additionalProp2 = additionalProp2;
+        return this;
     }
 
     @JsonProperty("additionalProp3")
@@ -38,7 +40,8 @@ public class AxesEntries {
     }
 
     @JsonProperty("additionalProp3")
-    public void setAdditionalProp3(AxesAdditionalProp3 additionalProp3) {
+    public AxesEntries setAdditionalProp3(AxesAdditionalProp3 additionalProp3) {
         this.additionalProp3 = additionalProp3;
+        return this;
     }
 }
