@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.objects.Customers;
-import com.apriori.apibase.services.cds.objects.Customer;
+import com.apriori.apibase.services.cas.objects.SingleCustomer;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
@@ -64,7 +64,7 @@ public class CasCustomersTest extends TestUtil {
 
        String identityEndpoint = apiUrl + "/" + identity;
 
-       ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, Customer.class,
+       ResponseWrapper<SingleCustomer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, SingleCustomer.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
