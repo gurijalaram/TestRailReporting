@@ -1,5 +1,6 @@
 
 package com.apriori.api.entity.reponse.componentiteration;
 
-public class AdditionalProp1__ {
+public class FaceAdditionalProp3 {
+
 }

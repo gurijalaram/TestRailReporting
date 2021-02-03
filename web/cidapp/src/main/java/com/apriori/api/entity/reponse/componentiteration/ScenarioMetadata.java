@@ -17,7 +17,7 @@ public class ScenarioMetadata {
     @JsonProperty("activeDimensions")
     private ActiveDimensions activeDimensions;
     @JsonProperty("axesEntries")
-    private List<AxesEntry> axesEntries;
+    private List<AxesEntries> axesEntries;
     @JsonProperty("boundingBox")
     private List<Integer> boundingBox;
     @JsonProperty("createdAt")
@@ -74,12 +74,12 @@ public class ScenarioMetadata {
     }
 
     @JsonProperty("axesEntries")
-    public List<AxesEntry> getAxesEntries() {
+    public List<AxesEntries> getAxesEntries() {
         return axesEntries;
     }
 
     @JsonProperty("axesEntries")
-    public void setAxesEntries(List<AxesEntry> axesEntries) {
+    public void setAxesEntries(List<AxesEntries> axesEntries) {
         this.axesEntries = axesEntries;
     }
 

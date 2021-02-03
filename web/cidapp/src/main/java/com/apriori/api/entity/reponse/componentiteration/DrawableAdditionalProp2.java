@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdditionalProp2__ {
+public class DrawableAdditionalProp2 {
 
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();

@@ -1,6 +1,6 @@
 
 package com.apriori.api.entity.reponse.componentiteration;
 
-public class AdditionalProp3___ {
+public class AxesAdditionalProp3 {
 
 }

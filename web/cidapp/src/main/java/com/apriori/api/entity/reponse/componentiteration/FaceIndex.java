@@ -1,14 +1,8 @@
 package com.apriori.api.entity.reponse.componentiteration;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -19,52 +13,38 @@ import java.util.Map;
 public class FaceIndex {
 
     @JsonProperty("additionalProp1")
-    private AdditionalProp1___ additionalProp1;
+    private FaceAdditionalProp1 additionalProp1;
     @JsonProperty("additionalProp2")
-    private AdditionalProp2___ additionalProp2;
+    private FaceAdditionalProp2 additionalProp2;
     @JsonProperty("additionalProp3")
-    private AdditionalProp3___ additionalProp3;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
+    private FaceAdditionalProp3 additionalProp3;
     @JsonProperty("additionalProp1")
-    public AdditionalProp1___ getAdditionalProp1() {
+    public FaceAdditionalProp1 getAdditionalProp1() {
         return additionalProp1;
     }
 
     @JsonProperty("additionalProp1")
-    public void setAdditionalProp1(AdditionalProp1___ additionalProp1) {
+    public void setAdditionalProp1(FaceAdditionalProp1 additionalProp1) {
         this.additionalProp1 = additionalProp1;
     }
 
     @JsonProperty("additionalProp2")
-    public AdditionalProp2___ getAdditionalProp2() {
+    public FaceAdditionalProp2 getAdditionalProp2() {
         return additionalProp2;
     }
 
     @JsonProperty("additionalProp2")
-    public void setAdditionalProp2(AdditionalProp2___ additionalProp2) {
+    public void setAdditionalProp2(FaceAdditionalProp2 additionalProp2) {
         this.additionalProp2 = additionalProp2;
     }
 
     @JsonProperty("additionalProp3")
-    public AdditionalProp3___ getAdditionalProp3() {
+    public FaceAdditionalProp3 getAdditionalProp3() {
         return additionalProp3;
     }
 
     @JsonProperty("additionalProp3")
-    public void setAdditionalProp3(AdditionalProp3___ additionalProp3) {
+    public void setAdditionalProp3(FaceAdditionalProp3 additionalProp3) {
         this.additionalProp3 = additionalProp3;
     }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
 }

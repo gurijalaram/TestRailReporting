@@ -1,6 +1,5 @@
 
 package com.apriori.api.entity.reponse.componentiteration;
 
-public class AdditionalProp3_ {
-
+public class DrawableAdditionalProp1 {
 }
