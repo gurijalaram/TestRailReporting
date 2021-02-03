@@ -1,11 +1,11 @@
 package com.apriori.edc.tests.util;
 
-import com.apriori.apibase.services.ats.apicalls.SecurityManager;
 import com.apriori.apibase.services.response.objects.BillOfMaterial;
 import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
 import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper;
 import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
+import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.edc.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -47,7 +47,7 @@ public class UserTestDataUtil {
     }
 
     public String initToken(UserCredentials userCredentials) {
-        return SecurityManager.retrieveJwtToken(
+        return new JwtTokenUtil().retrieveJwtToken(
                 Constants.getEdcServiceHost(),
                 Constants.getSecretKey(),
                 HttpStatus.SC_CREATED,
