@@ -799,7 +799,6 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for Target and Quoted Cost Trend data integrity
      * @param milestoneName String
-     * @param partNameIndex String
      */
     public void testTargetQuotedCostTrendDataIntegrity(String milestoneName) {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
