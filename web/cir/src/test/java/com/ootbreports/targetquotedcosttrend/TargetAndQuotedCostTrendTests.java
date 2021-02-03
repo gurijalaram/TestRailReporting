@@ -187,55 +187,21 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3360")
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidBase() {
-        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                        TargetQuotedCostTrendReportPage.class)
-                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class)
-                .clickMilestoneLink("Base")
-                .switchTab(1)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);;
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testTargetQuotedCostTrendDataIntegrity("Base");
+    }
 
-        String partName = targetQuotedCostTrendReportPage.getPartName("1");
-
-        String reportsScenarioName = targetQuotedCostTrendReportPage.getValueFromReport("5");
-        String reportsVpe = targetQuotedCostTrendReportPage.getValueFromReport("11");
-        String reportsProcessGroup = targetQuotedCostTrendReportPage.getValueFromReport("14");
-        String reportsMaterialComposition = targetQuotedCostTrendReportPage.getValueFromReport("17")
-                .replace("\n", " ");
-        String reportsAnnualVolume = targetQuotedCostTrendReportPage.getValueFromReport("22");
-        String reportsCurrentCost = targetQuotedCostTrendReportPage.getValueFromReport("24");
-
-        targetQuotedCostTrendReportPage.openNewCidTabAndFocus(2);
-
-        EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains", partName)
-                .apply(ExplorePage.class)
-                .openFirstScenario();
-
-        String cidScenarioName = evaluatePage.getScenarioName();
-        String cidVPE = evaluatePage.getVpe();
-        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
-        String cidMaterialComposition = evaluatePage.getMaterialInfo();
-        String cidAnnualVolume = evaluatePage.getAnnualVolume();
-        String cidFbc = evaluatePage.getFullyBurdenedCostValueRoundedUp();
-
-        assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
-        assertThat(reportsVpe, is(equalTo(cidVPE)));
-        assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
-        assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
-        assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
-        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3360")
+    @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
+    public void testDataIntegrityInCidFinal() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testTargetQuotedCostTrendDataIntegrity("Final");
     }
 
     @Test

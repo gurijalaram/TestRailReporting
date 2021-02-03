@@ -14,6 +14,7 @@ import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -22,6 +23,8 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.pageobjects.pages.evaluate.EvaluatePage;
+import com.pageobjects.pages.explore.ExplorePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -791,6 +794,60 @@ public class InputControlsTests extends TestBase {
 
         assertThat(targetQuotedCostTrendReportPage.getMilestoneName(),
                 is(equalTo(String.format("Milestone: %s", milestoneName))));
+    }
+
+    /**
+     * Generic test for Target and Quoted Cost Trend data integrity
+     * @param milestoneName String
+     * @param partNameIndex String
+     */
+    public void testTargetQuotedCostTrendDataIntegrity(String milestoneName) {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                        TargetQuotedCostTrendReportPage.class)
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class)
+                .clickMilestoneLink(milestoneName)
+                .switchTab(1)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);;
+
+        String partName = targetQuotedCostTrendReportPage.getPartName("1");
+
+        String reportsScenarioName = targetQuotedCostTrendReportPage.getValueFromReport("5");
+        String reportsVpe = targetQuotedCostTrendReportPage.getValueFromReport("11");
+        String reportsProcessGroup = targetQuotedCostTrendReportPage.getValueFromReport("14");
+        String reportsMaterialComposition = targetQuotedCostTrendReportPage.getValueFromReport("17")
+                .replace("\n", " ");
+        String reportsAnnualVolume = targetQuotedCostTrendReportPage.getValueFromReport("22");
+        String reportsCurrentCost = targetQuotedCostTrendReportPage.getValueFromReport("24");
+
+        targetQuotedCostTrendReportPage.openNewCidTabAndFocus(2);
+
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("VPE", "is", VPEEnum.APRIORI_USA.getVpe())
+                .apply(ExplorePage.class)
+                .openFirstScenario();
+
+        String cidScenarioName = evaluatePage.getScenarioName();
+        String cidVPE = evaluatePage.getVpe();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
+        String cidMaterialComposition = evaluatePage.getMaterialInfo();
+        String cidAnnualVolume = evaluatePage.getAnnualVolume();
+        String cidFbc = evaluatePage.getFullyBurdenedCostValueRoundedUp();
+
+        assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
+        assertThat(reportsVpe, is(equalTo(cidVPE)));
+        assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
+        assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
+        assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
+        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
     }
 
     private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
