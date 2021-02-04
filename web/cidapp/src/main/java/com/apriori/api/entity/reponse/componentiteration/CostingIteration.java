@@ -1,6 +1,5 @@
 package com.apriori.api.entity.reponse.componentiteration;
 
-import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,11 +10,8 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "newcid/ComponentIterationsResponse.json")
 public class CostingIteration {
 
-    @JsonProperty("response")
-    private CostingIteration response;
     @JsonProperty("identity")
     private String identity;
     @JsonProperty("createdAt")
@@ -58,15 +54,6 @@ public class CostingIteration {
     private Thumbnail thumbnail;
     @JsonProperty("material")
     private Material material;
-
-    public CostingIteration getResponse() {
-        return this.response;
-    }
-
-    public CostingIteration setResponse(CostingIteration response) {
-        this.response = response;
-        return this;
-    }
 
     public String getIdentity() {
         return identity;
