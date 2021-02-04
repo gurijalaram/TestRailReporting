@@ -14,7 +14,7 @@ public class CreateDashboardPage extends ReportsPageHeader {
 
     private final Logger LOGGER = LoggerFactory.getLogger(CreateDashboardPage.class);
 
-    @FindBy(css = "div[id='display'] .title")
+    @FindBy(css = "div[class='pageHeader-title-text']")
     private WebElement dashboardPageTitle;
 
     private PageUtils pageUtils;

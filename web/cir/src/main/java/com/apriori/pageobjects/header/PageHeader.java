@@ -38,7 +38,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(id = "helpLink")
     private WebElement helpButton;
 
-    @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
+    @FindBy(css = "title")
     private WebElement homePageTitle;
 
     @FindBy(id = "main_home")
@@ -139,7 +139,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(homePageTitle);
     }
 
     /**
@@ -308,8 +307,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return String - page title text
      */
     public String getHomeTitleText() {
-        pageUtils.waitForElementToAppear(homePageTitle);
-        return homePageTitle.getText();
+        return driver.getTitle();
     }
 
     /**
@@ -350,7 +348,6 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         pageUtils.waitForElementAndClick(searchInput);
         searchInput.sendKeys(textToType);
         pageUtils.waitForElementAndClick(searchButton);
-        pageUtils.isPageLoaded(homePageTitle);
         return new ViewSearchResultsPage(driver);
     }
 }

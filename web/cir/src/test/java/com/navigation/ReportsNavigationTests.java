@@ -94,7 +94,7 @@ public class ReportsNavigationTests extends TestBase {
             .login()
             .navigateToHomePage();
 
-        assertThat(reportsPageHeader.getHomeTitleText(), is(equalTo("Home")));
+        assertThat(reportsPageHeader.getHomeTitleText(), is(containsString("Home")));
     }
 
     @Test

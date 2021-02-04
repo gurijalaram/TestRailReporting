@@ -14,7 +14,7 @@ public class ViewSchedulesPage extends ReportsPageHeader {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ViewSchedulesPage.class);
 
-    @FindBy(xpath = "//div[contains(@class, 'listOfJobs')]/div/div[1]/div")
+    @FindBy(css = "div[class='pageHeader-title-text']")
     private WebElement schedulesPageTitle;
 
     private PageUtils pageUtils;

@@ -46,7 +46,7 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
                 .failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.INVALID_ERROR_MESSAGE)));
+        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE)));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin("", "");
 
-        assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(Constants.INVALID_ERROR_MESSAGE)));
+        assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE)));
     }
 
     @Test
@@ -83,6 +83,6 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.INVALID_ERROR_MESSAGE)));
+        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE)));
     }
 }
