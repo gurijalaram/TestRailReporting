@@ -1,6 +1,5 @@
 package com.apriori.apibase.services.cas.objects;
 
-import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -16,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Schema(location = "cas/SingleCustomerSchema.json")
 public class SingleCustomer {
 
     @JsonProperty("identity")
