@@ -12,6 +12,7 @@ import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.Constants;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -23,6 +24,7 @@ public class CasCustomersTest extends TestUtil {
     private String token;
 
     @Test
+    @TestRail(testCaseId = {"5810"})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersByName() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers?sortBy[ASC]=name");
@@ -43,6 +45,7 @@ public class CasCustomersTest extends TestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = {"5645"})
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers");
