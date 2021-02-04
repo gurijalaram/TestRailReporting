@@ -38,7 +38,7 @@ public class CidApiTests extends TestUtil {
     public void cadViewerValues() {
         final String apiUrl = String.format(Constants.getApiUrl(), "components");
 
-        image = new CidApiObject().uploadFile(token, apiUrl, UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
+        image = new CidApiObject().uploadComponent(token, apiUrl, UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
 
         assertThat(image.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }

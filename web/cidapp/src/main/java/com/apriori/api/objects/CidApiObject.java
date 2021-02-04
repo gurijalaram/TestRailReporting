@@ -20,7 +20,7 @@ public class CidApiObject {
     String CONTENT_TYPE = "Content-Type";
     Map<String, String> headers = new HashMap<>();
 
-    public ResponseWrapper<Object> uploadFile(String token, String apiUrl, Class klass, String scenarioName, String partName) {
+    public ResponseWrapper<Object> uploadComponent(String token, String apiUrl, Class klass, String scenarioName, String partName) {
         headers.put(CONTENT_TYPE, "multipart/form-data");
 
         RequestEntity requestEntity = RequestEntity.init(apiUrl, klass)
