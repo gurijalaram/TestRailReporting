@@ -791,7 +791,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage clickOk() {
         pageUtils.waitForElementAndClick(okButton);
-        pageUtils.waitForElementToAppear(upperTitle);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }
 

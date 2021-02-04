@@ -177,7 +177,7 @@ public class AssemblyCostReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = "2998")
-    @Description("Validate report content aligns to aP desktop values (simple case) (Assembly Cost A4 Report)")
+    @Description("Validate report content aligns to CID values (simple case) (Assembly Cost A4 Report)")
     public void testDataIntegrityAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testAssemblyCostDataIntegrity(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
@@ -186,7 +186,7 @@ public class AssemblyCostReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = "2998")
-    @Description("Validate report content aligns to aP desktop values (simple case) (Assembly Cost Letter Report)")
+    @Description("Validate report content aligns to CID values (simple case) (Assembly Cost Letter Report)")
     public void testDataIntegrityAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testAssemblyCostDataIntegrity(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
