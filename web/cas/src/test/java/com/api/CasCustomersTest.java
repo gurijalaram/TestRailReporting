@@ -60,13 +60,15 @@ public class CasCustomersTest extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-       String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String name = response.getResponseEntity().getResponse().getItems().get(0).getName();
 
-       String identityEndpoint = apiUrl + "/" + identity;
+        String identityEndpoint = apiUrl + "/" + identity;
 
-       ResponseWrapper<SingleCustomer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, SingleCustomer.class,
+        ResponseWrapper<SingleCustomer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, SingleCustomer.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(responseIdentity.getBody().contains(name), is(true));
     }
 }

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Schema(location = "cas/SingleCustomer.json")
+@Schema(location = "cas/SingleCustomerSchema.json")
 public class SingleCustomer {
 
     @JsonProperty("identity")
