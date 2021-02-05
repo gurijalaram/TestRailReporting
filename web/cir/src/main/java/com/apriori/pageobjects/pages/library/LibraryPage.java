@@ -67,6 +67,7 @@ public class LibraryPage extends ReportsPageHeader {
         WebElement reportLinkElement = pageUtils.getReportElement(reportName);
         pageUtils.waitForElementToAppear(reportLinkElement);
         reportLinkElement.click();
+        reportLinkElement.click();
         waitForInputControlsLoad();
         return PageFactory.initElements(driver, className);
     }

@@ -387,7 +387,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("2")));
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("2")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
                 is(equalTo("0200613 (Initial) [part]")));
     }

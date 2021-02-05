@@ -764,6 +764,7 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSet(exportSet)
             .selectCostMetric(costMetric)
+            .waitForCorrectCostMetric()
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 

@@ -214,6 +214,6 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         partNumberSearchCriteriaInput.sendKeys(partNumberToInput);
         partNumberSearchCriteriaInput.sendKeys(Keys.ENTER);
         waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1");
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "2");
     }
 }
