@@ -2,7 +2,9 @@ package com.apriori.cds.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cds.objects.AccessControls.AccessControlResponse;
@@ -40,7 +42,7 @@ public class CdsAccessControls extends CdsTestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        //TODO add an assertion to assert that out of context is returned
+       // assertThat(response.getResponseEntity().getResponse().getItems().get(0).getOutOfContext(), is(not(emptyString())));
     }
 
 }
