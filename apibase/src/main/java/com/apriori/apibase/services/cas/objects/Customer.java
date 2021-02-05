@@ -12,59 +12,55 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Schema(location = "cas/CasCustomerSchema.json")
 public class Customer {
 
-    @JsonProperty("identity")
+    @JsonProperty()
     private String identity;
-    @JsonProperty("createdAt")
+    @JsonProperty()
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-    @JsonProperty("createdBy")
+    @JsonProperty()
     private String createdBy;
-    @JsonProperty("updatedAt")
+    @JsonProperty()
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
-    @JsonProperty("updatedBy")
+    @JsonProperty()
     private String updatedBy;
-    @JsonProperty("name")
+    @JsonProperty()
     private String name;
-    @JsonProperty("cloudReference")
+    @JsonProperty()
     private String cloudReference;
-    @JsonProperty("description")
+    @JsonProperty()
     private String description;
-    @JsonProperty("customerType")
+    @JsonProperty()
     private String customerType;
-    @JsonProperty("salesforceId")
+    @JsonProperty()
     private String salesforceId;
-    @JsonProperty("active")
+    @JsonProperty()
     private Boolean active;
-    @JsonProperty("maxCadFileRetentionDays")
+    @JsonProperty()
     private Integer maxCadFileRetentionDays;
-    @JsonProperty("useExternalIdentityProvider")
+    @JsonProperty()
     private Boolean useExternalIdentityProvider;
-    @JsonProperty("mfaRequired")
+    @JsonProperty()
     private Boolean mfaRequired;
-    @JsonProperty("oneTimePasswordApplications")
+    @JsonProperty()
     private List<Object> oneTimePasswordApplications = null;
-    @JsonProperty("createdByName")
+    @JsonProperty()
     private String createdByName;
-    @JsonProperty("updatedByName")
+    @JsonProperty()
     private String updatedByName;
-    @JsonProperty("identityProviders")
+    @JsonProperty()
     private List<Object> identityProviders = null;
-    @JsonProperty("emailDomains")
+    @JsonProperty()
     private List<String> emailDomains = null;
-    @JsonProperty("authenticationType")
+    @JsonProperty()
     private String authenticationType;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getIdentity() {
         return identity;
@@ -245,15 +241,4 @@ public class Customer {
         this.authenticationType = authenticationType;
         return this;
     }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
 }

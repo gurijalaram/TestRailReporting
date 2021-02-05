@@ -16,6 +16,7 @@ import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.google.common.net.UrlEscapers;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -39,7 +40,7 @@ public class CasCustomersTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"5810"})
     @Description("Get a list of CAS customers sorted by name")
-    public void getCustomersByName() {
+    public void getCustomersSortedByName() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers?sortBy[ASC]=name");
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
@@ -71,5 +72,28 @@ public class CasCustomersTest extends TestUtil {
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(name)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5643"})
+    @Description("Get the Customer identified by its name")
+    public void getCustomerByName() {
+        String apiUrl = String.format(Constants.getApiUrl(), "customers");
+
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+
+        Customer customer = response.getResponseEntity().getResponse().getItems().get(1);
+        String name = customer.getName();
+
+        String nameEndpoint = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
+
+        ResponseWrapper<Customers> responseName = new CommonRequestUtil().getCommonRequest(nameEndpoint, false, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(responseName.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 }
