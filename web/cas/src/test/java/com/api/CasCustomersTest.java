@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import com.apriori.apibase.services.cas.objects.Customer;
 import com.apriori.apibase.services.cas.objects.Customers;
 import com.apriori.apibase.services.cas.objects.SingleCustomerResponse;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -48,7 +49,7 @@ public class CasCustomersTest extends TestUtil {
     @TestRail(testCaseId = {"5645"})
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers");
+        String apiUrl = String.format(Constants.getApiUrl(), "customers/");
 
         token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
                 Constants.getCasServiceHost(),
@@ -63,10 +64,11 @@ public class CasCustomersTest extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String name = response.getResponseEntity().getResponse().getItems().get(0).getName();
+        Customer customer = response.getResponseEntity().getResponse().getItems().get(0);
+        String identity = customer.getIdentity();
+        String name = customer.getName();
 
-        String identityEndpoint = apiUrl + "/" + identity;
+        String identityEndpoint = apiUrl + identity;
 
         ResponseWrapper<SingleCustomerResponse> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, SingleCustomerResponse.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
