@@ -1,6 +1,9 @@
 package com.apriori.cds.tests;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.Customers;
@@ -8,6 +11,9 @@ import com.apriori.cds.entity.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.dao.GenericRequestUtil;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -17,6 +23,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CdsCustomers extends CdsTestUtil {
     private String url;
@@ -65,6 +73,38 @@ public class CdsCustomers extends CdsTestUtil {
         ResponseWrapper<Users> response = getCommonRequest(url, true, Users.class);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+    }
+
+    @Test
+    @Description("Add API customers")
+    public void addCustomers() {
+        url = String.format(url, "customers");
+
+        Map<String, String> headers = new HashMap<>();
+
+        headers.put("Content-Type", "application/json");
+
+        RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
+            .setHeaders(headers)
+            .setBody(new HashMap<String, Object>() {
+                {
+                    put("customer",
+                        new Customer().setName("Moya101")
+                            .setDescription("Add new customer api test")
+                            .setCustomerType("CLOUD_ONLY")
+                            .setCreatedBy("#SYSTEM00000")
+                            .setSalesforceId("AutomationSalesId")
+                            .setActive(true)
+                            .setMfaRequired(false)
+                            .setUseExternalIdentityProvider(false)
+                            .setMaxCadFileRetentionDays(1095)
+                            .setEmailRegexPatterns(Arrays.asList("S+friths.com", "s+friths.co.uk")));
+                }
+            });
+
+        ResponseWrapper<Customer> responseWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+
+        assertThat(responseWrapper.getResponseEntity().getResponse().getName(), is(equalTo("Moya101")));
     }
 
     /*
