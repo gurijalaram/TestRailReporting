@@ -2,35 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "http://example.com/example.json",
   "type": "object",
-  "title": "The root schema",
-  "description": "The root schema comprises the entire JSON document.",
-  "default": {},
-  "examples": [
-    {
-      "response": {
-        "identity": "L2H992828LC1",
-        "createdAt": "2020-07-31T20:50Z",
-        "createdBy": "#SYSTEM00000",
-        "updatedAt": "2020-08-14T14:53Z",
-        "updatedBy": "#SYSTEM00000",
-        "name": "AB Tetra Pak",
-        "description": "AB Tetra Pak",
-        "customerType": "ON_PREMISE_ONLY",
-        "active": true,
-        "maxCadFileRetentionDays": 1095,
-        "useExternalIdentityProvider": false,
-        "mfaRequired": false,
-        "oneTimePasswordApplications": [],
-        "createdByName": "SYSTEM",
-        "updatedByName": "SYSTEM",
-        "identityProviders": [],
-        "emailDomains": [
-          "abtetrapak.com"
-        ],
-        "authenticationType": "EMAIL_PWD"
-      }
-    }
-  ],
   "required": [
     "response"
   ],
@@ -38,39 +9,10 @@
     "response": {
       "$id": "#/properties/response",
       "type": "object",
-      "title": "The response schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": {},
-      "examples": [
-        {
-          "identity": "L2H992828LC1",
-          "createdAt": "2020-07-31T20:50Z",
-          "createdBy": "#SYSTEM00000",
-          "updatedAt": "2020-08-14T14:53Z",
-          "updatedBy": "#SYSTEM00000",
-          "name": "AB Tetra Pak",
-          "description": "AB Tetra Pak",
-          "customerType": "ON_PREMISE_ONLY",
-          "active": true,
-          "maxCadFileRetentionDays": 1095,
-          "useExternalIdentityProvider": false,
-          "mfaRequired": false,
-          "oneTimePasswordApplications": [],
-          "createdByName": "SYSTEM",
-          "updatedByName": "SYSTEM",
-          "identityProviders": [],
-          "emailDomains": [
-            "abtetrapak.com"
-          ],
-          "authenticationType": "EMAIL_PWD"
-        }
-      ],
       "required": [
         "identity",
         "createdAt",
         "createdBy",
-        "updatedAt",
-        "updatedBy",
         "name",
         "description",
         "customerType",
@@ -80,7 +22,6 @@
         "mfaRequired",
         "oneTimePasswordApplications",
         "createdByName",
-        "updatedByName",
         "identityProviders",
         "emailDomains",
         "authenticationType"
@@ -88,168 +29,62 @@
       "properties": {
         "identity": {
           "$id": "#/properties/response/properties/identity",
-          "type": "string",
-          "title": "The identity schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "L2H992828LC1"
-          ]
+          "type": "string"
         },
         "createdAt": {
           "$id": "#/properties/response/properties/createdAt",
-          "type": "string",
-          "title": "The createdAt schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "2020-07-31T20:50Z"
-          ]
+          "type": "string"
         },
         "createdBy": {
           "$id": "#/properties/response/properties/createdBy",
-          "type": "string",
-          "title": "The createdBy schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "#SYSTEM00000"
-          ]
-        },
-        "updatedAt": {
-          "$id": "#/properties/response/properties/updatedAt",
-          "type": "string",
-          "title": "The updatedAt schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "2020-08-14T14:53Z"
-          ]
-        },
-        "updatedBy": {
-          "$id": "#/properties/response/properties/updatedBy",
-          "type": "string",
-          "title": "The updatedBy schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "#SYSTEM00000"
-          ]
+          "type": "string"
         },
         "name": {
           "$id": "#/properties/response/properties/name",
-          "type": "string",
-          "title": "The name schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "AB Tetra Pak"
-          ]
+          "type": "string"
+        },
+        "cloudReference": {
+          "$id": "#/properties/response/properties/cloudReference",
+          "type": "string"
         },
         "description": {
           "$id": "#/properties/response/properties/description",
-          "type": "string",
-          "title": "The description schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "AB Tetra Pak"
-          ]
+          "type": "string"
         },
         "customerType": {
           "$id": "#/properties/response/properties/customerType",
-          "type": "string",
-          "title": "The customerType schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "ON_PREMISE_ONLY"
-          ]
+          "type": "string"
         },
         "active": {
           "$id": "#/properties/response/properties/active",
-          "type": "boolean",
-          "title": "The active schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            true
-          ]
+          "type": "boolean"
         },
         "maxCadFileRetentionDays": {
           "$id": "#/properties/response/properties/maxCadFileRetentionDays",
-          "type": "integer",
-          "title": "The maxCadFileRetentionDays schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            1095
-          ]
+          "type": "integer"
         },
         "useExternalIdentityProvider": {
           "$id": "#/properties/response/properties/useExternalIdentityProvider",
-          "type": "boolean",
-          "title": "The useExternalIdentityProvider schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            false
-          ]
+          "type": "boolean"
         },
         "mfaRequired": {
           "$id": "#/properties/response/properties/mfaRequired",
-          "type": "boolean",
-          "title": "The mfaRequired schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            false
-          ]
+          "type": "boolean"
         },
         "oneTimePasswordApplications": {
           "$id": "#/properties/response/properties/oneTimePasswordApplications",
           "type": "array",
-          "title": "The oneTimePasswordApplications schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": [],
-          "examples": [
-            []
-          ],
-          "additionalItems": true,
           "items": {
             "$id": "#/properties/response/properties/oneTimePasswordApplications/items"
           }
         },
         "createdByName": {
           "$id": "#/properties/response/properties/createdByName",
-          "type": "string",
-          "title": "The createdByName schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "SYSTEM"
-          ]
-        },
-        "updatedByName": {
-          "$id": "#/properties/response/properties/updatedByName",
-          "type": "string",
-          "title": "The updatedByName schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "SYSTEM"
-          ]
+          "type": "string"
         },
         "identityProviders": {
           "$id": "#/properties/response/properties/identityProviders",
           "type": "array",
-          "title": "The identityProviders schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": [],
-          "examples": [
-            []
-          ],
-          "additionalItems": true,
           "items": {
             "$id": "#/properties/response/properties/identityProviders/items"
           }
@@ -257,44 +92,21 @@
         "emailDomains": {
           "$id": "#/properties/response/properties/emailDomains",
           "type": "array",
-          "title": "The emailDomains schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": [],
-          "examples": [
-            [
-              "abtetrapak.com"
-            ]
-          ],
-          "additionalItems": true,
           "items": {
             "$id": "#/properties/response/properties/emailDomains/items",
             "anyOf": [
               {
                 "$id": "#/properties/response/properties/emailDomains/items/anyOf/0",
-                "type": "string",
-                "title": "The first anyOf schema",
-                "description": "An explanation about the purpose of this instance.",
-                "default": "",
-                "examples": [
-                  "abtetrapak.com"
-                ]
+                "type": "string"
               }
             ]
           }
         },
         "authenticationType": {
           "$id": "#/properties/response/properties/authenticationType",
-          "type": "string",
-          "title": "The authenticationType schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "EMAIL_PWD"
-          ]
+          "type": "string"
         }
-      },
-      "additionalProperties": true
+      }
     }
-  },
-  "additionalProperties": true
+  }
 }
