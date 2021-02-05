@@ -18,11 +18,23 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CasCustomersTest extends TestUtil {
 
     private String token;
+
+    @Before
+    public void getToken() {
+        token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
+                Constants.getCasServiceHost(),
+                HttpStatus.SC_CREATED,
+                Constants.getCasTokenUsername(),
+                Constants.getCasTokenEmail(),
+                Constants.getCasTokenIssuer(),
+                Constants.getCasTokenSubject());
+    }
 
     @Test
     @TestRail(testCaseId = {"5810"})
@@ -30,16 +42,8 @@ public class CasCustomersTest extends TestUtil {
     public void getCustomersByName() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers?sortBy[ASC]=name");
 
-        token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-            Constants.getCasServiceHost(),
-            HttpStatus.SC_CREATED,
-            Constants.getCasTokenUsername(),
-            Constants.getCasTokenEmail(),
-            Constants.getCasTokenIssuer(),
-            Constants.getCasTokenSubject());
-
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token));
+                new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -50,14 +54,6 @@ public class CasCustomersTest extends TestUtil {
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers/");
-
-        token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-                Constants.getCasServiceHost(),
-                HttpStatus.SC_CREATED,
-                Constants.getCasTokenUsername(),
-                Constants.getCasTokenEmail(),
-                Constants.getCasTokenIssuer(),
-                Constants.getCasTokenSubject());
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
