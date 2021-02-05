@@ -1,19 +1,9 @@
-
 package com.apriori.cds.entity.response.apVersion;
 
 import com.apriori.utils.http.enums.Schema;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 @Schema(location = "cds/apVersionsSchema.json")
-public class apVersionItem {
+public class ApVersionItem {
 
     private String identity;
     private String createdBy;
