@@ -1,5 +1,10 @@
 package com.apriori.cds.tests;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 import com.apriori.apibase.services.cds.objects.AccessControls.AccessControlResponse;
 import com.apriori.cds.entity.response.User;
 import com.apriori.cds.entity.response.Users;
@@ -33,30 +38,9 @@ public class CdsAccessControls extends CdsTestUtil {
         url = String.format(url, "access-controls");
         ResponseWrapper<AccessControlResponse> response = getCommonRequest(url, true, AccessControlResponse.class);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-    }
-
-
-
-    /*
-     * User Validation
-     */
-    private void validateUsers(Users usersResponse) {
-        Object[] users = usersResponse.getResponse().getItems().toArray();
-        Arrays.stream(users)
-                .forEach(this::validate);
-    }
-
-    private void validateUser(User userResponse) {
-        User user = userResponse.getResponse();
-        validate(user);
-    }
-
-    private void validate(Object userObj) {
-        EmailValidator validator = EmailValidator.getInstance();
-        User user = (User) userObj;
-        Assert.assertTrue(user.getIdentity().matches("^[a-zA-Z0-9]+$"));
-        Assert.assertTrue(validator.isValid(user.getEmail()));
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        //TODO add an assertion to assert that out of context is returned
     }
 
 }
