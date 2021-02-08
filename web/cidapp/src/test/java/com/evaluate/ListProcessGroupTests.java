@@ -40,7 +40,7 @@ public class ListProcessGroupTests extends TestBase {
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
     }
 
-    /*    @Test
+    /*@Test
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
 
