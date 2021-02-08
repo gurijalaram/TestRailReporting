@@ -282,6 +282,17 @@ public class RequestEntity {
         return this;
     }
 
+    public RequestEntity setHeaders(String key, String value) {
+        if (headers != null) {
+            this.headers = new HashMap<String, String>() {
+                {
+                    put(key, value);
+                }
+            };
+        }
+        return this;
+    }
+
     public RequestEntity addHeaders(final String key, final String value) {
         if (headers != null) {
             this.headers.put(key, value);

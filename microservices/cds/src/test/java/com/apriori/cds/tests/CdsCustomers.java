@@ -23,8 +23,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CdsCustomers extends CdsTestUtil {
     private String url;
@@ -80,23 +78,15 @@ public class CdsCustomers extends CdsTestUtil {
     public void addCustomers() {
         url = String.format(url, "customers");
 
-        Map<String, String> headers = new HashMap<>();
-
-        headers.put("Content-Type", "application/json");
-
         RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
-            .setHeaders(headers)
+            .setHeaders("Content-Type", "application/json")
             .setBody("customer",
                 new Customer().setName("Moya1020")
                     .setDescription("Add new customers api test")
                     .setCustomerType("CLOUD_ONLY")
                     .setCreatedBy("#SYSTEM00000")
                     .setSalesforceId("AutomationSalesIds")
-                    .setActive(true)
-                    .setMfaRequired(false)
-                    .setUseExternalIdentityProvider(false)
-                    .setMaxCadFileRetentionDays(1095)
-                    .setEmailRegexPatterns(Arrays.asList("S+friths.com", "s+friths.co.uk")));
+                    .setActive(true));
 
         ResponseWrapper<Customer> responseWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
 
