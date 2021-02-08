@@ -14,49 +14,49 @@ import java.util.List;
 @Schema(location = "cas/CasCustomerSchema.json")
 public class Customer {
 
-    @JsonProperty()
+    @JsonProperty
     private String identity;
-    @JsonProperty()
+    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-    @JsonProperty()
+    @JsonProperty
     private String createdBy;
-    @JsonProperty()
+    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
-    @JsonProperty()
+    @JsonProperty
     private String updatedBy;
-    @JsonProperty()
+    @JsonProperty
     private String name;
-    @JsonProperty()
+    @JsonProperty
     private String cloudReference;
-    @JsonProperty()
+    @JsonProperty
     private String description;
-    @JsonProperty()
+    @JsonProperty
     private String customerType;
-    @JsonProperty()
+    @JsonProperty
     private String salesforceId;
-    @JsonProperty()
+    @JsonProperty
     private Boolean active;
-    @JsonProperty()
+    @JsonProperty
     private Integer maxCadFileRetentionDays;
-    @JsonProperty()
+    @JsonProperty
     private Boolean useExternalIdentityProvider;
-    @JsonProperty()
+    @JsonProperty
     private Boolean mfaRequired;
-    @JsonProperty()
+    @JsonProperty
     private List<Object> oneTimePasswordApplications = null;
-    @JsonProperty()
+    @JsonProperty
     private String createdByName;
-    @JsonProperty()
+    @JsonProperty
     private String updatedByName;
-    @JsonProperty()
+    @JsonProperty
     private List<Object> identityProviders = null;
-    @JsonProperty()
+    @JsonProperty
     private List<String> emailDomains = null;
-    @JsonProperty()
+    @JsonProperty
     private String authenticationType;
 
     public String getIdentity() {
