@@ -792,10 +792,12 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage clickOk() {
         // The below hard wait is a temporary solution - will come back and try to fix later this week
-        pageUtils.waitFor(1000);
-        pageUtils.waitForElementAndClick(okButton);
-        okButton.click();
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitFor(2000);
+        By locator = By.cssSelector("div[id='inputControls']");
+        if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
+            okButton.click();
+            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        }
         return this;
     }
 
@@ -1832,7 +1834,7 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
             By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
-            pageUtils.waitForSteadinessOfElement(locator);
+            pageUtils.waitForElementToAppear(locator);
             pageUtils.waitForElementAndClick(driver.findElement(locator));
         }
         return this;
