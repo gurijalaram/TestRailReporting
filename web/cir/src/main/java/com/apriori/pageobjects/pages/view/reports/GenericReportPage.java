@@ -16,6 +16,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -161,7 +162,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "apply")
     private WebElement applyButton;
 
-    @FindBy(id = "ok")
+    @FindBy(xpath = "//button[@id='ok']/span/span")
     private WebElement okButton;
 
     @FindBy(id = "reset")
@@ -790,7 +791,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of Generic Report Page object
      */
     public GenericReportPage clickOk() {
+        // The below hard wait is a temporary solution - will come back and try to fix later this week
+        pageUtils.waitFor(1000);
         pageUtils.waitForElementAndClick(okButton);
+        okButton.click();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }
