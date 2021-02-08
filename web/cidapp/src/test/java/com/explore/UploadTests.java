@@ -38,7 +38,7 @@ public class UploadTests extends TestBase {
         assertThat(new FileOpenError(driver).getErrorText(), containsString("The selected file type is not supported"));
     }*/
 
-    @Test
+/*    @Test
     @TestRail(testCaseId = {"5423"})
     @Description("Nothing uploaded or translated if user select a file but then cancels the new component dialog")
     public void cancelUpload() {
@@ -51,5 +51,5 @@ public class UploadTests extends TestBase {
             .uploadComponentAndCancel(testComponentName, resourceFile, ExplorePage.class);
 
         assertThat(explorePage.getListOfComponents(testComponentName, "Piston_assembly"), is(equalTo(0)));
-    }
+    }*/
 }
