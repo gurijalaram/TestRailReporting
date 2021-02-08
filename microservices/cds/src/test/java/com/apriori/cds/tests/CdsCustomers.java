@@ -86,21 +86,17 @@ public class CdsCustomers extends CdsTestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
             .setHeaders(headers)
-            .setBody(new HashMap<String, Object>() {
-                {
-                    put("customer",
-                        new Customer().setName("Moya101")
-                            .setDescription("Add new customer api test")
-                            .setCustomerType("CLOUD_ONLY")
-                            .setCreatedBy("#SYSTEM00000")
-                            .setSalesforceId("AutomationSalesId")
-                            .setActive(true)
-                            .setMfaRequired(false)
-                            .setUseExternalIdentityProvider(false)
-                            .setMaxCadFileRetentionDays(1095)
-                            .setEmailRegexPatterns(Arrays.asList("S+friths.com", "s+friths.co.uk")));
-                }
-            });
+            .setBody("customer",
+                new Customer().setName("Moya1020")
+                    .setDescription("Add new customers api test")
+                    .setCustomerType("CLOUD_ONLY")
+                    .setCreatedBy("#SYSTEM00000")
+                    .setSalesforceId("AutomationSalesIds")
+                    .setActive(true)
+                    .setMfaRequired(false)
+                    .setUseExternalIdentityProvider(false)
+                    .setMaxCadFileRetentionDays(1095)
+                    .setEmailRegexPatterns(Arrays.asList("S+friths.com", "s+friths.co.uk")));
 
         ResponseWrapper<Customer> responseWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
 

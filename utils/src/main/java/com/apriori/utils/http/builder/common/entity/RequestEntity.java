@@ -354,6 +354,15 @@ public class RequestEntity {
         return this;
     }
 
+    public RequestEntity setBody(String node, Object body) {
+       this.body = new HashMap<String, Object>() {
+           {
+                put(node, body);
+            }
+        };
+        return this;
+    }
+
     public Class<?> getReturnType() {
         return returnType;
     }
