@@ -86,7 +86,11 @@ public class CdsCustomers extends CdsTestUtil {
                     .setCustomerType("CLOUD_ONLY")
                     .setCreatedBy("#SYSTEM00000")
                     .setSalesforceId("AutomationSalesIds")
-                    .setActive(true));
+                    .setActive(true)
+                    .setMfaRequired(false)
+                    .setUseExternalIdentityProvider(false)
+                    .setMaxCadFileRetentionDays(1095)
+                    .setEmailRegexPatterns(Arrays.asList("S+friths.com", "s+friths.co.uk")));
 
         ResponseWrapper<Customer> responseWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
 

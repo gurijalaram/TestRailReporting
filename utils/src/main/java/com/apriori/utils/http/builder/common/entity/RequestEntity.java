@@ -53,22 +53,42 @@ public class RequestEntity {
     private int socketTimeout = 60000;
     private boolean urlEncodingEnabled = true;
 
+    private RequestEntity(UserAuthenticationEntity userAuthenticationEntity, WebDriver driver, boolean defaultAuthorizationData, boolean useFormData) {
+        this.userAuthenticationEntity = userAuthenticationEntity;
+        this.driver = driver;
+        this.defaultAuthorizationData = defaultAuthorizationData;
+
+        if (useFormData) {
+            this.initFormUrlUserData();
+        }
+
+    }
+
+    private RequestEntity(UserAuthenticationEntity userAuthenticationEntity, WebDriver driver) {
+        this.userAuthenticationEntity = userAuthenticationEntity;
+        this.driver = driver;
+    }
+
+    public RequestEntity() {
+
+    }
+
     public static RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity(null, null)
-                .setEndpoint(endpoint)
-                .setReturnType(returnType);
+            .setEndpoint(endpoint)
+            .setReturnType(returnType);
     }
 
     public static RequestEntity init(String url, Class<?> returnType) {
         return new RequestEntity(null, null)
-                .setEndpoint(url)
-                .setReturnType(returnType);
+            .setEndpoint(url)
+            .setReturnType(returnType);
     }
 
     public static RequestEntity init(String endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()), null)
-                .setReturnType(returnType)
-                .setEndpoint(endpoint);
+            .setReturnType(returnType)
+            .setEndpoint(endpoint);
     }
 
     public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
@@ -79,9 +99,9 @@ public class RequestEntity {
 
     public static RequestEntity initWithToken(EndpointEnum endpoint, final String token, Class<?> returnType) {
         return new RequestEntity()
-                .setToken(token)
-                .setEndpoint(endpoint)
-                .setReturnType(returnType);
+            .setToken(token)
+            .setEndpoint(endpoint)
+            .setReturnType(returnType);
     }
 
     public static RequestEntity initDefaultFormAuthorizationData(final String username, final String password) {
@@ -102,26 +122,6 @@ public class RequestEntity {
 
     public static RequestEntity unAuthorized() {
         return new RequestEntity(new UserAuthenticationEntity(), null).setAutoLogin(false);
-    }
-
-    private RequestEntity(UserAuthenticationEntity userAuthenticationEntity, WebDriver driver, boolean defaultAuthorizationData, boolean useFormData) {
-        this.userAuthenticationEntity = userAuthenticationEntity;
-        this.driver = driver;
-        this.defaultAuthorizationData = defaultAuthorizationData;
-
-        if (useFormData) {
-            this.initFormUrlUserData();
-        }
-
-    }
-
-    private RequestEntity(UserAuthenticationEntity userAuthenticationEntity, WebDriver driver) {
-        this.userAuthenticationEntity = userAuthenticationEntity;
-        this.driver = driver;
-    }
-
-    public RequestEntity() {
-
     }
 
     private List<Map<String, ?>> initFormUrlUserData() {
@@ -191,6 +191,11 @@ public class RequestEntity {
 
     public RequestInitService getRequestInitService() {
         return requestInitService;
+    }
+
+    public RequestEntity setRequestInitService(RequestInitService requestInitService) {
+        this.requestInitService = requestInitService;
+        return this;
     }
 
     public Integer[] getStatusCode() {
@@ -270,7 +275,6 @@ public class RequestEntity {
         return this;
     }
 
-
     public Map<String, String> getHeaders() {
         return headers;
     }
@@ -319,7 +323,6 @@ public class RequestEntity {
         return this;
     }
 
-
     public Object[] getInlineVariables() {
         return inlineVariables;
     }
@@ -366,8 +369,8 @@ public class RequestEntity {
     }
 
     public RequestEntity setBody(String node, Object body) {
-       this.body = new HashMap<String, Object>() {
-           {
+        this.body = new HashMap<String, Object>() {
+            {
                 put(node, body);
             }
         };
@@ -398,11 +401,6 @@ public class RequestEntity {
 
     public RequestEntity setSocketTimeout(int socketTimeout) {
         this.socketTimeout = socketTimeout;
-        return this;
-    }
-
-    public RequestEntity setRequestInitService(RequestInitService requestInitService) {
-        this.requestInitService = requestInitService;
         return this;
     }
 
