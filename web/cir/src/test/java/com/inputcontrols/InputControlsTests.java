@@ -815,7 +815,9 @@ public class InputControlsTests extends TestBase {
 
         String dtcScoreValue = genericReportPage.getDtcScoreDtcReports().replace(" ", "");
 
-        dtcScore = dtcScore.equals("Sheet") ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScore;
+        if (dtcScore.equals("Sheet") || dtcScore.equals("Medium Casting")) {
+            dtcScore = DtcScoreEnum.MEDIUM.getDtcScoreName();
+        }
         assertThat(dtcScore, is(equalTo(genericReportPage.getDtcScoreAboveChart())));
         assertThat(dtcScore, is(equalTo(dtcScoreValue)));
     }

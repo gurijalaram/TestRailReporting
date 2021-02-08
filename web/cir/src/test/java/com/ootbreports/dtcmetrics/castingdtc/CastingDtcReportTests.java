@@ -357,7 +357,7 @@ public class CastingDtcReportTests extends TestBase {
         inputControlsTests.testDtcScoreMainReports(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
-            DtcScoreEnum.MEDIUM.getDtcScoreName()
+            DtcScoreEnum.MEDIUM.getDtcScoreName().concat(" Casting")
         );
     }
 

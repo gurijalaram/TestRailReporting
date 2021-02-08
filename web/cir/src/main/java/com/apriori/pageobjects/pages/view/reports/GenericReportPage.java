@@ -54,11 +54,14 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
     private WebElement upperTitle;
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name() = 'path']")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[55][local-name() = 'path']")
     private WebElement castingDtcBubble;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[18][local-name() = 'path']")
     private WebElement castingDtcBubbleTwo;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[25][local-name() = 'path']")
+    private WebElement castingDtcBubbleThree;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[7][local-name() = 'path']")
     private WebElement dtcScoreMediumBubble;
@@ -1830,10 +1833,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of current page object
      */
     public GenericReportPage setDtcScore(String dtcScoreOption) {
-        if (!dtcScoreOption.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
+        String dtcScoreToUse = dtcScoreOption.equals("Medium Casting") ?
+                DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScoreOption;
+        if (!dtcScoreToUse.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
             pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-            By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
+            By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreToUse));
             pageUtils.waitForElementToAppear(locator);
             pageUtils.waitForElementAndClick(driver.findElement(locator));
         }
@@ -2237,6 +2242,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseDtcScoreBubbleMap() {
         dtcScoreBubbleMap.put("Low", castingDtcBubbleTwo);
         dtcScoreBubbleMap.put("Medium", dtcScoreMediumBubble);
+        dtcScoreBubbleMap.put("Medium Casting", castingDtcBubbleThree);
         dtcScoreBubbleMap.put("High", dtcScoreHighBubble);
         dtcScoreBubbleMap.put("Sheet", dtcScoreSheetMetalMediumBubble);
     }
