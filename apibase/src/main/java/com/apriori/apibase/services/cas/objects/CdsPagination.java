@@ -1,20 +1,35 @@
-package com.apriori.apibase.services;
+package com.apriori.apibase.services.cas.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "PaginationSchema.json")
-public class Pagination {
-    private Boolean isFirstPage;
-    private Boolean isLastPage;
-    private Integer pageNumber;
-    private Integer pageSize;
-    private Integer pageItemCount;
-    private Integer totalItemCount;
-    private Integer totalPageCount;
-    private Boolean hasNextPage;
-    private Boolean hasPreviousPage;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public Pagination setIsFirstPage(Boolean isFirstPage) {
+import java.util.List;
+
+@Schema(location = "PaginationSchema.json")
+public class CdsPagination {
+    @JsonProperty
+    private Boolean isFirstPage;
+    @JsonProperty
+    private Boolean isLastPage;
+    @JsonProperty
+    private Integer pageNumber;
+    @JsonProperty
+    private Integer pageSize;
+    @JsonProperty
+    private Integer pageItemCount;
+    @JsonProperty
+    private Integer totalItemCount;
+    @JsonProperty
+    private Integer totalPageCount;
+    @JsonProperty
+    private Boolean hasNextPage;
+    @JsonProperty
+    private Boolean hasPreviousPage;
+    @JsonProperty
+    private List<Customer> items;
+
+    public CdsPagination setIsFirstPage(Boolean isFirstPage) {
         this.isFirstPage = isFirstPage;
         return this;
     }
@@ -23,7 +38,7 @@ public class Pagination {
         return this.isFirstPage;
     }
 
-    public Pagination setIsLastPage(Boolean isLastPage) {
+    public CdsPagination setIsLastPage(Boolean isLastPage) {
         this.isLastPage = isLastPage;
         return this;
     }
@@ -32,7 +47,7 @@ public class Pagination {
         return this.isLastPage;
     }
 
-    public Pagination setPageNumber(Integer pageNumber) {
+    public CdsPagination setPageNumber(Integer pageNumber) {
         this.pageNumber = pageNumber;
         return this;
     }
@@ -41,7 +56,7 @@ public class Pagination {
         return this.pageNumber;
     }
 
-    public Pagination setPageSize(Integer pageSize) {
+    public CdsPagination setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
         return this;
     }
@@ -50,7 +65,7 @@ public class Pagination {
         return this.pageSize;
     }
 
-    public Pagination setPageItemCount(Integer pageItemCount) {
+    public CdsPagination setPageItemCount(Integer pageItemCount) {
         this.pageItemCount = pageItemCount;
         return this;
     }
@@ -59,7 +74,7 @@ public class Pagination {
         return this.pageItemCount;
     }
 
-    public Pagination setTotalItemCount(Integer totalItemCount) {
+    public CdsPagination setTotalItemCount(Integer totalItemCount) {
         this.totalItemCount = totalItemCount;
         return this;
     }
@@ -68,7 +83,7 @@ public class Pagination {
         return this.totalItemCount;
     }
 
-    public Pagination setTotalPageCount(Integer totalPageCount) {
+    public CdsPagination setTotalPageCount(Integer totalPageCount) {
         this.totalPageCount = totalPageCount;
         return this;
     }
@@ -77,7 +92,7 @@ public class Pagination {
         return this.totalPageCount;
     }
 
-    public Pagination setHasNextPage(Boolean hasNextPage) {
+    public CdsPagination setHasNextPage(Boolean hasNextPage) {
         this.hasNextPage = hasNextPage;
         return this;
     }
@@ -86,12 +101,22 @@ public class Pagination {
         return this.hasNextPage;
     }
 
-    public Pagination setHasPreviousPage(Boolean hasPreviousPage) {
+    public CdsPagination setHasPreviousPage(Boolean hasPreviousPage) {
         this.hasPreviousPage = hasPreviousPage;
         return this;
     }
 
     public Boolean getHasPreviousPage() {
         return this.hasPreviousPage;
+    }
+
+
+    public CdsPagination setItems(List<Customer> items) {
+        this.items = items;
+        return this;
+    }
+
+    public List<Customer> getItems() {
+        return this.items;
     }
 }
