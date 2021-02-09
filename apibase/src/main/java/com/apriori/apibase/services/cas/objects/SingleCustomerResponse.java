@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "cas/SingleCustomerSchema.json")
 public class SingleCustomerResponse {
+    @JsonProperty
+    private SingleCustomer response;
 
-    @JsonProperty("response")
     public SingleCustomer getResponse() {
         return response;
     }
@@ -15,6 +16,4 @@ public class SingleCustomerResponse {
     public void setResponse(SingleCustomer response) {
         this.response = response;
     }
-
-    private SingleCustomer response;
 }
