@@ -1,6 +1,7 @@
 package com.apriori.apibase.services.cas.objects;
 
 import com.apriori.utils.http.enums.Schema;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;

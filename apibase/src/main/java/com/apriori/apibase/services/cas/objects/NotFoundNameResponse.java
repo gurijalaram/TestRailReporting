@@ -18,11 +18,11 @@ public class NotFoundNameResponse extends Pagination {
         this.response = response;
     }
 
-    public List<NotFoundName> getItems(){
+    public List<NotFoundName> getItems() {
         return this.items;
     }
 
-    public NotFoundNameResponse setItems(List<NotFoundName> items){
+    public NotFoundNameResponse setItems(List<NotFoundName> items) {
         this.items = items;
         return this;
     }
