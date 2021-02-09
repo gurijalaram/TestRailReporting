@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cds.objects;
+package com.apriori.apibase.services.common.objects;
 
 public class Site {
     private String identity;

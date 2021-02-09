@@ -1,11 +1,11 @@
-package com.apriori.apibase.services.cds.objects;
+package com.apriori.apibase.services.common.objects;
 
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "cds/CdsRolesSchema.json")
+@Schema(location = "common/RolesSchema.json")
 public class Roles extends Pagination {
     private List<Role> items;
     private Roles response;

@@ -1,11 +1,11 @@
-package com.apriori.apibase.services.cds.objects;
+package com.apriori.apibase.services.common.objects;
 
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "cds/CdsApplicationsSchema.json")
+@Schema(location = "common/ApplicationsSchema.json")
 public class Applications extends Pagination {
     private List<Application> items;
     private Applications response;

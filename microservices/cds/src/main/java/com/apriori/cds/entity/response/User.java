@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "cds/CdsUserSchema.json")
+@Schema(location = "cds/UserSchema.json")
 public class User {
     private String identity;
     private String createdBy;
