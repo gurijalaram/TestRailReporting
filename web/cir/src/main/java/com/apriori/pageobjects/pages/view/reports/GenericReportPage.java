@@ -605,8 +605,9 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
-        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForElementAndClick(driver.findElement(locator));
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }
 
@@ -1488,13 +1489,14 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers over bubble in DTC Reports
      */
     public void hoverPartNameBubbleDtcReports() {
-        WebElement elementToUse = bubbleMap.get(this.reportName);
-        pageUtils.waitForElementToAppear(elementToUse);
-        Actions builder = new Actions(driver).moveToElement(elementToUse);
+        //WebElement elementToUse = bubbleMap.get(this.reportName);
+        //pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(
+                driver.findElement(By.xpath("//*[@class='highcharts-series-group']//*[20][local-name() = 'path']")));
         builder.build().perform();
 
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
-            elementToUse.click();
+            //elementToUse.click();
         }
     }
 
