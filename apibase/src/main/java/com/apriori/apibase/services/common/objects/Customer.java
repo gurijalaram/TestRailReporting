@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "cas/CasCustomerSchema.json")
+@Schema(location = "common/CustomerSchema.json")
 public class Customer {
     @JsonProperty
     private Customer response;

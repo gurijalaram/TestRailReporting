@@ -4,7 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "cas/CasCustomersSchema.json")
+@Schema(location = "common/CustomersSchema.json")
 public class Customers {
     @JsonProperty
     private Pagination response;
