@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class SingleCustomer {
-
     @JsonProperty
     private String identity;
     @JsonProperty
@@ -45,13 +44,13 @@ public class SingleCustomer {
     @JsonProperty
     private Boolean mfaRequired;
     @JsonProperty
-    private List<Object> oneTimePasswordApplications = null;
+    private List<SingleCustomer> oneTimePasswordApplications = null;
     @JsonProperty
     private String createdByName;
     @JsonProperty
     private String updatedByName;
     @JsonProperty
-    private List<Object> identityProviders = null;
+    private List<SingleCustomer> identityProviders = null;
     @JsonProperty
     private List<String> emailDomains = null;
     @JsonProperty
@@ -183,11 +182,11 @@ public class SingleCustomer {
         return this;
     }
 
-    public List<Object> getOneTimePasswordApplications() {
+    public List<SingleCustomer> getOneTimePasswordApplications() {
         return oneTimePasswordApplications;
     }
 
-    public SingleCustomer setOneTimePasswordApplications(List<Object> oneTimePasswordApplications) {
+    public SingleCustomer setOneTimePasswordApplications(List<SingleCustomer> oneTimePasswordApplications) {
         this.oneTimePasswordApplications = oneTimePasswordApplications;
         return this;
     }
@@ -210,11 +209,11 @@ public class SingleCustomer {
         return this;
     }
 
-    public List<Object> getIdentityProviders() {
+    public List<SingleCustomer> getIdentityProviders() {
         return identityProviders;
     }
 
-    public SingleCustomer setIdentityProviders(List<Object> identityProviders) {
+    public SingleCustomer setIdentityProviders(List<SingleCustomer> identityProviders) {
         this.identityProviders = identityProviders;
         return this;
     }

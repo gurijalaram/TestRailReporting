@@ -3,50 +3,6 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "title": "The root schema",
-  "description": "The root schema comprises the entire JSON document.",
-  "default": {},
-  "examples": [
-    {
-      "response": {
-        "isFirstPage": true,
-        "isLastPage": false,
-        "pageNumber": 1,
-        "pageSize": 10,
-        "pageItemCount": 10,
-        "totalItemCount": 226,
-        "totalPageCount": 23,
-        "hasNextPage": true,
-        "hasPreviousPage": false,
-        "items": [
-          {
-            "identity": "GH536L761IK6",
-            "createdAt": "2020-08-26T12:40Z",
-            "createdBy": "L2H992828NLF",
-            "updatedAt": "2020-09-10T09:48Z",
-            "updatedBy": "L2H992828NLF",
-            "name": "AAA Industries",
-            "cloudReference": "AAA-Industries",
-            "description": "AAA Industries PLC",
-            "customerType": "CLOUD_ONLY",
-            "salesforceId": "advwe42ewgdgseg",
-            "active": false,
-            "maxCadFileRetentionDays": 1095,
-            "useExternalIdentityProvider": false,
-            "mfaRequired": false,
-            "oneTimePasswordApplications": [],
-            "createdByName": "Peter Hanna",
-            "updatedByName": "Peter Hanna",
-            "identityProviders": [],
-            "emailDomains": [
-              "gmail.com",
-              "aaaindustries.com"
-            ],
-            "authenticationType": "EMAIL_PWD"
-          }
-        ]
-      }
-    }
-  ],
   "required": [
     "response"
   ],
@@ -55,48 +11,6 @@
       "$id": "#/properties/response",
       "type": "object",
       "title": "The response schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": {},
-      "examples": [
-        {
-          "isFirstPage": true,
-          "isLastPage": false,
-          "pageNumber": 1,
-          "pageSize": 10,
-          "pageItemCount": 10,
-          "totalItemCount": 226,
-          "totalPageCount": 23,
-          "hasNextPage": true,
-          "hasPreviousPage": false,
-          "items": [
-            {
-              "identity": "GH536L761IK6",
-              "createdAt": "2020-08-26T12:40Z",
-              "createdBy": "L2H992828NLF",
-              "updatedAt": "2020-09-10T09:48Z",
-              "updatedBy": "L2H992828NLF",
-              "name": "AAA Industries",
-              "cloudReference": "AAA-Industries",
-              "description": "AAA Industries PLC",
-              "customerType": "CLOUD_ONLY",
-              "salesforceId": "advwe42ewgdgseg",
-              "active": false,
-              "maxCadFileRetentionDays": 1095,
-              "useExternalIdentityProvider": false,
-              "mfaRequired": false,
-              "oneTimePasswordApplications": [],
-              "createdByName": "Peter Hanna",
-              "updatedByName": "Peter Hanna",
-              "identityProviders": [],
-              "emailDomains": [
-                "gmail.com",
-                "aaaindustries.com"
-              ],
-              "authenticationType": "EMAIL_PWD"
-            }
-          ]
-        }
-      ],
       "required": [
         "isFirstPage",
         "isLastPage",
@@ -113,129 +27,52 @@
         "isFirstPage": {
           "$id": "#/properties/response/properties/isFirstPage",
           "type": "boolean",
-          "title": "The isFirstPage schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            true
-          ]
+          "title": "The isFirstPage schema"
         },
         "isLastPage": {
           "$id": "#/properties/response/properties/isLastPage",
           "type": "boolean",
-          "title": "The isLastPage schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            false
-          ]
+          "title": "The isLastPage schema"
         },
         "pageNumber": {
           "$id": "#/properties/response/properties/pageNumber",
           "type": "integer",
-          "title": "The pageNumber schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            1
-          ]
+          "title": "The pageNumber schema"
         },
         "pageSize": {
           "$id": "#/properties/response/properties/pageSize",
           "type": "integer",
-          "title": "The pageSize schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            10
-          ]
+          "title": "The pageSize schema"
         },
         "pageItemCount": {
           "$id": "#/properties/response/properties/pageItemCount",
           "type": "integer",
-          "title": "The pageItemCount schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            10
-          ]
+          "title": "The pageItemCount schema"
         },
         "totalItemCount": {
           "$id": "#/properties/response/properties/totalItemCount",
           "type": "integer",
-          "title": "The totalItemCount schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            226
-          ]
+          "title": "The totalItemCount schema"
         },
         "totalPageCount": {
           "$id": "#/properties/response/properties/totalPageCount",
           "type": "integer",
-          "title": "The totalPageCount schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            23
-          ]
+          "title": "The totalPageCount schema"
         },
         "hasNextPage": {
           "$id": "#/properties/response/properties/hasNextPage",
           "type": "boolean",
-          "title": "The hasNextPage schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            true
-          ]
+          "title": "The hasNextPage schema"
         },
         "hasPreviousPage": {
           "$id": "#/properties/response/properties/hasPreviousPage",
           "type": "boolean",
-          "title": "The hasPreviousPage schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            false
-          ]
+          "title": "The hasPreviousPage schema"
         },
         "items": {
           "$id": "#/properties/response/properties/items",
           "type": "array",
           "title": "The items schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": [],
-          "examples": [
-            [
-              {
-                "identity": "GH536L761IK6",
-                "createdAt": "2020-08-26T12:40Z",
-                "createdBy": "L2H992828NLF",
-                "updatedAt": "2020-09-10T09:48Z",
-                "updatedBy": "L2H992828NLF",
-                "name": "AAA Industries",
-                "cloudReference": "AAA-Industries",
-                "description": "AAA Industries PLC",
-                "customerType": "CLOUD_ONLY",
-                "salesforceId": "advwe42ewgdgseg",
-                "active": false,
-                "maxCadFileRetentionDays": 1095,
-                "useExternalIdentityProvider": false,
-                "mfaRequired": false,
-                "oneTimePasswordApplications": [],
-                "createdByName": "Peter Hanna",
-                "updatedByName": "Peter Hanna",
-                "identityProviders": [],
-                "emailDomains": [
-                  "gmail.com",
-                  "aaaindustries.com"
-                ],
-                "authenticationType": "EMAIL_PWD"
-              }
-            ]
-          ],
-          "additionalItems": true,
           "items": {
             "$id": "#/properties/response/properties/items/items",
             "anyOf": [
@@ -243,53 +80,20 @@
                 "$id": "#/properties/response/properties/items/items/anyOf/0",
                 "type": "object",
                 "title": "The first anyOf schema",
-                "description": "An explanation about the purpose of this instance.",
-                "default": {},
-                "examples": [
-                  {
-                    "identity": "GH536L761IK6",
-                    "createdAt": "2020-08-26T12:40Z",
-                    "createdBy": "L2H992828NLF",
-                    "updatedAt": "2020-09-10T09:48Z",
-                    "updatedBy": "L2H992828NLF",
-                    "name": "AAA Industries",
-                    "cloudReference": "AAA-Industries",
-                    "description": "AAA Industries PLC",
-                    "customerType": "CLOUD_ONLY",
-                    "salesforceId": "advwe42ewgdgseg",
-                    "active": false,
-                    "maxCadFileRetentionDays": 1095,
-                    "useExternalIdentityProvider": false,
-                    "mfaRequired": false,
-                    "oneTimePasswordApplications": [],
-                    "createdByName": "Peter Hanna",
-                    "updatedByName": "Peter Hanna",
-                    "identityProviders": [],
-                    "emailDomains": [
-                      "gmail.com",
-                      "aaaindustries.com"
-                    ],
-                    "authenticationType": "EMAIL_PWD"
-                  }
-                ],
                 "required": [
                   "identity",
                   "createdAt",
                   "createdBy",
-                  "updatedAt",
-                  "updatedBy",
                   "name",
                   "cloudReference",
                   "description",
                   "customerType",
-                  "salesforceId",
                   "active",
                   "maxCadFileRetentionDays",
                   "useExternalIdentityProvider",
                   "mfaRequired",
                   "oneTimePasswordApplications",
                   "createdByName",
-                  "updatedByName",
                   "identityProviders",
                   "emailDomains",
                   "authenticationType"
@@ -298,153 +102,62 @@
                   "identity": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identity",
                     "type": "string",
-                    "title": "The identity schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "GH536L761IK6"
-                    ]
+                    "title": "The identity schema"
                   },
                   "createdAt": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdAt",
                     "type": "string",
-                    "title": "The createdAt schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "2020-08-26T12:40Z"
-                    ]
+                    "title": "The createdAt schema"
                   },
                   "createdBy": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdBy",
                     "type": "string",
-                    "title": "The createdBy schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "L2H992828NLF"
-                    ]
-                  },
-                  "updatedAt": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/updatedAt",
-                    "type": "string",
-                    "title": "The updatedAt schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "2020-09-10T09:48Z"
-                    ]
-                  },
-                  "updatedBy": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/updatedBy",
-                    "type": "string",
-                    "title": "The updatedBy schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "L2H992828NLF"
-                    ]
+                    "title": "The createdBy schema"
                   },
                   "name": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/name",
                     "type": "string",
-                    "title": "The name schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "AAA Industries"
-                    ]
+                    "title": "The name schema"
                   },
                   "cloudReference": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/cloudReference",
                     "type": "string",
-                    "title": "The cloudReference schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "AAA-Industries"
-                    ]
+                    "title": "The cloudReference schema"
                   },
                   "description": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/description",
                     "type": "string",
-                    "title": "The description schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "AAA Industries PLC"
-                    ]
+                    "title": "The description schema"
                   },
                   "customerType": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/customerType",
                     "type": "string",
-                    "title": "The customerType schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "CLOUD_ONLY"
-                    ]
-                  },
-                  "salesforceId": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/salesforceId",
-                    "type": "string",
-                    "title": "The salesforceId schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "advwe42ewgdgseg"
-                    ]
+                    "title": "The customerType schema"
                   },
                   "active": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/active",
                     "type": "boolean",
-                    "title": "The active schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": false,
-                    "examples": [
-                      false
-                    ]
+                    "title": "The active schema"
                   },
                   "maxCadFileRetentionDays": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/maxCadFileRetentionDays",
                     "type": "integer",
-                    "title": "The maxCadFileRetentionDays schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": 0,
-                    "examples": [
-                      1095
-                    ]
+                    "title": "The maxCadFileRetentionDays schema"
                   },
                   "useExternalIdentityProvider": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/useExternalIdentityProvider",
                     "type": "boolean",
-                    "title": "The useExternalIdentityProvider schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": false,
-                    "examples": [
-                      false
-                    ]
+                    "title": "The useExternalIdentityProvider schema"
                   },
                   "mfaRequired": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/mfaRequired",
                     "type": "boolean",
-                    "title": "The mfaRequired schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": false,
-                    "examples": [
-                      false
-                    ]
+                    "title": "The mfaRequired schema"
                   },
                   "oneTimePasswordApplications": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/oneTimePasswordApplications",
                     "type": "array",
                     "title": "The oneTimePasswordApplications schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": [],
-                    "examples": [
-                      []
-                    ],
-                    "additionalItems": true,
                     "items": {
                       "$id": "#/properties/response/properties/items/items/anyOf/0/properties/oneTimePasswordApplications/items"
                     }
@@ -452,33 +165,12 @@
                   "createdByName": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdByName",
                     "type": "string",
-                    "title": "The createdByName schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "Peter Hanna"
-                    ]
-                  },
-                  "updatedByName": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/updatedByName",
-                    "type": "string",
-                    "title": "The updatedByName schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "Peter Hanna"
-                    ]
+                    "title": "The createdByName schema"
                   },
                   "identityProviders": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviders",
                     "type": "array",
                     "title": "The identityProviders schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": [],
-                    "examples": [
-                      []
-                    ],
-                    "additionalItems": true,
                     "items": {
                       "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviders/items"
                     }
@@ -487,28 +179,13 @@
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailDomains",
                     "type": "array",
                     "title": "The emailDomains schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": [],
-                    "examples": [
-                      [
-                        "gmail.com",
-                        "aaaindustries.com"
-                      ]
-                    ],
-                    "additionalItems": true,
                     "items": {
                       "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailDomains/items",
                       "anyOf": [
                         {
                           "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailDomains/items/anyOf/0",
                           "type": "string",
-                          "title": "The first anyOf schema",
-                          "description": "An explanation about the purpose of this instance.",
-                          "default": "",
-                          "examples": [
-                            "gmail.com",
-                            "aaaindustries.com"
-                          ]
+                          "title": "The first anyOf schema"
                         }
                       ]
                     }
@@ -516,22 +193,14 @@
                   "authenticationType": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/authenticationType",
                     "type": "string",
-                    "title": "The authenticationType schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "EMAIL_PWD"
-                    ]
+                    "title": "The authenticationType schema"
                   }
-                },
-                "additionalProperties": true
+                }
               }
             ]
           }
         }
-      },
-      "additionalProperties": true
+      }
     }
-  },
-  "additionalProperties": true
+  }
 }
