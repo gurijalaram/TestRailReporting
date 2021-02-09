@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cas.objects;
+package com.apriori.apibase.services.common.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
@@ -7,13 +7,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(location = "cas/CasCustomersSchema.json")
 public class Customers {
     @JsonProperty
-    private CdsPagination response;
+    private Pagination response;
 
-    public CdsPagination getResponse() {
+    public Pagination getResponse() {
         return this.response;
     }
 
-    public Customers setResponse(CdsPagination response) {
+    public Customers setResponse(Pagination response) {
         this.response = response;
         return this;
     }
