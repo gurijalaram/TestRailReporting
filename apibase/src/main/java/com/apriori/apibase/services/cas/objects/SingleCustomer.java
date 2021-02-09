@@ -1,6 +1,5 @@
 package com.apriori.apibase.services.cas.objects;
 
-import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,8 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "cas/CasCustomerSchema.json")
-public class Customer {
+public class SingleCustomer {
 
     @JsonProperty
     private String identity;
@@ -63,7 +61,7 @@ public class Customer {
         return identity;
     }
 
-    public Customer setIdentity(String identity) {
+    public SingleCustomer setIdentity(String identity) {
         this.identity = identity;
         return this;
     }
@@ -72,7 +70,7 @@ public class Customer {
         return createdAt;
     }
 
-    public Customer setCreatedAt(LocalDateTime createdAt) {
+    public SingleCustomer setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -81,7 +79,7 @@ public class Customer {
         return createdBy;
     }
 
-    public Customer setCreatedBy(String createdBy) {
+    public SingleCustomer setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -90,7 +88,7 @@ public class Customer {
         return updatedAt;
     }
 
-    public Customer setUpdatedAt(LocalDateTime updatedAt) {
+    public SingleCustomer setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }
@@ -99,7 +97,7 @@ public class Customer {
         return updatedBy;
     }
 
-    public Customer setUpdatedBy(String updatedBy) {
+    public SingleCustomer setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
         return this;
     }
@@ -108,7 +106,7 @@ public class Customer {
         return name;
     }
 
-    public Customer setName(String name) {
+    public SingleCustomer setName(String name) {
         this.name = name;
         return this;
     }
@@ -117,7 +115,7 @@ public class Customer {
         return cloudReference;
     }
 
-    public Customer setCloudReference(String cloudReference) {
+    public SingleCustomer setCloudReference(String cloudReference) {
         this.cloudReference = cloudReference;
         return this;
     }
@@ -126,7 +124,7 @@ public class Customer {
         return description;
     }
 
-    public Customer setDescription(String description) {
+    public SingleCustomer setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -135,7 +133,7 @@ public class Customer {
         return customerType;
     }
 
-    public Customer setCustomerType(String customerType) {
+    public SingleCustomer setCustomerType(String customerType) {
         this.customerType = customerType;
         return this;
     }
@@ -144,7 +142,7 @@ public class Customer {
         return salesforceId;
     }
 
-    public Customer setSalesforceId(String salesforceId) {
+    public SingleCustomer setSalesforceId(String salesforceId) {
         this.salesforceId = salesforceId;
         return this;
     }
@@ -153,7 +151,7 @@ public class Customer {
         return active;
     }
 
-    public Customer setActive(Boolean active) {
+    public SingleCustomer setActive(Boolean active) {
         this.active = active;
         return this;
     }
@@ -162,7 +160,7 @@ public class Customer {
         return maxCadFileRetentionDays;
     }
 
-    public Customer setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
+    public SingleCustomer setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
         this.maxCadFileRetentionDays = maxCadFileRetentionDays;
         return this;
     }
@@ -171,7 +169,7 @@ public class Customer {
         return useExternalIdentityProvider;
     }
 
-    public Customer setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
+    public SingleCustomer setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
         this.useExternalIdentityProvider = useExternalIdentityProvider;
         return this;
     }
@@ -180,7 +178,7 @@ public class Customer {
         return mfaRequired;
     }
 
-    public Customer setMfaRequired(Boolean mfaRequired) {
+    public SingleCustomer setMfaRequired(Boolean mfaRequired) {
         this.mfaRequired = mfaRequired;
         return this;
     }
@@ -189,7 +187,7 @@ public class Customer {
         return oneTimePasswordApplications;
     }
 
-    public Customer setOneTimePasswordApplications(List<Object> oneTimePasswordApplications) {
+    public SingleCustomer setOneTimePasswordApplications(List<Object> oneTimePasswordApplications) {
         this.oneTimePasswordApplications = oneTimePasswordApplications;
         return this;
     }
@@ -198,7 +196,7 @@ public class Customer {
         return createdByName;
     }
 
-    public Customer setCreatedByName(String createdByName) {
+    public SingleCustomer setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
         return this;
     }
@@ -207,7 +205,7 @@ public class Customer {
         return updatedByName;
     }
 
-    public Customer setUpdatedByName(String updatedByName) {
+    public SingleCustomer setUpdatedByName(String updatedByName) {
         this.updatedByName = updatedByName;
         return this;
     }
@@ -216,7 +214,7 @@ public class Customer {
         return identityProviders;
     }
 
-    public Customer setIdentityProviders(List<Object> identityProviders) {
+    public SingleCustomer setIdentityProviders(List<Object> identityProviders) {
         this.identityProviders = identityProviders;
         return this;
     }
@@ -225,7 +223,7 @@ public class Customer {
         return emailDomains;
     }
 
-    public Customer setEmailDomains(List<String> emailDomains) {
+    public SingleCustomer setEmailDomains(List<String> emailDomains) {
         this.emailDomains = emailDomains;
         return this;
     }
@@ -234,7 +232,7 @@ public class Customer {
         return authenticationType;
     }
 
-    public Customer setAuthenticationType(String authenticationType) {
+    public SingleCustomer setAuthenticationType(String authenticationType) {
         this.authenticationType = authenticationType;
         return this;
     }
