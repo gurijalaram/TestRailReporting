@@ -16,6 +16,7 @@ import com.apriori.pageobjects.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -346,6 +347,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public ViewSearchResultsPage searchForReport(String textToType) {
         pageUtils.waitForElementAndClick(searchInput);
         searchInput.sendKeys(textToType);
+        pageUtils.waitForSteadinessOfElement(By.cssSelector("span[id='globalSearch'] > a"));
         pageUtils.waitForElementAndClick(searchButton);
         return new ViewSearchResultsPage(driver);
     }

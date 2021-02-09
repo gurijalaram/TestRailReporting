@@ -67,7 +67,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1676")
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {

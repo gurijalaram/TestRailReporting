@@ -794,8 +794,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of Generic Report Page object
      */
     public GenericReportPage clickOk() {
-        // The below hard wait is a temporary solution - will come back and try to fix later this week
-        pageUtils.waitFor(2000);
+        pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
         By locator = By.cssSelector("div[id='inputControls']");
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
             okButton.click();
