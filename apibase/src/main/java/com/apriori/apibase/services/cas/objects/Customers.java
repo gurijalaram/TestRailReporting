@@ -8,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Customers {
     @JsonProperty
     private CdsPagination response;
-    @JsonProperty("response")
-    private Customer customerResponse;
 
     public CdsPagination getResponse() {
         return this.response;
@@ -18,14 +16,5 @@ public class Customers {
     public Customers setResponse(CdsPagination response) {
         this.response = response;
         return this;
-    }
-
-    public Customers setItems(List<Customer> items) {
-        this.items = items;
-        return this;
-    }
-
-    public List<Customer> getItems() {
-        return this.items;
     }
 }
