@@ -10,6 +10,7 @@ import com.apriori.cds.entity.response.Customers;
 import com.apriori.cds.entity.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -74,27 +75,39 @@ public class CdsCustomers extends CdsTestUtil {
     }
 
     @Test
-    @Description("Add API customers")
-    public void addCustomers() {
-        url = String.format(url, "customers");
+    @Description("Gets the customer by identity")
+    public void getCustomerByIdentity() {
+        String url2 = String.format(url, "customers");
 
-        RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
+        String customerName = new GenerateStringUtil().generateCustomerName();
+        String salesForceId = new GenerateStringUtil().generateSalesForceId();
+        String email = "S+@".concat(customerName);
+        String cloudReference = new GenerateStringUtil().generateCloudReference();
+
+        RequestEntity requestEntity = RequestEntity.init(url2, Customer.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("customer",
-                new Customer().setName("Moya1020")
+                new Customer().setName(customerName)
                     .setDescription("Add new customers api test")
                     .setCustomerType("CLOUD_ONLY")
                     .setCreatedBy("#SYSTEM00000")
-                    .setSalesforceId("AutomationSalesIds")
+                    .setCloudReference(cloudReference)
+                    .setSalesforceId(salesForceId)
                     .setActive(true)
                     .setMfaRequired(false)
                     .setUseExternalIdentityProvider(false)
                     .setMaxCadFileRetentionDays(1095)
-                    .setEmailRegexPatterns(Arrays.asList("S+friths.com", "s+friths.co.uk")));
+                    .setEmailRegexPatterns(Arrays.asList(email+".com", email+".co.uk")));
 
         ResponseWrapper<Customer> responseWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+        assertThat(responseWrapper.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
-        assertThat(responseWrapper.getResponseEntity().getResponse().getName(), is(equalTo("Moya101")));
+        String customerIdentity = responseWrapper.getResponseEntity().getResponse().getIdentity();
+        String url3 = String.format(url, String.format("customers/%s", customerIdentity));
+
+        ResponseWrapper<Customer> response = getCommonRequest(url3, true, Customer.class);
+        assertThat(response.getResponseEntity().getResponse().getEmailRegexPatterns(),is(Arrays.asList(email+".com", email+".co.uk")));
+
     }
 
     /*
