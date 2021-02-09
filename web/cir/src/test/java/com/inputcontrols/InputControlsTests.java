@@ -665,8 +665,7 @@ public class InputControlsTests extends TestBase {
             is(startsWith("6,631,000")));
 
         if (!reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
-            genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
-            genericReportPage.hoverPartNameBubbleDtcReports();
+            genericReportPage.hoverPartNameBubbleMinAnnualSpend();
             BigDecimal annualSpendValue = genericReportPage.getAnnualSpendFromBubbleTooltip();
 
             assertThat(

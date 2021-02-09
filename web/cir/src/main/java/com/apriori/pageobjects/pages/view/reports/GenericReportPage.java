@@ -401,6 +401,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Minimum Annual Spend:')]/../following-sibling::td[2]/span")
     private WebElement minimumAnnualSpend;
 
+    @FindBy(xpath = "//label[@title='Minimum Annual Spend']/input")
+    private WebElement minimumAnnualSpendInput;
+
     @FindBy(xpath = "//tr[13]/td[20]/span")
     private WebElement annualSpendDetailsValue;
 
@@ -542,11 +545,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage inputMinimumAnnualSpend() {
-        By locator = By.xpath("//label[@title='Minimum Annual Spend']/input");
-        pageUtils.waitForElementAndClick(locator);
-        WebElement minimumAnnualSpend = driver.findElement(locator);
-        pageUtils.clearInput(driver.findElement(locator));
-        minimumAnnualSpend.sendKeys("6631000");
+        minimumAnnualSpendInput.clear();
+        pageUtils.javaScriptClick(minimumAnnualSpendInput);
+        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Minimum Annual Spend']/input[@value='']"));
+        minimumAnnualSpendInput.sendKeys("6631000");
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        clickCurrencyTwice();
+        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Minimum Annual Spend']/input[@value='6631000']"));
         return this;
     }
 
@@ -1494,6 +1499,16 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Hovers over the relevant bubble for Minimum Annual Spend tests
+     */
+    public void hoverPartNameBubbleMinAnnualSpend() {
+        By locator = By.xpath("//*[@class='highcharts-series-group']//*[4][local-name() = 'path']");
+        pageUtils.waitForElementToAppear(locator);
+        Actions builder = new Actions(driver).moveToElement(driver.findElement(locator));
+        builder.build().perform();
+    }
+
+    /**
      * Hover DTC Score bubble
      * @param dtcScore String
      */
@@ -2203,6 +2218,14 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     private int getMonthDropdownIndex(LocalDateTime date) {
         return date.getMonthValue() - 1;
+    }
+
+    /**
+     * Clicks current currency dropdown twice to change focus
+     */
+    private void clickCurrencyTwice() {
+        pageUtils.waitForElementAndClick(currentCurrencyElement);
+        currentCurrencyElement.click();
     }
 
     /**
