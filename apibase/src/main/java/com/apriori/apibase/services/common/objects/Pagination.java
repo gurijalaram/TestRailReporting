@@ -29,6 +29,15 @@ public class Pagination {
     @JsonProperty
     private List<Customer> items;
 
+    public List<Customer> getItems() {
+        return items;
+    }
+
+    public Pagination setItems(List<Customer> items) {
+        this.items = items;
+        return this;
+    }
+
     public Pagination setIsFirstPage(Boolean isFirstPage) {
         this.isFirstPage = isFirstPage;
         return this;
@@ -108,15 +117,5 @@ public class Pagination {
 
     public Boolean getHasPreviousPage() {
         return this.hasPreviousPage;
-    }
-
-
-    public Pagination setItems(List<Customer> items) {
-        this.items = items;
-        return this;
-    }
-
-    public List<Customer> getItems() {
-        return this.items;
     }
 }

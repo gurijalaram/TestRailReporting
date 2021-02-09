@@ -1,20 +1,37 @@
 package com.apriori.apibase.services.common.objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserProfile {
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
+    @JsonProperty
     private String createdAt;
+    @JsonProperty
     private String givenName;
+    @JsonProperty
     private String familyName;
+    @JsonProperty
     private String jobTitle;
+    @JsonProperty
     private String department;
+    @JsonProperty
     private String supervisor;
+    @JsonProperty
     private String timezone;
+    @JsonProperty
     private String townCity;
+    @JsonProperty
     private String countryCode;
+    @JsonProperty
     private String prefix;
+    @JsonProperty
     private String suffix;
+    @JsonProperty
     private String stateProvince;
+    @JsonProperty
     private String county;
 
     public String getCounty() {

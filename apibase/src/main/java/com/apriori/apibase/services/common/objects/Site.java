@@ -1,9 +1,15 @@
 package com.apriori.apibase.services.common.objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Site {
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
+    @JsonProperty
     private String createdAt;
+    @JsonProperty
     private String siteIdentity;
 
     public Site setIdentity(String identity) {

@@ -4,6 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
+// TODO: 09/02/2021 ciene - might not need this class
 @Schema(location = "cds/CdsResponseSchema.json")
 public class Response {
     private Boolean isFirstPage;

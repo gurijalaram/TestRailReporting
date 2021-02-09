@@ -1,13 +1,16 @@
 package com.apriori.apibase.services.common.objects;
 
-import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @Schema(location = "common/ApplicationsSchema.json")
 public class Applications extends Pagination {
+    @JsonProperty
     private List<Application> items;
+    @JsonProperty
     private Applications response;
 
     public Applications getResponse() {
@@ -19,12 +22,12 @@ public class Applications extends Pagination {
         return this;
     }
 
-    public Applications setItems(List<Application> items) {
+    /*public Applications setItems(List<Application> items) {
         this.items = items;
         return this;
     }
 
     public List<Application> getItems() {
         return this.items;
-    }
+    }*/
 }
