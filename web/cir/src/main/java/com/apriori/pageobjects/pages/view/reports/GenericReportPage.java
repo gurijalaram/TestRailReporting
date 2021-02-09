@@ -811,6 +811,7 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.cssSelector("div[id='inputControls']");
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
             pageUtils.waitForElementAndClick(okButton);
+            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
             okButton.click();
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         }
