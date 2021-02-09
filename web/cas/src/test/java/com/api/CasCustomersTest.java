@@ -85,7 +85,7 @@ public class CasCustomersTest extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        Customer customer = response.getResponseEntity().getResponse().getItems().get(1);
+        Customer customer = response.getResponseEntity().getResponse().getItems().get(0);
         String name = customer.getName();
 
         String nameEndpoint = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
