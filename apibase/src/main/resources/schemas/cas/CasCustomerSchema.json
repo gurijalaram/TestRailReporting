@@ -11,7 +11,7 @@
       "$id": "#/properties/response",
       "type": "object",
       "title": "The response schema",
-      "required": [
+      "optional": [
         "isFirstPage",
         "isLastPage",
         "pageNumber",

@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.objects.Customer;
 import com.apriori.apibase.services.cas.objects.Customers;
-import com.apriori.apibase.services.cas.objects.SingleCustomerResponse;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
@@ -60,16 +59,16 @@ public class CasCustomersTest extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        Customer customer = response.getResponseEntity().getResponse().getItems().get(0);
+        Customer customer =  response.getResponseEntity().getResponse().getItems().get(0);
         String identity = customer.getIdentity();
         String name = customer.getName();
 
         String identityEndpoint = apiUrl + identity;
 
-        ResponseWrapper<SingleCustomerResponse> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, SingleCustomerResponse.class,
+        ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, Customer.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(name)));
+        assertThat(responseIdentity.getResponseEntity().getCustomerResponse().getName(), is(equalTo(name)));
     }
 }

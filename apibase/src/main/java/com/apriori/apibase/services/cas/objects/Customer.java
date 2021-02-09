@@ -14,6 +14,8 @@ import java.util.List;
 @Schema(location = "cas/CasCustomerSchema.json")
 public class Customer {
     @JsonProperty
+    private Customer response;
+    @JsonProperty
     private String identity;
     @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
@@ -57,6 +59,16 @@ public class Customer {
     private List<String> emailDomains = null;
     @JsonProperty
     private String authenticationType;
+
+
+    public Customer getCustomerResponse() {
+        return response;
+    }
+
+    public Customer setCustomerResponse(Customer response) {
+        this.response = response;
+        return this;
+    }
 
     public String getIdentity() {
         return identity;
