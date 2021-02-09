@@ -9,7 +9,7 @@
 700-33770-01_A0.stp,AutoAPIPlasticMolding700-33770-01_A0,Plastic Molding
 7021021-2_rib.prt.1,AutoAPIStockMachining7021021-2_rib,Stock Machining
 AGCO _ 71421375.prt.1,AutoAPISheetMetalAGCO_71421375,Sheet Metal
-Assembly2.stp,AutoAPIAssemblyAssembly2,Assembly
+//Assembly2.stp,AutoAPIAssemblyAssembly2,Assembly
 BasicScenario_Additive.prt.1,AutoAPIAdditiveManufacturingBasicScenario_Additive,Additive Manufacturing
 BasicScenario_Forging.stp,AutoAPIForgingBasicScenario_Forging,Forging
 bracket_basic.prt,AutoAPISheetMetalbracket_basic,Sheet Metal
@@ -55,7 +55,7 @@ MultiUpload.stp,AutoAPIPlasticMoldingMultiUpload,Plastic Molding
 nist_ftc_06_asme1_sw1500_rd.SLDPRT,AutoAPIStockMachiningnist_ftc_06_asme1_sw1500_rd,Stock Machining
 partbody_2.stp,AutoAPIDieCastingpartbody_2,Casting - Die
 partbody_2.stp,AutoAPIStockMachiningpartbody_2,Stock Machining
-Piston_assembly.stp,AutoAPIAssemblyPiston_assembly,Assembly
+//Piston_assembly.stp,AutoAPIAssemblyPiston_assembly,Assembly
 Plastic moulded cap DFM.CATPart,AutoAPIPlasticMoldingPlasticmouldedcapDFM,Plastic Molding
 Plastic moulded cap noDraft.CATPart,AutoAPIDieCastingPlasticmouldedcapnoDraft,Casting - Die
 Plastic moulded cap noDraft.CATPart,AutoAPIPlasticMouldingPlasticmouldedcapnoDraft,Plastic Molding
