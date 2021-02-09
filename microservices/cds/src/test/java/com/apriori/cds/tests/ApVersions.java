@@ -28,9 +28,8 @@ public class ApVersions extends CdsTestUtil {
 
     @Test
     @Description("Get a list of ap Versions in CDSDb")
-    public void getapVersions() {
-        url = String.format(url,
-            String.format("ap-versions", Constants.getCdsIdentityCustomer()));
+    public void getApVersions() {
+        url = String.format(url,"ap-versions");
 
         ResponseWrapper<ApVersionResponse> response = getCommonRequest(url, true, ApVersionResponse.class);
 
