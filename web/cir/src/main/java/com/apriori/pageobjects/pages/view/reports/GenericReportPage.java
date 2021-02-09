@@ -7,8 +7,10 @@ import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
+import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
+import org.checkerframework.checker.units.qual.A;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -703,6 +705,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectMassMetric(String massMetric) {
+        if (massMetric.equals(MassMetricEnum.FINISH_MASS.getMassMetricName())) {
+            massMetricDropdown.click();
+            driver.findElement(By.xpath(
+                    String.format("//li[@title='%s']/div/a", MassMetricEnum.ROUGH_MASS.getMassMetricName()))).click();
+        }
         if (!massMetricDropdown.getAttribute("title").equals(massMetric)) {
             massMetricDropdown.click();
             driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", massMetric))).click();
@@ -797,6 +804,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
         By locator = By.cssSelector("div[id='inputControls']");
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
+            pageUtils.waitForElementAndClick(okButton);
             okButton.click();
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         }
