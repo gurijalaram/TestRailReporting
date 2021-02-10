@@ -604,7 +604,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setProcessGroup(String processGroupOption) {
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        //waitForCorrectSelectedProcessGroupCount("0");
         waitForCorrectAvailableSelectedCount("", "Selected: ", "0");
 
         By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
@@ -615,6 +614,7 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator2 = By.xpath(
                 String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", processGroupOption));
         pageUtils.waitForElementToAppear(locator2);
+        waitForCorrectAvailableSelectedCount("", "Selected: ", "0");
         return this;
     }
 
@@ -819,8 +819,6 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
             pageUtils.waitForElementAndClick(okButton);
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-            //okButton.click();
-            //pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         }
         return this;
     }
@@ -1497,22 +1495,23 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers over bubble in DTC Reports
      */
     public void hoverPartNameBubbleDtcReports() {
-        //WebElement elementToUse = bubbleMap.get(this.reportName);
-        //pageUtils.waitForElementToAppear(elementToUse);
-        Actions builder = new Actions(driver).moveToElement(
-                driver.findElement(By.xpath("//*[@class='highcharts-series-group']//*[20][local-name() = 'path']")));
+        WebElement elementToUse = bubbleMap.get(this.reportName);
+        pageUtils.waitForElementToAppear(elementToUse);
+        Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.build().perform();
 
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
-            //elementToUse.click();
+            elementToUse.click();
         }
     }
 
     /**
-     * Hovers over the relevant bubble for Minimum Annual Spend tests
+     * Hovers over the relevant bubble for any DTC Report test
+     * @param bubbleIndex String
      */
-    public void hoverPartNameBubbleMinAnnualSpend() {
-        By locator = By.xpath("//*[@class='highcharts-series-group']//*[4][local-name() = 'path']");
+    public void hoverSpecificPartNameBubble(String bubbleIndex) {
+        By locator = By.xpath(
+                String.format("//*[@class='highcharts-series-group']//*[%s][local-name() = 'path']", bubbleIndex));
         pageUtils.waitForElementToAppear(locator);
         Actions builder = new Actions(driver).moveToElement(driver.findElement(locator));
         builder.build().perform();

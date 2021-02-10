@@ -370,6 +370,10 @@ public class InputControlsTests extends TestBase {
             .setProcessGroup(processGroupName)
             .clickOk();
 
+        if (processGroupName.equals(ProcessGroupEnum.CASTING_DIE.getProcessGroup())) {
+            genericReportPage.clickOk();
+        }
+
         assertThat(
             genericReportPage.getProcessGroupValueDtc(reportName),
             is(equalTo(processGroupName))
@@ -380,8 +384,7 @@ public class InputControlsTests extends TestBase {
             assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
         } else if (reportName.equals(ReportNamesEnum.CASTING_DTC.getReportName()) ||
                 reportName.equals(ReportNamesEnum.SHEET_METAL_DTC.getReportName())) {
-            genericReportPage.setReportName(reportName);
-            genericReportPage.hoverPartNameBubbleDtcReports();
+            genericReportPage.hoverSpecificPartNameBubble("20");
             String partName = genericReportPage.getPartNameDtcReports();
 
             navigateToDtcPartSummaryAndAssert(partName, processGroupName);
@@ -665,7 +668,7 @@ public class InputControlsTests extends TestBase {
             is(startsWith("6,631,000")));
 
         if (!reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
-            genericReportPage.hoverPartNameBubbleMinAnnualSpend();
+            genericReportPage.hoverSpecificPartNameBubble("4");
             BigDecimal annualSpendValue = genericReportPage.getAnnualSpendFromBubbleTooltip();
 
             assertThat(
