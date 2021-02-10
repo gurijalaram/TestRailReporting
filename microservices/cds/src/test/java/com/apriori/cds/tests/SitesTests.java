@@ -51,7 +51,7 @@ public class SitesTests extends CdsTestUtil {
         ResponseWrapper<Site> responseWrapper = getCommonRequest(identityUrl, true, Site.class);
 
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        //assertThat(responseWrapper.getResponseEntity().getResponse().getName(),is("USER"));
+        assertThat(responseWrapper.getResponseEntity().getResponse().getIdentity(), is(equalTo(siteIdentity)));
     }
 
 }
