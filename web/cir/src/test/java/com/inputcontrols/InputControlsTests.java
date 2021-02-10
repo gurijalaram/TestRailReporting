@@ -367,6 +367,7 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSet)
+            .setProcessGroup(processGroupName)
             .clickOk();
 
         assertThat(
