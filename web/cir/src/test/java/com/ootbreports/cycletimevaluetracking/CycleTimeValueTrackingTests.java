@@ -16,6 +16,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -81,7 +82,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "2332")
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
@@ -101,7 +102,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "2335")
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {
