@@ -1867,8 +1867,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of current page object
      */
     public GenericReportPage setDtcScore(String dtcScoreOption) {
-        String dtcScoreToUse = dtcScoreOption.equals("Medium Casting") ?
-                DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScoreOption;
+        String dtcScoreToUse = dtcScoreOption.equals("Medium Casting")
+                ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScoreOption;
         if (!dtcScoreToUse.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
             pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
