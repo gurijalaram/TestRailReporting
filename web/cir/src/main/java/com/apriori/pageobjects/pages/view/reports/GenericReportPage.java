@@ -614,7 +614,7 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator2 = By.xpath(
                 String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", processGroupOption));
         pageUtils.waitForElementToAppear(locator2);
-        waitForCorrectAvailableSelectedCount("", "Selected: ", "0");
+        waitForCorrectAvailableSelectedCount("", "Selected: ", "1");
         return this;
     }
 
