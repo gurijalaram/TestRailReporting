@@ -1,169 +1,320 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
-    "identity",
-    "createdBy",
-    "createdAt",
-    "name",
-    "description",
-    "active",
-    "siteId",
-    "customerIdentity",
-    "deployments"
+    "response"
   ],
   "properties": {
-    "identity": {
-      "type": "string"
-    },
-    "createdBy": {
-      "type": "string"
-    },
-    "createdAt": {
-      "type": "string"
-    },
-    "name": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string"
-    },
-    "active": {
-      "type": "boolean"
-    },
-    "siteId": {
-      "type": "string"
-    },
-    "customerIdentity": {
-      "type": "string"
-    },
-    "deployments": {
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "type": "object",
-            "required": [
-              "isDefault",
-              "identity",
-              "createdBy",
-              "createdAt",
-              "name",
-              "description",
-              "apVersion",
-              "active",
-              "installations",
-              "customerIdentity",
-              "applications",
-              "deploymentType",
-              "sites"
-            ],
-            "properties": {
-              "isDefault": {
-                "type": "boolean"
-              },
-              "identity": {
-                "type": "string"
-              },
-              "createdBy": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "apVersion": {
-                "type": "string"
-              },
-              "active": {
-                "type": "boolean"
-              },
-              "installations": {
-                "type": "array",
-                "items": {
-                }
-              },
-              "customerIdentity": {
-                "type": "string"
-              },
-              "applications": {
-                "type": "array",
-                "items": {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "required": [
-                        "isCloudHomeApp",
-                        "isSingleTenant",
-                        "isPublic",
-                        "identity",
-                        "createdBy",
-                        "createdAt",
-                        "name",
-                        "cloudReference",
-                        "serviceName",
-                        "description",
-                        "iconUrl"
-                      ],
-                      "properties": {
-                        "isCloudHomeApp": {
-                          "type": "boolean"
-                        },
-                        "isSingleTenant": {
-                          "type": "boolean"
-                        },
-                        "isPublic": {
-                          "type": "boolean"
-                        },
-                        "identity": {
-                          "type": "string"
-                        },
-                        "createdBy": {
-                          "type": "string"
-                        },
-                        "createdAt": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "cloudReference": {
-                          "type": "string"
-                        },
-                        "serviceName": {
-                          "type": "string"
-                        },
-                        "description": {
-                          "type": "string"
-                        },
-                        "iconUrl": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "name",
+        "description",
+        "active",
+        "siteId",
+        "deployments",
+        "customerIdentity"
+      ],
+      "properties": {
+        "identity": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "string"
+        },
+        "createdBy": {
+          "$id": "#/properties/response/properties/createdBy",
+          "type": "string"
+        },
+        "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
+          "type": "string"
+        },
+        "name": {
+          "$id": "#/properties/response/properties/name",
+          "type": "string"
+        },
+        "description": {
+          "$id": "#/properties/response/properties/description",
+          "type": "string"
+        },
+        "active": {
+          "$id": "#/properties/response/properties/active",
+          "type": "boolean"
+        },
+        "siteId": {
+          "$id": "#/properties/response/properties/siteId",
+          "type": "string"
+        },
+        "deployments": {
+          "$id": "#/properties/response/properties/deployments",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/deployments/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/response/properties/deployments/items/anyOf/0",
+                "type": "object",
+                "required": [
+                  "isDefault",
+                  "identity",
+                  "createdBy",
+                  "createdAt",
+                  "name",
+                  "description",
+                  "apVersion",
+                  "active",
+                  "installations",
+                  "applications",
+                  "customerIdentity",
+                  "deploymentType",
+                  "sites"
+                ],
+                "properties": {
+                  "isDefault": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/isDefault",
+                    "type": "boolean"
+                  },
+                  "identity": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/identity",
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/createdBy",
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/createdAt",
+                    "type": "string"
+                  },
+                  "name": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/name",
+                    "type": "string"
+                  },
+                  "description": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/description",
+                    "type": "string"
+                  },
+                  "apVersion": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/apVersion",
+                    "type": "string"
+                  },
+                  "active": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/active",
+                    "type": "boolean"
+                  },
+                  "installations": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items",
+                      "anyOf": [
+                        {
+                          "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0",
+                          "type": "object",
+                          "required": [
+                            "identity",
+                            "createdBy",
+                            "createdAt",
+                            "name",
+                            "cloudReference",
+                            "description",
+                            "active",
+                            "realm",
+                            "url",
+                            "s3Bucket",
+                            "tenantGroup",
+                            "tenant",
+                            "clientId",
+                            "clientSecret",
+                            "cidGlobalKey",
+                            "deploymentIdentity",
+                            "region",
+                            "customerIdentity"
+                          ],
+                          "properties": {
+                            "identity": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/identity",
+                              "type": "string"
+                            },
+                            "createdBy": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/createdBy",
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/createdAt",
+                              "type": "string"
+                            },
+                            "name": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/name",
+                              "type": "string"
+                            },
+                            "cloudReference": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/cloudReference",
+                              "type": "string"
+                            },
+                            "description": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/description",
+                              "type": "string"
+                            },
+                            "active": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/active",
+                              "type": "boolean"
+                            },
+                            "realm": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/realm",
+                              "type": "string"
+                            },
+                            "url": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/url",
+                              "type": "string"
+                            },
+                            "s3Bucket": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/s3Bucket",
+                              "type": "string"
+                            },
+                            "tenantGroup": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/tenantGroup",
+                              "type": "string"
+                            },
+                            "tenant": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/tenant",
+                              "type": "string"
+                            },
+                            "clientId": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/clientId",
+                              "type": "string"
+                            },
+                            "clientSecret": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/clientSecret",
+                              "type": "string"
+                            },
+                            "cidGlobalKey": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/cidGlobalKey",
+                              "type": "string"
+                            },
+                            "deploymentIdentity": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/deploymentIdentity",
+                              "type": "string"
+                            },
+                            "region": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/region",
+                              "type": "string"
+                            },
+                            "customerIdentity": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/installations/items/anyOf/0/properties/customerIdentity",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "applications": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items",
+                      "anyOf": [
+                        {
+                          "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0",
+                          "type": "object",
+                          "required": [
+                            "isCloudHomeApp",
+                            "isSingleTenant",
+                            "isPublic",
+                            "identity",
+                            "createdBy",
+                            "createdAt",
+                            "name",
+                            "cloudReference",
+                            "serviceName",
+                            "description",
+                            "iconUrl"
+                          ],
+                          "properties": {
+                            "isCloudHomeApp": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/isCloudHomeApp",
+                              "type": "boolean"
+                            },
+                            "isSingleTenant": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/isSingleTenant",
+                              "type": "boolean"
+                            },
+                            "isPublic": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/isPublic",
+                              "type": "boolean"
+                            },
+                            "identity": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/identity",
+                              "type": "string"
+                            },
+                            "createdBy": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/createdBy",
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/createdAt",
+                              "type": "string"
+                            },
+                            "name": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/name",
+                              "type": "string"
+                            },
+                            "cloudReference": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/cloudReference",
+                              "type": "string"
+                            },
+                            "serviceName": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/serviceName",
+                              "type": "string"
+                            },
+                            "description": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/description",
+                              "type": "string"
+                            },
+                            "iconUrl": {
+                              "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/applications/items/anyOf/0/properties/iconUrl",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "customerIdentity": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/customerIdentity",
+                    "type": "string"
+                  },
+                  "deploymentType": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/deploymentType",
+                    "type": "string"
+                  },
+                  "sites": {
+                    "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/sites",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/sites/items",
+                      "anyOf": [
+                        {
+                          "$id": "#/properties/response/properties/deployments/items/anyOf/0/properties/sites/items/anyOf/0",
                           "type": "string"
                         }
-                      }
+                      ]
                     }
-                  ]
-                }
-              },
-              "deploymentType": {
-                "type": "string"
-              },
-              "sites": {
-                "type": "array",
-                "items": {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    }
-                  ]
+                  }
                 }
               }
-            }
+            ]
           }
-        ]
+        },
+        "customerIdentity": {
+          "$id": "#/properties/response/properties/customerIdentity",
+          "type": "string"
+        }
       }
     }
   }
