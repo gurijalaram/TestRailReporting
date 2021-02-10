@@ -22,7 +22,7 @@ public class Role {
     private String description;
     @JsonProperty
     private Role response;
-    
+
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;

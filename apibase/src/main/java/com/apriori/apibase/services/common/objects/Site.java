@@ -12,17 +12,12 @@ public class Site {
     @JsonProperty
     private String siteIdentity;
 
-    public Site setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
     public String getIdentity() {
         return this.identity;
     }
 
-    public Site setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public Site setIdentity(String identity) {
+        this.identity = identity;
         return this;
     }
 
@@ -30,8 +25,8 @@ public class Site {
         return this.createdBy;
     }
 
-    public Site setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public Site setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
@@ -39,13 +34,18 @@ public class Site {
         return this.createdAt;
     }
 
-    public Site setSiteIdentity(String siteIdentity) {
-        this.siteIdentity = siteIdentity;
+    public Site setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
     public String getSiteIdentity() {
         return this.siteIdentity;
+    }
+
+    public Site setSiteIdentity(String siteIdentity) {
+        this.siteIdentity = siteIdentity;
+        return this;
     }
 
 }

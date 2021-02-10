@@ -27,12 +27,12 @@ public class CasCustomersTest extends TestUtil {
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-                Constants.getCasServiceHost(),
-                HttpStatus.SC_CREATED,
-                Constants.getCasTokenUsername(),
-                Constants.getCasTokenEmail(),
-                Constants.getCasTokenIssuer(),
-                Constants.getCasTokenSubject());
+            Constants.getCasServiceHost(),
+            HttpStatus.SC_CREATED,
+            Constants.getCasTokenUsername(),
+            Constants.getCasTokenEmail(),
+            Constants.getCasTokenIssuer(),
+            Constants.getCasTokenSubject());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class CasCustomersTest extends TestUtil {
         String apiUrl = String.format(Constants.getApiUrl(), "customers?sortBy[ASC]=name");
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -55,18 +55,18 @@ public class CasCustomersTest extends TestUtil {
         String apiUrl = String.format(Constants.getApiUrl(), "customers/");
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        Customer customer =  response.getResponseEntity().getResponse().getItems().get(0);
+        Customer customer = response.getResponseEntity().getResponse().getItems().get(0);
         String identity = customer.getIdentity();
         String name = customer.getName();
 
         String identityEndpoint = apiUrl + identity;
 
         ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, Customer.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(name)));

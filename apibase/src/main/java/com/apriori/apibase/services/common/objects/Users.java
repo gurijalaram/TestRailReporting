@@ -22,13 +22,13 @@ public class Users extends Pagination {
         return this;
     }
 
-    /*public Users setItems(List<User> items) {
+    public Users setItems(List<User> items) {
         this.items = items;
         return this;
     }
 
     public List<User> getItems() {
         return this.items;
-    }*/
+    }
 }
 

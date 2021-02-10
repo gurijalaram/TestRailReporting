@@ -79,14 +79,13 @@ public class UserProfile {
         return this;
     }
 
+    public String getTownCity() {
+        return this.townCity;
+    }
 
     public UserProfile setTownCity(String townCity) {
         this.townCity = townCity;
         return this;
-    }
-
-    public String getTownCity() {
-        return this.townCity;
     }
 
     public String getTimezone() {
@@ -125,18 +124,12 @@ public class UserProfile {
         return this;
     }
 
-
-    public UserProfile setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
     public String getIdentity() {
         return this.identity;
     }
 
-    public UserProfile setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public UserProfile setIdentity(String identity) {
+        this.identity = identity;
         return this;
     }
 
@@ -144,8 +137,8 @@ public class UserProfile {
         return this.createdBy;
     }
 
-    public UserProfile setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public UserProfile setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
@@ -153,8 +146,8 @@ public class UserProfile {
         return this.createdAt;
     }
 
-    public UserProfile setGivenName(String givenName) {
-        this.givenName = givenName;
+    public UserProfile setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
@@ -162,13 +155,18 @@ public class UserProfile {
         return this.givenName;
     }
 
-    public UserProfile setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public UserProfile setGivenName(String givenName) {
+        this.givenName = givenName;
         return this;
     }
 
     public String getFamilyName() {
         return this.familyName;
+    }
+
+    public UserProfile setFamilyName(String familyName) {
+        this.familyName = familyName;
+        return this;
     }
 
 }

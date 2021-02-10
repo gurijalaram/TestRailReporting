@@ -82,17 +82,12 @@ public class User {
         return this;
     }
 
-    public User setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
     public String getIdentity() {
         return this.identity;
     }
 
-    public User setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public User setIdentity(String identity) {
+        this.identity = identity;
         return this;
     }
 
@@ -100,8 +95,8 @@ public class User {
         return this.createdBy;
     }
 
-    public User setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public User setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
@@ -109,8 +104,8 @@ public class User {
         return this.createdAt;
     }
 
-    public User setUserType(String userType) {
-        this.userType = userType;
+    public User setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
@@ -118,8 +113,8 @@ public class User {
         return this.userType;
     }
 
-    public User setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public User setUserType(String userType) {
+        this.userType = userType;
         return this;
     }
 
@@ -127,8 +122,8 @@ public class User {
         return this.userProfile;
     }
 
-    public User setEmail(String email) {
-        this.email = email;
+    public User setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
         return this;
     }
 
@@ -136,8 +131,8 @@ public class User {
         return this.email;
     }
 
-    public User setUsername(String userName) {
-        this.username = userName;
+    public User setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -145,8 +140,8 @@ public class User {
         return this.username;
     }
 
-    public User setActive(Boolean active) {
-        this.active = active;
+    public User setUsername(String userName) {
+        this.username = userName;
         return this;
     }
 
@@ -154,8 +149,8 @@ public class User {
         return this.active;
     }
 
-    public User setSites(List<Site> sites) {
-        this.sites = sites;
+    public User setActive(Boolean active) {
+        this.active = active;
         return this;
     }
 
@@ -163,12 +158,17 @@ public class User {
         return this.sites;
     }
 
-    public User setCustomerIdentity(String customerIdentity) {
-        this.customerIdentity = customerIdentity;
+    public User setSites(List<Site> sites) {
+        this.sites = sites;
         return this;
     }
 
     public String getCustomerIdentity() {
         return this.customerIdentity;
+    }
+
+    public User setCustomerIdentity(String customerIdentity) {
+        this.customerIdentity = customerIdentity;
+        return this;
     }
 }

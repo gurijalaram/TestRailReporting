@@ -27,17 +27,12 @@ public class Pagination {
     @JsonProperty
     private Boolean hasPreviousPage;
 
-    public Pagination setIsFirstPage(Boolean isFirstPage) {
-        this.isFirstPage = isFirstPage;
-        return this;
-    }
-
     public Boolean getIsFirstPage() {
         return this.isFirstPage;
     }
 
-    public Pagination setIsLastPage(Boolean isLastPage) {
-        this.isLastPage = isLastPage;
+    public Pagination setIsFirstPage(Boolean isFirstPage) {
+        this.isFirstPage = isFirstPage;
         return this;
     }
 
@@ -45,8 +40,8 @@ public class Pagination {
         return this.isLastPage;
     }
 
-    public Pagination setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
+    public Pagination setIsLastPage(Boolean isLastPage) {
+        this.isLastPage = isLastPage;
         return this;
     }
 
@@ -54,8 +49,8 @@ public class Pagination {
         return this.pageNumber;
     }
 
-    public Pagination setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public Pagination setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
         return this;
     }
 
@@ -63,8 +58,8 @@ public class Pagination {
         return this.pageSize;
     }
 
-    public Pagination setPageItemCount(Integer pageItemCount) {
-        this.pageItemCount = pageItemCount;
+    public Pagination setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
         return this;
     }
 
@@ -72,8 +67,8 @@ public class Pagination {
         return this.pageItemCount;
     }
 
-    public Pagination setTotalItemCount(Integer totalItemCount) {
-        this.totalItemCount = totalItemCount;
+    public Pagination setPageItemCount(Integer pageItemCount) {
+        this.pageItemCount = pageItemCount;
         return this;
     }
 
@@ -81,8 +76,8 @@ public class Pagination {
         return this.totalItemCount;
     }
 
-    public Pagination setTotalPageCount(Integer totalPageCount) {
-        this.totalPageCount = totalPageCount;
+    public Pagination setTotalItemCount(Integer totalItemCount) {
+        this.totalItemCount = totalItemCount;
         return this;
     }
 
@@ -90,8 +85,8 @@ public class Pagination {
         return this.totalPageCount;
     }
 
-    public Pagination setHasNextPage(Boolean hasNextPage) {
-        this.hasNextPage = hasNextPage;
+    public Pagination setTotalPageCount(Integer totalPageCount) {
+        this.totalPageCount = totalPageCount;
         return this;
     }
 
@@ -99,12 +94,17 @@ public class Pagination {
         return this.hasNextPage;
     }
 
-    public Pagination setHasPreviousPage(Boolean hasPreviousPage) {
-        this.hasPreviousPage = hasPreviousPage;
+    public Pagination setHasNextPage(Boolean hasNextPage) {
+        this.hasNextPage = hasNextPage;
         return this;
     }
 
     public Boolean getHasPreviousPage() {
         return this.hasPreviousPage;
+    }
+
+    public Pagination setHasPreviousPage(Boolean hasPreviousPage) {
+        this.hasPreviousPage = hasPreviousPage;
+        return this;
     }
 }
