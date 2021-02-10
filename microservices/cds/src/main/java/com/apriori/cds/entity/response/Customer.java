@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Schema(location = "cds/CdsCustomerSchema.json")
-public class Customer{
+public class Customer {
 
     private Customer response;
     private Boolean useExternalIdentityProvider;

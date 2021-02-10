@@ -12,9 +12,6 @@ import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -75,10 +72,14 @@ public class CdsCustomers extends CdsTestUtil {
     }
 
     @Test
-    @Description("Gets the customer by identity")
-    public void getCustomerByIdentity() {
-        String url2 = String.format(url, "customers");
+    @Description("Add API customers")
+    public void addCustomers() {
+        url = String.format(url, "customers");
 
+        String customerName = new GenerateStringUtil().generateCustomerName();
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
+        String salesForceId = new GenerateStringUtil().generateSalesForceId();
+        String emailPattern = "S+@".concat(customerName);
         String customerName = new GenerateStringUtil().generateCustomerName();
         String salesForceId = new GenerateStringUtil().generateSalesForceId();
         String email = "S+@".concat(customerName);
@@ -99,12 +100,14 @@ public class CdsCustomers extends CdsTestUtil {
                     .setMaxCadFileRetentionDays(1095)
                     .setEmailRegexPatterns(Arrays.asList(email+".com", email+".co.uk")));
 
+        ResponseWrapper<Customer> customer = addCustomer(url, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         ResponseWrapper<Customer> responseWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
         assertThat(responseWrapper.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         String customerIdentity = responseWrapper.getResponseEntity().getResponse().getIdentity();
         String url3 = String.format(url, String.format("customers/%s", customerIdentity));
 
+        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
         ResponseWrapper<Customer> response = getCommonRequest(url3, true, Customer.class);
         assertThat(response.getResponseEntity().getResponse().getEmailRegexPatterns(),is(Arrays.asList(email+".com", email+".co.uk")));
 
