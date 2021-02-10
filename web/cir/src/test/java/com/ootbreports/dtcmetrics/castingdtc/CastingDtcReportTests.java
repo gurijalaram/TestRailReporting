@@ -277,7 +277,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1704")
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupDieCastingOnly() {
