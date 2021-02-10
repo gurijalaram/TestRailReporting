@@ -817,9 +817,8 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
         By locator = By.cssSelector("div[id='inputControls']");
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
-            pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
             okButton.click();
-            //pageUtils.waitForElementAndClick(okButton);
+            pageUtils.waitForElementAndClick(okButton);
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         }
         return this;
@@ -924,8 +923,22 @@ public class GenericReportPage extends ReportsPageHeader {
         String valueToInput = invalidValue.isEmpty() ? dateToUse : invalidValue;
 
         dateInputToUse.clear();
+        By emptyEarliestInput = By.xpath("//label[contains(@title, 'Earliest Export Date')]/input[@value='']");
+        By emptyLatestInput = By.xpath("//label[contains(@title, 'Latest Export Date')]/input[@value='']");
+        By emptyLocatorToUse = isEarliestAndToday ? emptyEarliestInput : emptyLatestInput;
+        pageUtils.waitForElementToAppear(emptyLocatorToUse);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         dateInputToUse.click();
         dateInputToUse.sendKeys(valueToInput);
+
+        if (!isEarliestAndToday) {
+            By earliestLocator = By.xpath(
+                    String.format("//label[contains(@title, 'Earliest Export Date')]/input[@value='%s']", invalidValue));
+            By latestLocator = By.xpath(
+                    String.format("//label[contains(@title, 'Earliest Export Date')]/input[@value='%s']", invalidValue));
+            By locatorToUse = isEarliestAndToday ? earliestLocator : latestLocator;
+            pageUtils.waitForElementToAppear(locatorToUse);
+        }
 
         return this;
     }
@@ -945,7 +958,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return booolean
      */
     public boolean isExportSetFilterErrorDisplayedAndEnabled(boolean isEarliest) {
-        pageUtils.waitForElementToAppear(earliestExportSetDateError);
+        WebElement elementToWaitFor = isEarliest ? earliestExportSetDateError : latestExportSetDateError;
+        pageUtils.waitForElementToAppear(elementToWaitFor);
         pageUtils.waitForElementToAppear(latestExportSetDateError);
         return isEarliest ? earliestExportSetDateError.isDisplayed() && earliestExportSetDateError.isEnabled() :
                 latestExportSetDateError.isDisplayed() && latestExportSetDateError.isEnabled();
