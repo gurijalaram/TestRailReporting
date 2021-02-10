@@ -18,7 +18,7 @@ public class CdsTestUtil extends TestUtil {
         );
     }
 
-    // TODO: 10/02/2021 ciene - to be moved to a more generic utility class
+    // TODO: 10/02/2021 ciene - to be moved to a more generic utility class.  possibly pass create an addcustomer class with a constructor create the customer
     /**
      * POST call to add a customer
      *
