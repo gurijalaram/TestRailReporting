@@ -604,10 +604,17 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setProcessGroup(String processGroupOption) {
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        //waitForCorrectSelectedProcessGroupCount("0");
+        waitForCorrectAvailableSelectedCount("", "Selected: ", "0");
+
         By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForElementAndClick(driver.findElement(locator));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+
+        By locator2 = By.xpath(
+                String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", processGroupOption));
+        pageUtils.waitForElementToAppear(locator2);
         return this;
     }
 
