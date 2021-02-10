@@ -30,12 +30,12 @@ public class CdsRoles extends CdsTestUtil {
     public void getRoles() {
         url = String.format(url, "roles");
 
-        ResponseWrapper<Roles> response =  getCommonRequest(url, true, Roles.class);
+        ResponseWrapper<Roles> response = getCommonRequest(url, true, Roles.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(2));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getName(),is("USER"));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(1).getName(),is("ADMIN"));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getName(), is("USER"));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(1).getName(), is("ADMIN"));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CdsRoles extends CdsTestUtil {
     public void getRoleById() {
         String rolesUrl = String.format(url, "roles");
 
-        ResponseWrapper<Roles> responseWrapper =  getCommonRequest(rolesUrl, true, Roles.class);
+        ResponseWrapper<Roles> responseWrapper = getCommonRequest(rolesUrl, true, Roles.class);
 
         String roleIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
@@ -52,6 +52,6 @@ public class CdsRoles extends CdsTestUtil {
         ResponseWrapper<Role> response = getCommonRequest(identityUrl, true, Role.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getName(),is("USER"));
+        assertThat(response.getResponseEntity().getResponse().getName(), is("USER"));
     }
 }
