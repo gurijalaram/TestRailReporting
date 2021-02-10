@@ -3,9 +3,9 @@ package com.apriori.apibase.services.common.objects;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
-import java.util.List;
-
+@JsonRootName("response")
 @Schema(location = "PaginationSchema.json")
 public class Pagination {
     @JsonProperty
@@ -26,17 +26,6 @@ public class Pagination {
     private Boolean hasNextPage;
     @JsonProperty
     private Boolean hasPreviousPage;
-    @JsonProperty
-    private List<Customer> items;
-
-    public List<Customer> getItems() {
-        return items;
-    }
-
-    public Pagination setItems(List<Customer> items) {
-        this.items = items;
-        return this;
-    }
 
     public Pagination setIsFirstPage(Boolean isFirstPage) {
         this.isFirstPage = isFirstPage;

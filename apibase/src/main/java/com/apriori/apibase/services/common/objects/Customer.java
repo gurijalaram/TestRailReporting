@@ -60,12 +60,11 @@ public class Customer {
     @JsonProperty
     private String authenticationType;
 
-
-    public Customer getCustomerResponse() {
+    public Customer getResponse() {
         return response;
     }
 
-    public Customer setCustomerResponse(Customer response) {
+    public Customer setResponse(Customer response) {
         this.response = response;
         return this;
     }

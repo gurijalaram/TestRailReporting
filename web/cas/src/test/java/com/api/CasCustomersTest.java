@@ -45,7 +45,7 @@ public class CasCustomersTest extends TestUtil {
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
@@ -69,6 +69,6 @@ public class CasCustomersTest extends TestUtil {
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseIdentity.getResponseEntity().getCustomerResponse().getName(), is(equalTo(name)));
+        assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(name)));
     }
 }
