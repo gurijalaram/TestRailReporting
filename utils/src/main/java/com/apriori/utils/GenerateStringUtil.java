@@ -65,7 +65,7 @@ public class GenerateStringUtil {
      */
     @Attachment
     public String generateSalesForceId() {
-        return "AutoSFID" + (int)(Math.random() * 10000000000L);
+        return "AutoSFID" + RandomStringUtils.randomNumeric(10);
     }
 
     /**
