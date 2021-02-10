@@ -72,8 +72,8 @@ public class CdsCustomers extends CdsTestUtil {
     }
 
     @Test
-    @Description("Add API customers")
-    public void addCustomers() {
+    @Description("Add API customer")
+    public void addCustomer() {
         url = String.format(url, "customers");
 
         String customerName = new GenerateStringUtil().generateCustomerName();
