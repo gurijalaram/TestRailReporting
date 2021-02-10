@@ -370,6 +370,10 @@ public class InputControlsTests extends TestBase {
             .setProcessGroup(processGroupName)
             .clickOk();
 
+        if (processGroupName.equals(ProcessGroupEnum.CASTING_DIE.getProcessGroup())) {
+            genericReportPage.clickOk();
+        }
+
         assertThat(
             genericReportPage.getProcessGroupValueDtc(reportName),
             is(equalTo(processGroupName))

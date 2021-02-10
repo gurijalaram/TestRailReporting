@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.view.reports;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -603,21 +602,19 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of current page object
      */
     public GenericReportPage setProcessGroup(String processGroupOption) {
-        if (!processGroupOption.equals(ProcessGroupEnum.SHEET_METAL.getProcessGroup())) {
-            pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
-            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-            waitForCorrectAvailableSelectedCount("", "Selected: ", "0");
+        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        waitForCorrectAvailableSelectedCount("", "Selected: ", "0");
 
-            By optionToClickLocator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
-            pageUtils.waitForElementToAppear(optionToClickLocator);
-            pageUtils.waitForElementAndClick(driver.findElement(optionToClickLocator));
-            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForElementAndClick(driver.findElement(locator));
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
 
-            By optionSelectedLocator = By.xpath(
-                    String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", processGroupOption));
-            pageUtils.waitForElementToAppear(optionSelectedLocator);
-            waitForCorrectAvailableSelectedCount("", "Selected: ", "1");
-        }
+        By locator2 = By.xpath(
+                String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", processGroupOption));
+        pageUtils.waitForElementToAppear(locator2);
+        waitForCorrectAvailableSelectedCount("", "Selected: ", "1");
         return this;
     }
 
@@ -820,7 +817,9 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
         By locator = By.cssSelector("div[id='inputControls']");
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
+            pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
             okButton.click();
+            //pageUtils.waitForElementAndClick(okButton);
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         }
         return this;
