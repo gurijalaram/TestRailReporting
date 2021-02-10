@@ -385,6 +385,7 @@ public class InputControlsTests extends TestBase {
         } else if (reportName.equals(ReportNamesEnum.CASTING_DTC.getReportName()) ||
                 reportName.equals(ReportNamesEnum.SHEET_METAL_DTC.getReportName())) {
             genericReportPage.hoverSpecificPartNameBubble("20");
+            genericReportPage.setReportName(reportName);
             String partName = genericReportPage.getPartNameDtcReports();
 
             navigateToDtcPartSummaryAndAssert(partName, processGroupName);
