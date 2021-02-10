@@ -812,8 +812,8 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
             pageUtils.waitForElementAndClick(okButton);
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-            okButton.click();
-            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+            //okButton.click();
+            //pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         }
         return this;
     }
