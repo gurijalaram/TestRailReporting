@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDate;
 
-@Schema(location = "cas/NotFoundIdentitySchema.json")
-public class NotFoundIdentity {
+@Schema(location = "cas/ErrorMessageSchema.json")
+public class ErrorMessage {
 
     @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)

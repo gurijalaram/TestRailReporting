@@ -7,8 +7,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.objects.Customer;
 import com.apriori.apibase.services.cas.objects.Customers;
-import com.apriori.apibase.services.cas.objects.NotFoundIdentity;
-import com.apriori.apibase.services.cas.objects.NotFoundNameResponse;
+import com.apriori.apibase.services.cas.objects.ErrorMessage;
 import com.apriori.apibase.services.cas.objects.SingleCustomerResponse;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
@@ -106,7 +105,7 @@ public class CasCustomersTest extends TestUtil {
     public void getCustomerNotExistingIdentity() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers/76EA87KCHIKD");
 
-        ResponseWrapper<NotFoundIdentity> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, NotFoundIdentity.class,
+        ResponseWrapper<ErrorMessage> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, ErrorMessage.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
@@ -119,7 +118,7 @@ public class CasCustomersTest extends TestUtil {
         String name = new GenerateStringUtil().generateCustomerName();
         String apiUrl = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
 
-        ResponseWrapper<NotFoundNameResponse> response = new CommonRequestUtil().getCommonRequest(apiUrl, false, NotFoundNameResponse.class,
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, false, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(0));
