@@ -96,7 +96,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("4")));
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("3"), is(equalTo("2")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("3"), is(equalTo("1")));
 
         cycleTimeValueTrackingPage.clickOk();
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
