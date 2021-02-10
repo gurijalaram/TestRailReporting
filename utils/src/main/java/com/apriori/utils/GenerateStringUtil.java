@@ -65,7 +65,17 @@ public class GenerateStringUtil {
      */
     @Attachment
     public String generateSalesForceId() {
-        return "AutoSFID" + (int)(Math.random() * 10000000000L);
+        return "AutoSFID" + RandomStringUtils.randomNumeric(10);
+    }
+
+    /**
+     * Generates a cloudref for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateCloudReference() {
+        return "AutoCloudRef" + RandomStringUtils.randomAlphabetic(4);
     }
 
     /**
