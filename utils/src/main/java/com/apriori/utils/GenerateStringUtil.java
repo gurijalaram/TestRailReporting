@@ -69,6 +69,16 @@ public class GenerateStringUtil {
     }
 
     /**
+     * Generates a cloudref for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateCloudReference() {
+        return "AutoCloudRef" + RandomStringUtils.randomAlphabetic(4);
+    }
+
+    /**
      * Generates a userName for API
      *
      * @return string

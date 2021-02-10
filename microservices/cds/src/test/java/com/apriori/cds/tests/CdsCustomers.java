@@ -77,10 +77,11 @@ public class CdsCustomers extends CdsTestUtil {
         url = String.format(url, "customers");
 
         String customerName = new GenerateStringUtil().generateCustomerName();
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesForceId = new GenerateStringUtil().generateSalesForceId();
-        String emailPattern = new GenerateStringUtil().generateEmail();
+        String emailPattern = "S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(url, Customer.class, customerName, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(url, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
 
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
     }

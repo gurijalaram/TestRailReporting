@@ -13,22 +13,23 @@ public class CdsTestUtil extends TestUtil {
 
     protected <T> ResponseWrapper<T> getCommonRequest(String url, boolean urlEncoding, Class klass) {
         return GenericRequestUtil.get(
-                RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
-                new RequestAreaApi()
+            RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
+            new RequestAreaApi()
         );
     }
 
     /**
      * POST call to add a customer
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
-     * @param name         - the customer name
-     * @param salesForceId - the sales force id
-     * @param email        - the email pattern
+     * @param url            - the endpoint
+     * @param klass          - the response class
+     * @param name           - the customer name
+     * @param cloudReference - the cloud reference name
+     * @param salesForceId   - the sales force id
+     * @param email          - the email pattern
      * @return ResponseWrapper<Customer>
      */
-    public ResponseWrapper<Customer> addCustomer(String url, Class klass, String name, String salesForceId, String email) {
+    public ResponseWrapper<Customer> addCustomer(String url, Class klass, String name, String cloudReference, String salesForceId, String email) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("customer",
@@ -36,6 +37,7 @@ public class CdsTestUtil extends TestUtil {
                     .setDescription("Add new customers api test")
                     .setCustomerType("CLOUD_ONLY")
                     .setCreatedBy("#SYSTEM00000")
+                    .setCloudReference(cloudReference)
                     .setSalesforceId(salesForceId)
                     .setActive(true)
                     .setMfaRequired(false)
