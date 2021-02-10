@@ -10,10 +10,8 @@ import com.apriori.cds.entity.response.Customers;
 import com.apriori.cds.entity.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -78,23 +76,13 @@ public class CdsCustomers extends CdsTestUtil {
     public void addCustomers() {
         url = String.format(url, "customers");
 
-        RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
-            .setHeaders("Content-Type", "application/json")
-            .setBody("customer",
-                new Customer().setName("Moya1020")
-                    .setDescription("Add new customers api test")
-                    .setCustomerType("CLOUD_ONLY")
-                    .setCreatedBy("#SYSTEM00000")
-                    .setSalesforceId("AutomationSalesIds")
-                    .setActive(true)
-                    .setMfaRequired(false)
-                    .setUseExternalIdentityProvider(false)
-                    .setMaxCadFileRetentionDays(1095)
-                    .setEmailRegexPatterns(Arrays.asList("S+friths.com", "s+friths.co.uk")));
+        String customerName = new GenerateStringUtil().generateCustomerName();
+        String salesForceId = new GenerateStringUtil().generateSalesForceId();
+        String emailPattern = new GenerateStringUtil().generateEmail();
 
-        ResponseWrapper<Customer> responseWrapper = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+        ResponseWrapper<Customer> customer = addCustomer(url, Customer.class, customerName, salesForceId, emailPattern);
 
-        assertThat(responseWrapper.getResponseEntity().getResponse().getName(), is(equalTo("Moya101")));
+        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
     }
 
     /*
