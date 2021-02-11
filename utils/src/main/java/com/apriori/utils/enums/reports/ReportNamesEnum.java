@@ -21,7 +21,10 @@ public enum ReportNamesEnum {
     SCENARIO_COMPARISON("Scenario Comparison"),
     SHEET_METAL_DTC("Sheet Metal DTC"),
     SHEET_METAL_DTC_COMPARISON("Sheet Metal DTC Comparison"),
-    SHEET_METAL_DTC_DETAILS("Sheet Metal DTC Details");
+    SHEET_METAL_DTC_DETAILS("Sheet Metal DTC Details"),
+    TARGET_AND_QUOTED_COST_TREND("Target and Quoted Cost Trend"),
+    TARGET_AND_QUOTED_COST_VALUE_TRACKING("Target and Quoted Cost Value Tracking"),
+    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS("Target and Quoted Cost Value Tracking Details");
 
     private final String reportName;
 
