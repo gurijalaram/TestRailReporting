@@ -1,6 +1,5 @@
-package com.apriori.apibase.services.common.objects.AccessControls;
+package com.apriori.apibase.services.common.objects;
 
-import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

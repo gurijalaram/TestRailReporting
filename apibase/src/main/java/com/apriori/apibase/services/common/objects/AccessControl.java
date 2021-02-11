@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.common.objects.AccessControls;
+package com.apriori.apibase.services.common.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
