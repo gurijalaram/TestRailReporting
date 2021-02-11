@@ -31,7 +31,7 @@ public class CdsCustomerUsers extends CdsTestUtil {
     @TestRail(testCaseId = "3293")
     @Description("Add a user to a customer")
     public void addCustomerUsers() {
-        String customersUrl = String.format(url, "customers");
+        String customersEndpoint = String.format(url, "customers");
 
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
@@ -39,11 +39,11 @@ public class CdsCustomerUsers extends CdsTestUtil {
         String emailPattern = "\\S+@".concat(customerName);
         String userName = new GenerateStringUtil().generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersUrl, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
-        String usersUrl = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
-        ResponseWrapper<User> user = addUser(usersUrl, User.class, userName, customerName);
+        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
         assertThat(user.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
 
