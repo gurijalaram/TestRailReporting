@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.apibase.services.cds.objects.ApVersions;
+import com.apriori.cds.entity.response.ApVersions;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.http.utils.ResponseWrapper;
