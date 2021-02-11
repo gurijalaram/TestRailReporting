@@ -6,7 +6,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.apibase.services.cds.objects.AccessControls.AccessControlResponse;
+import com.apriori.apibase.services.common.objects.AccessControls;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
@@ -25,13 +25,12 @@ public class CdsAccessControls extends CdsTestUtil {
         url = Constants.getServiceUrl();
     }
 
-
     @Test
     @TestRail(testCaseId = "3289")
     @Description("API returns a list of all the access controls in the CDS DB")
     public void getAccessControls() {
         url = String.format(url, "access-controls");
-        ResponseWrapper<AccessControlResponse> response = getCommonRequest(url, true, AccessControlResponse.class);
+        ResponseWrapper<AccessControls> response = getCommonRequest(url, true, AccessControls.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
