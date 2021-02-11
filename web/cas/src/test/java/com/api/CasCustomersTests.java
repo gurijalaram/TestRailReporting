@@ -24,7 +24,7 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CasCustomersTest extends TestUtil {
+public class CasCustomersTests extends TestUtil {
 
     private String token;
 

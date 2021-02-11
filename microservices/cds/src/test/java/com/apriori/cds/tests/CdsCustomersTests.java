@@ -25,12 +25,12 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class CdsCustomers extends CdsTestUtil {
+public class CdsCustomersTests extends CdsTestUtil {
     private String url;
 
-    private String[] customerTypes = {"ON_PREMISE_ONLY", "CLOUD_ONLY", "ON_PREMISE_AND_CLOUD"};
     private String customerIdentity;
     private String customerIdentityEndpoint;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     @Before
     public void setServiceUrl() {
@@ -62,9 +62,9 @@ public class CdsCustomers extends CdsTestUtil {
     public void addCustomerTest() {
         String customerEndpoint = String.format(url, "customers");
 
-        String customerName = new GenerateStringUtil().generateCustomerName();
-        String cloudRef = new GenerateStringUtil().generateCloudReference();
-        String salesForceId = new GenerateStringUtil().generateSalesForceId();
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
         ResponseWrapper<Customer> customer = addCustomer(customerEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
@@ -79,9 +79,9 @@ public class CdsCustomers extends CdsTestUtil {
     public void getCustomerByIdentity() {
         String customersEndpoint = String.format(url, "customers");
 
-        String customerName = new GenerateStringUtil().generateCustomerName();
-        String cloudRef = new GenerateStringUtil().generateCloudReference();
-        String salesForceId = new GenerateStringUtil().generateSalesForceId();
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
@@ -100,9 +100,9 @@ public class CdsCustomers extends CdsTestUtil {
     public void getCustomersApplications() {
         String customersEndpoint = String.format(url, "customers");
 
-        String customerName = new GenerateStringUtil().generateCustomerName();
-        String cloudRef = new GenerateStringUtil().generateCloudReference();
-        String salesForceId = new GenerateStringUtil().generateSalesForceId();
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
