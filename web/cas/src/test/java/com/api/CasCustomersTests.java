@@ -17,15 +17,20 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.api.utils.CasTestUtil;
 import com.google.common.net.UrlEscapers;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class CasCustomersTests extends TestUtil {
 
     private String token;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     @Before
     public void getToken() {
@@ -114,12 +119,51 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
-        String name = new GenerateStringUtil().generateCustomerName();
+        String name = generateStringUtil.generateCustomerName();
         String apiUrl = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, false, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(0));
+    }
+
+    @Test
+    @Issue("MIC-1679")
+    @TestRail(testCaseId = {"5642", "5644"})
+    @Description("Add a new customer, get it by name, update the customer and get it by identity")
+    public void createUpdateCustomer() {
+        String url = String.format(Constants.getApiUrl(), "customers/");
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String email = customerName.toLowerCase();
+        String description = customerName + " Description";
+
+        ResponseWrapper<Customer> response = new CasTestUtil().addCustomer(url, Customer.class, token, customerName, cloudRef, description, email);
+
+        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+
+        String customerNameUrl = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(customerName);
+
+        ResponseWrapper<Customers> responseName = new CommonRequestUtil().getCommonRequest(customerNameUrl, false, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(responseName.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+
+        String identity = responseName.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String identityUrl = url + identity;
+
+        ResponseWrapper<Customer> patchResponse = new CasTestUtil().updateCustomer(identityUrl, Customer.class, token, email);
+
+        assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(patchResponse.getResponseEntity().getResponse().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
+
+        ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityUrl, true, Customer.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(responseIdentity.getResponseEntity().getResponse().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
     }
 }
