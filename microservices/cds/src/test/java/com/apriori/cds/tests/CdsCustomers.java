@@ -94,7 +94,6 @@ public class CdsCustomers extends CdsTestUtil {
         ResponseWrapper<Customer> response = getCommonRequest(customerIdentityEndpoint, true, Customer.class);
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getResponse().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
-
     }
 
     @Test
