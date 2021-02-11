@@ -95,8 +95,8 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
             .setHeaders("Content-Type", "application/json");
 
-        ResponseWrapper<String> deleteCustomer = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+        ResponseWrapper<String> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
 
-        assertThat(deleteCustomer.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 }
