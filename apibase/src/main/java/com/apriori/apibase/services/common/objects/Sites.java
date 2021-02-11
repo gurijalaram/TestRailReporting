@@ -31,7 +31,5 @@ public class Sites extends Pagination {
     public List<Site> getItems() {
         return this.items;
     }
-
-
 }
 

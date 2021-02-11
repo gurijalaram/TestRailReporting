@@ -168,5 +168,4 @@ public class UserProfile {
         this.familyName = familyName;
         return this;
     }
-
 }

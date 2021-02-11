@@ -2,21 +2,32 @@ package com.apriori.apibase.services.common.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 @Schema(location = "cds/SiteSchema.json")
 
 public class Site {
-
+    @JsonProperty
     private Site response;
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
+    @JsonProperty
     private String createdAt;
+    @JsonProperty
     private String name;
+    @JsonProperty
     private String description;
+    @JsonProperty
     private Boolean active;
+    @JsonProperty
     private String siteId;
+    @JsonProperty
     private String customerIdentity;
+    @JsonProperty
     private List<Deployment> deployments;
 
     public Site getResponse() {
@@ -108,5 +119,4 @@ public class Site {
         this.deployments = deployments;
         return this;
     }
-
 }
