@@ -6,8 +6,6 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;

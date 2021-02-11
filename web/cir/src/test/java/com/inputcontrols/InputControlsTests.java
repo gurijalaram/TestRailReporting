@@ -15,6 +15,7 @@ import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPag
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -360,6 +361,38 @@ public class InputControlsTests extends TestBase {
                 is(equalTo(costMetric)));
         String costAvoidedFinalValue = costMetric.contains("Fully") ? "(0.19)" : "(0.11)";
         assertThat(targetQuotedCostTrendReportPage.getCostAvoidedFinal(), is(equalTo(costAvoidedFinalValue)));
+    }
+
+    /**
+     * Generic test for cost metric input control on Value Tracking report
+     * @param reportName String
+     * @param costMetric String
+     */
+    public void testCostMetricTargetQuotedCostValueTrackingReport(String reportName, String costMetric) {
+        testCostMetricCoreTargetQuotedCostReports(reportName, costMetric);
+
+        String expectedFirstProjectName = costMetric.contains("Fully") ? "4" : "1";
+        String expectedQuotedCostDifference = costMetric.contains("Fully") ? "318.50" : "264.13";
+
+        assertThat(targetQuotedCostTrendReportPage.getFirstProject(),
+                is(equalTo(String.format("PROJECT %s", expectedFirstProjectName))));
+        assertThat(targetQuotedCostTrendReportPage.getQuotedCostDifferenceFromApCost(),
+                is(equalTo(expectedQuotedCostDifference)));
+    }
+
+    /**
+     * Generic test for cost metric input control on Value Tracking Details report
+     * @param reportName String
+     * @param costMetric String
+     */
+    public void testCostMetricTargetQuotedCostValueTrackingDetailsReport(String reportName, String costMetric) {
+        testCostMetricCoreTargetQuotedCostReports(reportName, costMetric);
+
+        String expectedCurrentAprioriCost = costMetric.contains("Fully") ? "264.92" : "264.61";
+        String expectedAnnualizedAprioriCost = costMetric.contains("Fully") ? "1,453,962.46" : "1,453,623.64";
+
+        assertThat(targetQuotedCostTrendReportPage.getCurrentAprioriCost(), is(equalTo(expectedCurrentAprioriCost)));
+        assertThat(targetQuotedCostTrendReportPage.getAnnualizedCost(), is(equalTo(expectedAnnualizedAprioriCost)));
     }
 
     /**
@@ -847,6 +880,24 @@ public class InputControlsTests extends TestBase {
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
         assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
+    }
+
+    private void testCostMetricCoreTargetQuotedCostReports(String reportName, String costMetric) {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, TargetQuotedCostTrendReportPage.class)
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .selectCostMetric(costMetric)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        String expectedCostMetric = costMetric;
+        if (reportName.contains("Details") && costMetric.contains("Fully")) {
+            expectedCostMetric = "Fully Burdened";
+        }
+        assertThat(targetQuotedCostTrendReportPage.getCostMetricValueFromAboveChart(),
+                is(equalTo(expectedCostMetric)));
     }
 
     private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
