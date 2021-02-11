@@ -39,7 +39,7 @@ public class CdsTestUtil extends TestUtil {
      * @param email          - the email pattern
      * @return ResponseWrapper<Customer>
      */
-    public ResponseWrapper<Customer> addCustomer(String url, Class klass, String name, String cloudReference, String salesForceId, String email) {
+    public <T> ResponseWrapper<T> addCustomer(String url, Class klass, String name, String cloudReference, String salesForceId, String email) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("customer",
@@ -67,7 +67,7 @@ public class CdsTestUtil extends TestUtil {
      * @param customerName - the customer name
      * @return ResponseWrapper<User>
      */
-    public ResponseWrapper<User> addUser(String url, Class klass, String userName, String customerName) {
+    public <T> ResponseWrapper<T> addUser(String url, Class klass, String userName, String customerName) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("user",
