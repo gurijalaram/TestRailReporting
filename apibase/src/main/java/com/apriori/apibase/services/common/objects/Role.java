@@ -1,22 +1,28 @@
-package com.apriori.cds.entity.response;
+package com.apriori.apibase.services.common.objects;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "cds/RoleSchema.json")
+@Schema(location = "common/RoleSchema.json")
 public class Role {
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
+    @JsonProperty
     private String name;
+    @JsonProperty
     private String description;
+    @JsonProperty
     private Role response;
-    
+
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;

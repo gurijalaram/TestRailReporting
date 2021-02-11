@@ -1,5 +1,9 @@
 package com.apriori.cds.tests.utils;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.User;
@@ -8,6 +12,8 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
+import org.apache.http.HttpStatus;
 
 import java.util.Arrays;
 
@@ -20,7 +26,8 @@ public class CdsTestUtil extends TestUtil {
         );
     }
 
-    // TODO: 10/02/2021 ciene - to be moved to a more generic utility class.  possibly pass create an addcustomer class with a constructor create the customer
+    // TODO: 11/02/2021 ciene - all methods below to be moved into a util class
+
     /**
      * POST call to add a customer
      *
@@ -30,9 +37,9 @@ public class CdsTestUtil extends TestUtil {
      * @param cloudReference - the cloud reference name
      * @param salesForceId   - the sales force id
      * @param email          - the email pattern
-     * @return ResponseWrapper<Customer>
+     * @return <T>ResponseWrapper<T>
      */
-    public ResponseWrapper<Customer> addCustomer(String url, Class klass, String name, String cloudReference, String salesForceId, String email) {
+    public <T> ResponseWrapper<T> addCustomer(String url, Class klass, String name, String cloudReference, String salesForceId, String email) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("customer",
@@ -54,28 +61,42 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a customer
      *
-     * @param url            - the endpoint
-     * @param klass          - the response class
-     * @param userName       - the user name
-     * @param customerName   - the customer name
-     * @return ResponseWrapper<User>
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param userName     - the user name
+     * @param customerName - the customer name
+     * @return <T>ResponseWrapper<T>
      */
-    public ResponseWrapper<User> addUser(String url, Class klass, String userName, String customerName) {
+    public <T> ResponseWrapper<T> addUser(String url, Class klass, String userName, String customerName) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("user",
                 new User().setUsername(userName)
-                    .setEmail(userName.concat("@").concat(customerName).concat(".com"))
+                    .setEmail(userName + "@" + customerName + ".com")
                     .setCreatedBy("#SYSTEM00000")
                     .setActive(true)
                     .setUserType("AP_CLOUD_USER")
                     .setUserProfile(new UserProfile().setGivenName(userName)
-                    .setFamilyName("Automater")
-                    .setJobTitle("Automation Engineer")
-                    .setDepartment("Automation")
-                    .setSupervisor("Ciene Frith")
-                    .setCreatedBy("#SYSTEM00000")));
+                        .setFamilyName("Automater")
+                        .setJobTitle("Automation Engineer")
+                        .setDepartment("Automation")
+                        .setSupervisor("Ciene Frith")
+                        .setCreatedBy("#SYSTEM00000")));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * Delete an api customer/user
+     *
+     * @param deleteEndpoint - the endpoint to delete a customer/user
+     */
+    public void delete(String deleteEndpoint) {
+        RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
+            .setHeaders("Content-Type", "application/json");
+
+        ResponseWrapper<String> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+
+        assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 }
