@@ -1,13 +1,15 @@
 package com.apriori.cds.tests;
 
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cds.entity.response.Applications;
 import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.Customers;
-import com.apriori.cds.entity.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -52,40 +54,15 @@ public class CdsCustomers extends CdsTestUtil {
 
         ResponseWrapper<Customers> response = getCommonRequest(url, true, Customers.class);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-        validateCustomers(response.getResponseEntity());
-    }
-
-
-    @Test
-    @TestRail(testCaseId = "3278")
-    @Description("API returns a customer's information based on the supplied identity")
-    public void getCustomerById() {
-        url = String.format(url,
-            String.format("customers/%s", Constants.getCdsIdentityCustomer()));
-
-        ResponseWrapper<Customer> response = getCommonRequest(url, true, Customer.class);
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-        validateCustomer(response.getResponseEntity());
+        assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), CoreMatchers.is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getMaxCadFileRetentionDays(), CoreMatchers.is(not(nullValue())));
     }
 
     @Test
-    @TestRail(testCaseId = "3250")
-    @Description("API returns a list of all available users for the customer")
-    public void getCustomerUsers() {
-        url = String.format(url,
-            String.format("customers/%s/users", Constants.getCdsIdentityCustomer()));
-
-        ResponseWrapper<Users> response = getCommonRequest(url, true, Users.class);
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-    }
-
-    @Test
-    @Description("Add API customer")
-    public void addCustomer() {
-        String customerEndpoint = String.format(url, "customers");
+    @Description("Add API customers")
+    public void addCustomerTest() {
+        url = String.format(url, "customers");
 
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
@@ -99,23 +76,45 @@ public class CdsCustomers extends CdsTestUtil {
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
     }
 
-    /*
-     * Customer Validation
-     */
-    private void validateCustomers(Customers customersResponse) {
-        Object[] customers = customersResponse.getResponse().getItems().toArray();
-        Arrays.stream(customers)
-            .forEach(this::validate);
+    @Test
+    @Description("Get customer by Identity")
+    public void getCustomerByIdentity() {
+        String customersUrl = String.format(url, "customers");
+
+        String customerName = new GenerateStringUtil().generateCustomerName();
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
+        String salesForceId = new GenerateStringUtil().generateSalesForceId();
+        String emailPattern = "S+@".concat(customerName);
+
+        ResponseWrapper<Customer> customer = addCustomer(customersUrl, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+
+        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentityUrl = String.format(url, String.format("customers/%s", customerIdentity));
+
+        ResponseWrapper<Customer> response = getCommonRequest(customerIdentityUrl, true, Customer.class);
+        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(response.getResponseEntity().getResponse().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
 
-    private void validateCustomer(Customer customerResponse) {
-        Customer customer = customerResponse.getResponse();
-        validate(customer);
-    }
+    @Test
+    @Description("Get customer by Identity")
+    public void getCustomersApplications() {
+        String customersUrl = String.format(url, "customers");
 
-    private void validate(Object customerObj) {
-        Customer customer = (Customer) customerObj;
-        Assert.assertTrue(customer.getIdentity().matches("^[a-zA-Z0-9]+$"));
-        Assert.assertThat(Arrays.asList(customerTypes), hasItems(customer.getCustomerType()));
+        String customerName = new GenerateStringUtil().generateCustomerName();
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
+        String salesForceId = new GenerateStringUtil().generateSalesForceId();
+        String emailPattern = "S+@".concat(customerName);
+
+        ResponseWrapper<Customer> customer = addCustomer(customersUrl, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+
+        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String applicationsUrl = String.format(url, String.format("customers/%s", customerIdentity.concat("/applications")));
+
+        ResponseWrapper<Applications> response = getCommonRequest(applicationsUrl, true, Applications.class);
+        assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), CoreMatchers.is(equalTo(0)));
     }
 }
