@@ -65,7 +65,7 @@ public class CdsTestUtil extends TestUtil {
      * @param klass        - the response class
      * @param userName     - the user name
      * @param customerName - the customer name
-     * @return <T></T>ResponseWrapper<T>
+     * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> addUser(String url, Class klass, String userName, String customerName) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
