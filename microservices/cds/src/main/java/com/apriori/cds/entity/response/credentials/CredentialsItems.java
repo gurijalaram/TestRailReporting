@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@Schema(location = "cds/credentialsSchema.json")
+@Schema(location = "cds/CredentialsSchema.json")
 public class CredentialsItems {
 
     @JsonProperty
