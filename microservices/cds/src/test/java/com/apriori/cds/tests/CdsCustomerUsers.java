@@ -59,7 +59,7 @@ public class CdsCustomerUsers extends CdsTestUtil {
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", String.format(customerIdentity.concat("/users/%s"), userIdentity)));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
 
         assertThat(user.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
@@ -82,12 +82,16 @@ public class CdsCustomerUsers extends CdsTestUtil {
         String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
-        assertThat(user.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_CREATED)));
+
+        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
 
         ResponseWrapper<Users> response = getCommonRequest(usersEndpoint, true, Users.class);
-        assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), CoreMatchers.is(equalTo(1)));
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
         assertThat(response.getResponseEntity().getResponse().getItems().get(0).getIdentity(), is(equalTo(userIdentity)));
     }
 
@@ -108,11 +112,14 @@ public class CdsCustomerUsers extends CdsTestUtil {
         String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
-        assertThat(user.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_CREATED)));
+
+        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        String userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
 
         ResponseWrapper<User> response = getCommonRequest(userIdentityEndpoint, true, User.class);
+
         assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getIdentity(), is(equalTo(userIdentity)));
         assertThat(response.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
