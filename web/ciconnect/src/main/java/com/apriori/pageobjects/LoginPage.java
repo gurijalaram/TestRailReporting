@@ -1,60 +1,43 @@
-package com.apriori.login;
+package com.apriori.pageobjects;
 
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.workflows.GenericWorkflow;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Constants;
 
-public class LoginPage extends LoadableComponent<LoginPage> {
-
+public class LoginPage {
     private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
-    private static String loginPageURL = Constants.getDefaultUrl();
-    protected String url;
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
     @FindBy(css = "input[name='password']")
     private WebElement password;
     @FindBy(css = "button[type='submit']")
-
     private WebElement submitButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
     public LoginPage(WebDriver driver) {
-        init(driver, "", true);
+        init(driver, true);
     }
 
-    public void init(WebDriver driver, String url, boolean loadNewPage) {
+    public void init(WebDriver driver, boolean loadNewPage) {
         this.driver = driver;
-        pageUtils = new PageUtils(driver);
+        pageUtils = PageUtils.getInstance(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        if (url == null || url.isEmpty()) {
-            url = "https://" + loginPageURL;
-        }
         if (loadNewPage) {
-            driver.get(url);
+            driver.get(Constants.URL);
         }
-        logger.info("CURRENTLY ON INSTANCE: " + url);
+        logger.info("CURRENTLY ON INSTANCE: " + Constants.URL);
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
     }
 
     /**
@@ -75,13 +58,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
      * @return new page object
      */
     public GenericWorkflow login() {
-        UserCredentials userCredentials;
-
-        if (Constants.DEFAULT_USER_NAME_KEY != null && Constants.DEFAULT_PASSWORD_KEY != null) {
-            userCredentials = new UserCredentials(Constants.DEFAULT_USER_NAME_KEY, Constants.DEFAULT_PASSWORD_KEY);
-        } else {
-            userCredentials = UserUtil.getUser();
-        }
+        UserCredentials userCredentials = new UserCredentials(Constants.USER_EMAIL, Constants.USER_PASSWORD);
 
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new GenericWorkflow(driver);
