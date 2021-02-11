@@ -3,18 +3,38 @@ package com.apriori.cds.entity.response.credentials;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 @Schema(location = "cds/credentialsSchema.json")
 public class CredentialsItems {
 
+    @JsonProperty
+    private CredentialsItems response;
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String userIdentity;
+    @JsonProperty
     private String email;
+    @JsonProperty
     private String passwordHash;
+    @JsonProperty
     private String passwordSalt;
+    @JsonProperty
     private List<String> passwordHashHistory = null;
+    @JsonProperty
     private List<String> passwordSaltHistory = null;
+
+    public CredentialsItems getResponse() {
+        return response;
+    }
+
+    public CredentialsItems setResponse(CredentialsItems response) {
+        this.response = response;
+        return this;
+    }
 
     public String getIdentity() {
         return identity;

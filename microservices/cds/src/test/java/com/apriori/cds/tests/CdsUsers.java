@@ -56,7 +56,7 @@ public class CdsUsers extends CdsTestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getCustomerIdentity(), is(not(emptyString())));
-
+        assertThat(response.getResponseEntity().getResponse().getIdentity(), is(equalTo(userIdentity)));
     }
 
     @Test
@@ -72,7 +72,6 @@ public class CdsUsers extends CdsTestUtil {
         ResponseWrapper<CredentialsItems> response = getCommonRequest(credentialsUrl, true, CredentialsItems.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getPasswordHash(),is(equalTo("hjkjk")));
-
+        assertThat(response.getResponseEntity().getResponse().getPasswordHash(),is(equalTo("e68b4ec50e5f9996af36b0e5dc6be6267fd545ad")));
     }
 }
