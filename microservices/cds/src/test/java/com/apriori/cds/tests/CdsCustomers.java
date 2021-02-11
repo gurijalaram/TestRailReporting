@@ -18,8 +18,8 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +31,6 @@ public class CdsCustomers extends CdsTestUtil {
     private String[] customerTypes = {"ON_PREMISE_ONLY", "CLOUD_ONLY", "ON_PREMISE_AND_CLOUD"};
     private String customerIdentity;
     private String deleteCustomerEndpoint;
-    private String deleteUserEndpoint;
 
     @Before
     public void setServiceUrl() {
@@ -54,15 +53,15 @@ public class CdsCustomers extends CdsTestUtil {
 
         ResponseWrapper<Customers> response = getCommonRequest(url, true, Customers.class);
 
-        assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), CoreMatchers.is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getMaxCadFileRetentionDays(), CoreMatchers.is(not(nullValue())));
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getMaxCadFileRetentionDays(), is(not(nullValue())));
     }
 
     @Test
     @Description("Add API customers")
     public void addCustomerTest() {
-        url = String.format(url, "customers");
+        String customerEndpoint = String.format(url, "customers");
 
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
@@ -79,14 +78,14 @@ public class CdsCustomers extends CdsTestUtil {
     @Test
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
-        String customersUrl = String.format(url, "customers");
+        String customersEndpoint = String.format(url, "customers");
 
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesForceId = new GenerateStringUtil().generateSalesForceId();
         String emailPattern = "S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customersUrl, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
@@ -100,14 +99,14 @@ public class CdsCustomers extends CdsTestUtil {
     @Test
     @Description("Get customer by Identity")
     public void getCustomersApplications() {
-        String customersUrl = String.format(url, "customers");
+        String customersEndpoint = String.format(url, "customers");
 
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesForceId = new GenerateStringUtil().generateSalesForceId();
         String emailPattern = "S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customersUrl, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
