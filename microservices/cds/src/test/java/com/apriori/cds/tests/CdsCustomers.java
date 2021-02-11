@@ -66,7 +66,7 @@ public class CdsCustomers extends CdsTestUtil {
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesForceId = new GenerateStringUtil().generateSalesForceId();
-        String emailPattern = "S+@".concat(customerName);
+        String emailPattern = "\\S+@".concat(customerName);
 
         ResponseWrapper<Customer> customer = addCustomer(customerEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
@@ -83,7 +83,7 @@ public class CdsCustomers extends CdsTestUtil {
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesForceId = new GenerateStringUtil().generateSalesForceId();
-        String emailPattern = "S+@".concat(customerName);
+        String emailPattern = "\\S+@".concat(customerName);
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
@@ -104,7 +104,7 @@ public class CdsCustomers extends CdsTestUtil {
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesForceId = new GenerateStringUtil().generateSalesForceId();
-        String emailPattern = "S+@".concat(customerName);
+        String emailPattern = "\\S+@".concat(customerName);
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
