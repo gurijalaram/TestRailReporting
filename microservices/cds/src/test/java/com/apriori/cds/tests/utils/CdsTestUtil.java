@@ -37,7 +37,7 @@ public class CdsTestUtil extends TestUtil {
      * @param cloudReference - the cloud reference name
      * @param salesForceId   - the sales force id
      * @param email          - the email pattern
-     * @return ResponseWrapper<Customer>
+     * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> addCustomer(String url, Class klass, String name, String cloudReference, String salesForceId, String email) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
@@ -65,7 +65,7 @@ public class CdsTestUtil extends TestUtil {
      * @param klass        - the response class
      * @param userName     - the user name
      * @param customerName - the customer name
-     * @return ResponseWrapper<User>
+     * @return <T></T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> addUser(String url, Class klass, String userName, String customerName) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
