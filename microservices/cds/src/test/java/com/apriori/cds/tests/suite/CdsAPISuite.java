@@ -1,7 +1,7 @@
 package com.apriori.cds.tests.suite;
 
 import com.apriori.cds.tests.CdsApplications;
-import com.apriori.cds.tests.CdsCustomers;
+import com.apriori.cds.tests.CdsCustomersTests;
 import com.apriori.cds.tests.CdsRoles;
 import com.apriori.cds.tests.CdsUsers;
 import com.apriori.utils.ProjectRunID;
@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     CdsApplications.class,
-    CdsCustomers.class,
+    CdsCustomersTests.class,
     CdsRoles.class,
     CdsUsers.class
 })

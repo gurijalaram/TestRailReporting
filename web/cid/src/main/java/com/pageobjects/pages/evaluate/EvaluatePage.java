@@ -576,9 +576,9 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
-     * Returns fully burdened cost value
+     * Returns fully burdened cost value (rounded down)
      *
-     * @return BigDecimal - Fully Burdened Cost (rounded down - thus ROUND_FLOOR)
+     * @return BigDecimal - Fully Burdened Cost
      */
     public BigDecimal getBurdenedCostValue() {
         pageUtils.waitForElementToAppear(burdenedCost);
@@ -586,6 +586,19 @@ public class EvaluatePage extends EvaluateHeader {
             burdenedCost.getText()
                 .replace(",", ""))
             .setScale(2, BigDecimal.ROUND_FLOOR);
+    }
+
+    /**
+     * Returns fully burdened cost value as String (rounded up)
+     *
+     * @return String - Fully Burdened Cost
+     */
+    public String getFullyBurdenedCostValueRoundedUp() {
+        pageUtils.waitForElementToAppear(burdenedCost);
+        return new BigDecimal(
+                burdenedCost.getText().replace(",", ""))
+                .setScale(2, BigDecimal.ROUND_CEILING)
+                .toString();
     }
 
     /**
@@ -659,10 +672,20 @@ public class EvaluatePage extends EvaluateHeader {
     /**
      * Gets the selected VPE
      *
-     * @return string
+     * @return boolean
      */
     public boolean getSelectedVPE(String text) {
         return pageUtils.checkElementFirstOption(vpeDropdown, text);
+    }
+
+    /**
+     * Gets the currently selected VPE
+     *
+     * @return String
+     */
+    public String getVpe() {
+        Select dropdown = new Select(vpeDropdown);
+        return dropdown.getFirstSelectedOption().getText();
     }
 
     /**
