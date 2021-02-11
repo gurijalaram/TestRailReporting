@@ -16,6 +16,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,10 +27,20 @@ public class CdsCustomers extends CdsTestUtil {
     private String url;
 
     private String[] customerTypes = {"ON_PREMISE_ONLY", "CLOUD_ONLY", "ON_PREMISE_AND_CLOUD"};
+    private String customerIdentity;
+    private String deleteCustomerEndpoint;
+    private String deleteUserEndpoint;
 
     @Before
     public void setServiceUrl() {
         url = Constants.getServiceUrl();
+    }
+
+    @After
+    public void cleanUp() {
+        if (deleteCustomerEndpoint != null) {
+            deleteCustomer(deleteCustomerEndpoint);
+        }
     }
 
 
@@ -74,14 +85,16 @@ public class CdsCustomers extends CdsTestUtil {
     @Test
     @Description("Add API customer")
     public void addCustomer() {
-        url = String.format(url, "customers");
+        String customerEndpoint = String.format(url, "customers");
 
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesForceId = new GenerateStringUtil().generateSalesForceId();
         String emailPattern = "S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(url, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        deleteCustomerEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
     }
