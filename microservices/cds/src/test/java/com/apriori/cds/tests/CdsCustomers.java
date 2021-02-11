@@ -40,7 +40,7 @@ public class CdsCustomers extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (customerIdentityEndpoint != null) {
-            deleteCustomer(customerIdentityEndpoint);
+            delete(customerIdentityEndpoint);
         }
     }
 

@@ -87,12 +87,12 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Delete an api customer
+     * Delete an api customer/user
      *
-     * @param deleteCustomerEndpoint - the endpoint to delete a customer
+     * @param deleteEndpoint - the endpoint to delete a customer/user
      */
-    public void deleteCustomer(String deleteCustomerEndpoint) {
-        RequestEntity requestEntity = RequestEntity.init(deleteCustomerEndpoint, null)
+    public void delete(String deleteEndpoint) {
+        RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
             .setHeaders("Content-Type", "application/json");
 
         ResponseWrapper<String> deleteCustomer = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
