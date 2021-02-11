@@ -932,7 +932,7 @@ public class GenericReportPage extends ReportsPageHeader {
         dateInputToUse.click();
         dateInputToUse.sendKeys(valueToInput);
 
-        if (!isEarliestAndToday) {
+        if (!isEarliestAndToday && !invalidValue.isEmpty()) {
             By earliestLocator = By.xpath(
                     String.format("//label[contains(@title, 'Earliest Export Date')]/input[@value='%s']", invalidValue));
             By latestLocator = By.xpath(

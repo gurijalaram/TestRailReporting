@@ -13,6 +13,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 import org.junit.experimental.categories.Category;
@@ -102,6 +103,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
+    @Issue("AP-66960")
     @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "2335")
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
