@@ -7,12 +7,14 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.objects.Customer;
 import com.apriori.apibase.services.cas.objects.Customers;
+import com.apriori.apibase.services.cas.objects.ErrorMessage;
 import com.apriori.apibase.services.cas.objects.SingleCustomerResponse;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.Constants;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -95,5 +97,30 @@ public class CasCustomersTest extends TestUtil {
 
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseName.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5644"})
+    @Description("Get the Customer by not existing identity")
+    public void getCustomerNotExistingIdentity() {
+        String apiUrl = String.format(Constants.getApiUrl(), "customers/76EA87KCHIKD");
+
+        ResponseWrapper<ErrorMessage> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, ErrorMessage.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5643"})
+    @Description("Get the Customer by not existing name")
+    public void getCustomerNotExistingName() {
+        String name = new GenerateStringUtil().generateCustomerName();
+        String apiUrl = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
+
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, false, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(0));
     }
 }
