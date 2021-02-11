@@ -814,7 +814,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of Generic Report Page object
      */
     public GenericReportPage clickOk() {
-        pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
+        //pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
         By locator = By.cssSelector("div[id='inputControls']");
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
             pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
