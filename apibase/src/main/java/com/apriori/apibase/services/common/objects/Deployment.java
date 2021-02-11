@@ -1,21 +1,35 @@
-package com.apriori.apibase.services.cds.objects;
+package com.apriori.apibase.services.common.objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class Deployment {
-
+    @JsonProperty
     private Boolean isDefault;
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
+    @JsonProperty
     private String createdAt;
+    @JsonProperty
     private String name;
+    @JsonProperty
     private String description;
+    @JsonProperty
     private String apVersion;
+    @JsonProperty
     private Boolean active;
+    @JsonProperty
     private List<Object> installations = null;
+    @JsonProperty
     private String customerIdentity;
+    @JsonProperty
     private List<Application> applications = null;
+    @JsonProperty
     private String deploymentType;
+    @JsonProperty
     private List<String> sites = null;
 
     public Boolean getIsDefault() {

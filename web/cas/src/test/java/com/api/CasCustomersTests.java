@@ -5,10 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.apibase.services.cas.objects.Customer;
-import com.apriori.apibase.services.cas.objects.Customers;
-import com.apriori.apibase.services.cas.objects.ErrorMessage;
-import com.apriori.apibase.services.cas.objects.SingleCustomerResponse;
+import com.apriori.apibase.services.common.objects.Customer;
+import com.apriori.apibase.services.common.objects.Customers;
+import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
@@ -31,12 +30,12 @@ public class CasCustomersTests extends TestUtil {
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-                Constants.getCasServiceHost(),
-                HttpStatus.SC_CREATED,
-                Constants.getCasTokenUsername(),
-                Constants.getCasTokenEmail(),
-                Constants.getCasTokenIssuer(),
-                Constants.getCasTokenSubject());
+            Constants.getCasServiceHost(),
+            HttpStatus.SC_CREATED,
+            Constants.getCasTokenUsername(),
+            Constants.getCasTokenEmail(),
+            Constants.getCasTokenIssuer(),
+            Constants.getCasTokenSubject());
     }
 
     @Test
@@ -46,10 +45,10 @@ public class CasCustomersTests extends TestUtil {
         String apiUrl = String.format(Constants.getApiUrl(), "customers?sortBy[ASC]=name");
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
@@ -59,7 +58,7 @@ public class CasCustomersTests extends TestUtil {
         String apiUrl = String.format(Constants.getApiUrl(), "customers/");
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
@@ -69,8 +68,8 @@ public class CasCustomersTests extends TestUtil {
 
         String identityEndpoint = apiUrl + identity;
 
-        ResponseWrapper<SingleCustomerResponse> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, SingleCustomerResponse.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, Customer.class,
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(name)));

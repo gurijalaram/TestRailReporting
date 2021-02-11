@@ -1,23 +1,48 @@
-package com.apriori.apibase.services.cds.objects.AccessControls;
+package com.apriori.apibase.services.common.objects;
 
-public class AccessControlItems {
+import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Schema(location = "common/CdsAccessControlSchema.json")
+public class AccessControl {
+    @JsonProperty
+    private AccessControl response;
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
+    @JsonProperty
     private String createdAt;
+    @JsonProperty
     private String customerIdentity;
+    @JsonProperty
     private String deploymentIdentity;
+    @JsonProperty
     private String userIdentity;
+    @JsonProperty
     private String installationIdentity;
+    @JsonProperty
     private String applicationIdentity;
+    @JsonProperty
     private String roleIdentity;
+    @JsonProperty
     private Boolean outOfContext;
+
+    public AccessControl getResponse() {
+        return response;
+    }
+
+    public AccessControl setResponse(AccessControl response) {
+        this.response = response;
+        return this;
+    }
 
     public String getIdentity() {
         return identity;
     }
 
-    public AccessControlItems setIdentity(String identity) {
+    public AccessControl setIdentity(String identity) {
         this.identity = identity;
         return this;
     }
@@ -26,7 +51,7 @@ public class AccessControlItems {
         return createdBy;
     }
 
-    public AccessControlItems setCreatedBy(String createdBy) {
+    public AccessControl setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -35,7 +60,7 @@ public class AccessControlItems {
         return createdAt;
     }
 
-    public AccessControlItems  setCreatedAt(String createdAt) {
+    public AccessControl setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -44,7 +69,7 @@ public class AccessControlItems {
         return customerIdentity;
     }
 
-    public AccessControlItems  setCustomerIdentity(String customerIdentity) {
+    public AccessControl setCustomerIdentity(String customerIdentity) {
         this.customerIdentity = customerIdentity;
         return this;
     }
@@ -53,7 +78,7 @@ public class AccessControlItems {
         return deploymentIdentity;
     }
 
-    public AccessControlItems  setDeploymentIdentity(String deploymentIdentity) {
+    public AccessControl setDeploymentIdentity(String deploymentIdentity) {
         this.deploymentIdentity = deploymentIdentity;
         return this;
     }
@@ -62,7 +87,7 @@ public class AccessControlItems {
         return userIdentity;
     }
 
-    public AccessControlItems  setUserIdentity(String userIdentity) {
+    public AccessControl setUserIdentity(String userIdentity) {
         this.userIdentity = userIdentity;
         return this;
     }
@@ -71,7 +96,7 @@ public class AccessControlItems {
         return installationIdentity;
     }
 
-    public AccessControlItems  setInstallationIdentity(String installationIdentity) {
+    public AccessControl setInstallationIdentity(String installationIdentity) {
         this.installationIdentity = installationIdentity;
         return this;
     }
@@ -80,7 +105,7 @@ public class AccessControlItems {
         return applicationIdentity;
     }
 
-    public AccessControlItems  setApplicationIdentity(String applicationIdentity) {
+    public AccessControl setApplicationIdentity(String applicationIdentity) {
         this.applicationIdentity = applicationIdentity;
         return this;
     }
@@ -89,7 +114,7 @@ public class AccessControlItems {
         return roleIdentity;
     }
 
-    public AccessControlItems  setRoleIdentity(String roleIdentity) {
+    public AccessControl setRoleIdentity(String roleIdentity) {
         this.roleIdentity = roleIdentity;
         return this;
     }
@@ -98,7 +123,7 @@ public class AccessControlItems {
         return outOfContext;
     }
 
-    public AccessControlItems  setOutOfContext(Boolean outOfContext) {
+    public AccessControl setOutOfContext(Boolean outOfContext) {
         this.outOfContext = outOfContext;
         return this;
     }

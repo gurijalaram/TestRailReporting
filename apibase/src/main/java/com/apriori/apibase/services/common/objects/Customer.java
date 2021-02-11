@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cas.objects;
+package com.apriori.apibase.services.common.objects;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
@@ -11,9 +11,10 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "cas/CasCustomerSchema.json")
+@Schema(location = "common/CustomerSchema.json")
 public class Customer {
-
+    @JsonProperty
+    private Customer response;
     @JsonProperty
     private String identity;
     @JsonProperty
@@ -53,11 +54,20 @@ public class Customer {
     @JsonProperty
     private String updatedByName;
     @JsonProperty
-    private List<Object> identityProviders = null;
+    private List<Customer> identityProviders = null;
     @JsonProperty
     private List<String> emailDomains = null;
     @JsonProperty
     private String authenticationType;
+
+    public Customer getResponse() {
+        return response;
+    }
+
+    public Customer setResponse(Customer response) {
+        this.response = response;
+        return this;
+    }
 
     public String getIdentity() {
         return identity;
@@ -212,11 +222,11 @@ public class Customer {
         return this;
     }
 
-    public List<Object> getIdentityProviders() {
+    public List<Customer> getIdentityProviders() {
         return identityProviders;
     }
 
-    public Customer setIdentityProviders(List<Object> identityProviders) {
+    public Customer setIdentityProviders(List<Customer> identityProviders) {
         this.identityProviders = identityProviders;
         return this;
     }
