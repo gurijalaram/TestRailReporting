@@ -2,6 +2,8 @@ package com.apriori.cds.tests.utils;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.User;
+import com.apriori.cds.entity.response.UserProfile;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -45,6 +47,34 @@ public class CdsTestUtil extends TestUtil {
                     .setUseExternalIdentityProvider(false)
                     .setMaxCadFileRetentionDays(1095)
                     .setEmailRegexPatterns(Arrays.asList(email + ".com", email + ".co.uk")));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * POST call to add a customer
+     *
+     * @param url            - the endpoint
+     * @param klass          - the response class
+     * @param userName       - the user name
+     * @param customerName   - the customer name
+     * @return ResponseWrapper<Customer>
+     */
+    public ResponseWrapper<User> addUser(String url, Class klass, String userName, String customerName) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("user",
+                new User().setUsername(userName)
+                    .setEmail(userName.concat("@").concat(customerName).concat(".com"))
+                    .setCreatedBy("#SYSTEM00000")
+                    .setActive(true)
+                    .setUserType("AP_CLOUD_USER")
+                    .setUserProfile(new UserProfile().setGivenName(userName)
+                    .setFamilyName("Automater")
+                    .setJobTitle("Automation Engineer")
+                    .setDepartment("Automation")
+                    .setSupervisor("Ciene Frith")
+                    .setCreatedBy("#SYSTEM00000")));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
