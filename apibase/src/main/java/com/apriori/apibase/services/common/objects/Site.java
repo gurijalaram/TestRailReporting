@@ -1,19 +1,35 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.apibase.services.cds.objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.apriori.utils.http.enums.Schema;
+
+import java.util.List;
+
+@Schema(location = "cds/SiteSchema.json")
 
 public class Site {
-    @JsonProperty
+
+    private Site response;
     private String identity;
-    @JsonProperty
     private String createdBy;
-    @JsonProperty
     private String createdAt;
-    @JsonProperty
-    private String siteIdentity;
+    private String name;
+    private String description;
+    private Boolean active;
+    private String siteId;
+    private String customerIdentity;
+    private List<Deployment> deployments;
+
+    public Site getResponse() {
+        return response;
+    }
+
+    public Site setResponse(Site response) {
+        this.response = response;
+        return this;
+    }
 
     public String getIdentity() {
-        return this.identity;
+        return identity;
     }
 
     public Site setIdentity(String identity) {
@@ -22,7 +38,7 @@ public class Site {
     }
 
     public String getCreatedBy() {
-        return this.createdBy;
+        return createdBy;
     }
 
     public Site setCreatedBy(String createdBy) {
@@ -31,7 +47,7 @@ public class Site {
     }
 
     public String getCreatedAt() {
-        return this.createdAt;
+        return createdAt;
     }
 
     public Site setCreatedAt(String createdAt) {
@@ -39,12 +55,57 @@ public class Site {
         return this;
     }
 
-    public String getSiteIdentity() {
-        return this.siteIdentity;
+    public String getName() {
+        return name;
     }
 
-    public Site setSiteIdentity(String siteIdentity) {
-        this.siteIdentity = siteIdentity;
+    public Site setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Site setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public Site setActive(Boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    public String getSiteId() {
+        return siteId;
+    }
+
+    public Site setSiteId(String siteId) {
+        this.siteId = siteId;
+        return this;
+    }
+
+    public String getCustomerIdentity() {
+        return customerIdentity;
+    }
+
+    public Site setCustomerIdentity(String customerIdentity) {
+        this.customerIdentity = customerIdentity;
+        return this;
+    }
+
+    public List<Deployment> getDeployments() {
+        return deployments;
+    }
+
+    public Site setDeployments(List<Deployment> deployments) {
+        this.deployments = deployments;
         return this;
     }
 
