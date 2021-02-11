@@ -6,15 +6,20 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
+import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.web.driver.TestBase;
+
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
+
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
+
 
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;

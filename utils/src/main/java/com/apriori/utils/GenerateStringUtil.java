@@ -1,7 +1,7 @@
 package com.apriori.utils;
 
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,5 +46,45 @@ public class GenerateStringUtil {
      */
     public String generateEmail() {
         return "fakeuser" + new Random().nextInt(1000) + "@apriori.com";
+    }
+
+    /**
+     * Generates a customer name for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateCustomerName() {
+        return "AutoCustomer" + RandomStringUtils.randomAlphabetic(6);
+    }
+
+    /**
+     * Generates a salesforceID for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateSalesForceId() {
+        return "AutoSFID" + RandomStringUtils.randomNumeric(10);
+    }
+
+    /**
+     * Generates a cloudref for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateCloudReference() {
+        return "AutoCloudRef" + RandomStringUtils.randomAlphabetic(4);
+    }
+
+    /**
+     * Generates a userName for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateUserName() {
+        return "AutoUser" + RandomStringUtils.randomAlphabetic(5);
     }
 }

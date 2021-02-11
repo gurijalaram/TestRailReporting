@@ -1,20 +1,24 @@
 package com.apriori.cds.tests;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 import com.apriori.cds.entity.response.User;
 import com.apriori.cds.entity.response.Users;
+import com.apriori.cds.entity.response.credentials.CredentialsItems;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class CdsUsers extends CdsTestUtil {
     private String url;
@@ -32,8 +36,9 @@ public class CdsUsers extends CdsTestUtil {
         url = String.format(url, "users");
         ResponseWrapper<Users> response = getCommonRequest(url, true, Users.class);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-        validateUsers(response.getResponseEntity());
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getUserType(), is(not(emptyString())));
     }
 
 
@@ -41,34 +46,32 @@ public class CdsUsers extends CdsTestUtil {
     @TestRail(testCaseId = "3698")
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
-        url = String.format(url,
-                String.format("users/%s", Constants.getCdsIdentityUser()));
-        ResponseWrapper<User> response = getCommonRequest(url, true, User.class);
+        String usersUrl = String.format(url, "users");
+        ResponseWrapper<Users> responseWrapper = getCommonRequest(usersUrl, true, Users.class);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-        validateUser(response.getResponseEntity());
+        String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+
+        String identityUrl = String.format(url, String.format("users/%s", userIdentity));
+        ResponseWrapper<User> response = getCommonRequest(identityUrl, true, User.class);
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getCustomerIdentity(), is(not(emptyString())));
+        assertThat(response.getResponseEntity().getResponse().getIdentity(), is(equalTo(userIdentity)));
     }
 
+    @Test
+    @TestRail(testCaseId = "3698")
+    @Description("API returns a user's credentials based on the supplied identity")
+    public void getUsersCredentials() {
+        String usersUrl = String.format(url, "users");
+        ResponseWrapper<Users> responseWrapper = getCommonRequest(usersUrl, true, Users.class);
 
-    /*
-     * User Validation
-     */
-    private void validateUsers(Users usersResponse) {
-        Object[] users = usersResponse.getResponse().getItems().toArray();
-        Arrays.stream(users)
-                .forEach(this::validate);
+        String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+
+        String credentialsUrl = String.format(String.format(String.format(url, "users/%s"), userIdentity.concat("%s")),"/credentials");
+        ResponseWrapper<CredentialsItems> response = getCommonRequest(credentialsUrl, true, CredentialsItems.class);
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getPasswordHash(),is(equalTo("e68b4ec50e5f9996af36b0e5dc6be6267fd545ad")));
     }
-
-    private void validateUser(User userResponse) {
-        User user = userResponse.getResponse();
-        validate(user);
-    }
-
-    private void validate(Object userObj) {
-        EmailValidator validator = EmailValidator.getInstance();
-        User user = (User) userObj;
-        Assert.assertTrue(user.getIdentity().matches("^[a-zA-Z0-9]+$"));
-        Assert.assertTrue(validator.isValid(user.getEmail()));
-    }
-
 }

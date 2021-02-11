@@ -139,8 +139,9 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     @Description("Validate Cost Metric drop-down Input Control")
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReport(
+        inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
@@ -151,8 +152,9 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     @Description("Validate Cost Metric drop-down Input Control")
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReport(
+        inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
                 CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
