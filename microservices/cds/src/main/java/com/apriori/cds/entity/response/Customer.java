@@ -1,6 +1,5 @@
 package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
@@ -13,7 +12,7 @@ import java.util.List;
 
 
 @Schema(location = "cds/CdsCustomerSchema.json")
-public class Customer extends TestUtil {
+public class Customer {
 
     private Customer response;
     private Boolean useExternalIdentityProvider;
