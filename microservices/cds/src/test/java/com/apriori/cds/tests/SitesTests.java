@@ -7,8 +7,8 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 
-import com.apriori.apibase.services.cds.objects.Site;
-import com.apriori.apibase.services.cds.objects.Sites;
+import com.apriori.apibase.services.common.objects.Site;
+import com.apriori.apibase.services.common.objects.Sites;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.http.utils.ResponseWrapper;

@@ -1,6 +1,6 @@
 package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.services.cds.objects.Site;
+import com.apriori.apibase.services.common.objects.Site;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
