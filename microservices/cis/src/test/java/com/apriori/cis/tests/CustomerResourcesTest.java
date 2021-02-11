@@ -1,16 +1,13 @@
 package com.apriori.cis.tests;
 
 import com.apriori.apibase.services.CustomerBase;
-
 import com.apriori.cis.controller.CustomerResources;
 import com.apriori.cis.entity.request.PatchCostingPreferenceRequest;
-
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
-
 import org.junit.Test;
 
 import java.util.Random;
@@ -65,6 +62,5 @@ public class CustomerResourcesTest extends CustomerBase {
         cp.setCadToleranceReplacement(100.00);
         cp.setMinCadToleranceThreshold(value);
         CustomerResources.patchCostingPreferences(cp);
-
     }
 }

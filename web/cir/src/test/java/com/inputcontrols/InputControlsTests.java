@@ -11,15 +11,20 @@ import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainin
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
+import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.pageobjects.pages.evaluate.EvaluatePage;
+import com.pageobjects.pages.explore.ExplorePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,6 +36,7 @@ import java.util.List;
 
 public class InputControlsTests extends TestBase {
 
+    private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
     private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private GenericReportPage genericReportPage;
     private WebDriver driver;
@@ -321,13 +327,39 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, Details and Comparison
+     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, Details and
+     * Comparison
      *
      * @param reportName - String
      * @param costMetric - String
      */
-    public void testCostMetricInputControlComparisonDetailsDtcReports(String reportName, String exportSet, String costMetric) {
+    public void testCostMetricInputControlComparisonDetailsDtcReports(String reportName, String exportSet,
+                                                                      String costMetric) {
         testCostMetricCore(reportName, exportSet, costMetric);
+    }
+
+    /**
+     * Generic test for Cost Metric Input Control on Target and Quoted Cost Trend reports
+     * @param reportName - String
+     * @param rollupName - String
+     * @param costMetric - String
+     */
+    public void testCostMetricInputControlTargetQuotedCostTrendReports(String reportName, String rollupName,
+                                                                       String costMetric) {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, TargetQuotedCostTrendReportPage.class);
+
+        targetQuotedCostTrendReportPage.selectProjectRollup(rollupName)
+                .selectCostMetric(costMetric)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        assertThat(targetQuotedCostTrendReportPage.getCostMetricValueFromAboveChart(),
+                is(equalTo(costMetric)));
+        String costAvoidedFinalValue = costMetric.contains("Fully") ? "(0.19)" : "(0.11)";
+        assertThat(targetQuotedCostTrendReportPage.getCostAvoidedFinal(), is(equalTo(costAvoidedFinalValue)));
     }
 
     /**
@@ -453,6 +485,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSetName)
                 .deselectAllDtcScores()
+                .clickOk()
                 .clickOk();
 
         String listName = "dtcScore";
@@ -739,6 +772,80 @@ public class InputControlsTests extends TestBase {
 
         assertThat(sheetMetalDtcReportPage.getFirstExportSetName(),
                 is(equalTo(exportSetName)));
+    }
+
+    /**
+     * Generic test for Target Quoted Cost Trend Report Links
+     * @param milestoneName String
+     */
+    public void testTargetQuotedCostTrendReportHyperlinks(String milestoneName) {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                        TargetQuotedCostTrendReportPage.class)
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class)
+                .clickMilestoneLink(milestoneName)
+                .switchTab(1)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        assertThat(targetQuotedCostTrendReportPage.getMilestoneName(),
+                is(equalTo(String.format("Milestone: %s", milestoneName))));
+    }
+
+    /**
+     * Generic test for Target and Quoted Cost Trend data integrity
+     * @param milestoneName String
+     */
+    public void testTargetQuotedCostTrendDataIntegrity(String milestoneName) {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                        TargetQuotedCostTrendReportPage.class)
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class)
+                .clickMilestoneLink(milestoneName)
+                .switchTab(1)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);;
+
+        String partName = targetQuotedCostTrendReportPage.getPartName("1");
+
+        String reportsScenarioName = targetQuotedCostTrendReportPage.getValueFromReport("5");
+        String reportsVpe = targetQuotedCostTrendReportPage.getValueFromReport("11");
+        String reportsProcessGroup = targetQuotedCostTrendReportPage.getValueFromReport("14");
+        String reportsMaterialComposition = targetQuotedCostTrendReportPage.getValueFromReport("17")
+                .replace("\n", " ");
+        String reportsAnnualVolume = targetQuotedCostTrendReportPage.getValueFromReport("22");
+        String reportsCurrentCost = targetQuotedCostTrendReportPage.getValueFromReport("24");
+
+        targetQuotedCostTrendReportPage.openNewCidTabAndFocus(2);
+
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace(Constants.PUBLIC_WORKSPACE)
+                .setScenarioType(Constants.PART_SCENARIO_TYPE)
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("VPE", "is", VPEEnum.APRIORI_USA.getVpe())
+                .apply(ExplorePage.class)
+                .openFirstScenario();
+
+        String cidScenarioName = evaluatePage.getScenarioName();
+        String cidVPE = evaluatePage.getVpe();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
+        String cidMaterialComposition = evaluatePage.getMaterialInfo();
+        String cidAnnualVolume = evaluatePage.getAnnualVolume();
+        String cidFbc = evaluatePage.getFullyBurdenedCostValueRoundedUp();
+
+        assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
+        assertThat(reportsVpe, is(equalTo(cidVPE)));
+        assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
+        assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
+        assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
+        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
     }
 
     private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {

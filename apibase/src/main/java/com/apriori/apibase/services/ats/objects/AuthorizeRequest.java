@@ -26,4 +26,16 @@ public class AuthorizeRequest {
         this.token = token;
         return this;
     }
+
+    public String getApplication() {
+        return application;
+    }
+
+    public String getTargetCloudContext() {
+        return targetCloudContext;
+    }
+
+    public String getToken() {
+        return token;
+    }
 }

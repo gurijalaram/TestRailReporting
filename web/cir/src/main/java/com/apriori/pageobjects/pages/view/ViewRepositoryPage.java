@@ -13,9 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ViewRepositoryPage extends ReportsPageHeader {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ViewRepositoryPage.class);
+    private Map<String, String[]> navigationMap = new HashMap<>();
 
     @FindBy(xpath = "//div[contains(text(), 'Repository')]")
     private WebElement repositoryPageTitle;
@@ -32,6 +36,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseNavigationMap();
     }
 
     /**
@@ -44,14 +49,14 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("Organization");
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
-        navigateToFolder(afterReportsFolder);
-        if (afterReportsFolder.equals(Constants.DTC_METRICS_FOLDER)) {
-            By locator = By.xpath(String.format("//p[contains(text(), '%s')]/..", lastFolder.split(" ")[0]));
-            pageUtils.waitForElementAndClick(locator);
-        } else if (lastFolder.contains("Cycle Time")) {
-            navigateToFolder("Design To Cost");
-            navigateToFolder("Cycle Time");
+
+        if (!afterReportsFolder.equals(Constants.GENERAL_FOLDER)) {
+            navigateToFolder(navigationMap.get(lastFolder)[0]);
+            navigateToFolder(navigationMap.get(lastFolder)[1]);
+        } else {
+            navigateToFolder(Constants.GENERAL_FOLDER);
         }
+
         return new GenericReportPage(driver);
     }
 
@@ -82,5 +87,17 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     private void navigateToFolder(String folder) {
         By locator = By.xpath(String.format("//p[contains(text(), '%s')]/b", folder));
         pageUtils.waitForElementAndClick(locator);
+    }
+
+    /**
+     * Initialises Navigation Hash Map
+     */
+    private void initialiseNavigationMap() {
+        navigationMap.put("Casting DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Casting"});
+        navigationMap.put("Machining DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Machining"});
+        navigationMap.put("Plastic DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Plastic"});
+        navigationMap.put("Sheet Metal DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Sheet Metal"});
+        navigationMap.put("Cycle Time", new String[]{"Design To Cost", "Cycle Time"});
+        navigationMap.put("Target and Quoted Cost", new String[]{"Design To Cost", "Target And Quoted Cost"});
     }
 }
