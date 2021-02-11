@@ -61,10 +61,10 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a customer
      *
-     * @param url            - the endpoint
-     * @param klass          - the response class
-     * @param userName       - the user name
-     * @param customerName   - the customer name
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param userName     - the user name
+     * @param customerName - the customer name
      * @return ResponseWrapper<User>
      */
     public ResponseWrapper<User> addUser(String url, Class klass, String userName, String customerName) {
@@ -72,16 +72,16 @@ public class CdsTestUtil extends TestUtil {
             .setHeaders("Content-Type", "application/json")
             .setBody("user",
                 new User().setUsername(userName)
-                    .setEmail(userName.concat("@").concat(customerName).concat(".com"))
+                    .setEmail(userName + "@" + customerName + ".com")
                     .setCreatedBy("#SYSTEM00000")
                     .setActive(true)
                     .setUserType("AP_CLOUD_USER")
                     .setUserProfile(new UserProfile().setGivenName(userName)
-                    .setFamilyName("Automater")
-                    .setJobTitle("Automation Engineer")
-                    .setDepartment("Automation")
-                    .setSupervisor("Ciene Frith")
-                    .setCreatedBy("#SYSTEM00000")));
+                        .setFamilyName("Automater")
+                        .setJobTitle("Automation Engineer")
+                        .setDepartment("Automation")
+                        .setSupervisor("Ciene Frith")
+                        .setCreatedBy("#SYSTEM00000")));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
