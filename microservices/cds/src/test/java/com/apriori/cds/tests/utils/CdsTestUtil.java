@@ -21,6 +21,7 @@ public class CdsTestUtil extends TestUtil {
     }
 
     // TODO: 10/02/2021 ciene - to be moved to a more generic utility class.  possibly pass create an addcustomer class with a constructor create the customer
+
     /**
      * POST call to add a customer
      *
@@ -54,10 +55,10 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a customer
      *
-     * @param url            - the endpoint
-     * @param klass          - the response class
-     * @param userName       - the user name
-     * @param customerName   - the customer name
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param userName     - the user name
+     * @param customerName - the customer name
      * @return ResponseWrapper<User>
      */
     public ResponseWrapper<User> addUser(String url, Class klass, String userName, String customerName) {
@@ -70,11 +71,11 @@ public class CdsTestUtil extends TestUtil {
                     .setActive(true)
                     .setUserType("AP_CLOUD_USER")
                     .setUserProfile(new UserProfile().setGivenName(userName)
-                    .setFamilyName("Automater")
-                    .setJobTitle("Automation Engineer")
-                    .setDepartment("Automation")
-                    .setSupervisor("Ciene Frith")
-                    .setCreatedBy("#SYSTEM00000")));
+                        .setFamilyName("Automater")
+                        .setJobTitle("Automation Engineer")
+                        .setDepartment("Automation")
+                        .setSupervisor("Ciene Frith")
+                        .setCreatedBy("#SYSTEM00000")));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }

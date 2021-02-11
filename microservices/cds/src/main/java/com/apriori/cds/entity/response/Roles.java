@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "cds/CdsRolesSchema.json")
+@Schema(location = "cds/RolesSchema.json")
 public class Roles extends Pagination {
     private List<Role> items;
     private Roles response;
