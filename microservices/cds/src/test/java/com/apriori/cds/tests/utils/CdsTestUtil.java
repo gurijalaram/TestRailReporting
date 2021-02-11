@@ -69,18 +69,4 @@ public class CdsTestUtil extends TestUtil {
 
         assertThat(deleteCustomer.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
-
-    /**
-     * Delete an api user
-     *
-     * @param deleteUserEndpoint - the endpoint to delete a user
-     */
-    public void deleteUser(String deleteUserEndpoint) {
-        RequestEntity requestEntity = RequestEntity.init(deleteUserEndpoint, null)
-            .setHeaders("Content-Type", "application/json");
-
-        ResponseWrapper<String> deleteUser = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
-
-        assertThat(deleteUser.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
-    }
 }
