@@ -3,6 +3,7 @@ package com.apriori.cds.entity.response;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -13,21 +14,35 @@ import java.util.List;
 
 @Schema(location = "cds/CdsCustomerSchema.json")
 public class Customer {
-
+    @JsonProperty
     private Customer response;
+    @JsonProperty
     private Boolean useExternalIdentityProvider;
+    @JsonProperty
     private Boolean mfaRequired;
+    @JsonProperty
     private List<String> oneTimePasswordApplications;
+    @JsonProperty
     private Integer maxCadFileRetentionDays;
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
+    @JsonProperty
     private String name;
+    @JsonProperty
     private String cloudReference;
+    @JsonProperty
     private String description;
+    @JsonProperty
     private List<String> emailRegexPatterns;
+    @JsonProperty
     private Boolean active;
+    @JsonProperty
     private String customerType;
+    @JsonProperty
     private String salesforceId;
+    @JsonProperty
     private String updatedBy;
 
     @JsonSerialize(using = ToStringSerializer.class)
