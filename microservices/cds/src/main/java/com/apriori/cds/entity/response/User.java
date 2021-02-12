@@ -28,7 +28,7 @@ public class User {
     @JsonProperty
     private Boolean active;
     @JsonProperty
-    private List<Site> sites;
+    private List<UserSite> sites;
     @JsonProperty
     private CustomAttributes customAttributes;
     @JsonProperty
@@ -156,11 +156,11 @@ public class User {
         return this;
     }
 
-    public List<Site> getSites() {
+    public List<UserSite> getSites() {
         return this.sites;
     }
 
-    public User setSites(List<Site> sites) {
+    public User setSites(List<UserSite> sites) {
         this.sites = sites;
         return this;
     }
