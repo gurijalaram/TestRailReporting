@@ -1,10 +1,10 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.cds.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "common/CdsAccessControlSchema.json")
+@Schema(location = "cds/AccessControlSchema.json")
 public class AccessControl {
     @JsonProperty
     private AccessControl response;

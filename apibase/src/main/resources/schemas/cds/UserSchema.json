@@ -16,6 +16,7 @@
         "username",
         "active",
         "sites",
+        "customAttributes",
         "customerIdentity",
         "mfaRequired"
       ],

@@ -1,34 +1,21 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.apibase.services.cas;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "common/CustomerSchema.json")
-public class Customer {
+@Schema(location = "cas/SingleCustomerSchema.json")
+public class SingleCustomer {
     @JsonProperty
-    private Customer response;
+    private SingleCustomer response;
     @JsonProperty
     private String identity;
     @JsonProperty
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime createdAt;
+    private String createdAt;
     @JsonProperty
     private String createdBy;
-    @JsonProperty
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime updatedAt;
-    @JsonProperty
-    private String updatedBy;
     @JsonProperty
     private String name;
     @JsonProperty
@@ -37,8 +24,6 @@ public class Customer {
     private String description;
     @JsonProperty
     private String customerType;
-    @JsonProperty
-    private String salesforceId;
     @JsonProperty
     private Boolean active;
     @JsonProperty
@@ -52,19 +37,17 @@ public class Customer {
     @JsonProperty
     private String createdByName;
     @JsonProperty
-    private String updatedByName;
-    @JsonProperty
-    private List<Customer> identityProviders = null;
+    private List<Object> identityProviders = null;
     @JsonProperty
     private List<String> emailDomains = null;
     @JsonProperty
     private String authenticationType;
 
-    public Customer getResponse() {
+    public SingleCustomer getResponse() {
         return response;
     }
 
-    public Customer setResponse(Customer response) {
+    public SingleCustomer setResponse(SingleCustomer response) {
         this.response = response;
         return this;
     }
@@ -73,16 +56,16 @@ public class Customer {
         return identity;
     }
 
-    public Customer setIdentity(String identity) {
+    public SingleCustomer setIdentity(String identity) {
         this.identity = identity;
         return this;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public Customer setCreatedAt(LocalDateTime createdAt) {
+    public SingleCustomer setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -91,26 +74,8 @@ public class Customer {
         return createdBy;
     }
 
-    public Customer setCreatedBy(String createdBy) {
+    public SingleCustomer setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
-        return this;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public Customer setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public Customer setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
         return this;
     }
 
@@ -118,7 +83,7 @@ public class Customer {
         return name;
     }
 
-    public Customer setName(String name) {
+    public SingleCustomer setName(String name) {
         this.name = name;
         return this;
     }
@@ -127,7 +92,7 @@ public class Customer {
         return cloudReference;
     }
 
-    public Customer setCloudReference(String cloudReference) {
+    public SingleCustomer setCloudReference(String cloudReference) {
         this.cloudReference = cloudReference;
         return this;
     }
@@ -136,7 +101,7 @@ public class Customer {
         return description;
     }
 
-    public Customer setDescription(String description) {
+    public SingleCustomer setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -145,17 +110,8 @@ public class Customer {
         return customerType;
     }
 
-    public Customer setCustomerType(String customerType) {
+    public SingleCustomer setCustomerType(String customerType) {
         this.customerType = customerType;
-        return this;
-    }
-
-    public String getSalesforceId() {
-        return salesforceId;
-    }
-
-    public Customer setSalesforceId(String salesforceId) {
-        this.salesforceId = salesforceId;
         return this;
     }
 
@@ -163,7 +119,7 @@ public class Customer {
         return active;
     }
 
-    public Customer setActive(Boolean active) {
+    public SingleCustomer setActive(Boolean active) {
         this.active = active;
         return this;
     }
@@ -172,7 +128,7 @@ public class Customer {
         return maxCadFileRetentionDays;
     }
 
-    public Customer setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
+    public SingleCustomer setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
         this.maxCadFileRetentionDays = maxCadFileRetentionDays;
         return this;
     }
@@ -181,7 +137,7 @@ public class Customer {
         return useExternalIdentityProvider;
     }
 
-    public Customer setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
+    public SingleCustomer setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
         this.useExternalIdentityProvider = useExternalIdentityProvider;
         return this;
     }
@@ -190,7 +146,7 @@ public class Customer {
         return mfaRequired;
     }
 
-    public Customer setMfaRequired(Boolean mfaRequired) {
+    public SingleCustomer setMfaRequired(Boolean mfaRequired) {
         this.mfaRequired = mfaRequired;
         return this;
     }
@@ -199,7 +155,7 @@ public class Customer {
         return oneTimePasswordApplications;
     }
 
-    public Customer setOneTimePasswordApplications(List<Object> oneTimePasswordApplications) {
+    public SingleCustomer setOneTimePasswordApplications(List<Object> oneTimePasswordApplications) {
         this.oneTimePasswordApplications = oneTimePasswordApplications;
         return this;
     }
@@ -208,25 +164,16 @@ public class Customer {
         return createdByName;
     }
 
-    public Customer setCreatedByName(String createdByName) {
+    public SingleCustomer setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
         return this;
     }
 
-    public String getUpdatedByName() {
-        return updatedByName;
-    }
-
-    public Customer setUpdatedByName(String updatedByName) {
-        this.updatedByName = updatedByName;
-        return this;
-    }
-
-    public List<Customer> getIdentityProviders() {
+    public List<Object> getIdentityProviders() {
         return identityProviders;
     }
 
-    public Customer setIdentityProviders(List<Customer> identityProviders) {
+    public SingleCustomer setIdentityProviders(List<Object> identityProviders) {
         this.identityProviders = identityProviders;
         return this;
     }
@@ -235,7 +182,7 @@ public class Customer {
         return emailDomains;
     }
 
-    public Customer setEmailDomains(List<String> emailDomains) {
+    public SingleCustomer setEmailDomains(List<String> emailDomains) {
         this.emailDomains = emailDomains;
         return this;
     }
@@ -244,7 +191,7 @@ public class Customer {
         return authenticationType;
     }
 
-    public Customer setAuthenticationType(String authenticationType) {
+    public SingleCustomer setAuthenticationType(String authenticationType) {
         this.authenticationType = authenticationType;
         return this;
     }

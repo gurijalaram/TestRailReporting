@@ -1,13 +1,17 @@
 package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.services.Pagination;
+import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @Schema(location = "cds/ApplicationsSchema.json")
 public class Applications extends Pagination {
+    @JsonProperty
     private List<Application> items;
+    @JsonProperty
     private Applications response;
 
     public Applications getResponse() {
