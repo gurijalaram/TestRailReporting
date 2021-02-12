@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-@Schema(location = "cds/CdsCustomerSchema.json")
+@Schema(location = "common/CustomerSchema.json")
 public class Customer {
 
     private Customer response;

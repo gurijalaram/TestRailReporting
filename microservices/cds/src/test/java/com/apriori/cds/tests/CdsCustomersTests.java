@@ -108,7 +108,7 @@ public class CdsCustomersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String applicationsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/applications")));
 
