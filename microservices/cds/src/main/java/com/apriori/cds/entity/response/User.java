@@ -30,6 +30,8 @@ public class User {
     @JsonProperty
     private List<Site> sites;
     @JsonProperty
+    private CustomAttributes customAttributes;
+    @JsonProperty
     private String customerIdentity;
     @JsonProperty
     private User response;
@@ -160,6 +162,15 @@ public class User {
 
     public User setSites(List<Site> sites) {
         this.sites = sites;
+        return this;
+    }
+
+    public CustomAttributes getCustomAttributes() {
+        return customAttributes;
+    }
+
+    public User setCustomAttributes(CustomAttributes customAttributes) {
+        this.customAttributes = customAttributes;
         return this;
     }
 
