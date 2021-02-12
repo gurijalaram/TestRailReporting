@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "cds/ApplicationsSchema.json")
+@Schema(location = "common/ApplicationsSchema.json")
 public class Applications extends Pagination {
     private List<Application> items;
     private Applications response;
