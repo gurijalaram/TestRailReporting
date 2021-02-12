@@ -9,7 +9,7 @@
     "response": {
       "$id": "#/properties/response",
       "type": "object",
-      "required": [
+      "optional": [
         "isFirstPage",
         "isLastPage",
         "pageNumber",
