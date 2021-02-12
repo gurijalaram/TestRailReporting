@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@Schema(location = "cds/ApVersionsSchema.json")
+@Schema(location = "common/ApVersionsSchema.json")
 public class ApVersions extends Pagination {
     @JsonProperty
     private List<ApVersion> items;
