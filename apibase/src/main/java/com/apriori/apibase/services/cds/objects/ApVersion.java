@@ -4,7 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "cds/ApVersionSchema.json")
+@Schema(location = "common/ApVersionSchema.json")
 public class ApVersion {
     @JsonProperty
     private ApVersion response;

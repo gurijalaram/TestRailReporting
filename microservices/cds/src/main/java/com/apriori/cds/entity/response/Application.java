@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "common/ApplicationSchema.json")
+@Schema(location = "cds/ApplicationSchema.json")
 public class Application {
     @JsonProperty
     private Boolean isCloudHomeApp;
