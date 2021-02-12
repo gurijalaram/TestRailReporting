@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDate;
 
-@Schema(location = "cas/ErrorMessageSchema.json")
+@Schema(location = "common/ErrorMessageSchema.json")
 public class ErrorMessage {
 
     @JsonProperty

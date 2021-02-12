@@ -14,7 +14,7 @@ project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 
 
-final String[] microservicesModules = ["ats", "cds", "cis", "edc", "fms", "nts"]
+final String[] microservicesModules = ["ats", "cas", "cds", "cis", "edc", "fms", "nts"]
 final String[] webModules = ["cas", "cia", "ciconnect", "cid", "cidapp", "cir"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {

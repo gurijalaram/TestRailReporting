@@ -1,0 +1,333 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "isFirstPage",
+        "isLastPage",
+        "pageNumber",
+        "pageSize",
+        "pageItemCount",
+        "totalItemCount",
+        "totalPageCount",
+        "hasNextPage",
+        "hasPreviousPage",
+        "items"
+      ],
+      "properties": {
+        "isFirstPage": {
+          "$id": "#/properties/response/properties/isFirstPage",
+          "type": "boolean"
+        },
+        "isLastPage": {
+          "$id": "#/properties/response/properties/isLastPage",
+          "type": "boolean"
+        },
+        "pageNumber": {
+          "$id": "#/properties/response/properties/pageNumber",
+          "type": "integer"
+        },
+        "pageSize": {
+          "$id": "#/properties/response/properties/pageSize",
+          "type": "integer"
+        },
+        "pageItemCount": {
+          "$id": "#/properties/response/properties/pageItemCount",
+          "type": "integer"
+        },
+        "totalItemCount": {
+          "$id": "#/properties/response/properties/totalItemCount",
+          "type": "integer"
+        },
+        "totalPageCount": {
+          "$id": "#/properties/response/properties/totalPageCount",
+          "type": "integer"
+        },
+        "hasNextPage": {
+          "$id": "#/properties/response/properties/hasNextPage",
+          "type": "boolean"
+        },
+        "hasPreviousPage": {
+          "$id": "#/properties/response/properties/hasPreviousPage",
+          "type": "boolean"
+        },
+        "items": {
+          "$id": "#/properties/response/properties/items",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/items/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/response/properties/items/items/anyOf/0",
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdBy",
+                  "updatedBy",
+                  "createdAt",
+                  "updatedAt",
+                  "name",
+                  "description",
+                  "emailRegexPatterns",
+                  "active",
+                  "maxCadFileRetentionDays",
+                  "useExternalIdentityProvider",
+                  "mfaRequired",
+                  "oneTimePasswordApplications",
+                  "customerType"
+                ],
+                "properties": {
+                  "identity": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identity",
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdBy",
+                    "type": "string"
+                  },
+                  "updatedBy": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/updatedBy",
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdAt",
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/updatedAt",
+                    "type": "string"
+                  },
+                  "name": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/name",
+                    "type": "string"
+                  },
+                  "description": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/description",
+                    "type": "string"
+                  },
+                  "emailRegexPatterns": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailRegexPatterns",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailRegexPatterns/items",
+                      "anyOf": [
+                        {
+                          "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailRegexPatterns/items/anyOf/0",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "active": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/active",
+                    "type": "boolean"
+                  },
+                  "maxCadFileRetentionDays": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/maxCadFileRetentionDays",
+                    "type": "integer"
+                  },
+                  "useExternalIdentityProvider": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/useExternalIdentityProvider",
+                    "type": "boolean"
+                  },
+                  "mfaRequired": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/mfaRequired",
+                    "type": "boolean"
+                  },
+                  "oneTimePasswordApplications": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/oneTimePasswordApplications",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/items/items/anyOf/0/properties/oneTimePasswordApplications/items"
+                    }
+                  },
+                  "customerType": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/customerType",
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "$id": "#/properties/response/properties/items/items/anyOf/1",
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdBy",
+                  "createdAt",
+                  "name",
+                  "description",
+                  "emailRegexPatterns",
+                  "active",
+                  "maxCadFileRetentionDays",
+                  "useExternalIdentityProvider",
+                  "mfaRequired",
+                  "oneTimePasswordApplications",
+                  "customerType"
+                ],
+                "properties": {
+                  "identity": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/identity",
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/createdBy",
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/createdAt",
+                    "type": "string"
+                  },
+                  "name": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/name",
+                    "type": "string"
+                  },
+                  "description": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/description",
+                    "type": "string"
+                  },
+                  "emailRegexPatterns": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/emailRegexPatterns",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/items/items/anyOf/1/properties/emailRegexPatterns/items",
+                      "anyOf": [
+                        {
+                          "$id": "#/properties/response/properties/items/items/anyOf/1/properties/emailRegexPatterns/items/anyOf/0",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "active": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/active",
+                    "type": "boolean"
+                  },
+                  "maxCadFileRetentionDays": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/maxCadFileRetentionDays",
+                    "type": "integer"
+                  },
+                  "useExternalIdentityProvider": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/useExternalIdentityProvider",
+                    "type": "boolean"
+                  },
+                  "mfaRequired": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/mfaRequired",
+                    "type": "boolean"
+                  },
+                  "oneTimePasswordApplications": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/oneTimePasswordApplications",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/items/items/anyOf/1/properties/oneTimePasswordApplications/items"
+                    }
+                  },
+                  "customerType": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/customerType",
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "$id": "#/properties/response/properties/items/items/anyOf/2",
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdBy",
+                  "createdAt",
+                  "name",
+                  "cloudReference",
+                  "description",
+                  "salesforceId",
+                  "emailRegexPatterns",
+                  "active",
+                  "maxCadFileRetentionDays",
+                  "useExternalIdentityProvider",
+                  "mfaRequired",
+                  "oneTimePasswordApplications",
+                  "customerType"
+                ],
+                "properties": {
+                  "identity": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/identity",
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/createdBy",
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/createdAt",
+                    "type": "string"
+                  },
+                  "name": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/name",
+                    "type": "string"
+                  },
+                  "cloudReference": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/cloudReference",
+                    "type": "string"
+                  },
+                  "description": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/description",
+                    "type": "string"
+                  },
+                  "salesforceId": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/salesforceId",
+                    "type": "string"
+                  },
+                  "emailRegexPatterns": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/emailRegexPatterns",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/items/items/anyOf/2/properties/emailRegexPatterns/items",
+                      "anyOf": [
+                        {
+                          "$id": "#/properties/response/properties/items/items/anyOf/2/properties/emailRegexPatterns/items/anyOf/0",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "active": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/active",
+                    "type": "boolean"
+                  },
+                  "maxCadFileRetentionDays": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/maxCadFileRetentionDays",
+                    "type": "integer"
+                  },
+                  "useExternalIdentityProvider": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/useExternalIdentityProvider",
+                    "type": "boolean"
+                  },
+                  "mfaRequired": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/mfaRequired",
+                    "type": "boolean"
+                  },
+                  "oneTimePasswordApplications": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/oneTimePasswordApplications",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/items/items/anyOf/2/properties/oneTimePasswordApplications/items"
+                    }
+                  },
+                  "customerType": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/2/properties/customerType",
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

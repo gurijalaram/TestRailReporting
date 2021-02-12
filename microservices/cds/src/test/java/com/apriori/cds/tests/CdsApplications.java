@@ -62,7 +62,7 @@ public class CdsApplications extends CdsTestUtil {
      * Application Validation
      */
     private void validateApplications(Applications applicationsResponse) {
-        Object[] applications = applicationsResponse.getResponse().getItems().toArray();
+        Object[] applications = applicationsResponse.getItems().toArray();
         Arrays.stream(applications)
             .forEach(this::validate);
     }

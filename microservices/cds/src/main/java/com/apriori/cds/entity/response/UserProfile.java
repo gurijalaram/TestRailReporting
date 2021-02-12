@@ -1,51 +1,38 @@
 package com.apriori.cds.entity.response;
 
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserProfile {
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
+    @JsonProperty
+    private String createdAt;
+    @JsonProperty
     private String givenName;
+    @JsonProperty
     private String familyName;
+    @JsonProperty
     private String jobTitle;
+    @JsonProperty
     private String department;
+    @JsonProperty
     private String supervisor;
+    @JsonProperty
     private String timezone;
+    @JsonProperty
     private String townCity;
+    @JsonProperty
     private String countryCode;
+    @JsonProperty
     private String prefix;
+    @JsonProperty
     private String suffix;
+    @JsonProperty
     private String stateProvince;
+    @JsonProperty
     private String county;
-
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime createdAt;
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime updatedAt;
-
-    public UserProfile setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public UserProfile setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
 
     public String getCounty() {
         return county;
@@ -92,14 +79,13 @@ public class UserProfile {
         return this;
     }
 
+    public String getTownCity() {
+        return this.townCity;
+    }
 
     public UserProfile setTownCity(String townCity) {
         this.townCity = townCity;
         return this;
-    }
-
-    public String getTownCity() {
-        return this.townCity;
     }
 
     public String getTimezone() {
@@ -138,18 +124,12 @@ public class UserProfile {
         return this;
     }
 
-
-    public UserProfile setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
     public String getIdentity() {
         return this.identity;
     }
 
-    public UserProfile setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public UserProfile setIdentity(String identity) {
+        this.identity = identity;
         return this;
     }
 
@@ -157,9 +137,17 @@ public class UserProfile {
         return this.createdBy;
     }
 
+    public UserProfile setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+        return this;
+    }
 
-    public UserProfile setGivenName(String givenName) {
-        this.givenName = givenName;
+    public String getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public UserProfile setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
@@ -167,8 +155,8 @@ public class UserProfile {
         return this.givenName;
     }
 
-    public UserProfile setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public UserProfile setGivenName(String givenName) {
+        this.givenName = givenName;
         return this;
     }
 
@@ -176,4 +164,8 @@ public class UserProfile {
         return this.familyName;
     }
 
+    public UserProfile setFamilyName(String familyName) {
+        this.familyName = familyName;
+        return this;
+    }
 }
