@@ -1,6 +1,5 @@
 package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.services.common.objects.Site;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
@@ -29,7 +28,9 @@ public class User {
     @JsonProperty
     private Boolean active;
     @JsonProperty
-    private List<Site> sites;
+    private List<UserSite> sites;
+    @JsonProperty
+    private CustomAttributes customAttributes;
     @JsonProperty
     private String customerIdentity;
     @JsonProperty
@@ -38,8 +39,6 @@ public class User {
     private String updatedBy;
     @JsonProperty
     private Boolean mfaRequired;
-    @JsonProperty
-    private Object customAttributes;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -48,15 +47,6 @@ public class User {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
-
-    public Object getCustomAttributes() {
-        return customAttributes;
-    }
-
-    public User setCustomAttributes(Object customAttributes) {
-        this.customAttributes = customAttributes;
-        return this;
-    }
 
     public Boolean getMfaRequired() {
         return mfaRequired;
@@ -94,17 +84,12 @@ public class User {
         return this;
     }
 
-    public User setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
     public String getIdentity() {
         return this.identity;
     }
 
-    public User setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public User setIdentity(String identity) {
+        this.identity = identity;
         return this;
     }
 
@@ -112,8 +97,8 @@ public class User {
         return this.createdBy;
     }
 
-    public User setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public User setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
@@ -121,8 +106,8 @@ public class User {
         return this.createdAt;
     }
 
-    public User setUserType(String userType) {
-        this.userType = userType;
+    public User setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
@@ -130,8 +115,8 @@ public class User {
         return this.userType;
     }
 
-    public User setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public User setUserType(String userType) {
+        this.userType = userType;
         return this;
     }
 
@@ -139,8 +124,8 @@ public class User {
         return this.userProfile;
     }
 
-    public User setEmail(String email) {
-        this.email = email;
+    public User setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
         return this;
     }
 
@@ -148,8 +133,8 @@ public class User {
         return this.email;
     }
 
-    public User setUsername(String userName) {
-        this.username = userName;
+    public User setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -157,8 +142,8 @@ public class User {
         return this.username;
     }
 
-    public User setActive(Boolean active) {
-        this.active = active;
+    public User setUsername(String userName) {
+        this.username = userName;
         return this;
     }
 
@@ -166,21 +151,35 @@ public class User {
         return this.active;
     }
 
-    public User setSites(List<Site> sites) {
+    public User setActive(Boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    public List<UserSite> getSites() {
+        return this.sites;
+    }
+
+    public User setSites(List<UserSite> sites) {
         this.sites = sites;
         return this;
     }
 
-    public List<Site> getSites() {
-        return this.sites;
+    public CustomAttributes getCustomAttributes() {
+        return customAttributes;
     }
 
-    public User setCustomerIdentity(String customerIdentity) {
-        this.customerIdentity = customerIdentity;
+    public User setCustomAttributes(CustomAttributes customAttributes) {
+        this.customAttributes = customAttributes;
         return this;
     }
 
     public String getCustomerIdentity() {
         return this.customerIdentity;
+    }
+
+    public User setCustomerIdentity(String customerIdentity) {
+        this.customerIdentity = customerIdentity;
+        return this;
     }
 }

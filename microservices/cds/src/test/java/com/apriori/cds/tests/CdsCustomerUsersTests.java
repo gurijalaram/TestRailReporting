@@ -80,6 +80,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
@@ -110,6 +111,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);

@@ -1,12 +1,13 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.cds.entity.response;
 
+import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@Schema(location = "common/CdsAccessControlsSchema.json")
+@Schema(location = "cds/AccessControlsSchema.json")
 public class AccessControls extends Pagination {
     @JsonProperty
     private AccessControls response;

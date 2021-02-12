@@ -1,4 +1,4 @@
-package com.apriori.cds.entity.response;
+package com.apriori.apibase.services.cas;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "cds/CustomerSchema.json")
+@Schema(location = "cas/CustomerSchema.json")
 public class Customer {
     @JsonProperty
     private Customer response;
@@ -29,28 +29,36 @@ public class Customer {
     private LocalDateTime updatedAt;
     @JsonProperty
     private String updatedBy;
-    @JsonProperty("name")
+    @JsonProperty
     private String name;
-    @JsonProperty("description")
-    private String description;
-    @JsonProperty("emailRegexPatterns")
-    private List<String> emailRegexPatterns;
-    @JsonProperty("active")
-    private Boolean active;
-    @JsonProperty("maxCadFileRetentionDays")
-    private Integer maxCadFileRetentionDays;
-    @JsonProperty("useExternalIdentityProvider")
-    private Boolean useExternalIdentityProvider;
-    @JsonProperty("mfaRequired")
-    private Boolean mfaRequired;
-    @JsonProperty("oneTimePasswordApplications")
-    private List<Object> oneTimePasswordApplications;
-    @JsonProperty("customerType")
-    private String customerType;
-    @JsonProperty("cloudReference")
+    @JsonProperty
     private String cloudReference;
-    @JsonProperty("salesforceId")
+    @JsonProperty
+    private String description;
+    @JsonProperty
+    private String customerType;
+    @JsonProperty
     private String salesforceId;
+    @JsonProperty
+    private Boolean active;
+    @JsonProperty
+    private Integer maxCadFileRetentionDays;
+    @JsonProperty
+    private Boolean useExternalIdentityProvider;
+    @JsonProperty
+    private Boolean mfaRequired;
+    @JsonProperty
+    private List<Object> oneTimePasswordApplications = null;
+    @JsonProperty
+    private String createdByName;
+    @JsonProperty
+    private String updatedByName;
+    @JsonProperty
+    private List<Object> identityProviders = null;
+    @JsonProperty
+    private List<String> emailDomains = null;
+    @JsonProperty
+    private String authenticationType;
 
     public Customer getResponse() {
         return response;
@@ -133,15 +141,6 @@ public class Customer {
         return this;
     }
 
-    public List<String> getEmailRegexPatterns() {
-        return emailRegexPatterns;
-    }
-
-    public Customer setEmailRegexPatterns(List<String> emailRegexPatterns) {
-        this.emailRegexPatterns = emailRegexPatterns;
-        return this;
-    }
-
     public String getCustomerType() {
         return customerType;
     }
@@ -202,6 +201,51 @@ public class Customer {
 
     public Customer setOneTimePasswordApplications(List<Object> oneTimePasswordApplications) {
         this.oneTimePasswordApplications = oneTimePasswordApplications;
+        return this;
+    }
+
+    public String getCreatedByName() {
+        return createdByName;
+    }
+
+    public Customer setCreatedByName(String createdByName) {
+        this.createdByName = createdByName;
+        return this;
+    }
+
+    public String getUpdatedByName() {
+        return updatedByName;
+    }
+
+    public Customer setUpdatedByName(String updatedByName) {
+        this.updatedByName = updatedByName;
+        return this;
+    }
+
+    public List<Object> getIdentityProviders() {
+        return identityProviders;
+    }
+
+    public Customer setIdentityProviders(List<Object> identityProviders) {
+        this.identityProviders = identityProviders;
+        return this;
+    }
+
+    public List<String> getEmailDomains() {
+        return emailDomains;
+    }
+
+    public Customer setEmailDomains(List<String> emailDomains) {
+        this.emailDomains = emailDomains;
+        return this;
+    }
+
+    public String getAuthenticationType() {
+        return authenticationType;
+    }
+
+    public Customer setAuthenticationType(String authenticationType) {
+        this.authenticationType = authenticationType;
         return this;
     }
 }

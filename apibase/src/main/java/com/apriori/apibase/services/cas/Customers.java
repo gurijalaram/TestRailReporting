@@ -1,33 +1,30 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.apibase.services.cas;
 
+import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@Schema(location = "common/CustomersSchema.json")
+@Schema(location = "cas/CustomersSchema.json")
 public class Customers extends Pagination {
-    @JsonProperty
     private List<Customer> items;
-
-    @JsonProperty
     private Customers response;
 
     public Customers getResponse() {
-        return response;
+        return this.response;
     }
 
-    public void setResponse(Customers response) {
+    public Customers setResponse(Customers response) {
         this.response = response;
-    }
-
-    public List<Customer> getItems() {
-        return items;
+        return this;
     }
 
     public Customers setItems(List<Customer> items) {
         this.items = items;
         return this;
+    }
+
+    public List<Customer> getItems() {
+        return this.items;
     }
 }

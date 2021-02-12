@@ -5,8 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.apibase.services.common.objects.Customer;
-import com.apriori.apibase.services.common.objects.Customers;
+import com.apriori.apibase.services.cas.Customer;
+import com.apriori.apibase.services.cas.Customers;
+import com.apriori.apibase.services.cas.SingleCustomer;
 import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
@@ -53,7 +54,7 @@ public class CasCustomersTests extends TestUtil {
             new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
@@ -139,7 +140,7 @@ public class CasCustomersTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> response = new CasTestUtil().addCustomer(url, Customer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> response = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
@@ -157,13 +158,13 @@ public class CasCustomersTests extends TestUtil {
         ResponseWrapper<Customer> patchResponse = new CasTestUtil().updateCustomer(identityUrl, Customer.class, token, email);
 
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(patchResponse.getResponseEntity().getResponse().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
+        assertThat(patchResponse.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
 
         ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityUrl, true, Customer.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
-        assertThat(responseIdentity.getResponseEntity().getResponse().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
+        assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(customerName)));
+        assertThat(responseIdentity.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
     }
 }
