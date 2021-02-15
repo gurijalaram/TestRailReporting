@@ -2,10 +2,12 @@ package com.apriori.apibase.services.cas;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cas/SingleCustomerSchema.json")
 public class SingleCustomer {
     @JsonProperty

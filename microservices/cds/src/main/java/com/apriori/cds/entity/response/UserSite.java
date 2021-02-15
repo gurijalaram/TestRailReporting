@@ -1,7 +1,9 @@
 package com.apriori.cds.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserSite {
     @JsonProperty
     private String identity;
