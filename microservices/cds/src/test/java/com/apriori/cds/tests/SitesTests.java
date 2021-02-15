@@ -18,8 +18,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -88,8 +86,8 @@ public class SitesTests extends CdsTestUtil {
 
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
 
-        assertThat(site.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_CREATED)));
-        assertThat(site.getResponseEntity().getResponse().getName(), Matchers.is(Matchers.equalTo(siteName)));
+        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        assertThat(site.getResponseEntity().getResponse().getName(), is(equalTo(siteName)));
     }
 
     @Test
@@ -137,8 +135,8 @@ public class SitesTests extends CdsTestUtil {
         String identityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites/").concat(siteIdentity)));
 
         ResponseWrapper<Site> response = getCommonRequest(identityEndpoint, true, Site.class);
-        assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
-        assertThat(site.getResponseEntity().getResponse().getName(), Matchers.is(Matchers.equalTo(siteName)));
-        assertThat(site.getResponseEntity().getResponse().getCustomerIdentity(), Matchers.is(Matchers.equalTo(customerIdentity)));
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(site.getResponseEntity().getResponse().getName(), is(equalTo(siteName)));
+        assertThat(site.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));
     }
 }
