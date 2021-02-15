@@ -87,4 +87,24 @@ public class GenerateStringUtil {
     public String generateUserName() {
         return "AutoUser" + RandomStringUtils.randomAlphabetic(5);
     }
+
+    /**
+     * Generates a siteName for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateSiteName() {
+        return "AutoSite" + RandomStringUtils.randomAlphabetic(5);
+    }
+
+    /**
+     * Generates a siteID for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateSiteID() {
+        return "AutoSiteID" + RandomStringUtils.randomNumeric(26);
+    }
 }
