@@ -672,8 +672,7 @@ public class InputControlsTests extends TestBase {
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
 
         genericReportPage.setExportDateUsingInput(true, invalidDate)
-            .setExportDateUsingInput(false, invalidDate)
-            .clickUseLatestExportDropdownTwice();
+            .setExportDateUsingInput(false, invalidDate);
 
         if (valueToInvalidate.equals(DateElementsEnum.MONTH.getDateElement()) ||
             valueToInvalidate.equals(DateElementsEnum.DAY.getDateElement())) {

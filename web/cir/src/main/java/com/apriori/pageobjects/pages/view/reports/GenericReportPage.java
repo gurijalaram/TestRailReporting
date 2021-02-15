@@ -932,6 +932,8 @@ public class GenericReportPage extends ReportsPageHeader {
         dateInputToUse.click();
         dateInputToUse.sendKeys(valueToInput);
 
+        clickUseLatestExportDropdownTwice();
+
         if (!isEarliestAndToday && !invalidValue.isEmpty()) {
             invalidValue = invalidValue.contains("65") ? invalidValue.replace("65", "59") : invalidValue;
             invalidValue = invalidValue.contains("25") ? invalidValue.replace("25", "23") : invalidValue;
