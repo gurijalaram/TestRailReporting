@@ -819,7 +819,6 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!driver.findElement(locator).getAttribute("className").contains("hidden")) {
             pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
             okButton.click();
-            //pageUtils.waitForElementAndClick(okButton);
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         }
         return this;
@@ -916,6 +915,7 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Sets export set date to now or two days from now using input field
      * @param isEarliestAndToday - boolean to determine element to use and date to set
+     * @param invalidValue - invalid value to input
      * @return instance of current page object
      */
     public GenericReportPage setExportDateUsingInput(boolean isEarliestAndToday, String invalidValue) {
@@ -933,12 +933,11 @@ public class GenericReportPage extends ReportsPageHeader {
         dateInputToUse.sendKeys(valueToInput);
 
         if (!isEarliestAndToday && !invalidValue.isEmpty()) {
-            By earliestLocator = By.xpath(
-                    String.format("//label[contains(@title, 'Earliest Export Date')]/input[@value='%s']", invalidValue));
+            invalidValue = invalidValue.contains("65") ? invalidValue.replace("65", "59") : invalidValue;
+            invalidValue = invalidValue.contains("25") ? invalidValue.replace("25", "23") : invalidValue;
             By latestLocator = By.xpath(
-                    String.format("//label[contains(@title, 'Earliest Export Date')]/input[@value='%s']", invalidValue));
-            By locatorToUse = isEarliestAndToday ? earliestLocator : latestLocator;
-            pageUtils.waitForElementToAppear(locatorToUse);
+                    String.format("//label[contains(@title, 'Latest Export Date')]/input[@value='%s']", invalidValue));
+            pageUtils.waitForElementToAppear(latestLocator);
         }
 
         return this;

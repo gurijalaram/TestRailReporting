@@ -74,7 +74,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "3038")
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
