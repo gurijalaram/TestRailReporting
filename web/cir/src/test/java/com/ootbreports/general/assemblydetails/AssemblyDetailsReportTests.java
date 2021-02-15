@@ -473,7 +473,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Issue("AP-66932")
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1919")
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
@@ -618,7 +618,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Issue("AP-66932")
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1931")
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {

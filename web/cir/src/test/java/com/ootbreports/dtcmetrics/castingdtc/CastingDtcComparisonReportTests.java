@@ -25,6 +25,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
@@ -321,7 +322,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderManufacturingCastingIssues() {
@@ -334,7 +335,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderManufacturingMachiningIssues() {
@@ -347,7 +348,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderMaterialScrap() {
@@ -360,7 +361,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderTolerances() {
@@ -373,7 +374,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderSlowOperations() {
@@ -386,7 +387,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1698")
     @Description("Verify Sort Order input control functions correctly")
     public void testCastingDtcComparisonSortOrderSpecialTooling() {

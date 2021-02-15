@@ -85,7 +85,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CustomerSmokeTests.class})
+    @Category({ReportsTest.class, OnPremTest.class, CustomerSmokeTests.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1694")
     @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
     public void testRollupDropDown() {
@@ -225,7 +225,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -238,7 +238,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
@@ -251,7 +251,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1696")
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
@@ -349,7 +349,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
@@ -362,7 +362,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1372")
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
