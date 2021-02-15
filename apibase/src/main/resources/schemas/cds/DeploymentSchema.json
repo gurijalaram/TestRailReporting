@@ -5,6 +5,7 @@
     "identity",
     "createdBy",
     "createdAt",
+    "siteIdentity",
     "name",
     "description",
     "apVersion",
@@ -22,6 +23,10 @@
     },
     "identity": {
       "$id": "#/properties/identity",
+      "type": "string"
+    },
+    "siteIdentity": {
+      "$id": "#/properties/siteIdentity",
       "type": "string"
     },
     "createdBy": {

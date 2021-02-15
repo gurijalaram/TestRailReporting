@@ -5,9 +5,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cds.entity.request.AddDeployment;
 import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.Site;
-import com.apriori.cds.entity.response.Deployment;
 import com.apriori.cds.entity.response.User;
 import com.apriori.cds.entity.response.UserProfile;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -91,10 +91,10 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a site to a customer
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
-     * @param siteName     - the site name
-     * @param siteID       - the siteID
+     * @param url      - the endpoint
+     * @param klass    - the response class
+     * @param siteName - the site name
+     * @param siteID   - the siteID
      * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> addSite(String url, Class klass, String siteName, String siteID) {
@@ -115,34 +115,32 @@ public class CdsTestUtil extends TestUtil {
      *
      * @param url          - the endpoint
      * @param klass        - the response class
-     * @param deploymentName     - the user name
-     * @param customerName - the customer name
+     * @param siteIdentity - the site Identity
      * @return <T>ResponseWrapper<T>
      */
-    public <T> ResponseWrapper<T> addDeployment(String url, Class klass, String deploymentName, String customerName) {
+    public <T> ResponseWrapper<T> addDeployment(String url, Class klass, String siteIdentity) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("deployment",
-                new Deployment().setName(deploymentName)
-                    .setDescription("Deployment added using API automation")
+                new AddDeployment().setName("Production Deployment")
+                    .setDescription("Deployment added by API automation")
                     .setDeploymentType("PRODUCTION")
-                    .setActive(Boolean.TRUE)
-                    .setIsDefault(Boolean.TRUE)
+                    .setSiteIdentity(siteIdentity)
+                    .setActive("true")
+                    .setIsDefault("true")
                     .setCreatedBy("#SYSTEM00000")
                     .setApVersion("2020 R1")
-                    .setUserProfile(new UserProfile().setGivenName(userName)
-                        .setFamilyName("Automater")
-                        .setJobTitle("Automation Engineer")
-                        .setDepartment("Automation")
-                        .setSupervisor("Ciene Frith")
-                        .setCreatedBy("#SYSTEM00000")));
+                    .setApplications(Arrays.asList("1J8M416FBJBK")));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
 
 
-        /**
-         * Delete an api customer/user
-         *
-         * @param deleteEndpoint - the endpoint to delete a customer/user
-         */
+    /**
+     * Delete an api customer/user
+     *
+     * @param deleteEndpoint - the endpoint to delete a customer/user
+     */
     public void delete(String deleteEndpoint) {
         RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
             .setHeaders("Content-Type", "application/json");

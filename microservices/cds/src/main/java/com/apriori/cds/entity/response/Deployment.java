@@ -1,35 +1,24 @@
 package com.apriori.cds.entity.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
+@Schema(location = "cds/DeploymentSchema.json")
 public class Deployment {
-    @JsonProperty
     private Boolean isDefault;
-    @JsonProperty
     private String identity;
-    @JsonProperty
     private String createdBy;
-    @JsonProperty
     private String createdAt;
-    @JsonProperty
+    private String siteIdentity;
     private String name;
-    @JsonProperty
     private String description;
-    @JsonProperty
     private String apVersion;
-    @JsonProperty
     private Boolean active;
-    @JsonProperty
     private List<Object> installations = null;
-    @JsonProperty
     private String customerIdentity;
-    @JsonProperty
     private List<Application> applications = null;
-    @JsonProperty
     private String deploymentType;
-    @JsonProperty
     private List<String> sites = null;
 
     public Boolean getIsDefault() {
@@ -56,6 +45,11 @@ public class Deployment {
 
     public Deployment setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
+    }
+
+    public Deployment setSiteIdentity(String siteIdentity) {
+        this.siteIdentity = siteIdentity;
         return this;
     }
 
