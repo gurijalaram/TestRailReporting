@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.entity.response.Deployment;
 import com.apriori.cds.entity.response.User;
 import com.apriori.cds.entity.response.UserProfile;
@@ -88,6 +89,28 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * POST call to add a site to a customer
+     *
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param siteName     - the site name
+     * @param siteID       - the siteID
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addSite(String url, Class klass, String siteName, String siteID) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("site",
+                new Site().setName(siteName)
+                    .setDescription("Site created by automation test")
+                    .setSiteId(siteID)
+                    .setCreatedBy("#SYSTEM00000")
+                    .setActive(true));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
      * POST call to add a deployment to a customer
      *
      * @param url          - the endpoint
@@ -114,14 +137,12 @@ public class CdsTestUtil extends TestUtil {
                         .setSupervisor("Ciene Frith")
                         .setCreatedBy("#SYSTEM00000")));
 
-        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
-    }
 
-    /**
-     * Delete an api customer/user
-     *
-     * @param deleteEndpoint - the endpoint to delete a customer/user
-     */
+        /**
+         * Delete an api customer/user
+         *
+         * @param deleteEndpoint - the endpoint to delete a customer/user
+         */
     public void delete(String deleteEndpoint) {
         RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
             .setHeaders("Content-Type", "application/json");
