@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -82,6 +83,28 @@ public class CdsTestUtil extends TestUtil {
                         .setDepartment("Automation")
                         .setSupervisor("Ciene Frith")
                         .setCreatedBy("#SYSTEM00000")));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * POST call to add a site to a customer
+     *
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param siteName     - the site name
+     * @param siteID       - the siteID
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addSite(String url, Class klass, String siteName, String siteID) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("site",
+                new Site().setName(siteName)
+                    .setDescription("Site created by automation test")
+                    .setSiteId(siteID)
+                    .setCreatedBy("#SYSTEM00000")
+                    .setActive(true));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
