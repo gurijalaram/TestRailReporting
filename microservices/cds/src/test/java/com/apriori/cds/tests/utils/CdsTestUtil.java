@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Deployment;
 import com.apriori.cds.entity.response.User;
 import com.apriori.cds.entity.response.UserProfile;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -76,6 +77,36 @@ public class CdsTestUtil extends TestUtil {
                     .setCreatedBy("#SYSTEM00000")
                     .setActive(true)
                     .setUserType("AP_CLOUD_USER")
+                    .setUserProfile(new UserProfile().setGivenName(userName)
+                        .setFamilyName("Automater")
+                        .setJobTitle("Automation Engineer")
+                        .setDepartment("Automation")
+                        .setSupervisor("Ciene Frith")
+                        .setCreatedBy("#SYSTEM00000")));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * POST call to add a deployment to a customer
+     *
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param deploymentName     - the user name
+     * @param customerName - the customer name
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addDeployment(String url, Class klass, String deploymentName, String customerName) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("deployment",
+                new Deployment().setName(deploymentName)
+                    .setDescription("Deployment added using API automation")
+                    .setDeploymentType("PRODUCTION")
+                    .setActive(Boolean.TRUE)
+                    .setIsDefault(Boolean.TRUE)
+                    .setCreatedBy("#SYSTEM00000")
+                    .setApVersion("2020 R1")
                     .setUserProfile(new UserProfile().setGivenName(userName)
                         .setFamilyName("Automater")
                         .setJobTitle("Automation Engineer")
