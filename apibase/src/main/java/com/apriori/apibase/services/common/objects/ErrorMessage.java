@@ -3,6 +3,7 @@ package com.apriori.apibase.services.common.objects;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDate;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "common/ErrorMessageSchema.json")
 public class ErrorMessage {
 
