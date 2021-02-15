@@ -1,67 +1,78 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "type": "object",
-  "required": [
-    "items"
-  ],
-  "properties": {
-    "items": {
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "type": "object",
-            "required": [
-              "identity",
-              "createdBy",
-              "createdAt",
-              "updatedAt",
-              "customerIdentity",
-              "scenarioName",
-              "state",
-              "virtual",
-              "ownedBy",
-              "locked",
-              "published"
-            ],
-            "properties": {
-              "identity": {
-                "type": "string"
-              },
-              "createdBy": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "updatedAt": {
-                "type": "string"
-              },
-              "customerIdentity": {
-                "type": "string"
-              },
-              "scenarioName": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "virtual": {
-                "type": "boolean"
-              },
-              "ownedBy": {
-                "type": "string"
-              },
-              "locked": {
-                "type": "boolean"
-              },
-              "published": {
-                "type": "boolean"
-              }
-            }
+  "type": "array",
+  "items": {
+    "anyOf": [
+      {
+        "type": "object",
+        "required": [
+          "identity",
+          "createdBy",
+          "createdAt",
+          "updatedAt",
+          "customerIdentity",
+          "scenarioName",
+          "state",
+          "virtual",
+          "costMaturity",
+          "status",
+          "locked",
+          "published"
+        ],
+        "properties": {
+          "identity": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "customerIdentity": {
+            "type": "string"
+          },
+          "scenarioName": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "oneOf": [
+              {"type": "string", "enum": ["CREATED", "READY_TO_COST", "SUBMITTED", "COSTED", "FAILED"]}
+            ]
+          },
+          "virtual": {
+            "type": "boolean"
+          },
+          "costMaturity": {
+            "type": "string",
+            "oneOf": [
+              {"type": "string", "enum": ["INITIAL", "LOW", "MEDIUM", "HIGH"]}
+            ]
+          },
+          "status": {
+            "type": "string",
+            "oneOf": [
+              {"type": "string", "enum": ["ANALYSIS", "CLOSED", "COMPLETE", "NEW", "WAITING"]}
+            ]
+          },
+          "locked": {
+            "type": "boolean"
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "publishedAt": {
+            "type": "string"
+          },
+          "publishedBy": {
+            "type": "string"
           }
-        ]
+        }
       }
-    }
+    ]
   }
 }

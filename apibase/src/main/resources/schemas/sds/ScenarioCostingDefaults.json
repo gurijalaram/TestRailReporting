@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "scenarioKey",
+        "compType",
+        "initialized",
+        "availablePgNames",
+        "processGroupName",
+        "pgEnabled",
+        "vpeBean",
+        "supportsMaterials",
+        "materialBean",
+        "annualVolume",
+        "annualVolumeOverridden",
+        "productionLife",
+        "productionLifeOverridden",
+        "batchSizeOverride",
+        "computedBatchSize",
+        "batchSizeOverridden",
+        "componentsPerProduct",
+        "manuallyCosted",
+        "availableCurrencyCodes",
+        "manualCurrencyCode",
+        "availableCurrencyVersions",
+        "manualCurrencyVersion",
+        "machiningMode",
+        "hasTargetCost",
+        "hasTargetFinishMass",
+        "cadModelLoaded",
+        "thicknessVisible",
+        "defaultToPrimaryVpe",
+        "compositesFileVisible",
+        "manualCurrencyCodeVisible",
+        "availableProcessGroupSelections",
+        "machiningModeEnabled",
+        "sourceModelVisible",
+        "stagesAndMaterialsVisible"
+      ],
+      "properties": {
+        "scenarioKey": {
+          "type": "object",
+          "$ref": "ScenarioKey.json"
+        },
+        "compType": {
+          "type": "string"
+        },
+        "initialized": {
+          "type": "boolean"
+        },
+        "availablePgNames": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "processGroupName": {
+          "type": "string"
+        },
+        "pgEnabled": {
+          "type": "boolean"
+        },
+        "vpeBean": {
+          "type": "object",
+          "$ref": "ScenarioDigitalFactoryBean.json"
+        },
+        "supportsMaterials": {
+          "type": "boolean"
+        },
+        "materialBean": {
+          "type": "object",
+          "$ref": "ScenarioMaterialBean.json"
+        },
+        "annualVolume": {
+          "type": "integer"
+        },
+        "annualVolumeOverridden": {
+          "type": "boolean"
+        },
+        "productionLife": {
+          "type": "integer"
+        },
+        "productionLifeOverridden": {
+          "type": "boolean"
+        },
+        "batchSizeOverride": {
+          "type": "integer"
+        },
+        "computedBatchSize": {
+          "type": "integer"
+        },
+        "batchSizeOverridden": {
+          "type": "boolean"
+        },
+        "componentsPerProduct": {
+          "type": "integer"
+        },
+        "manuallyCosted": {
+          "type": "boolean"
+        },
+        "availableCurrencyCodes": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "manualCurrencyCode": {
+          "type": "string"
+        },
+        "availableCurrencyVersions": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "manualCurrencyVersion": {
+          "type": "string"
+        },
+        "machiningMode": {
+          "type": "string"
+        },
+        "hasTargetCost": {
+          "type": "boolean"
+        },
+        "hasTargetFinishMass": {
+          "type": "boolean"
+        },
+        "cadModelLoaded": {
+          "type": "boolean"
+        },
+        "thicknessVisible": {
+          "type": "boolean"
+        },
+        "defaultToPrimaryVpe": {
+          "type": "boolean"
+        },
+        "compositesFileVisible": {
+          "type": "boolean"
+        },
+        "manualCurrencyCodeVisible": {
+          "type": "boolean"
+        },
+        "availableProcessGroupSelections": {
+          "type": "array",
+          "$ref": "ScenarioAvailableProcessGroupSelection.json"
+        },
+        "machiningModeEnabled": {
+          "type": "boolean"
+        },
+        "sourceModelVisible": {
+          "type": "boolean"
+        },
+        "stagesAndMaterialsVisible": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

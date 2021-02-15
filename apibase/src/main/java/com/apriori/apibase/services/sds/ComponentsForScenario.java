@@ -9,10 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(location = "sds/ComponentsForScenario.json")
 public class ComponentsForScenario extends Pagination {
 
-    @JsonProperty("response")
     private ComponentsForScenario response;
-
-    @JsonProperty("items")
     private List<Scenario> items;
 
     public ComponentsForScenario setResponse(ComponentsForScenario response) {

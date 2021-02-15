@@ -10,43 +10,22 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 @Schema(location = "sds/Scenario.json")
 public class Scenario {
 
-    @JsonProperty
+    private String costMaturity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private String createdAt;
-
-    @JsonProperty
     private String customerIdentity;
-
-    @JsonProperty
     private String virtual;
-
-    @JsonProperty
     private String createdBy;
-
-    @JsonProperty
     private String identity;
-
-    @JsonProperty
     private String state;
-
-    @JsonProperty
     private String published;
-
-    @JsonProperty
     private String locked;
-
-    @JsonProperty
     private String scenarioName;
-
-    @JsonProperty
     private String ownedBy;
-
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private String updatedAt;
-
 
     public String getCreatedAt() {
         return createdAt;
