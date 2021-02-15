@@ -15,7 +15,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +35,7 @@ public class CdsConfigurationsTests extends CdsTestUtil {
         ResponseWrapper<ConfigurationResponse> response = getCommonRequest(url, true, ConfigurationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), Matchers.is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getDomain(), Matchers.is(not(nullValue())));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getDomain(), is(not(nullValue())));
     }
 }
