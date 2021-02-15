@@ -1,6 +1,15 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
+    "deployment"
+  ],
+  "properties": {
+    "deployment": {
+      "$id": "#/properties/deployment",
+      "type": "object",
+      "required": [
         "name",
         "description",
         "deploymentType",

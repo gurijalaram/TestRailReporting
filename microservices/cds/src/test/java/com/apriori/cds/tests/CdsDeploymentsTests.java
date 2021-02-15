@@ -4,8 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cds.entity.request.AddDeployment;
 import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Deployment;
 import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -59,7 +59,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
         String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
-        ResponseWrapper<AddDeployment> response = addDeployment(deploymentsEndpoint, AddDeployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         //assertThat(response.getResponseEntity().getResponse().getItems().get(0).getMaxCadFileRetentionDays(), is(not(nullValue())));
     }

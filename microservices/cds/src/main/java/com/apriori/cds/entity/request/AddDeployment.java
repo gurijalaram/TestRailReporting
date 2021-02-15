@@ -2,10 +2,14 @@ package com.apriori.cds.entity.request;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/AddDeploymentSchema.json")
 public class AddDeployment {
+    private AddDeployment deployment;
     private String name;
     private String description;
     private String deploymentType;
@@ -15,6 +19,14 @@ public class AddDeployment {
     private String createdBy;
     private String apVersion;
     private List<String> applications = null;
+
+    public AddDeployment getDeployment() {
+        return deployment;
+    }
+
+    public void setDeployment(AddDeployment deployment) {
+        this.deployment = deployment;
+    }
 
     public String getName() {
         return name;

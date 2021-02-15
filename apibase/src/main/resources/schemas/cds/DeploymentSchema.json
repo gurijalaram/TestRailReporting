@@ -1,261 +1,162 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
-    "isDefault",
-    "identity",
-    "createdBy",
-    "createdAt",
-    "siteIdentity",
-    "name",
-    "description",
-    "apVersion",
-    "active",
-    "installations",
-    "applications",
-    "customerIdentity",
-    "deploymentType",
-    "sites"
+    "response"
   ],
   "properties": {
-    "isDefault": {
-      "$id": "#/properties/isDefault",
-      "type": "boolean"
-    },
-    "identity": {
-      "$id": "#/properties/identity",
-      "type": "string"
-    },
-    "siteIdentity": {
-      "$id": "#/properties/siteIdentity",
-      "type": "string"
-    },
-    "createdBy": {
-      "$id": "#/properties/createdBy",
-      "type": "string"
-    },
-    "createdAt": {
-      "$id": "#/properties/createdAt",
-      "type": "string"
-    },
-    "name": {
-      "$id": "#/properties/name",
-      "type": "string"
-    },
-    "description": {
-      "$id": "#/properties/description",
-      "type": "string"
-    },
-    "apVersion": {
-      "$id": "#/properties/apVersion",
-      "type": "string"
-    },
-    "active": {
-      "$id": "#/properties/active",
-      "type": "boolean"
-    },
-    "installations": {
-      "$id": "#/properties/installations",
-      "type": "array",
-      "items": {
-        "$id": "#/properties/installations/items",
-        "anyOf": [
-          {
-            "$id": "#/properties/installations/items/anyOf/0",
-            "type": "object",
-            "required": [
-              "identity",
-              "createdBy",
-              "createdAt",
-              "updatedAt",
-              "name",
-              "cloudReference",
-              "description",
-              "active",
-              "realm",
-              "url",
-              "s3Bucket",
-              "tenantGroup",
-              "tenant",
-              "clientId",
-              "clientSecret",
-              "cidGlobalKey",
-              "deploymentIdentity",
-              "region",
-              "customerIdentity"
-            ],
-            "properties": {
-              "identity": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/identity",
-                "type": "string"
-              },
-              "createdBy": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/createdBy",
-                "type": "string"
-              },
-              "createdAt": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/createdAt",
-                "type": "string"
-              },
-              "updatedAt": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/updatedAt",
-                "type": "string"
-              },
-              "name": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/name",
-                "type": "string"
-              },
-              "cloudReference": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/cloudReference",
-                "type": "string"
-              },
-              "description": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/description",
-                "type": "string"
-              },
-              "active": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/active",
-                "type": "boolean"
-              },
-              "realm": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/realm",
-                "type": "string"
-              },
-              "url": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/url",
-                "type": "string"
-              },
-              "s3Bucket": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/s3Bucket",
-                "type": "string"
-              },
-              "tenantGroup": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/tenantGroup",
-                "type": "string"
-              },
-              "tenant": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/tenant",
-                "type": "string"
-              },
-              "clientId": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/clientId",
-                "type": "string"
-              },
-              "clientSecret": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/clientSecret",
-                "type": "string"
-              },
-              "cidGlobalKey": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/cidGlobalKey",
-                "type": "string"
-              },
-              "deploymentIdentity": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/deploymentIdentity",
-                "type": "string"
-              },
-              "region": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/region",
-                "type": "string"
-              },
-              "customerIdentity": {
-                "$id": "#/properties/installations/items/anyOf/0/properties/customerIdentity",
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "isDefault",
+        "identity",
+        "createdBy",
+        "createdAt",
+        "name",
+        "description",
+        "apVersion",
+        "active",
+        "installations",
+        "applications",
+        "customerIdentity",
+        "deploymentType",
+        "sites"
+      ],
+      "properties": {
+        "isDefault": {
+          "$id": "#/properties/response/properties/isDefault",
+          "type": "boolean"
+        },
+        "identity": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "string"
+        },
+        "createdBy": {
+          "$id": "#/properties/response/properties/createdBy",
+          "type": "string"
+        },
+        "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
+          "type": "string"
+        },
+        "name": {
+          "$id": "#/properties/response/properties/name",
+          "type": "string"
+        },
+        "description": {
+          "$id": "#/properties/response/properties/description",
+          "type": "string"
+        },
+        "apVersion": {
+          "$id": "#/properties/response/properties/apVersion",
+          "type": "string"
+        },
+        "active": {
+          "$id": "#/properties/response/properties/active",
+          "type": "boolean"
+        },
+        "installations": {
+          "$id": "#/properties/response/properties/installations",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/installations/items"
+          }
+        },
+        "applications": {
+          "$id": "#/properties/response/properties/applications",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/applications/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/response/properties/applications/items/anyOf/0",
+                "type": "object",
+                "required": [
+                  "isCloudHomeApp",
+                  "isSingleTenant",
+                  "isPublic",
+                  "identity",
+                  "createdBy",
+                  "createdAt",
+                  "name",
+                  "cloudReference",
+                  "serviceName",
+                  "description",
+                  "iconUrl"
+                ],
+                "properties": {
+                  "isCloudHomeApp": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/isCloudHomeApp",
+                    "type": "boolean"
+                  },
+                  "isSingleTenant": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/isSingleTenant",
+                    "type": "boolean"
+                  },
+                  "isPublic": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/isPublic",
+                    "type": "boolean"
+                  },
+                  "identity": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/identity",
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/createdBy",
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/createdAt",
+                    "type": "string"
+                  },
+                  "name": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/name",
+                    "type": "string"
+                  },
+                  "cloudReference": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/cloudReference",
+                    "type": "string"
+                  },
+                  "serviceName": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/serviceName",
+                    "type": "string"
+                  },
+                  "description": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/description",
+                    "type": "string"
+                  },
+                  "iconUrl": {
+                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/iconUrl",
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "customerIdentity": {
+          "$id": "#/properties/response/properties/customerIdentity",
+          "type": "string"
+        },
+        "deploymentType": {
+          "$id": "#/properties/response/properties/deploymentType",
+          "type": "string"
+        },
+        "sites": {
+          "$id": "#/properties/response/properties/sites",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/sites/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/response/properties/sites/items/anyOf/0",
                 "type": "string"
               }
-            }
+            ]
           }
-        ]
-      }
-    },
-    "applications": {
-      "$id": "#/properties/applications",
-      "type": "array",
-      "items": {
-        "$id": "#/properties/applications/items",
-        "anyOf": [
-          {
-            "$id": "#/properties/applications/items/anyOf/0",
-            "type": "object",
-            "required": [
-              "isCloudHomeApp",
-              "isSingleTenant",
-              "isPublic",
-              "identity",
-              "createdBy",
-              "createdAt",
-              "name",
-              "cloudReference",
-              "serviceName",
-              "description",
-              "iconUrl"
-            ],
-            "properties": {
-              "isCloudHomeApp": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/isCloudHomeApp",
-                "type": "boolean"
-              },
-              "isSingleTenant": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/isSingleTenant",
-                "type": "boolean"
-              },
-              "isPublic": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/isPublic",
-                "type": "boolean"
-              },
-              "identity": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/identity",
-                "type": "string"
-              },
-              "createdBy": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/createdBy",
-                "type": "string"
-              },
-              "createdAt": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/createdAt",
-                "type": "string"
-              },
-              "name": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/name",
-                "type": "string"
-              },
-              "cloudReference": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/cloudReference",
-                "type": "string"
-              },
-              "serviceName": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/serviceName",
-                "type": "string"
-              },
-              "description": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/description",
-                "type": "string"
-              },
-              "iconUrl": {
-                "$id": "#/properties/applications/items/anyOf/0/properties/iconUrl",
-                "type": "string"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "customerIdentity": {
-      "$id": "#/properties/customerIdentity",
-      "type": "string"
-    },
-    "deploymentType": {
-      "$id": "#/properties/deploymentType",
-      "type": "string"
-    },
-    "sites": {
-      "$id": "#/properties/sites",
-      "type": "array",
-      "items": {
-        "$id": "#/properties/sites/items",
-        "anyOf": [
-          {
-            "$id": "#/properties/sites/items/anyOf/0",
-            "type": "string"
-          }
-        ]
+        }
       }
     }
   }

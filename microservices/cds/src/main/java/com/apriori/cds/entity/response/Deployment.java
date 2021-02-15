@@ -2,10 +2,14 @@ package com.apriori.cds.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/DeploymentSchema.json")
 public class Deployment {
+    private Deployment response;
     private Boolean isDefault;
     private String identity;
     private String createdBy;
@@ -20,6 +24,14 @@ public class Deployment {
     private List<Application> applications = null;
     private String deploymentType;
     private List<String> sites = null;
+
+    public Deployment getResponse() {
+        return response;
+    }
+
+    public void setResponse(Deployment response) {
+        this.response = response;
+    }
 
     public Boolean getIsDefault() {
         return isDefault;
