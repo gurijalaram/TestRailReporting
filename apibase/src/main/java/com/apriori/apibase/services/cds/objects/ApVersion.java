@@ -2,8 +2,10 @@ package com.apriori.apibase.services.cds.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "common/ApVersionSchema.json")
 public class ApVersion {
     @JsonProperty
