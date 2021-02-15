@@ -7,7 +7,6 @@ import java.util.List;
 
 @Schema(location = "cis/CisReportsSchema.json")
 public class Notifications extends Pagination {
-
     private Notifications response;
     private List<Notification> items;
 
