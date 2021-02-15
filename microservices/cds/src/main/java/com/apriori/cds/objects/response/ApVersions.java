@@ -1,4 +1,4 @@
-package com.apriori.cds.entity.response;
+package com.apriori.cds.objects.response;
 
 import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
@@ -7,28 +7,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@Schema(location = "cds/ApplicationsSchema.json")
-public class Applications extends Pagination {
+@Schema(location = "common/ApVersionsSchema.json")
+public class ApVersions extends Pagination {
     @JsonProperty
-    private List<Application> items;
+    private List<ApVersion> items;
     @JsonProperty
-    private Applications response;
+    private ApVersions response;
 
-    public Applications getResponse() {
+    public ApVersions getResponse() {
         return this.response;
     }
 
-    public Applications setResponse(Applications response) {
+    public ApVersions setResponse(ApVersions response) {
         this.response = response;
         return this;
     }
 
-    public Applications setItems(List<Application> items) {
+    public ApVersions setItems(List<ApVersion> items) {
         this.items = items;
         return this;
     }
 
-    public List<Application> getItems() {
+    public List<ApVersion> getItems() {
         return this.items;
     }
 }

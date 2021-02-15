@@ -5,9 +5,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.cds.entity.response.Customer;
-import com.apriori.cds.entity.response.User;
-import com.apriori.cds.entity.response.UserProfile;
+import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.User;
+import com.apriori.cds.objects.response.UserProfile;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;

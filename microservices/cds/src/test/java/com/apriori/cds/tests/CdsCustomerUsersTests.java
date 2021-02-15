@@ -4,9 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cds.entity.response.Customer;
-import com.apriori.cds.entity.response.User;
-import com.apriori.cds.entity.response.Users;
+import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.User;
+import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;

@@ -1,4 +1,4 @@
-package com.apriori.cds.entity.response;
+package com.apriori.cds.objects.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
