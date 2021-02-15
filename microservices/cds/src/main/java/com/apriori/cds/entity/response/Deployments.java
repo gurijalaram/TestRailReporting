@@ -10,7 +10,7 @@ import java.util.List;
 @Schema(location = "cds/DeploymentsSchema.json")
 public class Deployments extends Pagination {
     @JsonProperty
-    private List<Customer> items;
+    private List<Deployment> items;
 
     @JsonProperty
     private Deployments response;
@@ -23,11 +23,11 @@ public class Deployments extends Pagination {
         this.response = response;
     }
 
-    public List<Customer> getItems() {
+    public List<Deployment> getItems() {
         return items;
     }
 
-    public Deployments setItems(List<Customer> items) {
+    public Deployments setItems(List<Deployment> items) {
         this.items = items;
         return this;
     }
