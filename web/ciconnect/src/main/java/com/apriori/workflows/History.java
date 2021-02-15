@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class History extends LoadableComponent<History> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(History.class);
+    private final Logger logger = LoggerFactory.getLogger(History.class);
 
     @FindBy(css = "div#root_pagemashupcontainer-1_textbox-76 input")
     private WebElement searchJobName;
@@ -43,7 +43,7 @@ public class History extends LoadableComponent<History> {
     public History(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

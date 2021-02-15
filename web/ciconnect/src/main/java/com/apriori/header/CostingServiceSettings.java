@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class CostingServiceSettings extends LoadableComponent<CostingServiceSettings> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CostingServiceSettings.class);
+    private static final Logger logger = LoggerFactory.getLogger(CostingServiceSettings.class);
 
     @FindBy(css = "div[id='root_navigation-40-popup_label-212'] > span")
     private WebElement costingServiceSettingsText;
@@ -23,7 +23,7 @@ public class CostingServiceSettings extends LoadableComponent<CostingServiceSett
     public CostingServiceSettings(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

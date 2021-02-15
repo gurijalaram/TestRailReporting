@@ -1,13 +1,8 @@
 package com.apriori.cds.entity.response;
 
-import com.apriori.utils.http.enums.Schema;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "common/ApVersionSchema.json")
-public class ApVersion {
-    @JsonProperty
-    private ApVersion response;
+public class UserSite {
     @JsonProperty
     private String identity;
     @JsonProperty
@@ -15,22 +10,13 @@ public class ApVersion {
     @JsonProperty
     private String createdAt;
     @JsonProperty
-    private String version;
-
-    public ApVersion getResponse() {
-        return response;
-    }
-
-    public ApVersion setResponse(ApVersion response) {
-        this.response = response;
-        return this;
-    }
+    private String siteIdentity;
 
     public String getIdentity() {
         return identity;
     }
 
-    public ApVersion setIdentity(String identity) {
+    public UserSite setIdentity(String identity) {
         this.identity = identity;
         return this;
     }
@@ -39,7 +25,7 @@ public class ApVersion {
         return createdBy;
     }
 
-    public ApVersion setCreatedBy(String createdBy) {
+    public UserSite setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -48,17 +34,17 @@ public class ApVersion {
         return createdAt;
     }
 
-    public ApVersion setCreatedAt(String createdAt) {
+    public UserSite setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
         return this;
     }
 
-    public String getVersion() {
-        return version;
+    public String getSiteIdentity() {
+        return siteIdentity;
     }
 
-    public ApVersion setVersion(String version) {
-        this.version = version;
+    public UserSite setSiteIdentity(String siteIdentity) {
+        this.siteIdentity = siteIdentity;
         return this;
     }
 }

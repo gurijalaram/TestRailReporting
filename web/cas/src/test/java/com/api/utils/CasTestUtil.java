@@ -1,6 +1,6 @@
 package com.api.utils;
 
-import com.apriori.apibase.services.common.objects.Customer;
+import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;

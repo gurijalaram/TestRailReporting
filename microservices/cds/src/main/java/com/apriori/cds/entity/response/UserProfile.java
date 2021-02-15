@@ -2,6 +2,7 @@ package com.apriori.cds.entity.response;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -9,43 +10,42 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 public class UserProfile {
+    @JsonProperty
     private String identity;
+    @JsonProperty
     private String createdBy;
-    private String givenName;
-    private String familyName;
-    private String jobTitle;
-    private String department;
-    private String supervisor;
-    private String timezone;
-    private String townCity;
-    private String countryCode;
-    private String prefix;
-    private String suffix;
-    private String stateProvince;
-    private String county;
-
-
+    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-
+    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
-
-    public UserProfile setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public UserProfile setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
+    @JsonProperty
+    private String givenName;
+    @JsonProperty
+    private String familyName;
+    @JsonProperty
+    private String jobTitle;
+    @JsonProperty
+    private String department;
+    @JsonProperty
+    private String supervisor;
+    @JsonProperty
+    private String timezone;
+    @JsonProperty
+    private String townCity;
+    @JsonProperty
+    private String countryCode;
+    @JsonProperty
+    private String prefix;
+    @JsonProperty
+    private String suffix;
+    @JsonProperty
+    private String stateProvince;
+    @JsonProperty
+    private String county;
 
     public String getCounty() {
         return county;
@@ -92,14 +92,13 @@ public class UserProfile {
         return this;
     }
 
+    public String getTownCity() {
+        return this.townCity;
+    }
 
     public UserProfile setTownCity(String townCity) {
         this.townCity = townCity;
         return this;
-    }
-
-    public String getTownCity() {
-        return this.townCity;
     }
 
     public String getTimezone() {
@@ -138,18 +137,12 @@ public class UserProfile {
         return this;
     }
 
-
-    public UserProfile setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
     public String getIdentity() {
         return this.identity;
     }
 
-    public UserProfile setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public UserProfile setIdentity(String identity) {
+        this.identity = identity;
         return this;
     }
 
@@ -157,18 +150,34 @@ public class UserProfile {
         return this.createdBy;
     }
 
-
-    public UserProfile setGivenName(String givenName) {
-        this.givenName = givenName;
+    public UserProfile setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public UserProfile setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getGivenName() {
         return this.givenName;
     }
 
-    public UserProfile setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public UserProfile setGivenName(String givenName) {
+        this.givenName = givenName;
         return this;
     }
 
@@ -176,4 +185,8 @@ public class UserProfile {
         return this.familyName;
     }
 
+    public UserProfile setFamilyName(String familyName) {
+        this.familyName = familyName;
+        return this;
+    }
 }

@@ -1,13 +1,17 @@
 package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.services.Pagination;
+import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @Schema(location = "cds/RolesSchema.json")
 public class Roles extends Pagination {
+    @JsonProperty
     private List<Role> items;
+    @JsonProperty
     private Roles response;
 
     public Roles getResponse() {
@@ -19,14 +23,12 @@ public class Roles extends Pagination {
         return this;
     }
 
-    public Roles setItems(List<Role> items) {
-        this.items = items;
-        return this;
-    }
-
     public List<Role> getItems() {
         return this.items;
     }
 
-
+    public Roles setItems(List<Role> items) {
+        this.items = items;
+        return this;
+    }
 }
