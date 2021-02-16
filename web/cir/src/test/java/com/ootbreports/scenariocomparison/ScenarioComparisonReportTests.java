@@ -329,6 +329,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
+                .selectDefaultScenarioName(ScenarioComparisonReportPage.class)
                 .selectComponentType("assembly");
 
         assertThat(scenarioComparisonReportPage.getFirstScenarioName(),
