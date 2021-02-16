@@ -136,6 +136,37 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * POST call to add an installation to a customer
+     *
+     * @param url      - the endpoint
+     * @param klass    - the response class
+     * @param realmKey - the realm key
+     * @param cloudReference - the cloud reference
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addInstallation(String url, Class klass, String realmKey, String cloudReference) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("installation",
+                new InstallationItems().setName("Automation Installation")
+                    .setDescription("Installation added by API automation")
+                    .setActive(true)
+                    .setRegion("na-1")
+                    .setRealm(realmKey)
+                    .setUrl("https://na-1.qa.apriori.net")
+                    .setS3Bucket("apriori-qa-blue-fms")
+                    .setTenant("default")
+                    .setTenantGroup("default")
+                    .setClientId("apriori-web-cost")
+                    .setClientSecret("donotusethiskey")
+                    .setCreatedBy("#SYSTEM00000")
+                    .setCidGlobalKey("donotusethiskey")
+                    .setCloudReference(cloudReference));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
      * Delete an api customer/user
      *
      * @param deleteEndpoint - the endpoint to delete a customer/user
