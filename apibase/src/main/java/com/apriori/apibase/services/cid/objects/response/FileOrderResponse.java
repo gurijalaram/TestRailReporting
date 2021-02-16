@@ -2,15 +2,9 @@ package com.apriori.apibase.services.cid.objects.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Schema(location = "FileOrderResponseSchema.json")
 public class FileOrderResponse {
-
-    @JsonProperty
     private String id;
-
-    @JsonProperty
     private Boolean resourceCreated;
 
     public String getId() {

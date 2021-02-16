@@ -8,7 +8,6 @@ import java.util.List;
 
 @Schema(location = "nts/NtsGetEmailsResponseSchema.json")
 public class GetEmailResponse  extends Pagination {
-
     private GetEmailResponse response;
     private List<Email> items;
 

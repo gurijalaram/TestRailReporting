@@ -1,6 +1,6 @@
-package com.apriori.cds.entity.response;
+package com.apriori.cds.objects.response;
 
-import com.apriori.apibase.services.Pagination;
+import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,28 +9,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/SitesSchema.json")
-public class Sites extends Pagination {
+@Schema(location = "cds/UsersSchema.json")
+public class Users extends Pagination {
     @JsonProperty
-    private List<Site> items;
+    private List<User> items;
     @JsonProperty
-    private Sites response;
+    private Users response;
 
-    public Sites getResponse() {
+    public Users getResponse() {
         return this.response;
     }
 
-    public Sites setResponse(Sites response) {
+    public Users setResponse(Users response) {
         this.response = response;
         return this;
     }
 
-    public Sites setItems(List<Site> items) {
+    public Users setItems(List<User> items) {
         this.items = items;
         return this;
     }
 
-    public List<Site> getItems() {
+    public List<User> getItems() {
         return this.items;
     }
 }
