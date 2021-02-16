@@ -50,143 +50,161 @@ public class IdentityProvider {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public IdentityProvider setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public IdentityProvider setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public IdentityProvider setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     public Boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public IdentityProvider setActive(Boolean active) {
         this.active = active;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public IdentityProvider setName(String name) {
         this.name = name;
+        return this;
     }
 
     public IdentityProviderPlatform getIdentityProviderPlatform() {
         return identityProviderPlatform;
     }
 
-    public void setIdentityProviderPlatform(IdentityProviderPlatform identityProviderPlatform) {
+    public IdentityProvider setIdentityProviderPlatform(IdentityProviderPlatform identityProviderPlatform) {
         this.identityProviderPlatform = identityProviderPlatform;
+        return this;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
+    public IdentityProvider setDisplayName(String displayName) {
         this.displayName = displayName;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public IdentityProvider setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public List<Object> getIdpDomains() {
         return idpDomains;
     }
 
-    public void setIdpDomains(List<Object> idpDomains) {
+    public IdentityProvider setIdpDomains(List<Object> idpDomains) {
         this.idpDomains = idpDomains;
+        return this;
     }
 
     public String getSignInUrl() {
         return signInUrl;
     }
 
-    public void setSignInUrl(String signInUrl) {
+    public IdentityProvider setSignInUrl(String signInUrl) {
         this.signInUrl = signInUrl;
+        return this;
     }
 
     public String getSigningCertificate() {
         return signingCertificate;
     }
 
-    public void setSigningCertificate(String signingCertificate) {
+    public IdentityProvider setSigningCertificate(String signingCertificate) {
         this.signingCertificate = signingCertificate;
+        return this;
     }
 
     public String getSigningCertificateExpiresAt() {
         return signingCertificateExpiresAt;
     }
 
-    public void setSigningCertificateExpiresAt(String signingCertificateExpiresAt) {
+    public IdentityProvider setSigningCertificateExpiresAt(String signingCertificateExpiresAt) {
         this.signingCertificateExpiresAt = signingCertificateExpiresAt;
+        return this;
     }
 
     public Boolean getSignRequest() {
         return signRequest;
     }
 
-    public void setSignRequest(Boolean signRequest) {
+    public IdentityProvider setSignRequest(Boolean signRequest) {
         this.signRequest = signRequest;
+        return this;
     }
 
     public AttributeMappings getAttributeMappings() {
         return attributeMappings;
     }
 
-    public void setAttributeMappings(AttributeMappings attributeMappings) {
+    public IdentityProvider setAttributeMappings(AttributeMappings attributeMappings) {
         this.attributeMappings = attributeMappings;
+        return this;
     }
 
     public String getCreatedByName() {
         return createdByName;
     }
 
-    public void setCreatedByName(String createdByName) {
+    public IdentityProvider setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+        return this;
     }
 
     public String getSignRequestAlgorithm() {
         return signRequestAlgorithm;
     }
 
-    public void setSignRequestAlgorithm(String signRequestAlgorithm) {
+    public IdentityProvider setSignRequestAlgorithm(String signRequestAlgorithm) {
         this.signRequestAlgorithm = signRequestAlgorithm;
+        return this;
     }
 
     public String getSignRequestAlgorithmDigest() {
         return signRequestAlgorithmDigest;
     }
 
-    public void setSignRequestAlgorithmDigest(String signRequestAlgorithmDigest) {
+    public IdentityProvider setSignRequestAlgorithmDigest(String signRequestAlgorithmDigest) {
         this.signRequestAlgorithmDigest = signRequestAlgorithmDigest;
+        return this;
     }
 
     public String getProtocolBinding() {
         return protocolBinding;
     }
 
-    public void setProtocolBinding(String protocolBinding) {
+    public IdentityProvider setProtocolBinding(String protocolBinding) {
         this.protocolBinding = protocolBinding;
+        return this;
     }
 }
