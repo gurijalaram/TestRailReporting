@@ -1,5 +1,5 @@
 
-package com.apriori.cds.entity.response.credentials;
+package com.apriori.cds.objects.response.credentials;
 
 import com.apriori.utils.http.enums.Schema;
 

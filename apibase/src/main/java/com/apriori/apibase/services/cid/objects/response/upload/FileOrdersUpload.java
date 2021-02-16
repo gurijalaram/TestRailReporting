@@ -1,13 +1,7 @@
 package com.apriori.apibase.services.cid.objects.response.upload;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class FileOrdersUpload {
-
-    @JsonProperty
     private String commandType;
-
-    @JsonProperty
     private FileUploadOrder inputs;
 
     public String getCommandType() {

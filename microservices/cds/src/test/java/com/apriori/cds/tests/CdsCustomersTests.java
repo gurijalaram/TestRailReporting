@@ -8,9 +8,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cds.entity.response.Applications;
-import com.apriori.cds.entity.response.Customer;
-import com.apriori.cds.entity.response.Customers;
+import com.apriori.cds.objects.response.Applications;
+import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;

@@ -1,16 +1,8 @@
 package com.apriori.apibase.services.cid.objects.response.upload;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class FileUploadOrder {
-
-    @JsonProperty
     private String scenarioName;
-
-    @JsonProperty
     private String fileKey;
-
-    @JsonProperty
     private String fileName;
 
     public String getScenarioName() {

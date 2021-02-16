@@ -2,42 +2,20 @@ package com.apriori.apibase.services.cid.objects.response.upload;
 
 import com.apriori.apibase.services.response.objects.FileItemsEntity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class FileUpload {
-
-    @JsonProperty
     private Boolean isFirstPage;
-
-    @JsonProperty
     private Boolean isLastPage;
-
-    @JsonProperty
     private Integer pageNumber;
-
-    @JsonProperty
     private Integer pageSize;
-
-    @JsonProperty
     private Integer pageItemCount;
-
-    @JsonProperty
     private Integer totalItemCount;
-
-    @JsonProperty
     private Integer totalPageCount;
-
-    @JsonProperty
     private Boolean hasNextPage;
-
-    @JsonProperty
     private Boolean hasPreviousPage;
-
-    @JsonProperty
     private List<FileItemsEntity> items;
 
     public Boolean getFirstPage() {
