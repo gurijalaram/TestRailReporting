@@ -10,7 +10,7 @@ public class IdentityProviderItems {
     private String identity;
     private String createdBy;
     private String createdAt;
-    private com.example.IdentityProviderPlatform identityProviderPlatform;
+    private IdentityProviderPlatform identityProviderPlatform;
     private Boolean active;
     private String name;
     private String displayName;
@@ -53,11 +53,11 @@ public class IdentityProviderItems {
         return this;
     }
 
-    public com.example.IdentityProviderPlatform getIdentityProviderPlatform() {
+    public IdentityProviderPlatform getIdentityProviderPlatform() {
         return identityProviderPlatform;
     }
 
-    public IdentityProviderItems setIdentityProviderPlatform(com.example.IdentityProviderPlatform identityProviderPlatform) {
+    public IdentityProviderItems setIdentityProviderPlatform(IdentityProviderPlatform identityProviderPlatform) {
         this.identityProviderPlatform = identityProviderPlatform;
         return this;
     }
