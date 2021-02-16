@@ -1365,7 +1365,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage clickReset() {
-        pageUtils.waitForElementAndClick(resetButton);
+        pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='reset']/span/span"));
+        resetButton.click();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }

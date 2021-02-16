@@ -83,7 +83,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "2332")
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
@@ -94,8 +94,8 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
                         CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("4")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("5")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("2")));
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("3"), is(equalTo("1")));
 
         cycleTimeValueTrackingPage.clickOk();

@@ -9,6 +9,7 @@ import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.navigation.CommonReportTests;
@@ -83,7 +84,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "2332")
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
@@ -93,9 +94,9 @@ public class CycleTimeValueTrackingTests extends TestBase {
                 .navigateToReport(
                         ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
                         CycleTimeValueTrackingPage.class
-                );
+                ).selectCycleTimeRollup();
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("1")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("4")));
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("1")));
 
         cycleTimeValueTrackingPage.clickOk();

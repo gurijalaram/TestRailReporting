@@ -9,6 +9,7 @@ import com.ootbreports.dtcmetrics.castingdtc.CastingDtcReportTests;
 import com.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
+import com.ootbreports.scenariocomparison.ScenarioComparisonReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,7 +18,10 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        MachiningDtcReportTests.class
+        CastingDtcReportTests.class,
+        CycleTimeValueTrackingTests.class,
+        CycleTimeValueTrackingDetailsTests.class,
+        ScenarioComparisonReportTests.class
 })
 
 public class CiaCirTestDevSuite {
