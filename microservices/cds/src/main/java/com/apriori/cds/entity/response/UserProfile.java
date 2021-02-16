@@ -3,7 +3,6 @@ package com.apriori.cds.entity.response;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -12,41 +11,25 @@ import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserProfile {
-    @JsonProperty
     private String identity;
-    @JsonProperty
     private String createdBy;
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
-    @JsonProperty
     private String givenName;
-    @JsonProperty
     private String familyName;
-    @JsonProperty
     private String jobTitle;
-    @JsonProperty
     private String department;
-    @JsonProperty
     private String supervisor;
-    @JsonProperty
     private String timezone;
-    @JsonProperty
     private String townCity;
-    @JsonProperty
     private String countryCode;
-    @JsonProperty
     private String prefix;
-    @JsonProperty
     private String suffix;
-    @JsonProperty
     private String stateProvince;
-    @JsonProperty
     private String county;
 
     public String getCounty() {

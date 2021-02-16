@@ -4,7 +4,6 @@ import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -15,43 +14,26 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/CustomerSchema.json")
 public class Customer {
-    @JsonProperty
     private Customer response;
-    @JsonProperty
     private String identity;
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-    @JsonProperty
     private String createdBy;
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
-    @JsonProperty
     private String updatedBy;
-    @JsonProperty("name")
     private String name;
-    @JsonProperty("description")
     private String description;
-    @JsonProperty("emailRegexPatterns")
     private List<String> emailRegexPatterns;
-    @JsonProperty("active")
     private Boolean active;
-    @JsonProperty("maxCadFileRetentionDays")
     private Integer maxCadFileRetentionDays;
-    @JsonProperty("useExternalIdentityProvider")
     private Boolean useExternalIdentityProvider;
-    @JsonProperty("mfaRequired")
     private Boolean mfaRequired;
-    @JsonProperty("oneTimePasswordApplications")
     private List<Object> oneTimePasswordApplications;
-    @JsonProperty("customerType")
     private String customerType;
-    @JsonProperty("cloudReference")
     private String cloudReference;
-    @JsonProperty("salesforceId")
     private String salesforceId;
 
     public Customer getResponse() {

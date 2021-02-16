@@ -1,11 +1,13 @@
 
 package com.apriori.cds.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class IdentityProviderPlatform {
-
     private String identity;
     private String createdBy;
     private String createdAt;

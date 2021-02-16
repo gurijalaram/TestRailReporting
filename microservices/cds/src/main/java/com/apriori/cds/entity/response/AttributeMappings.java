@@ -2,7 +2,6 @@
 package com.apriori.cds.entity.response;
 
 public class AttributeMappings {
-
     private String name;
     private String email;
     private String userId;
