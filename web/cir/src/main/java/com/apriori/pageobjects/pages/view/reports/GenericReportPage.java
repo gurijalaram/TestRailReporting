@@ -2188,6 +2188,7 @@ public class GenericReportPage extends ReportsPageHeader {
                 .getAttribute("childElementCount");
         By lastElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, childElementCount));
         By firstElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, "1"));
+        pageUtils.waitFor(2000);
         pageUtils.waitForElementToAppear(firstElementLocator);
         pageUtils.waitForElementToAppear(lastElementLocator);
 
