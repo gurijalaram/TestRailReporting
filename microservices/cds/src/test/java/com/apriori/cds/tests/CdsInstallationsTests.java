@@ -91,9 +91,12 @@ public class CdsInstallationsTests extends CdsTestUtil {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
 
-        installationIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations")));
-        ResponseWrapper<InstallationItems> installation = addInstallation(installationIdentityEndpoint, InstallationItems.class, realmKey, cloudRef);
+        String installationEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations")));
+        ResponseWrapper<InstallationItems> installation = addInstallation(installationEndpoint, InstallationItems.class, realmKey, cloudRef);
         assertThat(installation.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+
+        String installationIdentity = installation.getResponseEntity().getResponse().getIdentity();
+        installationIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations/").concat(installationIdentity)));
 
         assertThat(installation.getResponseEntity().getResponse().getName(), is(equalTo("Automation Installation")));
         assertThat(installation.getResponseEntity().getResponse().getRegion(), is(equalTo("na-1")));
