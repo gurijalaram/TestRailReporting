@@ -1,5 +1,10 @@
 package com.api;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 import com.apriori.apibase.services.cas.IdentityProviders;
 import com.apriori.apibase.services.cas.SingleIdp;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -14,11 +19,6 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 public class CasIdentityProvidersTests extends TestUtil {
 
