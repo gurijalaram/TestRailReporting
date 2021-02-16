@@ -119,7 +119,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "1693")
     @Description("Verify reset button on Casting DTC input control panel works")
     public void testResetButton() {

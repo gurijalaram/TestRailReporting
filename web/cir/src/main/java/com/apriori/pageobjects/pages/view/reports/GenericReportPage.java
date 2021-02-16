@@ -2180,7 +2180,7 @@ public class GenericReportPage extends ReportsPageHeader {
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
 
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 2; i++) {
             By locator2 =
                     By.xpath(String.format(
                             "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]",

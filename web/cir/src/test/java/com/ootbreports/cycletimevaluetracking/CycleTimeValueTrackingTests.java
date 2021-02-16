@@ -84,7 +84,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = "2332")
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
