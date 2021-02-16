@@ -135,7 +135,6 @@ public class CdsTestUtil extends TestUtil {
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 
-
     /**
      * Delete an api customer/user
      *
