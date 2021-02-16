@@ -23,39 +23,44 @@ public class ErrorMessage {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDate timestamp) {
+    public ErrorMessage setTimestamp(LocalDate timestamp) {
         this.timestamp = timestamp;
+        return this;
     }
 
     public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public ErrorMessage setStatus(Integer status) {
         this.status = status;
+        return this;
     }
 
     public String getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public ErrorMessage setError(String error) {
         this.error = error;
+        return this;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public ErrorMessage setMessage(String message) {
         this.message = message;
+        return this;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public ErrorMessage setPath(String path) {
         this.path = path;
+        return this;
     }
 }
