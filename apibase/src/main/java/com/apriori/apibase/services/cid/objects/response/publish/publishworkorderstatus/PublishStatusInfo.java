@@ -2,8 +2,6 @@ package com.apriori.apibase.services.cid.objects.response.publish.publishworkord
 
 import com.apriori.utils.http.enums.Schema;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Schema(location = "cid/PublishWorkOrderStatusResponse.json")
 public class PublishStatusInfo {
     private Integer version;
@@ -12,7 +10,6 @@ public class PublishStatusInfo {
     private String searchKey;
     private PublishStatusCommand command;
     private String dateSubmitted;
-    @JsonProperty("dateStarted")
     private String dateStarted;
 
     public Integer getVersion() {
