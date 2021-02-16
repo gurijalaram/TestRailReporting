@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
