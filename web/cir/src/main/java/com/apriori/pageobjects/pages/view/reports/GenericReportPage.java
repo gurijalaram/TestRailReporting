@@ -2175,15 +2175,15 @@ public class GenericReportPage extends ReportsPageHeader {
     public ScenarioComparisonReportPage selectComponentType(String componentType) {
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Component Type")));
 
-        if (!componentType.equals("assembly")) {
+        /*if (!componentType.equals("assembly")) {
             pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//div[@id='componentType']//span[@class='wrap']")), false);
-        }
+        }*/
         By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']", componentType));
         pageUtils.waitForElementAndClick(locator);
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
 
-        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//div[@id='scenarioToCompareIDs']//li[@title='Select All']")), true);
+        //pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//div[@id='scenarioToCompareIDs']//li[@title='Select All']")), true);
         String childElementCount = driver.findElement(By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]"))
                 .getAttribute("childElementCount");
         By lastElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, childElementCount));
