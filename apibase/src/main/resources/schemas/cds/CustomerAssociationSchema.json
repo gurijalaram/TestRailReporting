@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "createdAt",
+        "createdBy",
+        "description",
+        "identity",
+        "targetCustomerIdentity",
+        "type"
+      ],
+      "optional": [
+        "deletedAt",
+        "deletedBy",
+        "updatedAt",
+        "updatedBy"
+      ],
+      "properties": {
+        "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
+          "type": "string"
+        },
+        "createdBy": {
+          "$id": "#/properties/response/properties/createdBy",
+          "type": "string"
+        },
+        "deletedAt": {
+          "$id": "#/properties/response/properties/deletedAt",
+          "type": "string"
+        },
+        "deletedBy": {
+          "$id": "#/properties/response/properties/deletedBy",
+          "type": "string"
+        },
+        "description": {
+          "$id": "#/properties/response/properties/description",
+          "type": "string"
+        },
+        "identity": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "string"
+        },
+        "targetCustomerIdentity": {
+          "$id": "#/properties/response/properties/targetCustomerIdentity",
+          "type": "string"
+        },
+        "type": {
+          "$id": "#/properties/response/properties/type",
+          "type": "string"
+        },
+        "updatedAt": {
+          "$id": "#/properties/response/properties/updatedAt",
+          "type": "string"
+        },
+        "updatedBy": {
+          "$id": "#/properties/response/properties/updatedBy",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
