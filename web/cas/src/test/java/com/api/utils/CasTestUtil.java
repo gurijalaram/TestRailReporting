@@ -33,7 +33,7 @@ public class CasTestUtil extends TestUtil {
                     .setDescription(description)
                     .setCustomerType("CLOUD_ONLY")
                     .setActive(true)
-                    .setMfaRequired(false)
+                    .setMfaRequired(true)
                     .setUseExternalIdentityProvider(false)
                     .setMaxCadFileRetentionDays(584)
                     .setEmailDomains(Arrays.asList(email + ".com", "gmail.com")));
@@ -57,5 +57,11 @@ public class CasTestUtil extends TestUtil {
                 new Customer().setEmailDomains(Arrays.asList(email + ".com", email + ".co.uk")));
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
+    }
+
+    public <T> ResponseWrapper<T> resetMfa(String url, String token) {
+        RequestEntity requestEntity = RequestEntity.init(url, null)
+                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 }
