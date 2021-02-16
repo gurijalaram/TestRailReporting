@@ -107,4 +107,14 @@ public class GenerateStringUtil {
     public String generateSiteID() {
         return "AutoSiteID" + RandomStringUtils.randomNumeric(26);
     }
+
+    /**
+     * Generates a realmkey for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateRealmKey() {
+        return "AutoRealmKey" + RandomStringUtils.randomNumeric(26);
+    }
 }
