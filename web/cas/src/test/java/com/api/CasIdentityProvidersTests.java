@@ -1,6 +1,7 @@
 package com.api;
 
-import com.apriori.apibase.services.cas.*;
+import com.apriori.apibase.services.cas.IdentityProviders;
+import com.apriori.apibase.services.cas.SingleIdp;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
@@ -8,6 +9,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -36,7 +38,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     @Test
     @TestRail(testCaseId = {"5646", "5647"})
     @Description("Get IDPs for customer and get IDP by identity")
-    public void getIdpCustomer(){
+    public void getIdpCustomer() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828N8M/identity-providers/");
 
         ResponseWrapper<IdentityProviders> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, IdentityProviders.class,
@@ -45,7 +47,7 @@ public class CasIdentityProvidersTests extends TestUtil {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        String identity= response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
         String identityProvidersUrl = apiUrl + identity;
 

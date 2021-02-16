@@ -3,7 +3,8 @@ package com.apriori.apibase.services.cas;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -11,47 +12,29 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cas/IdentityProviderSchema.json")
 public class IdentityProvider {
-    @JsonProperty
     private IdentityProvider response;
-    @JsonProperty
     private String identity;
-    @JsonProperty
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-    @JsonProperty
     private String createdBy;
-    @JsonProperty
     private Boolean active;
-    @JsonProperty
     private String name;
-    @JsonProperty
     private IdentityProviderPlatform identityProviderPlatform;
-    @JsonProperty
     private String displayName;
-    @JsonProperty
     private String description;
-    @JsonProperty
     private List<Object> idpDomains = null;
-    @JsonProperty
     private String signInUrl;
-    @JsonProperty
     private String signingCertificate;
-    @JsonProperty
     private String signingCertificateExpiresAt;
-    @JsonProperty
     private Boolean signRequest;
-    @JsonProperty
     private AttributeMappings attributeMappings;
-    @JsonProperty
     private String createdByName;
-    @JsonProperty
     private String signRequestAlgorithm;
-    @JsonProperty
     private String signRequestAlgorithmDigest;
-    @JsonProperty
     private String protocolBinding;
 
     public IdentityProvider getResponse() {
