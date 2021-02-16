@@ -3,46 +3,28 @@ package com.apriori.apibase.services.cas;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cas/SingleCustomerSchema.json")
 public class SingleCustomer {
-    @JsonProperty
     private SingleCustomer response;
-    @JsonProperty
     private String identity;
-    @JsonProperty
     private String createdAt;
-    @JsonProperty
     private String createdBy;
-    @JsonProperty
     private String name;
-    @JsonProperty
     private String cloudReference;
-    @JsonProperty
     private String description;
-    @JsonProperty
     private String customerType;
-    @JsonProperty
     private Boolean active;
-    @JsonProperty
     private Integer maxCadFileRetentionDays;
-    @JsonProperty
     private Boolean useExternalIdentityProvider;
-    @JsonProperty
     private Boolean mfaRequired;
-    @JsonProperty
     private List<Object> oneTimePasswordApplications = null;
-    @JsonProperty
     private String createdByName;
-    @JsonProperty
     private List<Object> identityProviders = null;
-    @JsonProperty
     private List<String> emailDomains = null;
-    @JsonProperty
     private String authenticationType;
 
     public SingleCustomer getResponse() {
