@@ -110,6 +110,31 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * POST call to add a deployment to a customer
+     *
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param siteIdentity - the site Identity
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addDeployment(String url, Class klass, String siteIdentity) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("deployment",
+                new AddDeployment().setName("Production Deployment")
+                    .setDescription("Deployment added by API automation")
+                    .setDeploymentType("PRODUCTION")
+                    .setSiteIdentity(siteIdentity)
+                    .setActive("true")
+                    .setIsDefault("true")
+                    .setCreatedBy("#SYSTEM00000")
+                    .setApVersion("2020 R1")
+                    .setApplications(Arrays.asList("1J8M416FBJBK")));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
      * Delete an api customer/user
      *
      * @param deleteEndpoint - the endpoint to delete a customer/user
