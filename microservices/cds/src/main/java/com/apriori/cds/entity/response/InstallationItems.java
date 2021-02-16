@@ -1,13 +1,18 @@
 package com.apriori.cds.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/InstallationSchema.json")
 public class InstallationItems {
-
     private Boolean active;
     private String cidApiId;
     private String cidApiSecret;
@@ -15,10 +20,14 @@ public class InstallationItems {
     private String clientId;
     private String clientSecret;
     private String cloudReference;
-    private String createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime createdAt;
     private String createdBy;
     private String customerIdentity;
-    private String deletedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime deletedAt;
     private String deletedBy;
     private String deploymentIdentity;
     private String description;
@@ -29,7 +38,9 @@ public class InstallationItems {
     private String s3Bucket;
     private String tenant;
     private String tenantGroup;
-    private String updatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
     private String updatedBy;
     private String url;
     private InstallationItems response;
@@ -106,11 +117,11 @@ public class InstallationItems {
         return this;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public InstallationItems setCreatedAt(String createdAt) {
+    public InstallationItems setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -133,11 +144,11 @@ public class InstallationItems {
         return this;
     }
 
-    public String getDeletedAt() {
+    public LocalDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public InstallationItems setDeletedAt(String deletedAt) {
+    public InstallationItems setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
         return this;
     }
@@ -232,11 +243,11 @@ public class InstallationItems {
         return this;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public InstallationItems setUpdatedAt(String updatedAt) {
+    public InstallationItems setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }
