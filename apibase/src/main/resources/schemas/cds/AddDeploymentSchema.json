@@ -1,13 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
     "deployment"
   ],
   "properties": {
     "deployment": {
-      "$id": "#/properties/deployment",
       "type": "object",
       "required": [
         "name",
@@ -22,45 +20,34 @@
       ],
       "properties": {
         "name": {
-          "$id": "#/properties/deployment/properties/name",
           "type": "string"
         },
         "description": {
-          "$id": "#/properties/deployment/properties/description",
           "type": "string"
         },
         "deploymentType": {
-          "$id": "#/properties/deployment/properties/deploymentType",
           "type": "string"
         },
         "siteIdentity": {
-          "$id": "#/properties/deployment/properties/siteIdentity",
           "type": "string"
         },
         "active": {
-          "$id": "#/properties/deployment/properties/active",
           "type": "string"
         },
         "isDefault": {
-          "$id": "#/properties/deployment/properties/isDefault",
           "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/deployment/properties/createdBy",
           "type": "string"
         },
         "apVersion": {
-          "$id": "#/properties/deployment/properties/apVersion",
           "type": "string"
         },
         "applications": {
-          "$id": "#/properties/deployment/properties/applications",
           "type": "array",
           "items": {
-            "$id": "#/properties/deployment/properties/applications/items",
             "anyOf": [
               {
-                "$id": "#/properties/deployment/properties/applications/items/anyOf/0",
                 "type": "string"
               }
             ]

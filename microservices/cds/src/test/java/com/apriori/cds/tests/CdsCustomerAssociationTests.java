@@ -18,7 +18,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,13 +31,6 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
     @Before
     public void setServiceUrl() {
         url = Constants.getServiceUrl();
-    }
-
-    @After
-    public void cleanUp() {
-        if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
-        }
     }
 
     @Test
