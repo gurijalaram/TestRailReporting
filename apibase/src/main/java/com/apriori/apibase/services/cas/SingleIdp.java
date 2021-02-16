@@ -1,5 +1,6 @@
 package com.apriori.apibase.services.cas;
 
+import com.apriori.apibase.services.common.objects.IdentityProviderPlatform;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
