@@ -24,8 +24,9 @@ public class AddDeployment {
         return deployment;
     }
 
-    public void setDeployment(AddDeployment deployment) {
+    public AddDeployment setDeployment(AddDeployment deployment) {
         this.deployment = deployment;
+        return this;
     }
 
     public String getName() {

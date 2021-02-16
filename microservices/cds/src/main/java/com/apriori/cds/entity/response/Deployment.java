@@ -29,8 +29,9 @@ public class Deployment {
         return response;
     }
 
-    public void setResponse(Deployment response) {
+    public Deployment setResponse(Deployment response) {
         this.response = response;
+        return this;
     }
 
     public Boolean getIsDefault() {
@@ -154,5 +155,4 @@ public class Deployment {
         this.sites = sites;
         return this;
     }
-
 }
