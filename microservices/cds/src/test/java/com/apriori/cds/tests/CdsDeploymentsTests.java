@@ -6,10 +6,10 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cds.entity.response.Customer;
-import com.apriori.cds.entity.response.Deployment;
-import com.apriori.cds.entity.response.Deployments;
-import com.apriori.cds.entity.response.Site;
+import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.Deployment;
+import com.apriori.cds.objects.response.Deployments;
+import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;

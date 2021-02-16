@@ -1,4 +1,4 @@
-package com.apriori.cds.entity.request;
+package com.apriori.cds.objects.request;
 
 import com.apriori.utils.http.enums.Schema;
 
