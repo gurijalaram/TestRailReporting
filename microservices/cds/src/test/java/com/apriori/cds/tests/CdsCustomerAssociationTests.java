@@ -1,5 +1,6 @@
 package com.apriori.cds.tests;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -67,7 +68,7 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
         ResponseWrapper<CustomerAssociationItems> association = getCommonRequest(associationIdentityEndpoint, true, CustomerAssociationItems.class);
 
         assertThat(association.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        //assertThat(association.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        //assertThat(response.getResponseEntity().getResponse().getItems().get(0).getTargetCustomerIdentity(), is(not(nullValue())));
+        assertThat(association.getResponseEntity().getResponse().getIdentity(), is(equalTo(associationIdentity)));
+        assertThat(association.getResponseEntity().getResponse().getDescription(), containsString("is a customer of aPriori"));
     }
 }
