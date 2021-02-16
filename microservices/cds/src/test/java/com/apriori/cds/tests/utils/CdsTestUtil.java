@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cds.entity.request.AddDeployment;
 import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.entity.response.User;
@@ -90,10 +91,10 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a site to a customer
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
-     * @param siteName     - the site name
-     * @param siteID       - the siteID
+     * @param url      - the endpoint
+     * @param klass    - the response class
+     * @param siteName - the site name
+     * @param siteID   - the siteID
      * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> addSite(String url, Class klass, String siteName, String siteID) {
@@ -105,6 +106,31 @@ public class CdsTestUtil extends TestUtil {
                     .setSiteId(siteID)
                     .setCreatedBy("#SYSTEM00000")
                     .setActive(true));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * POST call to add a deployment to a customer
+     *
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param siteIdentity - the site Identity
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addDeployment(String url, Class klass, String siteIdentity) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("deployment",
+                new AddDeployment().setName("Production Deployment")
+                    .setDescription("Deployment added by API automation")
+                    .setDeploymentType("PRODUCTION")
+                    .setSiteIdentity(siteIdentity)
+                    .setActive("true")
+                    .setIsDefault("true")
+                    .setCreatedBy("#SYSTEM00000")
+                    .setApVersion("2020 R1")
+                    .setApplications(Arrays.asList("1J8M416FBJBK")));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
