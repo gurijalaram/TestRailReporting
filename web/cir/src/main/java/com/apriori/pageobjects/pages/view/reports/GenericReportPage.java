@@ -2175,22 +2175,21 @@ public class GenericReportPage extends ReportsPageHeader {
     public ScenarioComparisonReportPage selectComponentType(String componentType) {
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Component Type")));
 
-        /*if (!componentType.equals("assembly")) {
-            pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//div[@id='componentType']//span[@class='wrap']")), false);
-        }*/
         By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']", componentType));
-        pageUtils.waitForElementAndClick(locator);
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForElementAndClick(driver.findElement(locator));
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
 
-        //pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//div[@id='scenarioToCompareIDs']//li[@title='Select All']")), true);
         String childElementCount = driver.findElement(By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]"))
                 .getAttribute("childElementCount");
         By lastElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, childElementCount));
         By firstElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, "1"));
-        pageUtils.waitFor(2000);
+        //pageUtils.waitFor(2000);
         pageUtils.waitForElementToAppear(firstElementLocator);
-        pageUtils.waitForElementToAppear(lastElementLocator);
+        /*if (!componentType.equals("rollup")) {
+            pageUtils.waitForElementToAppear(lastElementLocator);
+        }*/
 
         /*for (int i = 1; i < 2; i++) {
             By locator2 =
