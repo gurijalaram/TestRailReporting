@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
@@ -90,10 +91,10 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a site to a customer
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
-     * @param siteName     - the site name
-     * @param siteID       - the siteID
+     * @param url      - the endpoint
+     * @param klass    - the response class
+     * @param siteName - the site name
+     * @param siteID   - the siteID
      * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> addSite(String url, Class klass, String siteName, String siteID) {
