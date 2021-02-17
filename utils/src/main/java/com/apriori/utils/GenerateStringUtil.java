@@ -65,7 +65,17 @@ public class GenerateStringUtil {
      */
     @Attachment
     public String generateSalesForceId() {
-        return "AutoSFID" + (int)(Math.random() * 10000000000L);
+        return "AutoSFID" + RandomStringUtils.randomNumeric(10);
+    }
+
+    /**
+     * Generates a cloudref for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateCloudReference() {
+        return "AutoCloudRef" + RandomStringUtils.randomAlphabetic(4);
     }
 
     /**
@@ -76,5 +86,35 @@ public class GenerateStringUtil {
     @Attachment
     public String generateUserName() {
         return "AutoUser" + RandomStringUtils.randomAlphabetic(5);
+    }
+
+    /**
+     * Generates a siteName for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateSiteName() {
+        return "AutoSite" + RandomStringUtils.randomAlphabetic(5);
+    }
+
+    /**
+     * Generates a siteID for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateSiteID() {
+        return "AutoSiteID" + RandomStringUtils.randomNumeric(26);
+    }
+
+    /**
+     * Generates a realmkey for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateRealmKey() {
+        return "AutoRealmKey" + RandomStringUtils.randomNumeric(26);
     }
 }

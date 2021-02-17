@@ -7,13 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CicUserGuide extends LoadableComponent<CicUserGuide> {
-
-    private final Logger LOGGER = LoggerFactory.getLogger(CicUserGuide.class);
+public class CicUserGuide  {
+    private final Logger logger = LoggerFactory.getLogger(CicUserGuide.class);
 
     @FindBy(css = "div[id='wwpID0ELHA']")
     private WebElement userGuideTitle;
@@ -26,9 +24,9 @@ public class CicUserGuide extends LoadableComponent<CicUserGuide> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.pageHeader = new PageHeader(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
+        //this.get();
     }
 
     protected void load() {

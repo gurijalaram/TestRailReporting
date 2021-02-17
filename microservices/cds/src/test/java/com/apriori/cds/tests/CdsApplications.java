@@ -1,22 +1,24 @@
 package com.apriori.cds.tests;
 
-import com.apriori.cds.entity.response.Application;
-import com.apriori.cds.entity.response.Applications;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.is;
+
+import com.apriori.cds.objects.response.Application;
+import com.apriori.cds.objects.response.Applications;
+import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class CdsApplications extends CdsTestUtil {
     private String url;
@@ -33,10 +35,11 @@ public class CdsApplications extends CdsTestUtil {
     public void getAllApplications() {
         url = String.format(url, "applications");
 
-        ResponseWrapper<Applications> response = getRequest(Applications.class, true);
+        ResponseWrapper<Applications> response = getCommonRequest(url, true, Applications.class);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-        validateApplications(response.getResponseEntity());
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getIsSingleTenant(), CoreMatchers.is(notNullValue()));
     }
 
     @Test
@@ -45,35 +48,21 @@ public class CdsApplications extends CdsTestUtil {
     public void getApplicationById() {
         url = String.format(url, String.format("applications/%s", Constants.getCdsIdentityApplication()));
 
-        ResponseWrapper<Application> response = getRequest(Application.class, false);
+        ResponseWrapper<Application> response = getCommonRequest(url,false, Application.class);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-        validateApplication(response.getResponseEntity());
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("aPriori Professional")));
     }
 
-    private <T> ResponseWrapper<T> getRequest(Class klass, boolean urlEncoding) {
-        return GenericRequestUtil.get(
-            RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
-            new RequestAreaApi()
-        );
-    }
+    @Test
+    @TestRail(testCaseId = "5811")
+    @Description(" API returns a paged list of customers authorized to use a particular application")
+    public void getCustomersAuthorizedForApplication() {
+        url = String.format(url, String.format("applications/%s", Constants.getCdsIdentityApplication().concat("/customers")));
 
-    /*
-     * Application Validation
-     */
-    private void validateApplications(Applications applicationsResponse) {
-        Object[] applications = applicationsResponse.getResponse().getItems().toArray();
-        Arrays.stream(applications)
-            .forEach(this::validate);
-    }
+        ResponseWrapper<Customers> response = getCommonRequest(url,false, Customers.class);
 
-    private void validateApplication(Application applicationResponse) {
-        Application application = applicationResponse.getResponse();
-        validate(application);
-    }
-
-    private void validate(Object applicationObj) {
-        Application application = (Application) applicationObj;
-        Assert.assertTrue(application.getIdentity().matches("^[a-zA-Z0-9]+$"));
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 }
