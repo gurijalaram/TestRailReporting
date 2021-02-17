@@ -1,11 +1,11 @@
 package com.apriori.apibase.services.sds;
 
 import com.apriori.utils.http.enums.Schema;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "sds/ScenarioCostingDefaultsResponse.json")
+@Schema(location = "sds/ScenarioCostingDefaults.json")
 public class ScenarioCostingDefaultsResponse {
 
+    private ScenarioCostingDefaultsResponse response;
     private String[] availablePgNames;
     private String machiningModeEnabled;
     private String computedBatchSize;
@@ -39,6 +39,15 @@ public class ScenarioCostingDefaultsResponse {
     private String manualCurrencyVersion;
     private String productionLifeOverridden;
     private String componentsPerProduct;
+
+    public ScenarioCostingDefaultsResponse getResponse() {
+        return response;
+    }
+
+    public void setResponse(ScenarioCostingDefaultsResponse response) {
+        this.response = response;
+    }
+
     private ScenarioAvailableProcessGroupSelection[] availableProcessGroupSelections;
 
     public String[] getAvailablePgNames () {

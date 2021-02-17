@@ -1,7 +1,6 @@
 package com.apriori.apibase.services.sds;
 
 import com.apriori.utils.http.enums.Schema;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "sds/ScenarioAvailableProcessGroupSelection.json")
 public class ScenarioAvailableProcessGroupSelection {

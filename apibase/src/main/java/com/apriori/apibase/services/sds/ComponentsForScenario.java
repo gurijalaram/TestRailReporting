@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "sds/ComponentsForScenario.json")
 public class ComponentsForScenario extends Pagination {

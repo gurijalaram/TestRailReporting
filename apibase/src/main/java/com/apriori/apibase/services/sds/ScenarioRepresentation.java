@@ -14,4 +14,3 @@ public class ScenarioRepresentation {
         this.response = response;
     }
 }
-
