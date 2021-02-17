@@ -1,4 +1,4 @@
-package com.apriori.cds.entity.response;
+package com.apriori.cds.objects.response;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;

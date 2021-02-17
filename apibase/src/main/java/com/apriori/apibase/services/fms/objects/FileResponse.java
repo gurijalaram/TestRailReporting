@@ -12,31 +12,19 @@ import java.time.LocalDateTime;
 @Schema(location = "fms/FmsFileSchema.json")
 public class FileResponse {
     private String identity;
-
     private String createdBy;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-
     private String customerIdentity;
-
     private String deploymentIdentity;
-
     private String installationIdentity;
-
     private String applicationIdentity;
-
     private String userIdentity;
-
     private String filename;
-
     private String folder;
-
     private Long filesize;
-
     private String md5hash;
-
     private FileResponse response;
 
     public FileResponse getResponse() {

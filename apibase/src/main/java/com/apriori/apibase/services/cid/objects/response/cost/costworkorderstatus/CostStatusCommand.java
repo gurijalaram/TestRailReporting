@@ -1,22 +1,9 @@
 package com.apriori.apibase.services.cid.objects.response.cost.costworkorderstatus;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "commandType",
-    "inputs",
-    "outputs"
-})
 public class CostStatusCommand {
 
-    @JsonProperty("commandType")
     private String commandType;
-    @JsonProperty("inputs")
     private CostOrderStatusInputs inputs;
-    @JsonProperty("outputs")
     private CostOrderStatusOutputs outputs;
 
     public String getCommandType() {

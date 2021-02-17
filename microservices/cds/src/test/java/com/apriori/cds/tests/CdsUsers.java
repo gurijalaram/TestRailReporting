@@ -7,9 +7,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.cds.entity.response.User;
-import com.apriori.cds.entity.response.Users;
-import com.apriori.cds.entity.response.credentials.CredentialsItems;
+import com.apriori.cds.objects.response.User;
+import com.apriori.cds.objects.response.Users;
+import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;

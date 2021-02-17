@@ -1,25 +1,9 @@
 package com.apriori.apibase.services.cid.objects.cost.createcostworkorder;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "typeName",
-    "stateName",
-    "workspaceId",
-    "masterName"
-})
 public class CostOrderScenario {
-
-    @JsonProperty("typeName")
     private String typeName;
-    @JsonProperty("stateName")
     private String stateName;
-    @JsonProperty("workspaceId")
     private Integer workspaceId;
-    @JsonProperty("masterName")
     private String masterName;
 
     public String getTypeName() {

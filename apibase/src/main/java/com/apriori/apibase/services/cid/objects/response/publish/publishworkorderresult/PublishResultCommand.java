@@ -1,22 +1,8 @@
 package com.apriori.apibase.services.cid.objects.response.publish.publishworkorderresult;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "commandType",
-    "inputs",
-    "outputs"
-})
 public class PublishResultCommand {
-
-    @JsonProperty("commandType")
     private String commandType;
-    @JsonProperty("inputs")
     private PublishResultInputs inputs;
-    @JsonProperty("outputs")
     private PublishResultOutputs outputs;
 
     public String getCommandType() {

@@ -2,99 +2,36 @@ package com.apriori.apibase.services.cid.objects.cost.productioninfo;
 
 import com.apriori.utils.http.enums.Schema;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 import java.util.List;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "scenarioKey",
-    "compType",
-    "initialized",
-    "availablePgNames",
-    "processGroupName",
-    "pgEnabled",
-    "cadModelLoaded",
-    "vpeBean",
-    "supportsMaterials",
-    "materialBean",
-    "annualVolume",
-    "annualVolumeOverridden",
-    "productionLife",
-    "productionLifeOverridden",
-    "computedBatchSize",
-    "batchSizeOverridden",
-    "componentsPerProduct",
-    "manuallyCosted",
-    "availableCurrencyCodes",
-    "manualCurrencyCode",
-    "availableCurrencyVersions",
-    "manualCurrencyVersion",
-    "hasTargetCost",
-    "hasTargetFinishMass",
-    "machiningMode",
-    "thicknessVisible",
-    "compositesFileName"
-})
 
 @Schema(location = "ProductionCostResponse.json")
 public class ProductionInfo {
-
-    @JsonProperty("scenarioKey")
     private ProductionInfoScenario scenarioKey;
-    @JsonProperty("compType")
     private String compType;
-    @JsonProperty("initialized")
     private Boolean initialized;
-    @JsonProperty("availablePgNames")
     private List<String> availablePgNames = null;
-    @JsonProperty("processGroupName")
     private String processGroupName;
-    @JsonProperty("pgEnabled")
     private Boolean pgEnabled;
-    @JsonProperty("cadModelLoaded")
     private Boolean cadModelLoaded;
-    @JsonProperty("vpeBean")
     private ProductionInfoVpe vpeBean;
-    @JsonProperty("supportsMaterials")
     private Boolean supportsMaterials;
-    @JsonProperty("materialBean")
     private ProductionInfoMaterial materialBean;
-    @JsonProperty("annualVolume")
     private Integer annualVolume;
-    @JsonProperty("annualVolumeOverridden")
     private Boolean annualVolumeOverridden;
-    @JsonProperty("productionLife")
     private Integer productionLife;
-    @JsonProperty("productionLifeOverridden")
     private Boolean productionLifeOverridden;
-    @JsonProperty("computedBatchSize")
     private Integer computedBatchSize;
-    @JsonProperty("batchSizeOverridden")
     private Boolean batchSizeOverridden;
-    @JsonProperty("componentsPerProduct")
     private Integer componentsPerProduct;
-    @JsonProperty("manuallyCosted")
     private Boolean manuallyCosted;
-    @JsonProperty("availableCurrencyCodes")
     private List<String> availableCurrencyCodes = null;
-    @JsonProperty("manualCurrencyCode")
     private String manualCurrencyCode;
-    @JsonProperty("availableCurrencyVersions")
     private List<String> availableCurrencyVersions = null;
-    @JsonProperty("manualCurrencyVersion")
     private String manualCurrencyVersion;
-    @JsonProperty("hasTargetCost")
     private Boolean hasTargetCost;
-    @JsonProperty("hasTargetFinishMass")
     private Boolean hasTargetFinishMass;
-    @JsonProperty("machiningMode")
     private String machiningMode;
-    @JsonProperty("thicknessVisible")
     private Boolean thicknessVisible;
-    @JsonProperty("compositesFileName")
     private String compositesFileName;
 
     public ProductionInfoScenario getScenarioKey() {

@@ -1,4 +1,4 @@
-package com.apriori.cds.entity.response;
+package com.apriori.cds.objects.response;
 
 import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
@@ -9,29 +9,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/UsersSchema.json")
-public class Users extends Pagination {
+@Schema(location = "cds/ApplicationsSchema.json")
+public class Applications extends Pagination {
     @JsonProperty
-    private List<User> items;
+    private List<Application> items;
     @JsonProperty
-    private Users response;
+    private Applications response;
 
-    public Users getResponse() {
+    public Applications getResponse() {
         return this.response;
     }
 
-    public Users setResponse(Users response) {
+    public Applications setResponse(Applications response) {
         this.response = response;
         return this;
     }
 
-    public Users setItems(List<User> items) {
+    public Applications setItems(List<Application> items) {
         this.items = items;
         return this;
     }
 
-    public List<User> getItems() {
+    public List<Application> getItems() {
         return this.items;
     }
 }
-
