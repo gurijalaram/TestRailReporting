@@ -1,0 +1,239 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "active",
+    "apVersion",
+    "createdAt",
+    "createdBy",
+    "customerIdentity",
+    "deletedAt",
+    "deletedBy",
+    "description",
+    "identity",
+    "licensedModules",
+    "siteIdentity",
+    "subLicenses",
+    "updatedAt",
+    "updatedBy"
+  ],
+  "properties": {
+    "active": {
+      "$id": "#/properties/active",
+      "type": "boolean"
+    },
+    "apVersion": {
+      "$id": "#/properties/apVersion",
+      "type": "string"
+    },
+    "createdAt": {
+      "$id": "#/properties/createdAt",
+      "type": "string"
+    },
+    "createdBy": {
+      "$id": "#/properties/createdBy",
+      "type": "string"
+    },
+    "customerIdentity": {
+      "$id": "#/properties/customerIdentity",
+      "type": "string"
+    },
+    "deletedAt": {
+      "$id": "#/properties/deletedAt",
+      "type": "string"
+    },
+    "deletedBy": {
+      "$id": "#/properties/deletedBy",
+      "type": "string"
+    },
+    "description": {
+      "$id": "#/properties/description",
+      "type": "string"
+    },
+    "identity": {
+      "$id": "#/properties/identity",
+      "type": "string"
+    },
+    "licensedModules": {
+      "$id": "#/properties/licensedModules",
+      "type": "array",
+      "items": {
+        "$id": "#/properties/licensedModules/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/licensedModules/items/anyOf/0",
+            "type": "object",
+            "required": [
+              "createdAt",
+              "createdBy",
+              "deletedAt",
+              "deletedBy",
+              "expiresAt",
+              "identity",
+              "licenseSignature",
+              "name",
+              "updatedAt",
+              "updatedBy"
+            ],
+            "properties": {
+              "createdAt": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/createdAt",
+                "type": "string"
+              },
+              "createdBy": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/createdBy",
+                "type": "string"
+              },
+              "deletedAt": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/deletedAt",
+                "type": "string"
+              },
+              "deletedBy": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/deletedBy",
+                "type": "string"
+              },
+              "expiresAt": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/expiresAt",
+                "type": "string"
+              },
+              "identity": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/identity",
+                "type": "string"
+              },
+              "licenseSignature": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/licenseSignature",
+                "type": "string"
+              },
+              "name": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/name",
+                "type": "string"
+              },
+              "updatedAt": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/updatedAt",
+                "type": "string"
+              },
+              "updatedBy": {
+                "$id": "#/properties/licensedModules/items/anyOf/0/properties/updatedBy",
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "siteIdentity": {
+      "$id": "#/properties/siteIdentity",
+      "type": "string"
+    },
+    "subLicenses": {
+      "$id": "#/properties/subLicenses",
+      "type": "array",
+      "items": {
+        "$id": "#/properties/subLicenses/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/subLicenses/items/anyOf/0",
+            "type": "object",
+            "required": [
+              "createdAt",
+              "createdBy",
+              "deletedAt",
+              "deletedBy",
+              "expiresAt",
+              "identity",
+              "licenseSignature",
+              "licensedModuleNames",
+              "maxNumUsers",
+              "name",
+              "numAssignedUsers",
+              "numPurchasedUsers",
+              "updatedAt",
+              "updatedBy",
+              "uuid"
+            ],
+            "properties": {
+              "createdAt": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/createdAt",
+                "type": "string"
+              },
+              "createdBy": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/createdBy",
+                "type": "string"
+              },
+              "deletedAt": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/deletedAt",
+                "type": "string"
+              },
+              "deletedBy": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/deletedBy",
+                "type": "string"
+              },
+              "expiresAt": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/expiresAt",
+                "type": "string"
+              },
+              "identity": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/identity",
+                "type": "string"
+              },
+              "licenseSignature": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/licenseSignature",
+                "type": "string"
+              },
+              "licensedModuleNames": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/licensedModuleNames",
+                "type": "array",
+                "items": {
+                  "$id": "#/properties/subLicenses/items/anyOf/0/properties/licensedModuleNames/items",
+                  "anyOf": [
+                    {
+                      "$id": "#/properties/subLicenses/items/anyOf/0/properties/licensedModuleNames/items/anyOf/0",
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "maxNumUsers": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/maxNumUsers",
+                "type": "integer"
+              },
+              "name": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/name",
+                "type": "string"
+              },
+              "numAssignedUsers": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/numAssignedUsers",
+                "type": "integer"
+              },
+              "numPurchasedUsers": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/numPurchasedUsers",
+                "type": "integer"
+              },
+              "updatedAt": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/updatedAt",
+                "type": "string"
+              },
+              "updatedBy": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/updatedBy",
+                "type": "string"
+              },
+              "uuid": {
+                "$id": "#/properties/subLicenses/items/anyOf/0/properties/uuid",
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "updatedAt": {
+      "$id": "#/properties/updatedAt",
+      "type": "string"
+    },
+    "updatedBy": {
+      "$id": "#/properties/updatedBy",
+      "type": "string"
+    }
+  }
+}
