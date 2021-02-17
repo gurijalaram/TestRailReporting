@@ -41,89 +41,39 @@ public class LicenseResponse {
         return active;
     }
 
-    public LicenseResponse setActive(Boolean active) {
-        this.active = active;
-        return this;
-    }
-
     public String getApVersion() {
         return apVersion;
-    }
-
-    public LicenseResponse setApVersion(String apVersion) {
-        this.apVersion = apVersion;
-        return this;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public LicenseResponse setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public LicenseResponse setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
     }
 
     public String getCustomerIdentity() {
         return customerIdentity;
     }
 
-    public LicenseResponse setCustomerIdentity(String customerIdentity) {
-        this.customerIdentity = customerIdentity;
-        return this;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public LicenseResponse setDescription(String description) {
-        this.description = description;
-        return this;
     }
 
     public String getIdentity() {
         return identity;
     }
 
-    public LicenseResponse setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
     public List<LicensedModule> getLicensedModules() {
         return licensedModules;
-    }
-
-    public LicenseResponse setLicensedModules(List<LicensedModule> licensedModules) {
-        this.licensedModules = licensedModules;
-        return this;
     }
 
     public String getSiteIdentity() {
         return siteIdentity;
     }
 
-    public LicenseResponse setSiteIdentity(String siteIdentity) {
-        this.siteIdentity = siteIdentity;
-        return this;
-    }
-
     public List<SubLicense> getSubLicenses() {
         return subLicenses;
-    }
-
-    public LicenseResponse setSubLicenses(List<SubLicense> subLicenses) {
-        this.subLicenses = subLicenses;
-        return this;
     }
 }
