@@ -15,26 +15,18 @@ import java.util.List;
 @Schema(location = "cds/LicenseResponseSchema.json")
 public class LicenseResponse {
     private LicenseResponse response;
-    private Boolean active;
-    private String apVersion;
+    private String identity;
+    private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-    private String createdBy;
-    private String customerIdentity;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime deletedAt;
-    private String deletedBy;
+    private Boolean active;
+    private String apVersion;
     private String description;
-    private String identity;
-    private List<LicensedModule> licensedModules = null;
-    private String siteIdentity;
     private List<SubLicense> subLicenses = null;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime updatedAt;
-    private String updatedBy;
+    private List<LicensedModule> licensedModules = null;
+    private String customerIdentity;
+    private String siteIdentity;
 
     public LicenseResponse getResponse() {
         return response;
@@ -63,15 +55,6 @@ public class LicenseResponse {
         return this;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LicenseResponse setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
     public String getCreatedBy() {
         return createdBy;
     }
@@ -81,30 +64,21 @@ public class LicenseResponse {
         return this;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LicenseResponse setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
     public String getCustomerIdentity() {
         return customerIdentity;
     }
 
     public LicenseResponse setCustomerIdentity(String customerIdentity) {
         this.customerIdentity = customerIdentity;
-        return this;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public LicenseResponse setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-        return this;
-    }
-
-    public String getDeletedBy() {
-        return deletedBy;
-    }
-
-    public LicenseResponse setDeletedBy(String deletedBy) {
-        this.deletedBy = deletedBy;
         return this;
     }
 
@@ -150,24 +124,6 @@ public class LicenseResponse {
 
     public LicenseResponse setSubLicenses(List<SubLicense> subLicenses) {
         this.subLicenses = subLicenses;
-        return this;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LicenseResponse setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public LicenseResponse setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
         return this;
     }
 }

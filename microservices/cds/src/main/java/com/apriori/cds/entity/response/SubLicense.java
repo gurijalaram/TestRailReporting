@@ -12,29 +12,21 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SubLicense {
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime createdAt;
+    private String identity;
     private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime deletedAt;
-    private String deletedBy;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime expiresAt;
-    private String identity;
-    private String licenseSignature;
+    private LocalDateTime createdAt;
+    private String name;
+    private String uuid;
     private List<String> licensedModuleNames = null;
     private Integer maxNumUsers;
-    private String name;
-    private Integer numAssignedUsers;
     private Integer numPurchasedUsers;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime updatedAt;
-    private String updatedBy;
-    private String uuid;
+    private LocalDateTime expiresAt;
+    private String licenseSignature;
+    private Integer numAssignedUsers;
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -51,33 +43,6 @@ public class SubLicense {
 
     public SubLicense setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
-        return this;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public SubLicense setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-        return this;
-    }
-
-    public String getDeletedBy() {
-        return deletedBy;
-    }
-
-    public SubLicense setDeletedBy(String deletedBy) {
-        this.deletedBy = deletedBy;
-        return this;
-    }
-
-    public LocalDateTime getExpiresAt() {
-        return expiresAt;
-    }
-
-    public SubLicense setExpiresAt(LocalDateTime expiresAt) {
-        this.expiresAt = expiresAt;
         return this;
     }
 
@@ -144,30 +109,21 @@ public class SubLicense {
         return this;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public SubLicense setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public SubLicense setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-        return this;
-    }
-
     public String getUuid() {
         return uuid;
     }
 
     public SubLicense setUuid(String uuid) {
         this.uuid = uuid;
+        return this;
+    }
+
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+    public SubLicense setExpiresAt(LocalDateTime expiresAt) {
+        this.expiresAt = expiresAt;
         return this;
     }
 }
