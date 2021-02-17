@@ -130,4 +130,12 @@ public class Constants {
     public static String getServiceUrl() {
         return serviceUrl = getProtocol().concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
     }
+
+    public static String getLicense() {
+        return PROPERTIES.getProperty("cds.license");
+    }
+
+    public static String getLicenseTemplate() {
+        return PROPERTIES.getProperty("cds.license.template");
+    }
 }
