@@ -166,7 +166,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
 
         String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
 
-        //addSaml()
+        // TODO: 17/02/2021 this method should be moved to a utils and named eg. addSaml()
         RequestEntity requestEntity = RequestEntity.init(identityProviderEndpoint, IdentityProviderResponse.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("identityProvider",
@@ -178,18 +178,18 @@ public class CdsDeploymentsTests extends CdsTestUtil {
                     .setDescription("Ciene Okta IdP using SAML")
                     .setActive(true)
                     .setCreatedBy("#SYSTEM00000")
-                    .setSignInUrl("https://aprioritest.oktapreview.com/app/aprioritest_aprioritechnologies_1/exkuyvviKdbHl5IMa1d5/sso/sam")
-                    .setSigningCertificate("-----BEGIN CERTIFICATE-----\\nMIIDpjCCAo6gAwIBAgIGAXN4tBWjMA0GCSqGSIb3DQEBCwUAMIGTMQswCQYDVQQGEwJVUzETMBEG\\nA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzENMAsGA1UECgwET2t0YTEU\\nMBIGA1UECwwLU1NPUHJvdmlkZXIxFDASBgNVBAMMC2Fwcmlvcml0ZXN0MRwwGgYJKoZIhvcNAQkB\\nFg1pbmZvQG9rdGEuY29tMB4XDTIwMDcyMjIyNDQzNFoXDTMwMDcyMjIyNDUzNFowgZMxCzAJBgNV\\nBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMRYwFAYDVQQHDA1TYW4gRnJhbmNpc2NvMQ0wCwYD\\nVQQKDARPa3RhMRQwEgYDVQQLDAtTU09Qcm92aWRlcjEUMBIGA1UEAwwLYXByaW9yaXRlc3QxHDAa\\nBgkqhkiG9w0BCQEWDWluZm9Ab2t0YS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\\nAQC6bGJ+reDF+25VjGlhORysq9o13sZnEPeoIJ9LoQEmGvklVl8b1I50zYv4Pa7p6P8hZ/L2skhV\\n2vCPIJw89mdQBElcQNsugWMP/wws8tmAd0tegn8wEOleSgm5NHiqNEr8Xk+uV6cqpDPITEaLXPBQ\\n1NNgZPY4HA1x9Jyd9qAY3d26LcAEbII3VKx9Fzbgi65Z33ZuQaux87HyrUEfHYB+7pwt+MLBVZlF\\nFzv/e/nkI8nZmY1wRy0kDMFwaMyvwGvl+UaYERzUiUK6KAmJEuLlRkBrc76Q3Vg5SgBDAczYGnNV\\ni9okyB9eKPZfrJYrTuWmfl2I9LVwllNbhPzxkJxrAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAATX\\nIZfcr93OtjT5l+925e35SuM4APUhl/c/qvmDtAoLimlHbX/9kKyLrh9ahf7F8WIX7QgnKLRWIUfW\\npkfcmVzQARHqWABPQVA0Hh3QvUVsmGInohq8DdRwh+1yz/ZC/lkGEACLRqN/PFH4ONQ90MM7EiWl\\nzHXqb0tp5bNW0NcXjK0DfxL6AKYvdzooKc2tCTa7h9fhJD6WDenN4xZVkALSE96bGvF5zQkoLPQq\\nE+xAIuaYd75Cpu9FLafSSc6eEEg3HpKbzGp0Ku5Du+UwqEatPhCrjc7y2tT5lOYHfsWboCCHmfn7\\n0oSMqaURZv2R1xoFRvL1P1apxxavljTHdiY=\\n-----END CERTIFICATE-----\\n")
+                    .setSignInUrl(Constants.getSignInUrl())
+                    .setSigningCertificate(Constants.getSignInCert())
                     .setSigningCertificateExpiresAt("2030-07-22T22:45Z")
                     .setSignRequest(true)
                     .setSignRequestAlgorithm("RSA_SHA256")
                     .setSignRequestAlgorithmDigest("SHA256")
                     .setProtocolBinding("HTTP_POST")
-                    .setAttributeMappings(new AttributeMappings().setUser_id("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
-                        .setEmail("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")
-                        .setName("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")
-                        .setGiven_name("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname")
-                        .setFamily_name("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname")));
+                    .setAttributeMappings(new AttributeMappings().setUser_id(Constants.getUserId())
+                        .setEmail(Constants.getEmail())
+                        .setName(Constants.getName())
+                        .setGiven_name(Constants.getGivenName())
+                        .setFamily_name(Constants.getFamilyName())));
 
         ResponseWrapper<IdentityProviderResponse> response = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
 

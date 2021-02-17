@@ -130,4 +130,32 @@ public class Constants {
     public static String getServiceUrl() {
         return serviceUrl = getProtocol().concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
     }
+
+    public static String getSignInUrl() {
+        return PROPERTIES.getProperty("signin.url");
+    }
+
+    public static String getSignInCert() {
+        return PROPERTIES.getProperty("signin.cert");
+    }
+
+    public static String getUserId() {
+        return PROPERTIES.getProperty("cds.user.id");
+    }
+
+    public static String getEmail() {
+        return PROPERTIES.getProperty("cds.email");
+    }
+
+    public static String getName() {
+        return PROPERTIES.getProperty("cds.name");
+    }
+
+    public static String getGivenName() {
+        return PROPERTIES.getProperty("cds.givenName");
+    }
+
+    public static String getFamilyName() {
+        return PROPERTIES.getProperty("cds.familyName");
+    }
 }
