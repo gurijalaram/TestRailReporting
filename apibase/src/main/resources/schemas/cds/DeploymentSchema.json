@@ -1,13 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
     "response"
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "required": [
         "isDefault",
@@ -26,52 +24,39 @@
       ],
       "properties": {
         "isDefault": {
-          "$id": "#/properties/response/properties/isDefault",
           "type": "boolean"
         },
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/response/properties/createdBy",
           "type": "string"
         },
         "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
           "type": "string"
         },
         "name": {
-          "$id": "#/properties/response/properties/name",
           "type": "string"
         },
         "description": {
-          "$id": "#/properties/response/properties/description",
           "type": "string"
         },
         "apVersion": {
-          "$id": "#/properties/response/properties/apVersion",
           "type": "string"
         },
         "active": {
-          "$id": "#/properties/response/properties/active",
           "type": "boolean"
         },
         "installations": {
-          "$id": "#/properties/response/properties/installations",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/installations/items"
           }
         },
         "applications": {
-          "$id": "#/properties/response/properties/applications",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/applications/items",
             "anyOf": [
               {
-                "$id": "#/properties/response/properties/applications/items/anyOf/0",
                 "type": "object",
                 "required": [
                   "isCloudHomeApp",
@@ -88,47 +73,36 @@
                 ],
                 "properties": {
                   "isCloudHomeApp": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/isCloudHomeApp",
                     "type": "boolean"
                   },
                   "isSingleTenant": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/isSingleTenant",
                     "type": "boolean"
                   },
                   "isPublic": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/isPublic",
                     "type": "boolean"
                   },
                   "identity": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/identity",
                     "type": "string"
                   },
                   "createdBy": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/createdBy",
                     "type": "string"
                   },
                   "createdAt": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/createdAt",
                     "type": "string"
                   },
                   "name": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/name",
                     "type": "string"
                   },
                   "cloudReference": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/cloudReference",
                     "type": "string"
                   },
                   "serviceName": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/serviceName",
                     "type": "string"
                   },
                   "description": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/description",
                     "type": "string"
                   },
                   "iconUrl": {
-                    "$id": "#/properties/response/properties/applications/items/anyOf/0/properties/iconUrl",
                     "type": "string"
                   }
                 }
@@ -137,21 +111,16 @@
           }
         },
         "customerIdentity": {
-          "$id": "#/properties/response/properties/customerIdentity",
           "type": "string"
         },
         "deploymentType": {
-          "$id": "#/properties/response/properties/deploymentType",
           "type": "string"
         },
         "sites": {
-          "$id": "#/properties/response/properties/sites",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/sites/items",
             "anyOf": [
               {
-                "$id": "#/properties/response/properties/sites/items/anyOf/0",
                 "type": "string"
               }
             ]

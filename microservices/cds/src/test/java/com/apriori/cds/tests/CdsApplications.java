@@ -6,9 +6,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cds.entity.response.Application;
-import com.apriori.cds.entity.response.Applications;
-import com.apriori.cds.entity.response.Customers;
+import com.apriori.cds.objects.response.Application;
+import com.apriori.cds.objects.response.Applications;
+import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
@@ -46,7 +46,7 @@ public class CdsApplications extends CdsTestUtil {
     @TestRail(testCaseId = "3700")
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
-        url = String.format(url, String.format("applications/%s", Constants.getCdsIdentityApplication()));
+        url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity()));
 
         ResponseWrapper<Application> response = getCommonRequest(url,false, Application.class);
 
@@ -58,7 +58,7 @@ public class CdsApplications extends CdsTestUtil {
     @TestRail(testCaseId = "5811")
     @Description(" API returns a paged list of customers authorized to use a particular application")
     public void getCustomersAuthorizedForApplication() {
-        url = String.format(url, String.format("applications/%s", Constants.getCdsIdentityApplication().concat("/customers")));
+        url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity().concat("/customers")));
 
         ResponseWrapper<Customers> response = getCommonRequest(url,false, Customers.class);
 

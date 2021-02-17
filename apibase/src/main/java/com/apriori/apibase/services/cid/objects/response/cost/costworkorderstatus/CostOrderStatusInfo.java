@@ -1,35 +1,12 @@
 package com.apriori.apibase.services.cid.objects.response.cost.costworkorderstatus;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "version",
-    "id",
-    "status",
-    "searchKey",
-    "command",
-    "dateSubmitted",
-    "dateStarted"
-})
-
 public class CostOrderStatusInfo {
-
-    @JsonProperty("version")
     private Integer version;
-    @JsonProperty("id")
     private String id;
-    @JsonProperty("status")
     private String status;
-    @JsonProperty("searchKey")
     private String searchKey;
-    @JsonProperty("command")
     private CostStatusCommand command;
-    @JsonProperty("dateSubmitted")
     private String dateSubmitted;
-    @JsonProperty("dateStarted")
     private String dateStarted;
 
     public Integer getVersion() {

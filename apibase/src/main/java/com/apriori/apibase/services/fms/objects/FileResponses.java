@@ -8,7 +8,6 @@ import java.util.List;
 @Schema(location = "fms/FmsFilesSchema.json")
 public class FileResponses extends Pagination {
     private List<FileResponse> items;
-
     private FileResponses response;
 
     public FileResponses getResponse() {
