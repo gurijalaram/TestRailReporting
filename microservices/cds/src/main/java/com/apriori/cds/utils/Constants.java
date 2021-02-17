@@ -131,30 +131,58 @@ public class Constants {
         return serviceUrl = getProtocol().concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
     }
 
+    /**
+     * Get signin url
+     * @return string
+     */
     public static String getSignInUrl() {
         return PROPERTIES.getProperty("signin.url");
     }
 
+    /**
+     * Get signin certificate
+     * @return string
+     */
     public static String getSignInCert() {
         return PROPERTIES.getProperty("signin.cert");
     }
 
+    /**
+     * Get user id
+     * @return string
+     */
     public static String getUserId() {
         return PROPERTIES.getProperty("cds.user.id");
     }
 
+    /**
+     * Get email
+     * @return string
+     */
     public static String getEmail() {
         return PROPERTIES.getProperty("cds.email");
     }
 
+    /**
+     * Get name
+     * @return string
+     */
     public static String getName() {
         return PROPERTIES.getProperty("cds.name");
     }
 
+    /**
+     * Get given name
+     * @return string
+     */
     public static String getGivenName() {
         return PROPERTIES.getProperty("cds.givenName");
     }
 
+    /**
+     * Get family name
+     * @return string
+     */
     public static String getFamilyName() {
         return PROPERTIES.getProperty("cds.familyName");
     }
