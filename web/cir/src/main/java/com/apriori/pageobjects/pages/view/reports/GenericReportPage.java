@@ -2176,9 +2176,9 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Component Type")));
 
         By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']", componentType));
-        pageUtils.waitForElementToAppear(locator);
-        driver.findElement(locator).click();
-        //pageUtils.waitForElementAndClick(locator);
+        //pageUtils.waitForElementToAppear(locator);
+        //driver.findElement(locator).click();
+        pageUtils.waitForElementAndClick(locator);
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
 
