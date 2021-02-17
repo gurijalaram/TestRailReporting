@@ -21,10 +21,10 @@ public class Constants {
     private static final File INPUT_STREAM;
     private static final Properties PROPERTIES = new Properties();
     public static String environment;
-    private static String cdsIdentityUser;
+    private static String userIdentity;
     private static String cdsIdentityRole;
-    private static String cdsIdentityCustomer;
-    private static String cdsIdentityApplication;
+    private static String aPrioriInternalCustomerIdentity;
+    private static String apProApplicationIdentity;
     private static String baseUrl;
     private static String serviceUrl;
     private static String serviceHost;
@@ -73,8 +73,8 @@ public class Constants {
      *
      * @return string
      */
-    public static String getCdsIdentityUser() {
-        return cdsIdentityUser = System.getProperty("cdsIdentityUser") == null ? PROPERTIES.getProperty("cds.identity.user") : System.getProperty("cdsIdentityUser");
+    public static String getUserIdentity() {
+        return userIdentity = System.getProperty("userIdentity") == null ? PROPERTIES.getProperty("automation.user.identity") : System.getProperty("userIdentity");
     }
 
     /**
@@ -91,8 +91,8 @@ public class Constants {
      *
      * @return string
      */
-    public static String getCdsIdentityCustomer() {
-        return cdsIdentityCustomer = System.getProperty("cdsIdentityCustomer") == null ? PROPERTIES.getProperty("cds.identity.customer") : System.getProperty("cdsIdentityCustomer");
+    public static String getaPrioriInternalCustomerIdentity() {
+        return aPrioriInternalCustomerIdentity = System.getProperty("aPrioriInternalCustomerIdentity") == null ? PROPERTIES.getProperty("aPrioriInternal.customer.Identity") : System.getProperty("aPrioriInternalCustomerIdentity");
     }
 
     /**
@@ -100,8 +100,8 @@ public class Constants {
      *
      * @return string
      */
-    public static String getCdsIdentityApplication() {
-        return cdsIdentityApplication = System.getProperty("cdsIdentityApplication") == null ? PROPERTIES.getProperty("cds.identity.application") : System.getProperty("cdsIdentityApplication");
+    public static String getApProApplicationIdentity() {
+        return apProApplicationIdentity = System.getProperty("apProApplicationIdentity") == null ? PROPERTIES.getProperty("appro.application.identity") : System.getProperty("apProApplicationIdentity");
     }
 
     /**
