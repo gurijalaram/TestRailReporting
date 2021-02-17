@@ -46,7 +46,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     @TestRail(testCaseId = "3700")
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
-        url = String.format(url, String.format("applications/%s", Constants.getCdsIdentityApplication()));
+        url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity()));
 
         ResponseWrapper<Application> response = getCommonRequest(url,false, Application.class);
 
@@ -58,7 +58,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5811")
     @Description(" API returns a paged list of customers authorized to use a particular application")
     public void getCustomersAuthorizedForApplication() {
-        url = String.format(url, String.format("applications/%s", Constants.getCdsIdentityApplication().concat("/customers")));
+        url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity().concat("/customers")));
 
         ResponseWrapper<Customers> response = getCommonRequest(url,false, Customers.class);
 

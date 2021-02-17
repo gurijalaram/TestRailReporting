@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.services.cas.Customers;
+import com.apriori.apibase.services.cas.Site;
 import com.apriori.apibase.services.cas.Sites;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
@@ -60,5 +61,35 @@ public class CasSitesTests extends TestUtil {
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(siteResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         assertThat(siteResponse.getResponseEntity().getResponse().getItems().get(0).getSiteId(), is(not(emptyString())));
+    }
+
+    @Test
+    @TestRail(testCaseId = "5650")
+    @Description("Get the Site identified by its identity.")
+    public void getSiteByIdentity() {
+        String apiUrl = String.format(Constants.getApiUrl(), "customers/");
+
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+
+        String customerIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String siteEndpoint = apiUrl + customerIdentity + "/sites/";
+
+        ResponseWrapper<Sites> sitesResponse = new CommonRequestUtil().getCommonRequest(siteEndpoint, true, Sites.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(sitesResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+
+        String siteIdentity = sitesResponse.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String siteByIdUrl = siteEndpoint + siteIdentity;
+
+        ResponseWrapper<Site> site = new CommonRequestUtil().getCommonRequest(siteByIdUrl,true, Site.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(site.getResponseEntity().getResponse().getIdentity(), is(equalTo(siteIdentity)));
     }
 }
