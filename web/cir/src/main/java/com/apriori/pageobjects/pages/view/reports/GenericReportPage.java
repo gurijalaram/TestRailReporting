@@ -2181,24 +2181,11 @@ public class GenericReportPage extends ReportsPageHeader {
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
 
-        String childElementCount = driver.findElement(By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]"))
-                .getAttribute("childElementCount");
-        By lastElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, childElementCount));
         By firstElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, "1"));
-        //pageUtils.waitFor(2000);
+        By laterElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, "7"));
         pageUtils.waitForElementToAppear(firstElementLocator);
-        /*if (!componentType.equals("rollup")) {
-            pageUtils.waitForElementToAppear(lastElementLocator);
-        }*/
+        pageUtils.waitForElementToAppear(laterElementLocator);
 
-        /*for (int i = 1; i < 2; i++) {
-            By locator2 =
-                    By.xpath(String.format(
-                            "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]",
-                            componentType, i)
-            );
-            pageUtils.waitForElementToAppear(locator2);
-        }*/
         return new ScenarioComparisonReportPage(driver);
     }
 
