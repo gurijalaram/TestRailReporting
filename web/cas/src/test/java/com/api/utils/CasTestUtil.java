@@ -1,6 +1,7 @@
 package com.api.utils;
 
 import com.apriori.apibase.services.cas.Customer;
+import com.apriori.apibase.services.cas.Site;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -61,7 +62,17 @@ public class CasTestUtil extends TestUtil {
 
     public <T> ResponseWrapper<T> resetMfa(String url, String token) {
         RequestEntity requestEntity = RequestEntity.init(url, null)
-                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    public <T> ResponseWrapper<T> validateSite(String url, Class klass, String token, String siteId) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setBody("site",
+                new Site().setSiteId(siteId));
+
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 }
