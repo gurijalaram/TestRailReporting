@@ -15,6 +15,7 @@ import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.utils.http.enums.common.api.PartsAPIEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
@@ -161,7 +162,8 @@ public class UserTestDataUtil {
             .setAutoLogin(true)
             .setFormParams(new FormParams().use("type", "WH"));
 
-        return ((BillOfSingleMaterialWrapper) GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity()).getBillOfMaterial().getIdentity();
+        ResponseWrapper<BillOfSingleMaterialWrapper> response = GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi());
+        return response.getResponseEntity().getBillOfMaterial().getIdentity();
     }
 
     private MaterialLineItem getRandomLineItemWithParts(MaterialsLineItemsWrapper materialsLineItemsWrapper) {
