@@ -14,17 +14,7 @@ public class ValidateSite {
         return status;
     }
 
-    public ValidateSite setStatus(String status) {
-        this.status = status;
-        return this;
-    }
-
     public ValidateSite getResponse() {
         return response;
-    }
-
-    public ValidateSite setResponse(ValidateSite response) {
-        this.response = response;
-        return this;
     }
 }

@@ -60,6 +60,11 @@ public class CasTestUtil extends TestUtil {
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
 
+    /**
+     * @param url - the endpoint
+     * @param token - token
+     * @return <T>ResponseWrapper <T>
+     */
     public <T> ResponseWrapper<T> resetMfa(String url, String token) {
         RequestEntity requestEntity = RequestEntity.init(url, null)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -67,6 +72,13 @@ public class CasTestUtil extends TestUtil {
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 
+    /**
+     * @param url - the endpoint
+     * @param klass - the response class
+     * @param token - token
+     * @param siteId - site ID
+     * @return <T>ResponseWrapper <T>
+     */
     public <T> ResponseWrapper<T> validateSite(String url, Class klass, String token, String siteId) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
