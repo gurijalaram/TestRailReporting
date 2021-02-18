@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import com.apriori.apibase.services.cas.Deployment;
 import com.apriori.apibase.services.cas.Deployments;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
@@ -44,5 +45,27 @@ public class CasDeploymentsTests extends TestUtil {
 
         assertThat(responseDeployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseDeployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "5658")
+    @Description("Get the deployment identified by its identity.")
+    public void getDeploymentByIdentity() {
+        String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/deployments/");
+
+        ResponseWrapper<Deployments> responseDeployments = new CommonRequestUtil().getCommonRequest(apiUrl, true, Deployments.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(responseDeployments.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(responseDeployments.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+
+        String deploymentIdentity = responseDeployments.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String deploymentUrl = apiUrl + deploymentIdentity;
+
+        ResponseWrapper<Deployment> deploymentByID = new CommonRequestUtil().getCommonRequest(deploymentUrl, true, Deployment.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(deploymentByID.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(deploymentByID.getResponseEntity().getResponse().getIdentity(), is(equalTo(deploymentIdentity)));
     }
 }
