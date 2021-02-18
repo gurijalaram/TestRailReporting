@@ -1,6 +1,5 @@
 package com.apriori.apibase.services.common.objects;
 
-import com.apriori.apibase.services.cas.AttributeMappings;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
