@@ -17,17 +17,7 @@ public class Deployments extends Pagination {
         return response;
     }
 
-    public Deployments setResponse(Deployments response) {
-        this.response = response;
-        return this;
-    }
-
     public List<Deployment> getItems() {
         return items;
-    }
-
-    public Deployments setItems(List<Deployment> items) {
-        this.items = items;
-        return this;
     }
 }
