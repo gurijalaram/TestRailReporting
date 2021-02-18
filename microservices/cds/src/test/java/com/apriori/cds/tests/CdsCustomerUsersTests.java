@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cds.objects.response.Customer;
@@ -196,7 +197,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
 
     @Test
     @TestRail(testCaseId = "3281")
-    @Description("Delete user wrong identity")
+    @Description("Update a users credentials")
     public void patchUsersCredentials() {
         String customersEndpoint = String.format(url, "customers");
 
@@ -220,6 +221,9 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         String credentialsUrl = String.format(String.format(String.format(url, "users/%s"), userIdentity.concat("%s")),"/credentials");
         ResponseWrapper<CredentialsItems> credentials = getCommonRequest(credentialsUrl, true, CredentialsItems.class);
         String passwordHash = credentials.getResponseEntity().getResponse().getPasswordHash();
+        String patchCredentialsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity).concat("/credentials"))));
 
+        ResponseWrapper<CredentialsItems> response = patchCredentials(patchCredentialsEndpoint,CredentialsItems.class, passwordHash);
+        assertThat(response.getResponseEntity().getResponse().getPasswordHash(),is(not(equalTo(passwordHash))));
     }
 }

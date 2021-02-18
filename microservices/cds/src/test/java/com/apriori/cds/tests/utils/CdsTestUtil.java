@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.objects.request.AddDeployment;
+import com.apriori.cds.objects.request.UpdateCredentials;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.Site;
@@ -184,6 +185,26 @@ public class CdsTestUtil extends TestUtil {
                     .setCloudReference(cloudReference));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * PATCH call to update a users credentials
+     *
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @param currentPasswordHash - the users current password hash
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> patchCredentials(String url, Class klass, String currentPasswordHash) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("userCredential",
+                new UpdateCredentials().setCurrentPasswordHash(currentPasswordHash)
+                    .setNewEncryptedPassword("k02b1983edad20a0d7b13e5d9dd6bd502d193eff7d1a2768d2ac0766c69b73ba")
+                    .setNewPasswordHash("32521452457252")
+                    .setNewPasswordSalt("7848110ce8a800bfe583f4cc79b6143ad760ae7b5768e112"));
+
+        return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
 
     /**
