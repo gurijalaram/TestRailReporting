@@ -2,10 +2,12 @@ package com.apriori.apibase.services.response.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "BillOfMaterialsSchema.json")
 public class BillOfMaterialsWrapper extends BasePageResponse {
 
