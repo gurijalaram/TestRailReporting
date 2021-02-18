@@ -6,12 +6,15 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.objects.request.AddDeployment;
+import com.apriori.cds.objects.request.License;
+import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -140,9 +143,9 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param url      - the endpoint
-     * @param klass    - the response class
-     * @param realmKey - the realm key
+     * @param url            - the endpoint
+     * @param klass          - the response class
+     * @param realmKey       - the realm key
      * @param cloudReference - the cloud reference
      * @return <T>ResponseWrapper<T>
      */
@@ -171,8 +174,8 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an apriori staff user association to a customer
      *
-     * @param url      - the endpoint
-     * @param klass    - the response class
+     * @param url          - the endpoint
+     * @param klass        - the response class
      * @param userIdentity - the aPriori Staff users identity
      * @return <T>ResponseWrapper<T>
      */
@@ -198,5 +201,30 @@ public class CdsTestUtil extends TestUtil {
         ResponseWrapper<String> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
 
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+    }
+
+    /**
+     * Post to add site license
+     *
+     * @param url          - the url
+     * @param klass        - the response class
+     * @param customerName - the customer name
+     * @param siteId       - the site id
+     * @param licenseId    - the license id
+     * @param subLicenseId - the sublicense id
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addLicense(String url, Class klass, String customerName, String siteId, String licenseId, String subLicenseId) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody(new LicenseRequest().setLicense(
+                new License().setDescription("Test License")
+                    .setApVersion("2020 R1")
+                    .setCreatedBy("#SYSTEM00000")
+                    .setActive("true")
+                    .setLicense(String.format(Constants.getLicense(), customerName, siteId, licenseId, subLicenseId))
+                    .setLicenseTemplate(String.format(Constants.getLicenseTemplate(), customerName))));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 }
