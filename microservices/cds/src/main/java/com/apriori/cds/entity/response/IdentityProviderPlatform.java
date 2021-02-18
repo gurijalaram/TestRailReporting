@@ -3,9 +3,6 @@ package com.apriori.cds.entity.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IdentityProviderPlatform {
     private String identity;
@@ -15,7 +12,6 @@ public class IdentityProviderPlatform {
     private String name;
     private String vendor;
     private String identityProviderProtocol;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getIdentity() {
         return identity;
@@ -72,13 +68,4 @@ public class IdentityProviderPlatform {
     public void setIdentityProviderProtocol(String identityProviderProtocol) {
         this.identityProviderProtocol = identityProviderProtocol;
     }
-
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
 }

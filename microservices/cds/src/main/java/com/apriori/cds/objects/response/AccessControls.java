@@ -17,16 +17,6 @@ public class AccessControls extends Pagination {
         return response;
     }
 
-    public AccessControls setResponse(AccessControls response) {
-        this.response = response;
-        return this;
-    }
-
-    public AccessControls setItems(List<AccessControl> items) {
-        this.items = items;
-        return this;
-    }
-
     public List<AccessControl> getItems() {
         return this.items;
     }

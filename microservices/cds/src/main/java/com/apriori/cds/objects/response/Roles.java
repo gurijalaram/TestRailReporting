@@ -17,17 +17,7 @@ public class Roles extends Pagination {
         return this.response;
     }
 
-    public Roles setResponse(Roles response) {
-        this.response = response;
-        return this;
-    }
-
     public List<Role> getItems() {
         return this.items;
-    }
-
-    public Roles setItems(List<Role> items) {
-        this.items = items;
-        return this;
     }
 }

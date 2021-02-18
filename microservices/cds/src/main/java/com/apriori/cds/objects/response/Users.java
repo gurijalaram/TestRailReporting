@@ -17,16 +17,6 @@ public class Users extends Pagination {
         return this.response;
     }
 
-    public Users setResponse(Users response) {
-        this.response = response;
-        return this;
-    }
-
-    public Users setItems(List<User> items) {
-        this.items = items;
-        return this;
-    }
-
     public List<User> getItems() {
         return this.items;
     }

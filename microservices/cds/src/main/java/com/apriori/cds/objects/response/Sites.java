@@ -17,16 +17,6 @@ public class Sites extends Pagination {
         return this.response;
     }
 
-    public Sites setResponse(Sites response) {
-        this.response = response;
-        return this;
-    }
-
-    public Sites setItems(List<Site> items) {
-        this.items = items;
-        return this;
-    }
-
     public List<Site> getItems() {
         return this.items;
     }

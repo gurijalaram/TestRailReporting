@@ -3,9 +3,7 @@ package com.apriori.cds.entity.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IdentityProviderItems {
@@ -26,7 +24,6 @@ public class IdentityProviderItems {
     private String signRequestAlgorithm;
     private String signRequestAlgorithmDigest;
     private String protocolBinding;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getIdentity() {
         return identity;
@@ -180,14 +177,4 @@ public class IdentityProviderItems {
         this.protocolBinding = protocolBinding;
         return this;
     }
-
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public IdentityProviderItems setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
-
 }
