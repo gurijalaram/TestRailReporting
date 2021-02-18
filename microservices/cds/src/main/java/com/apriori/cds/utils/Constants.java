@@ -130,4 +130,60 @@ public class Constants {
     public static String getServiceUrl() {
         return serviceUrl = getProtocol().concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
     }
+
+    /**
+     * Get signin url
+     * @return string
+     */
+    public static String getSignInUrl() {
+        return PROPERTIES.getProperty("signin.url");
+    }
+
+    /**
+     * Get signin certificate
+     * @return string
+     */
+    public static String getSignInCert() {
+        return PROPERTIES.getProperty("signin.cert");
+    }
+
+    /**
+     * Get user id
+     * @return string
+     */
+    public static String getSamlNameIdentifier() {
+        return PROPERTIES.getProperty("saml.attribute.nameidentifier");
+    }
+
+    /**
+     * Get email
+     * @return string
+     */
+    public static String getSamlAttributeEmail() {
+        return PROPERTIES.getProperty("saml.attribute.email");
+    }
+
+    /**
+     * Get name
+     * @return string
+     */
+    public static String getSamlAttributeName() {
+        return PROPERTIES.getProperty("saml.attribute.name");
+    }
+
+    /**
+     * Get given name
+     * @return string
+     */
+    public static String getSamlAttributeGivenName() {
+        return PROPERTIES.getProperty("saml.attribute.givenname");
+    }
+
+    /**
+     * Get family name
+     * @return string
+     */
+    public static String getSamlAttributeFamilyName() {
+        return PROPERTIES.getProperty("saml.attribute.familyname");
+    }
 }
