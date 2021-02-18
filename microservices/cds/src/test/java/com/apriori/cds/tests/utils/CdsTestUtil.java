@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.apibase.services.cas.AttributeMappings;
+import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.request.License;
@@ -201,6 +203,43 @@ public class CdsTestUtil extends TestUtil {
         ResponseWrapper<String> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
 
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+    }
+
+    /**
+     * Post to add SAML
+     *
+     * @param url          - the url
+     * @param klass        - the response class
+     * @param userIdentity - the aPriori Staff users identity
+     * @param userName     - the user name
+     * @return <T> ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String userName) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("identityProvider",
+                new IdentityProviderRequest().setContact(userIdentity)
+                    .setName(userName)
+                    .setDisplayName(userName + "2")
+                    .setIdpDomains(Arrays.asList(userName + ".com"))
+                    .setIdentityProviderPlatform("AZURE AD")
+                    .setDescription("Ciene Okta IdP using SAML")
+                    .setActive(true)
+                    .setCreatedBy("#SYSTEM00000")
+                    .setSignInUrl(Constants.getSignInUrl())
+                    .setSigningCertificate(Constants.getSignInCert())
+                    .setSigningCertificateExpiresAt("2030-07-22T22:45Z")
+                    .setSignRequest(true)
+                    .setSignRequestAlgorithm("RSA_SHA256")
+                    .setSignRequestAlgorithmDigest("SHA256")
+                    .setProtocolBinding("HTTP_POST")
+                    .setAttributeMappings(new AttributeMappings().setUser_id(Constants.getSamlNameIdentifier())
+                        .setEmail(Constants.getSamlAttributeEmail())
+                        .setName(Constants.getSamlAttributeName())
+                        .setGiven_name(Constants.getSamlAttributeGivenName())
+                        .setFamily_name(Constants.getSamlAttributeFamilyName())));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 
     /**
