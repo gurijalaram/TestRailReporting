@@ -231,11 +231,11 @@ public class CdsTestUtil extends TestUtil {
                     .setSignRequestAlgorithm("RSA_SHA256")
                     .setSignRequestAlgorithmDigest("SHA256")
                     .setProtocolBinding("HTTP_POST")
-                    .setAttributeMappings(new AttributeMappings().setUser_id(Constants.getUserId())
-                        .setEmail(Constants.getEmail())
-                        .setName(Constants.getName())
-                        .setGiven_name(Constants.getGivenName())
-                        .setFamily_name(Constants.getFamilyName())));
+                    .setAttributeMappings(new AttributeMappings().setUser_id(Constants.getSamlNameIdentifier())
+                        .setEmail(Constants.getSamlAttributeEmail())
+                        .setName(Constants.getSamlAttributeName())
+                        .setGiven_name(Constants.getSamlAttributeGivenName())
+                        .setFamily_name(Constants.getSamlAttributeFamilyName())));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }

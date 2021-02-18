@@ -151,39 +151,39 @@ public class Constants {
      * Get user id
      * @return string
      */
-    public static String getUserId() {
-        return PROPERTIES.getProperty("cds.user.id");
+    public static String getSamlNameIdentifier() {
+        return PROPERTIES.getProperty("saml.attribute.nameidentifier");
     }
 
     /**
      * Get email
      * @return string
      */
-    public static String getEmail() {
-        return PROPERTIES.getProperty("cds.email");
+    public static String getSamlAttributeEmail() {
+        return PROPERTIES.getProperty("saml.attribute.email");
     }
 
     /**
      * Get name
      * @return string
      */
-    public static String getName() {
-        return PROPERTIES.getProperty("cds.name");
+    public static String getSamlAttributeName() {
+        return PROPERTIES.getProperty("saml.attribute.name");
     }
 
     /**
      * Get given name
      * @return string
      */
-    public static String getGivenName() {
-        return PROPERTIES.getProperty("cds.givenName");
+    public static String getSamlAttributeGivenName() {
+        return PROPERTIES.getProperty("saml.attribute.givenname");
     }
 
     /**
      * Get family name
      * @return string
      */
-    public static String getFamilyName() {
-        return PROPERTIES.getProperty("cds.familyName");
+    public static String getSamlAttributeFamilyName() {
+        return PROPERTIES.getProperty("saml.attribute.familyname");
     }
 }
