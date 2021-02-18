@@ -8,6 +8,8 @@ import com.apriori.apibase.services.cas.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.objects.request.AddDeployment;
+import com.apriori.cds.objects.request.License;
+import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.InstallationItems;
@@ -236,6 +238,31 @@ public class CdsTestUtil extends TestUtil {
                         .setName(Constants.getSamlAttributeName())
                         .setGiven_name(Constants.getSamlAttributeGivenName())
                         .setFamily_name(Constants.getSamlAttributeFamilyName())));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * Post to add site license
+     *
+     * @param url          - the url
+     * @param klass        - the response class
+     * @param customerName - the customer name
+     * @param siteId       - the site id
+     * @param licenseId    - the license id
+     * @param subLicenseId - the sublicense id
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addLicense(String url, Class klass, String customerName, String siteId, String licenseId, String subLicenseId) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody(new LicenseRequest().setLicense(
+                new License().setDescription("Test License")
+                    .setApVersion("2020 R1")
+                    .setCreatedBy("#SYSTEM00000")
+                    .setActive("true")
+                    .setLicense(String.format(Constants.getLicense(), customerName, siteId, licenseId, subLicenseId))
+                    .setLicenseTemplate(String.format(Constants.getLicenseTemplate(), customerName))));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
