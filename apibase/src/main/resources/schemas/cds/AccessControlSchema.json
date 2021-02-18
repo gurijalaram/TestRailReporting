@@ -16,7 +16,7 @@
                   "userIdentity",
                   "deploymentIdentity",
                   "customerIdentity",
-                  "outOfContext"c
+                  "outOfContext"
                 ],
                 "properties": {
                   "identity": {
