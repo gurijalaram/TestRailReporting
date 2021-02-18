@@ -17,16 +17,6 @@ public class Customers extends Pagination {
         return this.response;
     }
 
-    public Customers setResponse(Customers response) {
-        this.response = response;
-        return this;
-    }
-
-    public Customers setItems(List<Customer> items) {
-        this.items = items;
-        return this;
-    }
-
     public List<Customer> getItems() {
         return this.items;
     }

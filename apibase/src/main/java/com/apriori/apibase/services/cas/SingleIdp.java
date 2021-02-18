@@ -1,5 +1,6 @@
 package com.apriori.apibase.services.cas;
 
+import com.apriori.apibase.services.common.objects.IdentityProviderPlatform;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
@@ -25,7 +26,7 @@ public class SingleIdp {
     private IdentityProviderPlatform identityProviderPlatform;
     private String displayName;
     private String description;
-    private List<Object> idpDomains = null;
+    private List<String> idpDomains = null;
     private String signInUrl;
     private String signingCertificate;
     private String signingCertificateExpiresAt;
@@ -117,11 +118,11 @@ public class SingleIdp {
         return this;
     }
 
-    public List<Object> getIdpDomains() {
+    public List<String> getIdpDomains() {
         return idpDomains;
     }
 
-    public SingleIdp setIdpDomains(List<Object> idpDomains) {
+    public SingleIdp setIdpDomains(List<String> idpDomains) {
         this.idpDomains = idpDomains;
         return this;
     }

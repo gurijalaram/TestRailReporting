@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "isSingleTenant",
+        "isCloudHomeApp",
+        "isPublic",
+        "identity",
+        "createdAt",
+        "createdBy",
+        "name",
+        "serviceName",
+        "cloudReference",
+        "description",
+        "iconUrl"
+      ],
+      "properties": {
+        "isSingleTenant": {
+          "$id": "#/properties/isSingleTenant",
+          "type": "boolean"
+        },
+        "isCloudHomeApp": {
+          "$id": "#/properties/isCloudHomeApp",
+          "type": "boolean"
+        },
+        "isPublic": {
+          "$id": "#/properties/isPublic",
+          "type": "boolean"
+        },
+        "identity": {
+          "$id": "#/properties/identity",
+          "type": "string"
+        },
+        "createdAt": {
+          "$id": "#/properties/createdAt",
+          "type": "string"
+        },
+        "createdBy": {
+          "$id": "#/properties/createdBy",
+          "type": "string"
+        },
+        "name": {
+          "$id": "#/properties/name",
+          "type": "string"
+        },
+        "serviceName": {
+          "$id": "#/properties/serviceName",
+          "type": "string"
+        },
+        "cloudReference": {
+          "$id": "#/properties/cloudReference",
+          "type": "string"
+        },
+        "description": {
+          "$id": "#/properties/description",
+          "type": "string"
+        },
+        "iconUrl": {
+          "$id": "#/properties/iconUrl",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

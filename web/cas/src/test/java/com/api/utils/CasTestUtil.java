@@ -1,6 +1,7 @@
 package com.api.utils;
 
 import com.apriori.apibase.services.cas.Customer;
+import com.apriori.apibase.services.cas.Site;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -59,9 +60,51 @@ public class CasTestUtil extends TestUtil {
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
 
+    /**
+     * @param url - the endpoint
+     * @param token - token
+     * @return <T>ResponseWrapper <T>
+     */
     public <T> ResponseWrapper<T> resetMfa(String url, String token) {
         RequestEntity requestEntity = RequestEntity.init(url, null)
-                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * @param url - the endpoint
+     * @param klass - the response class
+     * @param token - token
+     * @param siteId - site ID
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> validateSite(String url, Class klass, String token, String siteId) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setBody("site",
+                new Site().setSiteId(siteId));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * @param url - the endpoint
+     * @param klass - the response class
+     * @param token - token
+     * @param siteId - site ID
+     * @param siteName - site name
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> addSite(String url, Class klass, String token, String siteId, String siteName) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setBody("site",
+                 new Site().setSiteId(siteId)
+            .setName(siteName)
+            .setDescription("Site created by automation test")
+            .setActive(true));
+
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 }
