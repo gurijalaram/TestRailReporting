@@ -1,4 +1,4 @@
-package com.api;
+package com.apriori.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -8,20 +8,20 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.services.cas.Customers;
-import com.apriori.apibase.services.cas.SingleCustomer;
-import com.apriori.apibase.services.cas.Site;
-import com.apriori.apibase.services.cas.Sites;
-import com.apriori.apibase.services.cas.ValidateSite;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.SingleCustomer;
+import com.apriori.entity.response.Site;
+import com.apriori.entity.response.Sites;
+import com.apriori.entity.response.ValidateSite;
+import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
-import com.api.utils.CasTestUtil;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
