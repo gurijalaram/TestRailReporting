@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.not;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.services.cas.Site;
 import com.apriori.apibase.services.cas.Sites;
+import com.apriori.apibase.services.cas.ValidateSite;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
@@ -19,6 +20,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.api.utils.CasTestUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -91,5 +93,34 @@ public class CasSitesTests extends TestUtil {
 
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(site.getResponseEntity().getResponse().getIdentity(), is(equalTo(siteIdentity)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "5651")
+    @Description("Validates Customer's Site record by site ID.")
+    public void validateCustomerSite() {
+        String apiUrl = String.format(Constants.getApiUrl(), "customers/");
+
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+
+        String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String sitesEndpoint = apiUrl + identity + "/sites/";
+
+        ResponseWrapper<Sites> sitesResponse = new CommonRequestUtil().getCommonRequest(sitesEndpoint, true, Sites.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(sitesResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+
+        String siteId = sitesResponse.getResponseEntity().getResponse().getItems().get(0).getSiteId();
+        String validateUrl = sitesEndpoint + "validate";
+
+        ResponseWrapper<ValidateSite> siteResponse = new CasTestUtil().validateSite(validateUrl, ValidateSite.class, token, siteId);
+
+        assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(siteResponse.getResponseEntity().getResponse().getStatus(), is(equalTo("EXISTS")));
     }
 }

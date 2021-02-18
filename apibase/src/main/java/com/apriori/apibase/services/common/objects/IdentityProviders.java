@@ -17,16 +17,6 @@ public class IdentityProviders extends Pagination {
         return this.response;
     }
 
-    public IdentityProviders setResponse(IdentityProviders response) {
-        this.response = response;
-        return this;
-    }
-
-    public IdentityProviders setItems(List<IdentityProvider> items) {
-        this.items = items;
-        return this;
-    }
-
     public List<IdentityProvider> getItems() {
         return this.items;
     }
