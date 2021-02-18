@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
+import com.apriori.cds.objects.response.AssociationUserResponse;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -73,5 +74,73 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getResponse().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, "customers/".concat(aPCustomerIdentity).concat("/customer-associations/").concat(associationIdentity).concat("/customer-association-users/").concat(customerAssociationUserIdentity));
+    }
+
+    // TODO Moya create testrail case for this
+    @Test
+    @Description("Get users associated for customer")
+    public void getAssociationUsers() {
+        String customersEndpoint = String.format(url, "customers");
+
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
+        String emailPattern = "\\S+@".concat(customerName);
+        String aPStaffIdentity = Constants.getUserIdentity();
+        String aPCustomerIdentity = Constants.getaPrioriInternalCustomerIdentity();
+
+        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+
+        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+
+        String associationsEndpoint = String.format(url.concat("&pageSize=1000"), "customers/".concat(aPCustomerIdentity).concat("/customer-associations"));
+        ResponseWrapper<CustomerAssociationResponse> response = getCommonRequest(associationsEndpoint, true, CustomerAssociationResponse.class);
+        String associationIdentity = response.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
+        String associationEndpoint = String.format(url, "customers/".concat(aPCustomerIdentity).concat("/customer-associations/").concat(associationIdentity).concat("/customer-association-users"));
+
+        ResponseWrapper<AssociationUserItems> associationUser = addAssociationUser(associationEndpoint, AssociationUserItems.class, aPStaffIdentity);
+        assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        customerAssociationUserIdentity = associationUser.getResponseEntity().getResponse().getIdentity();
+        customerAssociationUserIdentityEndpoint = String.format(url, "customers/".concat(aPCustomerIdentity).concat("/customer-associations/").concat(associationIdentity).concat("/customer-association-users/").concat(customerAssociationUserIdentity));
+
+        ResponseWrapper<AssociationUserResponse> users = getCommonRequest(associationEndpoint, true, AssociationUserResponse.class);
+        assertThat(users.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(users.getResponseEntity().getResponse().getTotalItemCount(),is(equalTo(1)));
+    }
+
+    // TODO Moya create testrail case for this
+    @Test
+    @Description("Get user details for association")
+    public void getAssociationByUserIdentity() {
+        String customersEndpoint = String.format(url, "customers");
+
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
+        String emailPattern = "\\S+@".concat(customerName);
+        String aPStaffIdentity = Constants.getUserIdentity();
+        String aPCustomerIdentity = Constants.getaPrioriInternalCustomerIdentity();
+
+        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+
+        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+
+        String associationsEndpoint = String.format(url.concat("&pageSize=1000"), "customers/".concat(aPCustomerIdentity).concat("/customer-associations"));
+        ResponseWrapper<CustomerAssociationResponse> response = getCommonRequest(associationsEndpoint, true, CustomerAssociationResponse.class);
+        String associationIdentity = response.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
+        String associationEndpoint = String.format(url, "customers/".concat(aPCustomerIdentity).concat("/customer-associations/").concat(associationIdentity).concat("/customer-association-users"));
+
+        ResponseWrapper<AssociationUserItems> associationUser = addAssociationUser(associationEndpoint, AssociationUserItems.class, aPStaffIdentity);
+        assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        customerAssociationUserIdentity = associationUser.getResponseEntity().getResponse().getIdentity();
+        customerAssociationUserIdentityEndpoint = String.format(url, "customers/".concat(aPCustomerIdentity).concat("/customer-associations/").concat(associationIdentity).concat("/customer-association-users/").concat(customerAssociationUserIdentity));
+
+        ResponseWrapper<AssociationUserItems> associationUserIdentity = getCommonRequest(customerAssociationUserIdentityEndpoint, true, AssociationUserItems.class);
+        assertThat(associationUserIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(associationUserIdentity.getResponseEntity().getResponse().getUserIdentity(),is(equalTo(aPStaffIdentity)));
     }
 }
