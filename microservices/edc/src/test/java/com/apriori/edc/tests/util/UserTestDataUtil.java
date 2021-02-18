@@ -140,16 +140,18 @@ public class UserTestDataUtil {
     }
 
     public void clearTestData(final UserDataEDC userDataEDC) {
-        userDataEDC.getWorkingIdentities().forEach(identity ->
-            GenericRequestUtil.delete(
-                RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userDataEDC.getUserCredentials(), null)
-                    .setInlineVariables(identity)
-                    .setStatusCode(HttpStatus.SC_NO_CONTENT)
-                    .setToken(this.getToken())
-                    .setAutoLogin(true),
-                new RequestAreaApi()
-            )
-        );
+        if(userDataEDC != null) {
+            userDataEDC.getWorkingIdentities().forEach(identity ->
+                GenericRequestUtil.delete(
+                    RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userDataEDC.getUserCredentials(), null)
+                        .setInlineVariables(identity)
+                        .setStatusCode(HttpStatus.SC_NO_CONTENT)
+                        .setToken(this.getToken())
+                        .setAutoLogin(true),
+                    new RequestAreaApi()
+                )
+            );
+        }
     }
 
     public String uploadTestData(final UserDataEDC userDataEDC) {
