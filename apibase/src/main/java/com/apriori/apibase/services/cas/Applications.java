@@ -17,16 +17,6 @@ public class Applications extends Pagination {
         return this.response;
     }
 
-    public Applications setResponse(Applications response) {
-        this.response = response;
-        return this;
-    }
-
-    public Applications setItems(List<Application> items) {
-        this.items = items;
-        return this;
-    }
-
     public List<Application> getItems() {
         return this.items;
     }
