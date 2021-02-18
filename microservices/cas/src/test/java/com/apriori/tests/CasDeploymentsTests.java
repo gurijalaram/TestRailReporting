@@ -1,15 +1,15 @@
-package com.api;
+package com.apriori.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.apibase.services.cas.Deployments;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.Deployments;
 import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
