@@ -1,4 +1,4 @@
-package com.api;
+package com.apriori.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -8,20 +8,22 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.services.cas.Customers;
-import com.apriori.apibase.services.cas.Site;
-import com.apriori.apibase.services.cas.Sites;
-import com.apriori.apibase.services.cas.ValidateSite;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.SingleCustomer;
+import com.apriori.entity.response.Site;
+import com.apriori.entity.response.Sites;
+import com.apriori.entity.response.ValidateSite;
+import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
-import com.api.utils.CasTestUtil;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
@@ -122,5 +124,31 @@ public class CasSitesTests extends TestUtil {
 
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(siteResponse.getResponseEntity().getResponse().getStatus(), is(equalTo("EXISTS")));
+    }
+
+    @Test
+    @Issue("MIC-1678")
+    @TestRail(testCaseId = "5648")
+    @Description("Create a new Site for the Customer")
+    public void createCustomerSite() {
+        String url = String.format(Constants.getApiUrl(), "customers/");
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String email = customerName.toLowerCase();
+        String description = customerName + " Description";
+        String siteName = generateStringUtil.generateSiteName();
+        String siteID = generateStringUtil.generateSiteID();
+
+        ResponseWrapper<SingleCustomer> response = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+
+        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+
+        String identity = response.getResponseEntity().getResponse().getIdentity();
+        String siteUrl = url + identity + "/sites";
+
+        ResponseWrapper<Site> site = new CasTestUtil().addSite(siteUrl, Site.class, token, siteID, siteName);
+
+        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        assertThat(site.getResponseEntity().getResponse().getSiteId(), is(equalTo(siteID)));
     }
 }

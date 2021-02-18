@@ -1,9 +1,9 @@
-package com.api.utils;
+package com.apriori.tests.utils;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.cas.Site;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.Site;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -84,6 +84,26 @@ public class CasTestUtil extends TestUtil {
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("site",
                 new Site().setSiteId(siteId));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * @param url - the endpoint
+     * @param klass - the response class
+     * @param token - token
+     * @param siteId - site ID
+     * @param siteName - site name
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> addSite(String url, Class klass, String token, String siteId, String siteName) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setBody("site",
+                 new Site().setSiteId(siteId)
+            .setName(siteName)
+            .setDescription("Site created by automation test")
+            .setActive(true));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }

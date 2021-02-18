@@ -1,15 +1,15 @@
-package com.api;
+package com.apriori.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.apibase.services.cas.Deployments;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.Applications;
 import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -19,7 +19,8 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CasDeploymentsTests extends TestUtil {
+public class ApplicationsTests extends TestUtil {
+
     private String token;
 
     @Before
@@ -34,15 +35,15 @@ public class CasDeploymentsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5657")
-    @Description("Returns a list of deployments for the customer.")
-    public void getCustomersDeployments() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/deployments");
+    @TestRail(testCaseId = "5659")
+    @Description("Returns a list of applications for the customer.")
+    public void getCustomerApplications() {
+        String url = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/applications");
 
-        ResponseWrapper<Deployments> responseDeployment = new CommonRequestUtil().getCommonRequest(apiUrl, true, Deployments.class,
+        ResponseWrapper<Applications> responseApplications = new CommonRequestUtil().getCommonRequest(url, true, Applications.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
-        assertThat(responseDeployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseDeployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(responseApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(responseApplications.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 }

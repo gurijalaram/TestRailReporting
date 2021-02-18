@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.services.cas.AttributeMappings;
+import com.apriori.apibase.services.common.objects.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.objects.request.AddDeployment;
@@ -233,11 +233,11 @@ public class CdsTestUtil extends TestUtil {
                     .setSignRequestAlgorithm("RSA_SHA256")
                     .setSignRequestAlgorithmDigest("SHA256")
                     .setProtocolBinding("HTTP_POST")
-                    .setAttributeMappings(new AttributeMappings().setUser_id(Constants.getSamlNameIdentifier())
+                    .setAttributeMappings(new AttributeMappings().setUserId(Constants.getSamlNameIdentifier())
                         .setEmail(Constants.getSamlAttributeEmail())
                         .setName(Constants.getSamlAttributeName())
-                        .setGiven_name(Constants.getSamlAttributeGivenName())
-                        .setFamily_name(Constants.getSamlAttributeFamilyName())));
+                        .setGivenName(Constants.getSamlAttributeGivenName())
+                        .setFamilyName(Constants.getSamlAttributeFamilyName())));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
