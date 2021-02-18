@@ -1,34 +1,30 @@
 package com.apriori.cds.objects.response;
 
 import com.apriori.utils.http.enums.Schema;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/AccessControlSchema.json")
 public class AccessControl {
-    @JsonProperty
     private AccessControl response;
-    @JsonProperty
     private String identity;
-    @JsonProperty
     private String createdBy;
-    @JsonProperty
-    private String createdAt;
-    @JsonProperty
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime createdAt;
     private String customerIdentity;
-    @JsonProperty
     private String deploymentIdentity;
-    @JsonProperty
     private String userIdentity;
-    @JsonProperty
     private String installationIdentity;
-    @JsonProperty
     private String applicationIdentity;
-    @JsonProperty
     private String roleIdentity;
-    @JsonProperty
     private Boolean outOfContext;
 
     public AccessControl getResponse() {
@@ -58,11 +54,11 @@ public class AccessControl {
         return this;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public AccessControl setCreatedAt(String createdAt) {
+    public AccessControl setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }

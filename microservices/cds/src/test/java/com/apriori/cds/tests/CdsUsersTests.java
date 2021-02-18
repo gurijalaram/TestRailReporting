@@ -20,7 +20,7 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsUsers extends CdsTestUtil {
+public class CdsUsersTests extends CdsTestUtil {
     private String url;
 
     @Before

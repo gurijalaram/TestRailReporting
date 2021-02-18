@@ -17,16 +17,6 @@ public class Installations extends Pagination {
         return this.response;
     }
 
-    public Installations setResponse(Installations response) {
-        this.response = response;
-        return this;
-    }
-
-    public Installations setItems(List<Installation> items) {
-        this.items = items;
-        return this;
-    }
-
     public List<Installation> getItems() {
         return this.items;
     }

@@ -5,8 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.apibase.services.cas.IdentityProviders;
 import com.apriori.apibase.services.cas.SingleIdp;
+import com.apriori.apibase.services.common.objects.IdentityProviders;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
@@ -27,12 +27,12 @@ public class CasIdentityProvidersTests extends TestUtil {
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-                Constants.getCasServiceHost(),
-                HttpStatus.SC_CREATED,
-                Constants.getCasTokenUsername(),
-                Constants.getCasTokenEmail(),
-                Constants.getCasTokenIssuer(),
-                Constants.getCasTokenSubject());
+            Constants.getCasServiceHost(),
+            HttpStatus.SC_CREATED,
+            Constants.getCasTokenUsername(),
+            Constants.getCasTokenEmail(),
+            Constants.getCasTokenIssuer(),
+            Constants.getCasTokenSubject());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class CasIdentityProvidersTests extends TestUtil {
         String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828N8M/identity-providers/");
 
         ResponseWrapper<IdentityProviders> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, IdentityProviders.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -52,7 +52,7 @@ public class CasIdentityProvidersTests extends TestUtil {
         String identityProvidersUrl = apiUrl + identity;
 
         ResponseWrapper<SingleIdp> responseIdentity = new CommonRequestUtil().getCommonRequest(identityProvidersUrl, true, SingleIdp.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getResponse().getIdentity(), is(equalTo(identity)));

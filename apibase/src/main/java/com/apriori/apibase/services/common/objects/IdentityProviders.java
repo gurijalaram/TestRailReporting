@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cas;
+package com.apriori.apibase.services.common.objects;
 
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
@@ -15,16 +15,6 @@ public class IdentityProviders extends Pagination {
 
     public IdentityProviders getResponse() {
         return this.response;
-    }
-
-    public IdentityProviders setResponse(IdentityProviders response) {
-        this.response = response;
-        return this;
-    }
-
-    public IdentityProviders setItems(List<IdentityProvider> items) {
-        this.items = items;
-        return this;
     }
 
     public List<IdentityProvider> getItems() {
