@@ -6,8 +6,6 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.services.cas.AttributeMappings;
-import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Deployment;
@@ -18,9 +16,6 @@ import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -28,8 +23,6 @@ import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class CdsDeploymentsTests extends CdsTestUtil {
     private String url;
@@ -166,32 +159,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
 
         String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
 
-        // TODO: 17/02/2021 this method should be moved to a utils and named eg. addSaml()
-        RequestEntity requestEntity = RequestEntity.init(identityProviderEndpoint, IdentityProviderResponse.class)
-            .setHeaders("Content-Type", "application/json")
-            .setBody("identityProvider",
-                new IdentityProviderRequest().setContact(userIdentity)
-                    .setName(userName)
-                    .setDisplayName(userName + "2")
-                    .setIdpDomains(Arrays.asList(userName + ".com"))
-                    .setIdentityProviderPlatform("AZURE AD")
-                    .setDescription("Ciene Okta IdP using SAML")
-                    .setActive(true)
-                    .setCreatedBy("#SYSTEM00000")
-                    .setSignInUrl(Constants.getSignInUrl())
-                    .setSigningCertificate(Constants.getSignInCert())
-                    .setSigningCertificateExpiresAt("2030-07-22T22:45Z")
-                    .setSignRequest(true)
-                    .setSignRequestAlgorithm("RSA_SHA256")
-                    .setSignRequestAlgorithmDigest("SHA256")
-                    .setProtocolBinding("HTTP_POST")
-                    .setAttributeMappings(new AttributeMappings().setUser_id(Constants.getUserId())
-                        .setEmail(Constants.getEmail())
-                        .setName(Constants.getName())
-                        .setGiven_name(Constants.getGivenName())
-                        .setFamily_name(Constants.getFamilyName())));
-
-        ResponseWrapper<IdentityProviderResponse> response = GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+        ResponseWrapper<IdentityProviderResponse> response = addSaml(identityProviderEndpoint, IdentityProviderResponse.class, userIdentity, userName);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }

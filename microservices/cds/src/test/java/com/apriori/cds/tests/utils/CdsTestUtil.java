@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.apibase.services.cas.AttributeMappings;
+import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.response.AssociationUserItems;
@@ -12,6 +14,7 @@ import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -140,9 +143,9 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param url      - the endpoint
-     * @param klass    - the response class
-     * @param realmKey - the realm key
+     * @param url            - the endpoint
+     * @param klass          - the response class
+     * @param realmKey       - the realm key
      * @param cloudReference - the cloud reference
      * @return <T>ResponseWrapper<T>
      */
@@ -171,8 +174,8 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an apriori staff user association to a customer
      *
-     * @param url      - the endpoint
-     * @param klass    - the response class
+     * @param url          - the endpoint
+     * @param klass        - the response class
      * @param userIdentity - the aPriori Staff users identity
      * @return <T>ResponseWrapper<T>
      */
@@ -198,5 +201,42 @@ public class CdsTestUtil extends TestUtil {
         ResponseWrapper<String> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
 
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+    }
+
+    /**
+     * Post to add SAML
+     *
+     * @param url          - the url
+     * @param klass        - the response class
+     * @param userIdentity - the aPriori Staff users identity
+     * @param userName     - the user name
+     * @return <T> ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String userName) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("identityProvider",
+                new IdentityProviderRequest().setContact(userIdentity)
+                    .setName(userName)
+                    .setDisplayName(userName + "2")
+                    .setIdpDomains(Arrays.asList(userName + ".com"))
+                    .setIdentityProviderPlatform("AZURE AD")
+                    .setDescription("Ciene Okta IdP using SAML")
+                    .setActive(true)
+                    .setCreatedBy("#SYSTEM00000")
+                    .setSignInUrl(Constants.getSignInUrl())
+                    .setSigningCertificate(Constants.getSignInCert())
+                    .setSigningCertificateExpiresAt("2030-07-22T22:45Z")
+                    .setSignRequest(true)
+                    .setSignRequestAlgorithm("RSA_SHA256")
+                    .setSignRequestAlgorithmDigest("SHA256")
+                    .setProtocolBinding("HTTP_POST")
+                    .setAttributeMappings(new AttributeMappings().setUser_id(Constants.getUserId())
+                        .setEmail(Constants.getEmail())
+                        .setName(Constants.getName())
+                        .setGiven_name(Constants.getGivenName())
+                        .setFamily_name(Constants.getFamilyName())));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 }
