@@ -13,11 +13,10 @@ import java.util.stream.Collectors;
 
 public class Constants {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
-
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cds";
+    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
     private static final File INPUT_STREAM;
     private static final Properties PROPERTIES = new Properties();
     public static String environment;
@@ -132,7 +131,26 @@ public class Constants {
     }
 
     /**
+     * Get license
+     *
+     * @return string
+     */
+    public static String getLicense() {
+        return PROPERTIES.getProperty("cds.license");
+    }
+
+    /**
+     * Get license template
+     *
+     * @return string
+     */
+    public static String getLicenseTemplate() {
+        return PROPERTIES.getProperty("cds.license.template");
+    }
+
+    /**
      * Get signin url
+     *
      * @return string
      */
     public static String getSignInUrl() {
@@ -141,6 +159,7 @@ public class Constants {
 
     /**
      * Get signin certificate
+     *
      * @return string
      */
     public static String getSignInCert() {
@@ -149,6 +168,7 @@ public class Constants {
 
     /**
      * Get user id
+     *
      * @return string
      */
     public static String getSamlNameIdentifier() {
@@ -157,6 +177,7 @@ public class Constants {
 
     /**
      * Get email
+     *
      * @return string
      */
     public static String getSamlAttributeEmail() {
@@ -165,6 +186,7 @@ public class Constants {
 
     /**
      * Get name
+     *
      * @return string
      */
     public static String getSamlAttributeName() {
@@ -173,6 +195,7 @@ public class Constants {
 
     /**
      * Get given name
+     *
      * @return string
      */
     public static String getSamlAttributeGivenName() {
@@ -181,6 +204,7 @@ public class Constants {
 
     /**
      * Get family name
+     *
      * @return string
      */
     public static String getSamlAttributeFamilyName() {
