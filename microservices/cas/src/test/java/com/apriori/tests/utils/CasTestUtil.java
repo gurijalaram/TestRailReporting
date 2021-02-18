@@ -87,4 +87,24 @@ public class CasTestUtil extends TestUtil {
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
+
+    /**
+     * @param url - the endpoint
+     * @param klass - the response class
+     * @param token - token
+     * @param siteId - site ID
+     * @param siteName - site name
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> addSite(String url, Class klass, String token, String siteId, String siteName) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setBody("site",
+                 new Site().setSiteId(siteId)
+            .setName(siteName)
+            .setDescription("Site created by automation test")
+            .setActive(true));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
 }
