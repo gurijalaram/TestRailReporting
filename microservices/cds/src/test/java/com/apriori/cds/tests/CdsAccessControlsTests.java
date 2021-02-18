@@ -17,7 +17,7 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsAccessControls extends CdsTestUtil {
+public class CdsAccessControlsTests extends CdsTestUtil {
     private String url;
 
     @Before

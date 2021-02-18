@@ -22,7 +22,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SitesTests extends CdsTestUtil {
+public class CdsSitesTests extends CdsTestUtil {
     private String url;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();

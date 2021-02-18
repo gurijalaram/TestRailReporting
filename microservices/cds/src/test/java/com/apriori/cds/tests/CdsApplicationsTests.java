@@ -20,7 +20,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsApplications extends CdsTestUtil {
+public class CdsApplicationsTests extends CdsTestUtil {
     private String url;
 
     @Before
