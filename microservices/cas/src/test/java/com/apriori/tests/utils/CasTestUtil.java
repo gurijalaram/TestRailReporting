@@ -1,9 +1,9 @@
-package com.api.utils;
+package com.apriori.tests.utils;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.cas.Site;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.Site;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;

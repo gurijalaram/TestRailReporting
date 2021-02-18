@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cas;
+package com.apriori.entity.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
