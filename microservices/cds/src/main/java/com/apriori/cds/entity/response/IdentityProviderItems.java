@@ -1,7 +1,7 @@
 
 package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.services.common.objects.AttributeMappings;
+import com.apriori.apibase.services.cds.AttributeMappings;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
