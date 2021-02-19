@@ -1,4 +1,4 @@
-package testsuites;
+package com.apriori.tests.suite;
 
 import com.apriori.tests.*;
 import com.apriori.utils.ProjectRunID;
