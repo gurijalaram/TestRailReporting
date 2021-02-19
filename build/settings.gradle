@@ -40,6 +40,7 @@ if (configuration != null) {
     //Microservices
 
     include(':microservices:ats')
+    include(':microservices:cas')
     include(':microservices:cds')
     include(':microservices:cis')
     include(':microservices:edc')
@@ -49,6 +50,7 @@ if (configuration != null) {
     include(':microservices:sds')
 
     project(':microservices:ats').projectDir = file('../microservices/ats')
+    project(':microservices:cas').projectDir = file('../microservices/cas')
     project(':microservices:cds').projectDir = file('../microservices/cds')
     project(':microservices:cis').projectDir = file('../microservices/cis')
     project(':microservices:edc').projectDir = file('../microservices/edc')

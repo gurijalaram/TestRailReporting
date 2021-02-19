@@ -1,17 +1,21 @@
 package com.apriori.cds.objects.response;
 
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserSite {
-    @JsonProperty
     private String identity;
-    @JsonProperty
     private String createdBy;
-    @JsonProperty
-    private String createdAt;
-    @JsonProperty
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime createdAt;
     private String siteIdentity;
 
     public String getIdentity() {
@@ -32,11 +36,11 @@ public class UserSite {
         return this;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public UserSite setCreatedAt(String createdAt) {
+    public UserSite setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
