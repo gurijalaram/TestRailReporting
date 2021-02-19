@@ -1,30 +1,20 @@
-package com.apriori.apibase.services.sds;
+package com.apriori.sds.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "sds/ScenarioManifest.json")
-public class ScenarioManifest {
+@Schema(location = "sds/ScenarioManifestSubComponents.json")
+public class ScenarioManifestSubComponents {
 
-    private ScenarioManifest response;
     private String occurrences;
     private String componentType;
-    private ScenarioManifestSubComponents[] subComponents;
+    private String[] subComponents;
     private String componentName;
     private String componentIdentity;
-    private String cadMetadataIdentity;
     private String totalComponents;
     private String scenarioIdentity;
     private String scenarioName;
     private String scenarioState;
     private String totalSubComponents;
-
-    public ScenarioManifest getResponse() {
-        return response;
-    }
-
-    public void setResponse(ScenarioManifest response) {
-        this.response = response;
-    }
 
     public String getOccurrences() {
         return occurrences;
@@ -42,11 +32,11 @@ public class ScenarioManifest {
         this.componentType = componentType;
     }
 
-    public ScenarioManifestSubComponents[] getSubComponents() {
+    public String[] getSubComponents() {
         return subComponents;
     }
 
-    public void setSubComponents(ScenarioManifestSubComponents[] subComponents) {
+    public void setSubComponents(String[] subComponents) {
         this.subComponents = subComponents;
     }
 
@@ -64,14 +54,6 @@ public class ScenarioManifest {
 
     public void setComponentIdentity(String componentIdentity) {
         this.componentIdentity = componentIdentity;
-    }
-
-    public String getCadMetadataIdentity() {
-        return cadMetadataIdentity;
-    }
-
-    public void setCadMetadataIdentity(String cadMetadataIdentity) {
-        this.cadMetadataIdentity = cadMetadataIdentity;
     }
 
     public String getTotalComponents() {
