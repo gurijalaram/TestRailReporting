@@ -15,75 +15,75 @@ public class ScenarioMaterialBean {
     private String userUtilizationOverride;
     private String userMaterialName;
 
-    public String getIsCadMaterialNameValid () {
+    public String getIsCadMaterialNameValid() {
         return isCadMaterialNameValid;
     }
 
-    public void setIsCadMaterialNameValid (String isCadMaterialNameValid) {
+    public void setIsCadMaterialNameValid(String isCadMaterialNameValid) {
         this.isCadMaterialNameValid = isCadMaterialNameValid;
     }
 
-    public String getUtilizationMode () {
+    public String getUtilizationMode() {
         return utilizationMode;
     }
 
-    public void setUtilizationMode (String utilizationMode) {
+    public void setUtilizationMode(String utilizationMode) {
         this.utilizationMode = utilizationMode;
     }
 
-    public String getInitialized () {
+    public String getInitialized() {
         return initialized;
     }
 
-    public void setInitialized (String initialized) {
+    public void setInitialized(String initialized) {
         this.initialized = initialized;
     }
 
-    public String getMaterialMode () {
+    public String getMaterialMode() {
         return materialMode;
     }
 
-    public void setMaterialMode (String materialMode) {
+    public void setMaterialMode(String materialMode) {
         this.materialMode = materialMode;
     }
 
-    public String getIsUserMaterialNameValid () {
+    public String getIsUserMaterialNameValid() {
         return isUserMaterialNameValid;
     }
 
-    public void setIsUserMaterialNameValid (String isUserMaterialNameValid) {
+    public void setIsUserMaterialNameValid(String isUserMaterialNameValid) {
         this.isUserMaterialNameValid = isUserMaterialNameValid;
     }
 
-    public String getVpeDefaultMaterialName () {
+    public String getVpeDefaultMaterialName() {
         return vpeDefaultMaterialName;
     }
 
-    public void setVpeDefaultMaterialName (String vpeDefaultMaterialName) {
+    public void setVpeDefaultMaterialName(String vpeDefaultMaterialName) {
         this.vpeDefaultMaterialName = vpeDefaultMaterialName;
     }
 
-    public String getStockMode () {
+    public String getStockMode() {
         return stockMode;
     }
 
-    public void setStockMode (String stockMode) {
+    public void setStockMode(String stockMode) {
         this.stockMode = stockMode;
     }
 
-    public String getUserUtilizationOverride () {
+    public String getUserUtilizationOverride() {
         return userUtilizationOverride;
     }
 
-    public void setUserUtilizationOverride (String userUtilizationOverride) {
+    public void setUserUtilizationOverride(String userUtilizationOverride) {
         this.userUtilizationOverride = userUtilizationOverride;
     }
 
-    public String getUserMaterialName () {
+    public String getUserMaterialName() {
         return userMaterialName;
     }
 
-    public void setUserMaterialName (String userMaterialName) {
+    public void setUserMaterialName(String userMaterialName) {
         this.userMaterialName = userMaterialName;
     }
 }

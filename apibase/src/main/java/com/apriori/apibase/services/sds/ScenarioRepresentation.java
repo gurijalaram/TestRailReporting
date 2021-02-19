@@ -6,11 +6,11 @@ import com.apriori.utils.http.enums.Schema;
 public class ScenarioRepresentation {
     private ScenarioRepresentation response;
 
-    public ScenarioRepresentation getResponse () {
+    public ScenarioRepresentation getResponse() {
         return response;
     }
 
-    public void setResponse (ScenarioRepresentation response) {
+    public void setResponse(ScenarioRepresentation response) {
         this.response = response;
     }
 }

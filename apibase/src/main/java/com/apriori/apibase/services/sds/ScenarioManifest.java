@@ -26,91 +26,91 @@ public class ScenarioManifest {
         this.response = response;
     }
 
-    public String getOccurrences () {
+    public String getOccurrences() {
         return occurrences;
     }
 
-    public void setOccurrences (String occurrences) {
+    public void setOccurrences(String occurrences) {
         this.occurrences = occurrences;
     }
 
-    public String getComponentType () {
+    public String getComponentType() {
         return componentType;
     }
 
-    public void setComponentType (String componentType) {
+    public void setComponentType(String componentType) {
         this.componentType = componentType;
     }
 
-    public ScenarioManifestSubComponents[] getSubComponents () {
+    public ScenarioManifestSubComponents[] getSubComponents() {
         return subComponents;
     }
 
-    public void setSubComponents (ScenarioManifestSubComponents[] subComponents) {
+    public void setSubComponents(ScenarioManifestSubComponents[] subComponents) {
         this.subComponents = subComponents;
     }
 
-    public String getComponentName () {
+    public String getComponentName() {
         return componentName;
     }
 
-    public void setComponentName (String componentName) {
+    public void setComponentName(String componentName) {
         this.componentName = componentName;
     }
 
-    public String getComponentIdentity () {
+    public String getComponentIdentity() {
         return componentIdentity;
     }
 
-    public void setComponentIdentity (String componentIdentity) {
+    public void setComponentIdentity(String componentIdentity) {
         this.componentIdentity = componentIdentity;
     }
 
-    public String getCadMetadataIdentity () {
+    public String getCadMetadataIdentity() {
         return cadMetadataIdentity;
     }
 
-    public void setCadMetadataIdentity (String cadMetadataIdentity) {
+    public void setCadMetadataIdentity(String cadMetadataIdentity) {
         this.cadMetadataIdentity = cadMetadataIdentity;
     }
 
-    public String getTotalComponents () {
+    public String getTotalComponents() {
         return totalComponents;
     }
 
-    public void setTotalComponents (String totalComponents) {
+    public void setTotalComponents(String totalComponents) {
         this.totalComponents = totalComponents;
     }
 
-    public String getScenarioIdentity () {
+    public String getScenarioIdentity() {
         return scenarioIdentity;
     }
 
-    public void setScenarioIdentity (String scenarioIdentity) {
+    public void setScenarioIdentity(String scenarioIdentity) {
         this.scenarioIdentity = scenarioIdentity;
     }
 
-    public String getScenarioName () {
+    public String getScenarioName() {
         return scenarioName;
     }
 
-    public void setScenarioName (String scenarioName) {
+    public void setScenarioName(String scenarioName) {
         this.scenarioName = scenarioName;
     }
 
-    public String getScenarioState () {
+    public String getScenarioState() {
         return scenarioState;
     }
 
-    public void setScenarioState (String scenarioState) {
+    public void setScenarioState(String scenarioState) {
         this.scenarioState = scenarioState;
     }
 
-    public String getTotalSubComponents () {
+    public String getTotalSubComponents() {
         return totalSubComponents;
     }
 
-    public void setTotalSubComponents (String totalSubComponents) {
+    public void setTotalSubComponents(String totalSubComponents) {
         this.totalSubComponents = totalSubComponents;
     }
 }

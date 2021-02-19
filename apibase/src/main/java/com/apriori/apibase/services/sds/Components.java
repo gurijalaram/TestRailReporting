@@ -13,67 +13,67 @@ public class Components {
     private String originalFilename;
     private String updatedAt;
 
-    public String getCreatedAt () {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt (String createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getCustomerIdentity () {
+    public String getCustomerIdentity() {
         return customerIdentity;
     }
 
-    public void setCustomerIdentity (String customerIdentity) {
+    public void setCustomerIdentity(String customerIdentity) {
         this.customerIdentity = customerIdentity;
     }
 
-    public String getComponentType () {
+    public String getComponentType() {
         return componentType;
     }
 
-    public void setComponentType (String componentType) {
+    public void setComponentType(String componentType) {
         this.componentType = componentType;
     }
 
-    public String getCreatedBy () {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy (String createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 
-    public String getIdentity () {
+    public String getIdentity() {
         return identity;
     }
 
-    public void setIdentity (String identity) {
+    public void setIdentity(String identity) {
         this.identity = identity;
     }
 
-    public String getComponentName () {
+    public String getComponentName() {
         return componentName;
     }
 
-    public void setComponentName (String componentName) {
+    public void setComponentName(String componentName) {
         this.componentName = componentName;
     }
 
-    public String getOriginalFilename () {
+    public String getOriginalFilename() {
         return originalFilename;
     }
 
-    public void setOriginalFilename (String originalFilename) {
+    public void setOriginalFilename(String originalFilename) {
         this.originalFilename = originalFilename;
     }
 
-    public String getUpdatedAt () {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt (String updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

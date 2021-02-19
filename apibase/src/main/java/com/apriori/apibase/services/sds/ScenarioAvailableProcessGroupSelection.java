@@ -9,27 +9,27 @@ public class ScenarioAvailableProcessGroupSelection {
     private String displayName;
     private String pgName;
 
-    public String getManuallyCosted () {
+    public String getManuallyCosted() {
         return manuallyCosted;
     }
 
-    public void setManuallyCosted (String manuallyCosted) {
+    public void setManuallyCosted(String manuallyCosted) {
         this.manuallyCosted = manuallyCosted;
     }
 
-    public String getDisplayName () {
+    public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName (String displayName) {
+    public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
-    public String getPgName () {
+    public String getPgName() {
         return pgName;
     }
 
-    public void setPgName (String pgName) {
+    public void setPgName(String pgName) {
         this.pgName = pgName;
     }
 }

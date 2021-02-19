@@ -13,59 +13,59 @@ public class ScenarioDigitalFactoryBean {
     private ScenarioMaterialCatalogKeyData materialCatalogKeyData;
     private String primaryPgName;
 
-    public String getPrimaryVpeName () {
+    public String getPrimaryVpeName() {
         return primaryVpeName;
     }
 
-    public void setPrimaryVpeName (String primaryVpeName) {
+    public void setPrimaryVpeName(String primaryVpeName) {
         this.primaryVpeName = primaryVpeName;
     }
 
-    public String getInitialized () {
+    public String getInitialized() {
         return initialized;
     }
 
-    public void setInitialized (String initialized) {
+    public void setInitialized(String initialized) {
         this.initialized = initialized;
     }
 
-    public ScenarioKey getScenarioKey () {
+    public ScenarioKey getScenarioKey() {
         return scenarioKey;
     }
 
-    public void setScenarioKey (ScenarioKey scenarioKey) {
+    public void setScenarioKey(ScenarioKey scenarioKey) {
         this.scenarioKey = scenarioKey;
     }
 
-    public ScenarioCurrentProcessGroup getCurrentPpgIdentifier () {
+    public ScenarioCurrentProcessGroup getCurrentPpgIdentifier() {
         return currentPpgIdentifier;
     }
 
-    public void setCurrentPpgIdentifier (ScenarioCurrentProcessGroup currentPpgIdentifier) {
+    public void setCurrentPpgIdentifier(ScenarioCurrentProcessGroup currentPpgIdentifier) {
         this.currentPpgIdentifier = currentPpgIdentifier;
     }
 
-    public String getUsePrimaryAsDefault () {
+    public String getUsePrimaryAsDefault() {
         return usePrimaryAsDefault;
     }
 
-    public void setUsePrimaryAsDefault (String usePrimaryAsDefault) {
+    public void setUsePrimaryAsDefault(String usePrimaryAsDefault) {
         this.usePrimaryAsDefault = usePrimaryAsDefault;
     }
 
-    public ScenarioMaterialCatalogKeyData getMaterialCatalogKeyData () {
+    public ScenarioMaterialCatalogKeyData getMaterialCatalogKeyData() {
         return materialCatalogKeyData;
     }
 
-    public void setMaterialCatalogKeyData (ScenarioMaterialCatalogKeyData materialCatalogKeyData) {
+    public void setMaterialCatalogKeyData(ScenarioMaterialCatalogKeyData materialCatalogKeyData) {
         this.materialCatalogKeyData = materialCatalogKeyData;
     }
 
-    public String getPrimaryPgName () {
+    public String getPrimaryPgName() {
         return primaryPgName;
     }
 
-    public void setPrimaryPgName (String primaryPgName) {
+    public void setPrimaryPgName(String primaryPgName) {
         this.primaryPgName = primaryPgName;
     }
 

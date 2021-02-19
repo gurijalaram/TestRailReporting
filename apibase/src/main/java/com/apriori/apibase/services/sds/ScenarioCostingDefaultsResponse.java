@@ -50,275 +50,275 @@ public class ScenarioCostingDefaultsResponse {
 
     private ScenarioAvailableProcessGroupSelection[] availableProcessGroupSelections;
 
-    public String[] getAvailablePgNames () {
+    public String[] getAvailablePgNames() {
         return availablePgNames;
     }
 
-    public void setAvailablePgNames (String[] availablePgNames) {
+    public void setAvailablePgNames(String[] availablePgNames) {
         this.availablePgNames = availablePgNames;
     }
 
-    public String getMachiningModeEnabled () {
+    public String getMachiningModeEnabled() {
         return machiningModeEnabled;
     }
 
-    public void setMachiningModeEnabled (String machiningModeEnabled) {
+    public void setMachiningModeEnabled(String machiningModeEnabled) {
         this.machiningModeEnabled = machiningModeEnabled;
     }
 
-    public String getComputedBatchSize () {
+    public String getComputedBatchSize() {
         return computedBatchSize;
     }
 
-    public void setComputedBatchSize (String computedBatchSize) {
+    public void setComputedBatchSize(String computedBatchSize) {
         this.computedBatchSize = computedBatchSize;
     }
 
-    public String getManuallyCosted () {
+    public String getManuallyCosted() {
         return manuallyCosted;
     }
 
-    public void setManuallyCosted (String manuallyCosted) {
+    public void setManuallyCosted(String manuallyCosted) {
         this.manuallyCosted = manuallyCosted;
     }
 
-    public String getBatchSizeOverride () {
+    public String getBatchSizeOverride() {
         return batchSizeOverride;
     }
 
-    public void setBatchSizeOverride (String batchSizeOverride) {
+    public void setBatchSizeOverride(String batchSizeOverride) {
         this.batchSizeOverride = batchSizeOverride;
     }
 
-    public String getDefaultToPrimaryVpe () {
+    public String getDefaultToPrimaryVpe() {
         return defaultToPrimaryVpe;
     }
 
-    public void setDefaultToPrimaryVpe (String defaultToPrimaryVpe) {
+    public void setDefaultToPrimaryVpe(String defaultToPrimaryVpe) {
         this.defaultToPrimaryVpe = defaultToPrimaryVpe;
     }
 
-    public ScenarioKey getScenarioKey () {
+    public ScenarioKey getScenarioKey() {
         return scenarioKey;
     }
 
-    public void setScenarioKey (ScenarioKey scenarioKey) {
+    public void setScenarioKey(ScenarioKey scenarioKey) {
         this.scenarioKey = scenarioKey;
     }
 
-    public String getProcessGroupName () {
+    public String getProcessGroupName() {
         return processGroupName;
     }
 
-    public void setProcessGroupName (String processGroupName) {
+    public void setProcessGroupName(String processGroupName) {
         this.processGroupName = processGroupName;
     }
 
-    public String getProductionLife () {
+    public String getProductionLife() {
         return productionLife;
     }
 
-    public void setProductionLife (String productionLife) {
+    public void setProductionLife(String productionLife) {
         this.productionLife = productionLife;
     }
 
-    public String getCompType () {
+    public String getCompType() {
         return compType;
     }
 
-    public void setCompType (String compType) {
+    public void setCompType(String compType) {
         this.compType = compType;
     }
 
-    public String getThicknessVisible () {
+    public String getThicknessVisible() {
         return thicknessVisible;
     }
 
-    public void setThicknessVisible (String thicknessVisible) {
+    public void setThicknessVisible(String thicknessVisible) {
         this.thicknessVisible = thicknessVisible;
     }
 
-    public String getSourceModelVisible () {
+    public String getSourceModelVisible() {
         return sourceModelVisible;
     }
 
-    public void setSourceModelVisible (String sourceModelVisible) {
+    public void setSourceModelVisible(String sourceModelVisible) {
         this.sourceModelVisible = sourceModelVisible;
     }
 
-    public ScenarioDigitalFactoryBean getVpeBean () {
+    public ScenarioDigitalFactoryBean getVpeBean() {
         return vpeBean;
     }
 
-    public void setVpeBean (ScenarioDigitalFactoryBean vpeBean) {
+    public void setVpeBean(ScenarioDigitalFactoryBean vpeBean) {
         this.vpeBean = vpeBean;
     }
 
-    public String getInitialized () {
+    public String getInitialized() {
         return initialized;
     }
 
-    public void setInitialized (String initialized) {
+    public void setInitialized(String initialized) {
         this.initialized = initialized;
     }
 
-    public String getPgEnabled () {
+    public String getPgEnabled() {
         return pgEnabled;
     }
 
-    public void setPgEnabled (String pgEnabled) {
+    public void setPgEnabled(String pgEnabled) {
         this.pgEnabled = pgEnabled;
     }
 
-    public String getSupportsMaterials () {
+    public String getSupportsMaterials() {
         return supportsMaterials;
     }
 
-    public void setSupportsMaterials (String supportsMaterials) {
+    public void setSupportsMaterials(String supportsMaterials) {
         this.supportsMaterials = supportsMaterials;
     }
 
-    public String getMachiningMode () {
+    public String getMachiningMode() {
         return machiningMode;
     }
 
-    public void setMachiningMode (String machiningMode) {
+    public void setMachiningMode(String machiningMode) {
         this.machiningMode = machiningMode;
     }
 
-    public String getHasTargetFinishMass () {
+    public String getHasTargetFinishMass() {
         return hasTargetFinishMass;
     }
 
-    public void setHasTargetFinishMass (String hasTargetFinishMass) {
+    public void setHasTargetFinishMass(String hasTargetFinishMass) {
         this.hasTargetFinishMass = hasTargetFinishMass;
     }
 
-    public ScenarioMaterialBean getMaterialBean () {
+    public ScenarioMaterialBean getMaterialBean() {
         return materialBean;
     }
 
-    public void setMaterialBean (ScenarioMaterialBean materialBean) {
+    public void setMaterialBean(ScenarioMaterialBean materialBean) {
         this.materialBean = materialBean;
     }
 
-    public String getAnnualVolumeOverridden () {
+    public String getAnnualVolumeOverridden() {
         return annualVolumeOverridden;
     }
 
-    public void setAnnualVolumeOverridden (String annualVolumeOverridden) {
+    public void setAnnualVolumeOverridden(String annualVolumeOverridden) {
         this.annualVolumeOverridden = annualVolumeOverridden;
     }
 
-    public String getHasTargetCost () {
+    public String getHasTargetCost() {
         return hasTargetCost;
     }
 
-    public void setHasTargetCost (String hasTargetCost) {
+    public void setHasTargetCost(String hasTargetCost) {
         this.hasTargetCost = hasTargetCost;
     }
 
-    public String getManualCurrencyCode () {
+    public String getManualCurrencyCode() {
         return manualCurrencyCode;
     }
 
-    public void setManualCurrencyCode (String manualCurrencyCode) {
+    public void setManualCurrencyCode(String manualCurrencyCode) {
         this.manualCurrencyCode = manualCurrencyCode;
     }
 
-    public String[] getAvailableCurrencyCodes () {
+    public String[] getAvailableCurrencyCodes() {
         return availableCurrencyCodes;
     }
 
-    public void setAvailableCurrencyCodes (String[] availableCurrencyCodes) {
+    public void setAvailableCurrencyCodes(String[] availableCurrencyCodes) {
         this.availableCurrencyCodes = availableCurrencyCodes;
     }
 
-    public String getCompositesFileVisible () {
+    public String getCompositesFileVisible() {
         return compositesFileVisible;
     }
 
-    public void setCompositesFileVisible (String compositesFileVisible) {
+    public void setCompositesFileVisible(String compositesFileVisible) {
         this.compositesFileVisible = compositesFileVisible;
     }
 
-    public String getBatchSizeOverridden () {
+    public String getBatchSizeOverridden() {
         return batchSizeOverridden;
     }
 
-    public void setBatchSizeOverridden (String batchSizeOverridden) {
+    public void setBatchSizeOverridden(String batchSizeOverridden) {
         this.batchSizeOverridden = batchSizeOverridden;
     }
 
-    public String getManualCurrencyCodeVisible () {
+    public String getManualCurrencyCodeVisible() {
         return manualCurrencyCodeVisible;
     }
 
-    public void setManualCurrencyCodeVisible (String manualCurrencyCodeVisible) {
+    public void setManualCurrencyCodeVisible(String manualCurrencyCodeVisible) {
         this.manualCurrencyCodeVisible = manualCurrencyCodeVisible;
     }
 
-    public String getStagesAndMaterialsVisible () {
+    public String getStagesAndMaterialsVisible() {
         return stagesAndMaterialsVisible;
     }
 
-    public void setStagesAndMaterialsVisible (String stagesAndMaterialsVisible) {
+    public void setStagesAndMaterialsVisible(String stagesAndMaterialsVisible) {
         this.stagesAndMaterialsVisible = stagesAndMaterialsVisible;
     }
 
-    public String[] getAvailableCurrencyVersions () {
+    public String[] getAvailableCurrencyVersions() {
         return availableCurrencyVersions;
     }
 
-    public void setAvailableCurrencyVersions (String[] availableCurrencyVersions) {
+    public void setAvailableCurrencyVersions(String[] availableCurrencyVersions) {
         this.availableCurrencyVersions = availableCurrencyVersions;
     }
 
-    public String getAnnualVolume () {
+    public String getAnnualVolume() {
         return annualVolume;
     }
 
-    public void setAnnualVolume (String annualVolume) {
+    public void setAnnualVolume(String annualVolume) {
         this.annualVolume = annualVolume;
     }
 
-    public String getCadModelLoaded () {
+    public String getCadModelLoaded() {
         return cadModelLoaded;
     }
 
-    public void setCadModelLoaded (String cadModelLoaded) {
+    public void setCadModelLoaded(String cadModelLoaded) {
         this.cadModelLoaded = cadModelLoaded;
     }
 
-    public String getManualCurrencyVersion () {
+    public String getManualCurrencyVersion() {
         return manualCurrencyVersion;
     }
 
-    public void setManualCurrencyVersion (String manualCurrencyVersion) {
+    public void setManualCurrencyVersion(String manualCurrencyVersion) {
         this.manualCurrencyVersion = manualCurrencyVersion;
     }
 
-    public String getProductionLifeOverridden () {
+    public String getProductionLifeOverridden() {
         return productionLifeOverridden;
     }
 
-    public void setProductionLifeOverridden (String productionLifeOverridden) {
+    public void setProductionLifeOverridden(String productionLifeOverridden) {
         this.productionLifeOverridden = productionLifeOverridden;
     }
 
-    public String getComponentsPerProduct () {
+    public String getComponentsPerProduct() {
         return componentsPerProduct;
     }
 
-    public void setComponentsPerProduct (String componentsPerProduct) {
+    public void setComponentsPerProduct(String componentsPerProduct) {
         this.componentsPerProduct = componentsPerProduct;
     }
 
-    public ScenarioAvailableProcessGroupSelection[] getAvailableProcessGroupSelections () {
+    public ScenarioAvailableProcessGroupSelection[] getAvailableProcessGroupSelections() {
         return availableProcessGroupSelections;
     }
 
-    public void setAvailableProcessGroupSelections (ScenarioAvailableProcessGroupSelection[] availableProcessGroupSelections) {
+    public void setAvailableProcessGroupSelections(ScenarioAvailableProcessGroupSelection[] availableProcessGroupSelections) {
         this.availableProcessGroupSelections = availableProcessGroupSelections;
     }
 

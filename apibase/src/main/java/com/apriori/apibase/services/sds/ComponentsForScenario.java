@@ -1,9 +1,9 @@
 package com.apriori.apibase.services.sds;
 
-import java.util.List;
-
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
+
+import java.util.List;
 
 @Schema(location = "sds/ComponentsForScenario.json")
 public class ComponentsForScenario extends Pagination {
