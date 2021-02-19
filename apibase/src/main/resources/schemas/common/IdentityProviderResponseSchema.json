@@ -134,10 +134,12 @@
           "type": "object",
           "required": [
             "name",
+            "userId",
+            "familyName"
+          ],
+          "optional": [
             "email",
-            "user_id",
-            "given_name",
-            "family_name"
+            "givenName"
           ],
           "properties": {
             "name": {
@@ -148,15 +150,15 @@
               "$id": "#/properties/response/properties/attributeMappings/properties/email",
               "type": "string"
             },
-            "user_id": {
+            "userId": {
               "$id": "#/properties/response/properties/attributeMappings/properties/user_id",
               "type": "string"
             },
-            "given_name": {
+            "givenName": {
               "$id": "#/properties/response/properties/attributeMappings/properties/given_name",
               "type": "string"
             },
-            "family_name": {
+            "familyName": {
               "$id": "#/properties/response/properties/attributeMappings/properties/family_name",
               "type": "string"
             }

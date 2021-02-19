@@ -9,6 +9,7 @@ import com.apriori.cds.tests.CdsCustomerAssociationTests;
 import com.apriori.cds.tests.CdsCustomerUsersTests;
 import com.apriori.cds.tests.CdsCustomersTests;
 import com.apriori.cds.tests.CdsDeploymentsTests;
+import com.apriori.cds.tests.CdsIdentityProvidersTests;
 import com.apriori.cds.tests.CdsInstallationsTests;
 import com.apriori.cds.tests.CdsLicenseTests;
 import com.apriori.cds.tests.CdsRolesTests;
@@ -36,7 +37,8 @@ import org.junit.runners.Suite;
     CdsLicenseTests.class,
     CdsRolesTests.class,
     CdsSitesTests.class,
-    CdsUsersTests.class
+    CdsUsersTests.class,
+    CdsIdentityProvidersTests.class
 })
 public class CdsAPISuite {
 
