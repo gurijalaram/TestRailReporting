@@ -140,7 +140,7 @@ public class UserTestDataUtil {
     }
 
     public void clearTestData(final UserDataEDC userDataEDC) {
-        if(userDataEDC != null) {
+        if (userDataEDC != null) {
             userDataEDC.getWorkingIdentities().forEach(identity ->
                 GenericRequestUtil.delete(
                     RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userDataEDC.getUserCredentials(), null)
