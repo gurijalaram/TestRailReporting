@@ -1,6 +1,6 @@
+package com.apriori.apibase.services.cas;
 
-package com.apriori.apibase.services.common.objects;
-
+import com.apriori.apibase.services.common.objects.IdentityProviderPlatform;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
@@ -15,7 +15,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cas/IdentityProviderSchema.json")
 public class IdentityProvider {
-    private IdentityProvider response;
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -36,15 +35,6 @@ public class IdentityProvider {
     private String signRequestAlgorithm;
     private String signRequestAlgorithmDigest;
     private String protocolBinding;
-
-    public IdentityProvider getResponse() {
-        return response;
-    }
-
-    public IdentityProvider setResponse(IdentityProvider response) {
-        this.response = response;
-        return this;
-    }
 
     public String getIdentity() {
         return identity;
