@@ -6,12 +6,10 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.Deployments;
 import com.apriori.cds.objects.response.Site;
-import com.apriori.cds.objects.response.User;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -135,32 +133,5 @@ public class CdsDeploymentsTests extends CdsTestUtil {
 
         assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getResponse().getIdentity(), is(equalTo(deploymentIdentity)));
-    }
-
-    @Test
-    @TestRail(testCaseId = "5314")
-    @Description("Get a list of deployments for a customer")
-    public void postCustomerIdentityProviders() {
-        String customersEndpoint = String.format(url, "customers");
-
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
-
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-
-        String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
-
-        ResponseWrapper<IdentityProviderResponse> response = addSaml(identityProviderEndpoint, IdentityProviderResponse.class, userIdentity, userName);
-
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }
 }
