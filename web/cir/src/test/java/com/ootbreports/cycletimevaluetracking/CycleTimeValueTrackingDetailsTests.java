@@ -94,8 +94,8 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
                         CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("5")));
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("2")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("4")));
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("3"), is(equalTo("1")));
 
         cycleTimeValueTrackingPage.clickOk();
@@ -103,7 +103,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "2334")
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
