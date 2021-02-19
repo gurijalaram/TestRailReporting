@@ -105,7 +105,7 @@ public class CycleTimeValueTrackingTests extends TestBase {
 
     @Test
     @Issue("AP-66960")
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "2335")
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {

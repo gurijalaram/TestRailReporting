@@ -18,7 +18,8 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        ScenarioComparisonReportTests.class
+        CycleTimeValueTrackingTests.class,
+        CycleTimeValueTrackingDetailsTests.class
 })
 
 public class CiaCirTestDevSuite {
