@@ -10,21 +10,14 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class CidApiObject {
+public class UploadComponent {
 
     private static String componentIdentity;
     private static String scenarioIdentity;
-    String CONTENT_TYPE = "Content-Type";
-    Map<String, String> headers = new HashMap<>();
 
     public ResponseWrapper<Object> uploadComponent(String token, String apiUrl, Class klass, String scenarioName, String partName) {
-        headers.put(CONTENT_TYPE, "multipart/form-data");
 
         RequestEntity requestEntity = RequestEntity.init(apiUrl, klass)
-            .setHeaders(headers)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(partName)))
             .setFormParams(new FormParams().use("filename", partName)

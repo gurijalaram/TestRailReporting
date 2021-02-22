@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.api.entity.reponse.upload.UploadComponent;
-import com.apriori.api.objects.CidApiObject;
+import com.apriori.api.objects.UploadComponent;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -15,9 +15,8 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import utils.Constants;
 
-public class CidApiTests extends TestUtil {
+public class UploadComponentTests extends TestUtil {
 
     private static String token;
     private ResponseWrapper<Object> image;
@@ -38,7 +37,7 @@ public class CidApiTests extends TestUtil {
     public void cadViewerValues() {
         final String apiUrl = String.format(Constants.getApiUrl(), "components");
 
-        image = new CidApiObject().uploadComponent(token, apiUrl, UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
+        image = new UploadComponent().uploadComponent(token, apiUrl, com.apriori.api.entity.reponse.upload.UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
 
         assertThat(image.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
