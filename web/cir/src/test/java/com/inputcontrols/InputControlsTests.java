@@ -245,6 +245,10 @@ public class InputControlsTests extends TestBase {
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
     }
 
+    public void testCurrencyCodeTargetQuotedCostTrendTests() {
+
+    }
+
     /**
      * Generic test for currency code
      *

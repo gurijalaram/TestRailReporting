@@ -1,5 +1,6 @@
 package testsuites;
 
+import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
@@ -13,8 +14,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        TargetAndQuotedCostValueTrackingTests.class,
-        TargetAndQuotedCostValueTrackingDetailsTests.class
+        TargetAndQuotedCostValueTrackingTests.class
 })
 
 public class CiaCirTestDevSuite {
