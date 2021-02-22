@@ -15,9 +15,19 @@ public class UploadComponent {
     private static String componentIdentity;
     private static String scenarioIdentity;
 
-    public ResponseWrapper<Object> uploadComponent(String token, String apiUrl, Class klass, String scenarioName, String partName) {
+    /**
+     * Uploads a component
+     *
+     * @param token        - the token
+     * @param url          - the url
+     * @param klass        - the response class
+     * @param scenarioName - the scenario name
+     * @param partName     - the part name
+     * @return object
+     */
+    public ResponseWrapper<Object> uploadComponent(String token, String url, Class klass, String scenarioName, String partName) {
 
-        RequestEntity requestEntity = RequestEntity.init(apiUrl, klass)
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(partName)))
             .setFormParams(new FormParams().use("filename", partName)
