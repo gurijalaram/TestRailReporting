@@ -2,56 +2,36 @@ package com.apriori.api.entity.reponse.componentiteration;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Material {
-
-    @JsonProperty("identity")
     private String identity;
-    @JsonProperty("createdAt")
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-    @JsonProperty("createdBy")
     private String createdBy;
-    @JsonProperty("altName1")
     private String altName1;
-    @JsonProperty("altName2")
     private String altName2;
-    @JsonProperty("altName3")
     private String altName3;
-    @JsonProperty("altName4")
     private String altName4;
-    @JsonProperty("altName5")
     private String altName5;
-    @JsonProperty("costUnits")
     private String costUnits;
-    @JsonProperty("dataSource")
     private String dataSource;
-    @JsonProperty("density")
     private Integer density;
-    @JsonProperty("description")
     private String description;
-    @JsonProperty("hardness")
     private Integer hardness;
-    @JsonProperty("hardnessSystem")
     private String hardnessSystem;
-    @JsonProperty("materialCutCodeName")
     private Double materialCutCodeName;
-    @JsonProperty("materialTypeName")
     private String materialTypeName;
-    @JsonProperty("millingSpeed")
     private Integer millingSpeed;
-    @JsonProperty("name")
     private String name;
-    @JsonProperty("scrapCostPercent")
     private Double scrapCostPercent;
-    @JsonProperty("shearStrength")
     private Integer shearStrength;
 
     public String getIdentity() {

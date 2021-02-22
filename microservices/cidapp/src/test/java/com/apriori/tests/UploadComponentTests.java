@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.api.UploadComponent;
+import com.apriori.api.entity.reponse.upload.UploadComponentResponse;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.Constants;
@@ -37,7 +38,7 @@ public class UploadComponentTests extends TestUtil {
     public void cadViewerValues() {
         final String apiUrl = String.format(Constants.getApiUrl(), "components");
 
-        image = new UploadComponent().uploadComponent(token, apiUrl, com.apriori.api.entity.reponse.upload.UploadComponent.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
+        image = new UploadComponent().uploadComponent(token, apiUrl, UploadComponentResponse.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
 
         assertThat(image.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }

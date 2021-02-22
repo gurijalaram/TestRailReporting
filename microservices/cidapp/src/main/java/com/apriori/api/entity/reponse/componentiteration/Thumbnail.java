@@ -1,14 +1,11 @@
 package com.apriori.api.entity.reponse.componentiteration;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Thumbnail {
-
-    @JsonProperty("identity")
     private String identity;
-    @JsonProperty("image")
     private String image;
-    @JsonProperty("imageType")
     private String imageType;
 
     public String getIdentity() {

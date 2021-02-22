@@ -2,7 +2,7 @@ package com.apriori.api.entity.reponse.componentiteration;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -10,49 +10,30 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CostingIteration {
-
-    @JsonProperty("identity")
     private String identity;
-    @JsonProperty("createdAt")
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-    @JsonProperty("createdBy")
     private String createdBy;
-    @JsonProperty("updatedAt")
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
-    @JsonProperty("createdByName")
     private String createdByName;
-    @JsonProperty("customerIdentity")
     private String customerIdentity;
-    @JsonProperty("iteration")
     private Integer iteration;
-    @JsonProperty("scenarioIterationKey")
     private String scenarioIterationKey;
-    @JsonProperty("costingInput")
     private CostingInput costingInput;
-    @JsonProperty("scenarioAnalysis")
     private ScenarioAnalysis scenarioAnalysis;
-    @JsonProperty("scenarioCustomAttributes")
     private List<ScenarioCustomAttribute> scenarioCustomAttributes = null;
-    @JsonProperty("scenarioDtcIssues")
     private List<ScenarioDtcIssue> scenarioDtcIssues = null;
-    @JsonProperty("scenarioGcd")
     private ScenarioGcd scenarioGcd;
-    @JsonProperty("scenarioMetadata")
     private ScenarioMetadata scenarioMetadata;
-    @JsonProperty("scenarioProcesses")
     private List<ScenarioProcess> scenarioProcesses = null;
-    @JsonProperty("hasThumbnail")
     private Boolean hasThumbnail;
-    @JsonProperty("hasWebImage")
     private Boolean hasWebImage;
-    @JsonProperty("thumbnail")
     private Thumbnail thumbnail;
-    @JsonProperty("material")
     private Material material;
 
     public String getIdentity() {
