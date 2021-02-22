@@ -96,6 +96,25 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * PATCH call to update a user
+     *
+     * @param url          - the endpoint
+     * @param klass        - the response class
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> patchUser(String url, Class klass) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("user",
+                new User()
+                    .setUserProfile(new UserProfile()
+                        .setDepartment("Design Dept")
+                        .setSupervisor("Moya Parker")));
+
+        return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
+    }
+
+    /**
      * POST call to add a site to a customer
      *
      * @param url      - the endpoint
@@ -145,9 +164,9 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param url            - the endpoint
-     * @param klass          - the response class
-     * @param realmKey       - the realm key
+     * @param url      - the endpoint
+     * @param klass    - the response class
+     * @param realmKey - the realm key
      * @param cloudReference - the cloud reference
      * @return <T>ResponseWrapper<T>
      */
