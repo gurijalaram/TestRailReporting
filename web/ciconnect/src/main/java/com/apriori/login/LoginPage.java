@@ -16,7 +16,7 @@ import utils.Constants;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
+    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.getDefaultUrl();
     protected String url;
 
@@ -37,14 +37,14 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = "https://" + loginPageURL;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        LOGGER.info("CURRENTLY ON INSTANCE: " + url);
+        logger.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }
