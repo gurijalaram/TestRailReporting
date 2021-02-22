@@ -40,6 +40,6 @@ public class UploadComponentTests extends TestUtil {
 
         image = new UploadComponent().uploadComponent(token, apiUrl, UploadComponentResponse.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
 
-        assertThat(image.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(image.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }
 }
