@@ -1,6 +1,7 @@
 package com.apriori.edc.tests.util;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.edc.utils.Constants;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -13,6 +14,7 @@ public class EdcTestUtil extends TestUtil {
 
     @BeforeClass
     public static void setUp() {
+        Constants.getDefaultUrl();
         userTestDataUtil = new UserTestDataUtil();
         userData = userTestDataUtil.initBillOfMaterials();
         token = userTestDataUtil.getToken();
