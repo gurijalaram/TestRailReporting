@@ -1,13 +1,17 @@
 package com.apriori.apibase.services.cas;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttributeMappings {
+    @JsonProperty("user_id")
     private String user_id;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("given_name")
     private String given_name;
+    @JsonProperty("family_name")
     private String family_name;
+    @JsonProperty("email")
     private String email;
 
     public String getUser_id() {

@@ -13,18 +13,17 @@ import java.util.stream.Collectors;
 
 public class Constants {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
-
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cds";
+    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
     private static final File INPUT_STREAM;
     private static final Properties PROPERTIES = new Properties();
     public static String environment;
-    private static String cdsIdentityUser;
+    private static String userIdentity;
     private static String cdsIdentityRole;
-    private static String cdsIdentityCustomer;
-    private static String cdsIdentityApplication;
+    private static String aPrioriInternalCustomerIdentity;
+    private static String apProApplicationIdentity;
     private static String baseUrl;
     private static String serviceUrl;
     private static String serviceHost;
@@ -73,8 +72,8 @@ public class Constants {
      *
      * @return string
      */
-    public static String getCdsIdentityUser() {
-        return cdsIdentityUser = System.getProperty("cdsIdentityUser") == null ? PROPERTIES.getProperty("cds.identity.user") : System.getProperty("cdsIdentityUser");
+    public static String getUserIdentity() {
+        return userIdentity = System.getProperty("userIdentity") == null ? PROPERTIES.getProperty("automation.user.identity") : System.getProperty("userIdentity");
     }
 
     /**
@@ -91,8 +90,8 @@ public class Constants {
      *
      * @return string
      */
-    public static String getCdsIdentityCustomer() {
-        return cdsIdentityCustomer = System.getProperty("cdsIdentityCustomer") == null ? PROPERTIES.getProperty("cds.identity.customer") : System.getProperty("cdsIdentityCustomer");
+    public static String getaPrioriInternalCustomerIdentity() {
+        return aPrioriInternalCustomerIdentity = System.getProperty("aPrioriInternalCustomerIdentity") == null ? PROPERTIES.getProperty("aPrioriInternal.customer.Identity") : System.getProperty("aPrioriInternalCustomerIdentity");
     }
 
     /**
@@ -100,8 +99,8 @@ public class Constants {
      *
      * @return string
      */
-    public static String getCdsIdentityApplication() {
-        return cdsIdentityApplication = System.getProperty("cdsIdentityApplication") == null ? PROPERTIES.getProperty("cds.identity.application") : System.getProperty("cdsIdentityApplication");
+    public static String getApProApplicationIdentity() {
+        return apProApplicationIdentity = System.getProperty("apProApplicationIdentity") == null ? PROPERTIES.getProperty("appro.application.identity") : System.getProperty("apProApplicationIdentity");
     }
 
     /**
@@ -129,5 +128,86 @@ public class Constants {
      */
     public static String getServiceUrl() {
         return serviceUrl = getProtocol().concat(getServiceHost()).concat("/%s?key=").concat(getSecretKey());
+    }
+
+    /**
+     * Get license
+     *
+     * @return string
+     */
+    public static String getLicense() {
+        return PROPERTIES.getProperty("cds.license");
+    }
+
+    /**
+     * Get license template
+     *
+     * @return string
+     */
+    public static String getLicenseTemplate() {
+        return PROPERTIES.getProperty("cds.license.template");
+    }
+
+    /**
+     * Get signin url
+     *
+     * @return string
+     */
+    public static String getSignInUrl() {
+        return PROPERTIES.getProperty("signin.url");
+    }
+
+    /**
+     * Get signin certificate
+     *
+     * @return string
+     */
+    public static String getSignInCert() {
+        return PROPERTIES.getProperty("signin.cert");
+    }
+
+    /**
+     * Get user id
+     *
+     * @return string
+     */
+    public static String getSamlNameIdentifier() {
+        return PROPERTIES.getProperty("saml.attribute.nameidentifier");
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public static String getSamlAttributeEmail() {
+        return PROPERTIES.getProperty("saml.attribute.email");
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public static String getSamlAttributeName() {
+        return PROPERTIES.getProperty("saml.attribute.name");
+    }
+
+    /**
+     * Get given name
+     *
+     * @return string
+     */
+    public static String getSamlAttributeGivenName() {
+        return PROPERTIES.getProperty("saml.attribute.givenname");
+    }
+
+    /**
+     * Get family name
+     *
+     * @return string
+     */
+    public static String getSamlAttributeFamilyName() {
+        return PROPERTIES.getProperty("saml.attribute.familyname");
     }
 }

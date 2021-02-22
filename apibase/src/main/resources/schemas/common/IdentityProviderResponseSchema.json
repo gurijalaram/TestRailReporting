@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "identityProviderPlatform",
+        "active",
+        "name",
+        "displayName",
+        "description",
+        "idpDomains",
+        "signInUrl",
+        "signingCertificate",
+        "signingCertificateExpiresAt",
+        "signRequest",
+        "attributeMappings",
+        "signRequestAlgorithm",
+        "signRequestAlgorithmDigest",
+        "protocolBinding"
+      ],
+      "properties": {
+        "identity": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "string"
+        },
+        "createdBy": {
+          "$id": "#/properties/response/properties/createdBy",
+          "type": "string"
+        },
+        "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
+          "type": "string"
+        },
+        "identityProviderPlatform": {
+          "$id": "#/properties/response/properties/identityProviderPlatform",
+          "type": "object",
+          "required": [
+            "identity",
+            "createdBy",
+            "createdAt",
+            "description",
+            "name",
+            "vendor",
+            "identityProviderProtocol"
+          ],
+          "properties": {
+            "identity": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/identity",
+              "type": "string"
+            },
+            "createdBy": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/createdBy",
+              "type": "string"
+            },
+            "createdAt": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/createdAt",
+              "type": "string"
+            },
+            "description": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/description",
+              "type": "string"
+            },
+            "name": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/name",
+              "type": "string"
+            },
+            "vendor": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/vendor",
+              "type": "string"
+            },
+            "identityProviderProtocol": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/identityProviderProtocol",
+              "type": "string"
+            }
+          }
+        },
+        "active": {
+          "$id": "#/properties/response/properties/active",
+          "type": "boolean"
+        },
+        "name": {
+          "$id": "#/properties/response/properties/name",
+          "type": "string"
+        },
+        "displayName": {
+          "$id": "#/properties/response/properties/displayName",
+          "type": "string"
+        },
+        "description": {
+          "$id": "#/properties/response/properties/description",
+          "type": "string"
+        },
+        "idpDomains": {
+          "$id": "#/properties/response/properties/idpDomains",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/idpDomains/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/response/properties/idpDomains/items/anyOf/0",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "signInUrl": {
+          "$id": "#/properties/response/properties/signInUrl",
+          "type": "string"
+        },
+        "signingCertificate": {
+          "$id": "#/properties/response/properties/signingCertificate",
+          "type": "string"
+        },
+        "signingCertificateExpiresAt": {
+          "$id": "#/properties/response/properties/signingCertificateExpiresAt",
+          "type": "string"
+        },
+        "signRequest": {
+          "$id": "#/properties/response/properties/signRequest",
+          "type": "boolean"
+        },
+        "attributeMappings": {
+          "$id": "#/properties/response/properties/attributeMappings",
+          "type": "object",
+          "required": [
+            "name",
+            "userId",
+            "familyName"
+          ],
+          "optional": [
+            "email",
+            "givenName"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/name",
+              "type": "string"
+            },
+            "email": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/email",
+              "type": "string"
+            },
+            "userId": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/user_id",
+              "type": "string"
+            },
+            "givenName": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/given_name",
+              "type": "string"
+            },
+            "familyName": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/family_name",
+              "type": "string"
+            }
+          }
+        },
+        "signRequestAlgorithm": {
+          "$id": "#/properties/response/properties/signRequestAlgorithm",
+          "type": "string"
+        },
+        "signRequestAlgorithmDigest": {
+          "$id": "#/properties/response/properties/signRequestAlgorithmDigest",
+          "type": "string"
+        },
+        "protocolBinding": {
+          "$id": "#/properties/response/properties/protocolBinding",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
