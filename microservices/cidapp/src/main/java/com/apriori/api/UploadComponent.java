@@ -1,4 +1,4 @@
-package com.apriori.api.objects;
+package com.apriori.api;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.JsonNodeUtil;
