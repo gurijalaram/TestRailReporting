@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.apibase.services.cds;
 
 public class AttributeMappings {
     private String name;

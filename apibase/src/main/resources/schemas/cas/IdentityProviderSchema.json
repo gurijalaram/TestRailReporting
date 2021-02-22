@@ -83,9 +83,9 @@
                   "signRequest",
                   "attributeMappings",
                   "createdByName",
+                  "protocolBinding",
                   "signRequestAlgorithm",
-                  "signRequestAlgorithmDigest",
-                  "protocolBinding"
+                  "signRequestAlgorithmDigest"
                 ],
                 "properties": {
                   "identity": {
@@ -225,16 +225,16 @@
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdByName",
                     "type": "string"
                   },
+                  "protocolBinding": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/protocolBinding",
+                    "type": "string"
+                  },
                   "signRequestAlgorithm": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/signRequestAlgorithm",
                     "type": "string"
                   },
                   "signRequestAlgorithmDigest": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/signRequestAlgorithmDigest",
-                    "type": "string"
-                  },
-                  "protocolBinding": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/protocolBinding",
                     "type": "string"
                   }
                 }
