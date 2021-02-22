@@ -55,7 +55,7 @@ public class WorkflowTests  extends TestBase {
         loginPage.login();
 
         /** Create Workflow **/
-        Map<String, Object> values = workflowFeatures.creteWorkflow();
+        Map<String, Object> values = workflowFeatures.createWorkflow();
         workflowNames.add((String)values.get("workflowName"));
         validator.validateCreatedWorkflow(values);
 
