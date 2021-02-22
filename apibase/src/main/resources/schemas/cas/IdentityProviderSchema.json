@@ -1,0 +1,248 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "isFirstPage",
+        "isLastPage",
+        "pageNumber",
+        "pageSize",
+        "pageItemCount",
+        "totalItemCount",
+        "totalPageCount",
+        "hasNextPage",
+        "hasPreviousPage",
+        "items"
+      ],
+      "properties": {
+        "isFirstPage": {
+          "$id": "#/properties/response/properties/isFirstPage",
+          "type": "boolean"
+        },
+        "isLastPage": {
+          "$id": "#/properties/response/properties/isLastPage",
+          "type": "boolean"
+        },
+        "pageNumber": {
+          "$id": "#/properties/response/properties/pageNumber",
+          "type": "integer"
+        },
+        "pageSize": {
+          "$id": "#/properties/response/properties/pageSize",
+          "type": "integer"
+        },
+        "pageItemCount": {
+          "$id": "#/properties/response/properties/pageItemCount",
+          "type": "integer"
+        },
+        "totalItemCount": {
+          "$id": "#/properties/response/properties/totalItemCount",
+          "type": "integer"
+        },
+        "totalPageCount": {
+          "$id": "#/properties/response/properties/totalPageCount",
+          "type": "integer"
+        },
+        "hasNextPage": {
+          "$id": "#/properties/response/properties/hasNextPage",
+          "type": "boolean"
+        },
+        "hasPreviousPage": {
+          "$id": "#/properties/response/properties/hasPreviousPage",
+          "type": "boolean"
+        },
+        "items": {
+          "$id": "#/properties/response/properties/items",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/items/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/response/properties/items/items/anyOf/0",
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdAt",
+                  "createdBy",
+                  "active",
+                  "name",
+                  "identityProviderPlatform",
+                  "displayName",
+                  "description",
+                  "idpDomains",
+                  "signInUrl",
+                  "signingCertificate",
+                  "signingCertificateExpiresAt",
+                  "signRequest",
+                  "attributeMappings",
+                  "createdByName",
+                  "protocolBinding",
+                  "signRequestAlgorithm",
+                  "signRequestAlgorithmDigest"
+                ],
+                "properties": {
+                  "identity": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identity",
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdAt",
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdBy",
+                    "type": "string"
+                  },
+                  "active": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/active",
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/name",
+                    "type": "string"
+                  },
+                  "identityProviderPlatform": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviderPlatform",
+                    "type": "object",
+                    "required": [
+                      "identity",
+                      "createdAt",
+                      "createdBy",
+                      "description",
+                      "name",
+                      "vendor",
+                      "identityProviderProtocol"
+                    ],
+                    "properties": {
+                      "identity": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviderPlatform/properties/identity",
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviderPlatform/properties/createdAt",
+                        "type": "string"
+                      },
+                      "createdBy": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviderPlatform/properties/createdBy",
+                        "type": "string"
+                      },
+                      "description": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviderPlatform/properties/description",
+                        "type": "string"
+                      },
+                      "name": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviderPlatform/properties/name",
+                        "type": "string"
+                      },
+                      "vendor": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviderPlatform/properties/vendor",
+                        "type": "string"
+                      },
+                      "identityProviderProtocol": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviderPlatform/properties/identityProviderProtocol",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "displayName": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/displayName",
+                    "type": "string"
+                  },
+                  "description": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/description",
+                    "type": "string"
+                  },
+                  "idpDomains": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/idpDomains",
+                    "type": "array",
+                    "items": {
+                      "$id": "#/properties/response/properties/items/items/anyOf/0/properties/idpDomains/items",
+                      "anyOf": [
+                        {
+                          "$id": "#/properties/response/properties/items/items/anyOf/0/properties/idpDomains/items/anyOf/0",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "signInUrl": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/signInUrl",
+                    "type": "string"
+                  },
+                  "signingCertificate": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/signingCertificate",
+                    "type": "string"
+                  },
+                  "signingCertificateExpiresAt": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/signingCertificateExpiresAt",
+                    "type": "string"
+                  },
+                  "signRequest": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/signRequest",
+                    "type": "boolean"
+                  },
+                  "attributeMappings": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/attributeMappings",
+                    "type": "object",
+                    "required": [
+                      "user_id",
+                      "name",
+                      "given_name",
+                      "family_name",
+                      "email"
+                    ],
+                    "properties": {
+                      "user_id": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/attributeMappings/properties/user_id",
+                        "type": "string"
+                      },
+                      "name": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/attributeMappings/properties/name",
+                        "type": "string"
+                      },
+                      "given_name": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/attributeMappings/properties/given_name",
+                        "type": "string"
+                      },
+                      "family_name": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/attributeMappings/properties/family_name",
+                        "type": "string"
+                      },
+                      "email": {
+                        "$id": "#/properties/response/properties/items/items/anyOf/0/properties/attributeMappings/properties/email",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "createdByName": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdByName",
+                    "type": "string"
+                  },
+                  "protocolBinding": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/protocolBinding",
+                    "type": "string"
+                  },
+                  "signRequestAlgorithm": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/signRequestAlgorithm",
+                    "type": "string"
+                  },
+                  "signRequestAlgorithmDigest": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/signRequestAlgorithmDigest",
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

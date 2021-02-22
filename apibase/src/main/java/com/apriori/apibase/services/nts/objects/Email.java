@@ -11,20 +11,15 @@ import java.time.LocalDateTime;
 
 @Schema(location = "nts/NtsGetEmailResponseSchema.json")
 public class Email {
-
-
     private Email response;
     private String identity;
     private String createdBy;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
-
     private String customerIdentity;
     private String deploymentIdentity;
     private String installationIdentity;

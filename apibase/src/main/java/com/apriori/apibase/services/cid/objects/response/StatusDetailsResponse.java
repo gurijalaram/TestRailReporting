@@ -1,7 +1,6 @@
 package com.apriori.apibase.services.cid.objects.response;
 
 public class StatusDetailsResponse {
-
     private String failureMessage;
     private String statusMessage;
 

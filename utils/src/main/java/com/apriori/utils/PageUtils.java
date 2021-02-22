@@ -44,8 +44,18 @@ public class PageUtils {
             StaleElementReferenceException.class, ElementNotInteractableException.class);
     private String currentlyOn = "CURRENTLY_ON_PAGE:";
 
+    private static PageUtils instance = null;
+
     public PageUtils(WebDriver driver) {
         this.driver = driver;
+    }
+
+    public static PageUtils getInstance(WebDriver driver) {
+        if (instance == null) {
+            instance = new PageUtils(driver);
+        }
+
+        return instance;
     }
 
     public String currentlyOnPage(String pageName) {
