@@ -1,5 +1,6 @@
 package com.apriori.apibase.services.common.objects;
 
+import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
