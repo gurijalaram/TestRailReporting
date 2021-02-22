@@ -2,16 +2,27 @@ package com.apriori.apibase.services;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Schema(location = "PaginationSchema.json")
 public class Pagination {
+    @JsonProperty
     private Boolean isFirstPage;
+    @JsonProperty
     private Boolean isLastPage;
+    @JsonProperty
     private Integer pageNumber;
+    @JsonProperty
     private Integer pageSize;
+    @JsonProperty
     private Integer pageItemCount;
+    @JsonProperty
     private Integer totalItemCount;
+    @JsonProperty
     private Integer totalPageCount;
+    @JsonProperty
     private Boolean hasNextPage;
+    @JsonProperty
     private Boolean hasPreviousPage;
 
     public Pagination setIsFirstPage(Boolean isFirstPage) {

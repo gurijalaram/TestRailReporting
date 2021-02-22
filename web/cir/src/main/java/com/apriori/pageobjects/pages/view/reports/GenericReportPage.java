@@ -673,9 +673,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage checkCurrencySelected(String currency) {
-        currentCurrencyElement.click();
         if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
-            currencyMap.get(currency).click();
+            pageUtils.waitForElementAndClick(currentCurrencyElement);
+            pageUtils.waitForElementAndClick(currencyMap.get(currency));
         }
         return this;
     }
@@ -726,7 +726,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCostMetricValueFromAboveChart() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return costMetricElementAboveChart.getAttribute("textContent");
+        return costMetricElementAboveChart.getText();
     }
 
     /**

@@ -1,31 +1,11 @@
 package com.apriori.apibase.services.cid.objects.cost.productioninfo;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "initialized",
-    "vpeDefaultMaterialName",
-    "materialMode",
-    "isUserMaterialNameValid",
-    "isCadMaterialNameValid",
-    "userUtilizationOverride"
-})
 public class ProductionInfoMaterial {
-
-    @JsonProperty("initialized")
     private Boolean initialized;
-    @JsonProperty("vpeDefaultMaterialName")
     private String vpeDefaultMaterialName;
-    @JsonProperty("materialMode")
     private String materialMode;
-    @JsonProperty("isUserMaterialNameValid")
     private Boolean isUserMaterialNameValid;
-    @JsonProperty("isCadMaterialNameValid")
     private Boolean isCadMaterialNameValid;
-    @JsonProperty("userUtilizationOverride")
     private Integer userUtilizationOverride;
 
     public Boolean getInitialized() {

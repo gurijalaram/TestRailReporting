@@ -19,8 +19,7 @@ import java.util.List;
  * @author kpatel
  */
 public class Schedule extends LoadableComponent<Schedule> {
-
-    private final Logger LOGGER = LoggerFactory.getLogger(Schedule.class);
+    private final Logger logger = LoggerFactory.getLogger(Schedule.class);
 
     @FindBy(xpath = "//span[.='New']")
     private WebElement newWorkflowBtn;
@@ -94,7 +93,7 @@ public class Schedule extends LoadableComponent<Schedule> {
     public Schedule(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

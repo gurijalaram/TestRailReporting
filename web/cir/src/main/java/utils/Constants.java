@@ -55,7 +55,13 @@ public class Constants {
     public static final String INVALID_ERROR_MESSAGE = "Invalid";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-staging";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
+
+    public static final String SCENARIO_TYPE = "";
+    public static final String ELEMENT_NAME = "";
+    public static final String SCENARIO_NAME = "";
+    public static final String EXPORT_SET_NAME = "";
+
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
