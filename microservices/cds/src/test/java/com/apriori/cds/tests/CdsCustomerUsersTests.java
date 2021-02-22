@@ -4,13 +4,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
-import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -193,37 +191,5 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<ErrorMessage> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
         assertThat(responseWrapper.getResponseEntity().getMessage(), is(containsString("Unable to get user with identity")));
-    }
-
-    @Test
-    @TestRail(testCaseId = "3281")
-    @Description("Update a users credentials")
-    public void patchUsersCredentials() {
-        String customersEndpoint = String.format(url, "customers");
-
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
-
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
-
-        String credentialsUrl = String.format(String.format(String.format(url, "users/%s"), userIdentity.concat("%s")),"/credentials");
-        ResponseWrapper<CredentialsItems> credentials = getCommonRequest(credentialsUrl, true, CredentialsItems.class);
-        String passwordHash = credentials.getResponseEntity().getResponse().getPasswordHash();
-        String patchCredentialsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity).concat("/credentials"))));
-
-        ResponseWrapper<CredentialsItems> response = patchCredentials(patchCredentialsEndpoint,CredentialsItems.class, passwordHash);
-        assertThat(response.getResponseEntity().getResponse().getPasswordHash(),is(not(equalTo(passwordHash))));
     }
 }
