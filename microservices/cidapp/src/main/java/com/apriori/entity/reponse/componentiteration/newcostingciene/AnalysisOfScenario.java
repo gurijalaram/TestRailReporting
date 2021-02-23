@@ -83,8 +83,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setIdentity(String identity) {
         this.identity = identity;
-    return this;
-}
+        return this;
+    }
 
     public Double getAdditionalAmortizedInvestment() {
         return additionalAmortizedInvestment;
@@ -92,8 +92,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setAdditionalAmortizedInvestment(Double additionalAmortizedInvestment) {
         this.additionalAmortizedInvestment = additionalAmortizedInvestment;
-    return this;
-}
+        return this;
+    }
 
     public Double getAdditionalDirectCosts() {
         return additionalDirectCosts;
@@ -101,8 +101,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setAdditionalDirectCosts(Double additionalDirectCosts) {
         this.additionalDirectCosts = additionalDirectCosts;
-    return this;
-}
+        return this;
+    }
 
     public Double getAmortizedInvestment() {
         return amortizedInvestment;
@@ -110,8 +110,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setAmortizedInvestment(Double amortizedInvestment) {
         this.amortizedInvestment = amortizedInvestment;
-    return this;
-}
+        return this;
+    }
 
     public Double getAnnualCost() {
         return annualCost;
@@ -119,8 +119,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setAnnualCost(Double annualCost) {
         this.annualCost = annualCost;
-    return this;
-}
+        return this;
+    }
 
     public Integer getAnnualVolume() {
         return annualVolume;
@@ -128,8 +128,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setAnnualVolume(Integer annualVolume) {
         this.annualVolume = annualVolume;
-    return this;
-}
+        return this;
+    }
 
     public Double getBatchCost() {
         return batchCost;
@@ -137,8 +137,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setBatchCost(Double batchCost) {
         this.batchCost = batchCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getBatchSetupTime() {
         return batchSetupTime;
@@ -146,8 +146,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setBatchSetupTime(Double batchSetupTime) {
         this.batchSetupTime = batchSetupTime;
-    return this;
-}
+        return this;
+    }
 
     public Integer getBatchSize() {
         return batchSize;
@@ -155,8 +155,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setBatchSize(Integer batchSize) {
         this.batchSize = batchSize;
-    return this;
-}
+        return this;
+    }
 
     public Double getCadSerLength() {
         return cadSerLength;
@@ -164,8 +164,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setCadSerLength(Double cadSerLength) {
         this.cadSerLength = cadSerLength;
-    return this;
-}
+        return this;
+    }
 
     public Double getCadSerWidth() {
         return cadSerWidth;
@@ -173,8 +173,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setCadSerWidth(Double cadSerWidth) {
         this.cadSerWidth = cadSerWidth;
-    return this;
-}
+        return this;
+    }
 
     public Double getCapitalInvestment() {
         return capitalInvestment;
@@ -182,8 +182,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setCapitalInvestment(Double capitalInvestment) {
         this.capitalInvestment = capitalInvestment;
-    return this;
-}
+        return this;
+    }
 
     public Double getCycleTime() {
         return cycleTime;
@@ -191,8 +191,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setCycleTime(Double cycleTime) {
         this.cycleTime = cycleTime;
-    return this;
-}
+        return this;
+    }
 
     public Integer getDfmRisk() {
         return dfmRisk;
@@ -200,8 +200,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setDfmRisk(Integer dfmRisk) {
         this.dfmRisk = dfmRisk;
-    return this;
-}
+        return this;
+    }
 
     public Double getDirectOverheadCost() {
         return directOverheadCost;
@@ -209,8 +209,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setDirectOverheadCost(Double directOverheadCost) {
         this.directOverheadCost = directOverheadCost;
-    return this;
-}
+        return this;
+    }
 
     public Integer getDtcMessagesCount() {
         return dtcMessagesCount;
@@ -218,8 +218,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setDtcMessagesCount(Integer dtcMessagesCount) {
         this.dtcMessagesCount = dtcMessagesCount;
-    return this;
-}
+        return this;
+    }
 
     public Double getElapsedTime() {
         return elapsedTime;
@@ -227,8 +227,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setElapsedTime(Double elapsedTime) {
         this.elapsedTime = elapsedTime;
-    return this;
-}
+        return this;
+    }
 
     public Double getExpendableToolingCostPerPart() {
         return expendableToolingCostPerPart;
@@ -236,8 +236,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setExpendableToolingCostPerPart(Double expendableToolingCostPerPart) {
         this.expendableToolingCostPerPart = expendableToolingCostPerPart;
-    return this;
-}
+        return this;
+    }
 
     public Double getExtraCosts() {
         return extraCosts;
@@ -245,8 +245,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setExtraCosts(Double extraCosts) {
         this.extraCosts = extraCosts;
-    return this;
-}
+        return this;
+    }
 
     public Integer getFailedGcdsCount() {
         return failedGcdsCount;
@@ -254,8 +254,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setFailedGcdsCount(Integer failedGcdsCount) {
         this.failedGcdsCount = failedGcdsCount;
-    return this;
-}
+        return this;
+    }
 
     public Integer getFailuresWarningsCount() {
         return failuresWarningsCount;
@@ -263,8 +263,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setFailuresWarningsCount(Integer failuresWarningsCount) {
         this.failuresWarningsCount = failuresWarningsCount;
-    return this;
-}
+        return this;
+    }
 
     public Double getFinalYield() {
         return finalYield;
@@ -272,8 +272,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setFinalYield(Double finalYield) {
         this.finalYield = finalYield;
-    return this;
-}
+        return this;
+    }
 
     public Double getFinishMass() {
         return finishMass;
@@ -281,8 +281,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setFinishMass(Double finishMass) {
         this.finishMass = finishMass;
-    return this;
-}
+        return this;
+    }
 
     public Double getFixtureCost() {
         return fixtureCost;
@@ -290,8 +290,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setFixtureCost(Double fixtureCost) {
         this.fixtureCost = fixtureCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getFixtureCostPerPart() {
         return fixtureCostPerPart;
@@ -299,8 +299,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setFixtureCostPerPart(Double fixtureCostPerPart) {
         this.fixtureCostPerPart = fixtureCostPerPart;
-    return this;
-}
+        return this;
+    }
 
     public Double getFullyBurdenedCost() {
         return fullyBurdenedCost;
@@ -308,8 +308,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setFullyBurdenedCost(Double fullyBurdenedCost) {
         this.fullyBurdenedCost = fullyBurdenedCost;
-    return this;
-}
+        return this;
+    }
 
     public Integer getGcdWithTolerancesCount() {
         return gcdWithTolerancesCount;
@@ -317,8 +317,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setGcdWithTolerancesCount(Integer gcdWithTolerancesCount) {
         this.gcdWithTolerancesCount = gcdWithTolerancesCount;
-    return this;
-}
+        return this;
+    }
 
     public Double getGoodPartYield() {
         return goodPartYield;
@@ -326,8 +326,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setGoodPartYield(Double goodPartYield) {
         this.goodPartYield = goodPartYield;
-    return this;
-}
+        return this;
+    }
 
     public Double getHardToolingCost() {
         return hardToolingCost;
@@ -335,8 +335,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setHardToolingCost(Double hardToolingCost) {
         this.hardToolingCost = hardToolingCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getHeight() {
         return height;
@@ -344,8 +344,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setHeight(Double height) {
         this.height = height;
-    return this;
-}
+        return this;
+    }
 
     public Double getLaborCost() {
         return laborCost;
@@ -353,8 +353,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setLaborCost(Double laborCost) {
         this.laborCost = laborCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getLaborTime() {
         return laborTime;
@@ -362,8 +362,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setLaborTime(Double laborTime) {
         this.laborTime = laborTime;
-    return this;
-}
+        return this;
+    }
 
     public String getLastCosted() {
         return lastCosted;
@@ -371,8 +371,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setLastCosted(String lastCosted) {
         this.lastCosted = lastCosted;
-    return this;
-}
+        return this;
+    }
 
     public Double getLength() {
         return length;
@@ -380,8 +380,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setLength(Double length) {
         this.length = length;
-    return this;
-}
+        return this;
+    }
 
     public Double getLifetimeCost() {
         return lifetimeCost;
@@ -389,8 +389,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setLifetimeCost(Double lifetimeCost) {
         this.lifetimeCost = lifetimeCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getLogisticsCost() {
         return logisticsCost;
@@ -398,8 +398,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setLogisticsCost(Double logisticsCost) {
         this.logisticsCost = logisticsCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getMargin() {
         return margin;
@@ -407,8 +407,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setMargin(Double margin) {
         this.margin = margin;
-    return this;
-}
+        return this;
+    }
 
     public Double getMarginPercent() {
         return marginPercent;
@@ -416,8 +416,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setMarginPercent(Double marginPercent) {
         this.marginPercent = marginPercent;
-    return this;
-}
+        return this;
+    }
 
     public Double getMaterialCost() {
         return materialCost;
@@ -425,8 +425,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setMaterialCost(Double materialCost) {
         this.materialCost = materialCost;
-    return this;
-}
+        return this;
+    }
 
     public String getMaterialName() {
         return materialName;
@@ -434,8 +434,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setMaterialName(String materialName) {
         this.materialName = materialName;
-    return this;
-}
+        return this;
+    }
 
     public Double getMaterialOverheadCost() {
         return materialOverheadCost;
@@ -443,8 +443,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setMaterialOverheadCost(Double materialOverheadCost) {
         this.materialOverheadCost = materialOverheadCost;
-    return this;
-}
+        return this;
+    }
 
     public String getMaterialStockFormName() {
         return materialStockFormName;
@@ -452,8 +452,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setMaterialStockFormName(String materialStockFormName) {
         this.materialStockFormName = materialStockFormName;
-    return this;
-}
+        return this;
+    }
 
     public String getMaterialStockName() {
         return materialStockName;
@@ -461,8 +461,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setMaterialStockName(String materialStockName) {
         this.materialStockName = materialStockName;
-    return this;
-}
+        return this;
+    }
 
     public Double getMaterialUnitCost() {
         return materialUnitCost;
@@ -470,8 +470,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setMaterialUnitCost(Double materialUnitCost) {
         this.materialUnitCost = materialUnitCost;
-    return this;
-}
+        return this;
+    }
 
     public Integer getNotSupportedGcdsCount() {
         return notSupportedGcdsCount;
@@ -479,8 +479,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setNotSupportedGcdsCount(Integer notSupportedGcdsCount) {
         this.notSupportedGcdsCount = notSupportedGcdsCount;
-    return this;
-}
+        return this;
+    }
 
     public Double getNumberOfParts() {
         return numberOfParts;
@@ -488,8 +488,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setNumberOfParts(Double numberOfParts) {
         this.numberOfParts = numberOfParts;
-    return this;
-}
+        return this;
+    }
 
     public Double getNumOperators() {
         return numOperators;
@@ -497,8 +497,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setNumOperators(Double numOperators) {
         this.numOperators = numOperators;
-    return this;
-}
+        return this;
+    }
 
     public Double getNumPartsPerSheet() {
         return numPartsPerSheet;
@@ -506,8 +506,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setNumPartsPerSheet(Double numPartsPerSheet) {
         this.numPartsPerSheet = numPartsPerSheet;
-    return this;
-}
+        return this;
+    }
 
     public Double getNumScrapParts() {
         return numScrapParts;
@@ -515,8 +515,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setNumScrapParts(Double numScrapParts) {
         this.numScrapParts = numScrapParts;
-    return this;
-}
+        return this;
+    }
 
     public Double getPartsPerHour() {
         return partsPerHour;
@@ -524,8 +524,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setPartsPerHour(Double partsPerHour) {
         this.partsPerHour = partsPerHour;
-    return this;
-}
+        return this;
+    }
 
     public Double getPeriodOverhead() {
         return periodOverhead;
@@ -533,8 +533,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setPeriodOverhead(Double periodOverhead) {
         this.periodOverhead = periodOverhead;
-    return this;
-}
+        return this;
+    }
 
     public Double getPieceAndPeriod() {
         return pieceAndPeriod;
@@ -542,8 +542,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setPieceAndPeriod(Double pieceAndPeriod) {
         this.pieceAndPeriod = pieceAndPeriod;
-    return this;
-}
+        return this;
+    }
 
     public Double getPieceCost() {
         return pieceCost;
@@ -551,8 +551,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setPieceCost(Double pieceCost) {
         this.pieceCost = pieceCost;
-    return this;
-}
+        return this;
+    }
 
     public String getProcessRoutingName() {
         return processRoutingName;
@@ -560,8 +560,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setProcessRoutingName(String processRoutingName) {
         this.processRoutingName = processRoutingName;
-    return this;
-}
+        return this;
+    }
 
     public Double getProgrammingCost() {
         return programmingCost;
@@ -569,8 +569,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setProgrammingCost(Double programmingCost) {
         this.programmingCost = programmingCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getProgrammingCostPerPart() {
         return programmingCostPerPart;
@@ -578,8 +578,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setProgrammingCostPerPart(Double programmingCostPerPart) {
         this.programmingCostPerPart = programmingCostPerPart;
-    return this;
-}
+        return this;
+    }
 
     public Double getRoughMass() {
         return roughMass;
@@ -587,8 +587,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setRoughMass(Double roughMass) {
         this.roughMass = roughMass;
-    return this;
-}
+        return this;
+    }
 
     public Double getScrapMass() {
         return scrapMass;
@@ -596,8 +596,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setScrapMass(Double scrapMass) {
         this.scrapMass = scrapMass;
-    return this;
-}
+        return this;
+    }
 
     public Double getSetupCostPerPart() {
         return setupCostPerPart;
@@ -605,8 +605,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setSetupCostPerPart(Double setupCostPerPart) {
         this.setupCostPerPart = setupCostPerPart;
-    return this;
-}
+        return this;
+    }
 
     public Double getSgaCost() {
         return sgaCost;
@@ -614,8 +614,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setSgaCost(Double sgaCost) {
         this.sgaCost = sgaCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getStockPropertyLength() {
         return stockPropertyLength;
@@ -623,8 +623,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setStockPropertyLength(Double stockPropertyLength) {
         this.stockPropertyLength = stockPropertyLength;
-    return this;
-}
+        return this;
+    }
 
     public Double getStockPropertyThickness() {
         return stockPropertyThickness;
@@ -632,8 +632,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setStockPropertyThickness(Double stockPropertyThickness) {
         this.stockPropertyThickness = stockPropertyThickness;
-    return this;
-}
+        return this;
+    }
 
     public Double getStockPropertyWidth() {
         return stockPropertyWidth;
@@ -641,8 +641,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setStockPropertyWidth(Double stockPropertyWidth) {
         this.stockPropertyWidth = stockPropertyWidth;
-    return this;
-}
+        return this;
+    }
 
     public Double getStripNestingPitch() {
         return stripNestingPitch;
@@ -650,8 +650,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setStripNestingPitch(Double stripNestingPitch) {
         this.stripNestingPitch = stripNestingPitch;
-    return this;
-}
+        return this;
+    }
 
     public Double getToolingCostPerPart() {
         return toolingCostPerPart;
@@ -659,8 +659,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setToolingCostPerPart(Double toolingCostPerPart) {
         this.toolingCostPerPart = toolingCostPerPart;
-    return this;
-}
+        return this;
+    }
 
     public Double getTotalCost() {
         return totalCost;
@@ -668,8 +668,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setTotalCost(Double totalCost) {
         this.totalCost = totalCost;
-    return this;
-}
+        return this;
+    }
 
     public Double getTotalProductionVolume() {
         return totalProductionVolume;
@@ -677,8 +677,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setTotalProductionVolume(Double totalProductionVolume) {
         this.totalProductionVolume = totalProductionVolume;
-    return this;
-}
+        return this;
+    }
 
     public Double getOtherDirectCosts() {
         return otherDirectCosts;
@@ -686,8 +686,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setOtherDirectCosts(Double otherDirectCosts) {
         this.otherDirectCosts = otherDirectCosts;
-    return this;
-}
+        return this;
+    }
 
     public Double getUtilization() {
         return utilization;
@@ -695,8 +695,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setUtilization(Double utilization) {
         this.utilization = utilization;
-    return this;
-}
+        return this;
+    }
 
     public Double getUtilizationWithAddendum() {
         return utilizationWithAddendum;
@@ -704,8 +704,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setUtilizationWithAddendum(Double utilizationWithAddendum) {
         this.utilizationWithAddendum = utilizationWithAddendum;
-    return this;
-}
+        return this;
+    }
 
     public Double getUtilizationWithoutAddendum() {
         return utilizationWithoutAddendum;
@@ -713,8 +713,8 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setUtilizationWithoutAddendum(Double utilizationWithoutAddendum) {
         this.utilizationWithoutAddendum = utilizationWithoutAddendum;
-    return this;
-}
+        return this;
+    }
 
     public Double getWidth() {
         return width;
@@ -722,6 +722,6 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setWidth(Double width) {
         this.width = width;
-    return this;
-}
+        return this;
+    }
 }

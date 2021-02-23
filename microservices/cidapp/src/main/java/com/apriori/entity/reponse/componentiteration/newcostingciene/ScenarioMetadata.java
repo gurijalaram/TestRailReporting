@@ -21,8 +21,8 @@ public class ScenarioMetadata {
 
     public ScenarioMetadata setIdentity(String identity) {
         this.identity = identity;
-    return this;
-}
+        return this;
+    }
 
     public List<Object> getActiveAxes() {
         return activeAxes;
@@ -30,8 +30,8 @@ public class ScenarioMetadata {
 
     public ScenarioMetadata setActiveAxes(List<Object> activeAxes) {
         this.activeAxes = activeAxes;
-    return this;
-}
+        return this;
+    }
 
     public ActiveDimensions getActiveDimensions() {
         return activeDimensions;
@@ -39,8 +39,8 @@ public class ScenarioMetadata {
 
     public ScenarioMetadata setActiveDimensions(ActiveDimensions activeDimensions) {
         this.activeDimensions = activeDimensions;
-    return this;
-}
+        return this;
+    }
 
     public List<AxesEntry> getAxesEntries() {
         return axesEntries;
@@ -48,8 +48,8 @@ public class ScenarioMetadata {
 
     public ScenarioMetadata setAxesEntries(List<AxesEntry> axesEntries) {
         this.axesEntries = axesEntries;
-    return this;
-}
+        return this;
+    }
 
     public List<Double> getBoundingBox() {
         return boundingBox;
@@ -57,8 +57,8 @@ public class ScenarioMetadata {
 
     public ScenarioMetadata setBoundingBox(List<Double> boundingBox) {
         this.boundingBox = boundingBox;
-    return this;
-}
+        return this;
+    }
 
     public List<DrawableNode> getDrawableNodes() {
         return drawableNodes;
@@ -66,8 +66,8 @@ public class ScenarioMetadata {
 
     public ScenarioMetadata setDrawableNodes(List<DrawableNode> drawableNodes) {
         this.drawableNodes = drawableNodes;
-    return this;
-}
+        return this;
+    }
 
     public List<FaceIndex> getFaceIndices() {
         return faceIndices;
@@ -75,8 +75,8 @@ public class ScenarioMetadata {
 
     public ScenarioMetadata setFaceIndices(List<FaceIndex> faceIndices) {
         this.faceIndices = faceIndices;
-    return this;
-}
+        return this;
+    }
 
     public List<Object> getNodeEntries() {
         return nodeEntries;
@@ -84,6 +84,6 @@ public class ScenarioMetadata {
 
     public ScenarioMetadata setNodeEntries(List<Object> nodeEntries) {
         this.nodeEntries = nodeEntries;
-    return this;
-}
+        return this;
+    }
 }
