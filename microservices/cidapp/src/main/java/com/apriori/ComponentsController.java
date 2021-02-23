@@ -2,6 +2,8 @@ package com.apriori;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.JsonNodeUtil;
+import com.apriori.entity.reponse.ComponentIdentityResponse;
+import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -39,5 +41,20 @@ public class ComponentsController {
         componentIdentity = new JsonNodeUtil().jsonNode(request.getBody(), "componentIdentity");
         scenarioIdentity = new JsonNodeUtil().jsonNode(request.getBody(), "scenarioIdentity");
         return request;
+    }
+
+    /**
+     * Get the current representation of a component.
+     *
+     * @param token - the token
+     * @return component identity
+     */
+    public ResponseWrapper<ComponentIdentityResponse> getComponentsIdentity(String token) {
+        final String url = String.format(Constants.getApiUrl(), "components/" + "8AA8I58780L7");
+
+        RequestEntity requestEntity = RequestEntity.init(url, ComponentIdentityResponse.class)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
     }
 }
