@@ -10,13 +10,13 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
-public class UploadComponent {
+public class ComponentsController {
 
     private static String componentIdentity;
     private static String scenarioIdentity;
 
     /**
-     * Uploads a component
+     * Post a component
      *
      * @param token        - the token
      * @param url          - the url
@@ -25,7 +25,7 @@ public class UploadComponent {
      * @param partName     - the part name
      * @return object
      */
-    public ResponseWrapper<Object> uploadComponent(String token, String url, Class klass, String scenarioName, String partName) {
+    public ResponseWrapper<Object> postComponents(String token, String url, Class klass, String scenarioName, String partName) {
 
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
