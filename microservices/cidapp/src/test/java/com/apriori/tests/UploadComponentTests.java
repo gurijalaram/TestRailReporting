@@ -20,7 +20,7 @@ import org.junit.Test;
 public class UploadComponentTests extends TestUtil {
 
     private static String token;
-    private ResponseWrapper<Object> image;
+    private ResponseWrapper<Object> response;
 
     @BeforeClass
     public static void getToken() {
@@ -38,8 +38,8 @@ public class UploadComponentTests extends TestUtil {
     public void cadViewerValues() {
         final String apiUrl = String.format(Constants.getApiUrl(), "components");
 
-        image = new ComponentsController().postComponents(token, apiUrl, UploadComponentResponse.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
+        response = new ComponentsController().postComponents(token, apiUrl, UploadComponentResponse.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
 
-        assertThat(image.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }
 }
