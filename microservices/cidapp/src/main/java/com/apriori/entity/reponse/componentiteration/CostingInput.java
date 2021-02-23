@@ -10,7 +10,7 @@ public class CostingInput {
     private CustomAttributes customAttributes;
     private String materialName;
     private String processGroupName;
-    private Integer productionLife;
+    private Double productionLife;
     private String vpeName;
 
     public String getIdentity() {
@@ -67,11 +67,11 @@ public class CostingInput {
         return this;
     }
 
-    public Integer getProductionLife() {
+    public Double getProductionLife() {
         return productionLife;
     }
 
-    public CostingInput setProductionLife(Integer productionLife) {
+    public CostingInput setProductionLife(Double productionLife) {
         this.productionLife = productionLife;
         return this;
     }

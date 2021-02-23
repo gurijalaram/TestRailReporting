@@ -4,34 +4,24 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DrawableNode {
-    private DrawableAdditionalProp1 additionalProp1;
-    private DrawableAdditionalProp2 additionalProp2;
-    private DrawableAdditionalProp3 additionalProp3;
+    private Integer value;
+    private Key_ key;
 
-    public DrawableAdditionalProp1 getAdditionalProp1() {
-        return additionalProp1;
+    public Integer getValue() {
+        return value;
     }
 
-    public DrawableNode setAdditionalProp1(DrawableAdditionalProp1 additionalProp1) {
-        this.additionalProp1 = additionalProp1;
+    public DrawableNode setValue(Integer value) {
+        this.value = value;
         return this;
     }
 
-    public DrawableAdditionalProp2 getAdditionalProp2() {
-        return additionalProp2;
+    public Key_ getKey() {
+        return key;
     }
 
-    public DrawableNode setAdditionalProp2(DrawableAdditionalProp2 additionalProp2) {
-        this.additionalProp2 = additionalProp2;
-        return this;
-    }
-
-    public DrawableAdditionalProp3 getAdditionalProp3() {
-        return additionalProp3;
-    }
-
-    public DrawableNode setAdditionalProp3(DrawableAdditionalProp3 additionalProp3) {
-        this.additionalProp3 = additionalProp3;
+    public DrawableNode setKey(Key_ key) {
+        this.key = key;
         return this;
     }
 }

@@ -34,5 +34,4 @@ public class Thumbnail {
         this.imageType = imageType;
         return this;
     }
-
 }

@@ -1,71 +1,55 @@
 package com.apriori.entity.reponse.componentiteration;
 
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-
-import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ScenarioGcd {
-    private Integer blankBoxLength;
-    private Integer blankBoxWidth;
+    private String identity;
+    private Double blankBoxLength;
+    private Double blankBoxWidth;
     private String cadConfiguration;
-    private String cadKeyText;
-    private String cadMaterialName;
     private Integer cadVersion;
     private Integer childArtifactCount;
     private String childGcds;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private String createdByName;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime deletedAt;
-    private String deletedBy;
-    private String deletedByName;
-    private String descriptor;
     private Integer distanceUnits;
     private String engineType;
     private String fileFormat;
-    private Integer height;
-    private String identity;
-    private Integer length;
+    private Double height;
+    private Double length;
     private String massUnitName;
     private Integer minGcdVersion;
-    private Integer nonSolidSurfaceArea;
+    private Double nonSolidSurfaceArea;
     private String partModelName;
-    private Integer surfaceArea;
+    private Double surfaceArea;
     private String temperatureUnitName;
-    private Integer thickness;
+    private Double thickness;
     private String timeUnitName;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime updatedAt;
-    private String updatedBy;
-    private String updatedByName;
-    private Integer volume;
-    private Integer width;
+    private Double volume;
+    private Double width;
 
-    public Integer getBlankBoxLength() {
+    public String getIdentity() {
+        return identity;
+    }
+
+    public ScenarioGcd setIdentity(String identity) {
+        this.identity = identity;
+        return this;
+    }
+
+    public Double getBlankBoxLength() {
         return blankBoxLength;
     }
 
-    public ScenarioGcd setBlankBoxLength(Integer blankBoxLength) {
+    public ScenarioGcd setBlankBoxLength(Double blankBoxLength) {
         this.blankBoxLength = blankBoxLength;
         return this;
     }
 
-    public Integer getBlankBoxWidth() {
+    public Double getBlankBoxWidth() {
         return blankBoxWidth;
     }
 
-    public ScenarioGcd setBlankBoxWidth(Integer blankBoxWidth) {
+    public ScenarioGcd setBlankBoxWidth(Double blankBoxWidth) {
         this.blankBoxWidth = blankBoxWidth;
         return this;
     }
@@ -76,24 +60,6 @@ public class ScenarioGcd {
 
     public ScenarioGcd setCadConfiguration(String cadConfiguration) {
         this.cadConfiguration = cadConfiguration;
-        return this;
-    }
-
-    public String getCadKeyText() {
-        return cadKeyText;
-    }
-
-    public ScenarioGcd setCadKeyText(String cadKeyText) {
-        this.cadKeyText = cadKeyText;
-        return this;
-    }
-
-    public String getCadMaterialName() {
-        return cadMaterialName;
-    }
-
-    public ScenarioGcd setCadMaterialName(String cadMaterialName) {
-        this.cadMaterialName = cadMaterialName;
         return this;
     }
 
@@ -124,69 +90,6 @@ public class ScenarioGcd {
         return this;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public ScenarioGcd setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public ScenarioGcd setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public String getCreatedByName() {
-        return createdByName;
-    }
-
-    public ScenarioGcd setCreatedByName(String createdByName) {
-        this.createdByName = createdByName;
-        return this;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public ScenarioGcd setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-        return this;
-    }
-
-    public String getDeletedBy() {
-        return deletedBy;
-    }
-
-    public ScenarioGcd setDeletedBy(String deletedBy) {
-        this.deletedBy = deletedBy;
-        return this;
-    }
-
-    public String getDeletedByName() {
-        return deletedByName;
-    }
-
-    public ScenarioGcd setDeletedByName(String deletedByName) {
-        this.deletedByName = deletedByName;
-        return this;
-    }
-
-    public String getDescriptor() {
-        return descriptor;
-    }
-
-    public ScenarioGcd setDescriptor(String descriptor) {
-        this.descriptor = descriptor;
-        return this;
-    }
-
     public Integer getDistanceUnits() {
         return distanceUnits;
     }
@@ -214,29 +117,20 @@ public class ScenarioGcd {
         return this;
     }
 
-    public Integer getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public ScenarioGcd setHeight(Integer height) {
+    public ScenarioGcd setHeight(Double height) {
         this.height = height;
         return this;
     }
 
-    public String getIdentity() {
-        return identity;
-    }
-
-    public ScenarioGcd setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
-    public Integer getLength() {
+    public Double getLength() {
         return length;
     }
 
-    public ScenarioGcd setLength(Integer length) {
+    public ScenarioGcd setLength(Double length) {
         this.length = length;
         return this;
     }
@@ -259,11 +153,11 @@ public class ScenarioGcd {
         return this;
     }
 
-    public Integer getNonSolidSurfaceArea() {
+    public Double getNonSolidSurfaceArea() {
         return nonSolidSurfaceArea;
     }
 
-    public ScenarioGcd setNonSolidSurfaceArea(Integer nonSolidSurfaceArea) {
+    public ScenarioGcd setNonSolidSurfaceArea(Double nonSolidSurfaceArea) {
         this.nonSolidSurfaceArea = nonSolidSurfaceArea;
         return this;
     }
@@ -277,11 +171,11 @@ public class ScenarioGcd {
         return this;
     }
 
-    public Integer getSurfaceArea() {
+    public Double getSurfaceArea() {
         return surfaceArea;
     }
 
-    public ScenarioGcd setSurfaceArea(Integer surfaceArea) {
+    public ScenarioGcd setSurfaceArea(Double surfaceArea) {
         this.surfaceArea = surfaceArea;
         return this;
     }
@@ -295,11 +189,11 @@ public class ScenarioGcd {
         return this;
     }
 
-    public Integer getThickness() {
+    public Double getThickness() {
         return thickness;
     }
 
-    public ScenarioGcd setThickness(Integer thickness) {
+    public ScenarioGcd setThickness(Double thickness) {
         this.thickness = thickness;
         return this;
     }
@@ -313,47 +207,20 @@ public class ScenarioGcd {
         return this;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public ScenarioGcd setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public ScenarioGcd setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-        return this;
-    }
-
-    public String getUpdatedByName() {
-        return updatedByName;
-    }
-
-    public ScenarioGcd setUpdatedByName(String updatedByName) {
-        this.updatedByName = updatedByName;
-        return this;
-    }
-
-    public Integer getVolume() {
+    public Double getVolume() {
         return volume;
     }
 
-    public ScenarioGcd setVolume(Integer volume) {
+    public ScenarioGcd setVolume(Double volume) {
         this.volume = volume;
         return this;
     }
 
-    public Integer getWidth() {
+    public Double getWidth() {
         return width;
     }
 
-    public ScenarioGcd setWidth(Integer width) {
+    public ScenarioGcd setWidth(Double width) {
         this.width = width;
         return this;
     }

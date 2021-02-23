@@ -1,56 +1,43 @@
 package com.apriori.entity.reponse.componentiteration;
 
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-
-import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ScenarioDtcIssue {
+    private String identity;
     private String attributeId;
     private String attributeText;
     private String category;
     private String categoryText;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private String createdByName;
-    private Integer currentValue;
-    private String currentValueText;
     private Integer decimalPlaces;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime deletedAt;
-    private String deletedBy;
-    private String deletedByName;
     private String dtcIssueType;
     private String gcdArtifactTypeName;
     private String gcdDisplayName;
     private Integer gcdSequenceNumber;
-    private String identity;
-    private String messageId;
     private String messageText;
     private Integer priority;
+    private String type;
+    private String currentValueText;
+    private String messageId;
     private String processDisplayName;
     private String processGroupName;
     private Integer processIndex;
     private String processName;
     private String rule;
-    private Integer suggestedMinValue;
     private String suggestedMinValueText;
-    private String type;
-    private String unitType;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime updatedAt;
-    private String updatedBy;
-    private String updatedByName;
     private String vpeName;
+    private Double currentValue;
+    private Double suggestedMinValue;
+    private String unitType;
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public ScenarioDtcIssue setIdentity(String identity) {
+        this.identity = identity;
+        return this;
+    }
 
     public String getAttributeId() {
         return attributeId;
@@ -88,84 +75,12 @@ public class ScenarioDtcIssue {
         return this;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public ScenarioDtcIssue setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public ScenarioDtcIssue setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public String getCreatedByName() {
-        return createdByName;
-    }
-
-    public ScenarioDtcIssue setCreatedByName(String createdByName) {
-        this.createdByName = createdByName;
-        return this;
-    }
-
-    public Integer getCurrentValue() {
-        return currentValue;
-    }
-
-    public ScenarioDtcIssue setCurrentValue(Integer currentValue) {
-        this.currentValue = currentValue;
-        return this;
-    }
-
-    public String getCurrentValueText() {
-        return currentValueText;
-    }
-
-    public ScenarioDtcIssue setCurrentValueText(String currentValueText) {
-        this.currentValueText = currentValueText;
-        return this;
-    }
-
     public Integer getDecimalPlaces() {
         return decimalPlaces;
     }
 
     public ScenarioDtcIssue setDecimalPlaces(Integer decimalPlaces) {
         this.decimalPlaces = decimalPlaces;
-        return this;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public ScenarioDtcIssue setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-        return this;
-    }
-
-    public String getDeletedBy() {
-        return deletedBy;
-    }
-
-    public ScenarioDtcIssue setDeletedBy(String deletedBy) {
-        this.deletedBy = deletedBy;
-        return this;
-    }
-
-    public String getDeletedByName() {
-        return deletedByName;
-    }
-
-    public ScenarioDtcIssue setDeletedByName(String deletedByName) {
-        this.deletedByName = deletedByName;
         return this;
     }
 
@@ -205,24 +120,6 @@ public class ScenarioDtcIssue {
         return this;
     }
 
-    public String getIdentity() {
-        return identity;
-    }
-
-    public ScenarioDtcIssue setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public ScenarioDtcIssue setMessageId(String messageId) {
-        this.messageId = messageId;
-        return this;
-    }
-
     public String getMessageText() {
         return messageText;
     }
@@ -238,6 +135,33 @@ public class ScenarioDtcIssue {
 
     public ScenarioDtcIssue setPriority(Integer priority) {
         this.priority = priority;
+        return this;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public ScenarioDtcIssue setType(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public String getCurrentValueText() {
+        return currentValueText;
+    }
+
+    public ScenarioDtcIssue setCurrentValueText(String currentValueText) {
+        this.currentValueText = currentValueText;
+        return this;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public ScenarioDtcIssue setMessageId(String messageId) {
+        this.messageId = messageId;
         return this;
     }
 
@@ -286,15 +210,6 @@ public class ScenarioDtcIssue {
         return this;
     }
 
-    public Integer getSuggestedMinValue() {
-        return suggestedMinValue;
-    }
-
-    public ScenarioDtcIssue setSuggestedMinValue(Integer suggestedMinValue) {
-        this.suggestedMinValue = suggestedMinValue;
-        return this;
-    }
-
     public String getSuggestedMinValueText() {
         return suggestedMinValueText;
     }
@@ -304,12 +219,30 @@ public class ScenarioDtcIssue {
         return this;
     }
 
-    public String getType() {
-        return type;
+    public String getVpeName() {
+        return vpeName;
     }
 
-    public ScenarioDtcIssue setType(String type) {
-        this.type = type;
+    public ScenarioDtcIssue setVpeName(String vpeName) {
+        this.vpeName = vpeName;
+        return this;
+    }
+
+    public Double getCurrentValue() {
+        return currentValue;
+    }
+
+    public ScenarioDtcIssue setCurrentValue(Double currentValue) {
+        this.currentValue = currentValue;
+        return this;
+    }
+
+    public Double getSuggestedMinValue() {
+        return suggestedMinValue;
+    }
+
+    public ScenarioDtcIssue setSuggestedMinValue(Double suggestedMinValue) {
+        this.suggestedMinValue = suggestedMinValue;
         return this;
     }
 
@@ -319,42 +252,6 @@ public class ScenarioDtcIssue {
 
     public ScenarioDtcIssue setUnitType(String unitType) {
         this.unitType = unitType;
-        return this;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public ScenarioDtcIssue setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public ScenarioDtcIssue setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-        return this;
-    }
-
-    public String getUpdatedByName() {
-        return updatedByName;
-    }
-
-    public ScenarioDtcIssue setUpdatedByName(String updatedByName) {
-        this.updatedByName = updatedByName;
-        return this;
-    }
-
-    public String getVpeName() {
-        return vpeName;
-    }
-
-    public ScenarioDtcIssue setVpeName(String vpeName) {
-        this.vpeName = vpeName;
         return this;
     }
 }

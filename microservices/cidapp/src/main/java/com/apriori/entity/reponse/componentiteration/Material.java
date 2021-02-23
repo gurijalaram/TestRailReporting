@@ -21,18 +21,26 @@ public class Material {
     private String altName3;
     private String altName4;
     private String altName5;
+    private Double costPerUnit;
     private String costUnits;
     private String dataSource;
-    private Integer density;
+    private Double density;
     private String description;
-    private Integer hardness;
+    private Double hardness;
     private String hardnessSystem;
+    private Double k;
     private Double materialCutCodeName;
     private String materialTypeName;
-    private Integer millingSpeed;
+    private Double millingSpeed;
+    private Double n;
     private String name;
+    private Double possionRatio;
+    private Double r;
     private Double scrapCostPercent;
-    private Integer shearStrength;
+    private Double shearStrength;
+    private Double tensileYieldStrength;
+    private Double ultimateTensileStrength;
+    private Double youngModulus;
 
     public String getIdentity() {
         return identity;
@@ -106,6 +114,15 @@ public class Material {
         return this;
     }
 
+    public Double getCostPerUnit() {
+        return costPerUnit;
+    }
+
+    public Material setCostPerUnit(Double costPerUnit) {
+        this.costPerUnit = costPerUnit;
+        return this;
+    }
+
     public String getCostUnits() {
         return costUnits;
     }
@@ -124,11 +141,11 @@ public class Material {
         return this;
     }
 
-    public Integer getDensity() {
+    public Double getDensity() {
         return density;
     }
 
-    public Material setDensity(Integer density) {
+    public Material setDensity(Double density) {
         this.density = density;
         return this;
     }
@@ -142,11 +159,11 @@ public class Material {
         return this;
     }
 
-    public Integer getHardness() {
+    public Double getHardness() {
         return hardness;
     }
 
-    public Material setHardness(Integer hardness) {
+    public Material setHardness(Double hardness) {
         this.hardness = hardness;
         return this;
     }
@@ -157,6 +174,15 @@ public class Material {
 
     public Material setHardnessSystem(String hardnessSystem) {
         this.hardnessSystem = hardnessSystem;
+        return this;
+    }
+
+    public Double getK() {
+        return k;
+    }
+
+    public Material setK(Double k) {
+        this.k = k;
         return this;
     }
 
@@ -178,12 +204,21 @@ public class Material {
         return this;
     }
 
-    public Integer getMillingSpeed() {
+    public Double getMillingSpeed() {
         return millingSpeed;
     }
 
-    public Material setMillingSpeed(Integer millingSpeed) {
+    public Material setMillingSpeed(Double millingSpeed) {
         this.millingSpeed = millingSpeed;
+        return this;
+    }
+
+    public Double getN() {
+        return n;
+    }
+
+    public Material setN(Double n) {
+        this.n = n;
         return this;
     }
 
@@ -196,6 +231,24 @@ public class Material {
         return this;
     }
 
+    public Double getPossionRatio() {
+        return possionRatio;
+    }
+
+    public Material setPossionRatio(Double possionRatio) {
+        this.possionRatio = possionRatio;
+        return this;
+    }
+
+    public Double getR() {
+        return r;
+    }
+
+    public Material setR(Double r) {
+        this.r = r;
+        return this;
+    }
+
     public Double getScrapCostPercent() {
         return scrapCostPercent;
     }
@@ -205,12 +258,39 @@ public class Material {
         return this;
     }
 
-    public Integer getShearStrength() {
+    public Double getShearStrength() {
         return shearStrength;
     }
 
-    public Material setShearStrength(Integer shearStrength) {
+    public Material setShearStrength(Double shearStrength) {
         this.shearStrength = shearStrength;
+        return this;
+    }
+
+    public Double getTensileYieldStrength() {
+        return tensileYieldStrength;
+    }
+
+    public Material setTensileYieldStrength(Double tensileYieldStrength) {
+        this.tensileYieldStrength = tensileYieldStrength;
+        return this;
+    }
+
+    public Double getUltimateTensileStrength() {
+        return ultimateTensileStrength;
+    }
+
+    public Material setUltimateTensileStrength(Double ultimateTensileStrength) {
+        this.ultimateTensileStrength = ultimateTensileStrength;
+        return this;
+    }
+
+    public Double getYoungModulus() {
+        return youngModulus;
+    }
+
+    public Material setYoungModulus(Double youngModulus) {
+        this.youngModulus = youngModulus;
         return this;
     }
 }
