@@ -105,4 +105,32 @@ public class CasCustomersUsersTests extends TestUtil {
         assertThat(updatedUser.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(updatedUser.getResponseEntity().getResponse().getUserProfile().getDepartment(), is(equalTo("QA")));
     }
+
+    @Test
+    @TestRail(testCaseId = "5667")
+    @Description("Reset the MFA configuration for a user.")
+    public void resettingUserMfa() {
+        String url = String.format(Constants.getApiUrl(), "customers/");
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String email = customerName.toLowerCase();
+        String description = customerName + " Description";
+        String userName = generateStringUtil.generateUserName();
+
+        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+
+        String usersEndpoint = url + customerIdentity + "/users/";
+
+        ResponseWrapper<User> user = new CasTestUtil().addUser(usersEndpoint, User.class, token, userName);
+
+        assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
+
+        String identity = user.getResponseEntity().getResponse().getIdentity();
+        String mfaUrl = usersEndpoint + identity + "/reset-mfa";
+
+        ResponseWrapper resetMfa = new CasTestUtil().resetMfa(mfaUrl, token);
+
+        assertThat(resetMfa.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
+    }
 }
