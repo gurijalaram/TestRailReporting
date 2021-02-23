@@ -1,0 +1,1681 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "updatedAt",
+        "createdByName",
+        "customerIdentity",
+        "iteration",
+        "scenarioIterationKey",
+        "costingInput",
+        "scenarioCustomAttributes",
+        "scenarioDtcIssues",
+        "scenarioGcd",
+        "scenarioMetadata",
+        "scenarioProcesses",
+        "analysisOfChildren",
+        "analysisOfScenario",
+        "analysisOfScenarioAndChildren",
+        "hasThumbnail",
+        "hasWebImage",
+        "thumbnail",
+        "material",
+        "materialStock"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "createdByName": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "iteration": {
+          "type": "integer"
+        },
+        "scenarioIterationKey": {
+          "type": "string"
+        },
+        "costingInput": {
+          "type": "object",
+          "required": [
+            "identity",
+            "annualVolume",
+            "batchSize",
+            "customAttributes",
+            "materialName",
+            "processGroupName",
+            "productionLife",
+            "vpeName"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "annualVolume": {
+              "type": "integer"
+            },
+            "batchSize": {
+              "type": "integer"
+            },
+            "customAttributes": {
+              "type": "object",
+              "required": []
+            },
+            "materialName": {
+              "type": "string"
+            },
+            "processGroupName": {
+              "type": "string"
+            },
+            "productionLife": {
+              "type": "number"
+            },
+            "vpeName": {
+              "type": "string"
+            }
+          }
+        },
+        "scenarioCustomAttributes": {
+          "type": "array",
+          "items": {
+          }
+        },
+        "scenarioDtcIssues": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "attributeId",
+                  "attributeText",
+                  "category",
+                  "categoryText",
+                  "decimalPlaces",
+                  "dtcIssueType",
+                  "gcdArtifactTypeName",
+                  "gcdDisplayName",
+                  "gcdSequenceNumber",
+                  "messageText",
+                  "priority",
+                  "type"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "attributeId": {
+                    "type": "string"
+                  },
+                  "attributeText": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "categoryText": {
+                    "type": "string"
+                  },
+                  "decimalPlaces": {
+                    "type": "integer"
+                  },
+                  "dtcIssueType": {
+                    "type": "string"
+                  },
+                  "gcdArtifactTypeName": {
+                    "type": "string"
+                  },
+                  "gcdDisplayName": {
+                    "type": "string"
+                  },
+                  "gcdSequenceNumber": {
+                    "type": "integer"
+                  },
+                  "messageText": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "integer"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "attributeId",
+                  "attributeText",
+                  "category",
+                  "categoryText",
+                  "currentValueText",
+                  "decimalPlaces",
+                  "dtcIssueType",
+                  "gcdArtifactTypeName",
+                  "gcdDisplayName",
+                  "gcdSequenceNumber",
+                  "messageId",
+                  "messageText",
+                  "priority",
+                  "processDisplayName",
+                  "processGroupName",
+                  "processIndex",
+                  "processName",
+                  "rule",
+                  "suggestedMinValueText",
+                  "type",
+                  "vpeName"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "attributeId": {
+                    "type": "string"
+                  },
+                  "attributeText": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "categoryText": {
+                    "type": "string"
+                  },
+                  "currentValueText": {
+                    "type": "string"
+                  },
+                  "decimalPlaces": {
+                    "type": "integer"
+                  },
+                  "dtcIssueType": {
+                    "type": "string"
+                  },
+                  "gcdArtifactTypeName": {
+                    "type": "string"
+                  },
+                  "gcdDisplayName": {
+                    "type": "string"
+                  },
+                  "gcdSequenceNumber": {
+                    "type": "integer"
+                  },
+                  "messageId": {
+                    "type": "string"
+                  },
+                  "messageText": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "integer"
+                  },
+                  "processDisplayName": {
+                    "type": "string"
+                  },
+                  "processGroupName": {
+                    "type": "string"
+                  },
+                  "processIndex": {
+                    "type": "integer"
+                  },
+                  "processName": {
+                    "type": "string"
+                  },
+                  "rule": {
+                    "type": "string"
+                  },
+                  "suggestedMinValueText": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "vpeName": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "attributeId",
+                  "attributeText",
+                  "category",
+                  "categoryText",
+                  "currentValue",
+                  "currentValueText",
+                  "decimalPlaces",
+                  "dtcIssueType",
+                  "gcdArtifactTypeName",
+                  "gcdDisplayName",
+                  "gcdSequenceNumber",
+                  "messageId",
+                  "messageText",
+                  "priority",
+                  "processDisplayName",
+                  "processGroupName",
+                  "processIndex",
+                  "processName",
+                  "rule",
+                  "suggestedMinValue",
+                  "suggestedMinValueText",
+                  "type",
+                  "unitType",
+                  "vpeName"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "attributeId": {
+                    "type": "string"
+                  },
+                  "attributeText": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "categoryText": {
+                    "type": "string"
+                  },
+                  "currentValue": {
+                    "type": "number"
+                  },
+                  "currentValueText": {
+                    "type": "string"
+                  },
+                  "decimalPlaces": {
+                    "type": "integer"
+                  },
+                  "dtcIssueType": {
+                    "type": "string"
+                  },
+                  "gcdArtifactTypeName": {
+                    "type": "string"
+                  },
+                  "gcdDisplayName": {
+                    "type": "string"
+                  },
+                  "gcdSequenceNumber": {
+                    "type": "integer"
+                  },
+                  "messageId": {
+                    "type": "string"
+                  },
+                  "messageText": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "integer"
+                  },
+                  "processDisplayName": {
+                    "type": "string"
+                  },
+                  "processGroupName": {
+                    "type": "string"
+                  },
+                  "processIndex": {
+                    "type": "integer"
+                  },
+                  "processName": {
+                    "type": "string"
+                  },
+                  "rule": {
+                    "type": "string"
+                  },
+                  "suggestedMinValue": {
+                    "type": "number"
+                  },
+                  "suggestedMinValueText": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "unitType": {
+                    "type": "string"
+                  },
+                  "vpeName": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "scenarioGcd": {
+          "type": "object",
+          "required": [
+            "identity",
+            "blankBoxLength",
+            "blankBoxWidth",
+            "cadConfiguration",
+            "cadVersion",
+            "childArtifactCount",
+            "childGcds",
+            "distanceUnits",
+            "engineType",
+            "fileFormat",
+            "height",
+            "length",
+            "massUnitName",
+            "minGcdVersion",
+            "nonSolidSurfaceArea",
+            "partModelName",
+            "surfaceArea",
+            "temperatureUnitName",
+            "thickness",
+            "timeUnitName",
+            "volume",
+            "width"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "blankBoxLength": {
+              "type": "number"
+            },
+            "blankBoxWidth": {
+              "type": "number"
+            },
+            "cadConfiguration": {
+              "type": "string"
+            },
+            "cadVersion": {
+              "type": "integer"
+            },
+            "childArtifactCount": {
+              "type": "integer"
+            },
+            "childGcds": {
+              "type": "string"
+            },
+            "distanceUnits": {
+              "type": "integer"
+            },
+            "engineType": {
+              "type": "string"
+            },
+            "fileFormat": {
+              "type": "string"
+            },
+            "height": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "massUnitName": {
+              "type": "string"
+            },
+            "minGcdVersion": {
+              "type": "integer"
+            },
+            "nonSolidSurfaceArea": {
+              "type": "number"
+            },
+            "partModelName": {
+              "type": "string"
+            },
+            "surfaceArea": {
+              "type": "number"
+            },
+            "temperatureUnitName": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "timeUnitName": {
+              "type": "string"
+            },
+            "volume": {
+              "type": "number"
+            },
+            "width": {
+              "type": "number"
+            }
+          }
+        },
+        "scenarioMetadata": {
+          "type": "object",
+          "required": [
+            "identity",
+            "activeAxes",
+            "activeDimensions",
+            "axesEntries",
+            "boundingBox",
+            "drawableNodes",
+            "faceIndices",
+            "nodeEntries"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "activeAxes": {
+              "type": "array",
+              "items": {
+              }
+            },
+            "activeDimensions": {
+              "type": "object",
+              "required": [
+                "propertyValueMap",
+                "propertyInfoMap"
+              ],
+              "properties": {
+                "propertyValueMap": {
+                  "type": "object",
+                  "required": [
+                    "artifactTypeName",
+                    "minGcdVersion",
+                    "surfaceArea",
+                    "nonSolidSurfaceArea",
+                    "thickness",
+                    "blankBoxLength",
+                    "engineType",
+                    "cadVersion",
+                    "cadConfiguration",
+                    "fileBaseName",
+                    "height",
+                    "blankBoxWidth",
+                    "length",
+                    "childArtifactCount",
+                    "timeUnitName",
+                    "massUnitName",
+                    "volume",
+                    "distanceUnits",
+                    "width",
+                    "partModelName",
+                    "temperatureUnitName",
+                    "fileFormat"
+                  ],
+                  "properties": {
+                    "artifactTypeName": {
+                      "type": "string"
+                    },
+                    "minGcdVersion": {
+                      "type": "integer"
+                    },
+                    "surfaceArea": {
+                      "type": "number"
+                    },
+                    "nonSolidSurfaceArea": {
+                      "type": "number"
+                    },
+                    "thickness": {
+                      "type": "number"
+                    },
+                    "blankBoxLength": {
+                      "type": "number"
+                    },
+                    "engineType": {
+                      "type": "string"
+                    },
+                    "cadVersion": {
+                      "type": "string"
+                    },
+                    "cadConfiguration": {
+                      "type": "string"
+                    },
+                    "fileBaseName": {
+                      "type": "string"
+                    },
+                    "height": {
+                      "type": "number"
+                    },
+                    "blankBoxWidth": {
+                      "type": "number"
+                    },
+                    "length": {
+                      "type": "number"
+                    },
+                    "childArtifactCount": {
+                      "type": "integer"
+                    },
+                    "timeUnitName": {
+                      "type": "string"
+                    },
+                    "massUnitName": {
+                      "type": "string"
+                    },
+                    "volume": {
+                      "type": "number"
+                    },
+                    "distanceUnits": {
+                      "type": "integer"
+                    },
+                    "width": {
+                      "type": "number"
+                    },
+                    "partModelName": {
+                      "type": "string"
+                    },
+                    "temperatureUnitName": {
+                      "type": "string"
+                    },
+                    "fileFormat": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "propertyInfoMap": {
+                  "type": "object",
+                  "required": [
+                    "artifactTypeName",
+                    "minGcdVersion",
+                    "surfaceArea",
+                    "nonSolidSurfaceArea",
+                    "thickness",
+                    "blankBoxLength",
+                    "engineType",
+                    "cadVersion",
+                    "descriptor",
+                    "cadConfiguration",
+                    "fileBaseName",
+                    "height",
+                    "cadKeyText",
+                    "blankBoxWidth",
+                    "length",
+                    "childArtifactCount",
+                    "timeUnitName",
+                    "massUnitName",
+                    "volume",
+                    "cadMaterialName",
+                    "distanceUnits",
+                    "width",
+                    "partModelName",
+                    "temperatureUnitName",
+                    "fileFormat"
+                  ],
+                  "properties": {
+                    "artifactTypeName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "minGcdVersion": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "surfaceArea": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "nonSolidSurfaceArea": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "thickness": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "blankBoxLength": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "engineType": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cadVersion": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "descriptor": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cadConfiguration": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "fileBaseName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "height": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cadKeyText": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "blankBoxWidth": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "length": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "childArtifactCount": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "timeUnitName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "massUnitName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "volume": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cadMaterialName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "distanceUnits": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "width": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "partModelName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "temperatureUnitName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "fileFormat": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "axesEntries": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "value",
+                      "key"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "required": [
+                                "origin",
+                                "direction",
+                                "length"
+                              ],
+                              "properties": {
+                                "origin": {
+                                  "type": "array",
+                                  "items": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "direction": {
+                                  "type": "array",
+                                  "items": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "length": {
+                                  "type": "number"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "key": {
+                        "type": "object",
+                        "required": [
+                          "artifactTypeName",
+                          "sequenceNumber",
+                          "displayName"
+                        ],
+                        "properties": {
+                          "artifactTypeName": {
+                            "type": "string"
+                          },
+                          "sequenceNumber": {
+                            "type": "integer"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "boundingBox": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            },
+            "drawableNodes": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "value",
+                      "key"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      },
+                      "key": {
+                        "type": "object",
+                        "required": [
+                          "artifactTypeName",
+                          "sequenceNumber",
+                          "displayName"
+                        ],
+                        "properties": {
+                          "artifactTypeName": {
+                            "type": "string"
+                          },
+                          "sequenceNumber": {
+                            "type": "integer"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "faceIndices": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "value",
+                      "key"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "integer"
+                            }
+                          ]
+                        }
+                      },
+                      "key": {
+                        "type": "object",
+                        "required": [
+                          "artifactTypeName",
+                          "sequenceNumber",
+                          "displayName"
+                        ],
+                        "properties": {
+                          "artifactTypeName": {
+                            "type": "string"
+                          },
+                          "sequenceNumber": {
+                            "type": "integer"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "nodeEntries": {
+              "type": "array",
+              "items": {
+              }
+            }
+          }
+        },
+        "scenarioProcesses": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "capitalInvestment",
+                  "costingFailed",
+                  "cycleTime",
+                  "displayName",
+                  "fullyBurdenedCost",
+                  "machineName",
+                  "order",
+                  "processGroupName",
+                  "processName",
+                  "totalCost",
+                  "vpeName"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "capitalInvestment": {
+                    "type": "number"
+                  },
+                  "costingFailed": {
+                    "type": "boolean"
+                  },
+                  "cycleTime": {
+                    "type": "number"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "fullyBurdenedCost": {
+                    "type": "number"
+                  },
+                  "machineName": {
+                    "type": "string"
+                  },
+                  "order": {
+                    "type": "integer"
+                  },
+                  "processGroupName": {
+                    "type": "string"
+                  },
+                  "processName": {
+                    "type": "string"
+                  },
+                  "totalCost": {
+                    "type": "number"
+                  },
+                  "vpeName": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "analysisOfChildren": {
+          "type": "object",
+          "required": []
+        },
+        "analysisOfScenario": {
+          "type": "object",
+          "required": [
+            "identity",
+            "additionalAmortizedInvestment",
+            "additionalDirectCosts",
+            "amortizedInvestment",
+            "annualCost",
+            "annualVolume",
+            "batchCost",
+            "batchSetupTime",
+            "batchSize",
+            "cadSerLength",
+            "cadSerWidth",
+            "capitalInvestment",
+            "cycleTime",
+            "dfmRisk",
+            "directOverheadCost",
+            "dtcMessagesCount",
+            "elapsedTime",
+            "expendableToolingCostPerPart",
+            "extraCosts",
+            "failedGcdsCount",
+            "failuresWarningsCount",
+            "finalYield",
+            "finishMass",
+            "fixtureCost",
+            "fixtureCostPerPart",
+            "fullyBurdenedCost",
+            "gcdWithTolerancesCount",
+            "goodPartYield",
+            "hardToolingCost",
+            "height",
+            "laborCost",
+            "laborTime",
+            "lastCosted",
+            "length",
+            "lifetimeCost",
+            "logisticsCost",
+            "margin",
+            "marginPercent",
+            "materialCost",
+            "materialName",
+            "materialOverheadCost",
+            "materialStockFormName",
+            "materialStockName",
+            "materialUnitCost",
+            "notSupportedGcdsCount",
+            "numberOfParts",
+            "numOperators",
+            "numPartsPerSheet",
+            "numScrapParts",
+            "partsPerHour",
+            "periodOverhead",
+            "pieceAndPeriod",
+            "pieceCost",
+            "processRoutingName",
+            "programmingCost",
+            "programmingCostPerPart",
+            "roughMass",
+            "scrapMass",
+            "setupCostPerPart",
+            "sgaCost",
+            "stockPropertyLength",
+            "stockPropertyThickness",
+            "stockPropertyWidth",
+            "stripNestingPitch",
+            "toolingCostPerPart",
+            "totalCost",
+            "totalProductionVolume",
+            "otherDirectCosts",
+            "utilization",
+            "utilizationWithAddendum",
+            "utilizationWithoutAddendum",
+            "width"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "additionalAmortizedInvestment": {
+              "type": "number"
+            },
+            "additionalDirectCosts": {
+              "type": "number"
+            },
+            "amortizedInvestment": {
+              "type": "number"
+            },
+            "annualCost": {
+              "type": "number"
+            },
+            "annualVolume": {
+              "type": "integer"
+            },
+            "batchCost": {
+              "type": "number"
+            },
+            "batchSetupTime": {
+              "type": "number"
+            },
+            "batchSize": {
+              "type": "integer"
+            },
+            "cadSerLength": {
+              "type": "number"
+            },
+            "cadSerWidth": {
+              "type": "number"
+            },
+            "capitalInvestment": {
+              "type": "number"
+            },
+            "cycleTime": {
+              "type": "number"
+            },
+            "dfmRisk": {
+              "type": "integer"
+            },
+            "directOverheadCost": {
+              "type": "number"
+            },
+            "dtcMessagesCount": {
+              "type": "integer"
+            },
+            "elapsedTime": {
+              "type": "number"
+            },
+            "expendableToolingCostPerPart": {
+              "type": "number"
+            },
+            "extraCosts": {
+              "type": "number"
+            },
+            "failedGcdsCount": {
+              "type": "integer"
+            },
+            "failuresWarningsCount": {
+              "type": "integer"
+            },
+            "finalYield": {
+              "type": "number"
+            },
+            "finishMass": {
+              "type": "number"
+            },
+            "fixtureCost": {
+              "type": "number"
+            },
+            "fixtureCostPerPart": {
+              "type": "number"
+            },
+            "fullyBurdenedCost": {
+              "type": "number"
+            },
+            "gcdWithTolerancesCount": {
+              "type": "integer"
+            },
+            "goodPartYield": {
+              "type": "number"
+            },
+            "hardToolingCost": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            },
+            "laborCost": {
+              "type": "number"
+            },
+            "laborTime": {
+              "type": "number"
+            },
+            "lastCosted": {
+              "type": "string"
+            },
+            "length": {
+              "type": "number"
+            },
+            "lifetimeCost": {
+              "type": "number"
+            },
+            "logisticsCost": {
+              "type": "number"
+            },
+            "margin": {
+              "type": "number"
+            },
+            "marginPercent": {
+              "type": "number"
+            },
+            "materialCost": {
+              "type": "number"
+            },
+            "materialName": {
+              "type": "string"
+            },
+            "materialOverheadCost": {
+              "type": "number"
+            },
+            "materialStockFormName": {
+              "type": "string"
+            },
+            "materialStockName": {
+              "type": "string"
+            },
+            "materialUnitCost": {
+              "type": "number"
+            },
+            "notSupportedGcdsCount": {
+              "type": "integer"
+            },
+            "numberOfParts": {
+              "type": "number"
+            },
+            "numOperators": {
+              "type": "number"
+            },
+            "numPartsPerSheet": {
+              "type": "number"
+            },
+            "numScrapParts": {
+              "type": "number"
+            },
+            "partsPerHour": {
+              "type": "number"
+            },
+            "periodOverhead": {
+              "type": "number"
+            },
+            "pieceAndPeriod": {
+              "type": "number"
+            },
+            "pieceCost": {
+              "type": "number"
+            },
+            "processRoutingName": {
+              "type": "string"
+            },
+            "programmingCost": {
+              "type": "number"
+            },
+            "programmingCostPerPart": {
+              "type": "number"
+            },
+            "roughMass": {
+              "type": "number"
+            },
+            "scrapMass": {
+              "type": "number"
+            },
+            "setupCostPerPart": {
+              "type": "number"
+            },
+            "sgaCost": {
+              "type": "number"
+            },
+            "stockPropertyLength": {
+              "type": "number"
+            },
+            "stockPropertyThickness": {
+              "type": "number"
+            },
+            "stockPropertyWidth": {
+              "type": "number"
+            },
+            "stripNestingPitch": {
+              "type": "number"
+            },
+            "toolingCostPerPart": {
+              "type": "number"
+            },
+            "totalCost": {
+              "type": "number"
+            },
+            "totalProductionVolume": {
+              "type": "number"
+            },
+            "otherDirectCosts": {
+              "type": "number"
+            },
+            "utilization": {
+              "type": "number"
+            },
+            "utilizationWithAddendum": {
+              "type": "number"
+            },
+            "utilizationWithoutAddendum": {
+              "type": "number"
+            },
+            "width": {
+              "type": "number"
+            }
+          }
+        },
+        "analysisOfScenarioAndChildren": {
+          "type": "object",
+          "required": []
+        },
+        "hasThumbnail": {
+          "type": "boolean"
+        },
+        "hasWebImage": {
+          "type": "boolean"
+        },
+        "thumbnail": {
+          "type": "object",
+          "required": [
+            "identity",
+            "image",
+            "imageType"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "imageType": {
+              "type": "string"
+            }
+          }
+        },
+        "material": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "altName1",
+            "altName2",
+            "altName3",
+            "altName4",
+            "altName5",
+            "costPerUnit",
+            "costUnits",
+            "dataSource",
+            "density",
+            "description",
+            "hardness",
+            "hardnessSystem",
+            "k",
+            "materialCutCodeName",
+            "materialTypeName",
+            "millingSpeed",
+            "n",
+            "name",
+            "possionRatio",
+            "r",
+            "scrapCostPercent",
+            "shearStrength",
+            "tensileYieldStrength",
+            "ultimateTensileStrength",
+            "youngModulus"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "altName1": {
+              "type": "string"
+            },
+            "altName2": {
+              "type": "string"
+            },
+            "altName3": {
+              "type": "string"
+            },
+            "altName4": {
+              "type": "string"
+            },
+            "altName5": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "dataSource": {
+              "type": "string"
+            },
+            "density": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "k": {
+              "type": "number"
+            },
+            "materialCutCodeName": {
+              "type": "number"
+            },
+            "materialTypeName": {
+              "type": "string"
+            },
+            "millingSpeed": {
+              "type": "number"
+            },
+            "n": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "possionRatio": {
+              "type": "number"
+            },
+            "r": {
+              "type": "number"
+            },
+            "scrapCostPercent": {
+              "type": "number"
+            },
+            "shearStrength": {
+              "type": "number"
+            },
+            "tensileYieldStrength": {
+              "type": "number"
+            },
+            "ultimateTensileStrength": {
+              "type": "number"
+            },
+            "youngModulus": {
+              "type": "number"
+            }
+          }
+        },
+        "materialStock": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "costPerUnit",
+            "costUnits",
+            "description",
+            "formName",
+            "hardness",
+            "hardnessSystem",
+            "length",
+            "name",
+            "virtual",
+            "width"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "length": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "virtual": {
+              "type": "boolean"
+            },
+            "width": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  }
+}
