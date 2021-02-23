@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.ComponentsController;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.entity.reponse.GetComponentResponse;
 import com.apriori.entity.reponse.PostComponentResponse;
 import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -35,16 +34,9 @@ public class UploadComponentTests extends TestUtil {
 
     @Test
     @Description("Check the cad viewer values are correct")
-    public void postComponentsTest() {
+    public void boundingBoxValues() {
         ResponseWrapper<PostComponentResponse> response = new ComponentsController().postComponents(token, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-    }
-
-    @Test
-    public void getComponentsTest() {
-        ResponseWrapper<GetComponentResponse> response = new ComponentsController().getComponents(token);
-
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
 }
