@@ -1,136 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "object",
-  "title": "The root schema",
-  "description": "The root schema comprises the entire JSON document.",
-  "default": {},
-  "examples": [
-    {
-      "response": {
-        "identity": "8K7JM6K1A680",
-        "createdAt": "2021-01-28T11:48Z",
-        "createdBy": "H337GKD0LA57",
-        "updatedAt": "2021-01-28T11:49Z",
-        "createdByName": "Ciene Frith",
-        "customerIdentity": "H337GKD0LA0M",
-        "iteration": 1,
-        "scenarioIterationKey": "partState-CASTING12.8K81ELF74HKB(27:1386)",
-        "costingInput": {
-          "identity": "8K865GKCI12J",
-          "annualVolume": 5500,
-          "batchSize": 458,
-          "customAttributes": {},
-          "materialName": "Steel, Hot Worked, AISI 1010",
-          "processGroupName": "Stock Machining",
-          "productionLife": 5.0,
-          "vpeName": "aPriori USA"
-        },
-        "scenarioAnalysis": {},
-        "scenarioCustomAttributes": [],
-        "scenarioDtcIssues": [],
-        "scenarioGcd": {},
-        "scenarioMetadata": {},
-        "scenarioProcesses": [],
-        "hasThumbnail": true,
-        "hasWebImage": true,
-        "thumbnail": {
-          "identity": "8K883152IK6A",
-          "image": "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",
-          "imageType": "THUMBNAIL"
-        },
-        "material": {
-          "identity": "A9M316E66DCK",
-          "createdAt": "2020-12-18T09:07Z",
-          "createdBy": "H337GKD0LA29",
-          "altName1": "Steel, Hot Worked, AISI 1010",
-          "altName2": "Ck 10 HR",
-          "altName3": "1.1121 HR",
-          "altName4": "10 HR",
-          "altName5": "S10C HR",
-          "costUnits": "",
-          "dataSource": "aPriori Baseline",
-          "density": 7850.0,
-          "description": "",
-          "hardness": 125.0,
-          "hardnessSystem": "Brinell",
-          "materialCutCodeName": 1.1,
-          "materialTypeName": "Steel",
-          "millingSpeed": 0.0,
-          "name": "Steel, Hot Worked, AISI 1010",
-          "scrapCostPercent": 0.04,
-          "shearStrength": 195.0
-        }
-      }
-    }
-  ],
   "required": [
     "response"
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
-      "title": "The response schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": {},
-      "examples": [
-        {
-          "identity": "8K7JM6K1A680",
-          "createdAt": "2021-01-28T11:48Z",
-          "createdBy": "H337GKD0LA57",
-          "updatedAt": "2021-01-28T11:49Z",
-          "createdByName": "Ciene Frith",
-          "customerIdentity": "H337GKD0LA0M",
-          "iteration": 1,
-          "scenarioIterationKey": "partState-CASTING12.8K81ELF74HKB(27:1386)",
-          "costingInput": {
-            "identity": "8K865GKCI12J",
-            "annualVolume": 5500,
-            "batchSize": 458,
-            "customAttributes": {},
-            "materialName": "Steel, Hot Worked, AISI 1010",
-            "processGroupName": "Stock Machining",
-            "productionLife": 5.0,
-            "vpeName": "aPriori USA"
-          },
-          "scenarioAnalysis": {},
-          "scenarioCustomAttributes": [],
-          "scenarioDtcIssues": [],
-          "scenarioGcd": {},
-          "scenarioMetadata": {},
-          "scenarioProcesses": [],
-          "hasThumbnail": true,
-          "hasWebImage": true,
-          "thumbnail": {
-            "identity": "8K883152IK6A",
-            "image": "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",
-            "imageType": "THUMBNAIL"
-          },
-          "material": {
-            "identity": "A9M316E66DCK",
-            "createdAt": "2020-12-18T09:07Z",
-            "createdBy": "H337GKD0LA29",
-            "altName1": "Steel, Hot Worked, AISI 1010",
-            "altName2": "Ck 10 HR",
-            "altName3": "1.1121 HR",
-            "altName4": "10 HR",
-            "altName5": "S10C HR",
-            "costUnits": "",
-            "dataSource": "aPriori Baseline",
-            "density": 7850.0,
-            "description": "",
-            "hardness": 125.0,
-            "hardnessSystem": "Brinell",
-            "materialCutCodeName": 1.1,
-            "materialTypeName": "Steel",
-            "millingSpeed": 0.0,
-            "name": "Steel, Hot Worked, AISI 1010",
-            "scrapCostPercent": 0.04,
-            "shearStrength": 195.0
-          }
-        }
-      ],
       "required": [
         "identity",
         "createdAt",
@@ -141,116 +17,47 @@
         "iteration",
         "scenarioIterationKey",
         "costingInput",
-        "scenarioAnalysis",
         "scenarioCustomAttributes",
         "scenarioDtcIssues",
         "scenarioGcd",
         "scenarioMetadata",
         "scenarioProcesses",
+        "analysisOfChildren",
+        "analysisOfScenario",
+        "analysisOfScenarioAndChildren",
         "hasThumbnail",
         "hasWebImage",
         "thumbnail",
-        "material"
+        "material",
+        "materialStock"
       ],
       "properties": {
         "identity": {
-          "$id": "#/properties/response/properties/identity",
-          "type": "string",
-          "title": "The identity schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "8K7JM6K1A680"
-          ]
+          "type": "string"
         },
         "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
-          "type": "string",
-          "title": "The createdAt schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "2021-01-28T11:48Z"
-          ]
+          "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/response/properties/createdBy",
-          "type": "string",
-          "title": "The createdBy schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "H337GKD0LA57"
-          ]
+          "type": "string"
         },
         "updatedAt": {
-          "$id": "#/properties/response/properties/updatedAt",
-          "type": "string",
-          "title": "The updatedAt schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "2021-01-28T11:49Z"
-          ]
+          "type": "string"
         },
         "createdByName": {
-          "$id": "#/properties/response/properties/createdByName",
-          "type": "string",
-          "title": "The createdByName schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "Ciene Frith"
-          ]
+          "type": "string"
         },
         "customerIdentity": {
-          "$id": "#/properties/response/properties/customerIdentity",
-          "type": "string",
-          "title": "The customerIdentity schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "H337GKD0LA0M"
-          ]
+          "type": "string"
         },
         "iteration": {
-          "$id": "#/properties/response/properties/iteration",
-          "type": "integer",
-          "title": "The iteration schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            1
-          ]
+          "type": "integer"
         },
         "scenarioIterationKey": {
-          "$id": "#/properties/response/properties/scenarioIterationKey",
-          "type": "string",
-          "title": "The scenarioIterationKey schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "partState-CASTING12.8K81ELF74HKB(27:1386)"
-          ]
+          "type": "string"
         },
         "costingInput": {
-          "$id": "#/properties/response/properties/costingInput",
           "type": "object",
-          "title": "The costingInput schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": {},
-          "examples": [
-            {
-              "identity": "8K865GKCI12J",
-              "annualVolume": 5500,
-              "batchSize": 458,
-              "customAttributes": {},
-              "materialName": "Steel, Hot Worked, AISI 1010",
-              "processGroupName": "Stock Machining",
-              "productionLife": 5.0,
-              "vpeName": "aPriori USA"
-            }
-          ],
           "required": [
             "identity",
             "annualVolume",
@@ -263,197 +70,1416 @@
           ],
           "properties": {
             "identity": {
-              "$id": "#/properties/response/properties/costingInput/properties/identity",
-              "type": "string",
-              "title": "The identity schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "8K865GKCI12J"
-              ]
+              "type": "string"
             },
             "annualVolume": {
-              "$id": "#/properties/response/properties/costingInput/properties/annualVolume",
-              "type": "integer",
-              "title": "The annualVolume schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0,
-              "examples": [
-                5500
-              ]
+              "type": "integer"
             },
             "batchSize": {
-              "$id": "#/properties/response/properties/costingInput/properties/batchSize",
-              "type": "integer",
-              "title": "The batchSize schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0,
-              "examples": [
-                458
-              ]
+              "type": "integer"
             },
             "customAttributes": {
-              "$id": "#/properties/response/properties/costingInput/properties/customAttributes",
               "type": "object",
-              "title": "The customAttributes schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": {},
-              "examples": [
-                {}
-              ],
-              "additionalProperties": true
+              "required": []
             },
             "materialName": {
-              "$id": "#/properties/response/properties/costingInput/properties/materialName",
-              "type": "string",
-              "title": "The materialName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Steel, Hot Worked, AISI 1010"
-              ]
+              "type": "string"
             },
             "processGroupName": {
-              "$id": "#/properties/response/properties/costingInput/properties/processGroupName",
-              "type": "string",
-              "title": "The processGroupName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Stock Machining"
-              ]
+              "type": "string"
             },
             "productionLife": {
-              "$id": "#/properties/response/properties/costingInput/properties/productionLife",
-              "type": "number",
-              "title": "The productionLife schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0.0,
-              "examples": [
-                5.0
-              ]
+              "type": "number"
             },
             "vpeName": {
-              "$id": "#/properties/response/properties/costingInput/properties/vpeName",
-              "type": "string",
-              "title": "The vpeName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "aPriori USA"
-              ]
+              "type": "string"
             }
-          },
-          "additionalProperties": true
-        },
-        "scenarioAnalysis": {
-          "$id": "#/properties/response/properties/scenarioAnalysis",
-          "type": "object",
-          "title": "The scenarioAnalysis schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": {},
-          "examples": [
-            {}
-          ],
-          "additionalProperties": true
+          }
         },
         "scenarioCustomAttributes": {
-          "$id": "#/properties/response/properties/scenarioCustomAttributes",
           "type": "array",
-          "title": "The scenarioCustomAttributes schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": [],
-          "examples": [
-            []
-          ],
-          "additionalItems": true,
           "items": {
-            "$id": "#/properties/response/properties/scenarioCustomAttributes/items"
           }
         },
         "scenarioDtcIssues": {
-          "$id": "#/properties/response/properties/scenarioDtcIssues",
           "type": "array",
-          "title": "The scenarioDtcIssues schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": [],
-          "examples": [
-            []
-          ],
-          "additionalItems": true,
           "items": {
-            "$id": "#/properties/response/properties/scenarioDtcIssues/items"
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "attributeId",
+                  "attributeText",
+                  "category",
+                  "categoryText",
+                  "decimalPlaces",
+                  "dtcIssueType",
+                  "gcdArtifactTypeName",
+                  "gcdDisplayName",
+                  "gcdSequenceNumber",
+                  "messageText",
+                  "priority",
+                  "type"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "attributeId": {
+                    "type": "string"
+                  },
+                  "attributeText": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "categoryText": {
+                    "type": "string"
+                  },
+                  "decimalPlaces": {
+                    "type": "integer"
+                  },
+                  "dtcIssueType": {
+                    "type": "string"
+                  },
+                  "gcdArtifactTypeName": {
+                    "type": "string"
+                  },
+                  "gcdDisplayName": {
+                    "type": "string"
+                  },
+                  "gcdSequenceNumber": {
+                    "type": "integer"
+                  },
+                  "messageText": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "integer"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "attributeId",
+                  "attributeText",
+                  "category",
+                  "categoryText",
+                  "currentValueText",
+                  "decimalPlaces",
+                  "dtcIssueType",
+                  "gcdArtifactTypeName",
+                  "gcdDisplayName",
+                  "gcdSequenceNumber",
+                  "messageId",
+                  "messageText",
+                  "priority",
+                  "processDisplayName",
+                  "processGroupName",
+                  "processIndex",
+                  "processName",
+                  "rule",
+                  "suggestedMinValueText",
+                  "type",
+                  "vpeName"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "attributeId": {
+                    "type": "string"
+                  },
+                  "attributeText": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "categoryText": {
+                    "type": "string"
+                  },
+                  "currentValueText": {
+                    "type": "string"
+                  },
+                  "decimalPlaces": {
+                    "type": "integer"
+                  },
+                  "dtcIssueType": {
+                    "type": "string"
+                  },
+                  "gcdArtifactTypeName": {
+                    "type": "string"
+                  },
+                  "gcdDisplayName": {
+                    "type": "string"
+                  },
+                  "gcdSequenceNumber": {
+                    "type": "integer"
+                  },
+                  "messageId": {
+                    "type": "string"
+                  },
+                  "messageText": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "integer"
+                  },
+                  "processDisplayName": {
+                    "type": "string"
+                  },
+                  "processGroupName": {
+                    "type": "string"
+                  },
+                  "processIndex": {
+                    "type": "integer"
+                  },
+                  "processName": {
+                    "type": "string"
+                  },
+                  "rule": {
+                    "type": "string"
+                  },
+                  "suggestedMinValueText": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "vpeName": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "attributeId",
+                  "attributeText",
+                  "category",
+                  "categoryText",
+                  "currentValue",
+                  "currentValueText",
+                  "decimalPlaces",
+                  "dtcIssueType",
+                  "gcdArtifactTypeName",
+                  "gcdDisplayName",
+                  "gcdSequenceNumber",
+                  "messageId",
+                  "messageText",
+                  "priority",
+                  "processDisplayName",
+                  "processGroupName",
+                  "processIndex",
+                  "processName",
+                  "rule",
+                  "suggestedMinValue",
+                  "suggestedMinValueText",
+                  "type",
+                  "unitType",
+                  "vpeName"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "attributeId": {
+                    "type": "string"
+                  },
+                  "attributeText": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "categoryText": {
+                    "type": "string"
+                  },
+                  "currentValue": {
+                    "type": "number"
+                  },
+                  "currentValueText": {
+                    "type": "string"
+                  },
+                  "decimalPlaces": {
+                    "type": "integer"
+                  },
+                  "dtcIssueType": {
+                    "type": "string"
+                  },
+                  "gcdArtifactTypeName": {
+                    "type": "string"
+                  },
+                  "gcdDisplayName": {
+                    "type": "string"
+                  },
+                  "gcdSequenceNumber": {
+                    "type": "integer"
+                  },
+                  "messageId": {
+                    "type": "string"
+                  },
+                  "messageText": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "integer"
+                  },
+                  "processDisplayName": {
+                    "type": "string"
+                  },
+                  "processGroupName": {
+                    "type": "string"
+                  },
+                  "processIndex": {
+                    "type": "integer"
+                  },
+                  "processName": {
+                    "type": "string"
+                  },
+                  "rule": {
+                    "type": "string"
+                  },
+                  "suggestedMinValue": {
+                    "type": "number"
+                  },
+                  "suggestedMinValueText": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "unitType": {
+                    "type": "string"
+                  },
+                  "vpeName": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
           }
         },
         "scenarioGcd": {
-          "$id": "#/properties/response/properties/scenarioGcd",
           "type": "object",
-          "title": "The scenarioGcd schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": {},
-          "examples": [
-            {}
+          "required": [
+            "identity",
+            "blankBoxLength",
+            "blankBoxWidth",
+            "cadConfiguration",
+            "cadVersion",
+            "childArtifactCount",
+            "childGcds",
+            "distanceUnits",
+            "engineType",
+            "fileFormat",
+            "height",
+            "length",
+            "massUnitName",
+            "minGcdVersion",
+            "nonSolidSurfaceArea",
+            "partModelName",
+            "surfaceArea",
+            "temperatureUnitName",
+            "thickness",
+            "timeUnitName",
+            "volume",
+            "width"
           ],
-          "additionalProperties": true
-        },
-        "scenarioMetadata": {
-          "$id": "#/properties/response/properties/scenarioMetadata",
-          "type": "object",
-          "title": "The scenarioMetadata schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": {},
-          "examples": [
-            {}
-          ],
-          "additionalProperties": true
-        },
-        "scenarioProcesses": {
-          "$id": "#/properties/response/properties/scenarioProcesses",
-          "type": "array",
-          "title": "The scenarioProcesses schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": [],
-          "examples": [
-            []
-          ],
-          "additionalItems": true,
-          "items": {
-            "$id": "#/properties/response/properties/scenarioProcesses/items"
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "blankBoxLength": {
+              "type": "number"
+            },
+            "blankBoxWidth": {
+              "type": "number"
+            },
+            "cadConfiguration": {
+              "type": "string"
+            },
+            "cadVersion": {
+              "type": "integer"
+            },
+            "childArtifactCount": {
+              "type": "integer"
+            },
+            "childGcds": {
+              "type": "string"
+            },
+            "distanceUnits": {
+              "type": "integer"
+            },
+            "engineType": {
+              "type": "string"
+            },
+            "fileFormat": {
+              "type": "string"
+            },
+            "height": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "massUnitName": {
+              "type": "string"
+            },
+            "minGcdVersion": {
+              "type": "integer"
+            },
+            "nonSolidSurfaceArea": {
+              "type": "number"
+            },
+            "partModelName": {
+              "type": "string"
+            },
+            "surfaceArea": {
+              "type": "number"
+            },
+            "temperatureUnitName": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "timeUnitName": {
+              "type": "string"
+            },
+            "volume": {
+              "type": "number"
+            },
+            "width": {
+              "type": "number"
+            }
           }
         },
+        "scenarioMetadata": {
+          "type": "object",
+          "required": [
+            "identity",
+            "activeAxes",
+            "activeDimensions",
+            "axesEntries",
+            "boundingBox",
+            "drawableNodes",
+            "faceIndices",
+            "nodeEntries"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "activeAxes": {
+              "type": "array",
+              "items": {
+              }
+            },
+            "activeDimensions": {
+              "type": "object",
+              "required": [
+                "propertyValueMap",
+                "propertyInfoMap"
+              ],
+              "properties": {
+                "propertyValueMap": {
+                  "type": "object",
+                  "required": [
+                    "artifactTypeName",
+                    "minGcdVersion",
+                    "surfaceArea",
+                    "nonSolidSurfaceArea",
+                    "thickness",
+                    "blankBoxLength",
+                    "engineType",
+                    "cadVersion",
+                    "cadConfiguration",
+                    "fileBaseName",
+                    "height",
+                    "blankBoxWidth",
+                    "length",
+                    "childArtifactCount",
+                    "timeUnitName",
+                    "massUnitName",
+                    "volume",
+                    "distanceUnits",
+                    "width",
+                    "partModelName",
+                    "temperatureUnitName",
+                    "fileFormat"
+                  ],
+                  "properties": {
+                    "artifactTypeName": {
+                      "type": "string"
+                    },
+                    "minGcdVersion": {
+                      "type": "integer"
+                    },
+                    "surfaceArea": {
+                      "type": "number"
+                    },
+                    "nonSolidSurfaceArea": {
+                      "type": "number"
+                    },
+                    "thickness": {
+                      "type": "number"
+                    },
+                    "blankBoxLength": {
+                      "type": "number"
+                    },
+                    "engineType": {
+                      "type": "string"
+                    },
+                    "cadVersion": {
+                      "type": "string"
+                    },
+                    "cadConfiguration": {
+                      "type": "string"
+                    },
+                    "fileBaseName": {
+                      "type": "string"
+                    },
+                    "height": {
+                      "type": "number"
+                    },
+                    "blankBoxWidth": {
+                      "type": "number"
+                    },
+                    "length": {
+                      "type": "number"
+                    },
+                    "childArtifactCount": {
+                      "type": "integer"
+                    },
+                    "timeUnitName": {
+                      "type": "string"
+                    },
+                    "massUnitName": {
+                      "type": "string"
+                    },
+                    "volume": {
+                      "type": "number"
+                    },
+                    "distanceUnits": {
+                      "type": "integer"
+                    },
+                    "width": {
+                      "type": "number"
+                    },
+                    "partModelName": {
+                      "type": "string"
+                    },
+                    "temperatureUnitName": {
+                      "type": "string"
+                    },
+                    "fileFormat": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "propertyInfoMap": {
+                  "type": "object",
+                  "required": [
+                    "artifactTypeName",
+                    "minGcdVersion",
+                    "surfaceArea",
+                    "nonSolidSurfaceArea",
+                    "thickness",
+                    "blankBoxLength",
+                    "engineType",
+                    "cadVersion",
+                    "descriptor",
+                    "cadConfiguration",
+                    "fileBaseName",
+                    "height",
+                    "cadKeyText",
+                    "blankBoxWidth",
+                    "length",
+                    "childArtifactCount",
+                    "timeUnitName",
+                    "massUnitName",
+                    "volume",
+                    "cadMaterialName",
+                    "distanceUnits",
+                    "width",
+                    "partModelName",
+                    "temperatureUnitName",
+                    "fileFormat"
+                  ],
+                  "properties": {
+                    "artifactTypeName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "minGcdVersion": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "surfaceArea": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "nonSolidSurfaceArea": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "thickness": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "blankBoxLength": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "engineType": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cadVersion": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "descriptor": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cadConfiguration": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "fileBaseName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "height": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cadKeyText": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "blankBoxWidth": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "length": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "childArtifactCount": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "timeUnitName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "massUnitName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "volume": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cadMaterialName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "distanceUnits": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "width": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "unitTypeName"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "partModelName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "temperatureUnitName": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "fileFormat": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "axesEntries": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "value",
+                      "key"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "required": [
+                                "origin",
+                                "direction",
+                                "length"
+                              ],
+                              "properties": {
+                                "origin": {
+                                  "type": "array",
+                                  "items": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "direction": {
+                                  "type": "array",
+                                  "items": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "length": {
+                                  "type": "number"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "key": {
+                        "type": "object",
+                        "required": [
+                          "artifactTypeName",
+                          "sequenceNumber",
+                          "displayName"
+                        ],
+                        "properties": {
+                          "artifactTypeName": {
+                            "type": "string"
+                          },
+                          "sequenceNumber": {
+                            "type": "integer"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "boundingBox": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            },
+            "drawableNodes": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "value",
+                      "key"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      },
+                      "key": {
+                        "type": "object",
+                        "required": [
+                          "artifactTypeName",
+                          "sequenceNumber",
+                          "displayName"
+                        ],
+                        "properties": {
+                          "artifactTypeName": {
+                            "type": "string"
+                          },
+                          "sequenceNumber": {
+                            "type": "integer"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "faceIndices": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "value",
+                      "key"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "integer"
+                            }
+                          ]
+                        }
+                      },
+                      "key": {
+                        "type": "object",
+                        "required": [
+                          "artifactTypeName",
+                          "sequenceNumber",
+                          "displayName"
+                        ],
+                        "properties": {
+                          "artifactTypeName": {
+                            "type": "string"
+                          },
+                          "sequenceNumber": {
+                            "type": "integer"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "nodeEntries": {
+              "type": "array",
+              "items": {
+              }
+            }
+          }
+        },
+        "scenarioProcesses": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "capitalInvestment",
+                  "costingFailed",
+                  "cycleTime",
+                  "displayName",
+                  "fullyBurdenedCost",
+                  "machineName",
+                  "order",
+                  "processGroupName",
+                  "processName",
+                  "totalCost",
+                  "vpeName"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "capitalInvestment": {
+                    "type": "number"
+                  },
+                  "costingFailed": {
+                    "type": "boolean"
+                  },
+                  "cycleTime": {
+                    "type": "number"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "fullyBurdenedCost": {
+                    "type": "number"
+                  },
+                  "machineName": {
+                    "type": "string"
+                  },
+                  "order": {
+                    "type": "integer"
+                  },
+                  "processGroupName": {
+                    "type": "string"
+                  },
+                  "processName": {
+                    "type": "string"
+                  },
+                  "totalCost": {
+                    "type": "number"
+                  },
+                  "vpeName": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "analysisOfChildren": {
+          "type": "object",
+          "required": []
+        },
+        "analysisOfScenario": {
+          "type": "object",
+          "required": [
+            "identity",
+            "additionalAmortizedInvestment",
+            "additionalDirectCosts",
+            "amortizedInvestment",
+            "annualCost",
+            "annualVolume",
+            "batchCost",
+            "batchSetupTime",
+            "batchSize",
+            "cadSerLength",
+            "cadSerWidth",
+            "capitalInvestment",
+            "cycleTime",
+            "dfmRisk",
+            "directOverheadCost",
+            "dtcMessagesCount",
+            "elapsedTime",
+            "expendableToolingCostPerPart",
+            "extraCosts",
+            "failedGcdsCount",
+            "failuresWarningsCount",
+            "finalYield",
+            "finishMass",
+            "fixtureCost",
+            "fixtureCostPerPart",
+            "fullyBurdenedCost",
+            "gcdWithTolerancesCount",
+            "goodPartYield",
+            "hardToolingCost",
+            "height",
+            "laborCost",
+            "laborTime",
+            "lastCosted",
+            "length",
+            "lifetimeCost",
+            "logisticsCost",
+            "margin",
+            "marginPercent",
+            "materialCost",
+            "materialName",
+            "materialOverheadCost",
+            "materialStockFormName",
+            "materialStockName",
+            "materialUnitCost",
+            "notSupportedGcdsCount",
+            "numberOfParts",
+            "numOperators",
+            "numPartsPerSheet",
+            "numScrapParts",
+            "partsPerHour",
+            "periodOverhead",
+            "pieceAndPeriod",
+            "pieceCost",
+            "processRoutingName",
+            "programmingCost",
+            "programmingCostPerPart",
+            "roughMass",
+            "scrapMass",
+            "setupCostPerPart",
+            "sgaCost",
+            "stockPropertyLength",
+            "stockPropertyThickness",
+            "stockPropertyWidth",
+            "stripNestingPitch",
+            "toolingCostPerPart",
+            "totalCost",
+            "totalProductionVolume",
+            "otherDirectCosts",
+            "utilization",
+            "utilizationWithAddendum",
+            "utilizationWithoutAddendum",
+            "width"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "additionalAmortizedInvestment": {
+              "type": "number"
+            },
+            "additionalDirectCosts": {
+              "type": "number"
+            },
+            "amortizedInvestment": {
+              "type": "number"
+            },
+            "annualCost": {
+              "type": "number"
+            },
+            "annualVolume": {
+              "type": "integer"
+            },
+            "batchCost": {
+              "type": "number"
+            },
+            "batchSetupTime": {
+              "type": "number"
+            },
+            "batchSize": {
+              "type": "integer"
+            },
+            "cadSerLength": {
+              "type": "number"
+            },
+            "cadSerWidth": {
+              "type": "number"
+            },
+            "capitalInvestment": {
+              "type": "number"
+            },
+            "cycleTime": {
+              "type": "number"
+            },
+            "dfmRisk": {
+              "type": "integer"
+            },
+            "directOverheadCost": {
+              "type": "number"
+            },
+            "dtcMessagesCount": {
+              "type": "integer"
+            },
+            "elapsedTime": {
+              "type": "number"
+            },
+            "expendableToolingCostPerPart": {
+              "type": "number"
+            },
+            "extraCosts": {
+              "type": "number"
+            },
+            "failedGcdsCount": {
+              "type": "integer"
+            },
+            "failuresWarningsCount": {
+              "type": "integer"
+            },
+            "finalYield": {
+              "type": "number"
+            },
+            "finishMass": {
+              "type": "number"
+            },
+            "fixtureCost": {
+              "type": "number"
+            },
+            "fixtureCostPerPart": {
+              "type": "number"
+            },
+            "fullyBurdenedCost": {
+              "type": "number"
+            },
+            "gcdWithTolerancesCount": {
+              "type": "integer"
+            },
+            "goodPartYield": {
+              "type": "number"
+            },
+            "hardToolingCost": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            },
+            "laborCost": {
+              "type": "number"
+            },
+            "laborTime": {
+              "type": "number"
+            },
+            "lastCosted": {
+              "type": "string"
+            },
+            "length": {
+              "type": "number"
+            },
+            "lifetimeCost": {
+              "type": "number"
+            },
+            "logisticsCost": {
+              "type": "number"
+            },
+            "margin": {
+              "type": "number"
+            },
+            "marginPercent": {
+              "type": "number"
+            },
+            "materialCost": {
+              "type": "number"
+            },
+            "materialName": {
+              "type": "string"
+            },
+            "materialOverheadCost": {
+              "type": "number"
+            },
+            "materialStockFormName": {
+              "type": "string"
+            },
+            "materialStockName": {
+              "type": "string"
+            },
+            "materialUnitCost": {
+              "type": "number"
+            },
+            "notSupportedGcdsCount": {
+              "type": "integer"
+            },
+            "numberOfParts": {
+              "type": "number"
+            },
+            "numOperators": {
+              "type": "number"
+            },
+            "numPartsPerSheet": {
+              "type": "number"
+            },
+            "numScrapParts": {
+              "type": "number"
+            },
+            "partsPerHour": {
+              "type": "number"
+            },
+            "periodOverhead": {
+              "type": "number"
+            },
+            "pieceAndPeriod": {
+              "type": "number"
+            },
+            "pieceCost": {
+              "type": "number"
+            },
+            "processRoutingName": {
+              "type": "string"
+            },
+            "programmingCost": {
+              "type": "number"
+            },
+            "programmingCostPerPart": {
+              "type": "number"
+            },
+            "roughMass": {
+              "type": "number"
+            },
+            "scrapMass": {
+              "type": "number"
+            },
+            "setupCostPerPart": {
+              "type": "number"
+            },
+            "sgaCost": {
+              "type": "number"
+            },
+            "stockPropertyLength": {
+              "type": "number"
+            },
+            "stockPropertyThickness": {
+              "type": "number"
+            },
+            "stockPropertyWidth": {
+              "type": "number"
+            },
+            "stripNestingPitch": {
+              "type": "number"
+            },
+            "toolingCostPerPart": {
+              "type": "number"
+            },
+            "totalCost": {
+              "type": "number"
+            },
+            "totalProductionVolume": {
+              "type": "number"
+            },
+            "otherDirectCosts": {
+              "type": "number"
+            },
+            "utilization": {
+              "type": "number"
+            },
+            "utilizationWithAddendum": {
+              "type": "number"
+            },
+            "utilizationWithoutAddendum": {
+              "type": "number"
+            },
+            "width": {
+              "type": "number"
+            }
+          }
+        },
+        "analysisOfScenarioAndChildren": {
+          "type": "object",
+          "required": []
+        },
         "hasThumbnail": {
-          "$id": "#/properties/response/properties/hasThumbnail",
-          "type": "boolean",
-          "title": "The hasThumbnail schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            true
-          ]
+          "type": "boolean"
         },
         "hasWebImage": {
-          "$id": "#/properties/response/properties/hasWebImage",
-          "type": "boolean",
-          "title": "The hasWebImage schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-            true
-          ]
+          "type": "boolean"
         },
         "thumbnail": {
-          "$id": "#/properties/response/properties/thumbnail",
           "type": "object",
-          "title": "The thumbnail schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": {},
-          "examples": [
-            {
-              "identity": "8K883152IK6A",
-              "image": "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",
-              "imageType": "THUMBNAIL"
-            }
-          ],
           "required": [
             "identity",
             "image",
@@ -461,68 +1487,18 @@
           ],
           "properties": {
             "identity": {
-              "$id": "#/properties/response/properties/thumbnail/properties/identity",
-              "type": "string",
-              "title": "The identity schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "8K883152IK6A"
-              ]
+              "type": "string"
             },
             "image": {
-              "$id": "#/properties/response/properties/thumbnail/properties/image",
-              "type": "string",
-              "title": "The image schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "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"
-              ]
+              "type": "string"
             },
             "imageType": {
-              "$id": "#/properties/response/properties/thumbnail/properties/imageType",
-              "type": "string",
-              "title": "The imageType schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "THUMBNAIL"
-              ]
+              "type": "string"
             }
-          },
-          "additionalProperties": true
+          }
         },
         "material": {
-          "$id": "#/properties/response/properties/material",
           "type": "object",
-          "title": "The material schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": {},
-          "examples": [
-            {
-              "identity": "A9M316E66DCK",
-              "createdAt": "2020-12-18T09:07Z",
-              "createdBy": "H337GKD0LA29",
-              "altName1": "Steel, Hot Worked, AISI 1010",
-              "altName2": "Ck 10 HR",
-              "altName3": "1.1121 HR",
-              "altName4": "10 HR",
-              "altName5": "S10C HR",
-              "costUnits": "",
-              "dataSource": "aPriori Baseline",
-              "density": 7850.0,
-              "description": "",
-              "hardness": 125.0,
-              "hardnessSystem": "Brinell",
-              "materialCutCodeName": 1.1,
-              "materialTypeName": "Steel",
-              "millingSpeed": 0.0,
-              "name": "Steel, Hot Worked, AISI 1010",
-              "scrapCostPercent": 0.04,
-              "shearStrength": 195.0
-            }
-          ],
           "required": [
             "identity",
             "createdAt",
@@ -532,226 +1508,174 @@
             "altName3",
             "altName4",
             "altName5",
+            "costPerUnit",
             "costUnits",
             "dataSource",
             "density",
             "description",
             "hardness",
             "hardnessSystem",
+            "k",
             "materialCutCodeName",
             "materialTypeName",
             "millingSpeed",
+            "n",
             "name",
+            "possionRatio",
+            "r",
             "scrapCostPercent",
-            "shearStrength"
+            "shearStrength",
+            "tensileYieldStrength",
+            "ultimateTensileStrength",
+            "youngModulus"
           ],
           "properties": {
             "identity": {
-              "$id": "#/properties/response/properties/material/properties/identity",
-              "type": "string",
-              "title": "The identity schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "A9M316E66DCK"
-              ]
+              "type": "string"
             },
             "createdAt": {
-              "$id": "#/properties/response/properties/material/properties/createdAt",
-              "type": "string",
-              "title": "The createdAt schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "2020-12-18T09:07Z"
-              ]
+              "type": "string"
             },
             "createdBy": {
-              "$id": "#/properties/response/properties/material/properties/createdBy",
-              "type": "string",
-              "title": "The createdBy schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "H337GKD0LA29"
-              ]
+              "type": "string"
             },
             "altName1": {
-              "$id": "#/properties/response/properties/material/properties/altName1",
-              "type": "string",
-              "title": "The altName1 schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Steel, Hot Worked, AISI 1010"
-              ]
+              "type": "string"
             },
             "altName2": {
-              "$id": "#/properties/response/properties/material/properties/altName2",
-              "type": "string",
-              "title": "The altName2 schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Ck 10 HR"
-              ]
+              "type": "string"
             },
             "altName3": {
-              "$id": "#/properties/response/properties/material/properties/altName3",
-              "type": "string",
-              "title": "The altName3 schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "1.1121 HR"
-              ]
+              "type": "string"
             },
             "altName4": {
-              "$id": "#/properties/response/properties/material/properties/altName4",
-              "type": "string",
-              "title": "The altName4 schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "10 HR"
-              ]
+              "type": "string"
             },
             "altName5": {
-              "$id": "#/properties/response/properties/material/properties/altName5",
-              "type": "string",
-              "title": "The altName5 schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "S10C HR"
-              ]
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
             },
             "costUnits": {
-              "$id": "#/properties/response/properties/material/properties/costUnits",
-              "type": "string",
-              "title": "The costUnits schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                ""
-              ]
+              "type": "string"
             },
             "dataSource": {
-              "$id": "#/properties/response/properties/material/properties/dataSource",
-              "type": "string",
-              "title": "The dataSource schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "aPriori Baseline"
-              ]
+              "type": "string"
             },
             "density": {
-              "$id": "#/properties/response/properties/material/properties/density",
-              "type": "number",
-              "title": "The density schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0.0,
-              "examples": [
-                7850.0
-              ]
+              "type": "number"
             },
             "description": {
-              "$id": "#/properties/response/properties/material/properties/description",
-              "type": "string",
-              "title": "The description schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                ""
-              ]
+              "type": "string"
             },
             "hardness": {
-              "$id": "#/properties/response/properties/material/properties/hardness",
-              "type": "number",
-              "title": "The hardness schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0.0,
-              "examples": [
-                125.0
-              ]
+              "type": "number"
             },
             "hardnessSystem": {
-              "$id": "#/properties/response/properties/material/properties/hardnessSystem",
-              "type": "string",
-              "title": "The hardnessSystem schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Brinell"
-              ]
+              "type": "string"
+            },
+            "k": {
+              "type": "number"
             },
             "materialCutCodeName": {
-              "$id": "#/properties/response/properties/material/properties/materialCutCodeName",
-              "type": "number",
-              "title": "The materialCutCodeName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0.0,
-              "examples": [
-                1.1
-              ]
+              "type": "number"
             },
             "materialTypeName": {
-              "$id": "#/properties/response/properties/material/properties/materialTypeName",
-              "type": "string",
-              "title": "The materialTypeName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Steel"
-              ]
+              "type": "string"
             },
             "millingSpeed": {
-              "$id": "#/properties/response/properties/material/properties/millingSpeed",
-              "type": "number",
-              "title": "The millingSpeed schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0.0,
-              "examples": [
-                0.0
-              ]
+              "type": "number"
+            },
+            "n": {
+              "type": "number"
             },
             "name": {
-              "$id": "#/properties/response/properties/material/properties/name",
-              "type": "string",
-              "title": "The name schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Steel, Hot Worked, AISI 1010"
-              ]
+              "type": "string"
+            },
+            "possionRatio": {
+              "type": "number"
+            },
+            "r": {
+              "type": "number"
             },
             "scrapCostPercent": {
-              "$id": "#/properties/response/properties/material/properties/scrapCostPercent",
-              "type": "number",
-              "title": "The scrapCostPercent schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0.0,
-              "examples": [
-                0.04
-              ]
+              "type": "number"
             },
             "shearStrength": {
-              "$id": "#/properties/response/properties/material/properties/shearStrength",
-              "type": "number",
-              "title": "The shearStrength schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": 0.0,
-              "examples": [
-                195.0
-              ]
+              "type": "number"
+            },
+            "tensileYieldStrength": {
+              "type": "number"
+            },
+            "ultimateTensileStrength": {
+              "type": "number"
+            },
+            "youngModulus": {
+              "type": "number"
             }
-          },
-          "additionalProperties": true
+          }
+        },
+        "materialStock": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "costPerUnit",
+            "costUnits",
+            "description",
+            "formName",
+            "hardness",
+            "hardnessSystem",
+            "length",
+            "name",
+            "virtual",
+            "width"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "length": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "virtual": {
+              "type": "boolean"
+            },
+            "width": {
+              "type": "number"
+            }
+          }
         }
-      },
-      "additionalProperties": true
+      }
     }
-  },
-  "additionalProperties": true
+  }
 }
