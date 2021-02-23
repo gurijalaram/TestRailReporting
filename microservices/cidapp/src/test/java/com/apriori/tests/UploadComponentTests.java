@@ -28,7 +28,6 @@ import org.junit.Test;
 public class UploadComponentTests extends TestUtil {
 
     private static String token;
-    private ResponseWrapper<Object> response;
 
     @BeforeClass
     public static void getToken() {
@@ -43,10 +42,8 @@ public class UploadComponentTests extends TestUtil {
 
     @Test
     @Description("Check the cad viewer values are correct")
-    public void cadViewerValues() {
-        final String apiUrl = String.format(Constants.getApiUrl(), "components");
-
-        response = new ComponentsController().postComponents(token, apiUrl, UploadComponentResponse.class, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
+    public void boundingBoxValues() {
+        ResponseWrapper<PostComponentResponse> response = new ComponentsController().postComponents(token, new GenerateStringUtil().generateScenarioName(), "bracket_basic.prt");
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }
