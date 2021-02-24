@@ -42,9 +42,9 @@ public class Constants {
     //Default worflow names
     public static final String DEFAULT_WORKFLOW_NAME = "0   0   0   0   0 Automation Workflow";
     public static final String DEFAULT_EDITED_WORKFLOW_NAME = "0   0   0   0   0 Automation Workflow - Updated";
-    public static final String DEFAULT_NAME_WITH_NUMBER = "0  0  0  1 Worflow Automation";
-    public static final String DEFAULT_NAME_UPPER_CASE = "0  0  0  A Upper Workflow Automation";
-    public static final String DEFAULT_NAME_LOWER_CASE = "0  0  0  a Lower Workflow Automation";
+    public static final String DEFAULT_NAME_WITH_NUMBER = "0   0   0   1 Worflow Automation";
+    public static final String DEFAULT_NAME_UPPER_CASE = "0   0   0   A Upper Workflow Automation";
+    public static final String DEFAULT_NAME_LOWER_CASE = "0   0   0   a Lower Workflow Automation";
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
