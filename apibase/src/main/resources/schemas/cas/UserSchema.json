@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "customerIdentity",
+        "userProfile",
+        "email",
+        "username",
+        "active",
+        "mfaRequired",
+        "customProperties",
+        "createdByName",
+        "licenseAssignments",
+        "userType"
+      ],
+      "properties": {
+        "identity": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "string"
+        },
+        "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
+          "type": "string"
+        },
+        "createdBy": {
+          "$id": "#/properties/response/properties/createdBy",
+          "type": "string"
+        },
+        "customerIdentity": {
+          "$id": "#/properties/response/properties/customerIdentity",
+          "type": "string"
+        },
+        "userProfile": {
+          "$id": "#/properties/response/properties/userProfile",
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "givenName",
+            "familyName",
+            "jobTitle",
+            "department",
+            "supervisor",
+            "townCity"
+          ],
+          "properties": {
+            "identity": {
+              "$id": "#/properties/response/properties/userProfile/properties/identity",
+              "type": "string"
+            },
+            "createdAt": {
+              "$id": "#/properties/response/properties/userProfile/properties/createdAt",
+              "type": "string"
+            },
+            "createdBy": {
+              "$id": "#/properties/response/properties/userProfile/properties/createdBy",
+              "type": "string"
+            },
+            "givenName": {
+              "$id": "#/properties/response/properties/userProfile/properties/givenName",
+              "type": "string"
+            },
+            "familyName": {
+              "$id": "#/properties/response/properties/userProfile/properties/familyName",
+              "type": "string"
+            },
+            "jobTitle": {
+              "$id": "#/properties/response/properties/userProfile/properties/jobTitle",
+              "type": "string"
+            },
+            "department": {
+              "$id": "#/properties/response/properties/userProfile/properties/department",
+              "type": "string"
+            },
+            "supervisor": {
+              "$id": "#/properties/response/properties/userProfile/properties/supervisor",
+              "type": "string"
+            },
+            "townCity": {
+              "$id": "#/properties/response/properties/userProfile/properties/townCity",
+              "type": "string"
+            }
+          }
+        },
+        "email": {
+          "$id": "#/properties/response/properties/email",
+          "type": "string"
+        },
+        "username": {
+          "$id": "#/properties/response/properties/username",
+          "type": "string"
+        },
+        "active": {
+          "$id": "#/properties/response/properties/active",
+          "type": "boolean"
+        },
+        "mfaRequired": {
+          "$id": "#/properties/response/properties/mfaRequired",
+          "type": "boolean"
+        },
+        "customProperties": {
+          "$id": "#/properties/response/properties/customProperties",
+          "type": "object"
+        },
+        "createdByName": {
+          "$id": "#/properties/response/properties/createdByName",
+          "type": "string"
+        },
+        "licenseAssignments": {
+          "$id": "#/properties/response/properties/licenseAssignments",
+          "type": "array",
+          "items": {
+            "$id": "#/properties/response/properties/licenseAssignments/items"
+          }
+        },
+        "userType": {
+          "$id": "#/properties/response/properties/userType",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
