@@ -90,7 +90,7 @@ public class Constants {
      *
      * @return string
      */
-    public static String getaPrioriInternalCustomerIdentity() {
+    public static String getAPrioriInternalCustomerIdentity() {
         return aPrioriInternalCustomerIdentity = System.getProperty("aPrioriInternalCustomerIdentity") == null ? PROPERTIES.getProperty("aPrioriInternal.customer.Identity") : System.getProperty("aPrioriInternalCustomerIdentity");
     }
 
