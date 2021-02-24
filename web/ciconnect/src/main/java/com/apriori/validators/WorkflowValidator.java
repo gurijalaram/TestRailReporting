@@ -55,8 +55,8 @@ public class WorkflowValidator {
         String secondWorkflowName = workflowPage.getRowName((int)values.get("upperNameIndex"));
         String thirdWorkflowName = workflowPage.getRowName((int)values.get("lowerNameIndex"));
 
-        Assert.assertEquals(firstWorkflowName, values.get("numericName"));
-        Assert.assertEquals(secondWorkflowName, values.get("upperName"));
-        Assert.assertEquals(thirdWorkflowName, values.get("lowerName"));
+        Assert.assertEquals(values.get("numericName"), firstWorkflowName);
+        Assert.assertEquals(values.get("upperName"), secondWorkflowName);
+        Assert.assertEquals(values.get("lowerName"), thirdWorkflowName);
     }
 }

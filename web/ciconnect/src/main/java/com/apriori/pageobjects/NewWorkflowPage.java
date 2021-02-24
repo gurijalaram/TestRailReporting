@@ -121,6 +121,7 @@ public class NewWorkflowPage {
         newWorflowNameField.sendKeys(name);
         pageUtils.waitForElementAndClick(newWorkflowConnectorDropDown);
         pageUtils.waitForElementAndClick(newWorkflowConnectorSelection);
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
         pageUtils.waitForElementAndClick(newWorkflowNextButton);
 
         fillQueryDefinitions();
