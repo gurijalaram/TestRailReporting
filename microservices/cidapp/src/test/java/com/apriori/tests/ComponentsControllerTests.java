@@ -54,7 +54,7 @@ public class ComponentsControllerTests {
         String partName = "bracket_basic.prt";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = new CidAppTestUtil().postComponents(url, token, scenarioName, partName);
+        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, token, scenarioName, partName);
 
         assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
@@ -71,7 +71,7 @@ public class ComponentsControllerTests {
         String partName = "bracket_basic.prt";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = new CidAppTestUtil().postComponents(url, token, scenarioName, partName);
+        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, token, scenarioName, partName);
 
         assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
@@ -79,7 +79,7 @@ public class ComponentsControllerTests {
 
         String identityUrl = String.format(Constants.getApiUrl(), "components/" + componentIdentity);
 
-        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = new CidAppTestUtil().getComponentsIdentity(identityUrl, token);
+        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = cidAppTestUtil.getComponentsIdentity(identityUrl, token);
 
         assertThat(componentIdentityResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIdentityResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(componentIdentity)));
