@@ -49,6 +49,7 @@ pipeline {
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.MODULE_PROP}"
+                    javaOpts = javaOpts + "${params.CLINE_PROPERTIES}"
 
                     url = params.TARGET_URL
                     if (url != "none") {
