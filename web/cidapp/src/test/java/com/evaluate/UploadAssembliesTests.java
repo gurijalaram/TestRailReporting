@@ -36,28 +36,29 @@ public class UploadAssembliesTests extends TestBase {
     @TestRail(testCaseId = "5616")
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssembliesComponentsTests() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         File bigRingComp = FileResourceUtil.getResourceAsFile("big ring.SLDPRT");
         File pinComp = FileResourceUtil.getResourceAsFile("pin.SLDPRT");
         File smallRingComp = FileResourceUtil.getResourceAsFile("small ring.SLDPRT");
         File hingeAsm = FileResourceUtil.getResourceAsFile("Hinge assembly.SLDASM");
 
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), bigRingComp, EvaluatePage.class)
+            .uploadComponentAndSubmit(scenarioName, bigRingComp, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
-        evaluatePage.uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), smallRingComp, EvaluatePage.class)
+        evaluatePage.uploadComponentAndSubmit(scenarioName, smallRingComp, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
-        evaluatePage.uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), pinComp, EvaluatePage.class)
+        evaluatePage.uploadComponentAndSubmit(scenarioName, pinComp, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
-        evaluatePage.uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), hingeAsm, EvaluatePage.class)
+        evaluatePage.uploadComponentAndSubmit(scenarioName, hingeAsm, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
