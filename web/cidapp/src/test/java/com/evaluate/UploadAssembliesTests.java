@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -33,7 +34,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = "5616")
+    @TestRail(testCaseId = "5612")
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssembliesComponentsTests() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -44,23 +45,27 @@ public class UploadAssembliesTests extends TestBase {
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(scenarioName, bigRingComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, smallRingComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, pinComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, hingeAsm, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+
+        assertThat(evaluatePage.getComponentResults("Total"), is(equalTo("3")));
+        assertThat(evaluatePage.getComponentResults("Unique"), is(equalTo("3")));
+        assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo("0")));
     }
 }
