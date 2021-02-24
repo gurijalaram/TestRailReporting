@@ -61,7 +61,7 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3364")
     @Description("Validate Cost Metric Input Control")
     public void testCostMetricInputControlPpc() {
@@ -73,7 +73,7 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3364")
     @Description("Validate Cost Metric Input Control")
     public void testCostMetricInputControlFbc() {

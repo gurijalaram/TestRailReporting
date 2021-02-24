@@ -7,6 +7,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
@@ -68,6 +69,39 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
         );
     }
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "3363")
+    @Description("Validate Target and Quoted Cost Value Tracking report is available by library")
+    public void testDetailsReportAvailabilityByLibrary() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "3363")
+    @Description("Validate Target and Quoted Cost Value Tracking report is available by navigation")
+    public void testDetailsReportAvailabilityByNavigation() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByNavigation(
+                Constants.SOLUTIONS_FOLDER,
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "3363")
+    @Description("Validate Target and Quoted Cost Value Tracking report is available by search")
+    public void testDetailsReportAvailabilityBySearch() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityBySearch(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
+        );
+    }
 
     @Test
     @Category(ReportsTest.class)
@@ -118,5 +152,26 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
         String gbpFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
 
         assertThat(usdFinalAprioriCost, is(not(equalTo(gbpFinalAprioriCost))));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3368")
+    @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
+    public void testLinksToMilestoneOne() {
+        targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                        TargetAndQuotedCostValueTrackingPage.class)
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
+                .clickProjectLink("1")
+                .switchTab(1)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
+
+        assertThat(targetAndQuotedCostValueTrackingPage.getProjectName(),
+                is(equalTo("PROJECT 1")));
     }
 }
