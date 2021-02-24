@@ -1,4 +1,4 @@
-package com.apriori.tests;
+package com.apriori.tests.controllers;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
