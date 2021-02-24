@@ -164,7 +164,7 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param url      - the endpoint
+     * @param url      - the endpointl
      * @param klass    - the response class
      * @param realmKey - the realm key
      * @param cloudReference - the cloud reference
