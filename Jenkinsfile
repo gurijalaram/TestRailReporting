@@ -21,7 +21,7 @@ pipeline {
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
         choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
         string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
-        string(name: 'CLINE_PROPERTIES', defaultValue: 'none', description: 'Command line values eg. -Dservice.host={service host}')
+        string(name: 'CLINE_PROPERTIES', defaultValue: 'none', description: 'Set command line properties as in Constants file eg. -DcdsServiceHost={service host} -DcdsSecretKey={secret key}')
     }
 
     agent {
