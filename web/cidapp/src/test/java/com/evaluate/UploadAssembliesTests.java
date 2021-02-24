@@ -11,7 +11,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -25,8 +25,6 @@ public class UploadAssembliesTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private File resourceFile;
-    private UserCredentials currentUser;
 
     public UploadAssembliesTests() {
         super();
@@ -43,7 +41,8 @@ public class UploadAssembliesTests extends TestBase {
         File smallRingComp = FileResourceUtil.getResourceAsFile("small ring.SLDPRT");
         File hingeAsm = FileResourceUtil.getResourceAsFile("Hinge assembly.SLDASM");
 
-        evaluatePage = loginPage.login(currentUser)
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, bigRingComp, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .costScenario();
