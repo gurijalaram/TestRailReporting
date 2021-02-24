@@ -102,7 +102,7 @@ public class WorkflowTests  extends TestBase {
 
         Map<String, Object> values = workflowFeatures.defaultSorting();
         validator.validateDefaultWorkflowOrdering(values);
-
+        workflowNames = (ArrayList<String>) values.get("workflows");
     }
 
     private void deleteWorkflows(ArrayList<String> workflows, WorkflowPage workflowPage, DeleteWorkflowPage deleteWorkflowPage) {

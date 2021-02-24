@@ -169,12 +169,13 @@ public class WorkflowFeatures {
 
         workflowPage.newWorkflow();
         String upperName = UIUtils.saltString(Constants.DEFAULT_NAME_UPPER_CASE);
-        newWorkflowPage.createNewWorkFlow(numericName, iteration);
+        newWorkflowPage.createNewWorkFlow(upperName, iteration);
         workflowPage.refeshPage(workflowPage);
         workflowPage.refreshWorkflowTable();
         upperName = correctWorkflowNameSpacing(upperName);
         values.put("upperName", upperName);
         workflows.add(upperName);
+        workflowPage.refeshPage(workflowPage);
 
         values.put("workflows", workflows);
         return values;
