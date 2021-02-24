@@ -31,7 +31,6 @@ pipeline {
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
-                    //javaOpts = javaOpts + " ${params.COMMAND_LINE_ARGUMENTS} "
 
                     testSuite = params.SUITE
 
