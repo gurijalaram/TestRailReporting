@@ -43,7 +43,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
      * @return current page object instance
      */
     public TargetAndQuotedCostValueTrackingPage clickProjectLink(String index) {
-        By locator = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]/..", index));
+        By locator = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]/../..", index));
         pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
