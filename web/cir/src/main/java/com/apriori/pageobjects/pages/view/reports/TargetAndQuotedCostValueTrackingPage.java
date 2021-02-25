@@ -16,6 +16,15 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "//div[@id='projectRollup']//a")
     private WebElement projectRollupDropdown;
 
+    @FindBy(xpath = "//div[@id='exportDate']//a")
+    private WebElement exportDateDropdown;
+
+    @FindBy(xpath = "//div[@class='jr-mSingleselect-dropdownContainer jr'][2]//ul")
+    private WebElement exportDateOptionList;
+
+    @FindBy(xpath = "(//span[contains(text(), 'Export Date:')])[1]/../following-sibling::td[2]/span")
+    private WebElement exportDateOnReport;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -43,7 +52,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
      * @return current page object instance
      */
     public TargetAndQuotedCostValueTrackingPage clickProjectLink(String index) {
-        By locator = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]/../..", index));
+        By locator = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]", index));
         pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
@@ -56,13 +65,13 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
      *
      * @return current page object
      */
-    public GenericReportPage selectProjectRollup(String rollupName) {
+    public <T> T selectProjectRollup(Class<T> className, String rollupName) {
         if (!projectRollupDropdown.getAttribute("title").equals(rollupName)) {
             pageUtils.waitForElementAndClick(projectRollupDropdown);
             By rollupLocator = By.xpath(String.format("//li[@title='%s']/div/a", rollupName));
             pageUtils.waitForElementAndClick(rollupLocator);
         }
-        return this;
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -72,5 +81,19 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
     public String getProjectName() {
         By locator = By.xpath("//span[contains(text(), 'Project Name:')]/../following-sibling::td[2]/span");
         return driver.findElement(locator).getText();
+    }
+
+    public String getExportDateOptionCount() {
+        pageUtils.waitForElementToAppear(exportDateDropdown);
+        return exportDateOptionList.getAttribute("childElementCount");
+    }
+
+    public String getSelectedExportDate() {
+        pageUtils.waitForElementToAppear(exportDateDropdown);
+        return exportDateDropdown.getAttribute("title");
+    }
+
+    public String getExportDateOnReport() {
+        return exportDateOnReport.getText();
     }
 }

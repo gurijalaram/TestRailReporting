@@ -164,7 +164,8 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
-                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .selectProjectRollup(TargetAndQuotedCostValueTrackingPage.class,
+                        RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .clickProjectLink("1")
@@ -173,5 +174,28 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
         assertThat(targetAndQuotedCostValueTrackingPage.getProjectName(),
                 is(equalTo("PROJECT 1")));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3366")
+    @Description("Export date lists all available versions from selected export set rollup")
+    public void testExportDateListFunctionality() {
+        targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                        TargetAndQuotedCostValueTrackingPage.class)
+                .selectProjectRollup(TargetAndQuotedCostValueTrackingPage.class, RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName());
+
+        assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOptionCount(), is(equalTo("1")));
+        String exportDateSelected = targetAndQuotedCostValueTrackingPage.getSelectedExportDate()
+                .replace("T", " ");
+
+        targetAndQuotedCostValueTrackingPage.clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
+
+        assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOnReport()
+                .replace(" UTC", ""), is(equalTo(exportDateSelected)));
     }
 }
