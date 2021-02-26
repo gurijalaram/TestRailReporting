@@ -1,9 +1,5 @@
 package com.apriori.cds.tests.utils;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.utils.TestUtil;
@@ -21,8 +17,6 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
-import org.apache.http.HttpStatus;
 
 import java.util.Arrays;
 
@@ -215,11 +209,12 @@ public class CdsTestUtil extends TestUtil {
      *
      * @param deleteEndpoint - the endpoint to delete a customer/user
      */
-    public void delete(String deleteEndpoint) {
+    public ResponseWrapper<String> delete(String deleteEndpoint) {
         RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
             .setHeaders("Content-Type", "application/json");
 
-        ResponseWrapper<String> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+        return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+    }
 
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
