@@ -47,7 +47,7 @@ public class IterationsControllerTests {
         String componentIdentity = postComponentResponse.getResponseEntity().getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getResponseEntity().getScenarioIdentity();
 
-        String componentIterationLatestUrl = String.format(Constants.getApiUrl(), "components/" + "58D35EBA3B9L" + "/scenarios/" + "58CLDL419I70" + "/iterations/latest");
+        String componentIterationLatestUrl = String.format(Constants.getApiUrl(), "components/" + componentIdentity + "/scenarios/" + scenarioIdentity + "/iterations/latest");
 
         ResponseWrapper<ComponentIteration> getComponentIterationResponse = cidAppTestUtil.getComponentsIterationsLatest(componentIterationLatestUrl, token);
 
