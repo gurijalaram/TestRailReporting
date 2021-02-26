@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "updatedAt",
+        "customerIdentity",
+        "iteration",
+        "scenarioIterationKey",
+        "costingInput",
+        "scenarioCustomAttributes",
+        "scenarioDtcIssues",
+        "scenarioProcesses",
+        "hasThumbnail",
+        "hasWebImage",
+        "thumbnail"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "iteration": {
+          "type": "integer"
+        },
+        "scenarioIterationKey": {
+          "type": "string"
+        },
+        "costingInput": {
+          "type": "object",
+          "required": [
+            "identity",
+            "annualVolume",
+            "batchSize",
+            "customAttributes",
+            "materialName",
+            "processGroupName",
+            "productionLife",
+            "vpeName"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "annualVolume": {
+              "type": "integer"
+            },
+            "batchSize": {
+              "type": "integer"
+            },
+            "customAttributes": {
+              "type": "object",
+              "required": []
+            },
+            "materialName": {
+              "type": "string"
+            },
+            "processGroupName": {
+              "type": "string"
+            },
+            "productionLife": {
+              "type": "number"
+            },
+            "vpeName": {
+              "type": "string"
+            }
+          }
+        },
+        "scenarioCustomAttributes": {
+          "type": "array",
+          "items": {
+          }
+        },
+        "scenarioDtcIssues": {
+          "type": "array",
+          "items": {
+          }
+        },
+        "scenarioProcesses": {
+          "type": "array",
+          "items": {
+          }
+        },
+        "hasThumbnail": {
+          "type": "boolean"
+        },
+        "hasWebImage": {
+          "type": "boolean"
+        },
+        "thumbnail": {
+          "type": "object",
+          "required": [
+            "identity",
+            "image",
+            "imageType"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "imageType": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
