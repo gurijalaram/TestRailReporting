@@ -1,10 +1,7 @@
 package com.apriori;
 
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.entity.reponse.ComponentIdentityResponse;
-import com.apriori.entity.reponse.GetComponentResponse;
 import com.apriori.entity.reponse.PostComponentResponse;
-import com.apriori.entity.reponse.componentiteration.ComponentIteration;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -40,31 +37,11 @@ public class CidAppTestUtil {
      *
      * @param url   - the url
      * @param token - the token
+     * @param klass - the class
      * @return responsewrapper
      */
-    public ResponseWrapper<GetComponentResponse> getComponents(String url, String token) {
-        RequestEntity requestEntity = RequestEntity.init(url, GetComponentResponse.class)
-            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
-
-        return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
-    }
-
-    /**
-     * Get the current representation of a component.
-     *
-     * @param url   - the url
-     * @param token - the token
-     * @return component identity
-     */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentsIdentity(String url, String token) {
-        RequestEntity requestEntity = RequestEntity.init(url, ComponentIdentityResponse.class)
-            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
-
-        return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
-    }
-
-    public ResponseWrapper<ComponentIteration> getComponentsIterationsLatest(String url, String token) {
-        RequestEntity requestEntity = RequestEntity.init(url, ComponentIteration.class)
+    public <T> ResponseWrapper<T> getComponents(String url, String token, Class klass) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
         return GenericRequestUtil.get(requestEntity, new RequestAreaApi());

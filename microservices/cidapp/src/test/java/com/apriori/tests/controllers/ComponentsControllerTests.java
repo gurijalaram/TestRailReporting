@@ -58,7 +58,7 @@ public class ComponentsControllerTests {
 
         assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<GetComponentResponse> getComponentResponse = cidAppTestUtil.getComponents(url, token);
+        ResponseWrapper<GetComponentResponse> getComponentResponse = cidAppTestUtil.getComponents(url, token, GetComponentResponse.class);
 
         assertThat(getComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(getComponentResponse.getResponseEntity().getResponse().getItems().size(), is(greaterThan(0)));
@@ -79,7 +79,7 @@ public class ComponentsControllerTests {
 
         String identityUrl = String.format(Constants.getApiUrl(), "components/" + componentIdentity);
 
-        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = cidAppTestUtil.getComponentsIdentity(identityUrl, token);
+        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = cidAppTestUtil.getComponents(identityUrl, token, ComponentIdentityResponse.class);
 
         assertThat(componentIdentityResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIdentityResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(componentIdentity)));

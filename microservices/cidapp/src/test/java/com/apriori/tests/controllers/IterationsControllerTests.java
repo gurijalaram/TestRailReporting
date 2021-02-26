@@ -49,7 +49,7 @@ public class IterationsControllerTests {
 
         String componentIterationLatestUrl = String.format(Constants.getApiUrl(), "components/" + componentIdentity + "/scenarios/" + scenarioIdentity + "/iterations/latest");
 
-        ResponseWrapper<ComponentIteration> getComponentIterationResponse = cidAppTestUtil.getComponentsIterationsLatest(componentIterationLatestUrl, token);
+        ResponseWrapper<ComponentIteration> getComponentIterationResponse = cidAppTestUtil.getComponents(componentIterationLatestUrl, token, ComponentIteration.class);
 
         assertThat(getComponentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
