@@ -25,6 +25,9 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "(//span[contains(text(), 'Export Date:')])[1]/../following-sibling::td[2]/span")
     private WebElement exportDateOnReport;
 
+    @FindBy(xpath = "(//*[contains(text(), 'IROBOT_18874')])[2]")
+    private WebElement partNumberDetailsReport;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -52,11 +55,21 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
      * @return current page object instance
      */
     public TargetAndQuotedCostValueTrackingPage clickProjectLink(String index) {
-        By locator = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]", index));
+        By locator = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]/../..", index));
         pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
-        pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementAndClick(locator);
+        return this;
+    }
+
+    /**
+     * Waits for correct project name to appear
+     * @param index project name index
+     * @return current page object instance
+     */
+    public TargetAndQuotedCostValueTrackingPage waitForCorrectProjectNameToAppear(String index) {
+        By locator = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]/../..", index));
+        pageUtils.waitForElementToAppear(locator);
         return this;
     }
 
@@ -83,17 +96,38 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
         return driver.findElement(locator).getText();
     }
 
+    /**
+     * Gets export date option count
+     * @return String
+     */
     public String getExportDateOptionCount() {
         pageUtils.waitForElementToAppear(exportDateDropdown);
         return exportDateOptionList.getAttribute("childElementCount");
     }
 
+    /**
+     * Gets currently selected export date
+     * @return String
+     */
     public String getSelectedExportDate() {
         pageUtils.waitForElementToAppear(exportDateDropdown);
         return exportDateDropdown.getAttribute("title");
     }
 
+    /**
+     * Gets export date from report
+     * @return String
+     */
     public String getExportDateOnReport() {
         return exportDateOnReport.getText();
+    }
+
+    /**
+     * Gets part number from details report
+     * @return String
+     */
+    public String getPartNumberFromDetailsReport() {
+        pageUtils.waitForElementToAppear(partNumberDetailsReport);
+        return partNumberDetailsReport.getText();
     }
 }

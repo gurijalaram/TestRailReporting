@@ -13,6 +13,10 @@ import com.apriori.utils.web.driver.TestBase;
 import com.inputcontrols.InputControlsTests;
 
 import com.navigation.CommonReportTests;
+import com.pageobjects.pages.evaluate.EvaluatePage;
+import com.pageobjects.pages.explore.ExplorePage;
+import com.pageobjects.pages.explore.FilterCriteriaPage;
+import groovy.util.Eval;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -24,6 +28,7 @@ import utils.Constants;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TargetAndQuotedCostValueTrackingTests extends TestBase {
@@ -197,5 +202,40 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
         assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOnReport()
                 .replace(" UTC", ""), is(equalTo(exportDateSelected)));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3367")
+    @Description("Validate Target Cost Value Tracking report aligns to CID values")
+    public void testDataIntegrityAgainstCID() {
+        targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                        TargetAndQuotedCostValueTrackingPage.class)
+                .selectProjectRollup(TargetAndQuotedCostValueTrackingPage.class,
+                        RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
+                .waitForCorrectProjectNameToAppear("1");
+
+        targetAndQuotedCostValueTrackingPage.clickProjectLink("1");
+        targetAndQuotedCostValueTrackingPage.switchTab(1);
+        String partName = targetAndQuotedCostValueTrackingPage.getPartNumberFromDetailsReport();
+
+        targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filter()
+                .setWorkspace("Public")
+                .setScenarioType("Part")
+                .setRowOne("Part Name", "Contains", partName)
+                .setRowTwo("Scenario Name", "Contains", "Initial")
+                .apply(ExplorePage.class)
+                .openFirstScenario();
+
+        String cidAnnualVolume = evaluatePage.getAnnualVolume();
+
+        assertThat(cidAnnualVolume, is(not(nullValue())));
     }
 }
