@@ -29,6 +29,17 @@ public class PropertyInfoMap {
     private PartModelName partModelName;
     private TemperatureUnitName temperatureUnitName;
     private FileFormat fileFormat;
+    private NumSurfaces numSurfaces;
+    private NumInsertCores numInsertCores;
+    private MinThickness minThickness;
+    private ToolThickness toolThickness;
+    private ThicknessStdDev thicknessStdDev;
+    private AverageThickness averageThickness;
+    private ToolMinThickness toolMinThickness;
+    private MaxThickness maxThickness;
+    private NumSideCores numSideCores;
+    private AverageThicknessDev averageThicknessDev;
+    private Min80Thickness min80Thickness;
 
     public ArtifactTypeName getArtifactTypeName() {
         return artifactTypeName;
@@ -252,6 +263,105 @@ public class PropertyInfoMap {
 
     public PropertyInfoMap setFileFormat(FileFormat fileFormat) {
         this.fileFormat = fileFormat;
+        return this;
+    }
+
+    public NumSurfaces getNumSurfaces() {
+        return numSurfaces;
+    }
+
+    public PropertyInfoMap setNumSurfaces(NumSurfaces numSurfaces) {
+        this.numSurfaces = numSurfaces;
+        return this;
+    }
+
+    public NumInsertCores getNumInsertCores() {
+        return numInsertCores;
+    }
+
+    public PropertyInfoMap setNumInsertCores(NumInsertCores numInsertCores) {
+        this.numInsertCores = numInsertCores;
+        return this;
+    }
+
+    public MinThickness getMinThickness() {
+        return minThickness;
+    }
+
+    public PropertyInfoMap setMinThickness(MinThickness minThickness) {
+        this.minThickness = minThickness;
+        return this;
+    }
+
+    public ToolThickness getToolThickness() {
+        return toolThickness;
+    }
+
+    public PropertyInfoMap setToolThickness(ToolThickness toolThickness) {
+        this.toolThickness = toolThickness;
+        return this;
+    }
+
+    public ThicknessStdDev getThicknessStdDev() {
+        return thicknessStdDev;
+    }
+
+    public PropertyInfoMap setThicknessStdDev(ThicknessStdDev thicknessStdDev) {
+        this.thicknessStdDev = thicknessStdDev;
+        return this;
+    }
+
+    public AverageThickness getAverageThickness() {
+        return averageThickness;
+    }
+
+    public PropertyInfoMap setAverageThickness(AverageThickness averageThickness) {
+        this.averageThickness = averageThickness;
+        return this;
+    }
+
+    public ToolMinThickness getToolMinThickness() {
+        return toolMinThickness;
+    }
+
+    public PropertyInfoMap setToolMinThickness(ToolMinThickness toolMinThickness) {
+        this.toolMinThickness = toolMinThickness;
+        return this;
+    }
+
+    public MaxThickness getMaxThickness() {
+        return maxThickness;
+    }
+
+    public PropertyInfoMap setMaxThickness(MaxThickness maxThickness) {
+        this.maxThickness = maxThickness;
+        return this;
+    }
+
+    public NumSideCores getNumSideCores() {
+        return numSideCores;
+    }
+
+    public PropertyInfoMap setNumSideCores(NumSideCores numSideCores) {
+        this.numSideCores = numSideCores;
+        return this;
+    }
+
+    public AverageThicknessDev getAverageThicknessDev() {
+        return averageThicknessDev;
+    }
+
+    public PropertyInfoMap setAverageThicknessDev(AverageThicknessDev averageThicknessDev) {
+        this.averageThicknessDev = averageThicknessDev;
+        return this;
+    }
+
+    public Min80Thickness getMin80Thickness() {
+        return min80Thickness;
+    }
+
+    public PropertyInfoMap setMin80Thickness(Min80Thickness min80Thickness) {
+        this.min80Thickness = min80Thickness;
         return this;
     }
 }

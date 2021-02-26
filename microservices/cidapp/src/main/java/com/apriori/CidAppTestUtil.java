@@ -4,6 +4,7 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.entity.reponse.ComponentIdentityResponse;
 import com.apriori.entity.reponse.GetComponentResponse;
 import com.apriori.entity.reponse.PostComponentResponse;
+import com.apriori.entity.reponse.componentiteration.ComponentIteration;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -57,6 +58,13 @@ public class CidAppTestUtil {
      */
     public ResponseWrapper<ComponentIdentityResponse> getComponentsIdentity(String url, String token) {
         RequestEntity requestEntity = RequestEntity.init(url, ComponentIdentityResponse.class)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+    }
+
+    public ResponseWrapper<ComponentIteration> getComponentsIterationsLatest(String url, String token) {
+        RequestEntity requestEntity = RequestEntity.init(url, ComponentIteration.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
         return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
