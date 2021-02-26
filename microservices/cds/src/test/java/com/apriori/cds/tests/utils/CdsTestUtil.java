@@ -92,8 +92,8 @@ public class CdsTestUtil extends TestUtil {
     /**
      * PATCH call to update a user
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
+     * @param url   - the endpoint
+     * @param klass - the response class
      * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> patchUser(String url, Class klass) {
@@ -158,9 +158,9 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param url      - the endpoint
-     * @param klass    - the response class
-     * @param realmKey - the realm key
+     * @param url            - the endpoint
+     * @param klass          - the response class
+     * @param realmKey       - the realm key
      * @param cloudReference - the cloud reference
      * @return <T>ResponseWrapper<T>
      */
@@ -205,18 +205,16 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Delete an api customer/user
+     * Calls the delete method
      *
-     * @param deleteEndpoint - the endpoint to delete a customer/user
+     * @param deleteEndpoint - the endpoint to delete
+     * @return responsewrapper
      */
     public ResponseWrapper<String> delete(String deleteEndpoint) {
         RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
             .setHeaders("Content-Type", "application/json");
 
         return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
-    }
-
-        assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 
     /**
