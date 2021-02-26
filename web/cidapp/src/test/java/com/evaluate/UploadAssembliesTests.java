@@ -45,16 +45,28 @@ public class UploadAssembliesTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, bigRingComp, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("Aluminum, Cast")
+            .selectMaterial("Aluminum, Cast, ANSI 112.0")
+            .submit()
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, smallRingComp, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("Aluminum, Cast")
+            .selectMaterial("Aluminum, Cast, ANSI 112.0")
+            .submit()
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, pinComp, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("Aluminum, Cast")
+            .selectMaterial("Aluminum, Cast, ANSI 112.0")
+            .submit()
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
