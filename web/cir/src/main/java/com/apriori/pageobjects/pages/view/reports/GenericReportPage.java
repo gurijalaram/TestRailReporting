@@ -796,6 +796,17 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Gets specified value from report
+     * @param index String - index of value to get
+     * @return String
+     */
+    public String getValueFromReport(String index) {
+        By locator = By.xpath(String.format("//table[contains(@class, 'jrPage')]//tr[22]/td[%s]/span", index));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
+    }
+
+    /**
      * Hovers over bar in Casting DTC Comparison Report
      * @return current page object
      */

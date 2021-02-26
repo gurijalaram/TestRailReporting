@@ -1,10 +1,7 @@
 package testsuites;
 
-import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
-import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsTests;
 import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;

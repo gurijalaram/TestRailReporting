@@ -4,6 +4,7 @@ import com.apriori.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -55,10 +56,10 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
      * @return current page object instance
      */
     public TargetAndQuotedCostValueTrackingPage clickProjectLink(String index) {
-        By locator = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]/../..", index));
-        pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
-        pageUtils.waitForElementAndClick(locator);
-        pageUtils.waitForElementAndClick(locator);
+        By locator2 = By.xpath(String.format("//span[contains(text(), 'PROJECT %s')]", index));
+        pageUtils.waitFor(2000);
+        pageUtils.waitForElementAndClick(locator2);
+        pageUtils.waitForElementAndClick(locator2);
         return this;
     }
 

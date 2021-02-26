@@ -244,17 +244,6 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets specified value from report
-     * @param index String - index of value to get
-     * @return String
-     */
-    public String getValueFromReport(String index) {
-        By locator = By.xpath(String.format("//table[contains(@class, 'jrPage')]//tr[22]/td[%s]/span", index));
-        pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(locator).getText();
-    }
-
-    /**
      * Gets first project name from Value Tracking Reports
      * @return String
      */

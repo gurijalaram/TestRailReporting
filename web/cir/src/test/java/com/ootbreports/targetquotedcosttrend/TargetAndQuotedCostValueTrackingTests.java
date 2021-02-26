@@ -224,6 +224,14 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
         targetAndQuotedCostValueTrackingPage.switchTab(1);
         String partName = targetAndQuotedCostValueTrackingPage.getPartNumberFromDetailsReport();
 
+        String reportsScenarioName = targetAndQuotedCostValueTrackingPage.getValueFromReport("5");
+        String reportsVpe = targetAndQuotedCostValueTrackingPage.getValueFromReport("11");
+        String reportsProcessGroup = targetAndQuotedCostValueTrackingPage.getValueFromReport("14");
+        String reportsMaterialComposition = targetAndQuotedCostValueTrackingPage.getValueFromReport("17")
+                .replace("\n", " ");
+        String reportsAnnualVolume = targetAndQuotedCostValueTrackingPage.getValueFromReport("22");
+        String reportsCurrentCost = targetAndQuotedCostValueTrackingPage.getValueFromReport("24");
+
         targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
@@ -234,8 +242,18 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
+        String cidScenarioName = evaluatePage.getScenarioName();
+        String cidVPE = evaluatePage.getVpe();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
+        String cidMaterialComposition = evaluatePage.getMaterialInfo();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
+        String cidFbc = evaluatePage.getFullyBurdenedCostValueRoundedUp();
 
-        assertThat(cidAnnualVolume, is(not(nullValue())));
+        assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
+        assertThat(reportsVpe, is(equalTo(cidVPE)));
+        assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
+        assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
+        assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
+        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
     }
 }
