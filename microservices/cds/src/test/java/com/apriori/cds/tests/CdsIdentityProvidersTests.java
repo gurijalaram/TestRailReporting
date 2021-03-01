@@ -1,7 +1,6 @@
 package com.apriori.cds.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -93,6 +92,5 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         ResponseWrapper<String> deleteResponse = delete(deleteIdentityProviderEndpoint);
 
         assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
-        assertThat(deleteResponse.getResponseEntity(), is(emptyString()));
     }
 }
