@@ -27,6 +27,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     private String userIdentityEndpoint;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private String accessControlIdentityEndpoint;
 
     @Before
     public void setServiceUrl() {
@@ -40,6 +41,9 @@ public class CdsAccessControlsTests extends CdsTestUtil {
         }
         if (customerIdentityEndpoint != null) {
             delete(customerIdentityEndpoint);
+        }
+        if (accessControlIdentityEndpoint != null) {
+            delete(accessControlIdentityEndpoint);
         }
     }
 
@@ -78,6 +82,9 @@ public class CdsAccessControlsTests extends CdsTestUtil {
 
         String accessControlEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat(String.format("/users/%s/access-controls", userIdentity))));
         ResponseWrapper<AccessControl> accessControlResponse = addAccessControl(accessControlEndpoint, AccessControl.class);
+        String accessControlIdentity = accessControlResponse.getResponseEntity().getResponse().getIdentity();
+
+        accessControlIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s/access-controls/%s", customerIdentity, userIdentity, accessControlIdentity));
 
         assertThat(accessControlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(accessControlResponse.getResponseEntity().getResponse().getOutOfContext(), is(true));
