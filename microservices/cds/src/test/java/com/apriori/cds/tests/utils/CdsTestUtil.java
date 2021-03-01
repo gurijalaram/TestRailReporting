@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cds.objects.request.AccessControlRequest;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
@@ -98,8 +99,8 @@ public class CdsTestUtil extends TestUtil {
     /**
      * PATCH call to update a user
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
+     * @param url   - the endpoint
+     * @param klass - the response class
      * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> patchUser(String url, Class klass) {
@@ -164,9 +165,9 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param url      - the endpoint
-     * @param klass    - the response class
-     * @param realmKey - the realm key
+     * @param url            - the endpoint
+     * @param klass          - the response class
+     * @param realmKey       - the realm key
      * @param cloudReference - the cloud reference
      * @return <T>ResponseWrapper<T>
      */
@@ -282,6 +283,29 @@ public class CdsTestUtil extends TestUtil {
                     .setActive("true")
                     .setLicense(String.format(Constants.getLicense(), customerName, siteId, licenseId, subLicenseId))
                     .setLicenseTemplate(String.format(Constants.getLicenseTemplate(), customerName))));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * Post to add out of context access control
+     *
+     * @param url   - the url
+     * @param klass - the class
+     * @param <T>   - generic return type
+     * @return <T>ResponseWrapper</T>
+     */
+    public <T> ResponseWrapper<T> addAccessControl(String url, Class klass) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("accessControl",
+                new AccessControlRequest().setCustomerIdentity(Constants.getAPrioriInternalCustomerIdentity())
+                    .setDeploymentIdentity(Constants.getApProductionDeploymentIdentity())
+                    .setInstallationIdentity(Constants.getApCoreInstallationIdentity())
+                    .setApplicationIdentity(Constants.getApProApplicationIdentity())
+                    .setCreatedBy("#SYSTEM000000")
+                    .setRoleName("USER")
+                    .setRoleIdentity(Constants.getCdsIdentityRole()));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
