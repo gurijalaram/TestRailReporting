@@ -163,22 +163,32 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
-    public void testLinksToMilestoneProjectFour() {
-        targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-                        TargetAndQuotedCostValueTrackingPage.class)
-                .selectProjectRollup(TargetAndQuotedCostValueTrackingPage.class,
-                        RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk()
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
-                .clickProjectLink("4")
-                .switchTab(1)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
+    public void testLinksToMilestoneProjectOne() {
+        testMilestoneProjectLink("1");
+    }
 
-        assertThat(targetAndQuotedCostValueTrackingPage.getProjectName(),
-                is(equalTo("PROJECT 4")));
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3368")
+    @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
+    public void testLinksToMilestoneProjectTwo() {
+        testMilestoneProjectLink("2");
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3368")
+    @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
+    public void testLinksToMilestoneProjectThree() {
+        testMilestoneProjectLink("3");
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3368")
+    @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
+    public void testLinksToMilestoneProjectFour() {
+        testMilestoneProjectLink("4");
     }
 
     @Test
@@ -255,5 +265,23 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
         assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
+    }
+
+    private void testMilestoneProjectLink(String index) {
+        targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                        TargetAndQuotedCostValueTrackingPage.class)
+                .selectProjectRollup(TargetAndQuotedCostValueTrackingPage.class,
+                        RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
+                .clickProjectLink(index)
+                .switchTab(1)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
+
+        assertThat(targetAndQuotedCostValueTrackingPage.getProjectName(),
+                is(equalTo(String.format("PROJECT %s", index))));
     }
 }
