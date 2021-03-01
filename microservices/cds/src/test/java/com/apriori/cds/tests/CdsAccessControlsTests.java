@@ -79,6 +79,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
         String accessControlEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat(String.format("/users/%s/access-controls", userIdentity))));
         ResponseWrapper<AccessControl> accessControlResponse = addAccessControl(accessControlEndpoint, AccessControl.class);
 
-        assertThat(accessControlResponse.getResponseEntity().getOutOfContext(), is(true));
+        assertThat(accessControlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        assertThat(accessControlResponse.getResponseEntity().getResponse().getOutOfContext(), is(true));
     }
 }

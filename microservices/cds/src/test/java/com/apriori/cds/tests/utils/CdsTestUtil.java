@@ -303,7 +303,7 @@ public class CdsTestUtil extends TestUtil {
                     .setDeploymentIdentity(Constants.getApProductionDeploymentIdentity())
                     .setInstallationIdentity(Constants.getApCoreInstallationIdentity())
                     .setApplicationIdentity(Constants.getApProApplicationIdentity())
-                    .setCreatedBy("#SYSTEM000000")
+                    .setCreatedBy("#SYSTEM00000")
                     .setRoleName("USER")
                     .setRoleIdentity(Constants.getCdsIdentityRole()));
 
