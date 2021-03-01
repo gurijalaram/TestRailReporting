@@ -36,14 +36,14 @@ public class CdsAccessControlsTests extends CdsTestUtil {
 
     @After
     public void cleanUp() {
+        if (accessControlIdentityEndpoint != null) {
+            delete(accessControlIdentityEndpoint);
+        }
         if (userIdentityEndpoint != null) {
             delete(userIdentityEndpoint);
         }
         if (customerIdentityEndpoint != null) {
             delete(customerIdentityEndpoint);
-        }
-        if (accessControlIdentityEndpoint != null) {
-            delete(accessControlIdentityEndpoint);
         }
     }
 
