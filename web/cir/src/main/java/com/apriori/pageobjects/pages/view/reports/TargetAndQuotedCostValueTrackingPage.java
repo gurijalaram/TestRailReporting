@@ -59,9 +59,9 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
         By locator = By.xpath(String.format("//span[.='PROJECT %s']/span", index));
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.isElementDisplayed(locator);
-        pageUtils.isElementEnabled(driver.findElement(locator));
-        pageUtils.waitForElementAndClick(locator);
+        if (pageUtils.isElementDisplayed(locator) && pageUtils.isElementEnabled(driver.findElement(locator))) {
+            pageUtils.waitForElementAndClick(locator);
+        }
         return this;
     }
 
