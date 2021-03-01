@@ -94,6 +94,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
      */
     public String getProjectName() {
         By locator = By.xpath("//span[contains(text(), 'Project Name:')]/../following-sibling::td[2]/span");
+        pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
     }
 

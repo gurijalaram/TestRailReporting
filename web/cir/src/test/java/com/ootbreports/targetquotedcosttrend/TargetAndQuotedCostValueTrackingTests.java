@@ -182,7 +182,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3366")
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateListFunctionality() {
@@ -205,7 +205,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3367")
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {
