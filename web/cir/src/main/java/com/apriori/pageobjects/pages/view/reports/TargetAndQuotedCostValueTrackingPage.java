@@ -60,6 +60,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.isElementDisplayed(locator);
+        pageUtils.isElementEnabled(driver.findElement(locator));
         pageUtils.waitForElementAndClick(locator);
         return this;
     }
