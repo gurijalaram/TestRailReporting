@@ -176,9 +176,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "save")
     private WebElement saveButton;
 
-    @FindBy(id = "loading")
-    private WebElement loadingPopup;
-
     @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Select All']/a")
     private WebElement exportSetSelectAll;
 
