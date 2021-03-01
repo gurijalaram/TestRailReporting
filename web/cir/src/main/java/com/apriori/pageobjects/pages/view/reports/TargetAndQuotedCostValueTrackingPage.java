@@ -29,6 +29,9 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "(//*[contains(text(), 'IROBOT_18874')])[2]")
     private WebElement partNumberDetailsReport;
 
+    @FindBy(id = "loading")
+    private WebElement loadingPopup;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -59,6 +62,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
         By locator2 = By.xpath(String.format("//span[.='PROJECT %s']/span", index));
         pageUtils.waitForSteadinessOfElement(locator2);
         pageUtils.checkElementAttribute(driver.findElement(locator2), "innerText", String.format("PROJECT %s", index));
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementAndClick(locator2);
         return this;
     }
