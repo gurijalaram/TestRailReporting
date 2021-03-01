@@ -163,7 +163,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
-    public void testLinksToMilestoneOne() {
+    public void testLinksToMilestoneProjectFour() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
@@ -173,12 +173,12 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
                         RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
-                .clickProjectLink("1")
+                .clickProjectLink("4")
                 .switchTab(1)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
 
         assertThat(targetAndQuotedCostValueTrackingPage.getProjectName(),
-                is(equalTo("PROJECT 1")));
+                is(equalTo("PROJECT 4")));
     }
 
     @Test
