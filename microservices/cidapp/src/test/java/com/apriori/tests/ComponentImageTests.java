@@ -38,10 +38,9 @@ public class ComponentImageTests {
     @Description("Test bounding values are correct")
     public void boundingBoxValuesTest() {
         String url = String.format(Constants.getApiUrl(), "components");
-        String partName = "bracket_basic.prt";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, token, scenarioName, partName);
+        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, token, scenarioName, "Casting - Die", "Casting.prt");
 
         assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 

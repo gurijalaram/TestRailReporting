@@ -3,6 +3,7 @@ package com.apriori;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.entity.reponse.PostComponentResponse;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -21,10 +22,10 @@ public class CidAppTestUtil {
      * @param partName     - the part name
      * @return responsewrapper
      */
-    public ResponseWrapper<PostComponentResponse> postComponents(String url, String token, String scenarioName, String partName) {
+    public ResponseWrapper<PostComponentResponse> postComponents(String url, String token, String scenarioName, String processGroup, String partName) {
         RequestEntity requestEntity = RequestEntity.init(url, PostComponentResponse.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
-            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getResourceAsFile(partName)))
+            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), partName)))
             .setFormParams(new FormParams().use("filename", partName)
                 .use("override", "false")
                 .use("scenarioName", scenarioName));
