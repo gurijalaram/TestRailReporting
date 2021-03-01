@@ -295,7 +295,7 @@ public class CdsTestUtil extends TestUtil {
                 new AccessControlRequest().setCustomerIdentity(Constants.getAPrioriInternalCustomerIdentity())
                     .setDeploymentIdentity(Constants.getApProductionDeploymentIdentity())
                     .setInstallationIdentity(Constants.getApCoreInstallationIdentity())
-                    .setApplicationIdentity(Constants.getApProApplicationIdentity())
+                    .setApplicationIdentity(Constants.getApCloudHomeApplicationIdentity())
                     .setCreatedBy("#SYSTEM00000")
                     .setRoleName("USER")
                     .setRoleIdentity(Constants.getCdsIdentityRole()));
