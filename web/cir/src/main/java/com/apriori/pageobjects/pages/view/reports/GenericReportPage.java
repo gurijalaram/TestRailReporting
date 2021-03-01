@@ -44,6 +44,9 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> bubbleMap = new HashMap<>();
     private String reportName = "";
 
+    @FindBy(id = "loading")
+    public WebElement loadingPopup;
+
     @FindBy(xpath = "//span[contains(text(), 'Select Parts')]")
     private WebElement selectPartsControlTitle;
 
