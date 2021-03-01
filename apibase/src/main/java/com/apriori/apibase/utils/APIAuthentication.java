@@ -55,7 +55,6 @@ public class APIAuthentication {
         return new HashMap<String, String>() {
             {
                 put("Authorization", "Bearer " + token);
-                put("Content-Type", "application/json");
             }
         };
     }

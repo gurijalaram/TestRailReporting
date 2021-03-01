@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.not;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.Sites;
+import com.apriori.cds.objects.response.User;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -18,6 +19,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +44,7 @@ public class CdsSitesTests extends CdsTestUtil {
     @Test
     @Description("Get a list of Sites in CDS Db")
     public void getSites() {
-        url = String.format(url,"sites");
+        url = String.format(url, "sites");
 
         ResponseWrapper<Sites> response = getCommonRequest(url, true, Sites.class);
 
@@ -54,7 +56,7 @@ public class CdsSitesTests extends CdsTestUtil {
     @Test
     @Description("Get details of a site by its Identity")
     public void getSiteByIdentity() {
-        String sitesUrl = String.format(url,"sites");
+        String sitesUrl = String.format(url, "sites");
 
         ResponseWrapper<Sites> response = getCommonRequest(sitesUrl, true, Sites.class);
         String siteIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
@@ -138,5 +140,34 @@ public class CdsSitesTests extends CdsTestUtil {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(site.getResponseEntity().getResponse().getName(), is(equalTo(siteName)));
         assertThat(site.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "5310")
+    public void deleteSite() {
+        String customersEndpoint = String.format(url, "customers");
+
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
+        String emailPattern = "\\S+@".concat(customerName);
+        String userName = generateStringUtil.generateUserName();
+
+        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+
+        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+
+        assertThat(user.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_CREATED)));
+
+        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String deleteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+
+        ResponseWrapper<String> deleteResponse = delete(deleteEndpoint);
+
+        assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        assertThat(deleteResponse.getResponseEntity(), is(emptyString()));
     }
 }
