@@ -29,6 +29,9 @@ public class Constants {
     private static String serviceHost;
     private static String secretKey;
     private static String protocol;
+    private static String apProductionDeploymentIdentity;
+    private static String apCoreInstallationIdentity;
+    private static String apcloudHomeApplicationIdentity;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -131,6 +134,33 @@ public class Constants {
     }
 
     /**
+     * Get apriori production deployment identity
+     *
+     * @return string
+     */
+    public static String getApProductionDeploymentIdentity() {
+        return apProductionDeploymentIdentity = System.getProperty("aprioriProductionDeploymentIdentity") == null ? PROPERTIES.getProperty("apriori.production.deployment.identity") : System.getProperty("aprioriProductionDeploymentIdentity");
+    }
+
+    /**
+     * Get apriori core installation identity
+     *
+     * @return string
+     */
+    public static String getApCoreInstallationIdentity() {
+        return apCoreInstallationIdentity = System.getProperty("aprioriCoreInstallationIdentity") == null ? PROPERTIES.getProperty("apriori.coreServices.installation.identity") : System.getProperty("aprioriCoreInstallationIdentity");
+    }
+
+    /**
+     * Get apriori cloud home application identity
+     *
+     * @return string
+     */
+    public static String getApCloudHomeApplicationIdentity() {
+        return apcloudHomeApplicationIdentity = System.getProperty("aprioriCloudHomeApplicationIdentity") == null ? PROPERTIES.getProperty("apriori.cloud.home.application.identity") : System.getProperty("aprioriCloudHomeApplicationIdentity");
+    }
+
+    /**
      * Get license
      *
      * @return string
@@ -210,4 +240,6 @@ public class Constants {
     public static String getSamlAttributeFamilyName() {
         return PROPERTIES.getProperty("saml.attribute.familyname");
     }
+
+
 }
