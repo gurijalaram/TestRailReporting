@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DrawableNode {
     private Integer value;
-    private Key_ key;
+    private Key key;
 
     public Integer getValue() {
         return value;
@@ -16,11 +16,11 @@ public class DrawableNode {
         return this;
     }
 
-    public Key_ getKey() {
+    public Key getKey() {
         return key;
     }
 
-    public DrawableNode setKey(Key_ key) {
+    public DrawableNode setKey(Key key) {
         this.key = key;
         return this;
     }
