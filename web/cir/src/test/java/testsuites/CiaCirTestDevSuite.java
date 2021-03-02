@@ -14,8 +14,6 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        CastingDtcReportTests.class,
-        CastingDtcDetailsReportTests.class,
         CastingDtcComparisonReportTests.class
 })
 
