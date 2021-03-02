@@ -44,9 +44,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private Map<String, WebElement> bubbleMap = new HashMap<>();
     private String reportName = "";
 
-    @FindBy(id = "loading")
-    public WebElement loadingPopup;
-
     @FindBy(xpath = "//span[contains(text(), 'Select Parts')]")
     private WebElement selectPartsControlTitle;
 
@@ -175,6 +172,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(id = "save")
     private WebElement saveButton;
+
+    @FindBy(id = "loading")
+    public WebElement loadingPopup;
 
     @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Select All']/a")
     private WebElement exportSetSelectAll;
@@ -796,7 +796,7 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets specified value from report
+     * Gets specified value from report (Target and Quoted Cost Trend or Value Tracking reports)
      * @param index String - index of value to get
      * @return String
      */

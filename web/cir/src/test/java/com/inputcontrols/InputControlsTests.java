@@ -15,7 +15,6 @@ import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPag
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
-import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -243,10 +242,6 @@ public class InputControlsTests extends TestBase {
         genericReportPage.exportSetDeselectAll();
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
-    }
-
-    public void testCurrencyCodeTargetQuotedCostTrendTests() {
-
     }
 
     /**

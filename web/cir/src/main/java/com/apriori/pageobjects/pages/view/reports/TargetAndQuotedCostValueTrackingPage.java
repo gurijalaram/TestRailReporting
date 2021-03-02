@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -83,13 +83,13 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
      *
      * @return current page object
      */
-    public <T> T selectProjectRollup(Class<T> className, String rollupName) {
+    public TargetAndQuotedCostValueTrackingPage selectProjectRollup(String rollupName) {
         if (!projectRollupDropdown.getAttribute("title").equals(rollupName)) {
             pageUtils.waitForElementAndClick(projectRollupDropdown);
             By rollupLocator = By.xpath(String.format("//li[@title='%s']/div/a", rollupName));
             pageUtils.waitForElementAndClick(rollupLocator);
         }
-        return PageFactory.initElements(driver, className);
+        return this;
     }
 
     /**

@@ -1,5 +1,10 @@
 package com.ootbreports.targetquotedcosttrend;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
@@ -15,21 +20,12 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.explore.ExplorePage;
-import com.pageobjects.pages.explore.FilterCriteriaPage;
-import groovy.util.Eval;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
@@ -74,6 +70,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
         );
     }
+
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = "3363")
@@ -160,7 +157,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectOne() {
@@ -168,7 +165,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectTwo() {
@@ -176,7 +173,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectThree() {
@@ -184,7 +181,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectFour() {
@@ -201,7 +198,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
-                .selectProjectRollup(TargetAndQuotedCostValueTrackingPage.class, RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName());
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName());
 
         assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOptionCount(), is(equalTo("1")));
         String exportDateSelected = targetAndQuotedCostValueTrackingPage.getSelectedExportDate()
@@ -224,8 +221,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
-                .selectProjectRollup(TargetAndQuotedCostValueTrackingPage.class,
-                        RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectProjectNameToAppear("1");
@@ -267,14 +263,17 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
         assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
     }
 
+    /**
+     * Generic test method for milestone project link test
+     * @param index - index of project link to click
+     */
     private void testMilestoneProjectLink(String index) {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
-                .selectProjectRollup(TargetAndQuotedCostValueTrackingPage.class,
-                        RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
                 .clickOk()
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .clickProjectLink(index)
