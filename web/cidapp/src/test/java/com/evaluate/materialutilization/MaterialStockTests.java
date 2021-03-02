@@ -28,7 +28,6 @@ public class MaterialStockTests extends TestBase {
     private CidAppLoginPage loginPage;
     private StockPage stockPage;
     private MaterialUtilizationPage materialUtilizationPage;
-    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
@@ -140,28 +139,4 @@ public class MaterialStockTests extends TestBase {
         assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("3 in OD. 20 ft lengths")));
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
     }
-
-    /*@Test
-    @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3839", "869"})
-    @Description("validate the user can collapse and expand material properties")
-    public void materialProperties() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
-
-        loginPage = new CidAppLoginPage(driver);
-        materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialUtilization()
-            .toggleMaterialPropertiesPanel()
-            .toggleUtilizationPanel();
-
-        assertThat(materialUtilizationPage.utilizationPanelExpanded(), is("collapsed"));
-        assertThat(materialUtilizationPage.materialPanelExpanded(), is("collapsed"));
-    }*/
 }
