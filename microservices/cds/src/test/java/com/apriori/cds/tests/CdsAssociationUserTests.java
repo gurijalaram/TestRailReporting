@@ -57,7 +57,7 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String aPStaffIdentity = Constants.getUserIdentity();
-        String aPCustomerIdentity = Constants.getaPrioriInternalCustomerIdentity();
+        String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
@@ -87,7 +87,7 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String aPStaffIdentity = Constants.getUserIdentity();
-        String aPCustomerIdentity = Constants.getaPrioriInternalCustomerIdentity();
+        String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
@@ -121,7 +121,7 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String aPStaffIdentity = Constants.getUserIdentity();
-        String aPCustomerIdentity = Constants.getaPrioriInternalCustomerIdentity();
+        String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
