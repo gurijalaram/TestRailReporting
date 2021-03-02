@@ -224,7 +224,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -237,7 +237,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1695")
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
