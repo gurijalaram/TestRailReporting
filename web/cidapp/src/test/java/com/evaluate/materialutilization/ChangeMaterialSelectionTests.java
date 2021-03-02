@@ -6,16 +6,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -143,7 +147,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
 
-    /*@Test
+    asdf@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"864", "866", "867", "889"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
@@ -154,25 +158,23 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(scenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.getMaterialInfo("Steel, Hot Worked, AISI 1010"), is(true));
+        assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Polyetheretherketone (PEEK)")
-            .select()
+            .submit()
             .costScenario()
-            // TODO: 27/10/2020 not fully implemented
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(scenarioName, "bracket_basic");
+            .publishScenario()
+            .publish(ExplorePage.class)
+            .openComponent(scenarioName, "bracket_basic");
 
-        assertThat(evaluatePage.getMaterialInfo("Polyetheretherketone (PEEK)"), is(true));
-    }*/
+        assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));
+    }
 
     @Test
     @TestRail(testCaseId = {"865", "868", "875"})
@@ -225,7 +227,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("Inconel 625")));
     }
 
-    /*@Test
+    asdf@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"884", "888"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
@@ -236,17 +238,16 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(scenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .clickExplore()
-            .openScenario(scenarioName, "MACHINED BOX AMERICAS");
-        // TODO: 27/10/2020 not fully implemented
+            .openComponent(scenarioName, "MACHINED BOX AMERICAS");
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1095"), is(true));
-    }*/
+    }
 
-    /*@Test
+    aasdf@Test
     @TestRail(testCaseId = {"885"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
@@ -263,7 +264,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));
-    }*/
+    }
 
     @Test
     @TestRail(testCaseId = {"905"})
