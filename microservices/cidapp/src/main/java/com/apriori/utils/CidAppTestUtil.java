@@ -84,7 +84,7 @@ public class CidAppTestUtil {
      * @param scenarioIdentity - the scenario identity
      * @return response object
      */
-    public ResponseWrapper<ComponentIteration> getComponentScenarioIdentity(String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(String componentIdentity, String scenarioIdentity) {
         url = String.format(url, String.format("components/%s/scenarios/%s/iterations/latest", componentIdentity ,scenarioIdentity ));
 
         RequestEntity requestEntity = RequestEntity.init(url, ComponentIteration.class)
