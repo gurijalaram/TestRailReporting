@@ -29,7 +29,9 @@ public class CostScenarioTests extends TestBase {
     @Category(SmokeTests.class)
     @Description("Cost Scenario")
     public void testCostScenario() {
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -37,7 +39,7 @@ public class CostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), is(true));
 
-        evaluatePage.selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+        evaluatePage.selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));

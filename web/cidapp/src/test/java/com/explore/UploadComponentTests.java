@@ -3,11 +3,13 @@ package com.explore;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.apibase.services.cis.objects.ProcessGroup;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.NewCostingLabelEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -28,7 +30,9 @@ public class UploadComponentTests extends TestBase {
     @Category(SmokeTests.class)
     @Description("Test uploading a component")
     public void testUploadComponent() {
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
 
         loginPage = new CidAppLoginPage(driver);
         evaluateToolbar = loginPage.login(UserUtil.getUser())
