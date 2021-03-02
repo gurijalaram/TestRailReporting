@@ -47,7 +47,7 @@ public class UploadAssembliesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
-            .selectMaterial("Aluminum, Cast, ANSI 112.0")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit()
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -56,7 +56,7 @@ public class UploadAssembliesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
-            .selectMaterial("Aluminum, Cast, ANSI 112.0")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit()
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
@@ -65,7 +65,7 @@ public class UploadAssembliesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
-            .selectMaterial("Aluminum, Cast, ANSI 112.0")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit()
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
