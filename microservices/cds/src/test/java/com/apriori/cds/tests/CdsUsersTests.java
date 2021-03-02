@@ -68,7 +68,7 @@ public class CdsUsersTests extends CdsTestUtil {
 
         String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        String credentialsUrl = String.format(String.format(String.format(url, "users/%s/credentials"), userIdentity));
+        String credentialsUrl = String.format(url, String.format("users/%s/credentials", userIdentity));
         ResponseWrapper<CredentialsItems> response = getCommonRequest(credentialsUrl, true, CredentialsItems.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
