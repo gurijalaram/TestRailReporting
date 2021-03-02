@@ -168,6 +168,5 @@ public class CdsSitesTests extends CdsTestUtil {
         ResponseWrapper<String> deleteResponse = delete(deleteEndpoint);
 
         assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
-        assertThat(deleteResponse.getResponseEntity(), is(emptyString()));
     }
 }
