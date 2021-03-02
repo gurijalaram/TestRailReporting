@@ -25,10 +25,9 @@ public class ComponentsControllerTests {
     @Test
     @Description("Add a new component")
     public void postComponents() {
-        String url = String.format(apiUrl, "components");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, scenarioName, "Casting - Die", "Casting.prt");
+        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
 
         assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }
@@ -36,14 +35,13 @@ public class ComponentsControllerTests {
     @Test
     @Description("Find components for the current user matching a specified query")
     public void getComponents() {
-        String url = String.format(apiUrl, "components");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, scenarioName, "Casting - Die", "Casting.prt");
+        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
 
         assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<GetComponentResponse> getComponentResponse = cidAppTestUtil.getComponents(url, GetComponentResponse.class);
+        ResponseWrapper<GetComponentResponse> getComponentResponse = cidAppTestUtil.getComponents();
 
         assertThat(getComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(getComponentResponse.getResponseEntity().getResponse().getItems().size(), is(greaterThan(0)));
@@ -52,18 +50,15 @@ public class ComponentsControllerTests {
     @Test
     @Description("Get the current representation of a component")
     public void getComponentIdentity() {
-        String url = String.format(apiUrl, "components");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, scenarioName, "Casting - Die", "Casting.prt");
+        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
 
         assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String componentIdentity = postComponentResponse.getResponseEntity().getComponentIdentity();
 
-        String identityUrl = String.format(Constants.getApiUrl(), "components/" + componentIdentity);
-
-        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = cidAppTestUtil.getComponents(identityUrl, ComponentIdentityResponse.class);
+        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = cidAppTestUtil.getComponentIdentity(componentIdentity);
 
         assertThat(componentIdentityResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIdentityResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(componentIdentity)));
