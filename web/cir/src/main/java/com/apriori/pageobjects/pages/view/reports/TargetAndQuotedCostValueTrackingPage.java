@@ -61,7 +61,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
         pageUtils.waitForSteadinessOfElement(locator);
-        if (pageUtils.isElementDisplayed(locator) && pageUtils.isElementEnabled(driver.findElement(locator))) {
+        if (pageUtils.isElementDisplayed(locator)) {
             pageUtils.waitForElementAndClick(locator);
         }
         return this;
