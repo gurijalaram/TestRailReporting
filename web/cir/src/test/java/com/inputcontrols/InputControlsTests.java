@@ -874,7 +874,7 @@ public class InputControlsTests extends TestBase {
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("\n%s", costMetric))));
+        assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("%s", costMetric))));
     }
 
     private void partOneOfCheckBothProcessGroupTest(String reportName, String exportSetName, String processGroupName) {
