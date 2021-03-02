@@ -158,7 +158,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectOne() {
@@ -166,7 +166,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectTwo() {
@@ -174,7 +174,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectThree() {
@@ -182,7 +182,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "3368")
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectFour() {
