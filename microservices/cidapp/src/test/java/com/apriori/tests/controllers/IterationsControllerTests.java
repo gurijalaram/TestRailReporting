@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.entity.reponse.PostComponentResponse;
 import com.apriori.entity.reponse.componentiteration.ComponentIteration;
 import com.apriori.utils.CidAppTestUtil;
-import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -22,19 +21,16 @@ public class IterationsControllerTests {
     @Test
     @Description("Get the latest iteration")
     public void getComponentsIterationsLatest() {
-        String url = String.format(Constants.getApiUrl(), "components");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, scenarioName, "Casting - Die", "Casting.prt");
+        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
 
         assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String componentIdentity = postComponentResponse.getResponseEntity().getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getResponseEntity().getScenarioIdentity();
 
-        String componentIterationLatestUrl = String.format(Constants.getApiUrl(), "components/" + componentIdentity + "/scenarios/" + scenarioIdentity + "/iterations/latest");
-
-        ResponseWrapper<ComponentIteration> getComponentIterationResponse = cidAppTestUtil.getComponents(componentIterationLatestUrl, ComponentIteration.class);
+        ResponseWrapper<ComponentIteration> getComponentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
 
         assertThat(getComponentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
