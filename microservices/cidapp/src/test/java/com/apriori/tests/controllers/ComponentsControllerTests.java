@@ -19,12 +19,13 @@ import org.junit.Test;
 
 public class ComponentsControllerTests {
 
+    private String apiUrl = Constants.getApiUrl();
     private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     @Test
     @Description("Add a new component")
     public void postComponents() {
-        String url = String.format(Constants.getApiUrl(), "components");
+        String url = String.format(apiUrl, "components");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, scenarioName, "Casting - Die", "Casting.prt");
@@ -35,7 +36,7 @@ public class ComponentsControllerTests {
     @Test
     @Description("Find components for the current user matching a specified query")
     public void getComponents() {
-        String url = String.format(Constants.getApiUrl(), "components");
+        String url = String.format(apiUrl, "components");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, scenarioName, "Casting - Die", "Casting.prt");
@@ -51,7 +52,7 @@ public class ComponentsControllerTests {
     @Test
     @Description("Get the current representation of a component")
     public void getComponentIdentity() {
-        String url = String.format(Constants.getApiUrl(), "components");
+        String url = String.format(apiUrl, "components");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(url, scenarioName, "Casting - Die", "Casting.prt");
