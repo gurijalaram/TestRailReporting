@@ -18,8 +18,6 @@ import org.apache.http.HttpStatus;
 
 public class CidAppTestUtil {
 
-    private String url = Constants.getApiUrl();
-
     private static String token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
         Constants.getCidServiceHost(),
         HttpStatus.SC_CREATED,
@@ -27,6 +25,7 @@ public class CidAppTestUtil {
         Constants.getCidTokenEmail(),
         Constants.getCidTokenIssuer(),
         Constants.getCidTokenSubject());
+    private String url = Constants.getApiUrl();
 
     /**
      * Adds a new component
@@ -81,11 +80,11 @@ public class CidAppTestUtil {
      * Find components for the current user matching an identity and component
      *
      * @param componentIdentity - the component identity
-     * @param scenarioIdentity - the scenario identity
+     * @param scenarioIdentity  - the scenario identity
      * @return response object
      */
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(String componentIdentity, String scenarioIdentity) {
-        url = String.format(url, String.format("components/%s/scenarios/%s/iterations/latest", componentIdentity ,scenarioIdentity ));
+        url = String.format(url, String.format("components/%s/scenarios/%s/iterations/latest", componentIdentity, scenarioIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, ComponentIteration.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
