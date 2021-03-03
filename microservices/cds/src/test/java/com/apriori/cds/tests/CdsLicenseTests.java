@@ -60,11 +60,11 @@ public class CdsLicenseTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
-        String licenseEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat(String.format("/sites/%s/licenses", siteIdentity))));
+        String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
         ResponseWrapper<LicenseResponse> response = addLicense(licenseEndpoint, LicenseResponse.class, customerName, siteId, licenseId, subLicenseId);
 
@@ -88,19 +88,19 @@ public class CdsLicenseTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
-        String licenseEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat(String.format("/sites/%s/licenses", siteIdentity))));
+        String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
         ResponseWrapper<LicenseResponse> response = addLicense(licenseEndpoint, LicenseResponse.class, customerName, siteId, licenseId, subLicenseId);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String customerLicenseEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/licenses")));
+        String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
         ResponseWrapper<Licenses> license = getCommonRequest(customerLicenseEndpoint, true, Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(license.getResponseEntity().getResponse().getTotalItemCount(),is(equalTo(1)));
+        assertThat(license.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
 
     @Test
@@ -120,23 +120,23 @@ public class CdsLicenseTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
-        String licenseEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat(String.format("/sites/%s/licenses", siteIdentity))));
+        String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
         ResponseWrapper<LicenseResponse> response = addLicense(licenseEndpoint, LicenseResponse.class, customerName, siteId, licenseId, subLicenseId);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String customerLicenseEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/licenses")));
+        String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
         ResponseWrapper<Licenses> license = getCommonRequest(customerLicenseEndpoint, true, Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String licenseIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/licenses/".concat(licenseIdentity))));
+        String licenseIdentityEndpoint = String.format(url, String.format("customers/%s/licenses/%s", customerIdentity, licenseIdentity));
 
         ResponseWrapper<LicenseResponse> licenseResponse = getCommonRequest(licenseIdentityEndpoint, true, LicenseResponse.class);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(licenseResponse.getResponseEntity().getResponse().getIdentity(),is(equalTo(licenseIdentity)));
+        assertThat(licenseResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(licenseIdentity)));
     }
 }

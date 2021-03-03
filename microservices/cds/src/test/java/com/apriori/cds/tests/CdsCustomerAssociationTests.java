@@ -56,7 +56,7 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String associationIdentityEndpoint = String.format(url, ("customers/L2H992828N8M/customer-associations/".concat(associationIdentity)));
+        String associationIdentityEndpoint = String.format(url, String.format("customers/L2H992828N8M/customer-associations/%s", associationIdentity));
         ResponseWrapper<CustomerAssociationItems> association = getCommonRequest(associationIdentityEndpoint, true, CustomerAssociationItems.class);
 
         assertThat(association.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
