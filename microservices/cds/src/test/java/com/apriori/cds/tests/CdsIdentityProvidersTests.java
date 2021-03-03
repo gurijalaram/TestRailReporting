@@ -179,4 +179,35 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         assertThat(idp.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(idp.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
+
+    @Test
+    @TestRail(testCaseId = " ")
+    @Description("Deletes identity provider")
+    public void deleteCustomerIdentityProvider() {
+        String customersEndpoint = String.format(url, "customers");
+
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
+        String emailPattern = "\\S+@".concat(customerName);
+        String userName = generateStringUtil.generateUserName();
+
+        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+
+        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+
+        String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
+
+        ResponseWrapper<IdentityProviderResponse> identityProviderResponse = addSaml(identityProviderEndpoint, IdentityProviderResponse.class, userIdentity, userName);
+        String identityProviderIdentity = identityProviderResponse.getResponseEntity().getResponse().getIdentity();
+
+        String deleteIdentityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, identityProviderIdentity));
+        ResponseWrapper<String> deleteResponse = delete(deleteIdentityProviderEndpoint);
+
+        assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+    }
 }
