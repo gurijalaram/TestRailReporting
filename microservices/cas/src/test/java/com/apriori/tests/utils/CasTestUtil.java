@@ -3,12 +3,14 @@ package com.apriori.tests.utils;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
+
 import com.apriori.entity.response.CustomProperties;
+import com.apriori.entity.response.CustomerUser;
+import com.apriori.entity.response.CustomerUserProfile;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UpdatedProfile;
-import com.apriori.entity.response.User;
-import com.apriori.entity.response.UserProfile;
+
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -126,11 +128,11 @@ public class CasTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("user",
-                new User().setUserType("AP_CLOUD_USER")
+                new CustomerUser().setUserType("AP_CLOUD_USER")
                     .setEmail(userName.toLowerCase() + "@gmail.com")
                     .setUsername(userName)
                     .setActive(true)
-                    .setUserProfile(new UserProfile().setGivenName(userName)
+                    .setUserProfile(new CustomerUserProfile().setGivenName(userName)
                         .setFamilyName("Automater")
                         .setJobTitle("Automation Engineer")
                         .setDepartment("Automation")

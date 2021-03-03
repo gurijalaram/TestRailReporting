@@ -7,13 +7,14 @@ import com.apriori.tests.CasCustomersUsersTests;
 import com.apriori.tests.CasDeploymentsTests;
 import com.apriori.tests.CasIdentityProvidersTests;
 import com.apriori.tests.CasSitesTests;
+import com.apriori.tests.CasUsersTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-/*@ProjectRunID("361")*/
+@ProjectRunID("644")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
         ApplicationsTests.class,
@@ -22,7 +23,8 @@ import org.junit.runners.Suite;
         CasDeploymentsTests.class,
         CasIdentityProvidersTests.class,
         CasSitesTests.class,
-        CasCustomersUsersTests.class
+        CasCustomersUsersTests.class,
+        CasUsersTests.class
 })
 public class CasAPISuite {
 }
