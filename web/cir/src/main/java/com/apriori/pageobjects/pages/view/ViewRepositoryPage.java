@@ -50,12 +50,12 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
 
-        if (!afterReportsFolder.equals(Constants.GENERAL_FOLDER)) {
-            navigateToFolder(navigationMap.get(lastFolder)[0]);
-            navigateToFolder(navigationMap.get(lastFolder)[1]);
-        } else {
-            navigateToFolder(Constants.GENERAL_FOLDER);
+        if (!afterReportsFolder.equals(Constants.DTC_METRICS_FOLDER)) {
+            navigateToFolder(afterReportsFolder);
         }
+
+        navigateToFolder(navigationMap.get(lastFolder)[0]);
+        navigateToFolder(navigationMap.get(lastFolder)[1]);
 
         return new GenericReportPage(driver);
     }
@@ -110,6 +110,8 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigationMap.put("Sheet Metal DTC Comparison", new String[]{Constants.DTC_METRICS_FOLDER, "Sheet Metal"});
 
         navigationMap.put("Cycle Time", new String[]{"Design To Cost", "Cycle Time"});
+        navigationMap.put("Cycle Time Value Tracking", new String[]{"Design To Cost", "Cycle Time"});
+        navigationMap.put("Cycle Time Value Tracking Details", new String[]{"Design To Cost", "Cycle Time"});
         navigationMap.put("Target and Quoted Cost", new String[]{"Design To Cost", "Target And Quoted Cost"});
     }
 }
