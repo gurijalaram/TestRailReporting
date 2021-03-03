@@ -556,7 +556,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
-        String inputString = reportName.equals(ReportNamesEnum.SCENARIO_COMPARISON.getReportName()) ? "bhegan" : "Ben Hegan";
+        String inputString = "bhegan";
 
         genericReportPage.searchListForName(listName, inputString);
         assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
