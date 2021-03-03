@@ -37,8 +37,8 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5314")
-    @Description("Get a list of deployments for a customer")
+    @TestRail(testCaseId = "5824")
+    @Description("Create a new identity provider")
     public void postCustomerIdentityProviders() {
         String customersEndpoint = String.format(url, "customers");
 
