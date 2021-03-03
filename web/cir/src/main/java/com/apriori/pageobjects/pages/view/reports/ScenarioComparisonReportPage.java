@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.net.www.content.text.Generic;
 
 import java.math.BigDecimal;
 
@@ -92,6 +93,12 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
             );
             pageUtils.waitForElementToAppear(locator);
         }
+
+        By filteredLocator = By.xpath("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')])[1]");
+        pageUtils.waitForElementToAppear(filteredLocator);
+
+        GenericReportPage genericReportPage = new GenericReportPage(driver);
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1,247");
     }
 
     /**

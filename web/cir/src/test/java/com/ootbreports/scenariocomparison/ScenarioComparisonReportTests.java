@@ -21,6 +21,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -60,7 +61,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3245")
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
@@ -69,7 +70,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3246")
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -88,10 +89,10 @@ public class ScenarioComparisonReportTests extends TestBase {
         assertThat(genericReportPage.getComponentName("2"), is(equalTo("part")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("1")));
+                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("2")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("2")));
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("3")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
@@ -138,7 +139,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3249")
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -368,7 +369,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "3306")
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
@@ -384,7 +385,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("2")));
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
