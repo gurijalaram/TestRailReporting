@@ -60,10 +60,10 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(id = "qa-scenario-select-field")
     private WebElement currentScenarioDropdown;
 
-    @FindBy(css = "div[id='qa-process-group-select-field'] [class='apriori-select form-control dropdown']")
+    @FindBy(css = "div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
     private WebElement processGroupDropdown;
 
-    @FindBy(css = "div[id='qa-vpe-select-field'] [class='apriori-select form-control dropdown']")
+    @FindBy(css = "div[id='qa-vpe-select-field'] [data-icon='chevron-down']")
     private WebElement vpeDropdown;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
