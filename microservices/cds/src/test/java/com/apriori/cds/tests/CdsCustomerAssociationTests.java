@@ -12,7 +12,6 @@ import com.apriori.cds.entity.response.CustomerAssociationItems;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -23,10 +22,6 @@ import org.junit.Test;
 
 public class CdsCustomerAssociationTests extends CdsTestUtil {
     private String url;
-
-    private String customerIdentity;
-    private String customerIdentityEndpoint;
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     @Before
     public void setServiceUrl() {
@@ -47,7 +42,7 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5387")
+    @TestRail(testCaseId = "5825")
     @Description("Get customer association by association Identity")
     public void getCustomerAssociationByIdentity() {
         String associationEndpoint = String.format(url, "customers/L2H992828N8M/customer-associations");

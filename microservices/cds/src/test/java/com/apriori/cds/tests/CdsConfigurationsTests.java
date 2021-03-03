@@ -27,7 +27,7 @@ public class CdsConfigurationsTests extends CdsTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "3243")
+    @TestRail(testCaseId = "5966")
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getBlacklistedEmailDomains() {
         url = String.format(url, "configurations/blacklisted-email-domains");

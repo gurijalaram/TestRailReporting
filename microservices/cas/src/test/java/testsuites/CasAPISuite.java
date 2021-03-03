@@ -1,4 +1,4 @@
-package com.apriori.tests.suite;
+package testsuites;
 
 import com.apriori.tests.ApplicationsTests;
 import com.apriori.tests.CasConfigurationsTests;

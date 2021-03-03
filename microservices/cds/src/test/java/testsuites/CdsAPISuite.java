@@ -1,4 +1,4 @@
-package com.apriori.cds.tests.suite;
+package testsuites;
 
 import com.apriori.cds.tests.ApVersionsTests;
 import com.apriori.cds.tests.CdsAccessControlsTests;
@@ -21,7 +21,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@ProjectRunID("361")
+@ProjectRunID("641")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     ApVersionsTests.class,

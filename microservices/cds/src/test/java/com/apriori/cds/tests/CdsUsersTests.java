@@ -60,7 +60,7 @@ public class CdsUsersTests extends CdsTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "3698")
+    @TestRail(testCaseId = "5971")
     @Description("API returns a user's credentials based on the supplied identity")
     public void getUsersCredentials() {
         String usersUrl = String.format(url, "users");

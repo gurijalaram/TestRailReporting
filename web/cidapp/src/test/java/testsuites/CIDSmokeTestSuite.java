@@ -24,7 +24,6 @@ import org.junit.runners.Suite;
 
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
-//TODO: Uncomment this when ready to split out @Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses ({
     CostAllCadTests.class,
     CostScenarioTests.class,
