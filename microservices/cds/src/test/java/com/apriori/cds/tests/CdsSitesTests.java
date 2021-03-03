@@ -42,6 +42,7 @@ public class CdsSitesTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "5969")
     @Description("Get a list of Sites in CDS Db")
     public void getSites() {
         url = String.format(url, "sites");
@@ -54,6 +55,7 @@ public class CdsSitesTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "5309")
     @Description("Get details of a site by its Identity")
     public void getSiteByIdentity() {
         String sitesUrl = String.format(url, "sites");
@@ -143,7 +145,7 @@ public class CdsSitesTests extends CdsTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5310")
+    @TestRail(testCaseId = "5970")
     public void deleteSite() {
         String customersEndpoint = String.format(url, "customers");
 
