@@ -28,6 +28,10 @@
         "signRequestAlgorithmDigest",
         "protocolBinding"
       ],
+      "optional": [
+        "updatedAt",
+        "updatedBy"
+      ],
       "properties": {
         "identity": {
           "$id": "#/properties/response/properties/identity",
