@@ -60,11 +60,11 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
@@ -85,14 +85,14 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<Users> response = getCommonRequest(usersEndpoint, true, Users.class);
 
@@ -116,14 +116,14 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<User> response = getCommonRequest(userIdentityEndpoint, true, User.class);
 
@@ -147,14 +147,14 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<User> patchResponse = patchUser(userIdentityEndpoint, User.class);
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -176,15 +176,15 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
-        String wrongIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat("L2H992829CFB"))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        String wrongIdentityEndpoint = String.format(url, String.format("customers/%s/users/L2H992829CFB", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(wrongIdentityEndpoint, ErrorMessage.class);
         ResponseWrapper<ErrorMessage> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());

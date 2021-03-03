@@ -56,12 +56,12 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
+        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
         ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("Production Deployment")));
@@ -85,12 +85,12 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
+        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
         ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
@@ -117,17 +117,17 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
+        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
         ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
-        String deploymentIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/".concat(deploymentIdentity))));
+        String deploymentIdentityEndpoint = String.format(url, String.format("customers/%s/deployments/%s", customerIdentity, deploymentIdentity));
 
         ResponseWrapper<Deployment> deployment = getCommonRequest(deploymentIdentityEndpoint, true, Deployment.class);
 

@@ -46,6 +46,13 @@ public class Constants {
     public static final String DEFAULT_NAME_UPPER_CASE = "0   0   0   A Upper Workflow Automation";
     public static final String DEFAULT_NAME_LOWER_CASE = "0   0   0   a Lower Workflow Automation";
 
+    public static final String DEFAULT_WORKFLOW_DESCRIPTION = "This workflow was created by automation";
+
+    //Workflow field boundaries
+    public static final int MAXIMUM_WORKFLOW_NAME_CHARACTERS = 64;
+    public static final int MINIMAL_WORKFLOW_NAME_CHARACTERS = 1;
+    public static final int MAXIMUM_WORKFLOW_DESCRIPTION_CHARACTERS = 255;
+
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 

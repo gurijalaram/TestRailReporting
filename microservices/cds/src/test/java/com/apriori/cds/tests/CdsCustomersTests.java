@@ -114,7 +114,7 @@ public class CdsCustomersTests extends CdsTestUtil {
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String applicationsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/applications")));
+        String applicationsEndpoint = String.format(url, String.format("customers/%s/applications", customerIdentity));
 
         ResponseWrapper<Applications> response = getCommonRequest(applicationsEndpoint, true, Applications.class);
         assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
