@@ -224,19 +224,19 @@ public class CdsTestUtil extends TestUtil {
      * @param url          - the url
      * @param klass        - the response class
      * @param userIdentity - the aPriori Staff users identity
-     * @param userName     - the user name
+     * @param customerName     - the customer name
      * @return <T> ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String userName) {
+    public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String customerName) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("identityProvider",
                 new IdentityProviderRequest().setContact(userIdentity)
-                    .setName(userName)
-                    .setDisplayName(userName + "2")
-                    .setIdpDomains(Arrays.asList(userName + ".com"))
+                    .setName(customerName + "-idp")
+                    .setDisplayName(customerName + "SAML")
+                    .setIdpDomains(Arrays.asList(customerName + ".com"))
                     .setIdentityProviderPlatform("AZURE AD")
-                    .setDescription("Ciene Okta IdP using SAML")
+                    .setDescription("Create IDP using CDS automation")
                     .setActive(true)
                     .setCreatedBy("#SYSTEM00000")
                     .setSignInUrl(Constants.getSignInUrl())
