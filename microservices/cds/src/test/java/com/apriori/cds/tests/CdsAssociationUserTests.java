@@ -19,8 +19,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.stream.Collectors;
-
 public class CdsAssociationUserTests extends CdsTestUtil {
     private String url;
 
@@ -65,9 +63,9 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String associationsEndpoint = String.format(url + "&pageSize=1000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
+        String associationsEndpoint = String.format(url + "&targetCustomer.identity[EQ]=" + customerIdentity, String.format("customers/%s/customer-associations", aPCustomerIdentity));
         ResponseWrapper<CustomerAssociationResponse> response = getCommonRequest(associationsEndpoint, true, CustomerAssociationResponse.class);
-        String associationIdentity = response.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
+        String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users", aPCustomerIdentity, associationIdentity));
 
         ResponseWrapper<AssociationUserItems> associationUser = addAssociationUser(associationEndpoint, AssociationUserItems.class, aPStaffIdentity);
@@ -95,9 +93,9 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String associationsEndpoint = String.format(url + "&pageSize=1000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
+        String associationsEndpoint = String.format(url + "&targetCustomer.identity[EQ]=" + customerIdentity, String.format("customers/%s/customer-associations", aPCustomerIdentity));
         ResponseWrapper<CustomerAssociationResponse> response = getCommonRequest(associationsEndpoint, true, CustomerAssociationResponse.class);
-        String associationIdentity = response.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
+        String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users", aPCustomerIdentity, associationIdentity));
 
         ResponseWrapper<AssociationUserItems> associationUser = addAssociationUser(associationEndpoint, AssociationUserItems.class, aPStaffIdentity);
@@ -129,9 +127,9 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String associationsEndpoint = String.format(url + "&pageSize=1000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
+        String associationsEndpoint = String.format(url + "&targetCustomer.identity[EQ]=" + customerIdentity, String.format("customers/%s/customer-associations", aPCustomerIdentity));
         ResponseWrapper<CustomerAssociationResponse> response = getCommonRequest(associationsEndpoint, true, CustomerAssociationResponse.class);
-        String associationIdentity = response.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
+        String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users", aPCustomerIdentity, associationIdentity));
 
         ResponseWrapper<AssociationUserItems> associationUser = addAssociationUser(associationEndpoint, AssociationUserItems.class, aPStaffIdentity);
