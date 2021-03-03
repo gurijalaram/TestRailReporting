@@ -7,7 +7,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FaceIndex {
     private List<Integer> value = null;
-    private Key__ key;
+    private Key key;
 
     public List<Integer> getValue() {
         return value;
@@ -18,11 +18,11 @@ public class FaceIndex {
         return this;
     }
 
-    public Key__ getKey() {
+    public Key getKey() {
         return key;
     }
 
-    public FaceIndex setKey(Key__ key) {
+    public FaceIndex setKey(Key key) {
         this.key = key;
         return this;
     }

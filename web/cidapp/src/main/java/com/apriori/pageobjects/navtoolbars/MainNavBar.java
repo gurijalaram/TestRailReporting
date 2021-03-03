@@ -31,16 +31,16 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     @FindBy(xpath = "//button[.='Compare']")
     private WebElement compareButton;
 
-    @FindBy(xpath = "//button[.='Settings']")
+    @FindBy(id = "qa-header-preferences-button")
     private WebElement settingsButton;
 
-    @FindBy(xpath = "//button[@class='transparent dropdown-toggle btn btn-secondary'] [.='Help']")
+    @FindBy(id = "qa-header-help-button")
     private WebElement helpDropdown;
 
-    @FindBy(xpath = "//button[@class='dropdown-item'] [.='Help']")
+    @FindBy(xpath = "//button[.='Help']")
     private WebElement helpButton;
 
-    @FindBy(xpath = "//button[@class='dropdown-item'] [.='About']")
+    @FindBy(xpath = "//button[.='About']")
     private WebElement aboutButton;
 
     private PageUtils pageUtils;

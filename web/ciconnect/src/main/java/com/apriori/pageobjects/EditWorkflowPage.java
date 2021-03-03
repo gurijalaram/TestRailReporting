@@ -101,7 +101,7 @@ public class EditWorkflowPage {
                 editWorkFlowDescription.sendKeys(newValue);
                 break;
             default:
-                logger.error("Field " + field + ", does not exist");
+                logger.debug("Field " + field + ", does not exist");
                 return;
         }
 

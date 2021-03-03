@@ -74,13 +74,13 @@ public class CdsAccessControlsTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
         ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        String accessControlEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat(String.format("/users/%s/access-controls", userIdentity))));
+        String accessControlEndpoint = String.format(url, String.format("customers/%s/users/%s/access-controls", customerIdentity, userIdentity));
         ResponseWrapper<AccessControl> accessControlResponse = addAccessControl(accessControlEndpoint, AccessControl.class);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getResponse().getIdentity();
 

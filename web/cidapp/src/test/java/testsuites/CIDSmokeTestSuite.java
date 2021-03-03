@@ -11,6 +11,7 @@ import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
 import com.evaluate.ReCostScenarioTests;
 import com.evaluate.SecondaryProcessTests;
+import com.evaluate.UploadAssembliesTests;
 import com.evaluate.materialutilization.ChangeMaterialSelectionTests;
 import com.evaluate.materialutilization.MaterialStockTests;
 import com.explore.UploadComponentTests;
@@ -18,10 +19,8 @@ import com.explore.UploadTests;
 import com.help.HelpTests;
 import com.login.LoginTests;
 import com.settings.DecimalPlaceTests;
-import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
@@ -41,7 +40,8 @@ import testsuites.suiteinterface.SmokeTests;
     UploadTests.class,
     HelpTests.class,
     LoginTests.class,
-    DecimalPlaceTests.class
+    DecimalPlaceTests.class,
+    UploadAssembliesTests.class
 })
 public class CIDSmokeTestSuite {
 }
