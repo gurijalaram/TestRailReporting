@@ -12,7 +12,6 @@ import com.apriori.cds.entity.response.CustomerAssociationItems;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -23,10 +22,6 @@ import org.junit.Test;
 
 public class CdsCustomerAssociationTests extends CdsTestUtil {
     private String url;
-
-    private String customerIdentity;
-    private String customerIdentityEndpoint;
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     @Before
     public void setServiceUrl() {
