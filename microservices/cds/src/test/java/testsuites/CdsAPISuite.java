@@ -1,4 +1,4 @@
-package com.apriori.cds.tests.suite;
+package testsuites;
 
 import com.apriori.cds.tests.ApVersionsTests;
 import com.apriori.cds.tests.CdsAccessControlsTests;
@@ -16,13 +16,13 @@ import com.apriori.cds.tests.CdsRolesTests;
 import com.apriori.cds.tests.CdsSitesTests;
 import com.apriori.cds.tests.CdsUsersTests;
 import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.utils.runner.CategorySuiteRunner;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@ProjectRunID("361")
-@RunWith(ConcurrentSuiteRunner.class)
+@ProjectRunID("641")
+@RunWith(CategorySuiteRunner.class)
 @Suite.SuiteClasses({
     ApVersionsTests.class,
     CdsAccessControlsTests.class,
