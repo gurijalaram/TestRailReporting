@@ -47,7 +47,7 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5387")
+    @TestRail(testCaseId = "5825")
     @Description("Get customer association by association Identity")
     public void getCustomerAssociationByIdentity() {
         String associationEndpoint = String.format(url, "customers/L2H992828N8M/customer-associations");
