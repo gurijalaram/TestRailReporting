@@ -2,12 +2,14 @@
 package com.apriori.cds.entity.response;
 
 import com.apriori.apibase.services.cds.AttributeMappings;
+import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "cds/IdentityProviderSchema.json")
 public class IdentityProviderItems {
     private String identity;
     private String createdBy;
