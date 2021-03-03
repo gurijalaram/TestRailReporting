@@ -62,6 +62,7 @@ public class CdsCustomersTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "3298")
     @Description("Add API customers")
     public void addCustomerTest() {
         String customerEndpoint = String.format(url, "customers");
@@ -79,6 +80,7 @@ public class CdsCustomersTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "3278")
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
         String customersEndpoint = String.format(url, "customers");
@@ -100,7 +102,8 @@ public class CdsCustomersTests extends CdsTestUtil {
     }
 
     @Test
-    @Description("Get customer by Identity")
+    @TestRail(testCaseId = "5957")
+    @Description("Get customer applications")
     public void getCustomersApplications() {
         String customersEndpoint = String.format(url, "customers");
 
@@ -122,6 +125,7 @@ public class CdsCustomersTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "5305")
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
         String customersEndpoint = String.format(url, "customers");

@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -44,6 +45,7 @@ public class CdsLicenseTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "3302")
     @Description("Post user licenses")
     public void postUserLicense() {
         String customersEndpoint = String.format(url, "customers");
@@ -72,6 +74,7 @@ public class CdsLicenseTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "5313")
     @Description("Get list of licenses for customer")
     public void getCustomerLicense() {
         String customersEndpoint = String.format(url, "customers");
@@ -104,6 +107,7 @@ public class CdsLicenseTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "5968")
     @Description("Get list of licenses for customer")
     public void getCustomerLicenseByIdentity() {
         String customersEndpoint = String.format(url, "customers");

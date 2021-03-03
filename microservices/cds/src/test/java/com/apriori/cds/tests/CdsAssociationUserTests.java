@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -44,8 +45,8 @@ public class CdsAssociationUserTests extends CdsTestUtil {
 
     }
 
-    // TODO Moya create testrail case for this
     @Test
+    @TestRail(testCaseId = "5959")
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
         String customersEndpoint = String.format(url, "customers");
@@ -74,8 +75,8 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
     }
 
-    // TODO Moya create testrail case for this
     @Test
+    @TestRail(testCaseId = "5965")
     @Description("Get users associated for customer")
     public void getAssociationUsers() {
         String customersEndpoint = String.format(url, "customers");
@@ -108,8 +109,8 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         assertThat(users.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
 
-    // TODO Moya create testrail case for this
     @Test
+    @TestRail(testCaseId = "5964")
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
         String customersEndpoint = String.format(url, "customers");

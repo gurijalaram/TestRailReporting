@@ -72,7 +72,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
 
     @Test
     @TestRail(testCaseId = "3250")
-    @Description("Add a user to a customer")
+    @Description("Get a list of users for a customer")
     public void getCustomerUsers() {
         String customersEndpoint = String.format(url, "customers");
 
@@ -133,7 +133,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "3281")
+    @TestRail(testCaseId = "3295")
     @Description("Update a user")
     public void patchUserByIdentity() {
         String customersEndpoint = String.format(url, "customers");
@@ -162,7 +162,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "3281")
+    @TestRail(testCaseId = "5967")
     @Description("Delete user wrong identity")
     public void deleteWrongUserIdentity() {
         String customersEndpoint = String.format(url, "customers");
