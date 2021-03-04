@@ -683,8 +683,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
-        String nameToSelect = "bhegan";
-        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), nameToSelect);
+        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), Constants.NAME_TO_SELECT);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.CREATED_BY.getListName(),
@@ -751,8 +750,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
-        String nameToSelect = "bhegan";
-        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), nameToSelect);
+        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), Constants.NAME_TO_SELECT);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(),

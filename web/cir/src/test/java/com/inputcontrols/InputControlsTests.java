@@ -588,10 +588,8 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
-        String inputString = "bhegan";
-
-        genericReportPage.searchListForName(listName, inputString);
-        assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
+        genericReportPage.searchListForName(listName, Constants.NAME_TO_SELECT);
+        assertThat(genericReportPage.isListOptionVisible(listName, Constants.NAME_TO_SELECT), is(true));
 
         genericReportPage.searchListForName(listName, "fakename");
         assertThat(genericReportPage.getCountOfListItems(listName), is(equalTo("0")));
