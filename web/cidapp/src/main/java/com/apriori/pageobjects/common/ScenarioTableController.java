@@ -73,4 +73,18 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase(), scenarioName));
         return driver.findElements(scenario).size();
     }
+
+    /**
+     * Selects the scenario checkbox in the table
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController selectScenario(String componentName, String scenarioName) {
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase(), scenarioName));
+        pageUtils.waitForElementToAppear(scenario);
+        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
+        return this;
+    }
 }

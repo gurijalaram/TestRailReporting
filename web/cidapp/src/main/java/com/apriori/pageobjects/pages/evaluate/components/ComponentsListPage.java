@@ -37,12 +37,14 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     private PageUtils pageUtils;
     private PanelController panelController;
     private ComponentTableActions componentTableActions;
+    private ScenarioTableController scenarioTableController;
 
     public ComponentsListPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
+        this.scenarioTableController = new ScenarioTableController(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
