@@ -92,6 +92,12 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
             );
             pageUtils.waitForElementToAppear(locator);
         }
+
+        By filteredLocator = By.xpath("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')])[1]");
+        pageUtils.waitForElementToAppear(filteredLocator);
+
+        GenericReportPage genericReportPage = new GenericReportPage(driver);
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1,247");
     }
 
     /**

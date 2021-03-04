@@ -20,7 +20,7 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EvaluateToolbar.class);
 
-    @FindBy(xpath = "//button[.='Cost']")
+    @FindBy(css = "[id='qa-sub-header-cost-button']")
     private WebElement costButton;
 
     @FindBy(css = ".alert")

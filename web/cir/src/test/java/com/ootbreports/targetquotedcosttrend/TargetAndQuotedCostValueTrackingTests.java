@@ -24,7 +24,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -69,40 +68,6 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
-        );
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
-    @Description("Validate Target and Quoted Cost Value Tracking report is available by library")
-    public void testDetailsReportAvailabilityByLibrary() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
-        );
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
-    @Description("Validate Target and Quoted Cost Value Tracking report is available by navigation")
-    public void testDetailsReportAvailabilityByNavigation() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByNavigation(
-                Constants.SOLUTIONS_FOLDER,
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
-        );
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
-    @Description("Validate Target and Quoted Cost Value Tracking report is available by search")
-    public void testDetailsReportAvailabilityBySearch() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityBySearch(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
         );
     }
 
