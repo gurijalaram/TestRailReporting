@@ -19,7 +19,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     private WebElement searchInput;
 
     @FindBy(css = "button[type='submit']")
-    private WebElement submitButton;
+    private WebElement searchIconButton;
 
     @FindBy(id = "qa-scenario-list-filter-button")
     private WebElement filtersButton;
@@ -57,7 +57,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      */
     public ScenarioTableController clickSearch(String componentName) {
         search(componentName);
-        submitButton.click();
+        searchIconButton.click();
         return new ScenarioTableController(driver);
     }
 
@@ -80,7 +80,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @return current page object
      */
     private ComponentTableActions search(String componentName) {
-        pageUtils.waitForElementToAppear(submitButton);
+        pageUtils.waitForElementToAppear(searchIconButton);
         searchInput.clear();
         searchInput.sendKeys(componentName);
         return this;

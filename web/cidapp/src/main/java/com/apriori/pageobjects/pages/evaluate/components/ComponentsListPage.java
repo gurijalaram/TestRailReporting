@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
+import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
@@ -32,6 +33,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
+    private ComponentTableActions componentTableActions;
 
     public ComponentsListPage(WebDriver driver) {
         this.driver = driver;
