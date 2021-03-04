@@ -3,7 +3,10 @@ package com.apriori.pageobjects.common;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
@@ -37,7 +40,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Opens the scenario
      *
-     * @param componentName - name of the part
+     * @param componentName - component name
      * @param scenarioName  - scenario name
      * @return a new page object
      */
@@ -51,21 +54,19 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Highlights the scenario in the table
      *
-     * @param componentName - name of the part
+     * @param componentName - component name
      * @param scenarioName  - scenario name
      * @return current page object
      */
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase(), scenarioName));
-        pageUtils.waitForElementToAppear(scenario);
-        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
+        findScenario(componentName, scenarioName).click();
         return this;
     }
 
     /**
      * Checks if the component is present on the page by size > 0 or < 1
      *
-     * @param componentName - name of the part
+     * @param componentName - component name
      * @param scenarioName  - scenario name
      * @return size of the element as int
      */
@@ -77,7 +78,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Selects the scenario checkbox in the table
      *
-     * @param componentName - name of the part
+     * @param componentName - component name
      * @param scenarioName  - scenario name
      * @return current page object
      */
@@ -86,5 +87,31 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
         return this;
+    }
+
+    /**
+     * Highlights the scenario in the table using the keyboard control key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController controlHighlightScenario(String componentName, String scenarioName) {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(findScenario(componentName, scenarioName)).sendKeys(Keys.CONTROL).click().build().perform();
+        return this;
+    }
+
+    /**
+     * Private method to find the scenario
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return webelement
+     */
+    private WebElement findScenario(String componentName, String scenarioName) {
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase(), scenarioName));
+        pageUtils.waitForElementToAppear(scenario);
+        return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
     }
 }
