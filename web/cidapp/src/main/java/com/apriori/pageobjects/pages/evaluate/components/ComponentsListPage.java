@@ -39,6 +39,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
+        this.componentTableActions = new ComponentTableActions(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -55,6 +56,11 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         pageUtils.waitForElementAndClick(previewButton);
     }
 
+    /**
+     * Opens tree view tab
+     *
+     * @return new page object
+     */
     public TreePage openTreeTab() {
         pageUtils.waitForElementAndClick(treeButton);
         return new TreePage(driver);
@@ -66,7 +72,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return new page object
      */
     public HelpDocPage openHelp() {
-        return  panelController.openHelp();
+        return panelController.openHelp();
     }
 
     /**
