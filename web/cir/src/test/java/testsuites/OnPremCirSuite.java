@@ -17,6 +17,9 @@ import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.ootbreports.scenariocomparison.ScenarioComparisonReportTests;
+import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostTrendTests;
+import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsTests;
+import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -39,7 +42,10 @@ import testsuites.suiteinterface.OnPremTest;
         SheetMetalDtcReportTests.class,
         SheetMetalDtcDetailsReportTests.class,
         SheetMetalDtcComparisonReportTests.class,
-        ScenarioComparisonReportTests.class
+        ScenarioComparisonReportTests.class,
+        TargetAndQuotedCostTrendTests.class,
+        TargetAndQuotedCostValueTrackingTests.class,
+        TargetAndQuotedCostValueTrackingDetailsTests.class
 })
 
 public class OnPremCirSuite {
