@@ -3,12 +3,13 @@ package com.apriori.tests.utils;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
+
 import com.apriori.entity.response.CustomProperties;
+import com.apriori.entity.response.CustomerUser;
+import com.apriori.entity.response.CustomerUserProfile;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UpdatedProfile;
-import com.apriori.entity.response.User;
-import com.apriori.entity.response.UserProfile;
 
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -16,7 +17,6 @@ import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import java.time.LocalDateTime;
-
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -70,7 +70,7 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url - the endpoint
+     * @param url   - the endpoint
      * @param token - token
      * @return <T>ResponseWrapper <T>
      */
@@ -82,9 +82,9 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url - the endpoint
-     * @param klass - the response class
-     * @param token - token
+     * @param url    - the endpoint
+     * @param klass  - the response class
+     * @param token  - token
      * @param siteId - site ID
      * @return <T>ResponseWrapper <T>
      */
@@ -98,10 +98,10 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url - the endpoint
-     * @param klass - the response class
-     * @param token - token
-     * @param siteId - site ID
+     * @param url      - the endpoint
+     * @param klass    - the response class
+     * @param token    - token
+     * @param siteId   - site ID
      * @param siteName - site name
      * @return <T>ResponseWrapper <T>
      */
@@ -109,18 +109,18 @@ public class CasTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("site",
-                 new Site().setSiteId(siteId)
-            .setName(siteName)
-            .setDescription("Site created by automation test")
-            .setActive(true));
+                new Site().setSiteId(siteId)
+                    .setName(siteName)
+                    .setDescription("Site created by automation test")
+                    .setActive(true));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 
     /**
-     * @param url - the endpoint
-     * @param klass - the response class
-     * @param token - token
+     * @param url      - the endpoint
+     * @param klass    - the response class
+     * @param token    - token
      * @param userName - username
      * @return <T>ResponseWrapper <T>
      */
@@ -128,28 +128,28 @@ public class CasTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("user",
-                new User().setUserType("AP_CLOUD_USER")
-            .setEmail(userName.toLowerCase() + "@gmail.com")
-            .setUsername(userName)
-            .setActive(true)
-            .setUserProfile(new UserProfile().setGivenName(userName)
-                    .setFamilyName("Automater")
-                    .setJobTitle("Automation Engineer")
-                    .setDepartment("Automation")
-                    .setSupervisor("Ciene Frith")
-                    .setTownCity("Brooklyn")));
+                new CustomerUser().setUserType("AP_CLOUD_USER")
+                    .setEmail(userName.toLowerCase() + "@gmail.com")
+                    .setUsername(userName)
+                    .setActive(true)
+                    .setUserProfile(new CustomerUserProfile().setGivenName(userName)
+                        .setFamilyName("Automater")
+                        .setJobTitle("Automation Engineer")
+                        .setDepartment("Automation")
+                        .setSupervisor("Ciene Frith")
+                        .setTownCity("Brooklyn")));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 
     /**
-     * @param url - the endpoint
-     * @param klass - the response class
-     * @param token - token
-     * @param userName - username
-     * @param identity - user identity
+     * @param url              - the endpoint
+     * @param klass            - the response class
+     * @param token            - token
+     * @param userName         - username
+     * @param identity         - user identity
      * @param customerIdentity - customer identity
-     * @param profileIdentity - user profile identity
+     * @param profileIdentity  - user profile identity
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> updateUser(String url, Class klass, String token, String userName, String identity, String customerIdentity, String profileIdentity) {
@@ -161,27 +161,27 @@ public class CasTestUtil extends TestUtil {
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("user",
                 new UpdateUser().setUserType("AP_CLOUD_USER")
-            .setEmail(userName.toLowerCase() + "@gmail.com")
-            .setUsername(userName)
-            .setActive(true)
-            .setIdentity(identity)
-            .setCreatedAt(createdAt)
-            .setCreatedBy("#SYSTEM00000")
-            .setUpdatedAt(updatedAt)
-            .setCustomerIdentity(customerIdentity)
-            .setMfaRequired(true)
-            .setCustomProperties(new CustomProperties())
-            .setCreatedByName("SYSTEM")
-            .setLicenseAssignments(Collections.singletonList(""))
-            .setUserType("AP_CLOUD_USER")
-            .setUserProfile(new UpdatedProfile().setIdentity(profileIdentity)
-                    .setCreatedAt(profileCreatedAt)
+                    .setEmail(userName.toLowerCase() + "@gmail.com")
+                    .setUsername(userName)
+                    .setActive(true)
+                    .setIdentity(identity)
+                    .setCreatedAt(createdAt)
                     .setCreatedBy("#SYSTEM00000")
-                    .setGivenName(userName)
-                    .setFamilyName("Automater")
-                    .setJobTitle("Automation Engineer")
-                    .setDepartment("QA")
-                    .setSupervisor("Ciene Frith")));
+                    .setUpdatedAt(updatedAt)
+                    .setCustomerIdentity(customerIdentity)
+                    .setMfaRequired(true)
+                    .setCustomProperties(new CustomProperties())
+                    .setCreatedByName("SYSTEM")
+                    .setLicenseAssignments(Collections.singletonList(""))
+                    .setUserType("AP_CLOUD_USER")
+                    .setUserProfile(new UpdatedProfile().setIdentity(profileIdentity)
+                        .setCreatedAt(profileCreatedAt)
+                        .setCreatedBy("#SYSTEM00000")
+                        .setGivenName(userName)
+                        .setFamilyName("Automater")
+                        .setJobTitle("Automation Engineer")
+                        .setDepartment("QA")
+                        .setSupervisor("Ciene Frith")));
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
