@@ -105,4 +105,14 @@ public class ExplorePage extends ExploreToolbar {
     public ConfigurePage configure() {
         return componentTableActions.configure();
     }
+
+    public ExplorePage multiHighlightScenario(String... componentScenarioName) {
+        scenarioTableController.multiHighlightScenario(componentScenarioName);
+        return this;
+    }
+
+    public ExplorePage multiSelectScenario(String... componentScenarioName) {
+        scenarioTableController.multiSelectScenario(componentScenarioName);
+        return this;
+    }
 }

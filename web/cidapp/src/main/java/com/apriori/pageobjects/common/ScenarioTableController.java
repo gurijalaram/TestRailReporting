@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 public class ScenarioTableController extends LoadableComponent<ScenarioTableController> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ScenarioTableController.class);
@@ -83,9 +85,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController selectScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase(), scenarioName));
-        pageUtils.waitForElementToAppear(scenario);
-        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
+        findScenario(componentName, scenarioName).click();
         return this;
     }
 
@@ -97,9 +97,36 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController controlHighlightScenario(String componentName, String scenarioName) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(findScenario(componentName, scenarioName)).sendKeys(Keys.CONTROL).click().build().perform();
+        Actions controlHighlight = new Actions(driver);
+        controlHighlight.moveToElement(findScenario(componentName, scenarioName)).sendKeys(Keys.CONTROL).click().build().perform();
         return this;
+    }
+
+    public ScenarioTableController multiHighlightScenario(String... componentScenarioName) {
+        Actions multiHighlight = new Actions(driver);
+
+        Arrays.stream(componentScenarioName).forEach(componentScenario -> {
+            String[] scenario = componentScenario.split(",");
+            multiHighlight.keyDown(Keys.CONTROL)
+                .click(findScenario(scenario[0].trim(), scenario[1].trim()))
+                .build()
+                .perform();
+        });
+        return this;
+    }
+
+    public ScenarioTableController multiSelectScenario(String... componentScenarioName) {
+        Arrays.stream(componentScenarioName).forEach(componentScenario -> {
+            String[] scenario = componentScenario.split(",");
+            findScenarioCheckbox(scenario[0].trim(), scenario[1].trim()).click();
+        });
+        return this;
+    }
+
+    private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase(), scenarioName));
+        pageUtils.waitForElementToAppear(scenario);
+        return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
     }
 
     /**
