@@ -106,11 +106,21 @@ public class ExplorePage extends ExploreToolbar {
         return componentTableActions.configure();
     }
 
+    /**
+     * Multi-highlight scenario
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
     public ExplorePage multiHighlightScenario(String... componentScenarioName) {
         scenarioTableController.multiHighlightScenario(componentScenarioName);
         return this;
     }
 
+    /**
+     * Multi-select scenario
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
     public ExplorePage multiSelectScenario(String... componentScenarioName) {
         scenarioTableController.multiSelectScenario(componentScenarioName);
         return this;

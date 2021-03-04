@@ -102,6 +102,11 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return this;
     }
 
+    /**
+     * Multi-highlight scenario
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
     public ScenarioTableController multiHighlightScenario(String... componentScenarioName) {
         Actions multiHighlight = new Actions(driver);
 
@@ -115,6 +120,11 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return this;
     }
 
+    /**
+     * Multi-select scenario
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
     public ScenarioTableController multiSelectScenario(String... componentScenarioName) {
         Arrays.stream(componentScenarioName).forEach(componentScenario -> {
             String[] scenario = componentScenario.split(",");
@@ -123,6 +133,12 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return this;
     }
 
+    /**
+     * Find scenario checkbox
+     * @param componentName - component name
+     * @param scenarioName - scenario name
+     * @return webelement
+     */
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
         By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase(), scenarioName));
         pageUtils.waitForElementToAppear(scenario);
