@@ -690,8 +690,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
-        String nameToSelect = "Ben Hegan";
-        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), nameToSelect);
+        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), Constants.NAME_TO_SELECT);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.CREATED_BY.getListName(),
@@ -703,9 +702,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 "Selected"
         ), is(equalTo("1")));
 
-        String expectedLastModifiedCount = Constants.DEFAULT_ENVIRONMENT_VALUE.equals("cir-qa") ? "2" : "1";
         genericReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", "2");
         String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
         String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
@@ -714,7 +712,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(lastModifiedByAvailableCountPreSelection,
                 is(not(equalTo(lastModifiedByAvailableCountPostSelection))));
         assertThat(scenarioNameAvailableCountPreSelection,
-                is(equalTo(scenarioNameAvailableCountPostSelection)));
+                is(not(equalTo(scenarioNameAvailableCountPostSelection))));
 
         genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
         assertThat(genericReportPage.getCurrentlySelectedAssembly(),
@@ -738,7 +736,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Category(ReportsTest.class)
     @TestRail(testCaseId = "1921")
     @Description("Export set search function works (plus other filters)")
-    public void testLastModifiedFilter() {
+    public void testLastModifiedFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
@@ -759,8 +757,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
-        String nameToSelect = "Ben Hegan";
-        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), nameToSelect);
+        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), Constants.NAME_TO_SELECT);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(),

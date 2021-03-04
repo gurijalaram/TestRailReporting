@@ -434,6 +434,7 @@ public class CommonReportTests extends TestBase {
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
+        evaluatePage.waitForCostsToLoad();
         CostDetailsPage costDetailsPage = evaluatePage.openAssemblyCostDetails();
 
         assertThat(reportsPartName, is(equalTo(evaluatePage.getPartName())));
