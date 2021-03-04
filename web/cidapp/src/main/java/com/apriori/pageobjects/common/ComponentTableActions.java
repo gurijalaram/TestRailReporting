@@ -22,7 +22,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     private WebElement searchIconButton;
 
     @FindBy(id = "qa-sub-component-detail-filter-button")
-    private WebElement filtersButton;
+    private WebElement filterButton;
 
     @FindBy(id = "qa-sub-component-detail-column-config-button")
     private WebElement configureButton;
@@ -101,8 +101,8 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      *
      * @return new page object
      */
-    public FiltersPage filters() {
-        pageUtils.waitForElementAndClick(filtersButton);
-        return new FiltersPage(driver);
+    public FilterPage filter() {
+        pageUtils.waitForElementAndClick(filterButton);
+        return new FilterPage(driver);
     }
 }

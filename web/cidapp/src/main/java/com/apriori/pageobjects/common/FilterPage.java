@@ -8,14 +8,14 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FiltersPage extends LoadableComponent<FiltersPage> {
+public class FilterPage extends LoadableComponent<FilterPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(FiltersPage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(FilterPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    public FiltersPage(WebDriver driver) {
+    public FilterPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));

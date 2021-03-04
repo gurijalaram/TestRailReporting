@@ -1,7 +1,10 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
 import com.apriori.pageobjects.common.ComponentTableActions;
+import com.apriori.pageobjects.common.ConfigurePage;
+import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
+import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
@@ -55,6 +58,45 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         pageUtils.waitForElementAndClick(listButton);
         pageUtils.waitForElementAndClick(previewButton);
     }
+
+    /**
+     * Search for component
+     *
+     * @param componentName - the component name
+     * @return new page object
+     */
+    public ScenarioTableController enterSearch(String componentName) {
+        return componentTableActions.enterSearch(componentName);
+    }
+
+    /**
+     * Search for component
+     *
+     * @param componentName - the component name
+     * @return new page object
+     */
+    public ScenarioTableController clickSearch(String componentName) {
+        return componentTableActions.clickSearch(componentName);
+    }
+
+    /**
+     * Open configure page
+     *
+     * @return new page object
+     */
+    public ConfigurePage configure() {
+        return componentTableActions.configure();
+    }
+
+    /**
+     * Open filters page
+     *
+     * @return new page object
+     */
+    public FilterPage filter() {
+        return componentTableActions.filter();
+    }
+
 
     /**
      * Opens tree view tab
