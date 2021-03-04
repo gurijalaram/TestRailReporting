@@ -180,7 +180,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement saveButton;
 
     @FindBy(id = "loading")
-    private WebElement loadingPopup;
+    public WebElement loadingPopup;
 
     @FindBy(xpath = "//div[@title='Single export set selection.']//li[@title='Select All']/a")
     private WebElement exportSetSelectAll;
@@ -822,6 +822,17 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         }
         return this;
+    }
+
+    /**
+     * Gets specified value from report (Target and Quoted Cost Trend or Value Tracking reports)
+     * @param index String - index of value to get
+     * @return String
+     */
+    public String getValueFromReport(String index) {
+        By locator = By.xpath(String.format("//table[contains(@class, 'jrPage')]//tr[22]/td[%s]/span", index));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 
     /**

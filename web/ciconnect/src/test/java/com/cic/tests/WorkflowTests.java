@@ -11,7 +11,6 @@ import com.apriori.validators.WorkflowValidator;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class WorkflowTests  extends TestBase {
         loginPage.login();
 
         /** Create Workflow **/
-        Map<String, Object> values = workflowFeatures.creteWorkflow();
+        Map<String, Object> values = workflowFeatures.createWorkflow();
         workflowNames.add((String)values.get("workflowName"));
         validator.validateCreatedWorkflow(values);
 
@@ -102,7 +101,7 @@ public class WorkflowTests  extends TestBase {
 
         Map<String, Object> values = workflowFeatures.defaultSorting();
         validator.validateDefaultWorkflowOrdering(values);
-
+        workflowNames = (ArrayList<String>) values.get("workflows");
     }
 
     private void deleteWorkflows(ArrayList<String> workflows, WorkflowPage workflowPage, DeleteWorkflowPage deleteWorkflowPage) {

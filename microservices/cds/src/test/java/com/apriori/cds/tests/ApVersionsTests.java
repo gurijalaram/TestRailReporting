@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import com.apriori.cds.objects.response.ApVersions;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -26,6 +27,7 @@ public class ApVersionsTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "5958")
     @Description("Get a list of ap Versions in CDSDb")
     public void getApVersions() {
         url = String.format(url,"ap-versions");

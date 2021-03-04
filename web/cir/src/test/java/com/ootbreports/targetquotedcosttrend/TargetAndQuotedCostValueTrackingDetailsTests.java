@@ -1,18 +1,24 @@
 package com.ootbreports.targetquotedcosttrend;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
+
+import com.inputcontrols.InputControlsTests;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
+
+    private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
     public TargetAndQuotedCostValueTrackingDetailsTests() {
@@ -50,6 +56,30 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "3364")
+    @Description("Validate Cost Metric Input Control")
+    public void testCostMetricInputControlPpc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricTargetQuotedCostValueTrackingDetailsReport(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName(),
+                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "3364")
+    @Description("Validate Cost Metric Input Control")
+    public void testCostMetricInputControlFbc() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostMetricTargetQuotedCostValueTrackingDetailsReport(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName(),
+                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 }

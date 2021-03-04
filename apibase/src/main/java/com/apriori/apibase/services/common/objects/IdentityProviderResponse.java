@@ -18,9 +18,13 @@ public class IdentityProviderResponse {
     private IdentityProviderResponse response;
     private String identity;
     private String createdBy;
+    private String updatedBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
     private IdentityProviderPlatform identityProviderPlatform;
     private Boolean active;
     private String name;
@@ -35,6 +39,24 @@ public class IdentityProviderResponse {
     private String signRequestAlgorithm;
     private String signRequestAlgorithmDigest;
     private String protocolBinding;
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public IdentityProviderResponse setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+        return this;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public IdentityProviderResponse setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
+    }
 
     public IdentityProviderResponse getResponse() {
         return response;

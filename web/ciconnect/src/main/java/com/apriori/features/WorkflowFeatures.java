@@ -33,7 +33,12 @@ public class WorkflowFeatures {
     private DeleteWorkflowPage deleteWorkflowPage;
     private PageUtils pageUtils;
     private Map<String, Object> values;
-    
+    private Map<String, Boolean> valuesB;
+
+    private enum WorkflowAction {
+        CREATE,
+        EDIT
+    }
     
     public WorkflowFeatures(WebDriver driver) {
         this.driver = driver;
@@ -43,55 +48,68 @@ public class WorkflowFeatures {
         this.deleteWorkflowPage = new DeleteWorkflowPage(driver);
         this.pageUtils = PageUtils.getInstance(driver);
     }
-        
-    public Map<String, Object>  creteWorkflow() {
-        return createWorklow(Constants.DEFAULT_WORKFLOW_NAME, 1);
+
+    /**
+     * Create new workflow with default values
+     *
+     * @return value map of field states and values
+     */
+    public Map<String, Object>  createWorkflow() {
+        return manageWorkflow(Constants.DEFAULT_WORKFLOW_NAME, WorkflowAction.CREATE, null, null,1);
     }
-    
-    public Map<String, Object> createWorklow(String workflowName, int iteration) {
-        values = new HashMap();
-        workflowPage.newWorkflow();
 
-        String label = newWorkflowPage.getLabel();
-        values.put("label", label);
-
-        workflowName = UIUtils.saltString(workflowName);
-        newWorkflowPage.createNewWorkFlow(workflowName, iteration);
-        workflowPage.refeshPage(workflowPage);
-
-        workflowName = correctWorkflowNameSpacing(workflowName);
-        boolean exists = workflowPage.workflowExists(workflowName);
-        values.put("workflowExists", exists);
-        values.put("workflowName", workflowName);
-        
-        return values;
+    /**
+     * Create a new workflow
+     *
+     * @param name workflow name
+     * @param description workflow description
+     * @return value map of field states and values
+     */
+    public Map<String, Object>  createWorkflow(String name, String description) {
+        return manageWorkflow(Constants.DEFAULT_WORKFLOW_NAME, WorkflowAction.CREATE, null,null, 1);
     }
-    
+
     public Map<String, Object> editWorklow(String workflowName) {
-        return editWorklow(workflowName, Constants.DEFAULT_EDITED_WORKFLOW_NAME);
-    }
-
-    public Map<String, Object> editWorklow(String workflowName, String newWorkflowName) {
-        Map<String, Object> values = new HashMap();
-        workflowPage.selectWorkflow(workflowName);
-        workflowPage.editWorkflow();
-
-        String editLabel = editWorkflowPage.getLabel();
-        values.put("label", editLabel);
-
-        newWorkflowName = UIUtils.saltString(newWorkflowName);
-        editWorkflowPage.editWorkflow("NAME", newWorkflowName);
-        workflowPage.refeshPage(workflowPage);
-        
-        newWorkflowName = correctWorkflowNameSpacing(newWorkflowName);
-        values.put("workflowName", newWorkflowName);
-        boolean exists = workflowPage.workflowExists(newWorkflowName);
-        values.put("workflowExists", exists);
-        values.put("workflowName", newWorkflowName);
-        
-        return values;
+        return manageWorkflow(workflowName, WorkflowAction.EDIT, Constants.DEFAULT_EDITED_WORKFLOW_NAME, null, null);
     }
     
+    public Map<String, Object> manageWorkflow(String workflowName, WorkflowAction action, String description,
+                                              String newWorkflowName, Integer iteration) {
+        values = new HashMap();
+        String label;
+        String name;
+        boolean exists;
+
+        switch (action) {
+            case CREATE:
+                workflowPage.newWorkflow();
+                label = newWorkflowPage.getLabel();
+                name = UIUtils.saltString(workflowName);
+                newWorkflowPage.createNewWorkflow(name, iteration);
+                break;
+            case EDIT:
+                workflowPage.selectWorkflow(workflowName);
+                workflowPage.editWorkflow();
+                label = editWorkflowPage.getLabel();
+                name = UIUtils.saltString(newWorkflowName);
+                editWorkflowPage.editWorkflow("NAME", name);
+                break;
+            default:
+                logger.info("Invalid workflow action");
+                return null;
+        }
+
+        workflowPage.refeshPage(workflowPage);
+        name = correctWorkflowNameSpacing(name);
+        exists = workflowPage.workflowExists(name);
+
+        values.put("label", label);
+        values.put("workflowExists", exists);
+        values.put("workflowName", name);
+
+        return values;
+    }
+
     public Map<String, Object> deleteWorklow(String workflowName) {
         Map<String, Object> values = new HashMap();
         workflowPage.refeshPage(workflowPage);
@@ -111,7 +129,7 @@ public class WorkflowFeatures {
     }
 
     public Map<String, Object> getButtonStates() {
-        Map<String, Object> values = new HashMap();
+        values = new HashMap();
         boolean isEnabled;
         boolean popupIsDisplayed;
 
@@ -148,7 +166,7 @@ public class WorkflowFeatures {
 
         workflowPage.newWorkflow();
         String lowerName = UIUtils.saltString(Constants.DEFAULT_NAME_LOWER_CASE);
-        newWorkflowPage.createNewWorkFlow(lowerName, iteration);
+        newWorkflowPage.createNewWorkflow(lowerName, iteration);
         workflowPage.refeshPage(workflowPage);
         workflowPage.refreshWorkflowTable();
         lowerName = correctWorkflowNameSpacing(lowerName);
@@ -158,7 +176,7 @@ public class WorkflowFeatures {
 
         workflowPage.newWorkflow();
         String numericName = UIUtils.saltString(Constants.DEFAULT_NAME_WITH_NUMBER);
-        newWorkflowPage.createNewWorkFlow(numericName, iteration);
+        newWorkflowPage.createNewWorkflow(numericName, iteration);
         workflowPage.refeshPage(workflowPage);
         workflowPage.refreshWorkflowTable();
         numericName = correctWorkflowNameSpacing(numericName);
@@ -168,17 +186,18 @@ public class WorkflowFeatures {
 
         workflowPage.newWorkflow();
         String upperName = UIUtils.saltString(Constants.DEFAULT_NAME_UPPER_CASE);
-        newWorkflowPage.createNewWorkFlow(numericName, iteration);
+        newWorkflowPage.createNewWorkflow(upperName, iteration);
         workflowPage.refeshPage(workflowPage);
         workflowPage.refreshWorkflowTable();
         upperName = correctWorkflowNameSpacing(upperName);
         values.put("upperName", upperName);
         workflows.add(upperName);
+        workflowPage.refeshPage(workflowPage);
 
         values.put("workflows", workflows);
         return values;
     }
-    
+
     private String correctWorkflowNameSpacing(String workflowName) {
         /* Need to modify the name because CIC removes multiple whitespaces and replaces it with
            a single space. The workflow name uses triple spaces to assure that the new workflow is at the top of the
@@ -193,6 +212,4 @@ public class WorkflowFeatures {
         editWorkflowPage.cancelEdit();
         return popupExists;
     }
-
-
 }

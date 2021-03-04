@@ -1,12 +1,9 @@
 package com.apriori.cds.tests.utils;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cds.objects.request.AccessControlRequest;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
@@ -21,8 +18,6 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
-import org.apache.http.HttpStatus;
 
 import java.util.Arrays;
 
@@ -98,8 +93,8 @@ public class CdsTestUtil extends TestUtil {
     /**
      * PATCH call to update a user
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
+     * @param url   - the endpoint
+     * @param klass - the response class
      * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> patchUser(String url, Class klass) {
@@ -164,9 +159,9 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param url      - the endpoint
-     * @param klass    - the response class
-     * @param realmKey - the realm key
+     * @param url            - the endpoint
+     * @param klass          - the response class
+     * @param realmKey       - the realm key
      * @param cloudReference - the cloud reference
      * @return <T>ResponseWrapper<T>
      */
@@ -211,17 +206,16 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Delete an api customer/user
+     * Calls the delete method
      *
-     * @param deleteEndpoint - the endpoint to delete a customer/user
+     * @param deleteEndpoint - the endpoint to delete
+     * @return responsewrapper
      */
-    public void delete(String deleteEndpoint) {
+    public ResponseWrapper<String> delete(String deleteEndpoint) {
         RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
             .setHeaders("Content-Type", "application/json");
 
-        ResponseWrapper<String> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
-
-        assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
     }
 
     /**
@@ -230,19 +224,19 @@ public class CdsTestUtil extends TestUtil {
      * @param url          - the url
      * @param klass        - the response class
      * @param userIdentity - the aPriori Staff users identity
-     * @param userName     - the user name
+     * @param customerName     - the customer name
      * @return <T> ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String userName) {
+    public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String customerName) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("identityProvider",
                 new IdentityProviderRequest().setContact(userIdentity)
-                    .setName(userName)
-                    .setDisplayName(userName + "2")
-                    .setIdpDomains(Arrays.asList(userName + ".com"))
+                    .setName(customerName + "-idp")
+                    .setDisplayName(customerName + "SAML")
+                    .setIdpDomains(Arrays.asList(customerName + ".com"))
                     .setIdentityProviderPlatform("AZURE AD")
-                    .setDescription("Ciene Okta IdP using SAML")
+                    .setDescription("Create IDP using CDS automation")
                     .setActive(true)
                     .setCreatedBy("#SYSTEM00000")
                     .setSignInUrl(Constants.getSignInUrl())
@@ -282,6 +276,29 @@ public class CdsTestUtil extends TestUtil {
                     .setActive("true")
                     .setLicense(String.format(Constants.getLicense(), customerName, siteId, licenseId, subLicenseId))
                     .setLicenseTemplate(String.format(Constants.getLicenseTemplate(), customerName))));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * Post to add out of context access control
+     *
+     * @param url   - the url
+     * @param klass - the class
+     * @param <T>   - generic return type
+     * @return <T>ResponseWrapper</T>
+     */
+    public <T> ResponseWrapper<T> addAccessControl(String url, Class klass) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("accessControl",
+                new AccessControlRequest().setCustomerIdentity(Constants.getAPrioriInternalCustomerIdentity())
+                    .setDeploymentIdentity(Constants.getApProductionDeploymentIdentity())
+                    .setInstallationIdentity(Constants.getApCoreInstallationIdentity())
+                    .setApplicationIdentity(Constants.getApCloudHomeApplicationIdentity())
+                    .setCreatedBy("#SYSTEM00000")
+                    .setRoleName("USER")
+                    .setRoleIdentity(Constants.getCdsIdentityRole()));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }

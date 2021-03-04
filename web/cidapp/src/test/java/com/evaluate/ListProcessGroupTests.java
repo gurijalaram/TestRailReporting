@@ -30,8 +30,9 @@ public class ListProcessGroupTests extends TestBase {
     @Test
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())

@@ -26,6 +26,7 @@ public class AccessControl {
     private String applicationIdentity;
     private String roleIdentity;
     private Boolean outOfContext;
+    private String customerAssociationIdentity;
 
     public AccessControl getResponse() {
         return response;
@@ -123,6 +124,15 @@ public class AccessControl {
 
     public AccessControl setOutOfContext(Boolean outOfContext) {
         this.outOfContext = outOfContext;
+        return this;
+    }
+
+    public String getCustomerAssociationIdentity() {
+        return customerAssociationIdentity;
+    }
+
+    public AccessControl setCustomerAssociationIdentity(String customerAssociationIdentity) {
+        this.customerAssociationIdentity = customerAssociationIdentity;
         return this;
     }
 }

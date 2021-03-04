@@ -48,7 +48,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     public void getApplicationById() {
         url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity()));
 
-        ResponseWrapper<Application> response = getCommonRequest(url,false, Application.class);
+        ResponseWrapper<Application> response = getCommonRequest(url, false, Application.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("aPriori Professional")));
@@ -58,9 +58,9 @@ public class CdsApplicationsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5811")
     @Description(" API returns a paged list of customers authorized to use a particular application")
     public void getCustomersAuthorizedForApplication() {
-        url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity().concat("/customers")));
+        url = String.format(url, String.format("applications/%s/customers", Constants.getApProApplicationIdentity()));
 
-        ResponseWrapper<Customers> response = getCommonRequest(url,false, Customers.class);
+        ResponseWrapper<Customers> response = getCommonRequest(url, false, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
