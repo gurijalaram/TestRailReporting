@@ -335,6 +335,14 @@ public class EvaluatePage extends EvaluateHeader {
     }
 
     /**
+     * Waits for costs to load before proceeding
+     */
+    public void waitForCostsToLoad() {
+        By locator = By.xpath("//td[@data-ap-field='targetCost' and @title='0.00']");
+        pageUtils.waitForElementToAppear(locator);
+    }
+
+    /**
      * Gets the process routing details
      *
      * @return the details as string

@@ -88,10 +88,10 @@ public class ScenarioComparisonReportTests extends TestBase {
         assertThat(genericReportPage.getComponentName("2"), is(equalTo("part")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("1")));
+                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("2")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("2")));
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("3")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
@@ -189,8 +189,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         String scenariosToCompareAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
 
-        String nameToSelect = "bhegan";
-        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), nameToSelect);
+        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), Constants.NAME_TO_SELECT);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
@@ -254,8 +253,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         String scenariosToCompareAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available");
 
-        String nameToSelect = "bhegan";
-        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), nameToSelect);
+        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), Constants.NAME_TO_SELECT);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
@@ -384,7 +382,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("2")));
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
