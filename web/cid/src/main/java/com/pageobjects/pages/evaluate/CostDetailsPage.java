@@ -153,9 +153,8 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
      * @return String
      */
     public String getPiecePartCostString() {
-        By locator = By.xpath("//td[@data-ap-field='targetCost' and @title='0.00']");
-        pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(By.xpath("//span[@data-ap-field='totalCost']")).getAttribute("title");
+        By locator = By.xpath("//span[@data-ap-field='totalCost']");
+        return driver.findElement(locator).getAttribute("title");
     }
 
     /**
