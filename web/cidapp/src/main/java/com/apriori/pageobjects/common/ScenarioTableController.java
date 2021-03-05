@@ -105,6 +105,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     /**
      * Multi-highlight scenario
+     * This method takes any number of arguments as string. A combination of component and scenario name needs to passed in the argument eg. {"PISTON, Initial", "Television, AutoScenario101"}
+     *
      * @param componentAndScenarioName - component name and method name
      * @return current page object
      */
@@ -113,14 +115,16 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
         Arrays.stream(componentAndScenarioName).map(csn -> csn.split(",")).collect(Collectors.toList())
             .forEach(componentScenario -> multiHighlight.keyDown(Keys.CONTROL)
-            .click(findScenario(componentScenario[0].trim(), componentScenario[1].trim()))
-            .build()
-            .perform());
+                .click(findScenario(componentScenario[0].trim(), componentScenario[1].trim()))
+                .build()
+                .perform());
         return this;
     }
 
     /**
      * Multi-select scenario
+     * This method takes any number of arguments as string. A combination of component and scenario name needs to passed in the argument eg. {"PISTON, Initial", "Television, AutoScenario101"}
+     *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
@@ -134,8 +138,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     /**
      * Find scenario checkbox
+     *
      * @param componentName - component name
-     * @param scenarioName - scenario name
+     * @param scenarioName  - scenario name
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
