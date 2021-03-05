@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  */
 public class CategorySuiteRunner extends Categories {
 
-    private static final Logger LOGGER_CONCURRENT_SUITE_RUNNER = LoggerFactory.getLogger(CategorySuiteRunner.class);
+    private static final Logger logger_CONCURRENT_SUITE_RUNNER = LoggerFactory.getLogger(CategorySuiteRunner.class);
 
     public CategorySuiteRunner(final Class<?> klass) throws InitializationError {
         super(klass, new AllDefaultPossibilitiesBuilder(true));
-        LOGGER_CONCURRENT_SUITE_RUNNER.debug("ConcurrentTestRunner constructor");
+        logger_CONCURRENT_SUITE_RUNNER.debug("ConcurrentTestRunner constructor");
         String threads = "1";
         if (StringUtils.isNotEmpty(System.getProperty("threadCountClasses"))) {
             threads = System.getProperty("threadCountClasses");

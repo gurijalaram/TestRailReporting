@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class SaveAsPage extends LoadableComponent<SaveAsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(SaveAsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(SaveAsPage.class);
 
     @FindBy(css = "input[data-ap-field='name']")
     private WebElement nameInput;
@@ -36,7 +36,7 @@ public class SaveAsPage extends LoadableComponent<SaveAsPage> {
     public SaveAsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

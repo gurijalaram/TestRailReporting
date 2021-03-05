@@ -22,7 +22,7 @@ import java.util.HashSet;
 
 public class MaterialCompositionPage extends LoadableComponent<MaterialCompositionPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(MaterialCompositionPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(MaterialCompositionPage.class);
 
     @FindBy(css = "select[data-ap-field='materialType']")
     private WebElement typeDropdown;
@@ -48,7 +48,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
     public MaterialCompositionPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

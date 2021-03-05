@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class UserList extends LoadableComponent<UserList> {
 
-    private final Logger logger = LoggerFactory.getLogger(UserList.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserList.class);
 
     @FindBy(css = "div.objbox tr")
     private List<WebElement> userListTable;

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 public class NewWorkflowValidator {
-    private final Logger logger = LoggerFactory.getLogger(NewWorkflowValidator.class);
+    private static final Logger logger = LoggerFactory.getLogger(NewWorkflowValidator.class);
 
     private WorkflowPage workflowPage;
 

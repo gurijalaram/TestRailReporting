@@ -29,7 +29,7 @@ import java.util.List;
 
 public class GenericHeader extends PageHeader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(GenericHeader.class);
 
     @FindBy(css = "a.dropdown-toggle.text-center span.glyphicon-file")
     private WebElement newFileDropdown;
@@ -89,7 +89,7 @@ public class GenericHeader extends PageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

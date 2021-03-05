@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class NewEditWorkflow extends LoadableComponent<NewEditWorkflow> {
 
-    private final Logger logger = LoggerFactory.getLogger(Schedule.class);
+    private static final Logger logger = LoggerFactory.getLogger(Schedule.class);
 
     @FindBy(css = "div[id='root_pagemashupcontainer-1_navigation-83-popup_button-92'] > button")
     private WebElement detailsNextBtn;

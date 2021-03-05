@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class ExplorePage extends ExploreToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(css = "button[class='dropdown-toggle btn btn-primary']")
     private WebElement paginatorDropdown;
@@ -39,7 +39,7 @@ public class ExplorePage extends ExploreToolbar {
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(scenarioCount);
     }

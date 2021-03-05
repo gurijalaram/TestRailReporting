@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class UserCommonService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserCommonService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserCommonService.class);
 
     private static ConcurrentLinkedQueue<UserCredentials> usersQueue = InitUsersData.initCommonUsers();
     private static UserCredentials globalUser;

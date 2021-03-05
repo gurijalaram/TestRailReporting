@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ComponentsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ComponentsPage.class);
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -22,7 +22,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

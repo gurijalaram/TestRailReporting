@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PlasticDtcReportPage extends GenericReportPage {
-    private final Logger LOGGER = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(AssemblyDetailsReportPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -17,7 +17,7 @@ public class PlasticDtcReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 }

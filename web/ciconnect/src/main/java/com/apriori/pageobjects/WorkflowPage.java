@@ -19,7 +19,7 @@ import utils.UIUtils;
 import java.util.List;
 
 public class WorkflowPage {
-    private final Logger logger = LoggerFactory.getLogger(WorkflowPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(WorkflowPage.class);
 
     @FindBy(css = "img[title='Users']")
     private WebElement userTab;

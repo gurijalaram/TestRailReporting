@@ -22,7 +22,7 @@ import java.util.List;
 
 public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(FileUploadPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
     @FindBy(css = "h3.modal-title")
     private WebElement modalDialog;
@@ -45,7 +45,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     public FileUploadPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
