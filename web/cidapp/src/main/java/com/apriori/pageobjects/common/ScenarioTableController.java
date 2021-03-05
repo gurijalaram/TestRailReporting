@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class ScenarioTableController extends LoadableComponent<ScenarioTableController> {
 
@@ -104,19 +105,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     /**
      * Multi-highlight scenario
-     * @param componentScenarioName - component name and method name
+     * @param componentAndScenarioName - component name and method name
      * @return current page object
      */
-    public ScenarioTableController multiHighlightScenario(String... componentScenarioName) {
+    public ScenarioTableController multiHighlightScenario(String... componentAndScenarioName) {
         Actions multiHighlight = new Actions(driver);
 
-        Arrays.stream(componentScenarioName).forEach(componentScenario -> {
-            String[] scenario = componentScenario.split(",");
-            multiHighlight.keyDown(Keys.CONTROL)
-                .click(findScenario(scenario[0].trim(), scenario[1].trim()))
-                .build()
-                .perform();
-        });
+        Arrays.stream(componentAndScenarioName).map(csn -> csn.split(",")).collect(Collectors.toList())
+            .forEach(componentScenario -> multiHighlight.keyDown(Keys.CONTROL)
+            .click(findScenario(componentScenario[0].trim(), componentScenario[1].trim()))
+            .build()
+            .perform());
         return this;
     }
 
