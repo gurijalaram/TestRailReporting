@@ -74,20 +74,37 @@ public class EditWorkflowPage {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 
+    /**
+     * Select the first query in the Query dropdown list
+     */
     public void selectQuery() {
         Select opt = new Select(queryDropDown);
         opt.selectByIndex(1);
     }
 
+    /**
+     * Checks that a Edit Workflow popup exists
+     *
+     * @return True if Edit Workflow popup exists
+     */
     public boolean modalExists() {
         pageUtils.waitForElementToAppear(editWorkflowNextButton);
         return editWorkflowModal.isDisplayed();
     }
 
+    /**
+     * Cancel editing a workflow
+     */
     public void cancelEdit() {
         pageUtils.waitForElementAndClick(editWorkflowCancelButton);
     }
 
+    /**
+     * Edit an existing workflow
+     *
+     * @param field The field to edit
+     * @param newValue The new value to enter
+     */
     public void editWorkflow(String field, String newValue) {
         switch (field.toUpperCase()) {
             case "NAME":
@@ -111,6 +128,11 @@ public class EditWorkflowPage {
         pageUtils.waitForElementAndClick(saveButton);
     }
 
+    /**
+     * Get the Edit popup label
+     *
+     * @return Edit popup header
+     */
     public String getLabel() {
         pageUtils.waitForElementAppear(editWorkflowLabel);
         return editWorkflowLabel.getText();
