@@ -125,4 +125,16 @@ public class ExplorePage extends ExploreToolbar {
         scenarioTableController.multiSelectScenario(componentScenarioName);
         return this;
     }
+
+    /**
+     * Highlights the scenario in the table using the keyboard control key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage controlHighlight(String componentName, String scenarioName) {
+        scenarioTableController.controlHighlightScenario(componentName, scenarioName);
+        return this;
+    }
 }

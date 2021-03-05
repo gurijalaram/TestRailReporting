@@ -99,7 +99,10 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController controlHighlightScenario(String componentName, String scenarioName) {
         Actions controlHighlight = new Actions(driver);
-        controlHighlight.moveToElement(findScenario(componentName, scenarioName)).sendKeys(Keys.CONTROL).click().build().perform();
+        controlHighlight.keyDown(Keys.CONTROL)
+            .click(findScenario(componentName, scenarioName))
+            .build()
+            .perform();
         return this;
     }
 
@@ -115,7 +118,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
         Arrays.stream(componentAndScenarioName).map(csn -> csn.split(",")).collect(Collectors.toList())
             .forEach(componentScenario -> multiHighlight.keyDown(Keys.CONTROL)
-                .click(findScenario(componentScenario[0].trim(), componentScenario[1].trim()))
+                .click(findScenario(componentScenario[0], componentScenario[1]))
                 .build()
                 .perform());
         return this;
@@ -131,7 +134,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController multiSelectScenario(String... componentScenarioName) {
         Arrays.stream(componentScenarioName).forEach(componentScenario -> {
             String[] scenario = componentScenario.split(",");
-            findScenarioCheckbox(scenario[0].trim(), scenario[1].trim()).click();
+            findScenarioCheckbox(scenario[0], scenario[1]).click();
         });
         return this;
     }
@@ -144,7 +147,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase(), scenarioName));
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
     }
@@ -157,7 +160,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement findScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase(), scenarioName));
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
     }
