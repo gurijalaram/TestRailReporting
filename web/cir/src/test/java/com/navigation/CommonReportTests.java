@@ -136,7 +136,7 @@ public class CommonReportTests extends TestBase {
                     is(equalTo(partNames[1])));
         }
 
-        /*assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
             is(equalTo(partNames[0])));
         assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
             is(equalTo(partNames[1])));
@@ -154,7 +154,7 @@ public class CommonReportTests extends TestBase {
         assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
             is(equalTo(partNames[0])));
         assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
-            is(equalTo(partNames[1])));*/
+            is(equalTo(partNames[1])));
     }
 
     /**

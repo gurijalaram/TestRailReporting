@@ -18,6 +18,13 @@ public class TableUtils {
         this.driver = driver;
     }
 
+    /**
+     * Find an item in a table by name
+     *
+     * @param table The table to search
+     * @param name The name to search for
+     * @return The webelement if found
+     */
     public WebElement findTableItemByName(WebElement table, String name) {
         pageUtils.waitForElementToBeClickable(table);
         List<WebElement> rows = table.findElements(By.tagName("tr"))
@@ -32,6 +39,13 @@ public class TableUtils {
         }
     }
 
+    /**
+     * Find an item in a table by name
+     *
+     * @param table The table to search
+     * @param rowNumber The row number to select
+     * @return The webelement if found
+     */
     public WebElement selectRowByIndex(WebElement table, int rowNumber) {
         int rowId = rowNumber + 1;
         String cssRow = String.format("tr:nth-child(%d)",rowId);
@@ -40,10 +54,23 @@ public class TableUtils {
         return row;
     }
 
+    /**
+     * Select a row by item name
+     *
+     * @param table  The table to search
+     * @param name The item name to search for
+     */
     public  void selectRowByName(WebElement table, String name) {
         findTableItemByName(table, name).click();
     }
 
+    /**
+     * Check if a item exisits in the table. Search by item name
+     *
+     * @param table  The table to search
+     * @param name The workflow name to check for
+     * @return True if the item exists in the table
+     */
     public Boolean itemExistsInTable(WebElement table, String name) {
         WebElement item = findTableItemByName(table, name);
         if (item != null) {

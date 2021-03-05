@@ -34,6 +34,11 @@ public class UsersPage {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 
+    /**
+     * Validates the Schedule Workflow list is sorted alphabetically
+     *
+     * @return True if the workflow list is sorted alphabetical
+     */
     public Map<String, List<String>> validateUsersSortedAlphabetical() {
         pageUtils.waitForElementToBeClickable(userList);
         List<String> users = new ArrayList<>();
