@@ -242,6 +242,13 @@ public class NewWorkflowPage {
         pageUtils.waitForElementAndClick(saveButton);
     }
 
+    /**
+     * Creates a css webelement string with specified a specified id
+     *
+     * @param css Marked up webelement css string
+     * @param interation The number of times the New Workflow popup has been called
+     * @return
+     */
     private WebElement getIncrementedElement(String css, int interation) {
         Integer id = interation * 5;
         String elementCss = css.replace("[ID]", id.toString());
@@ -249,6 +256,9 @@ public class NewWorkflowPage {
         return webElement;
     }
 
+    /**
+     * Fills in the Query Definition fiels with DEFAULT values
+     */
     private void fillQueryDefinitions() {
         Select opt = new Select(queryDropDown);
         opt.selectByIndex(1);
@@ -259,6 +269,11 @@ public class NewWorkflowPage {
         pageUtils.waitForElementAndClick(queryAddRowButton);
     }
 
+    /**
+     * Fill in the Costing Inputs fields with DEFAULT values
+     *
+     * @param iteration The number of times the New Workflow popup has been called
+     */
     private void fillCostingInputs(int iteration) {
         WebElement ciConnectField = getIncrementedElement(ciConnectFieldCss, iteration);
         pageUtils.waitFor(3000);

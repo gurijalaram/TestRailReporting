@@ -63,24 +63,44 @@ public class WorkflowPage {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 
+    /**
+     * Refreshes the workflow page to reload the the DOM. This prevents stale element errors
+     *
+     * @param workflowPage Worflowpage object
+     */
     public void refeshPage(WorkflowPage workflowPage) {
         workflowPage.clickUserTab();
         workflowPage.clickWorkflowTab();
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
     }
 
+    /**
+     * Click on the Users tab
+     */
     public void clickUserTab() {
         pageUtils.waitForElementAndClick(userTab);
     }
 
+    /**
+     * Click on the Workflow tab
+     */
     public void clickWorkflowTab() {
         pageUtils.waitForElementAndClick(workflowTab);
     }
 
+    /**
+     * Click on the refresh workflow list button
+     */
     public void refreshWorkflowTable() {
         pageUtils.waitForElementAndClick(refreshButton);
     }
 
+    /**
+     * Checks the enabled state of a button on the Workflow Schedule page
+     *
+     * @param button The button to check for
+     * @return True if the buton is enabled
+     */
     public Boolean getButtonState(String button) {
         switch (button.toUpperCase()) {
             case "NEW":
@@ -100,41 +120,76 @@ public class WorkflowPage {
         }
     }
 
+    /**
+     * Click the Invoke button
+     */
     public void clickInvokeButton() {
         pageUtils.waitForElementAndClick(invokeWorflowButton);
     }
 
+    /**
+     * Click the Delete button
+     */
     public void clickDeleteButton() {
         pageUtils.waitForElementAndClick(deleteWorkflowButton);
     }
 
+    /**
+     * Click the Edit button
+     */
     public void clickEditButton() {
         pageUtils.waitForElementAndClick(editWorkflowButton);
     }
 
+    /**
+     * Select a workflow by name in the Schedule Workflow list
+     *
+     * @param name Name of the workflow to select
+     */
     public void selectWorkflow(String name) {
         pageUtils.waitForElementAppear(workflowList);
         tableUtils.selectRowByName(workflowList, name);
     }
 
+    /**
+     * Check if a workflow exists in the Schedule Workflow list. The search is by workflow name
+     *
+     * @param name Workflow name to check for
+     * @return True if the workflow exists
+     */
     public Boolean workflowExists(String name) {
         pageUtils.waitForElementToBeClickable(workflowList);
         return tableUtils.itemExistsInTable(workflowList, name);
     }
 
+    /**
+     * Get the New Workflow popup
+     */
     public void newWorkflow() {
         pageUtils.waitForElementAndClick(newWorkflowButton);
     }
 
+    /**
+     * Get the Edit Workflow popup
+     */
     public void editWorkflow() {
         pageUtils.waitForElementAndClick(editWorkflowButton);
     }
 
+    /**
+     * Selects he first workflow in the Schedule Workflow list
+     */
     public void clickOnFirstWorkflowRow() {
         tableUtils.selectRowByIndex(workflowList, 1);
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
     }
 
+    /**
+     * Retrieve the name of the workflow in a specified row
+     *
+     * @param rowNumber The row numer to get the workflow name
+     * @return Workflow name
+     */
     public String getRowName(Integer rowNumber) {
         rowNumber = rowNumber + 1;
         String cssRow = row.replace("{ROWNUMBER}", rowNumber.toString());
