@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/CustomerUserSchema.json")
+@Schema(location = "cds/UserSchema.json")
 public class User {
     private String identity;
     private String createdBy;
