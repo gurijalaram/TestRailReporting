@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class EditWarningPage extends LoadableComponent<EditWarningPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(EditWarningPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(EditWarningPage.class);
 
     @FindBy(css = "div[data-ap-comp='editScenarioConflict'] .modal-content")
     private WebElement dialog;
@@ -42,7 +42,7 @@ public class EditWarningPage extends LoadableComponent<EditWarningPage> {
     public EditWarningPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

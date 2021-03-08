@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class History extends LoadableComponent<History> {
 
-    private final Logger logger = LoggerFactory.getLogger(History.class);
+    private static final Logger logger = LoggerFactory.getLogger(History.class);
 
     @FindBy(css = "div#root_pagemashupcontainer-1_textbox-76 input")
     private WebElement searchJobName;

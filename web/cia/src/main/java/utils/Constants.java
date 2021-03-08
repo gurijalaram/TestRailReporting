@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Constants {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
+    private static final Logger logger = LoggerFactory.getLogger(Constants.class);
 
     public static final String LOGOUT_HEADER = "CI DESIGN AUTOMATION";
     public static final String REPORTS_LAST_SUFFIX = "flow.html?_flowId=homeFlow";
@@ -41,7 +41,7 @@ public class Constants {
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            LOGGER.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

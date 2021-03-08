@@ -14,7 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EncryptionUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(EncryptionUtil.class);
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES";
 
@@ -48,7 +48,7 @@ public class EncryptionUtil {
             }
 
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
 
         return null;

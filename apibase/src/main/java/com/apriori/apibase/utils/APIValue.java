@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class APIValue {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(APIValue.class);
+    private static final Logger logger = LoggerFactory.getLogger(APIValue.class);
 
     private String baseUrl = System.getProperty("baseUrl");
 
@@ -52,7 +52,7 @@ public class APIValue {
         try {
             node = new ObjectMapper().readTree(jsonResponse);
         } catch (JsonProcessingException e) {
-            LOGGER.debug(e.getMessage());
+            logger.debug(e.getMessage());
             throw new NullPointerException("can't read json node");
         }
 

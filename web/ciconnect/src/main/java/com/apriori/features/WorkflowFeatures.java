@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 public class WorkflowFeatures {
-    private final Logger logger = LoggerFactory.getLogger(WorkflowFeatures.class);
+    private static final Logger logger = LoggerFactory.getLogger(WorkflowFeatures.class);
     
     public static String DELETE_HEADER_TEXT = "Are you sure?";
     public static String DELETE_MESSAGE_TEXT = "Do you really want to delete this workflow? This action cannot be undone.";

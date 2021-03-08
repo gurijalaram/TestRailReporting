@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 public class PageHeader extends LoadableComponent<PageHeader> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PageHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
 
     @FindBy(css = "button[aria-label='Create Dashboards']")
     protected WebElement createDashboardsButton;
@@ -124,7 +124,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public PageHeader(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

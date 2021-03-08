@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ScenarioPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ScenarioPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
@@ -32,7 +32,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

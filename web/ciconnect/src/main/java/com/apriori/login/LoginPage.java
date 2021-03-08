@@ -16,7 +16,7 @@ import utils.Constants;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
     private static String loginPageURL = Constants.getDefaultUrl();
     protected String url;
 

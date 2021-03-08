@@ -12,7 +12,7 @@ import java.util.Properties;
  */
 public class BaseReader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseReader.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseReader.class);
     Properties properties;
 
     public BaseReader(String fileName) {
@@ -20,7 +20,7 @@ public class BaseReader {
             properties = new Properties();
             properties.load(fileStream);
         } catch (IOException e) {
-            LOGGER.info(e.getMessage());
+            logger.info(e.getMessage());
         }
     }
 

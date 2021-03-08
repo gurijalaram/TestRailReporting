@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class ScenarioTableController extends LoadableComponent<ScenarioTableController> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ScenarioTableController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ScenarioTableController.class);
 
     @FindBy(css = "[class='apriori-table scenario-iteration-table scrollable-y selectable']")
     private WebElement componentTable;
@@ -27,7 +27,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -19,7 +19,7 @@ import java.util.List;
  * @author kpatel
  */
 public class Schedule extends LoadableComponent<Schedule> {
-    private final Logger logger = LoggerFactory.getLogger(Schedule.class);
+    private static final Logger logger = LoggerFactory.getLogger(Schedule.class);
 
     @FindBy(xpath = "//span[.='New']")
     private WebElement newWorkflowBtn;

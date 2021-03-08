@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValueSettingsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ToleranceValueSettingsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ToleranceValueSettingsPage.class);
 
     @FindBy(css = "[data-ap-comp='partOverrideTolerances'] .modal-title")
     private WebElement dialogTitle;
@@ -89,7 +89,7 @@ public class ToleranceValueSettingsPage extends LoadableComponent<ToleranceValue
     public ToleranceValueSettingsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

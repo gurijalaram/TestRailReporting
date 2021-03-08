@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Constants {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
+    private static final Logger logger = LoggerFactory.getLogger(Constants.class);
 
     public static final String DEFAULT_USER_NAME_KEY = System.getProperty("username");
     public static final String DEFAULT_PASSWORD_KEY = System.getProperty("password");
@@ -63,7 +63,7 @@ public class Constants {
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            LOGGER.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

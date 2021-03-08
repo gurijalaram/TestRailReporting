@@ -2,6 +2,7 @@ package testsuites;
 
 import com.apriori.tests.ApplicationsTests;
 import com.apriori.tests.CasConfigurationsTests;
+import com.apriori.tests.CasCustomerBatchTests;
 import com.apriori.tests.CasCustomersTests;
 import com.apriori.tests.CasCustomersUsersTests;
 import com.apriori.tests.CasDeploymentsTests;
@@ -24,7 +25,8 @@ import org.junit.runners.Suite;
         CasIdentityProvidersTests.class,
         CasSitesTests.class,
         CasCustomersUsersTests.class,
-        CasUsersTests.class
+        CasUsersTests.class,
+        CasCustomerBatchTests.class
 })
 public class CasAPISuite {
 }

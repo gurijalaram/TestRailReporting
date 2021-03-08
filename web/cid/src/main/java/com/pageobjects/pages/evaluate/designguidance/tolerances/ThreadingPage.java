@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class ThreadingPage extends LoadableComponent<ThreadingPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ThreadingPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ThreadingPage.class);
 
     @FindBy(css = "div[data-ap-comp='threadEditor'] .modal-content")
     private WebElement threadDialog;
@@ -48,7 +48,7 @@ public class ThreadingPage extends LoadableComponent<ThreadingPage> {
     public ThreadingPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
