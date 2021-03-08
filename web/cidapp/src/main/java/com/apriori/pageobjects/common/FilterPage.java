@@ -4,13 +4,12 @@ import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FilterPage extends LoadableComponent<FilterPage> {
+public class FilterPage {
 
-    private static final Logger logger = LoggerFactory.getLogger(FiltersPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(FilterPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -20,16 +19,5 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
     }
 }
