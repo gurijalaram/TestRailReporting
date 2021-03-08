@@ -112,10 +112,24 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             .collect(Collectors.toList());
     }
 
+    /**
+     * Gets the scenario 'by' locator
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return by
+     */
     private By getByScenario(String componentName, String scenarioName) {
         return By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
     }
 
+    /**
+     * Gets the parent part of the element
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return webelement
+     */
     private WebElement getByParentLocator(String componentName, String scenarioName) {
         return driver.findElement(By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div", componentName.toUpperCase().trim(), scenarioName.trim())));
     }
