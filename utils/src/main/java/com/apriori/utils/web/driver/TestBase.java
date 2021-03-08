@@ -40,10 +40,10 @@ public class TestBase extends TestHelper {
         browser = getBrowserType(System.getProperty("browser"));
         locale = System.getProperty("locale");
 
-        LOGGER.debug("Mode from property: " + System.getProperty("mode"));
-        LOGGER.debug("Browser from property: " + System.getProperty("browser"));
-        LOGGER.debug("Type of test from property: " + System.getProperty("type"));
-        LOGGER.debug("Locale from property: " + System.getProperty("locale"));
+        logger.debug("Mode from property: " + System.getProperty("mode"));
+        logger.debug("Browser from property: " + System.getProperty("browser"));
+        logger.debug("Type of test from property: " + System.getProperty("type"));
+        logger.debug("Locale from property: " + System.getProperty("locale"));
     }
 
     @Before
@@ -57,14 +57,14 @@ public class TestBase extends TestHelper {
 
         if (browser.value().equalsIgnoreCase("chrome")) {
             driver = new EventFiringWebDriver(df.getDriver());
-            TestHelper.LOGGER.info("CONSOLE LOG LEVEL: " + CommonConstants.consoleLogLevel.getName());
+            TestHelper.logger.info("CONSOLE LOG LEVEL: " + CommonConstants.consoleLogLevel.getName());
             ConsoleLogHandler consoleLogHandler = new ConsoleLogHandler(CommonConstants.consoleLogLevel);
             ((EventFiringWebDriver) driver).register(consoleLogHandler);
         }
 
         String os = System.getProperty("os.name");
-        TestHelper.LOGGER.info("Current Operating System:" + os);
-        TestHelper.LOGGER.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
+        TestHelper.logger.info("Current Operating System:" + os);
+        TestHelper.logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
 
         if (!df.isHeadless() && mode.equals(TestMode.LOCAL) && (os.toLowerCase().contains("linux") || os.toLowerCase().contains("mac"))) {
             // Todo 28/02/2020 - Commented out because this is causing headless on linux to crash with error message 'No X11 display...' this will be reworked in the future
@@ -73,15 +73,15 @@ public class TestBase extends TestHelper {
             driver.manage().window().setSize(new Dimension(1920,1080));
             driver.manage().window().maximize();
         }
-        TestHelper.LOGGER.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
+        TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
         driver.manage().deleteAllCookies();
-        TestHelper.LOGGER.debug("Browser window size: " + driver.manage().window().getSize());
+        TestHelper.logger.debug("Browser window size: " + driver.manage().window().getSize());
 
         MDC.put("methodName", this.getClass().getSimpleName() + "." + name.getMethodName());
         if (type.equals(TestType.EXPORT)) {
-            TestHelper.LOGGER.debug("Driver for " + this.getClass().getSimpleName() + "." + name.getMethodName() + " started: " + driver.hashCode() + " with download path=" + downloadPath);
+            TestHelper.logger.debug("Driver for " + this.getClass().getSimpleName() + "." + name.getMethodName() + " started: " + driver.hashCode() + " with download path=" + downloadPath);
         } else {
-            TestHelper.LOGGER.debug("Driver for " + this.getClass().getSimpleName() + "." + name.getMethodName() + " started: " + driver.hashCode());
+            TestHelper.logger.debug("Driver for " + this.getClass().getSimpleName() + "." + name.getMethodName() + " started: " + driver.hashCode());
         }
 
     }

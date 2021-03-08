@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class RevertPage extends LoadableComponent<RevertPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(RevertPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(RevertPage.class);
 
     @FindBy(css = "[data-ap-comp='revertScenario'] .modal-title")
     private WebElement dialogTitle;
@@ -36,7 +36,7 @@ public class RevertPage extends LoadableComponent<RevertPage> {
     public RevertPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

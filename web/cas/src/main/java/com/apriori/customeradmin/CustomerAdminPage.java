@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CustomerAdminPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerAdminPage.class);
 
     @FindBy(id = "qa-new-customer-link")
     private WebElement newCustomerButton;
@@ -45,7 +45,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

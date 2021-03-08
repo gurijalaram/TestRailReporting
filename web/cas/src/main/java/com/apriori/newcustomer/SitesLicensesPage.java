@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(SitesLicensesPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(SitesLicensesPage.class);
 
     @FindBy(xpath = "//h5[.='Loaded Licenses']")
     private WebElement licenseHeader;
@@ -37,7 +37,7 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
         this.fileImport = new FileImport(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

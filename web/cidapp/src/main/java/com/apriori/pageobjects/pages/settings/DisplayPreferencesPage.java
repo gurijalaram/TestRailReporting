@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferencesPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(DisplayPreferencesPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(DisplayPreferencesPage.class);
 
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
@@ -28,7 +28,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

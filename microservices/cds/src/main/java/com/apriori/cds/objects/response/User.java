@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/CustomerUserSchema.json")
+@Schema(location = "cds/UserSchema.json")
 public class User {
     private String identity;
     private String createdBy;
@@ -27,11 +27,9 @@ public class User {
     private User response;
     private String updatedBy;
     private Boolean mfaRequired;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;

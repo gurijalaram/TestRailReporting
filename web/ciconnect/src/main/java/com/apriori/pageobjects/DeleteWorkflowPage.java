@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DeleteWorkflowPage {
-    private final Logger logger = LoggerFactory.getLogger(DeleteWorkflowPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeleteWorkflowPage.class);
 
     @FindBy(css = "#confirmBox")
     private WebElement deleteWorklowModal;

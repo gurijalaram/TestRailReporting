@@ -13,7 +13,7 @@ import java.security.InvalidParameterException;
 
 public class DriverFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DriverFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
 
     BaseReader propertiesReader = new BaseReader("seleniumconfig.properties");
     String seleniumProtocol = propertiesReader.getProperties().getProperty("protocol");
@@ -30,12 +30,12 @@ public class DriverFactory {
     private WebDriver createDriver(TestMode testMode, TestType testType, BrowserTypes browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         switch (testMode) {
             case GRID:
-                LOGGER.debug("Getting host and port from properties file");
+                logger.debug("Getting host and port from properties file");
 
                 String seleniumPort = StringUtils.isNotEmpty(System.getProperty("selenium.port")) ? System.getProperty("selenium.port") : propertiesReader.getProperties().getProperty("port");
                 String seleniumHost = StringUtils.isNotEmpty(System.getProperty("selenium.host")) ? System.getProperty("selenium.host") : propertiesReader.getProperties().getProperty("host");
 
-                LOGGER.debug("Starting driver on " + seleniumHost + ":" + seleniumPort);
+                logger.debug("Starting driver on " + seleniumHost + ":" + seleniumPort);
 
                 StringBuilder serverBuilder = new StringBuilder(seleniumProtocol + "://" + seleniumHost);
 

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UsersPage {
-    private final Logger logger = LoggerFactory.getLogger(UsersPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(UsersPage.class);
 
     @FindBy(css = "#root_menu-19 > li:nth-child(2) > table > tbody > tr > td > a > span")
     private WebElement userTab;

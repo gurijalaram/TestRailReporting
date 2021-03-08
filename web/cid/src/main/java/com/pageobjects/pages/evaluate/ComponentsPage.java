@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 public class ComponentsPage extends LoadableComponent<ComponentsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ComponentsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ComponentsPage.class);
 
     @FindBy(css = ".panel.panel-details")
     private WebElement panelDetails;
@@ -65,7 +65,7 @@ public class ComponentsPage extends LoadableComponent<ComponentsPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.columnUtils = new ColumnUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

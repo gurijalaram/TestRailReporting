@@ -8,13 +8,13 @@ import org.slf4j.MDC;
 
 public class MyTestWatcher extends TestWatcher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyTestWatcher.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyTestWatcher.class);
 
     @Override
     protected void failed(Throwable e, Description description) {
         MDC.put("methodName", description.getTestClass().getSimpleName() + "." + description.getMethodName());
         super.failed(e, description);
-        LOGGER.info("Test {} failed.", description.getMethodName());
+        logger.info("Test {} failed.", description.getMethodName());
         MDC.remove("methodName");
     }
 
@@ -22,7 +22,7 @@ public class MyTestWatcher extends TestWatcher {
     protected void succeeded(Description description) {
         MDC.put("methodName", description.getTestClass().getSimpleName() + "." + description.getMethodName());
         super.succeeded(description);
-        LOGGER.info("Test {} succesfully run.", description.getMethodName());
+        logger.info("Test {} succesfully run.", description.getMethodName());
         MDC.remove("methodName");
     }
 
@@ -30,7 +30,7 @@ public class MyTestWatcher extends TestWatcher {
     protected void starting(Description description) {
         MDC.put("methodName", description.getTestClass().getSimpleName() + "." + description.getMethodName());
         super.starting(description);
-        LOGGER.info("Test {} is running.", description.getMethodName());
+        logger.info("Test {} is running.", description.getMethodName());
         MDC.remove("methodName");
 
     }

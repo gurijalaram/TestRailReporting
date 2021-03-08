@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 public class WorkflowValidator {
-    private final Logger logger = LoggerFactory.getLogger(WorkflowValidator.class);
+    private static final Logger logger = LoggerFactory.getLogger(WorkflowValidator.class);
 
     private WorkflowPage workflowPage;
 

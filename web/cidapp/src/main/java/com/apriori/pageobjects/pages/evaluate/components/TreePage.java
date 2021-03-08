@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class TreePage extends LoadableComponent<TreePage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(TreePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ComponentsPage.class);
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -19,6 +19,8 @@ public class TreePage extends LoadableComponent<TreePage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        this.panelController = new PanelController(driver);
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

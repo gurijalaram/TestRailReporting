@@ -13,33 +13,33 @@ import java.util.concurrent.TimeUnit;
  */
 class ParallelScheduler implements RunnerScheduler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ParallelScheduler.class);
+    private static final Logger logger = LoggerFactory.getLogger(ParallelScheduler.class);
 
     private ExecutorService executor;
 
     public ParallelScheduler(String threadCount) {
-        LOGGER.debug("ThreadPoolScheduler constructor start");
+        logger.debug("ThreadPoolScheduler constructor start");
 
         int numThreads = Integer.parseInt(threadCount);
-        LOGGER.debug("ThreadPoolScheduler number of threads: " + numThreads);
+        logger.debug("ThreadPoolScheduler number of threads: " + numThreads);
         executor = Executors.newFixedThreadPool(numThreads);
-        LOGGER.debug("ThreadPoolScheduler constructor end");
+        logger.debug("ThreadPoolScheduler constructor end");
     }
 
     public void finished() {
-        LOGGER.debug("ThreadPoolScheduler finished start");
+        logger.debug("ThreadPoolScheduler finished start");
         executor.shutdown();
         try {
             executor.awaitTermination(500, TimeUnit.MINUTES);
         } catch (InterruptedException exc) {
             Thread.currentThread().interrupt();
         }
-        LOGGER.debug("ThreadPoolScheduler finished end");
+        logger.debug("ThreadPoolScheduler finished end");
     }
 
     public void schedule(Runnable childStatement) {
-        LOGGER.debug("ThreadPoolScheduler schedule start");
+        logger.debug("ThreadPoolScheduler schedule start");
         executor.submit(childStatement);
-        LOGGER.debug("ThreadPoolScheduler schedule end");
+        logger.debug("ThreadPoolScheduler schedule end");
     }
 }

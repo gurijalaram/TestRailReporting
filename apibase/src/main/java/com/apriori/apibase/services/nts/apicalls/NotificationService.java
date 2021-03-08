@@ -21,7 +21,7 @@ import javax.mail.Message;
 
 public class NotificationService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NotificationService.class);
+    private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
 
     public static Boolean validateEmail(String subject) {
         EmailSetup emailSetup = new EmailSetup();
@@ -46,7 +46,7 @@ public class NotificationService {
                 count += 1;
             }
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
 
         return false;
@@ -71,7 +71,7 @@ public class NotificationService {
         try {
             smr = (SendEmailResponse) ConnectionManager.postMultiPartFormData(url, params, SendEmailResponse.class, cloudContext);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
 
         return smr;
@@ -112,7 +112,7 @@ public class NotificationService {
         try {
             smr = (SendEmailResponse) ConnectionManager.postMultiPartFormData(url, params, SendEmailResponse.class, attachment, cloudContext);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return smr;
     }

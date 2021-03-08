@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(FilterPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(FiltersPage.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -18,7 +18,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public FilterPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

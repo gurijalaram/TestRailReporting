@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ScenarioExport extends AdminHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ScenarioExport.class);
+    private static final Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
 
     @FindBy(css = "h1")
     private WebElement manageScenarioExportTitle;
@@ -24,7 +24,7 @@ public class ScenarioExport extends AdminHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

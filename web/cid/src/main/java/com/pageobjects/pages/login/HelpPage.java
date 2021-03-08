@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class HelpPage extends LoadableComponent<HelpPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(HelpPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(HelpPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -33,7 +33,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     public HelpPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

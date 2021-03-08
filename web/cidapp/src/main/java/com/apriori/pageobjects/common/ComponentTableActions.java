@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class ComponentTableActions extends LoadableComponent<ComponentTableActions> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ComponentTableActions.class);
+    private static final Logger logger = LoggerFactory.getLogger(ComponentTableActions.class);
 
     @FindBy(css = "input[name='search']")
     private WebElement searchInput;
@@ -33,7 +33,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     public ComponentTableActions(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

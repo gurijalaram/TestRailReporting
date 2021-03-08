@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewWorkflowPage {
-    private final Logger logger = LoggerFactory.getLogger(NewWorkflowPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(NewWorkflowPage.class);
 
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83")
     private WebElement newWorkflowModal;

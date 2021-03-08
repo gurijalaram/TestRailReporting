@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ReferenceComparePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReferenceComparePage.class);
 
     @FindBy(css = "[data-ap-comp='baselineScenarioSelection']")
     private WebElement filterDropdown;
@@ -113,7 +113,7 @@ public class ReferenceComparePage extends LoadableComponent<ReferenceComparePage
     public ReferenceComparePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

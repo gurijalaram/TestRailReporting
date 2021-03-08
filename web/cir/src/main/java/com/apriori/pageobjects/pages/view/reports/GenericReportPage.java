@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class GenericReportPage extends ReportsPageHeader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericReportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
     private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
     private Map<String, WebElement> tooltipElementMap = new HashMap<>();
@@ -495,7 +495,7 @@ public class GenericReportPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseDtcComparisonDtcIssueMap();
         initialiseTooltipElementMap();

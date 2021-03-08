@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class ViewRepositoryPage extends ReportsPageHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewRepositoryPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
     private Map<String, String[]> navigationMap = new HashMap<>();
 
     @FindBy(xpath = "//div[contains(text(), 'Repository')]")
@@ -34,7 +34,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseNavigationMap();
     }
@@ -52,10 +52,10 @@ public class ViewRepositoryPage extends ReportsPageHeader {
 
         if (!afterReportsFolder.equals(Constants.DTC_METRICS_FOLDER)) {
             navigateToFolder(afterReportsFolder);
+        } else {
+            navigateToFolder(navigationMap.get(lastFolder)[0]);
+            navigateToFolder(navigationMap.get(lastFolder)[1]);
         }
-
-        navigateToFolder(navigationMap.get(lastFolder)[0]);
-        navigateToFolder(navigationMap.get(lastFolder)[1]);
 
         return new GenericReportPage(driver);
     }
@@ -93,6 +93,11 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      * Initialises Navigation Hash Map
      */
     private void initialiseNavigationMap() {
+        navigationMap.put("Assembly Details", new String[]{Constants.GENERAL_FOLDER, "Assembly Details"});
+        navigationMap.put("Assembly Cost (A4)", new String[]{Constants.GENERAL_FOLDER, "Assembly Cost (A4)"});
+        navigationMap.put("Assembly Cost (Letter)", new String[]{Constants.GENERAL_FOLDER, "Assembly Cost (Letter)"});
+        navigationMap.put("Scenario Comparison", new String[]{Constants.GENERAL_FOLDER, "Scenario Comparison"});
+
         navigationMap.put("Casting DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Casting"});
         navigationMap.put("Casting DTC Details", new String[]{Constants.DTC_METRICS_FOLDER, "Casting"});
         navigationMap.put("Casting DTC Comparison", new String[]{Constants.DTC_METRICS_FOLDER, "Casting"});

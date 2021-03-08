@@ -17,7 +17,7 @@ import java.util.Queue;
  */
 public class UserSecurityService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserSecurityService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserSecurityService.class);
 
     private static Map<String, Queue<UserCredentials>> usersByAccessLevel = InitUsersData.initUsersWithAccessLevels();
     private static UserCredentials globalUser;
