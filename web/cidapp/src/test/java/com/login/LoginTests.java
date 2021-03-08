@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
@@ -27,6 +28,7 @@ public class LoginTests extends TestBase {
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
+    private EvaluatePage evaluatePage;
 
     public LoginTests() {
         super();
@@ -38,7 +40,7 @@ public class LoginTests extends TestBase {
     public void testLogin() {
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
+        explorePage = loginPage.login(UserUtil.getUser()).getRowText("pin" , "hinge");
 
         assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
