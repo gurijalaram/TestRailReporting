@@ -105,4 +105,9 @@ public class ExplorePage extends ExploreToolbar {
     public ConfigurePage configure() {
         return componentTableActions.configure();
     }
+
+    public ExplorePage getRowText(String component, String scenario) {
+        scenarioTableController.getRowText(component, scenario);
+        return this;
+    }
 }
