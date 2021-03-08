@@ -4,6 +4,8 @@ import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
@@ -15,6 +17,9 @@ import java.util.stream.Collectors;
 public class ScenarioTableController extends LoadableComponent<ScenarioTableController> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ScenarioTableController.class);
+
+    @FindBy(css = "[class='apriori-table scenario-iteration-table scrollable-y selectable']")
+    private WebElement componentTable;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -34,7 +39,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementAppear(componentTable);
     }
 
     /**
@@ -59,7 +64,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        By scenario = getByScenario(componentName, scenarioName);
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
         return this;
@@ -73,24 +78,45 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return size of the element as int
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
-        return driver.findElements(scenario).size();
+        return driver.findElements(getByScenario(componentName, scenarioName)).size();
     }
 
+    /**
+     * Gets the cell in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return
+     */
     public List<String> getRowText(String componentName, String scenarioName) {
-        return driver.findElement(By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div", componentName.toUpperCase().trim(), scenarioName.trim())))
+        return getByParentLocator(componentName, scenarioName)
             .findElements(By.cssSelector("[class='cell-text']"))
             .stream()
-            .map(attr -> attr.getAttribute("textContent"))
+            .map(x -> x.getAttribute("textContent"))
             .filter(text -> !text.equals(""))
             .collect(Collectors.toList());
     }
 
+    /**
+     * Gets the icon in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
     public List<String> getRowIcon(String componentName, String scenarioName) {
-        return driver.findElement(By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div", componentName.toUpperCase().trim(), scenarioName.trim())))
+        return getByParentLocator(componentName, scenarioName)
             .findElements(By.cssSelector("svg"))
             .stream()
-            .map(icon -> icon.getAttribute("data-icon"))
+            .map(x -> x.getAttribute("data-icon"))
             .collect(Collectors.toList());
+    }
+
+    private By getByScenario(String componentName, String scenarioName) {
+        return By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+    }
+
+    private WebElement getByParentLocator(String componentName, String scenarioName) {
+        return driver.findElement(By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div", componentName.toUpperCase().trim(), scenarioName.trim())));
     }
 }
