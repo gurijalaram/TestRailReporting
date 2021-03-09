@@ -488,8 +488,8 @@ public class EvaluatePage extends EvaluateToolbar {
      * @param label - the label
      * @return double
      */
-    public double getComponentResults(String label) {
+    public String getComponentResults(String label) {
         By componentResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
-        return Double.parseDouble(pageUtils.waitForElementToAppear(componentResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+        return pageUtils.waitForElementToAppear(componentResult).getAttribute("textContent");
     }
 }
