@@ -1,10 +1,12 @@
 package com.evaluate;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -25,6 +27,7 @@ public class UploadAssembliesTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private ComponentsListPage componentsListPage = new ComponentsListPage(driver);
 
     public UploadAssembliesTests() {
         super();
@@ -78,5 +81,12 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.getComponentResults("Total"), is(equalTo("3")));
         assertThat(evaluatePage.getComponentResults("Unique"), is(equalTo("3")));
         assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo("0")));
+
+        assertThat(componentsListPage.getRowText("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die"));
+        assertThat(componentsListPage.getRowIcon("Small Ring", "Initial"), hasItems("cube", "check"));
+        assertThat(componentsListPage.getRowText("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die"));
+        assertThat(componentsListPage.getRowIcon("Big Ring", "Initial"), hasItems("cube", "check"));
+        assertThat(componentsListPage.getRowText("Pin", "Initial"), hasItems("$1.97", "Casting - Die"));
+        assertThat(componentsListPage.getRowIcon("Pin", "Initial"), hasItems("cube", "check"));
     }
 }
