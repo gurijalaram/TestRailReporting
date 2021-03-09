@@ -7,7 +7,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -15,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,7 +87,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      *
      * @param componentName - name of the part
      * @param scenarioName  - scenario name
-     * @return
+     * @return list of string
      */
     public List<String> getRowText(String componentName, String scenarioName) {
         return getByParentLocator(componentName, scenarioName)
