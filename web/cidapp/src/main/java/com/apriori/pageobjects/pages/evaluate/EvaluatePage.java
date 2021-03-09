@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.utils.PageUtils;
@@ -279,9 +279,9 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public ComponentsPage openComponents() {
+    public ComponentsListPage openComponents() {
         pageUtils.waitForElementAndClick(componentsDetailsButton);
-        return new ComponentsPage(driver);
+        return new ComponentsListPage(driver);
     }
 
     /**

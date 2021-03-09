@@ -69,7 +69,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return a new page object
      */
-    public EvaluatePage openComponent(String componentName, String scenarioName) {
+    public EvaluatePage openScenario(String componentName, String scenarioName) {
         scenarioTableController.openScenario(componentName, scenarioName);
         return new EvaluatePage(driver);
     }
@@ -81,7 +81,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage highlightComponent(String componentName, String scenarioName) {
+    public ExplorePage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
@@ -93,7 +93,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return size of the element as int
      */
-    public int getListOfComponents(String componentName, String scenarioName) {
+    public int getListOfScenarios(String componentName, String scenarioName) {
         return scenarioTableController.getListOfScenarios(componentName, scenarioName);
     }
 
@@ -104,6 +104,38 @@ public class ExplorePage extends ExploreToolbar {
      */
     public ConfigurePage configure() {
         return componentTableActions.configure();
+    }
+
+    /**
+     * Multi-highlight scenarios
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ExplorePage multiHighlightScenarios(String... componentScenarioName) {
+        scenarioTableController.multiHighlightScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Multi-select scenario
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ExplorePage multiSelectScenarios(String... componentScenarioName) {
+        scenarioTableController.multiSelectScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Highlights the scenario in the table using the keyboard control key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage controlHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.controlHighlightScenario(componentName, scenarioName);
+        return this;
     }
 
     public ExplorePage getRowText(String component, String scenario) {

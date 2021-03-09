@@ -111,9 +111,9 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      * @return new page object
      */
     @Deprecated
-    public CidAppLoginPage login(String email, String password) {
+    public ExplorePage login(String email, String password) {
         executeLogin(email, password);
-        return new CidAppLoginPage(driver);
+        return new ExplorePage(driver);
     }
 
     /**
