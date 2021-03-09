@@ -137,4 +137,28 @@ public class ExplorePage extends ExploreToolbar {
         scenarioTableController.controlHighlightScenario(componentName, scenarioName);
         return this;
     }
+
+    /**
+     * Gets the cell in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    public ExplorePage getRowText(String componentName, String scenarioName) {
+        scenarioTableController.getRowText(componentName, scenarioName);
+        return this;
+    }
+
+    /**
+     * Gets the icon in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    public ExplorePage getRowIcon(String componentName, String scenarioName) {
+        scenarioTableController.getRowIcon(componentName, scenarioName);
+        return this;
+    }
 }
