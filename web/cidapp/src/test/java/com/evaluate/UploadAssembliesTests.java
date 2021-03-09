@@ -27,7 +27,7 @@ public class UploadAssembliesTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage = new ComponentsListPage(driver);
+    private ComponentsListPage componentsListPage;
 
     public UploadAssembliesTests() {
         super();
@@ -82,6 +82,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.getComponentResults("Unique"), is(equalTo("3")));
         assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo("0")));
 
+        componentsListPage = evaluatePage.openComponents();
         assertThat(componentsListPage.getRowText("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die"));
         assertThat(componentsListPage.getRowIcon("Small Ring", "Initial"), hasItems("cube", "check"));
         assertThat(componentsListPage.getRowText("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die"));
