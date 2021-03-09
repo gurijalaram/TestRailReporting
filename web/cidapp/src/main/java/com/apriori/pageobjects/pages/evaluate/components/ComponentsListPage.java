@@ -132,6 +132,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Multi-highlight scenarios
+     *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
@@ -142,6 +143,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Multi-select scenario
+     *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
@@ -181,6 +183,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return list of string
      */
     public List<String> getRowIcon(String componentName, String scenarioName) {
-       return scenarioTableController.getRowIcon(componentName, scenarioName);
+        return scenarioTableController.getRowIcon(componentName, scenarioName);
     }
 }

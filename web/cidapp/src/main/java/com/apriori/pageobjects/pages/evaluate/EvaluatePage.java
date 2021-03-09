@@ -281,7 +281,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public ComponentsListPage openComponents() {
         if (!pageUtils.isElementDisplayed(componentsDetailsButton)) {
-           return new ComponentsListPage(driver);
+            return new ComponentsListPage(driver);
         }
         pageUtils.waitForElementAndClick(componentsDetailsButton);
         return new ComponentsListPage(driver);
