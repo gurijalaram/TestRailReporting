@@ -58,9 +58,8 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
@@ -83,7 +82,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
@@ -110,9 +109,8 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
@@ -139,9 +137,8 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
@@ -166,9 +163,8 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 

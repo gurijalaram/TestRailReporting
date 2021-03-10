@@ -63,14 +63,15 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a customer
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
-     * @param userName     - the user name
-     * @param customerName - the customer name
+     * @param customerIdentity - the customer id
+     * @param userName         - the user name
+     * @param customerName     - the customer name
      * @return <T>ResponseWrapper<T>
      */
-    public <T> ResponseWrapper<T> addUser(String url, Class klass, String userName, String customerName) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<User> addUser(String customerIdentity, String userName, String customerName) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users", customerIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("user",
                 new User().setUsername(userName)
@@ -222,7 +223,7 @@ public class CdsTestUtil extends TestUtil {
      * @param url          - the url
      * @param klass        - the response class
      * @param userIdentity - the aPriori Staff users identity
-     * @param customerName     - the customer name
+     * @param customerName - the customer name
      * @return <T> ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String customerName) {

@@ -150,9 +150,8 @@ public class CdsSitesTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_CREATED)));
 
