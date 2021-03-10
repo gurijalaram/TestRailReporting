@@ -58,8 +58,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("Production Deployment")));
         assertThat(response.getResponseEntity().getResponse().getSites(), hasItem(siteIdentity));
@@ -85,7 +84,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
         String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         ResponseWrapper<Deployments> deployment = getCommonRequest(deploymentsEndpoint, true, Deployments.class);
@@ -113,8 +112,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();

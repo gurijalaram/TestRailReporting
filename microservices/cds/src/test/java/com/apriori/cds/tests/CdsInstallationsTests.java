@@ -84,8 +84,7 @@ public class CdsInstallationsTests extends CdsTestUtil {
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
 
@@ -120,8 +119,7 @@ public class CdsInstallationsTests extends CdsTestUtil {
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
 
@@ -158,8 +156,7 @@ public class CdsInstallationsTests extends CdsTestUtil {
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
 

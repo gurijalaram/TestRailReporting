@@ -9,6 +9,7 @@ import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
@@ -136,13 +137,14 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a deployment to a customer
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
-     * @param siteIdentity - the site Identity
+     * @param customerIdentity - the customer id
+     * @param siteIdentity     - the site Identity
      * @return <T>ResponseWrapper<T>
      */
-    public <T> ResponseWrapper<T> addDeployment(String url, Class klass, String siteIdentity) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public <T> ResponseWrapper<T> addDeployment(String customerIdentity, String siteIdentity) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments", customerIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, Deployment.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("deployment",
                 new AddDeployment().setName("Production Deployment")
