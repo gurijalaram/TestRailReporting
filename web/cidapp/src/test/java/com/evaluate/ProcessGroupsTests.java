@@ -85,6 +85,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .editScenario()
@@ -108,6 +109,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("case_012_009-0020647_hinge_2", testScenarioName)
@@ -131,6 +133,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("700-33770-01_A0", testScenarioName)
@@ -154,6 +157,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("case_005_flat end mill contouring", testScenarioName)
@@ -177,6 +181,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("Case_001_-_Rockwell_2075-0243G", testScenarioName)
@@ -200,6 +205,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("case_002_00400016-003M10_A", testScenarioName)
@@ -224,6 +230,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("GagePart_Case_011_gundrillgagepart-01", testScenarioName)
@@ -247,6 +254,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("prt0001", testScenarioName)
@@ -270,6 +278,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("7021021-2_rib", testScenarioName)
@@ -293,6 +302,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("ms16555-627_1", testScenarioName)
@@ -316,6 +326,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("14100640", testScenarioName)
@@ -339,6 +350,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("14100640", testScenarioName)
@@ -362,6 +374,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("case_066_SpaceX_00128711-001_A", testScenarioName)
@@ -385,6 +398,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("16-340053-00-04", testScenarioName)
@@ -408,6 +422,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("case_007_SpaceX_00088481-001_C", testScenarioName)
@@ -431,6 +446,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("case_002_006-8611543_prt", testScenarioName)
@@ -454,6 +470,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .openScenario("225_gasket-1-solid1", testScenarioName)
@@ -477,9 +494,6 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .publishScenario()
-            .publish(ExplorePage.class)
-            .openScenario("case_31_test_part_6_small", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -513,7 +527,7 @@ public class ProcessGroupsTests extends TestBase {
     @Test
     @Description("Testing process group Sheet Metal-Transfer Die")
     @TestRail(testCaseId = {"6061"})
-    public void testProcessGroupTransferDie() {
+    public void testSheetMetalFiberLaser() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
@@ -523,13 +537,10 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .publishScenario()
-            .publish(ExplorePage.class)
-            .openScenario("case_011_CENA-009-A1-LH-Rear-Body-Mount", testScenarioName)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Transfer Die"));
+        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Fiber Laser Cut"));
     }
 }
