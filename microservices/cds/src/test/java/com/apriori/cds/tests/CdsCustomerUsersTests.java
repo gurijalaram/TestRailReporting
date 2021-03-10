@@ -145,7 +145,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<User> patchResponse = patchUser(userIdentityEndpoint, User.class);
+        ResponseWrapper<User> patchResponse = patchUser(customerIdentity, userIdentity);
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getResponse().getUserProfile().getDepartment(), is(equalTo("Design Dept")));
     }

@@ -66,7 +66,7 @@ public class CdsTestUtil extends TestUtil {
      * @param customerIdentity - the customer id
      * @param userName         - the user name
      * @param customerName     - the customer name
-     * @return <T>ResponseWrapper<T>
+     * @return User object
      */
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String customerName) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users", customerIdentity));
@@ -92,12 +92,14 @@ public class CdsTestUtil extends TestUtil {
     /**
      * PATCH call to update a user
      *
-     * @param url   - the endpoint
-     * @param klass - the response class
-     * @return <T>ResponseWrapper<T>
+     * @param customerIdentity - the customer id
+     * @param userIdentity     - the user id
+     * @return User object
      */
-    public <T> ResponseWrapper<T> patchUser(String url, Class klass) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<User> patchUser(String customerIdentity, String userIdentity) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("user",
                 new User()
