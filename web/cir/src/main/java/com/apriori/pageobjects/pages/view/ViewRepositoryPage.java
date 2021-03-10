@@ -50,11 +50,17 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
 
-        if (!afterReportsFolder.equals(Constants.DTC_METRICS_FOLDER)) {
+        if (afterReportsFolder.equals(Constants.GENERAL_FOLDER)) {
             navigateToFolder(afterReportsFolder);
+        } else if (lastFolder.contains("Design") || afterReportsFolder.equals(Constants.DTC_METRICS_FOLDER)) {
+            String[] foldersToGoTo = navigationMap.get(lastFolder);
+            navigateToFolder(foldersToGoTo[0]);
+            navigateToFolder(foldersToGoTo[1]);
         } else {
-            navigateToFolder(navigationMap.get(lastFolder)[0]);
-            navigateToFolder(navigationMap.get(lastFolder)[1]);
+            String[] foldersToGoTo = navigationMap.get(lastFolder);
+            navigateToFolder(foldersToGoTo[0]);
+            navigateToFolder(foldersToGoTo[1]);
+            navigateToFolder(foldersToGoTo[2]);
         }
 
         return new GenericReportPage(driver);
@@ -114,9 +120,15 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigationMap.put("Sheet Metal DTC Details", new String[]{Constants.DTC_METRICS_FOLDER, "Sheet Metal"});
         navigationMap.put("Sheet Metal DTC Comparison", new String[]{Constants.DTC_METRICS_FOLDER, "Sheet Metal"});
 
-        navigationMap.put("Cycle Time", new String[]{"Design To Cost", "Cycle Time"});
-        navigationMap.put("Cycle Time Value Tracking", new String[]{"Design To Cost", "Cycle Time"});
-        navigationMap.put("Cycle Time Value Tracking Details", new String[]{"Design To Cost", "Cycle Time"});
-        navigationMap.put("Target and Quoted Cost", new String[]{"Design To Cost", "Target And Quoted Cost"});
+        navigationMap.put("Cycle Time Value Tracking", new String[]{"Solutions", "Design To Cost", "Cycle Time"});
+        navigationMap.put("Cycle Time Value Tracking Details", new String[]{"Solutions", "Design To Cost", "Cycle Time"});
+        navigationMap.put("Target and Quoted Cost Trend",
+                new String[]{"Solutions", "Design To Cost", "Target And Quoted Cost"});
+        navigationMap.put("Target and Quoted Cost Value Tracking",
+                new String[]{"Solutions", "Design To Cost", "Target And Quoted Cost"});
+        navigationMap.put("Target and Quoted Cost Value Tracking Details",
+                new String[]{"Solutions", "Design To Cost", "Target And Quoted Cost"});
+        navigationMap.put("Design Outlier Identification", new String[]{"Solutions", "Sourcing"});
+        navigationMap.put("Design Outlier Identification Details", new String[]{"Solutions", "Sourcing"});
     }
 }
