@@ -113,14 +113,15 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a site to a customer
      *
-     * @param url      - the endpoint
-     * @param klass    - the response class
-     * @param siteName - the site name
-     * @param siteID   - the siteID
-     * @return <T>ResponseWrapper<T>
+     * @param customerIdentity - the customer id
+     * @param siteName         - the site name
+     * @param siteID           - the siteID
+     * @return Site object
      */
-    public <T> ResponseWrapper<T> addSite(String url, Class klass, String siteName, String siteID) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/sites", customerIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, Site.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("site",
                 new Site().setName(siteName)

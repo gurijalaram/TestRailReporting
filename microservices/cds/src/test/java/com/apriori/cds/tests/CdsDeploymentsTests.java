@@ -54,8 +54,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
@@ -81,8 +80,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
@@ -111,8 +109,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 

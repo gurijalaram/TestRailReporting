@@ -60,9 +60,8 @@ public class CdsLicenseTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteId);
+        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
         String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
@@ -87,9 +86,8 @@ public class CdsLicenseTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteId);
+        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
         String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
@@ -118,9 +116,8 @@ public class CdsLicenseTests extends CdsTestUtil {
         ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteId);
+        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
         String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
