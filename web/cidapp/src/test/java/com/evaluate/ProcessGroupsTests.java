@@ -34,7 +34,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @TestRail(testCaseId = {"5441", "6061"})
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
@@ -53,7 +53,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @TestRail(testCaseId = {"5441"})
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {
@@ -72,7 +72,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @Description("Testing process group Bar and Tube")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupBarTube() {
@@ -92,7 +92,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @Description("Testing process group Casting")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupDieCasting() {
@@ -192,7 +192,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @Description("Testing process group Machining-Gage Parts")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupMachiningGageParts() {
@@ -213,7 +213,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @Description("Testing process group Machining-Milling-4 Axis Mill")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupMachining4AxisMill() {
@@ -253,7 +253,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @Description("Testing process group Machining-Milling-Mill Turn")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupMachiningMillTurn() {
@@ -333,7 +333,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @Description("Testing process group Rough Milling")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupRoughMilling() {
@@ -393,7 +393,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @Description("Testing process group Blow Molding")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupBlowMolding() {
@@ -413,7 +413,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
+    //@Test
     @Description("Testing process group Powder Metal")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupPowderMetal() {
