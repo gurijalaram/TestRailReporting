@@ -22,7 +22,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1985")
     @Description("Validate report is available navigation - menu")
     public void testReportAvailableByMenu() {
@@ -34,7 +34,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1985")
     @Description("Validate report is available navigation - library")
     public void testReportAvailableByLibrary() {
@@ -45,7 +45,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1985")
     @Description("Validate report is available navigation - search")
     public void testReportAvailableBySearch() {
