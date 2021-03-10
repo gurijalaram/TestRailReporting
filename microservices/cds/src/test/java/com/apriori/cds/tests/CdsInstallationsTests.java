@@ -67,8 +67,6 @@ public class CdsInstallationsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5316")
     @Description("Add a installation to a customer")
     public void addCustomerInstallation() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -77,7 +75,7 @@ public class CdsInstallationsTests extends CdsTestUtil {
         String siteID = generateStringUtil.generateSiteID();
         String realmKey = generateStringUtil.generateRealmKey();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
@@ -106,8 +104,6 @@ public class CdsInstallationsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5318")
     @Description("get Installations by Identity")
     public void getInstallationByIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -116,7 +112,7 @@ public class CdsInstallationsTests extends CdsTestUtil {
         String siteID = generateStringUtil.generateSiteID();
         String realmKey = generateStringUtil.generateRealmKey();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
@@ -147,8 +143,6 @@ public class CdsInstallationsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5317")
     @Description("Update an installation")
     public void patchInstallationByIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -157,7 +151,7 @@ public class CdsInstallationsTests extends CdsTestUtil {
         String siteID = generateStringUtil.generateSiteID();
         String realmKey = generateStringUtil.generateRealmKey();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 

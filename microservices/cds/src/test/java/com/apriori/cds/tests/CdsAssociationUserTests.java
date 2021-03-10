@@ -49,7 +49,6 @@ public class CdsAssociationUserTests extends CdsTestUtil {
     @TestRail(testCaseId = "5959")
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
-        String customersEndpoint = String.format(url, "customers");
 
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
@@ -58,7 +57,7 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String aPStaffIdentity = Constants.getUserIdentity();
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
@@ -79,7 +78,6 @@ public class CdsAssociationUserTests extends CdsTestUtil {
     @TestRail(testCaseId = "5965")
     @Description("Get users associated for customer")
     public void getAssociationUsers() {
-        String customersEndpoint = String.format(url, "customers");
 
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
@@ -88,7 +86,7 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String aPStaffIdentity = Constants.getUserIdentity();
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
@@ -113,7 +111,6 @@ public class CdsAssociationUserTests extends CdsTestUtil {
     @TestRail(testCaseId = "5964")
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
-        String customersEndpoint = String.format(url, "customers");
 
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
@@ -122,7 +119,7 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String aPStaffIdentity = Constants.getUserIdentity();
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();

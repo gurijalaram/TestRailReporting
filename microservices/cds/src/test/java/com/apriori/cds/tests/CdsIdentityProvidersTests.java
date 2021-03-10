@@ -54,15 +54,13 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
     @TestRail(testCaseId = {"5824", "5961"})
     @Description("Create an Identity provider for a customer")
     public void postCustomerIdentityProviders() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
@@ -82,15 +80,13 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
     @TestRail(testCaseId = "5963")
     @Description("Update Identity provider for a customer")
     public void patchCustomerIdentityProviders() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
@@ -109,7 +105,7 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
             .setHeaders("Content-Type", "application/json")
             .setBody("identityProvider",
                 new IdentityProviderRequest().setDescription("patch IDP using Automation")
-            .setContact(userIdentity));
+                    .setContact(userIdentity));
         ResponseWrapper<IdentityProviderResponse> updatedDescription = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
         assertThat(updatedDescription.getResponseEntity().getResponse().getDescription(), is(equalTo("patch IDP using Automation")));
     }
@@ -118,15 +114,13 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
     @TestRail(testCaseId = "5962")
     @Description("getIDP details by Identity")
     public void getIDPbyIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
@@ -151,15 +145,13 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
     @TestRail(testCaseId = "5960")
     @Description("getIDP list for customer")
     public void getListOfIDPsForCustomer() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
@@ -184,15 +176,13 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
     @TestRail(testCaseId = " ")
     @Description("Deletes identity provider")
     public void deleteCustomerIdentityProvider() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));

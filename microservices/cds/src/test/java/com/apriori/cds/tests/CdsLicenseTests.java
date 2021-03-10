@@ -48,8 +48,6 @@ public class CdsLicenseTests extends CdsTestUtil {
     @TestRail(testCaseId = "3302")
     @Description("Post user licenses")
     public void postUserLicense() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -59,7 +57,7 @@ public class CdsLicenseTests extends CdsTestUtil {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
@@ -77,8 +75,6 @@ public class CdsLicenseTests extends CdsTestUtil {
     @TestRail(testCaseId = "5313")
     @Description("Get list of licenses for customer")
     public void getCustomerLicense() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -88,7 +84,7 @@ public class CdsLicenseTests extends CdsTestUtil {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
@@ -110,8 +106,6 @@ public class CdsLicenseTests extends CdsTestUtil {
     @TestRail(testCaseId = "5968")
     @Description("Get list of licenses for customer")
     public void getCustomerLicenseByIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -121,7 +115,7 @@ public class CdsLicenseTests extends CdsTestUtil {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));

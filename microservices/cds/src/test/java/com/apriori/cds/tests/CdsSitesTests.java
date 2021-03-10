@@ -74,8 +74,6 @@ public class CdsSitesTests extends CdsTestUtil {
     @TestRail(testCaseId = "3299")
     @Description("Add a site to a customer")
     public void addCustomerSite() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -83,7 +81,7 @@ public class CdsSitesTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
@@ -98,14 +96,12 @@ public class CdsSitesTests extends CdsTestUtil {
     @TestRail(testCaseId = "3279")
     @Description("Get Sites for a customer")
     public void getCustomerSites() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
@@ -120,8 +116,6 @@ public class CdsSitesTests extends CdsTestUtil {
     @TestRail(testCaseId = "5310")
     @Description("Add a site to a customer")
     public void getCustomerSiteDetails() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -129,7 +123,7 @@ public class CdsSitesTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
@@ -147,15 +141,13 @@ public class CdsSitesTests extends CdsTestUtil {
     @Test
     @TestRail(testCaseId = "5970")
     public void deleteSite() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));

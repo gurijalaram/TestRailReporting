@@ -30,21 +30,19 @@ public class CdsTestUtil extends TestUtil {
         );
     }
 
-    // TODO: 11/02/2021 ciene - all methods below to be moved into a util class
-
     /**
      * POST call to add a customer
      *
-     * @param url            - the endpoint
-     * @param klass          - the response class
      * @param name           - the customer name
      * @param cloudReference - the cloud reference name
      * @param salesForceId   - the sales force id
      * @param email          - the email pattern
-     * @return <T>ResponseWrapper<T>
+     * @return Customer object
      */
-    public <T> ResponseWrapper<T> addCustomer(String url, Class klass, String name, String cloudReference, String salesForceId, String email) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String salesForceId, String email) {
+        String url = String.format(Constants.getServiceUrl(), "customers");
+
+        RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("customer",
                 new Customer().setName(name)

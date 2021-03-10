@@ -43,8 +43,6 @@ public class CdsDeploymentsTests extends CdsTestUtil {
     @TestRail(testCaseId = "3301")
     @Description("Add a deployment to a customer")
     public void addCustomerDeployment() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -52,7 +50,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
@@ -72,8 +70,6 @@ public class CdsDeploymentsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5314")
     @Description("Get a list of deployments for a customer")
     public void getCustomerDeployments() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -81,7 +77,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
@@ -104,8 +100,6 @@ public class CdsDeploymentsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5315")
     @Description("Add a deployment to a customer")
     public void getDeploymentByIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -113,7 +107,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 

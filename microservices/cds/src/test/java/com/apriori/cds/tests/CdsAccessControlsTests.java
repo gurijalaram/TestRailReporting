@@ -63,7 +63,6 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @TestRail(testCaseId = "3294")
     @Description("Adding out of context access control")
     public void postAccessControl() {
-        String customersEndpoint = String.format(url, "customers");
 
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
@@ -71,7 +70,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
