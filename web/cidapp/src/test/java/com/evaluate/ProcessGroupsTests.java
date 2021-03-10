@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -49,6 +50,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Forging"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -67,6 +69,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stock Machining"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -89,13 +92,14 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Bar & Tube"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @Description("Testing process group Casting")
     @TestRail(testCaseId = {"6061"})
-    public void testProcessGroupCasting() {
+    public void testProcessGroupDieCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"case_012_009-0020647_hinge_2.prt.1");
@@ -111,6 +115,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Casting - Die"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -133,6 +138,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Extrusion"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -155,6 +161,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Filleting"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -177,6 +184,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Gear Making"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -199,6 +207,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Machining Contouring"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -222,6 +231,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Machining Gauge Parts"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -244,6 +254,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -266,6 +277,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario(5);
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("5 Axis Mill"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -288,6 +300,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Mill Turn"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -310,6 +323,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Automated Machining"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -332,6 +346,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Perimeter Milling"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -354,6 +369,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Shared Walls"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -376,6 +392,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Rough Milling"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -398,6 +415,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Slot Examples"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -420,6 +438,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Group Turning"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -442,6 +461,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Blow Molding"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -464,6 +484,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Metal"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -485,6 +506,7 @@ public class ProcessGroupsTests extends TestBase {
 
         assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Roll Bending"));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -508,5 +530,6 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Transfer Die"));
     }
 }
