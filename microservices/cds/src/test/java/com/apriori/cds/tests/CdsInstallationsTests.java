@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.InstallationResponse;
+import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -31,6 +32,7 @@ public class CdsInstallationsTests extends CdsTestUtil {
     private String url;
 
     private String customerIdentity;
+    private String licensedAppIdentityEndpoint;
     private String customerIdentityEndpoint;
     private String installationIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -44,6 +46,9 @@ public class CdsInstallationsTests extends CdsTestUtil {
     public void cleanUp() {
         if (installationIdentityEndpoint != null) {
             delete(installationIdentityEndpoint);
+        }
+        if (licensedAppIdentityEndpoint != null) {
+            delete(licensedAppIdentityEndpoint);
         }
         if (customerIdentityEndpoint != null) {
             delete(customerIdentityEndpoint);
@@ -90,6 +95,12 @@ public class CdsInstallationsTests extends CdsTestUtil {
         ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
+
+        String licensedApplicationsEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
+        ResponseWrapper<LicensedApplication> licensedApp = addApplicationToSite(licensedApplicationsEndpoint, LicensedApplication.class);
+        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
 
         String installationEndpoint = String.format(url, String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
         ResponseWrapper<InstallationItems> installation = addInstallation(installationEndpoint, InstallationItems.class, realmKey, cloudRef);

@@ -5,13 +5,14 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/SiteSchema.json")
+@Schema(location = "cds/SiteApplicationSchema.json")
 public class LicensedApplication {
     private String identity;
     private String createdBy;
     private String createdAt;
     private String application;
     private String applicationIdentity;
+    private LicensedApplication response;
 
     public String getIdentity() {
         return identity;
@@ -55,6 +56,15 @@ public class LicensedApplication {
 
     public LicensedApplication setApplicationIdentity(String applicationIdentity) {
         this.applicationIdentity = applicationIdentity;
+        return this;
+    }
+
+    public LicensedApplication getResponse() {
+        return response;
+    }
+
+    public LicensedApplication setResponse(LicensedApplication response) {
+        this.response = response;
         return this;
     }
 }
