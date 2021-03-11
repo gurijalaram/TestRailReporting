@@ -22,8 +22,7 @@ public class ResetAutomationUsers {
 
     private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
 
-    String url = Constants.getProtocol()
-        + Constants.getServiceUrl()
+    String url = Constants.getServiceUrl()
         + Constants.getAutomationUsername()
         + "/password?key="
         + Constants.getSecretKey();

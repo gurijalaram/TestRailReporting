@@ -135,15 +135,6 @@ public class Constants {
     }
 
     /**
-     * Get protocol
-     *
-     * @return string
-     */
-    public static String getProtocol() {
-        return protocol = System.getProperty("atsProtocol") == null ? PROPERTIES.getProperty("ats.protocol") : System.getProperty("atsProtocol");
-    }
-
-    /**
      * Get service url
      *
      * @return string
