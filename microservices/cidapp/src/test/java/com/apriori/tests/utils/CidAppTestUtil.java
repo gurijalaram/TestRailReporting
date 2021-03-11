@@ -19,7 +19,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import org.apache.http.HttpStatus;
 
 public class CidAppTestUtil {
-
     private static String token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
         Constants.getCidServiceHost(),
         HttpStatus.SC_CREATED,
@@ -27,6 +26,7 @@ public class CidAppTestUtil {
         Constants.getCidTokenEmail(),
         Constants.getCidTokenIssuer(),
         Constants.getCidTokenSubject());
+
     private String url = Constants.getApiUrl();
 
     /**
