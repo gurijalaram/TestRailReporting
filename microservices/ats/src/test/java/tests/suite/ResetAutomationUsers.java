@@ -12,10 +12,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import org.apache.http.HttpStatus;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.stream.IntStream;
 
 public class ResetAutomationUsers {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
 
     String url = "https://ats.na-1.qa-20-1.apriori.net/users/qa-automation-%s@apriori.com/password?key=X0V4XXK2SF87";
     String password = "TrumpetSnakeFridgeToasty18!%";
@@ -25,7 +29,7 @@ public class ResetAutomationUsers {
         IntStream.range(1, 41).forEach(x -> {
             String autoIndex = (x < 10 ? "0" : "") + x;
 
-            System.out.println("qa-automation-" + autoIndex + "@apriori.com");
+            logger.debug(String.format("Resetting password for user: qa-automation-%s@apriori.com", autoIndex));
 
             RequestEntity requestEntity = RequestEntity.init(String.format(url, autoIndex), null)
                 .setUrlEncodingEnabled(false)
