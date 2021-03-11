@@ -29,7 +29,7 @@ public class ResetAutomationUsers {
         IntStream.range(1, 41).forEach(x -> {
             String autoIndex = (x < 10 ? "0" : "") + x;
 
-            logger.debug(String.format("Resetting password for user: qa-automation-%s@apriori.com", autoIndex));
+            logger.debug(String.format("Resetting password for user 'qa-automation-%s@apriori.com'", autoIndex));
 
             RequestEntity requestEntity = RequestEntity.init(String.format(url, autoIndex), null)
                 .setUrlEncodingEnabled(false)
