@@ -89,7 +89,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<Users> response = get(usersEndpoint, Users.class);
+        ResponseWrapper<Users> response = getResponse(usersEndpoint, Users.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
@@ -117,7 +117,7 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<User> response = get(userIdentityEndpoint, User.class);
+        ResponseWrapper<User> response = getResponse(userIdentityEndpoint, User.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getIdentity(), is(equalTo(userIdentity)));

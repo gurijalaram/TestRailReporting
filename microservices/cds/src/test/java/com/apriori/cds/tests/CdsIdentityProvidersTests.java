@@ -129,7 +129,7 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
-        ResponseWrapper<IdentityProviderResponse> idp = get(idpIdentityEndpoint, IdentityProviderResponse.class);
+        ResponseWrapper<IdentityProviderResponse> idp = getResponse(idpIdentityEndpoint, IdentityProviderResponse.class);
 
         assertThat(idp.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
         assertThat(idp.getResponseEntity().getResponse().getIdentity(), is(equalTo(idpIdentity)));
@@ -159,7 +159,7 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
-        ResponseWrapper<IdentityProviderPagination> idp = get(identityProviderEndpoint, IdentityProviderPagination.class);
+        ResponseWrapper<IdentityProviderPagination> idp = getResponse(identityProviderEndpoint, IdentityProviderPagination.class);
 
         assertThat(idp.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(idp.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));

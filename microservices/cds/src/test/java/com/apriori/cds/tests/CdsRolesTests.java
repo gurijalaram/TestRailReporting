@@ -30,7 +30,7 @@ public class CdsRolesTests extends CdsTestUtil {
     public void getRoles() {
         url = String.format(url, "roles");
 
-        ResponseWrapper<Roles> response = get(url, Roles.class);
+        ResponseWrapper<Roles> response = getResponse(url, Roles.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(2));
@@ -44,12 +44,12 @@ public class CdsRolesTests extends CdsTestUtil {
     public void getRoleById() {
         String rolesUrl = String.format(url, "roles");
 
-        ResponseWrapper<Roles> responseWrapper = get(rolesUrl, Roles.class);
+        ResponseWrapper<Roles> responseWrapper = getResponse(rolesUrl, Roles.class);
 
         String roleIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
         String identityUrl = String.format(url, String.format("roles/%s", roleIdentity));
-        ResponseWrapper<Role> response = get(identityUrl, Role.class);
+        ResponseWrapper<Role> response = getResponse(identityUrl, Role.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getName(), is("USER"));
