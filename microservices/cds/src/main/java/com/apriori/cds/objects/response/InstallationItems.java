@@ -39,6 +39,7 @@ public class InstallationItems {
     private String s3Bucket;
     private String tenant;
     private String tenantGroup;
+    private String siteIdentity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
@@ -46,6 +47,15 @@ public class InstallationItems {
     private String url;
     private List<Object> applications = null;
     private InstallationItems response;
+
+    public String getSiteIdentity() {
+        return siteIdentity;
+    }
+
+    public InstallationItems setSiteIdentity(String siteIdentity) {
+        this.siteIdentity = siteIdentity;
+        return this;
+    }
 
     public List<Object> getApplications() {
         return applications;

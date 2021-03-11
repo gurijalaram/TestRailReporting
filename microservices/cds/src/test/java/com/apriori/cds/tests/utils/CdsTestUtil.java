@@ -159,8 +159,8 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an application to a site
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
+     * @param url   - the endpoint
+     * @param klass - the response class
      * @return <T>ResponseWrapper<T>
      */
     public <T> ResponseWrapper<T> addApplicationToSite(String url, Class klass) {
@@ -168,7 +168,7 @@ public class CdsTestUtil extends TestUtil {
             .setHeaders("Content-Type", "application/json")
             .setBody("licensedApplication",
                 new LicensedApplication().setApplicationIdentity(Constants.getApProApplicationIdentity())
-                .setCreatedBy("#SYSTEM00000"));
+                    .setCreatedBy("#SYSTEM00000"));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -180,9 +180,10 @@ public class CdsTestUtil extends TestUtil {
      * @param klass          - the response class
      * @param realmKey       - the realm key
      * @param cloudReference - the cloud reference
+     * @param siteIdentity   - the site Identity
      * @return <T>ResponseWrapper<T>
      */
-    public <T> ResponseWrapper<T> addInstallation(String url, Class klass, String realmKey, String cloudReference) {
+    public <T> ResponseWrapper<T> addInstallation(String url, Class klass, String realmKey, String cloudReference, String siteIdentity) {
         RequestEntity requestEntity = RequestEntity.init(url, klass)
             .setHeaders("Content-Type", "application/json")
             .setBody("installation",
@@ -199,6 +200,7 @@ public class CdsTestUtil extends TestUtil {
                     .setClientSecret("donotusethiskey")
                     .setCreatedBy("#SYSTEM00000")
                     .setCidGlobalKey("donotusethiskey")
+                    .setSiteIdentity(siteIdentity)
                     .setApplications(Arrays.asList(Constants.getApProApplicationIdentity()))
                     .setCloudReference(cloudReference));
 
@@ -242,7 +244,7 @@ public class CdsTestUtil extends TestUtil {
      * @param url          - the url
      * @param klass        - the response class
      * @param userIdentity - the aPriori Staff users identity
-     * @param customerName     - the customer name
+     * @param customerName - the customer name
      * @return <T> ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String customerName) {
