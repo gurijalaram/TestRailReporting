@@ -887,13 +887,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String listName, String expectedCount) {
-        String genericLocator = "//div[@title='%s']//span[@title='%s']";
-
-        By availableLocator = By.xpath(String.format(genericLocator, listName, "Available: " + expectedCount));
-        pageUtils.waitForElementToAppear(availableLocator);
-
-        By selectedLocator = By.xpath(String.format(genericLocator, listName, "Selected: " + expectedCount));
-        pageUtils.waitForElementToAppear(selectedLocator);
+        waitForCorrectAvailableSelectedCount(listName, "Available: ", expectedCount);
+        waitForCorrectAvailableSelectedCount(listName, "Selected: ", expectedCount);
         return this;
     }
 
@@ -1280,7 +1275,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets day value in date picker
      */
     private void setDayValuePicker(int dayValue) {
-        By dayLocator = By.xpath(String.format("//a[contains(text(), '%d') and @class='ui-state-default']", dayValue));
+        By dayLocator = By.xpath(String.format("//a[contains(text(), '%d') and contains(@class, 'ui-state-default')]", dayValue));
         driver.findElement(dayLocator).click();
     }
 

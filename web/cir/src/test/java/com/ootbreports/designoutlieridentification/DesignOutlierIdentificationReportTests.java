@@ -66,7 +66,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1997")
     @Description("Mass metric options available & selected cost metric report generated (incl. report header)")
     public void testMassMetricFinishMass() {
@@ -79,7 +79,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1997")
     @Description("Mass metric options available & selected cost metric report generated (incl. report header)")
     public void testMassMetricRoughMass() {
@@ -88,6 +88,28 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
                 ExportSetEnum.ROLL_UP_A.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "1988")
+    @Description("Export date calendar widgets")
+    public void testExportSetFilterByDateCalendar() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "1988")
+    @Description("Export date calendar widgets")
+    public void testExportSetFilterByDateInputField() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingInputField(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 }
