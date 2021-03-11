@@ -255,7 +255,7 @@ public class CdsTestUtil extends TestUtil {
                     .setName(customerName + "-idp")
                     .setDisplayName(customerName + "SAML")
                     .setIdpDomains(Arrays.asList(customerName + ".com"))
-                    .setIdentityProviderPlatform("AZURE AD")
+                    .setIdentityProviderPlatform("Azure AD")
                     .setDescription("Create IDP using CDS automation")
                     .setActive(true)
                     .setCreatedBy("#SYSTEM00000")
