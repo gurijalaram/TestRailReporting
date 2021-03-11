@@ -268,6 +268,25 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * Patches and idp user
+     *
+     * @param customerIdentity - the customer id
+     * @param idpIdentity      - the idp id
+     * @param userIdentity     - the user id
+     * @return new object
+     */
+    public ResponseWrapper<IdentityProviderResponse> patchIdp(String customerIdentity, String idpIdentity, String userIdentity) {
+        url = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("identityProvider",
+                new IdentityProviderRequest().setDescription("patch IDP using Automation")
+                    .setContact(userIdentity));
+        return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
+    }
+
+    /**
      * Post to add site license
      *
      * @param customerIdentity - the customer id

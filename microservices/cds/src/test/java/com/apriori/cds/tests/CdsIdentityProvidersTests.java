@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.cds.entity.response.IdentityProviderPagination;
 import com.apriori.cds.objects.response.Customer;
@@ -13,9 +12,6 @@ import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -98,12 +94,7 @@ public class CdsIdentityProvidersTests {
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
-        RequestEntity requestEntity = RequestEntity.init(idpIdentityEndpoint, IdentityProviderResponse.class)
-            .setHeaders("Content-Type", "application/json")
-            .setBody("identityProvider",
-                new IdentityProviderRequest().setDescription("patch IDP using Automation")
-                    .setContact(userIdentity));
-        ResponseWrapper<IdentityProviderResponse> updatedDescription = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
+        ResponseWrapper<IdentityProviderResponse> updatedDescription = cdsTestUtil.patchIdp(customerIdentity, idpIdentity, userIdentity);
         assertThat(updatedDescription.getResponseEntity().getResponse().getDescription(), is(equalTo("patch IDP using Automation")));
     }
 
@@ -154,12 +145,12 @@ public class CdsIdentityProvidersTests {
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
+        String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
         ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getResponse(identityProviderEndpoint, IdentityProviderPagination.class);
 
         assertThat(idpPagination.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
