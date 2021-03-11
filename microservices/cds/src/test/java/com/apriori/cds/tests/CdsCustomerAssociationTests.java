@@ -53,7 +53,7 @@ public class CdsCustomerAssociationTests {
 
         String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String associationIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s", Constants.getAPrioriInternalCustomerIdentity(), associationIdentity));
-        ResponseWrapper<CustomerAssociationItems> association = getCommonRequest(associationIdentityEndpoint, true, CustomerAssociationItems.class);
+        ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getResponse(associationIdentityEndpoint, CustomerAssociationItems.class);
 
         assertThat(association.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(association.getResponseEntity().getResponse().getIdentity(), is(equalTo(associationIdentity)));

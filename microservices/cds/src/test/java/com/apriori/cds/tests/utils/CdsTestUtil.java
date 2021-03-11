@@ -181,12 +181,14 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an application to a site
      *
-     * @param url   - the endpoint
-     * @param klass - the response class
-     * @return <T>ResponseWrapper<T>
+     * @param customerIdentity - the customer id
+     * @param siteIdentity     - the site id
+     * @return new object
      */
-    public <T> ResponseWrapper<T> addApplicationToSite(String url, Class klass) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity) {
+        url = String.format(url, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, LicensedApplication.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("licensedApplication",
                 new LicensedApplication().setApplicationIdentity(Constants.getApProApplicationIdentity())
@@ -200,7 +202,7 @@ public class CdsTestUtil extends TestUtil {
      *
      * @param customerIdentity   - the customer id
      * @param deploymentIdentity - the deployment id
-     *                                 @param siteIdentity   - the site Identity
+     * @param siteIdentity       - the site Identity
      * @param realmKey           - the realm key
      * @param cloudReference     - the cloud reference
      * @return new object
@@ -228,6 +230,24 @@ public class CdsTestUtil extends TestUtil {
                     .setCloudReference(cloudReference));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * Patch installation
+     *
+     * @param customerIdentity     - the customer id
+     * @param deploymentIdentity   - the deployment id
+     * @param installationIdentity - the installation id
+     * @return new object
+     */
+    public ResponseWrapper<InstallationItems> patchInstallation(String customerIdentity, String deploymentIdentity, String installationIdentity) {
+        url = String.format(url, String.format("customers/%s/deployments/%s/installations/%s", customerIdentity, deploymentIdentity, installationIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
+            .setBody("installation",
+                new InstallationItems().setCloudReference("eu-1"));
+
+        return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
 
 
