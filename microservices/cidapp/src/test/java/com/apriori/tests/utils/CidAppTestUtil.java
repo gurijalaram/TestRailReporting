@@ -1,4 +1,4 @@
-package com.apriori.utils;
+package com.apriori.tests.utils;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.JwtTokenUtil;
@@ -6,6 +6,8 @@ import com.apriori.entity.reponse.ComponentIdentityResponse;
 import com.apriori.entity.reponse.GetComponentResponse;
 import com.apriori.entity.reponse.PostComponentResponse;
 import com.apriori.entity.reponse.componentiteration.ComponentIteration;
+import com.apriori.utils.Constants;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
