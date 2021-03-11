@@ -80,6 +80,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(38)")
     private WebElement machiningDtcBubbleTwo;
 
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(1)")
+    private WebElement designOutlierChartSpot;
+
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[39]")
     private WebElement sheetMetalDtcBubble;
 
@@ -2234,6 +2237,7 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), castingDtcBubbleTwo);
         bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), sheetMetalDtcBubble);
         bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName() + " 2", sheetMetalDtcBubbleTwo);
+        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(), designOutlierChartSpot);
     }
 
     /**

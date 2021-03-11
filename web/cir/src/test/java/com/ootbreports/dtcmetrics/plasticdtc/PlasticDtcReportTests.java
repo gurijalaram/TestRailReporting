@@ -277,7 +277,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -290,7 +290,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()

@@ -254,7 +254,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -267,7 +267,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
