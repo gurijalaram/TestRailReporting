@@ -8,7 +8,7 @@ import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Licenses;
 import com.apriori.cds.objects.response.Site;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -22,12 +22,13 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-public class CdsLicenseTests extends CdsTestUtil {
+public class CdsLicenseTests {
 
     private String url;
     private String userIdentityEndpoint;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -37,10 +38,10 @@ public class CdsLicenseTests extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (userIdentityEndpoint != null) {
-            delete(userIdentityEndpoint);
+            cdsTestUtil.delete(userIdentityEndpoint);
         }
         if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
+            cdsTestUtil.delete(customerIdentityEndpoint);
         }
     }
 
@@ -57,14 +58,14 @@ public class CdsLicenseTests extends CdsTestUtil {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper<LicenseResponse> response = addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> response = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }
@@ -82,18 +83,18 @@ public class CdsLicenseTests extends CdsTestUtil {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper<LicenseResponse> response = addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> response = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
-        ResponseWrapper<Licenses> license = getResponse(customerLicenseEndpoint,  Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getResponse(customerLicenseEndpoint,  Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(license.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
@@ -111,23 +112,23 @@ public class CdsLicenseTests extends CdsTestUtil {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper<LicenseResponse> response = addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> response = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
-        ResponseWrapper<Licenses> license = getResponse(customerLicenseEndpoint,  Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getResponse(customerLicenseEndpoint,  Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String licenseIdentityEndpoint = String.format(url, String.format("customers/%s/licenses/%s", customerIdentity, licenseIdentity));
 
-        ResponseWrapper<LicenseResponse> licenseResponse = getResponse(licenseIdentityEndpoint,  LicenseResponse.class);
+        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getResponse(licenseIdentityEndpoint,  LicenseResponse.class);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licenseResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(licenseIdentity)));
     }

@@ -10,7 +10,7 @@ import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AccessControls;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -22,12 +22,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsAccessControlsTests extends CdsTestUtil {
+public class CdsAccessControlsTests  {
     private String url;
     private String userIdentityEndpoint;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String accessControlIdentityEndpoint;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -37,13 +38,13 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (accessControlIdentityEndpoint != null) {
-            delete(accessControlIdentityEndpoint);
+            cdsTestUtil.delete(accessControlIdentityEndpoint);
         }
         if (userIdentityEndpoint != null) {
-            delete(userIdentityEndpoint);
+            cdsTestUtil.delete(userIdentityEndpoint);
         }
         if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
+            cdsTestUtil.delete(customerIdentityEndpoint);
         }
     }
 
@@ -52,7 +53,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @Description("API returns a list of all the access controls in the CDS DB")
     public void getAccessControls() {
         url = String.format(url, "access-controls");
-        ResponseWrapper<AccessControls> response = getResponse(url, AccessControls.class);
+        ResponseWrapper<AccessControls> response = cdsTestUtil.getResponse(url, AccessControls.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -70,15 +71,15 @@ public class CdsAccessControlsTests extends CdsTestUtil {
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        ResponseWrapper<User> user = addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<AccessControlResponse> accessControlResponse = addAccessControl(customerIdentity, userIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getResponse().getIdentity();
 
         accessControlIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s/access-controls/%s", customerIdentity, userIdentity, accessControlIdentity));

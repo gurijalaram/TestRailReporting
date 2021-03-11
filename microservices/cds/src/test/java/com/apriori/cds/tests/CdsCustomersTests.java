@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -29,12 +29,13 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class CdsCustomersTests extends CdsTestUtil {
+public class CdsCustomersTests {
     private String url;
 
     private String customerIdentity;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -44,7 +45,7 @@ public class CdsCustomersTests extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
+            cdsTestUtil.delete(customerIdentityEndpoint);
         }
     }
 
@@ -54,7 +55,7 @@ public class CdsCustomersTests extends CdsTestUtil {
     public void getCustomers() {
         url = String.format(url, "customers");
 
-        ResponseWrapper<Customers> response = getResponse(url, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getResponse(url, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -70,7 +71,7 @@ public class CdsCustomersTests extends CdsTestUtil {
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
@@ -86,13 +87,13 @@ public class CdsCustomersTests extends CdsTestUtil {
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        ResponseWrapper<Customer> response = getResponse(customerIdentityEndpoint, Customer.class);
+        ResponseWrapper<Customer> response = cdsTestUtil.getResponse(customerIdentityEndpoint, Customer.class);
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getResponse().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
@@ -106,14 +107,14 @@ public class CdsCustomersTests extends CdsTestUtil {
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String applicationsEndpoint = String.format(url, String.format("customers/%s/applications", customerIdentity));
 
-        ResponseWrapper<Applications> response = getResponse(applicationsEndpoint, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getResponse(applicationsEndpoint, Applications.class);
         assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), CoreMatchers.is(equalTo(0)));
     }
@@ -128,7 +129,7 @@ public class CdsCustomersTests extends CdsTestUtil {
         String emailPattern = "\\S+@".concat(customerName);
         String updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateCustomerName());
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));

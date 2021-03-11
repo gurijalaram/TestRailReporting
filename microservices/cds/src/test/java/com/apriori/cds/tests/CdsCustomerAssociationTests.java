@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.entity.response.CustomerAssociationItems;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -20,8 +20,9 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsCustomerAssociationTests extends CdsTestUtil {
+public class CdsCustomerAssociationTests {
     private String url;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -34,7 +35,7 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
     public void getCustomerAssociations() {
         url = String.format(url, "customers/L2H992828N8M/customer-associations");
 
-        ResponseWrapper<CustomerAssociationResponse> response = getResponse(url, CustomerAssociationResponse.class);
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getResponse(url, CustomerAssociationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -47,12 +48,12 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
     public void getCustomerAssociationByIdentity() {
         String associationEndpoint = String.format(url, "customers/L2H992828N8M/customer-associations");
 
-        ResponseWrapper<CustomerAssociationResponse> response = getResponse(associationEndpoint, CustomerAssociationResponse.class);
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getResponse(associationEndpoint, CustomerAssociationResponse.class);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String associationIdentityEndpoint = String.format(url, String.format("customers/L2H992828N8M/customer-associations/%s", associationIdentity));
-        ResponseWrapper<CustomerAssociationItems> association = getResponse(associationIdentityEndpoint, CustomerAssociationItems.class);
+        ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getResponse(associationIdentityEndpoint, CustomerAssociationItems.class);
 
         assertThat(association.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(association.getResponseEntity().getResponse().getIdentity(), is(equalTo(associationIdentity)));

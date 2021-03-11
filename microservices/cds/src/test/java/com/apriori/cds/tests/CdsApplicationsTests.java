@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.cds.objects.response.Application;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customers;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -20,8 +20,9 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsApplicationsTests extends CdsTestUtil {
+public class CdsApplicationsTests {
     private String url;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -35,7 +36,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     public void getAllApplications() {
         url = String.format(url, "applications");
 
-        ResponseWrapper<Applications> response = getResponse(url, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getResponse(url, Applications.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -48,7 +49,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     public void getApplicationById() {
         url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity()));
 
-        ResponseWrapper<Application> response = getResponse(url, Application.class);
+        ResponseWrapper<Application> response = cdsTestUtil.getResponse(url, Application.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("aPriori Professional")));
@@ -60,7 +61,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     public void getCustomersAuthorizedForApplication() {
         url = String.format(url, String.format("applications/%s/customers", Constants.getApProApplicationIdentity()));
 
-        ResponseWrapper<Customers> response = getResponse(url, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getResponse(url, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

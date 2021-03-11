@@ -8,7 +8,7 @@ import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.AssociationUserResponse;
 import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -20,7 +20,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsAssociationUserTests extends CdsTestUtil {
+public class CdsAssociationUserTests  {
     private String url;
 
     private String customerIdentity;
@@ -28,6 +28,7 @@ public class CdsAssociationUserTests extends CdsTestUtil {
     private String customerAssociationUserIdentity;
     private String customerAssociationUserIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -37,10 +38,10 @@ public class CdsAssociationUserTests extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (customerAssociationUserIdentityEndpoint != null) {
-            delete(customerAssociationUserIdentityEndpoint);
+            cdsTestUtil.delete(customerAssociationUserIdentityEndpoint);
         }
         if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
+            cdsTestUtil.delete(customerIdentityEndpoint);
         }
 
     }
@@ -57,17 +58,17 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String aPStaffIdentity = Constants.getUserIdentity();
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         String associationsEndpoint = String.format(url + "&targetCustomer.identity[EQ]=" + customerIdentity, String.format("customers/%s/customer-associations", aPCustomerIdentity));
-        ResponseWrapper<CustomerAssociationResponse> response = getResponse(associationsEndpoint, CustomerAssociationResponse.class);
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getResponse(associationsEndpoint, CustomerAssociationResponse.class);
         String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        ResponseWrapper<AssociationUserItems> associationUser = addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
+        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getResponse().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
@@ -85,23 +86,23 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String aPStaffIdentity = Constants.getUserIdentity();
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         String associationsEndpoint = String.format(url + "&targetCustomer.identity[EQ]=" + customerIdentity, String.format("customers/%s/customer-associations", aPCustomerIdentity));
-        ResponseWrapper<CustomerAssociationResponse> response = getResponse(associationsEndpoint, CustomerAssociationResponse.class);
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getResponse(associationsEndpoint, CustomerAssociationResponse.class);
         String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users", aPCustomerIdentity, associationIdentity));
 
-        ResponseWrapper<AssociationUserItems> associationUser = addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
+        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getResponse().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
 
-        ResponseWrapper<AssociationUserResponse> users = getResponse(associationEndpoint, AssociationUserResponse.class);
+        ResponseWrapper<AssociationUserResponse> users = cdsTestUtil.getResponse(associationEndpoint, AssociationUserResponse.class);
         assertThat(users.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(users.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
@@ -118,22 +119,22 @@ public class CdsAssociationUserTests extends CdsTestUtil {
         String aPStaffIdentity = Constants.getUserIdentity();
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        ResponseWrapper<Customer> customer = addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         String associationsEndpoint = String.format(url + "&targetCustomer.identity[EQ]=" + customerIdentity, String.format("customers/%s/customer-associations", aPCustomerIdentity));
-        ResponseWrapper<CustomerAssociationResponse> response = getResponse(associationsEndpoint, CustomerAssociationResponse.class);
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getResponse(associationsEndpoint, CustomerAssociationResponse.class);
         String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        ResponseWrapper<AssociationUserItems> associationUser = addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
+        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getResponse().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
 
-        ResponseWrapper<AssociationUserItems> associationUserIdentity = getResponse(customerAssociationUserIdentityEndpoint, AssociationUserItems.class);
+        ResponseWrapper<AssociationUserItems> associationUserIdentity = cdsTestUtil.getResponse(customerAssociationUserIdentityEndpoint, AssociationUserItems.class);
         assertThat(associationUserIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(associationUserIdentity.getResponseEntity().getResponse().getUserIdentity(), is(equalTo(aPStaffIdentity)));
     }

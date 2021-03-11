@@ -1,4 +1,4 @@
-package com.apriori.cds.tests.utils;
+package com.apriori.cds.utils;
 
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
@@ -17,7 +17,6 @@ import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -35,7 +34,7 @@ public class CdsTestUtil extends TestUtil {
      * @param <T>   - generic object
      * @return generic object
      */
-    protected <T> ResponseWrapper<T> getResponse(String url, Class klass) {
+    public <T> ResponseWrapper<T> getResponse(String url, Class klass) {
         return GenericRequestUtil.get(
             RequestEntity.init(url, klass).setUrlEncodingEnabled(true),
             new RequestAreaApi()
