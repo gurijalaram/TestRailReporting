@@ -160,10 +160,10 @@ public class CdsIdentityProvidersTests {
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
-        ResponseWrapper<IdentityProviderPagination> idp = cdsTestUtil.getResponse(identityProviderEndpoint, IdentityProviderPagination.class);
+        ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getResponse(identityProviderEndpoint, IdentityProviderPagination.class);
 
-        assertThat(idp.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(idp.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
+        assertThat(idpPagination.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(idpPagination.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
 
     @Test
