@@ -68,8 +68,7 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
-        ResponseWrapper<IdentityProviderResponse> response = addSaml(identityProviderEndpoint, IdentityProviderResponse.class, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> response = addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
@@ -93,8 +92,7 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
-        ResponseWrapper<IdentityProviderResponse> response = addSaml(identityProviderEndpoint, IdentityProviderResponse.class, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> response = addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
@@ -126,8 +124,7 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
-        ResponseWrapper<IdentityProviderResponse> response = addSaml(identityProviderEndpoint, IdentityProviderResponse.class, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> response = addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
@@ -157,7 +154,7 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
-        ResponseWrapper<IdentityProviderResponse> response = addSaml(identityProviderEndpoint, IdentityProviderResponse.class, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> response = addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
@@ -185,9 +182,7 @@ public class CdsIdentityProvidersTests extends CdsTestUtil {
         ResponseWrapper<User> user = addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
 
-        String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
-
-        ResponseWrapper<IdentityProviderResponse> identityProviderResponse = addSaml(identityProviderEndpoint, IdentityProviderResponse.class, userIdentity, userName);
+        ResponseWrapper<IdentityProviderResponse> identityProviderResponse = addSaml(customerIdentity, userIdentity, userName);
         String identityProviderIdentity = identityProviderResponse.getResponseEntity().getResponse().getIdentity();
 
         String deleteIdentityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, identityProviderIdentity));

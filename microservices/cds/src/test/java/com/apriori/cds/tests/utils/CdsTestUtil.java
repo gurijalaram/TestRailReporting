@@ -2,11 +2,14 @@ package com.apriori.cds.tests.utils;
 
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
+import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.objects.request.AccessControlRequest;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
+import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Deployment;
@@ -38,7 +41,7 @@ public class CdsTestUtil extends TestUtil {
      * @param cloudReference - the cloud reference name
      * @param salesForceId   - the sales force id
      * @param email          - the email pattern
-     * @return Customer object
+     * @return new object
      */
     public ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String salesForceId, String email) {
         String url = String.format(Constants.getServiceUrl(), "customers");
@@ -67,7 +70,7 @@ public class CdsTestUtil extends TestUtil {
      * @param customerIdentity - the customer id
      * @param userName         - the user name
      * @param customerName     - the customer name
-     * @return User object
+     * @return new object
      */
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String customerName) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users", customerIdentity));
@@ -95,7 +98,7 @@ public class CdsTestUtil extends TestUtil {
      *
      * @param customerIdentity - the customer id
      * @param userIdentity     - the user id
-     * @return User object
+     * @return new object
      */
     public ResponseWrapper<User> patchUser(String customerIdentity, String userIdentity) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users/%s", customerIdentity, userIdentity));
@@ -117,7 +120,7 @@ public class CdsTestUtil extends TestUtil {
      * @param customerIdentity - the customer id
      * @param siteName         - the site name
      * @param siteID           - the siteID
-     * @return Site object
+     * @return new object
      */
     public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/sites", customerIdentity));
@@ -139,7 +142,7 @@ public class CdsTestUtil extends TestUtil {
      *
      * @param customerIdentity - the customer id
      * @param siteIdentity     - the site Identity
-     * @return deployment object
+     * @return new object
      */
     public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String siteIdentity) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments", customerIdentity));
@@ -167,7 +170,7 @@ public class CdsTestUtil extends TestUtil {
      * @param deploymentIdentity - the deployment id
      * @param realmKey           - the realm key
      * @param cloudReference     - the cloud reference
-     * @return installation object
+     * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
@@ -200,7 +203,7 @@ public class CdsTestUtil extends TestUtil {
      * @param apCustomerIdentity  - the ap customer id
      * @param associationIdentity - the association id
      * @param userIdentity        - the aPriori Staff users identity
-     * @return associationueritems object
+     * @return new object
      */
     public ResponseWrapper<AssociationUserItems> addAssociationUser(String apCustomerIdentity, String associationIdentity, String userIdentity) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/customer-associations/%s/customer-association-users", apCustomerIdentity, associationIdentity));
@@ -230,14 +233,15 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Post to add SAML
      *
-     * @param url          - the url
-     * @param klass        - the response class
-     * @param userIdentity - the aPriori Staff users identity
-     * @param customerName - the customer name
-     * @return <T> ResponseWrapper <T>
+     * @param customerIdentity - the customer id
+     * @param userIdentity     - the aPriori Staff users identity
+     * @param customerName     - the customer name
+     * @return new object
      */
-    public <T> ResponseWrapper<T> addSaml(String url, Class klass, String userIdentity, String customerName) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<IdentityProviderResponse> addSaml(String customerIdentity, String userIdentity, String customerName) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/identity-providers", customerIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("identityProvider",
                 new IdentityProviderRequest().setContact(userIdentity)
@@ -267,16 +271,18 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Post to add site license
      *
-     * @param url          - the url
-     * @param klass        - the response class
-     * @param customerName - the customer name
-     * @param siteId       - the site id
-     * @param licenseId    - the license id
-     * @param subLicenseId - the sublicense id
-     * @return <T>ResponseWrapper<T>
+     * @param customerIdentity - the customer id
+     * @param siteIdentity     - the site id
+     * @param customerName     - the customer name
+     * @param siteId           - the site id
+     * @param licenseId        - the license id
+     * @param subLicenseId     - the sublicense id
+     * @return new object
      */
-    public <T> ResponseWrapper<T> addLicense(String url, Class klass, String customerName, String siteId, String licenseId, String subLicenseId) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<LicenseResponse> addLicense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, LicenseResponse.class)
             .setHeaders("Content-Type", "application/json")
             .setBody(new LicenseRequest().setLicense(
                 new License().setDescription("Test License")
@@ -292,13 +298,12 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Post to add out of context access control
      *
-     * @param url   - the url
-     * @param klass - the class
-     * @param <T>   - generic return type
-     * @return <T>ResponseWrapper</T>
+     * @return new object
      */
-    public <T> ResponseWrapper<T> addAccessControl(String url, Class klass) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users/%s/access-controls", customerIdentity, userIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, AccessControlResponse.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("accessControl",
                 new AccessControlRequest().setCustomerIdentity(Constants.getAPrioriInternalCustomerIdentity())

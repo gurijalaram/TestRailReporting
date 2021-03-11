@@ -6,7 +6,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.cds.objects.response.AccessControl;
+import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AccessControls;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
@@ -78,8 +78,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        String accessControlEndpoint = String.format(url, String.format("customers/%s/users/%s/access-controls", customerIdentity, userIdentity));
-        ResponseWrapper<AccessControl> accessControlResponse = addAccessControl(accessControlEndpoint, AccessControl.class);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getResponse().getIdentity();
 
         accessControlIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s/access-controls/%s", customerIdentity, userIdentity, accessControlIdentity));

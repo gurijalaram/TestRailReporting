@@ -63,9 +63,8 @@ public class CdsLicenseTests extends CdsTestUtil {
 
         ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
-        String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
-        ResponseWrapper<LicenseResponse> response = addLicense(licenseEndpoint, LicenseResponse.class, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> response = addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }
@@ -89,9 +88,8 @@ public class CdsLicenseTests extends CdsTestUtil {
 
         ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
-        String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
-        ResponseWrapper<LicenseResponse> response = addLicense(licenseEndpoint, LicenseResponse.class, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> response = addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
@@ -119,9 +117,8 @@ public class CdsLicenseTests extends CdsTestUtil {
 
         ResponseWrapper<Site> site = addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
-        String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
-        ResponseWrapper<LicenseResponse> response = addLicense(licenseEndpoint, LicenseResponse.class, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> response = addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
