@@ -35,6 +35,18 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * Calls the delete method
+     *
+     * @param deleteEndpoint - the endpoint to delete
+     * @return responsewrapper
+     */
+    public ResponseWrapper<String> delete(String deleteEndpoint) {
+        RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null);
+
+        return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+    }
+
+    /**
      * POST call to add a customer
      *
      * @param name           - the customer name
@@ -47,7 +59,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), "customers");
 
         RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("customer",
                 new Customer().setName(name)
                     .setDescription("Add new customers api test")
@@ -76,7 +87,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("user",
                 new User().setUsername(userName)
                     .setEmail(userName + "@" + customerName + ".com")
@@ -104,7 +114,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("user",
                 new User()
                     .setUserProfile(new UserProfile()
@@ -126,7 +135,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/sites", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Site.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("site",
                 new Site().setName(siteName)
                     .setDescription("Site created by automation test")
@@ -148,7 +156,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Deployment.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("deployment",
                 new AddDeployment().setName("Production Deployment")
                     .setDescription("Deployment added by API automation")
@@ -176,7 +183,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("installation",
                 new InstallationItems().setName("Automation Installation")
                     .setDescription("Installation added by API automation")
@@ -209,25 +215,11 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/customer-associations/%s/customer-association-users", apCustomerIdentity, associationIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, AssociationUserItems.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("userAssociation",
                 new AssociationUserItems().setUserIdentity(userIdentity)
                     .setCreatedBy("#SYSTEM00000"));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
-    }
-
-    /**
-     * Calls the delete method
-     *
-     * @param deleteEndpoint - the endpoint to delete
-     * @return responsewrapper
-     */
-    public ResponseWrapper<String> delete(String deleteEndpoint) {
-        RequestEntity requestEntity = RequestEntity.init(deleteEndpoint, null)
-            .setHeaders("Content-Type", "application/json");
-
-        return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
     }
 
     /**
@@ -242,7 +234,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/identity-providers", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("identityProvider",
                 new IdentityProviderRequest().setContact(userIdentity)
                     .setName(customerName + "-idp")
@@ -283,7 +274,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, LicenseResponse.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody(new LicenseRequest().setLicense(
                 new License().setDescription("Test License")
                     .setApVersion("2020 R1")
@@ -304,7 +294,6 @@ public class CdsTestUtil extends TestUtil {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users/%s/access-controls", customerIdentity, userIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, AccessControlResponse.class)
-            .setHeaders("Content-Type", "application/json")
             .setBody("accessControl",
                 new AccessControlRequest().setCustomerIdentity(Constants.getAPrioriInternalCustomerIdentity())
                     .setDeploymentIdentity(Constants.getApProductionDeploymentIdentity())
