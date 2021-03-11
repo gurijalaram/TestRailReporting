@@ -163,14 +163,16 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param url            - the endpoint
-     * @param klass          - the response class
+     * @param customerIdentity            - the customer id
+     * @param deploymentIdentity          - the deployment id
      * @param realmKey       - the realm key
      * @param cloudReference - the cloud reference
      * @return <T>ResponseWrapper<T>
      */
-    public <T> ResponseWrapper<T> addInstallation(String url, Class klass, String realmKey, String cloudReference) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public <T> ResponseWrapper<T> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("installation",
                 new InstallationItems().setName("Automation Installation")
