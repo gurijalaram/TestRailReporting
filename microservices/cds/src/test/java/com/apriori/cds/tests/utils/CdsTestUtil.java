@@ -139,9 +139,9 @@ public class CdsTestUtil extends TestUtil {
      *
      * @param customerIdentity - the customer id
      * @param siteIdentity     - the site Identity
-     * @return <T>ResponseWrapper<T>
+     * @return deployment object
      */
-    public <T> ResponseWrapper<T> addDeployment(String customerIdentity, String siteIdentity) {
+    public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String siteIdentity) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Deployment.class)
@@ -163,13 +163,13 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation to a customer
      *
-     * @param customerIdentity            - the customer id
-     * @param deploymentIdentity          - the deployment id
-     * @param realmKey       - the realm key
-     * @param cloudReference - the cloud reference
-     * @return <T>ResponseWrapper<T>
+     * @param customerIdentity   - the customer id
+     * @param deploymentIdentity - the deployment id
+     * @param realmKey           - the realm key
+     * @param cloudReference     - the cloud reference
+     * @return installation object
      */
-    public <T> ResponseWrapper<T> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference) {
+    public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference) {
         String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
@@ -193,16 +193,19 @@ public class CdsTestUtil extends TestUtil {
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 
+
     /**
      * POST call to add an apriori staff user association to a customer
      *
-     * @param url          - the endpoint
-     * @param klass        - the response class
-     * @param userIdentity - the aPriori Staff users identity
-     * @return <T>ResponseWrapper<T>
+     * @param apCustomerIdentity  - the ap customer id
+     * @param associationIdentity - the association id
+     * @param userIdentity        - the aPriori Staff users identity
+     * @return associationueritems object
      */
-    public <T> ResponseWrapper<T> addAssociationUser(String url, Class klass, String userIdentity) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<AssociationUserItems> addAssociationUser(String apCustomerIdentity, String associationIdentity, String userIdentity) {
+        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/customer-associations/%s/customer-association-users", apCustomerIdentity, associationIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, AssociationUserItems.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("userAssociation",
                 new AssociationUserItems().setUserIdentity(userIdentity)
