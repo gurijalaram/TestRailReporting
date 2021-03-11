@@ -1,10 +1,11 @@
-package tests.suite;
+package tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.ats.entity.request.ResetAutoUsers;
+import com.apriori.ats.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -21,8 +22,11 @@ public class ResetAutomationUsers {
 
     private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
 
-    String url = "https://ats.na-1.qa-20-1.apriori.net/users/qa-automation-%s@apriori.com/password?key=X0V4XXK2SF87";
-    String password = "TrumpetSnakeFridgeToasty18!%";
+    String url = Constants.getProtocol()
+        + Constants.getServiceUrl()
+        + Constants.getAutomationUsername()
+        + "/password?key="
+        + Constants.getSecretKey();
 
     @Test
     public void resetAllAutomationUsers() {
@@ -33,7 +37,7 @@ public class ResetAutomationUsers {
 
             RequestEntity requestEntity = RequestEntity.init(String.format(url, userIndex), null)
                 .setUrlEncodingEnabled(false)
-                .setBody(new ResetAutoUsers().setPassword(password));
+                .setBody(new ResetAutoUsers().setPassword(Constants.getAutomationPassword()));
 
             ResponseWrapper<String> resetAutoUsersResponse = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
 
