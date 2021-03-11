@@ -25,13 +25,13 @@ public class ResetAutomationUsers {
     String password = "TrumpetSnakeFridgeToasty18!%";
 
     @Test
-    public void resetAllUsers() {
+    public void resetAllAutomationUsers() {
         IntStream.range(1, 41).forEach(x -> {
-            String autoIndex = (x < 10 ? "0" : "") + x;
+            String userIndex = (x < 10 ? "0" : "") + x;
 
-            logger.debug(String.format("Resetting password for user 'qa-automation-%s@apriori.com'", autoIndex));
+            logger.debug(String.format("Resetting password for user 'qa-automation-%s@apriori.com'", userIndex));
 
-            RequestEntity requestEntity = RequestEntity.init(String.format(url, autoIndex), null)
+            RequestEntity requestEntity = RequestEntity.init(String.format(url, userIndex), null)
                 .setUrlEncodingEnabled(false)
                 .setBody(new ResetAutoUsers().setPassword(password));
 
