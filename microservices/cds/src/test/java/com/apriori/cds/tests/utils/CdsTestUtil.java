@@ -27,6 +27,8 @@ import java.util.Arrays;
 
 public class CdsTestUtil extends TestUtil {
 
+    String url = Constants.getServiceUrl();
+
     /**
      * @param url   - the url
      * @param klass - the class
@@ -62,7 +64,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String salesForceId, String email) {
-        String url = String.format(Constants.getServiceUrl(), "customers");
+        url = String.format(url, "customers");
 
         RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
             .setBody("customer",
@@ -90,7 +92,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String customerName) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users", customerIdentity));
+        url = String.format(url, String.format("customers/%s/users", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
@@ -117,7 +119,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<User> patchUser(String customerIdentity, String userIdentity) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        url = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
@@ -138,7 +140,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/sites", customerIdentity));
+        url = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Site.class)
             .setBody("site",
@@ -159,7 +161,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String siteIdentity) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments", customerIdentity));
+        url = String.format(url, String.format("customers/%s/deployments", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Deployment.class)
             .setBody("deployment",
@@ -186,7 +188,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
+        url = String.format(url, String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
             .setBody("installation",
@@ -218,7 +220,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<AssociationUserItems> addAssociationUser(String apCustomerIdentity, String associationIdentity, String userIdentity) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/customer-associations/%s/customer-association-users", apCustomerIdentity, associationIdentity));
+        url = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users", apCustomerIdentity, associationIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, AssociationUserItems.class)
             .setBody("userAssociation",
@@ -237,7 +239,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<IdentityProviderResponse> addSaml(String customerIdentity, String userIdentity, String customerName) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/identity-providers", customerIdentity));
+        url = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
             .setBody("identityProvider",
@@ -277,7 +279,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<LicenseResponse> addLicense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
+        url = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, LicenseResponse.class)
             .setBody(new LicenseRequest().setLicense(
@@ -297,7 +299,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
-        String url = String.format(Constants.getServiceUrl(), String.format("customers/%s/users/%s/access-controls", customerIdentity, userIdentity));
+        url = String.format(url, String.format("customers/%s/users/%s/access-controls", customerIdentity, userIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, AccessControlResponse.class)
             .setBody("accessControl",
