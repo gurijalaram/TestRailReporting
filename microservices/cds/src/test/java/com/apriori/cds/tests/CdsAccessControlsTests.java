@@ -52,7 +52,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @Description("API returns a list of all the access controls in the CDS DB")
     public void getAccessControls() {
         url = String.format(url, "access-controls");
-        ResponseWrapper<AccessControls> response = getCommonRequest(url, true, AccessControls.class);
+        ResponseWrapper<AccessControls> response = getCommonRequest(url, AccessControls.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

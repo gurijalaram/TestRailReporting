@@ -30,9 +30,9 @@ public class ApVersionsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5958")
     @Description("Get a list of ap Versions in CDSDb")
     public void getApVersions() {
-        url = String.format(url,"ap-versions");
+        url = String.format(url, "ap-versions");
 
-        ResponseWrapper<ApVersions> response = getCommonRequest(url, true, ApVersions.class);
+        ResponseWrapper<ApVersions> response = getCommonRequest(url, ApVersions.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

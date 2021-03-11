@@ -47,7 +47,7 @@ public class CdsSitesTests extends CdsTestUtil {
     public void getSites() {
         url = String.format(url, "sites");
 
-        ResponseWrapper<Sites> response = getCommonRequest(url, true, Sites.class);
+        ResponseWrapper<Sites> response = getCommonRequest(url, Sites.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -60,11 +60,11 @@ public class CdsSitesTests extends CdsTestUtil {
     public void getSiteByIdentity() {
         String sitesUrl = String.format(url, "sites");
 
-        ResponseWrapper<Sites> response = getCommonRequest(sitesUrl, true, Sites.class);
+        ResponseWrapper<Sites> response = getCommonRequest(sitesUrl, Sites.class);
         String siteIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
         String identityUrl = String.format(url, String.format("sites/%s", siteIdentity));
-        ResponseWrapper<Site> responseWrapper = getCommonRequest(identityUrl, true, Site.class);
+        ResponseWrapper<Site> responseWrapper = getCommonRequest(identityUrl, Site.class);
 
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseWrapper.getResponseEntity().getResponse().getIdentity(), is(equalTo(siteIdentity)));
@@ -105,7 +105,7 @@ public class CdsSitesTests extends CdsTestUtil {
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
-        ResponseWrapper<Sites> response = getCommonRequest(siteEndpoint, true, Sites.class);
+        ResponseWrapper<Sites> response = getCommonRequest(siteEndpoint, Sites.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(0)));
@@ -130,7 +130,7 @@ public class CdsSitesTests extends CdsTestUtil {
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
         String identityEndpoint = String.format(url, String.format("customers/%s/sites/%s", customerIdentity, siteIdentity));
 
-        ResponseWrapper<Site> response = getCommonRequest(identityEndpoint, true, Site.class);
+        ResponseWrapper<Site> response = getCommonRequest(identityEndpoint, Site.class);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(site.getResponseEntity().getResponse().getName(), is(equalTo(siteName)));
         assertThat(site.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));

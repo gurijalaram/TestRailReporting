@@ -27,9 +27,9 @@ import java.util.Arrays;
 
 public class CdsTestUtil extends TestUtil {
 
-    protected <T> ResponseWrapper<T> getCommonRequest(String url, boolean urlEncoding, Class klass) {
+    protected <T> ResponseWrapper<T> getCommonRequest(String url, Class klass) {
         return GenericRequestUtil.get(
-            RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
+            RequestEntity.init(url, klass).setUrlEncodingEnabled(true),
             new RequestAreaApi()
         );
     }
