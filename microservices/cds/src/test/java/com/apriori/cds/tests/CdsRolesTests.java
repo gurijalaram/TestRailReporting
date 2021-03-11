@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cds.objects.response.Role;
 import com.apriori.cds.objects.response.Roles;
-import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
