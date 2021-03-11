@@ -14,6 +14,7 @@ import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.InstallationItems;
+import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
@@ -172,8 +173,24 @@ public class CdsTestUtil extends TestUtil {
                     .setActive("true")
                     .setIsDefault("true")
                     .setCreatedBy("#SYSTEM00000")
-                    .setApVersion("2020 R1")
-                    .setApplications(Arrays.asList("1J8M416FBJBK")));
+                    .setApVersion("2020 R1"));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * POST call to add an application to a site
+     *
+     * @param url   - the endpoint
+     * @param klass - the response class
+     * @return <T>ResponseWrapper<T>
+     */
+    public <T> ResponseWrapper<T> addApplicationToSite(String url, Class klass) {
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+            .setHeaders("Content-Type", "application/json")
+            .setBody("licensedApplication",
+                new LicensedApplication().setApplicationIdentity(Constants.getApProApplicationIdentity())
+                    .setCreatedBy("#SYSTEM00000"));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -183,11 +200,12 @@ public class CdsTestUtil extends TestUtil {
      *
      * @param customerIdentity   - the customer id
      * @param deploymentIdentity - the deployment id
+     *                                 @param siteIdentity   - the site Identity
      * @param realmKey           - the realm key
      * @param cloudReference     - the cloud reference
      * @return new object
      */
-    public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference) {
+    public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity) {
         url = String.format(url, String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
@@ -205,6 +223,8 @@ public class CdsTestUtil extends TestUtil {
                     .setClientSecret("donotusethiskey")
                     .setCreatedBy("#SYSTEM00000")
                     .setCidGlobalKey("donotusethiskey")
+                    .setSiteIdentity(siteIdentity)
+                    .setApplications(Arrays.asList(Constants.getApProApplicationIdentity()))
                     .setCloudReference(cloudReference));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
@@ -247,7 +267,7 @@ public class CdsTestUtil extends TestUtil {
                     .setName(customerName + "-idp")
                     .setDisplayName(customerName + "SAML")
                     .setIdpDomains(Arrays.asList(customerName + ".com"))
-                    .setIdentityProviderPlatform("AZURE AD")
+                    .setIdentityProviderPlatform("Azure AD")
                     .setDescription("Create IDP using CDS automation")
                     .setActive(true)
                     .setCreatedBy("#SYSTEM00000")

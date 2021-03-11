@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
     "response"
@@ -22,9 +21,10 @@
         "clientId",
         "clientSecret",
         "cidGlobalKey",
+        "customerIdentity",
+        "applications",
         "deploymentIdentity",
-        "region",
-        "customerIdentity"
+        "region"
       ],
       "properties": {
         "identity": {
@@ -69,13 +69,71 @@
         "cidGlobalKey": {
           "type": "string"
         },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "isCloudHomeApp",
+                  "isSingleTenant",
+                  "isPublic",
+                  "identity",
+                  "createdBy",
+                  "createdAt",
+                  "name",
+                  "cloudReference",
+                  "serviceName",
+                  "description",
+                  "iconUrl"
+                ],
+                "properties": {
+                  "isCloudHomeApp": {
+                    "type": "boolean"
+                  },
+                  "isSingleTenant": {
+                    "type": "boolean"
+                  },
+                  "isPublic": {
+                    "type": "boolean"
+                  },
+                  "identity": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "cloudReference": {
+                    "type": "string"
+                  },
+                  "serviceName": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "iconUrl": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
         "deploymentIdentity": {
           "type": "string"
         },
         "region": {
-          "type": "string"
-        },
-        "customerIdentity": {
           "type": "string"
         }
       }

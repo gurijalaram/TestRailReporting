@@ -17,6 +17,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
@@ -62,6 +63,7 @@ public class CdsAccessControlsTests  {
 
     @Test
     @TestRail(testCaseId = "3294")
+    @Issue("MIC-1972")
     @Description("Adding out of context access control")
     public void postAccessControl() {
 
