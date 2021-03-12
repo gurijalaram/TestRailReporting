@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.components.inputs;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.PrimaryInputsController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
+import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -78,6 +79,26 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     }
 
     /**
+     * Opens secondary input tab
+     *
+     * @return new page object
+     */
+    public SecondaryInputsPage openSecondaryInputsTab() {
+        pageUtils.waitForElementAndClick(secondaryTab);
+        return new SecondaryInputsPage(driver);
+    }
+
+    /**
+     * Opens custom attributes tab
+     *
+     * @return new page object
+     */
+    public CustomAttributesPage openCustomAttributesTab() {
+        pageUtils.waitForElementAndClick(customAttributesTab);
+        return new CustomAttributesPage(driver);
+    }
+
+    /**
      * Selects the pg dropdown
      *
      * @param processGroup - the process group
@@ -100,6 +121,26 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     }
 
     /**
+     * Opens the material selector table
+     *
+     * @return new page object
+     */
+    public MaterialSelectorPage openMaterialSelectorTable() {
+        primaryInputsController.openMaterialSelectorTable(materialsPencil);
+        return new MaterialSelectorPage(driver);
+    }
+
+    /**
+     * Opens the secondary processes page
+     *
+     * @return new page object
+     */
+    public SecondaryProcessesPage openSecondaryProcesses() {
+        primaryInputsController.openSecondaryProcesses(secondaryProcessesPencil);
+        return new SecondaryProcessesPage(driver);
+    }
+
+    /**
      * Enters the annual volume
      *
      * @param annualVolume - the annual volume
@@ -119,36 +160,6 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     public PrimaryInputsPage enterAnnualYears(String productionLife) {
         primaryInputsController.enterAnnualYears(productionLifeInput, productionLife);
         return this;
-    }
-
-    /**
-     * Opens the material selector table
-     *
-     * @return new page object
-     */
-    public MaterialSelectorPage openMaterialSelectorTable() {
-        primaryInputsController.openMaterialSelectorTable(materialsPencil);
-        return new MaterialSelectorPage(driver);
-    }
-
-    /**
-     * Opens secondary input tab
-     *
-     * @return new page object
-     */
-    public SecondaryInputsPage openSecondaryInputsTab() {
-        pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryInputsPage(driver);
-    }
-
-    /**
-     * Opens custom attributes tab
-     *
-     * @return new page object
-     */
-    public CustomAttributesPage openCustomAttributesTab() {
-        pageUtils.waitForElementAndClick(customAttributesTab);
-        return new CustomAttributesPage(driver);
     }
 
     /**
