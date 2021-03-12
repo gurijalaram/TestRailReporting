@@ -11,6 +11,8 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ComponentIconEnum;
+import com.apriori.utils.enums.CostingIconEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
@@ -84,10 +86,12 @@ public class UploadAssembliesTests extends TestBase {
 
         componentsListPage = evaluatePage.openComponents();
         assertThat(componentsListPage.getRowText("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die"));
-        assertThat(componentsListPage.getRowIcon("Small Ring", "Initial"), hasItems("cube", "check"));
+        assertThat(componentsListPage.getRowIcon("Small Ring", "Initial"), hasItems(ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
+
         assertThat(componentsListPage.getRowText("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die"));
-        assertThat(componentsListPage.getRowIcon("Big Ring", "Initial"), hasItems("cube", "check"));
+        assertThat(componentsListPage.getRowIcon("Big Ring", "Initial"), hasItems(ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
+
         assertThat(componentsListPage.getRowText("Pin", "Initial"), hasItems("$1.97", "Casting - Die"));
-        assertThat(componentsListPage.getRowIcon("Pin", "Initial"), hasItems("cube", "check"));
+        assertThat(componentsListPage.getRowIcon("Pin", "Initial"), hasItems(ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
     }
 }
