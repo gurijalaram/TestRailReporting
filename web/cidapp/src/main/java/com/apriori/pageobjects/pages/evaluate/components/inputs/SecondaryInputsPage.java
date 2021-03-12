@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.evaluate.components;
+package com.apriori.pageobjects.pages.evaluate.components.inputs;
 
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.SecondaryInputsController;

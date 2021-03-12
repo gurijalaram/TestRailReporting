@@ -6,6 +6,7 @@ import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.PrimaryInputsPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
