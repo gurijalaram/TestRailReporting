@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "application",
+        "applicationIdentity"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "application": {
+          "type": "string"
+        },
+        "applicationIdentity": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

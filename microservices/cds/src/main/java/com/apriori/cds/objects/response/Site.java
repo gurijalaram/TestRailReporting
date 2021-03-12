@@ -26,6 +26,8 @@ public class Site {
     private String siteId;
     private String customerIdentity;
     private List<Deployment> deployments;
+    private List<LicensedApplication> licensedApplications = null;
+
 
     public Site getResponse() {
         return response;
@@ -33,6 +35,15 @@ public class Site {
 
     public Site setResponse(Site response) {
         this.response = response;
+        return this;
+    }
+
+    public List<LicensedApplication> getLicensedApplications() {
+        return licensedApplications;
+    }
+
+    public Site setLicensedApplications(List<LicensedApplication> licensedApplications) {
+        this.licensedApplications = licensedApplications;
         return this;
     }
 

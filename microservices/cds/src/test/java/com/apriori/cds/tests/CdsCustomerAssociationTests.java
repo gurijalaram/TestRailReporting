@@ -32,7 +32,7 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
     @TestRail(testCaseId = "5387")
     @Description("Get customer association for apriori Internal")
     public void getCustomerAssociations() {
-        url = String.format(url, "customers/L2H992828N8M/customer-associations");
+        url = String.format(url, String.format("customers/%s/customer-associations", Constants.getAPrioriInternalCustomerIdentity()));
 
         ResponseWrapper<CustomerAssociationResponse> response = getCommonRequest(url, true, CustomerAssociationResponse.class);
 
@@ -45,13 +45,13 @@ public class CdsCustomerAssociationTests extends CdsTestUtil {
     @TestRail(testCaseId = "5825")
     @Description("Get customer association by association Identity")
     public void getCustomerAssociationByIdentity() {
-        String associationEndpoint = String.format(url, "customers/L2H992828N8M/customer-associations");
+        String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations", Constants.getAPrioriInternalCustomerIdentity()));
 
         ResponseWrapper<CustomerAssociationResponse> response = getCommonRequest(associationEndpoint, true, CustomerAssociationResponse.class);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String associationIdentityEndpoint = String.format(url, String.format("customers/L2H992828N8M/customer-associations/%s", associationIdentity));
+        String associationIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s", Constants.getAPrioriInternalCustomerIdentity(), associationIdentity));
         ResponseWrapper<CustomerAssociationItems> association = getCommonRequest(associationIdentityEndpoint, true, CustomerAssociationItems.class);
 
         assertThat(association.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
