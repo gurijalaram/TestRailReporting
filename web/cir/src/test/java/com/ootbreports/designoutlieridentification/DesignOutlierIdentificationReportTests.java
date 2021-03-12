@@ -2,9 +2,7 @@ package com.ootbreports.designoutlieridentification;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.DesignOutlierIdentificationReportPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -19,6 +17,8 @@ import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class DesignOutlierIdentificationReportTests extends TestBase {
@@ -92,7 +92,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1988")
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateCalendar() {
@@ -103,7 +103,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1988")
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateInputField() {
@@ -111,5 +111,21 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
         inputControlsTests.testExportSetFilterUsingInputField(
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
         );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "1995")
+    @Description("Export date lists all available versions from selected export set(s)")
+    public void testExportDateAvailability() {
+        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                    DesignOutlierIdentificationReportPage.class);
+
+        designOutlierIdentificationReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+
+        assertThat(designOutlierIdentificationReportPage.getExportDateCount(), is(equalTo("2")));
     }
 }
