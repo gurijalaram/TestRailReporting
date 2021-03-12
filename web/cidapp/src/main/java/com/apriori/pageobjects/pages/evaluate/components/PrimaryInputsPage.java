@@ -46,6 +46,9 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     @FindBy(css = ".inputs-container div[id='qa-material-modal-select-field'] .input-group-append")
     private WebElement materialsPencil;
 
+    @FindBy(xpath = "//div[@class='inputs-container']//button[.='Secondary']")
+    private WebElement secondaryTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PrimaryInputsController primaryInputsController;
@@ -123,6 +126,11 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     public MaterialSelectorPage openMaterialSelectorTable() {
         primaryInputsController.openMaterialSelectorTable(materialsPencil);
         return new MaterialSelectorPage(driver);
+    }
+
+    public SecondaryInputsPage openSecondaryInputsTab() {
+        pageUtils.waitForElementAndClick(secondaryTab);
+        return new SecondaryInputsPage(driver);
     }
 
     /**

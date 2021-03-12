@@ -43,7 +43,7 @@ public class PrimaryInputsController {
     /**
      * Enters the annual volume
      *
-     * @param annualVolumeInput - the annual volume
+     * @param annualVolumeInput - the annual volume input
      * @param annualVolume      - the annual volume
      * @return current page object
      */
