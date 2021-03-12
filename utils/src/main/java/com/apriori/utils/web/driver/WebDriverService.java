@@ -20,7 +20,7 @@ import java.security.InvalidParameterException;
 
 public class WebDriverService extends BrowserManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverService.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebDriverService.class);
 
     private WebDriver result;
     private DesiredCapabilities dc = new DesiredCapabilities();
@@ -53,7 +53,7 @@ public class WebDriverService extends BrowserManager {
                     dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                     dc.setCapability(ChromeOptions.CAPABILITY, options);
                     result = new ChromeDriver(dc);
-                    LOGGER.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
+                    logger.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                     break;
 
                 case FIREFOX:
@@ -62,13 +62,13 @@ public class WebDriverService extends BrowserManager {
                     DesiredCapabilities firefoxOptions = new FirefoxOptions(downloadPath, locale).getFirefoxOptions();
                     firefoxOptions.acceptInsecureCerts();
                     result = new FirefoxDriver(firefoxOptions);
-                    LOGGER.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
+                    logger.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                     break;
 
                 case EDGE:
                     WebDriverManager.edgedriver().setup();
                     result = new EdgeDriver();
-                    LOGGER.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
+                    logger.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
                     break;
 
                 default:

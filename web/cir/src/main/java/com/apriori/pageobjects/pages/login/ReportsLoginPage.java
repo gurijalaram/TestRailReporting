@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ReportsLoginPage extends ReportsPageHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ReportsLoginPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
     private static String loginPageURL = Constants.getDefaultUrl();
 
     @FindBy(css = "input[name='j_username']")
@@ -67,14 +67,14 @@ public class ReportsLoginPage extends ReportsPageHeader {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = loginPageURL;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        LOGGER.info("CURRENTLY ON INSTANCE: " + url);
+        logger.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EditWorkflowPage {
-    private final Logger logger = LoggerFactory.getLogger(EditWorkflowPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(EditWorkflowPage.class);
 
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup")
     private WebElement editWorkflowModal;

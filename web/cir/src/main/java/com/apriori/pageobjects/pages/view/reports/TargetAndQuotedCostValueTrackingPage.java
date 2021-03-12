@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
 
     @FindBy(xpath = "//div[@id='projectRollup']//a")
     private WebElement projectRollupDropdown;
@@ -36,7 +36,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

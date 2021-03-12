@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class ExplorePage extends ExploreToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(css = "button[class='dropdown-toggle btn btn-primary']")
     private WebElement paginatorDropdown;
@@ -39,7 +39,7 @@ public class ExplorePage extends ExploreToolbar {
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(scenarioCount);
     }
@@ -69,7 +69,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return a new page object
      */
-    public EvaluatePage openComponent(String componentName, String scenarioName) {
+    public EvaluatePage openScenario(String componentName, String scenarioName) {
         scenarioTableController.openScenario(componentName, scenarioName);
         return new EvaluatePage(driver);
     }
@@ -81,7 +81,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage highlightComponent(String componentName, String scenarioName) {
+    public ExplorePage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
@@ -93,7 +93,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return size of the element as int
      */
-    public int getListOfComponents(String componentName, String scenarioName) {
+    public int getListOfScenarios(String componentName, String scenarioName) {
         return scenarioTableController.getListOfScenarios(componentName, scenarioName);
     }
 
@@ -104,5 +104,61 @@ public class ExplorePage extends ExploreToolbar {
      */
     public ConfigurePage configure() {
         return componentTableActions.configure();
+    }
+
+    /**
+     * Multi-highlight scenarios
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ExplorePage multiHighlightScenarios(String... componentScenarioName) {
+        scenarioTableController.multiHighlightScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Multi-select scenario
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ExplorePage multiSelectScenarios(String... componentScenarioName) {
+        scenarioTableController.multiSelectScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Highlights the scenario in the table using the keyboard control key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage controlHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.controlHighlightScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
+     * Gets the cell in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    public ExplorePage getRowText(String componentName, String scenarioName) {
+        scenarioTableController.getRowText(componentName, scenarioName);
+        return this;
+    }
+
+    /**
+     * Gets the icon in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    public ExplorePage getRowIcon(String componentName, String scenarioName) {
+        scenarioTableController.getRowIcon(componentName, scenarioName);
+        return this;
     }
 }

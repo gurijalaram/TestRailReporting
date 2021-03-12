@@ -11,11 +11,14 @@ import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UpdatedProfile;
 
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -184,5 +187,32 @@ public class CasTestUtil extends TestUtil {
                         .setSupervisor("Ciene Frith")));
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * @param url - the endpoint
+     * @param klass - the response class
+     * @param token - token
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> addBatchFile(String url, Class klass, String token) {
+        final File batchFile = FileResourceUtil.getResourceAsFile("users.csv");
+        RequestEntity requestEntity = RequestEntity.init(url, klass)
+                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+                .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * @param url - the endpoint
+     * @param token - token
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> deleteBatch(String url, String token) {
+        RequestEntity requestEntity = RequestEntity.init(url, null)
+                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
     }
 }

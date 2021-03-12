@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AfterTestUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AfterTestUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(AfterTestUtil.class);
     APIAuthentication apiAuthentication = new APIAuthentication();
     private String baseUrl = System.getProperty("baseUrl");
 
@@ -30,7 +30,7 @@ public class AfterTestUtil {
      * @param username - username of logged user
      */
     public void resetAllSettings(String username) {
-        LOGGER.info("Will reset settings for user {}", username);
+        logger.info("Will reset settings for user {}", username);
         resetDisplayUnits(username);
         resetColour(username);
         resetScenarioName(username);

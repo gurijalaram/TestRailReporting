@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.utils.PageUtils;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class EvaluatePage extends EvaluateToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(EvaluatePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
     @FindBy(css = ".left-panel.p-3")
     private WebElement leftPanel;
@@ -115,7 +115,7 @@ public class EvaluatePage extends EvaluateToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
         pageUtils.waitForElementAppear(leftPanel);
@@ -279,9 +279,9 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public ComponentsPage openComponents() {
+    public ComponentsListPage openComponents() {
         pageUtils.waitForElementAndClick(componentsDetailsButton);
-        return new ComponentsPage(driver);
+        return new ComponentsListPage(driver);
     }
 
     /**

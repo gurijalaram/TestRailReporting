@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 
 public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(FileUploadPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
     @FindBy(css = ".modal-content label")
     private WebElement componentLabel;
@@ -48,7 +48,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

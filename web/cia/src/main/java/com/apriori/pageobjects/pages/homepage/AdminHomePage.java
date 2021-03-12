@@ -13,7 +13,7 @@ import utils.Constants;
 
 public class AdminHomePage extends PageHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(AdminHomePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdminHomePage.class);
 
     @FindBy(css = "div[class='devices']")
     private WebElement reportsWelcomeText;
@@ -28,7 +28,7 @@ public class AdminHomePage extends PageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

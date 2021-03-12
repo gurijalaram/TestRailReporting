@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class ViewRepositoryPage extends ReportsPageHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewRepositoryPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
     private Map<String, String[]> navigationMap = new HashMap<>();
 
     @FindBy(xpath = "//div[contains(text(), 'Repository')]")
@@ -34,7 +34,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseNavigationMap();
     }

@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CicUserGuide  {
-    private final Logger logger = LoggerFactory.getLogger(CicUserGuide.class);
+    private static final Logger logger = LoggerFactory.getLogger(CicUserGuide.class);
 
     @FindBy(css = "div[id='wwpID0ELHA']")
     private WebElement userGuideTitle;

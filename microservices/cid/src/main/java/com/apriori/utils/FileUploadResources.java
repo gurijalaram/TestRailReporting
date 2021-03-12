@@ -50,7 +50,7 @@ import java.util.concurrent.TimeUnit;
 
 public class FileUploadResources {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUploadResources.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
     private static final long WAIT_TIME = 180;
 
     private static String identity;
@@ -341,7 +341,7 @@ public class FileUploadResources {
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
 
@@ -353,7 +353,7 @@ public class FileUploadResources {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
-                LOGGER.error(e.getMessage());
+                logger.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
 
@@ -459,7 +459,7 @@ public class FileUploadResources {
         try {
             node = new ObjectMapper().readTree(jsonProperties);
         } catch (JsonProcessingException e) {
-            LOGGER.debug(e.getMessage());
+            logger.debug(e.getMessage());
             throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();

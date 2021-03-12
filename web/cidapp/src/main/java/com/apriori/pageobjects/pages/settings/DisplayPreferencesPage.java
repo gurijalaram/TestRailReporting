@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferencesPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(DisplayPreferencesPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(DisplayPreferencesPage.class);
 
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;

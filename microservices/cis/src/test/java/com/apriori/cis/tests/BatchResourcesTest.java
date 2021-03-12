@@ -29,8 +29,8 @@ public class BatchResourcesTest extends TestUtil {
             String batchIdentity = CisUtils.getIdentity(batch, Batch.class);
             Constants.setCisBatchIdentity(batchIdentity);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error(Arrays.toString(e.getStackTrace()));
+            logger.error(e.getMessage());
+            logger.error(Arrays.toString(e.getStackTrace()));
         }
     }
 

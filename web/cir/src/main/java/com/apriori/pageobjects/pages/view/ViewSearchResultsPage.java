@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ViewSearchResultsPage extends ReportsPageHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewSearchResultsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ViewSearchResultsPage.class);
 
     @FindBy(css = "body")
     private WebElement searchResultsPageTitle;
@@ -27,7 +27,7 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         isLoaded();
     }

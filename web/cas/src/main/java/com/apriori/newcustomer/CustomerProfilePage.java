@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CustomerProfilePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerProfilePage.class);
 
     @FindBy(xpath = "//a[.='Profile']")
     private WebElement profileTab;
@@ -67,7 +67,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

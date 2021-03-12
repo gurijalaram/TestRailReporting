@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import utils.Constants;
 
 public class LoginPage {
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
 
     @FindBy(css = "input[name='email']")
     private WebElement email;

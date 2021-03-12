@@ -18,7 +18,7 @@ import java.util.List;
  * @author kpatel
  */
 public class ConnectorList extends LoadableComponent<ConnectorList> {
-    private final Logger logger = LoggerFactory.getLogger(ConnectorList.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConnectorList.class);
 
     @FindBy(css = "div.objbox tr")
     private List<WebElement> connectorListTable;

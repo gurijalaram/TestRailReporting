@@ -14,16 +14,13 @@ public class Deployment {
     private String identity;
     private String createdBy;
     private String createdAt;
-    private String siteIdentity;
     private String name;
     private String description;
     private String apVersion;
     private Boolean active;
     private List<Object> installations = null;
     private String customerIdentity;
-    private List<Application> applications = null;
     private String deploymentType;
-    private List<String> sites = null;
 
     public Deployment getResponse() {
         return response;
@@ -58,11 +55,6 @@ public class Deployment {
 
     public Deployment setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
-        return this;
-    }
-
-    public Deployment setSiteIdentity(String siteIdentity) {
-        this.siteIdentity = siteIdentity;
         return this;
     }
 
@@ -129,30 +121,12 @@ public class Deployment {
         return this;
     }
 
-    public List<Application> getApplications() {
-        return applications;
-    }
-
-    public Deployment setApplications(List<Application> applications) {
-        this.applications = applications;
-        return this;
-    }
-
     public String getDeploymentType() {
         return deploymentType;
     }
 
     public Deployment setDeploymentType(String deploymentType) {
         this.deploymentType = deploymentType;
-        return this;
-    }
-
-    public List<String> getSites() {
-        return sites;
-    }
-
-    public Deployment setSites(List<String> sites) {
-        this.sites = sites;
         return this;
     }
 }

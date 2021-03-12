@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class PartNestingPage extends EvaluatePanelToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(PartNestingPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(PartNestingPage.class);
 
     @FindBy(css = "label[data-ap-field='selectedSheet']")
     private WebElement selectedSheet;
@@ -53,7 +53,7 @@ public class PartNestingPage extends EvaluatePanelToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

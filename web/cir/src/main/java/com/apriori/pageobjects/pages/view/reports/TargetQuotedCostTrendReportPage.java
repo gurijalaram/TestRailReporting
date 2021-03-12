@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
 
     @FindBy(xpath = "//div[@id='projectRollup']//a")
     private WebElement projectRollupDropdown;
@@ -74,7 +74,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

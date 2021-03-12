@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewWorkflowFeatures {
-    private final Logger logger = LoggerFactory.getLogger(NewWorkflowFeatures.class);
+    private static final Logger logger = LoggerFactory.getLogger(NewWorkflowFeatures.class);
 
     private WebDriver driver;
     private WorkflowPage workflowPage;

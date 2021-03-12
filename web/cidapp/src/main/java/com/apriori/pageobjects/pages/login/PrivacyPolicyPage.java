@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
-    private final Logger logger = LoggerFactory.getLogger(PrivacyPolicyPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(PrivacyPolicyPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;

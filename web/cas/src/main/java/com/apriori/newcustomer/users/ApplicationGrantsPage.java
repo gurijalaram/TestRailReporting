@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class ApplicationGrantsPage extends LoadableComponent<ApplicationGrantsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ApplicationGrantsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationGrantsPage.class);
 
     @FindBy(xpath = "//span[.='Available Users']/parent::div//input[@class]")
     private WebElement userSearchInput;
@@ -42,7 +42,7 @@ public class ApplicationGrantsPage extends LoadableComponent<ApplicationGrantsPa
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
