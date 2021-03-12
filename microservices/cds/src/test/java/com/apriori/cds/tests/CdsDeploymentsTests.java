@@ -3,7 +3,6 @@ package com.apriori.cds.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.objects.response.Customer;
@@ -65,7 +64,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("Production Deployment")));
-        assertThat(response.getResponseEntity().getResponse().getSites(), hasItem(siteIdentity));
+        assertThat(response.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));
     }
 
     @Test

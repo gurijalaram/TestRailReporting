@@ -15,7 +15,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cds";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "int";
     private static final Logger logger = LoggerFactory.getLogger(Constants.class);
     private static final File INPUT_STREAM;
     private static final Properties PROPERTIES = new Properties();
