@@ -73,6 +73,25 @@ public class FileUploadResources {
     private String baseUrl = System.getProperty("baseUrl");
 
     /**
+     * Method to upload part, load CAD metadata and generate part images
+     * @param token - the token
+     * @param fileName - file to upload
+     * @param scenarioName - scenario name to use
+     */
+    public void uploadLoadCadMetadataGeneratePartImages(HashMap<String, String> token, String fileName,
+                                                        String scenarioName, String processGroup) {
+        // Create, submit and check file upload workorder
+        initializeFileUpload(token, fileName, processGroup);
+        createFileUploadWorkOrder(token, fileName, scenarioName);
+        submitFileUploadWorkOrder(token);
+        checkFileWorkOrderSuccessful(token);
+
+        // Create, submit and check Load CAD Metadata workorder
+
+        // Create, submit and check Generate Part Images workorder
+    }
+
+    /**
      * Method to upload, cost and publish a scenario
      *
      * @param token        - the token

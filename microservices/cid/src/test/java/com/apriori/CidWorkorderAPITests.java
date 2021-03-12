@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RunWith(JUnitParamsRunner.class)
-public class FileUploadApiTest extends TestUtil {
+public class CidWorkorderAPITests extends TestUtil {
 
     private static PropertyStore propertyStore;
 
@@ -44,6 +44,14 @@ public class FileUploadApiTest extends TestUtil {
         Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
         new FileUploadResources().uploadCostPublishApi(token, fileObject, fileName, scenarioName, processGroup);
+    }
+
+    @Test
+    @Description("Upload a part, load CAD Metadata, and generate part images")
+    public void loadCadMetadataAndGeneratePartImages(String fileName, String scenarioName, String processGroup) {
+        Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
+
+        new FileUploadResources().uploadLoadCadMetadataGeneratePartImages(token, fileName, scenarioName, processGroup);
     }
 
     public static class CustomMapper extends IdentityMapper {
