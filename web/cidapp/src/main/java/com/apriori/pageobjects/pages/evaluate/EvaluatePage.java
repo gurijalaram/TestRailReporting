@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.common.CustomAttributesInputsController;
 import com.apriori.pageobjects.common.PrimaryInputsController;
+import com.apriori.pageobjects.common.SecondaryInputsController;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
@@ -111,12 +113,16 @@ public class EvaluatePage extends EvaluateToolbar {
     private PageUtils pageUtils;
     private WebDriver driver;
     private PrimaryInputsController primaryInputsController;
+    private SecondaryInputsController secondaryInputsController;
+    private CustomAttributesInputsController customAttributesInputsController;
 
     public EvaluatePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.primaryInputsController = new PrimaryInputsController(driver);
+        this.secondaryInputsController = new SecondaryInputsController(driver);
+        this.customAttributesInputsController = new CustomAttributesInputsController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
