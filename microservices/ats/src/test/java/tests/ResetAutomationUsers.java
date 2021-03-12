@@ -11,6 +11,7 @@ import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -27,7 +28,11 @@ public class ResetAutomationUsers {
         + "/password?key="
         + Constants.getSecretKey();
 
+    /**
+     * The initial value in the 'range' is inclusive and upper bound value is exclusive
+     */
     @Test
+    @Description("Resets the password of the automation users")
     public void resetAllAutomationUsers() {
         IntStream.range(1, 41).forEach(x -> {
             String userIndex = (x < 10 ? "0" : "") + x;
