@@ -49,6 +49,9 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     @FindBy(xpath = "//div[@class='inputs-container']//button[.='Secondary']")
     private WebElement secondaryTab;
 
+    @FindBy(xpath = "//div[@class='inputs-container']//button[.='Custom Attributes']")
+    private WebElement customAttributesTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PrimaryInputsController primaryInputsController;
@@ -128,9 +131,24 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
         return new MaterialSelectorPage(driver);
     }
 
+    /**
+     * Opens secondary input tab
+     *
+     * @return new page object
+     */
     public SecondaryInputsPage openSecondaryInputsTab() {
         pageUtils.waitForElementAndClick(secondaryTab);
         return new SecondaryInputsPage(driver);
+    }
+
+    /**
+     * Opens custom attributes tab
+     *
+     * @return new page object
+     */
+    public CustomAttributesPage openCustomAttributesTab() {
+        pageUtils.waitForElementAndClick(customAttributesTab);
+        return new CustomAttributesPage(driver);
     }
 
     /**
