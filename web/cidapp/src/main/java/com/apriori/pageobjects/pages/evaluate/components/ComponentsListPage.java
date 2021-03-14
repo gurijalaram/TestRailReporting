@@ -165,24 +165,13 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Gets the cell in the row
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return list of string
-     */
-    public List<String> getRowText(String componentName, String scenarioName) {
-        return scenarioTableController.getRowText(componentName, scenarioName);
-    }
-
-    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
      * @param scenarioName  - scenario name
      * @return list of string
      */
-    public List<String> getRowIcon(String componentName, String scenarioName) {
-        return scenarioTableController.getRowIcon(componentName, scenarioName);
+    public List<String> getRowDetails(String componentName, String scenarioName) {
+        return scenarioTableController.getRowDetails(componentName, scenarioName);
     }
 }
