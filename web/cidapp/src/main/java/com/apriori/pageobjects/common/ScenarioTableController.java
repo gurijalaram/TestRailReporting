@@ -14,8 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ScenarioTableController extends LoadableComponent<ScenarioTableController> {
 
@@ -82,6 +84,19 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return driver.findElements(getByScenario(componentName, scenarioName)).size();
     }
 
+
+    /**
+     * Gets the info in the row
+     * @param componentName - name of the part
+     * @param scenarioName - scenario name
+     * @return list of string
+     */
+    public List<String> getRowDetails(String componentName, String scenarioName) {
+        return Stream.of(getRowText(componentName, scenarioName), getRowIcon(componentName, scenarioName), getDfmRisk(componentName, scenarioName))
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
+    }
+
     /**
      * Gets the cell in the row
      *
@@ -89,7 +104,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return list of string
      */
-    public List<String> getRowText(String componentName, String scenarioName) {
+    private List<String> getRowText(String componentName, String scenarioName) {
         return getByParentLocator(componentName, scenarioName)
             .findElements(By.cssSelector("[class='cell-text']"))
             .stream()
@@ -105,11 +120,26 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return list of string
      */
-    public List<String> getRowIcon(String componentName, String scenarioName) {
+    private List<String> getRowIcon(String componentName, String scenarioName) {
         return getByParentLocator(componentName, scenarioName)
             .findElements(By.cssSelector("svg"))
             .stream()
             .map(x -> x.getAttribute("data-icon"))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the dfm risk icon in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    private List<String> getDfmRisk(String componentName, String scenarioName) {
+        return getByParentLocator(componentName, scenarioName)
+            .findElements(By.cssSelector("svg circle"))
+            .stream()
+            .map(x -> x.getAttribute("stroke"))
             .collect(Collectors.toList());
     }
 

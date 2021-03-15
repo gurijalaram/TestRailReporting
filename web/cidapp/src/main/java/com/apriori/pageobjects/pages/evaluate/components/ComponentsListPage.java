@@ -18,6 +18,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ComponentsListPage.class);
@@ -154,4 +156,48 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         return panelController.closePanel();
     }
 
+    /**
+     * Multi-highlight scenarios
+     *
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ComponentsListPage multiHighlightScenarios(String... componentScenarioName) {
+        scenarioTableController.multiHighlightScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Multi-select scenario
+     *
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ComponentsListPage multiSelectScenarios(String... componentScenarioName) {
+        scenarioTableController.multiSelectScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Highlights the scenario in the table using the keyboard control key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ComponentsListPage controlHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.controlHighlightScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
+     * Gets the icon in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    public List<String> getRowDetails(String componentName, String scenarioName) {
+        return scenarioTableController.getRowDetails(componentName, scenarioName);
+    }
 }
