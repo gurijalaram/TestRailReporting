@@ -49,7 +49,7 @@ public class CidWorkorderAPITests extends TestUtil {
     @Test
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void loadCadMetadataAndGeneratePartImages() {
-        Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
+        //Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
         new FileUploadResources().uploadLoadCadMetadataGeneratePartImages(token, "bracket_basic.prt", "Initial", "Sheet Metal");
     }

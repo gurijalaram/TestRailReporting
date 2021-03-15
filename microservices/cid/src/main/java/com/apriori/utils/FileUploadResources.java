@@ -19,7 +19,7 @@ import com.apriori.entity.request.publish.createpublishworkorder.PublishInputs;
 import com.apriori.entity.request.publish.createpublishworkorder.PublishScenarioIterationKey;
 import com.apriori.entity.request.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.entity.request.publish.createpublishworkorder.PublishWorkOrderInfo;
-import com.apriori.entity.response.FileOrderResponse;
+import com.apriori.entity.response.CreateWorkorderResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.ListOfCostOrderStatuses;
 import com.apriori.entity.response.cost.iterations.ListOfCostIterations;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishWorkOrderInfoResult;
@@ -28,6 +28,9 @@ import com.apriori.entity.response.upload.FileOrdersUpload;
 import com.apriori.entity.response.upload.FileUploadOrder;
 import com.apriori.entity.response.upload.FileUploadWorkOrder;
 import com.apriori.entity.response.upload.FileWorkOrder;
+import com.apriori.entity.response.upload.LoadCadMetadataCommand;
+import com.apriori.entity.response.upload.LoadCadMetadataCommandType;
+import com.apriori.entity.response.upload.LoadCadMetadataInputs;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -54,6 +57,8 @@ public class FileUploadResources {
     private static final long WAIT_TIME = 180;
 
     private static String identity;
+    private static String fileIdentity;
+    private static String userIdentity;
     private static String orderId;
     private static int inputSetId;
     private static String stateName;
@@ -77,6 +82,7 @@ public class FileUploadResources {
      * @param token - the token
      * @param fileName - file to upload
      * @param scenarioName - scenario name to use
+     * @param processGroup - process group to use
      */
     public void uploadLoadCadMetadataGeneratePartImages(HashMap<String, String> token, String fileName,
                                                         String scenarioName, String processGroup) {
@@ -87,6 +93,7 @@ public class FileUploadResources {
         checkFileWorkOrderSuccessful(token);
 
         // Create, submit and check Load CAD Metadata workorder
+        createLoadCadMetadataWorkorder(token);
 
         // Create, submit and check Generate Part Images workorder
     }
@@ -133,7 +140,8 @@ public class FileUploadResources {
             .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup),fileName)))
             .setFormParams(new FormParams().use("filename", fileName));
 
-        identity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");
+        fileIdentity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");
+        userIdentity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "userIdentity");
     }
 
     /**
@@ -148,7 +156,7 @@ public class FileUploadResources {
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
-        RequestEntity fileRequestEntity = RequestEntity.init(fileURL, FileOrderResponse.class)
+        RequestEntity fileRequestEntity = RequestEntity.init(fileURL, CreateWorkorderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
             .setBody(new FileCommand()
@@ -159,6 +167,29 @@ public class FileUploadResources {
                         .setFileName(fileName.replaceAll("\\s", "")))));
 
         orderId = jsonNode(GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getBody(), "id");
+    }
+
+    /**
+     * Creates file upload
+     *
+     * @param token - the user token
+     */
+    private void createLoadCadMetadataWorkorder(HashMap<String, String> token) {
+        String fileURL = baseUrl + "apriori/cost/session/ws/workorder/orders";
+
+        headers.put(CONTENT_TYPE, APPLICATION_JSON);
+
+        RequestEntity loadCadMetadataRequestEntity = RequestEntity.init(fileURL, CreateWorkorderResponse.class)
+                .setHeaders(headers)
+                .setHeaders(token)
+                .setBody(new LoadCadMetadataCommand()
+                        .setCommand(new LoadCadMetadataCommandType()
+                                .setCommandType("LOAD_CAD_METADATA")
+                                .setInputs(new LoadCadMetadataInputs()
+                                        .setFileMetadataIdentity(fileIdentity)
+                                        .setRequestedBy(userIdentity))));
+
+        orderId = jsonNode(GenericRequestUtil.post(loadCadMetadataRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
     /**
@@ -203,7 +234,7 @@ public class FileUploadResources {
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
-        RequestEntity costRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
+        RequestEntity costRequestEntity = RequestEntity.init(orderURL, CreateWorkorderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
             .setBody(
@@ -223,7 +254,7 @@ public class FileUploadResources {
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
-        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
+        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, CreateWorkorderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
             .setBody(new CostOrderCommand().setCommand(new CostOrderCommandType()
@@ -283,7 +314,7 @@ public class FileUploadResources {
 
         headers.put(CONTENT_TYPE, APPLICATION_JSON);
 
-        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, FileOrderResponse.class)
+        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, CreateWorkorderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
             .setBody(new PublishWorkOrderInfo().setCommand(

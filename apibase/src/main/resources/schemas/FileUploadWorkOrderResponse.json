@@ -35,7 +35,6 @@
       "dateCompleted": "2020-07-14T10:27:39Z"
     }
   ],
-
   "additionalProperties": true,
   "properties": {
     "version": {
@@ -56,6 +55,26 @@
       "default": "",
       "examples": [
         "d33220ec-5305-4267-a774-fa16475cd4e1"
+      ]
+    },
+    "priority": {
+      "$id": "#/properties/priority",
+      "type": "string",
+      "title": "The priority schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "NORMAL"
+      ]
+    },
+    "userId": {
+      "$id": "#/properties/userId",
+      "type": "string",
+      "title": "The userId schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "qa-automation-01"
       ]
     },
     "status": {

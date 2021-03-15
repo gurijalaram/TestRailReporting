@@ -6,7 +6,9 @@ import com.apriori.utils.http.enums.Schema;
 public class FileUploadWorkOrder {
     private Integer version;
     private String id;
+    private String priority;
     private String status;
+    private String userId;
     private String searchKey;
     private FileUploadCommand command;
     private String dateSubmitted;
@@ -29,12 +31,28 @@ public class FileUploadWorkOrder {
         this.id = id;
     }
 
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getSearchKey() {
@@ -76,4 +94,5 @@ public class FileUploadWorkOrder {
     public void setDateCompleted(String dateCompleted) {
         this.dateCompleted = dateCompleted;
     }
+
 }

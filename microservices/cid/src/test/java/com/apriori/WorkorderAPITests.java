@@ -25,6 +25,12 @@ public class WorkorderAPITests {
     public void loadCadMetadataAndGeneratePartImages() {
         //Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new FileUploadResources().uploadLoadCadMetadataGeneratePartImages(token, "bracket_basic.prt", "Initial", "Sheet Metal");
+        new FileUploadResources()
+                .uploadLoadCadMetadataGeneratePartImages(
+                        token,
+                        "bracket_basic.prt",
+                        "Initial",
+                        "Sheet Metal"
+                );
     }
 }
