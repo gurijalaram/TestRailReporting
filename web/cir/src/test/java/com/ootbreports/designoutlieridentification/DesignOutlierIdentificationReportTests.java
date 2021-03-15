@@ -128,4 +128,24 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
 
         assertThat(designOutlierIdentificationReportPage.getExportDateCount(), is(equalTo("2")));
     }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "1998")
+    @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header)")
+    public void testMinAndMaxCostFilter() {
+        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                        DesignOutlierIdentificationReportPage.class);
+
+        designOutlierIdentificationReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+        designOutlierIdentificationReportPage.inputMaxOrMinCostOrMass("Cost", "Min", "2");
+        designOutlierIdentificationReportPage.inputMaxOrMinCostOrMass("Cost", "Max", "6125");
+        designOutlierIdentificationReportPage.clickOk();
+
+        // check above chart cost min and max are right
+        // check values appearing are correct (within range)
+    }
 }

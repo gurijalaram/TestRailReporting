@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,5 +35,17 @@ public class DesignOutlierIdentificationReportPage extends GenericReportPage {
     public String getExportDateCount() {
         pageUtils.waitForElementToAppear(exportDateList);
         return exportDateList.getAttribute("childElementCount");
+    }
+
+    /**
+     * Inputs value into max or min cost or mass fields
+     * @param valueToSet - cost or mass input field
+     * @param maxMinValue - max or min input field
+     * @param valueToInput - value to input into field
+     */
+    public void inputMaxOrMinCostOrMass(String valueToSet, String maxMinValue, String valueToInput) {
+        By locator = By.xpath(String.format("//div[@id='aPriori%s%s']//input", valueToSet, maxMinValue));
+        pageUtils.waitForElementToAppear(locator);
+        driver.findElement(locator).sendKeys(valueToInput);
     }
 }
