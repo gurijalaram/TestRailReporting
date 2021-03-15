@@ -48,10 +48,10 @@ public class CidWorkorderAPITests extends TestUtil {
 
     @Test
     @Description("Upload a part, load CAD Metadata, and generate part images")
-    public void loadCadMetadataAndGeneratePartImages(String fileName, String scenarioName, String processGroup) {
+    public void loadCadMetadataAndGeneratePartImages() {
         Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new FileUploadResources().uploadLoadCadMetadataGeneratePartImages(token, fileName, scenarioName, processGroup);
+        new FileUploadResources().uploadLoadCadMetadataGeneratePartImages(token, "bracket_basic.prt", "Initial", "Sheet Metal");
     }
 
     public static class CustomMapper extends IdentityMapper {
