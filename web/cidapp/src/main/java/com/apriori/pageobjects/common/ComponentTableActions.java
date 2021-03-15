@@ -24,7 +24,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     @FindBy(id = "qa-sub-component-detail-filter-button")
     private WebElement filterButton;
 
-    @FindBy(id = "qa-scenario-list-configure-button")
+    @FindBy(id = "qa-sub-component-detail-column-config-button")
     private WebElement configureButton;
 
     private PageUtils pageUtils;
