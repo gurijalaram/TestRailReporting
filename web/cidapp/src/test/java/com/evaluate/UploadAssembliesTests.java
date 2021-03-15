@@ -85,13 +85,8 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo("0")));
 
         componentsListPage = evaluatePage.openComponents();
-        assertThat(componentsListPage.getRowText("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die"));
-        assertThat(componentsListPage.getRowIcon("Small Ring", "Initial"), hasItems(ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
-
-        assertThat(componentsListPage.getRowText("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die"));
-        assertThat(componentsListPage.getRowIcon("Big Ring", "Initial"), hasItems(ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
-
-        assertThat(componentsListPage.getRowText("Pin", "Initial"), hasItems("$1.97", "Casting - Die"));
-        assertThat(componentsListPage.getRowIcon("Pin", "Initial"), hasItems(ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Pin", "Initial"), hasItems("$1.97", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon()));
     }
 }
