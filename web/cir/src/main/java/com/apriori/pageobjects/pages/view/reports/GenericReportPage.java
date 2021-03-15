@@ -81,7 +81,10 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement machiningDtcBubbleTwo;
 
     @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(1)")
-    private WebElement designOutlierChartSpot;
+    private WebElement designOutlierChartSpotOne;
+
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(5)")
+    private WebElement designOutlierChartSpotTwo;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[39]")
     private WebElement sheetMetalDtcBubble;
@@ -2226,13 +2229,14 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     private void initialiseBubbleMap() {
         bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcBubble);
-        bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2", machiningDtcBubbleTwo);
+        bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName().concat(" 2"), machiningDtcBubbleTwo);
         bubbleMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcBubble);
         bubbleMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcBubble);
         bubbleMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), castingDtcBubbleTwo);
         bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), sheetMetalDtcBubble);
-        bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName() + " 2", sheetMetalDtcBubbleTwo);
-        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(), designOutlierChartSpot);
+        bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName().concat(" 2"), sheetMetalDtcBubbleTwo);
+        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(), designOutlierChartSpotOne);
+        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"), designOutlierChartSpotTwo);
     }
 
     /**

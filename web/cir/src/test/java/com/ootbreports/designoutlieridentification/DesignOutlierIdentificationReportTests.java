@@ -2,6 +2,8 @@ package com.ootbreports.designoutlieridentification;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -20,6 +22,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
+
+import java.math.BigDecimal;
 
 public class DesignOutlierIdentificationReportTests extends TestBase {
 
@@ -141,11 +145,101 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                         DesignOutlierIdentificationReportPage.class);
 
         designOutlierIdentificationReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
-        designOutlierIdentificationReportPage.inputMaxOrMinCostOrMass("Cost", "Min", "2");
-        designOutlierIdentificationReportPage.inputMaxOrMinCostOrMass("Cost", "Max", "6125");
+
+        String minValue = "2.00";
+        String maxValue = "6,125.00";
+        designOutlierIdentificationReportPage.inputMaxOrMinCostOrMass(
+                "Cost",
+                "Min",
+                minValue
+        );
+        designOutlierIdentificationReportPage.inputMaxOrMinCostOrMass(
+                "Cost",
+                "Max",
+                maxValue.replace(",", "")
+        );
         designOutlierIdentificationReportPage.clickOk();
 
-        // check above chart cost min and max are right
-        // check values appearing are correct (within range)
+        assertThat(designOutlierIdentificationReportPage.getCostMinOrMaxAboveChartValue(
+                "Min"),
+                is(equalTo(minValue))
+        );
+        assertThat(designOutlierIdentificationReportPage.getCostMinOrMaxAboveChartValue(
+                "Max"),
+                is(equalTo(maxValue))
+        );
+
+        designOutlierIdentificationReportPage.hoverBubble(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
+        BigDecimal fbcValueOne = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip();
+        designOutlierIdentificationReportPage.hoverBubble(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"));
+        BigDecimal fbcValueTwo = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip();
+
+        assertThat(fbcValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(fbcValueOne.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+
+        assertThat(fbcValueTwo.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(fbcValueTwo.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "1998")
+    @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header)")
+    public void testMinAndMaxMassFilter() {
+        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                        DesignOutlierIdentificationReportPage.class);
+
+        designOutlierIdentificationReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+
+        String minValue = "1.00";
+        String maxValue = "1,173.00";
+        designOutlierIdentificationReportPage.inputMaxOrMinCostOrMass(
+                "Mass",
+                "Min",
+                minValue
+        );
+        designOutlierIdentificationReportPage.inputMaxOrMinCostOrMass(
+                "Mass",
+                "Max",
+                maxValue.replace(",", "")
+        );
+        designOutlierIdentificationReportPage.clickOk();
+
+        assertThat(designOutlierIdentificationReportPage.getMassMinOrMaxAboveChartValue(
+                "Min"),
+                is(equalTo(minValue.concat("0")))
+        );
+        assertThat(designOutlierIdentificationReportPage.getMassMinOrMaxAboveChartValue(
+                "Max"),
+                is(equalTo(maxValue.concat("0")))
+        );
+
+        designOutlierIdentificationReportPage.hoverBubble(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
+        BigDecimal massValueOne = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip();
+        designOutlierIdentificationReportPage.hoverBubble(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"));
+        BigDecimal massValueTwo = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip();
+
+        assertThat(massValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(massValueOne.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+
+        assertThat(massValueTwo.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(massValueTwo.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
     }
 }

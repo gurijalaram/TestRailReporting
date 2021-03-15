@@ -45,7 +45,46 @@ public class DesignOutlierIdentificationReportPage extends GenericReportPage {
      */
     public void inputMaxOrMinCostOrMass(String valueToSet, String maxMinValue, String valueToInput) {
         By locator = By.xpath(String.format("//div[@id='aPriori%s%s']//input", valueToSet, maxMinValue));
+        WebElement input = driver.findElement(locator);
+        pageUtils.waitForElementToAppear(input);
+        input.clear();
+        input.click();
+        input.sendKeys(valueToInput);
+    }
+
+    /**
+     * Gets Cost min or max above chart value
+     * @param maxOrMin - max or min value to get
+     * @return value as string
+     */
+    public String getCostMinOrMaxAboveChartValue(String maxOrMin) {
+        By locator = By.xpath(
+                String.format(
+                        "//span[contains(text(), 'aPriori Cost %s:')]/ancestor::td[2]/following-sibling::td[1]/span",
+                        maxOrMin)
+        );
         pageUtils.waitForElementToAppear(locator);
-        driver.findElement(locator).sendKeys(valueToInput);
+        return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Gets Mass min or max above chart value
+     * @param maxOrMin - max or min value to get
+     * @return value as string
+     */
+    public String getMassMinOrMaxAboveChartValue(String maxOrMin) {
+        By locator = By.xpath(
+                String.format(
+                        "//span[contains(text(), 'aPriori Mass %s:')]/../following-sibling::td[1]/span",
+                        maxOrMin
+                )
+        );
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
+    }
+
+    public void hoverBubble(String reportName) {
+        setReportName(reportName);
+        hoverPartNameBubbleDtcReports();
     }
 }
