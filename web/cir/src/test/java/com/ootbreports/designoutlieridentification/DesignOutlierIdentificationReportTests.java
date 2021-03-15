@@ -134,7 +134,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1998")
     @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header)")
     public void testMinAndMaxCostFilter() {
@@ -189,7 +189,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1998")
     @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header)")
     public void testMinAndMaxMassFilter() {
