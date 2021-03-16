@@ -15,7 +15,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -35,7 +34,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @TestRail(testCaseId = {"5441", "6061"})
     @Description("Testing process group Forging")
@@ -55,7 +53,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @TestRail(testCaseId = {"5441"})
     @Description("Testing process group Stock Machining")
@@ -75,7 +72,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @Description("Testing process group Bar and Tube")
     @TestRail(testCaseId = {"6061"})
@@ -96,7 +92,7 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
+
     @Test
     @Description("Testing process group Casting")
     @TestRail(testCaseId = {"6061"})
@@ -197,7 +193,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @Description("Testing process group Machining-Gage Parts")
     @TestRail(testCaseId = {"6061"})
@@ -219,7 +214,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @Description("Testing process group Machining-Milling-4 Axis Mill")
     @TestRail(testCaseId = {"6061"})
@@ -260,7 +254,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @Description("Testing process group Machining-Milling-Mill Turn")
     @TestRail(testCaseId = {"6061"})
@@ -341,7 +334,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @Description("Testing process group Rough Milling")
     @TestRail(testCaseId = {"6061"})
@@ -402,7 +394,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @Description("Testing process group Blow Molding")
     @TestRail(testCaseId = {"6061"})
@@ -423,7 +414,6 @@ public class ProcessGroupsTests extends TestBase {
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore
     @Test
     @Description("Testing process group Powder Metal")
     @TestRail(testCaseId = {"6061"})
