@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -13,11 +14,11 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -37,6 +38,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
+    @Ignore
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"389", "1091"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
@@ -61,17 +63,18 @@ public class PublishExistingCostedTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
-            .filter()
+            .publish(ExplorePage.class);
+            /*.filter();
             .setWorkspace("Public")
             .setScenarioType("Part")
             .setRowOne("Part Name", "Contains", partName)
-            .apply(ExplorePage.class);
+            .apply(ExplorePage.class);*/
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, partName), is(greaterThan(0)));
     }
 
     @Test
+    @Ignore
     @TestRail(testCaseId = {"390", "569", "403"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
@@ -86,23 +89,19 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
-            .openScenario(testScenarioName, partName)
+            .publish(EvaluatePage.class)
             .editScenario()
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
             .publishScenario()
-            .publish(PublishWarningPage.class)
-            .enterNewScenarioName(scenarioNameB)
-            .selectContinueButton()
-            .selectLock()
-            .selectPublishButton()
-            .openJobQueue()
-            .checkJobQueueActionStatus(partName, scenarioNameB, "Publish", "okay")
-            .closeJobQueue(ExplorePage.class)
-            .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace());
+            .override()
+            .continues(PublishPage.class)
+            .publish(EvaluatePage.class)
+            //.selectLock()
+            .publishScenario()
+            .publish(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(scenarioNameB, partName), is(greaterThan(0)));
     }
@@ -124,21 +123,20 @@ public class PublishExistingCostedTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(EvaluatePage.class)
             .uploadComponentAndSubmit(testScenarioName, FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario()
-            .publish(PublishWarningPage.class)
-            .selectOverwriteOption()
-            .selectContinueButton()
-            .selectPublishButton()
-            .openScenario(testScenarioName, partName);
+            .override()
+            .continues(PublishPage.class)
+            .publish(EvaluatePage.class);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
 
     @Test
+    @Ignore
     @TestRail(testCaseId = {"393"})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
@@ -157,18 +155,13 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
-            .selectLock()
-            .selectPublishButton()
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .refreshCurrentPage()
-            .uploadFileAndOk(testScenarioName, FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp"), EvaluatePage.class)
+            //.selectLock()
+            .uploadComponentAndSubmit(testScenarioName, FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp"), EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
-            .publishScenario(PublishWarningPage.class)
-            .enterNewScenarioName(testScenarioName2)
-            .selectContinueButton()
-            .selectPublishButton()
-            .openScenario(testScenarioName2, partName);
+            .publishScenario()
+            .changeName(testScenarioName2)
+            .publish(EvaluatePage.class);
 
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(testScenarioName2)));
     }
