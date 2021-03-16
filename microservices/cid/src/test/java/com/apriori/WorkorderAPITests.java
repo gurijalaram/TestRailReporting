@@ -13,7 +13,8 @@ import java.util.HashMap;
 
 public class WorkorderAPITests {
 
-    private final HashMap<String, String> token = new APIAuthentication().initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
+    private final HashMap<String, String> token = new APIAuthentication()
+            .initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
 
     @BeforeClass
     public static void testSetup() {
@@ -25,12 +26,11 @@ public class WorkorderAPITests {
     public void loadCadMetadataAndGeneratePartImages() {
         //Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new FileUploadResources()
-                .uploadLoadCadMetadataGeneratePartImages(
-                        token,
-                        "bracket_basic.prt",
-                        "Initial",
-                        "Sheet Metal"
-                );
+        new FileUploadResources().uploadLoadCadMetadataGeneratePartImages(
+                token,
+                "bracket_basic.prt",
+                "Initial",
+                "Sheet Metal"
+        );
     }
 }

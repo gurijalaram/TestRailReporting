@@ -5,125 +5,49 @@
   "title": "The root schema",
   "description": "The root schema comprises the entire JSON document.",
   "default": {},
-  "examples": [
-    {
-      "version": 4,
-      "id": "d33220ec-5305-4267-a774-fa16475cd4e1",
-      "status": "SUCCESS",
-      "searchKey": "5M860JF1G5H1/Push Pin.stp",
-      "command": {
-        "commandType": "LOADCADFILE",
-        "inputs": {
-          "scenarioName": "Initial",
-          "fileKey": "5M860JF1G5H1",
-          "fileName": "Push Pin.stp"
-        },
-        "outputs": {
-          "scenarioIterationKey": {
-            "scenarioKey": {
-              "stateName": "Initial",
-              "masterName": "PUSH PIN",
-              "typeName": "partState",
-              "workspaceId": 56
-            },
-            "iteration": 5036
-          }
-        }
-      },
-      "dateSubmitted": "2020-07-14T10:27:23Z",
-      "dateStarted": "2020-07-14T10:27:23Z",
-      "dateCompleted": "2020-07-14T10:27:39Z"
-    }
-  ],
   "additionalProperties": true,
   "properties": {
     "version": {
-      "$id": "#/properties/version",
       "type": "integer",
       "title": "The version schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": 0,
-      "examples": [
-        4
-      ]
+      "default": 0
     },
     "id": {
-      "$id": "#/properties/id",
       "type": "string",
       "title": "The id schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "d33220ec-5305-4267-a774-fa16475cd4e1"
-      ]
+      "default": ""
     },
     "priority": {
-      "$id": "#/properties/priority",
       "type": "string",
       "title": "The priority schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "NORMAL"
-      ]
+      "default": ""
     },
     "userId": {
-      "$id": "#/properties/userId",
       "type": "string",
       "title": "The userId schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "qa-automation-01"
-      ]
+      "default": ""
     },
     "status": {
-      "$id": "#/properties/status",
       "type": "string",
       "title": "The status schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "SUCCESS"
-      ]
+      "default": ""
     },
     "searchKey": {
-      "$id": "#/properties/searchKey",
       "type": "string",
       "title": "The searchKey schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "5M860JF1G5H1/Push Pin.stp"
-      ]
+      "default": ""
     },
     "command": {
-      "$id": "#/properties/command",
       "type": "object",
       "title": "The command schema",
       "description": "An explanation about the purpose of this instance.",
       "default": {},
-      "examples": [
-        {
-          "commandType": "LOADCADFILE",
-          "inputs": {
-            "scenarioName": "Initial",
-            "fileKey": "5M860JF1G5H1",
-            "fileName": "Push Pin.stp"
-          },
-          "outputs": {
-            "scenarioIterationKey": {
-              "scenarioKey": {
-                "stateName": "Initial",
-                "masterName": "PUSH PIN",
-                "typeName": "partState",
-                "workspaceId": 56
-              },
-              "iteration": 5036
-            }
-          }
-        }
-      ],
       "required": [
         "commandType",
         "inputs"
@@ -131,28 +55,16 @@
       "additionalProperties": true,
       "properties": {
         "commandType": {
-          "$id": "#/properties/command/properties/commandType",
           "type": "string",
           "title": "The commandType schema",
           "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "LOADCADFILE"
-          ]
+          "default": ""
         },
         "inputs": {
-          "$id": "#/properties/command/properties/inputs",
           "type": "object",
           "title": "The inputs schema",
           "description": "An explanation about the purpose of this instance.",
           "default": {},
-          "examples": [
-            {
-              "scenarioName": "Initial",
-              "fileKey": "5M860JF1G5H1",
-              "fileName": "Push Pin.stp"
-            }
-          ],
           "required": [
             "scenarioName",
             "fileKey",
@@ -161,78 +73,40 @@
           "additionalProperties": true,
           "properties": {
             "scenarioName": {
-              "$id": "#/properties/command/properties/inputs/properties/scenarioName",
               "type": "string",
               "title": "The scenarioName schema",
               "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Initial"
-              ]
+              "default": ""
             },
             "fileKey": {
-              "$id": "#/properties/command/properties/inputs/properties/fileKey",
               "type": "string",
               "title": "The fileKey schema",
               "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "5M860JF1G5H1"
-              ]
+              "default": ""
             },
             "fileName": {
-              "$id": "#/properties/command/properties/inputs/properties/fileName",
               "type": "string",
               "title": "The fileName schema",
               "description": "An explanation about the purpose of this instance.",
-              "default": "",
-              "examples": [
-                "Push Pin.stp"
-              ]
+              "default": ""
             }
           }
         },
         "outputs": {
-          "$id": "#/properties/command/properties/outputs",
           "type": "object",
           "title": "The outputs schema",
           "description": "An explanation about the purpose of this instance.",
           "default": {},
-          "examples": [
-            {
-              "scenarioIterationKey": {
-                "scenarioKey": {
-                  "stateName": "Initial",
-                  "masterName": "PUSH PIN",
-                  "typeName": "partState",
-                  "workspaceId": 56
-                },
-                "iteration": 5036
-              }
-            }
-          ],
           "required": [
             "scenarioIterationKey"
           ],
           "additionalProperties": true,
           "properties": {
             "scenarioIterationKey": {
-              "$id": "#/properties/command/properties/outputs/properties/scenarioIterationKey",
               "type": "object",
               "title": "The scenarioIterationKey schema",
               "description": "An explanation about the purpose of this instance.",
               "default": {},
-              "examples": [
-                {
-                  "scenarioKey": {
-                    "stateName": "Initial",
-                    "masterName": "PUSH PIN",
-                    "typeName": "partState",
-                    "workspaceId": 56
-                  },
-                  "iteration": 5036
-                }
-              ],
               "required": [
                 "scenarioKey",
                 "iteration"
@@ -240,19 +114,10 @@
               "additionalProperties": true,
               "properties": {
                 "scenarioKey": {
-                  "$id": "#/properties/command/properties/outputs/properties/scenarioIterationKey/properties/scenarioKey",
                   "type": "object",
                   "title": "The scenarioKey schema",
                   "description": "An explanation about the purpose of this instance.",
                   "default": {},
-                  "examples": [
-                    {
-                      "stateName": "Initial",
-                      "masterName": "PUSH PIN",
-                      "typeName": "partState",
-                      "workspaceId": 56
-                    }
-                  ],
                   "required": [
                     "stateName",
                     "masterName",
@@ -262,56 +127,36 @@
                   "additionalProperties": true,
                   "properties": {
                     "stateName": {
-                      "$id": "#/properties/command/properties/outputs/properties/scenarioIterationKey/properties/scenarioKey/properties/stateName",
                       "type": "string",
                       "title": "The stateName schema",
                       "description": "An explanation about the purpose of this instance.",
-                      "default": "",
-                      "examples": [
-                        "Initial"
-                      ]
+                      "default": ""
                     },
                     "masterName": {
-                      "$id": "#/properties/command/properties/outputs/properties/scenarioIterationKey/properties/scenarioKey/properties/masterName",
                       "type": "string",
                       "title": "The masterName schema",
                       "description": "An explanation about the purpose of this instance.",
-                      "default": "",
-                      "examples": [
-                        "PUSH PIN"
-                      ]
+                      "default": ""
                     },
                     "typeName": {
-                      "$id": "#/properties/command/properties/outputs/properties/scenarioIterationKey/properties/scenarioKey/properties/typeName",
                       "type": "string",
                       "title": "The typeName schema",
                       "description": "An explanation about the purpose of this instance.",
-                      "default": "",
-                      "examples": [
-                        "partState"
-                      ]
+                      "default": ""
                     },
                     "workspaceId": {
-                      "$id": "#/properties/command/properties/outputs/properties/scenarioIterationKey/properties/scenarioKey/properties/workspaceId",
                       "type": "integer",
                       "title": "The workspaceId schema",
                       "description": "An explanation about the purpose of this instance.",
-                      "default": 0,
-                      "examples": [
-                        56
-                      ]
+                      "default": 0
                     }
                   }
                 },
                 "iteration": {
-                  "$id": "#/properties/command/properties/outputs/properties/scenarioIterationKey/properties/iteration",
                   "type": "integer",
                   "title": "The iteration schema",
                   "description": "An explanation about the purpose of this instance.",
-                  "default": 0,
-                  "examples": [
-                    5036
-                  ]
+                  "default": 0
                 }
               }
             }
@@ -320,34 +165,22 @@
       }
     },
     "dateSubmitted": {
-      "$id": "#/properties/dateSubmitted",
       "type": "string",
       "title": "The dateSubmitted schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "2020-07-14T10:27:23Z"
-      ]
+      "default": ""
     },
     "dateStarted": {
-      "$id": "#/properties/dateStarted",
       "type": "string",
       "title": "The dateStarted schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "2020-07-14T10:27:23Z"
-      ]
+      "default": ""
     },
     "dateCompleted": {
-      "$id": "#/properties/dateCompleted",
       "type": "string",
       "title": "The dateCompleted schema",
       "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "2020-07-14T10:27:39Z"
-      ]
+      "default": ""
     }
   }
 }

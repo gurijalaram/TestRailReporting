@@ -1,12 +1,7 @@
 package com.apriori.entity.response.upload;
 
-import com.apriori.entity.request.cost.createcostworkorder.CostOrderCommandType;
-import com.apriori.entity.request.cost.createcostworkorder.CostOrderInputs;
-import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusInputs;
-import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
-import com.apriori.entity.response.cost.costworkorderstatus.CostStatusCommand;
-
 public class LoadCadMetadataCommandType {
+
     private String commandType;
     private LoadCadMetadataInputs inputs;
 

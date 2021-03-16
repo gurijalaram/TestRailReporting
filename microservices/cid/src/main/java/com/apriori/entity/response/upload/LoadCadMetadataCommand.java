@@ -10,8 +10,8 @@ public class LoadCadMetadataCommand {
         return command;
     }
 
-    public LoadCadMetadataCommandType setCommand(LoadCadMetadataCommandType command) {
+    public LoadCadMetadataCommand setCommand(LoadCadMetadataCommandType command) {
         this.command = command;
-        return new LoadCadMetadataCommandType();
+        return this;
     }
 }

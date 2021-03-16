@@ -14,32 +14,42 @@ public class LoadCadMetadataInputs {
         freeBodiesIgnoreMissingComponents = false;
     }
 
-    public String getFileMetadataIdentity() { return fileMetadataIdentity; }
+    public String getFileMetadataIdentity() {
+        return fileMetadataIdentity;
+    }
 
     public LoadCadMetadataInputs setFileMetadataIdentity(String fileMetadataIdentity) {
         this.fileMetadataIdentity = fileMetadataIdentity;
         return this;
     }
 
-    public boolean getKeepFreeBodies() { return keepFreeBodies; }
+    public boolean getKeepFreeBodies() {
+        return keepFreeBodies;
+    }
 
     public void setKeepFreeBodies(boolean keepFreeBodies) {
         this.keepFreeBodies = keepFreeBodies;
     }
 
-    public boolean getFreeBodiesPreserveCad() { return freeBodiesPreserveCad; }
+    public boolean getFreeBodiesPreserveCad() {
+        return freeBodiesPreserveCad;
+    }
 
     public void setFreeBodiesPreserveCad(boolean freeBodiesPreserveCad) {
         this.freeBodiesPreserveCad = freeBodiesPreserveCad;
     }
 
-    public boolean getFreeBodiesIgnoreMissingComponents() { return freeBodiesIgnoreMissingComponents; }
+    public boolean getFreeBodiesIgnoreMissingComponents() {
+        return freeBodiesIgnoreMissingComponents;
+    }
 
     public void setFreeBodiesIgnoreMissingComponents(boolean freeBodiesIgnoreMissingComponents) {
         this.freeBodiesIgnoreMissingComponents = freeBodiesIgnoreMissingComponents;
     }
 
-    public String getRequestedBy() { return requestedBy; }
+    public String getRequestedBy() {
+        return requestedBy;
+    }
 
     public LoadCadMetadataInputs setRequestedBy(String requestedBy) {
         this.requestedBy = requestedBy;
