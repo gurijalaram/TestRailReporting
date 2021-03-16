@@ -5,10 +5,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cds.entity.response.LicenseResponse;
-import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Licenses;
 import com.apriori.cds.objects.response.Site;
+import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -153,7 +153,7 @@ public class CdsLicenseTests extends CdsTestUtil {
     @Test
     @TestRail(testCaseId = "6145")
     @Description("Deletes an existing user sub-license association")
-    public void deleteCustomerSublicense() {
+    public void deleteCustomerSubLicense() {
         String customersEndpoint = String.format(url, "customers");
 
         String customerName = generateStringUtil.generateCustomerName();
@@ -190,12 +190,13 @@ public class CdsLicenseTests extends CdsTestUtil {
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        String associationUserEndPoint = String.format(url, String.format("customer/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
-        ResponseWrapper<AssociationUserItems> associationUserItemsResponse = addAssociationUser(associationUserEndPoint, AssociationUserItems.class, userIdentity);
-
+        String associationUserEndPoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
+        ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = addAssociationUser(associationUserEndPoint, SubLicenseAssociationUser.class, userIdentity);
         customerAssociationUserIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper<String> deleteEndPoint = delete(String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, customerAssociationUserIdentity)));
-        assertThat(deleteEndPoint.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        String deleteEndPoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, customerAssociationUserIdentity));
+
+        ResponseWrapper<String> deleteResponse = delete(deleteEndPoint);
+        assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 }
