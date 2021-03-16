@@ -16,7 +16,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -35,7 +34,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Ignore
     @Category(SmokeTests.class)
     @TestRail(testCaseId = "6101")
     @Description("Test recosting a cad file - Gear Making")
@@ -50,7 +48,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Gear Making"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
@@ -72,7 +70,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Machining Contouring"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
@@ -94,7 +92,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Automated Machining"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
@@ -103,7 +101,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Ignore
     @TestRail(testCaseId = "6104")
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
@@ -117,7 +114,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Pocket Recognition"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
@@ -139,7 +136,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Shared Walls"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
@@ -161,7 +158,7 @@ public class ReCostScenarioTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Slot Examples"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
 
         evaluatePage.selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
