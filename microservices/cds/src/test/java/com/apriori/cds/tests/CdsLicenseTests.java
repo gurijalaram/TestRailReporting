@@ -184,7 +184,7 @@ public class CdsLicenseTests extends CdsTestUtil {
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
-        String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(0).getIdentity();
+        String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
 
         ResponseWrapper<Licenses> license = getCommonRequest(customerLicenseEndpoint, true, Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
