@@ -22,9 +22,7 @@ import org.junit.Test;
 public class CdsSitesApplicationsTests extends CdsTestUtil {
     private String url;
 
-    private String customerIdentity;
     private String customerIdentityEndpoint;
-    private String installationIdentityEndpoint;
     private String licensedAppIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
@@ -55,7 +53,6 @@ public class CdsSitesApplicationsTests extends CdsTestUtil {
         String emailPattern = "\\S+@".concat(customerName);
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
 
         ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
@@ -104,5 +101,6 @@ public class CdsSitesApplicationsTests extends CdsTestUtil {
 
         ResponseWrapper<LicensedApplication> licensedApplicationResponse = getCommonRequest(licensedAppIdentityEndpoint, true, LicensedApplication.class);
         assertThat(licensedApplicationResponse.getResponseEntity().getResponse().getApplication(), is(equalTo("aPriori Professional")));
+        assertThat(licensedApplicationResponse.getResponseEntity().getResponse().getApplicationIdentity(), is(equalTo(Constants.getApProApplicationIdentity())));
     }
 }
