@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
@@ -13,6 +12,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @author cfrith
@@ -28,17 +29,18 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
 
+    @FindBy(css = "[id='qa-scenario-list-configure-button']")
+    private WebElement configureButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
-    private ComponentTableActions componentTableActions;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
-        this.componentTableActions = new ComponentTableActions(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(scenarioCount);
@@ -103,7 +105,8 @@ public class ExplorePage extends ExploreToolbar {
      * @return new page object
      */
     public ConfigurePage configure() {
-        return componentTableActions.configure();
+        pageUtils.waitForElementAndClick(configureButton);
+        return new ConfigurePage(driver);
     }
 
     /**
@@ -139,26 +142,13 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Gets the cell in the row
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return list of string
-     */
-    public ExplorePage getRowText(String componentName, String scenarioName) {
-        scenarioTableController.getRowText(componentName, scenarioName);
-        return this;
-    }
-
-    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
      * @param scenarioName  - scenario name
      * @return list of string
      */
-    public ExplorePage getRowIcon(String componentName, String scenarioName) {
-        scenarioTableController.getRowIcon(componentName, scenarioName);
-        return this;
+    public List<String> getRowDetails(String componentName, String scenarioName) {
+        return scenarioTableController.getRowDetails(componentName, scenarioName);
     }
 }
