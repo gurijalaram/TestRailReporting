@@ -134,7 +134,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1998")
     @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header)")
     public void testMinAndMaxCostFilter() {
@@ -169,11 +169,14 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 is(equalTo(maxValue))
         );
 
-        designOutlierIdentificationReportPage.hoverBubble(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
-        BigDecimal fbcValueOne = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip();
+        designOutlierIdentificationReportPage.hoverBubble(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
+        BigDecimal fbcValueOne = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
+                "FBC Value");
         designOutlierIdentificationReportPage.hoverBubble(
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"));
-        BigDecimal fbcValueTwo = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip();
+        BigDecimal fbcValueTwo = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
+                "FBC Value");
 
         assertThat(fbcValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
         assertThat(fbcValueOne.compareTo(
@@ -189,7 +192,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1998")
     @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header)")
     public void testMinAndMaxMassFilter() {
@@ -224,11 +227,21 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 is(equalTo(maxValue.concat("0")))
         );
 
-        designOutlierIdentificationReportPage.hoverBubble(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
-        BigDecimal massValueOne = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip();
+        designOutlierIdentificationReportPage.hoverBubble(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
+        designOutlierIdentificationReportPage.hoverBubble(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
+        designOutlierIdentificationReportPage.hoverBubble(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
+        BigDecimal massValueOne = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
+                "Finish Mass Value"
+        );
+
         designOutlierIdentificationReportPage.hoverBubble(
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"));
-        BigDecimal massValueTwo = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip();
+        BigDecimal massValueTwo = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
+                "Finish Mass Value"
+        );
 
         assertThat(massValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
         assertThat(massValueOne.compareTo(
@@ -241,5 +254,30 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 new BigDecimal(maxValue.replace(",", ""))),
                 is(equalTo(-1))
         );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "2006")
+    @Description("Validate the reports correct with user overrides")
+    public void testReportFunctionsWithUserCostOverride() {
+        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                        DesignOutlierIdentificationReportPage.class);
+
+        designOutlierIdentificationReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .clickOk();
+
+        designOutlierIdentificationReportPage.hoverBubble(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName() + " 2"
+        );
+        designOutlierIdentificationReportPage.hoverBubble(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName() + " 2"
+        );
+        BigDecimal fbcValue = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip("FBC Value");
+
+        assertThat(fbcValue.compareTo(new BigDecimal("9883.65")), is(equalTo(0)));
     }
 }

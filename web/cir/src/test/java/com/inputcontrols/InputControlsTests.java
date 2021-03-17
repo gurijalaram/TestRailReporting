@@ -266,7 +266,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
-        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
+        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
@@ -275,7 +275,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
-        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
+        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));

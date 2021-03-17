@@ -182,7 +182,7 @@ public class PlasticDtcReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();
         String partName = genericReportPage.getPartNameDtcReports();
-        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
         genericReportPage.openNewCidTabAndFocus(1);
 
         EvaluatePage evaluatePage = new ExplorePage(driver)

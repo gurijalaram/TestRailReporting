@@ -80,10 +80,10 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(38)")
     private WebElement machiningDtcBubbleTwo;
 
-    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(1)")
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(3)")
     private WebElement designOutlierChartSpotOne;
 
-    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(5)")
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(4)")
     private WebElement designOutlierChartSpotTwo;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[39]")
@@ -1437,8 +1437,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Method to return value from Bubble in DTC Casting or Machining DTC Report
      * @return BigDecimal value
      */
-    public BigDecimal getFBCValueFromBubbleTooltip() {
-        WebElement elementToUse = tooltipElementMap.get("FBC Value");
+    public BigDecimal getFBCValueFromBubbleTooltip(String valueIndexToGet) {
+        WebElement elementToUse = tooltipElementMap.get(valueIndexToGet);
         pageUtils.waitForElementToAppear(elementToUse);
 
         return new BigDecimal(

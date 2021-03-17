@@ -174,7 +174,7 @@ public class CastingDtcReportTests extends TestBase {
 
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();
-        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
         String partName = genericReportPage.getPartNameDtcReports();
         genericReportPage.openNewCidTabAndFocus(1);
 
