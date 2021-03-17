@@ -241,7 +241,7 @@ public class SheetMetalDtcReportTests extends TestBase {
         sheetMetalDtcReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal largerAnnualSpend = sheetMetalDtcReportPage.getAnnualSpendFromBubbleTooltip();
 
-        sheetMetalDtcReportPage.setReportName(ReportNamesEnum.SHEET_METAL_DTC.getReportName() + " 2");
+        sheetMetalDtcReportPage.setReportName(ReportNamesEnum.SHEET_METAL_DTC.getReportName().concat(" 2"));
         sheetMetalDtcReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal smallerAnnualSpend = sheetMetalDtcReportPage.getAnnualSpendFromBubbleTooltip();
 

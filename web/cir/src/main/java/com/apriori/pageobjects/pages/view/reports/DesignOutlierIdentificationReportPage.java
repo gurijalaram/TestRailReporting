@@ -82,9 +82,4 @@ public class DesignOutlierIdentificationReportPage extends GenericReportPage {
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
     }
-
-    public void hoverBubble(String reportName) {
-        setReportName(reportName);
-        hoverPartNameBubbleDtcReports();
-    }
 }

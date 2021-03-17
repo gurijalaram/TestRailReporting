@@ -1505,7 +1505,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void hoverMachiningBubbleTwice() {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
-        setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
+        setReportName(ReportNamesEnum.MACHINING_DTC.getReportName().concat(" 2"));
         hoverPartNameBubbleDtcReports();
         waitForCorrectPartNameMachiningDtc(true);
         hoverPartNameBubbleDtcReports();

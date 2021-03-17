@@ -2,8 +2,6 @@ package com.ootbreports.designoutlieridentification;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -19,7 +17,6 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -169,12 +166,17 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 is(equalTo(maxValue))
         );
 
-        designOutlierIdentificationReportPage.hoverBubble(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
+        designOutlierIdentificationReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+        );
+        designOutlierIdentificationReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal fbcValueOne = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
                 "FBC Value");
-        designOutlierIdentificationReportPage.hoverBubble(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"));
+
+        designOutlierIdentificationReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
+        );
+        designOutlierIdentificationReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal fbcValueTwo = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
                 "FBC Value");
 
@@ -227,18 +229,20 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 is(equalTo(maxValue.concat("0")))
         );
 
-        designOutlierIdentificationReportPage.hoverBubble(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
-        designOutlierIdentificationReportPage.hoverBubble(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
-        designOutlierIdentificationReportPage.hoverBubble(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName());
+        designOutlierIdentificationReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+        );
+        for (int i = 0; i < 3; i++) {
+            designOutlierIdentificationReportPage.hoverPartNameBubbleDtcReports();
+        }
         BigDecimal massValueOne = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
                 "Finish Mass Value"
         );
 
-        designOutlierIdentificationReportPage.hoverBubble(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"));
+        designOutlierIdentificationReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
+        );
+        designOutlierIdentificationReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal massValueTwo = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
                 "Finish Mass Value"
         );
@@ -270,13 +274,15 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
         designOutlierIdentificationReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
                 .clickOk();
 
-        designOutlierIdentificationReportPage.hoverBubble(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName() + " 2"
+        designOutlierIdentificationReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
         );
-        designOutlierIdentificationReportPage.hoverBubble(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName() + " 2"
+        for (int i = 0; i < 3; i++) {
+            designOutlierIdentificationReportPage.hoverPartNameBubbleDtcReports();
+        }
+        BigDecimal fbcValue = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip(
+                "FBC Value"
         );
-        BigDecimal fbcValue = designOutlierIdentificationReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         assertThat(fbcValue.compareTo(new BigDecimal("9883.65")), is(equalTo(0)));
     }
