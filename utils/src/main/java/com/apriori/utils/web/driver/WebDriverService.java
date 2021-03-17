@@ -52,6 +52,7 @@ public class WebDriverService extends BrowserManager {
                     ChromeOptions options = new ChromeDriverOptions(downloadPath, locale).getChromeOptions();
                     dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                     dc.setCapability(ChromeOptions.CAPABILITY, options);
+                    dc.setAcceptInsecureCerts(true);
                     result = new ChromeDriver(dc);
                     logger.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                     break;
