@@ -46,14 +46,6 @@ public class CidWorkorderAPITests extends TestUtil {
         new FileUploadResources().uploadCostPublishApi(token, fileObject, fileName, scenarioName, processGroup);
     }
 
-    @Test
-    @Description("Upload a part, load CAD Metadata, and generate part images")
-    public void loadCadMetadataAndGeneratePartImages() {
-        //Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
-
-        new FileUploadResources().uploadLoadCadMetadataGeneratePartImages(token, "bracket_basic.prt", "Initial", "Sheet Metal");
-    }
-
     public static class CustomMapper extends IdentityMapper {
         @Override
         public Object[] map(Reader reader) {
