@@ -23,6 +23,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CasBatchItemTests extends TestUtil {
@@ -92,8 +93,8 @@ public class CasBatchItemTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5673", "5674"})
-    @Description("Trying to update existing Batch Item by identity. Get the Batch Item identified by its identity.")
+    @TestRail(testCaseId = "5674")
+    @Description("Get the Batch Item identified by its identity.")
     public void getItemById() {
         String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
@@ -119,14 +120,43 @@ public class CasBatchItemTests extends TestUtil {
         String userName = batchItem.getUserName();
         String itemUrl = itemsUrl + itemId;
 
-        ResponseWrapper updateItem = new CasTestUtil().updateBatchItem(customerIdentity, batchIdentity, itemId, token);
-
-        assertThat(updateItem.getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
-
         ResponseWrapper<BatchItem> getItem = new CommonRequestUtil().getCommonRequest(itemUrl, true, BatchItem.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
+        assertThat(getItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(getItem.getResponseEntity().getResponse().getIdentity(), is(equalTo(itemId)));
         assertThat(getItem.getResponseEntity().getResponse().getUserName(), is(equalTo(userName)));
+    }
+
+    // TODO endpoint is not implemented
+    @Ignore
+    @Test
+    @TestRail(testCaseId = "5673")
+    @Description("Update an existing Batch Item identified by its identity.")
+    public void updateBatchItem() {
+        String url = String.format(Constants.getApiUrl(), "customers/");
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String email = customerName.toLowerCase();
+        String description = customerName + " Description";
+
+        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+
+        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String postEndpoint = url + customerIdentity + "/batches/";
+
+        ResponseWrapper<PostBatch> batch = new CasTestUtil().addBatchFile(postEndpoint, PostBatch.class, token);
+
+        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
+        String itemsUrl = postEndpoint + batchIdentity + "/items/";
+
+        ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        String itemId = getItems.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+
+        ResponseWrapper<BatchItem> updateItem = new CasTestUtil().updateBatchItem(customerIdentity, batchIdentity, itemId, token);
+
+        assertThat(updateItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
 }

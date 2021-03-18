@@ -240,11 +240,11 @@ public class CasTestUtil extends TestUtil {
      * @param batchIdentity - batch identity
      * @param itemIdentity - item identity
      * @param token - token
-     * @return ResponseWrapper <ErrorMessage>
+     * @return ResponseWrapper <BatchItem>
      */
-    public ResponseWrapper<ErrorMessage> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity, String token) {
+    public ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity, String token) {
         String url = String.format(Constants.getApiUrl(), "customers/" + customerIdentity + "/batches/" + batchIdentity + "/items/" + itemIdentity);
-        RequestEntity requestEntity = RequestEntity.init(url, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntity.init(url, BatchItem.class)
                 .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
                 .setBody("batchItem",
                     new BatchItem().setUserName("maggie")
