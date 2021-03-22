@@ -44,7 +44,6 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.SOLUTIONS_FOLDER,
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
         );
     }

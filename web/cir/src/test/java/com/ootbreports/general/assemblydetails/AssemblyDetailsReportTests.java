@@ -61,7 +61,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testReportAvailabilityByMenuAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-            Constants.GENERAL_FOLDER,
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
         );
     }

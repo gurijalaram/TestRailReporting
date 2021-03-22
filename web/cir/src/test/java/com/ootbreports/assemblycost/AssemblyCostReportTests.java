@@ -30,7 +30,6 @@ public class AssemblyCostReportTests extends TestBase {
     public void testReportAvailabilityByMenuAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
                 ReportNamesEnum.ASSEMBLY_COST_A4.getReportName()
         );
     }
@@ -42,7 +41,6 @@ public class AssemblyCostReportTests extends TestBase {
     public void testReportAvailabilityByMenuAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
                 ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName()
         );
     }
