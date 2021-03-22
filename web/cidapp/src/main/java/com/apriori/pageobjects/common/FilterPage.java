@@ -42,6 +42,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     @FindBy(css = "button [data-icon='plus']")
     private WebElement addButton;
 
+    @FindBy(css = "button [data-icon='clear']")
+    private WebElement clearButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -142,10 +145,21 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
     /**
      * Add filter
+     *
      * @return current page object
      */
     public FilterPage add() {
         pageUtils.waitForElementAndClick(addButton);
+        return this;
+    }
+
+    /**
+     * Clear filter
+     *
+     * @return current page object
+     */
+    public FilterPage clear() {
+        pageUtils.waitForElementAndClick(clearButton);
         return this;
     }
 
