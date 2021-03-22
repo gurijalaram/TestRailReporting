@@ -43,7 +43,6 @@ public class ComponentCostReportTests extends TestBase {
     public void testReportAvailabilityByMenu() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
                 ReportNamesEnum.COMPONENT_COST.getReportName()
         );
     }
