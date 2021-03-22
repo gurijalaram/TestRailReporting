@@ -45,6 +45,30 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     @FindBy(css = "button [data-icon='clear']")
     private WebElement clearButton;
 
+    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
+    @FindBy(css = ".col-4 .apriori-select[0]")
+    private WebElement propertyDropdown;
+
+    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
+    @FindBy(css = ".col-4 input[0]")
+    private WebElement propertyInput;
+
+    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
+    @FindBy(css = ".col-4 .apriori-select[1]")
+    private WebElement operationDropdown;
+
+    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
+    @FindBy(css = ".col-4 input")
+    private WebElement operationInput;
+
+    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
+    @FindBy(css = ".col-3 [data-icon='chevron-down']")
+    private WebElement valueDropdown;
+
+    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
+    @FindBy(css = ".col-3 input")
+    private WebElement valueInput;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -161,6 +185,24 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public FilterPage clear() {
         pageUtils.waitForElementAndClick(clearButton);
         return this;
+    }
+
+    public FilterPage setProperty(String property) {
+        pageUtils.waitForElementAndClick(propertyDropdown);
+        propertyInput.sendKeys(property);
+        propertyInput.sendKeys(Keys.ENTER);
+        return this;
+    }
+
+    public FilterPage setOperation(String operation) {
+        pageUtils.waitForElementAndClick(operationDropdown);
+        operationInput.sendKeys(operation);
+        operationInput.sendKeys(Keys.ENTER);
+        return this;
+    }
+
+    public FilterPage inputValue(String value) {
+
     }
 
     /**
