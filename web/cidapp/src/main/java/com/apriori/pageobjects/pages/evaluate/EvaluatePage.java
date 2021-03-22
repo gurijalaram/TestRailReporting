@@ -71,6 +71,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-vpe-select-field'] [data-icon='chevron-down']")
     private WebElement vpeDropdown;
 
+    @FindBy(css = "div[id='qa-vpe-select-field'] input")
+    private WebElement vpeInput;
+
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
 
@@ -176,6 +179,17 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public EvaluatePage selectVPE(String vpe) {
         primaryInputsController.selectVPE(vpeDropdown, vpe);
+        return this;
+    }
+
+    /**
+     * Inputs the vpe dropdown
+     *
+     * @param vpe      - the vpe
+     * @return current page object
+     */
+    public EvaluatePage inputVpe(String vpe) {
+        primaryInputsController.inputVpe(vpeInput, vpe);
         return this;
     }
 

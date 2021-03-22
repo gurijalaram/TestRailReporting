@@ -48,7 +48,7 @@ public class MaterialStockTests extends TestBase {
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization();
 
@@ -79,7 +79,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostResults("Piece Part Cost"), is(closeTo(20.44, 1)));
@@ -122,7 +122,7 @@ public class MaterialStockTests extends TestBase {
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();

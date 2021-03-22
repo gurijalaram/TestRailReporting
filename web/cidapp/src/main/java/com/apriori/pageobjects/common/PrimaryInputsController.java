@@ -21,6 +21,9 @@ public class PrimaryInputsController {
     @FindBy(css = "div[id='qa-process-group-select-field'] .apriori-select")
     private WebElement pgSelect;
 
+    @FindBy(css = "div[id='qa-vpe-select-field'] .apriori-select")
+    private WebElement vpeSelect;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -84,6 +87,20 @@ public class PrimaryInputsController {
         pageUtils.waitForElementAndClick(vpeDropdown);
         By vp = By.cssSelector(String.format("button[value='%s']", vpe));
         pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
+        return this;
+    }
+
+    /**
+     * Inputs the vpe dropdown
+     *
+     * @param vpeInput - the vpe input
+     * @param vpe      - the vpe
+     * @return current page object
+     */
+    public PrimaryInputsController inputVpe(WebElement vpeInput, String vpe) {
+        pageUtils.waitForElementAndClick(vpeSelect);
+        vpeInput.sendKeys(vpe);
+        vpeInput.sendKeys(Keys.ENTER);
         return this;
     }
 
