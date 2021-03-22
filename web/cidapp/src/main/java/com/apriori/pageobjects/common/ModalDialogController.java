@@ -49,6 +49,9 @@ public class ModalDialogController {
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
 
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
+    private WebElement costButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -157,5 +160,15 @@ public class ModalDialogController {
     public ModalDialogController collapseAll() {
         pageUtils.waitForElementAndClick(collapseAllButton);
         return this;
+    }
+
+    /**
+     * Cost
+     *
+     * @return current page object
+     */
+    public <T> T cost(Class<T> klass) {
+        pageUtils.waitForElementAppear(costButton);
+        return PageFactory.initElements(driver, klass);
     }
 }
