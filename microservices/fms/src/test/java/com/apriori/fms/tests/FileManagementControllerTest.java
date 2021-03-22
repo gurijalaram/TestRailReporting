@@ -21,8 +21,8 @@ public class FileManagementControllerTest extends TestUtil {
         token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
             Constants.getServiceHost(),
             HttpStatus.SC_CREATED,
-            "splunkett",
-            "splunkett@apriori.com",
+            "mparker",
+            "mparker@apriori.com",
             Constants.getFmsTokenIssuer(),
             Constants.getFmsTokenSubject());
     }
