@@ -46,7 +46,6 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName()
         );
     }
@@ -201,7 +200,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly - Finish Mass")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
                 ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -214,7 +213,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly - Rough Mass")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
                 ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()

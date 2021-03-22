@@ -45,7 +45,6 @@ public class ScenarioComparisonReportTests extends TestBase {
     public void testReportAvailabilityByMenu() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.GENERAL_FOLDER,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
         );
     }
