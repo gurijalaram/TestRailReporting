@@ -5,6 +5,7 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
 
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -136,21 +137,21 @@ public class ViewRepositoryPage extends ReportsPageHeader {
                 new String[]{ Constants.DTC_METRICS_FOLDER });
 
         navigationMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                        Constants.CYCLE_TIME_FOLDER });
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.CYCLE_TIME_FOLDER });
         navigationMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                        Constants.CYCLE_TIME_FOLDER });
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.CYCLE_TIME_FOLDER });
 
         navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                        Constants.TARGET_AND_QUOTED_COST_FOLDER });
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.TARGET_AND_QUOTED_COST_FOLDER });
         navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                        Constants.TARGET_AND_QUOTED_COST_FOLDER });
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.TARGET_AND_QUOTED_COST_FOLDER });
         navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                        Constants.TARGET_AND_QUOTED_COST_FOLDER });
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.TARGET_AND_QUOTED_COST_FOLDER });
 
         navigationMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
                 new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
