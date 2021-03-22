@@ -17,7 +17,6 @@ import org.junit.Test;
 
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class CycleTimeValueTrackingTests extends TestBase {
 
@@ -36,7 +35,6 @@ public class CycleTimeValueTrackingTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.SOLUTIONS_FOLDER,
                 ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName()
         );
     }
