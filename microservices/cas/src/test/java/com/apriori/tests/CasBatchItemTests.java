@@ -87,7 +87,7 @@ public class CasBatchItemTests extends TestUtil {
 
         String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper batchItems = new CasTestUtil().newUsersFromBatch(token, customerIdentity,batchIdentity);
+        ResponseWrapper batchItems = new CasTestUtil().newUsersFromBatch(token, customerIdentity, batchIdentity);
 
         assertThat(batchItems.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
