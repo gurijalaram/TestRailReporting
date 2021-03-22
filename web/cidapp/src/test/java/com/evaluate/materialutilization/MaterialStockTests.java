@@ -47,7 +47,7 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization();
@@ -121,7 +121,7 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization()
@@ -131,7 +131,7 @@ public class MaterialStockTests extends TestBase {
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("Yes")));
 
         stockPage.closePanel()
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();

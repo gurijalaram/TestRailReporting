@@ -45,7 +45,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
@@ -67,7 +67,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
@@ -89,7 +89,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
@@ -111,7 +111,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
@@ -133,7 +133,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
@@ -155,7 +155,7 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));

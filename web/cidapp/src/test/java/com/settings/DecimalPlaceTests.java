@@ -60,7 +60,7 @@ public class DecimalPlaceTests extends TestBase {
             .setDropdown("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExploreToolbar.class)
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1020")

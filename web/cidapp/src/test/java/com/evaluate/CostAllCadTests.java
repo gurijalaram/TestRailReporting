@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -15,7 +14,6 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -51,7 +49,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -103,7 +101,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -125,7 +123,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -146,7 +144,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -168,7 +166,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -190,7 +188,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -212,7 +210,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -234,7 +232,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -256,7 +254,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -278,7 +276,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
