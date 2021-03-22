@@ -6,6 +6,7 @@ import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.PrimaryInputsPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
@@ -34,6 +35,21 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @FindBy(xpath = "//button[.='Selection']")
     private WebElement selectionButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-upload-button")
+    private WebElement uploadButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-set-inputs-button")
+    private WebElement costInputsButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-override-button")
+    private WebElement pencilButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-exclude-button")
+    private WebElement eyeSlashButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-include-button")
+    private WebElement eyeButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -110,6 +126,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public TreePage openTreeTab() {
         pageUtils.waitForElementAndClick(treeButton);
         return new TreePage(driver);
+    }
+
+    /**
+     * Opens cost inputs page
+     *
+     * @return new page object
+     */
+    public PrimaryInputsPage setCostInputs() {
+        pageUtils.waitForElementAndClick(costInputsButton);
+        return new PrimaryInputsPage(driver);
     }
 
     /**
