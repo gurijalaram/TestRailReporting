@@ -36,7 +36,6 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.SOLUTIONS_FOLDER,
                 ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName()
         );
     }

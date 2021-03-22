@@ -25,8 +25,12 @@ public class Constants {
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
     public static final String GENERAL_FOLDER = "General";
+    public static final String SOURCING_FOLDER = "Sourcing";
     public static final String SOLUTIONS_FOLDER = "Solutions";
+    public static final String CYCLE_TIME_FOLDER = "Cycle Time";
     public static final String DTC_METRICS_FOLDER = "DTC Metrics";
+    public static final String DESIGN_TO_COST_FOLDER = "Design To Cost";
+    public static final String TARGET_AND_QUOTED_COST_FOLDER = "Target And Quoted Cost";
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
     public static final String ASSEMBLY_STRING = "[assembly]";
