@@ -17,6 +17,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -33,20 +34,19 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1985")
     @Description("Validate report is available navigation - menu")
     public void testReportAvailableByMenu() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.SOLUTIONS_FOLDER,
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1985")
+    @TestRail(testCaseId = "6178")
     @Description("Validate report is available navigation - library")
     public void testReportAvailableByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -57,7 +57,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1985")
+    @TestRail(testCaseId = "1986")
     @Description("Validate report is available navigation - search")
     public void testReportAvailableBySearch() {
         commonReportTests = new CommonReportTests(driver);

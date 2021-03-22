@@ -16,6 +16,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -30,13 +31,12 @@ public class CycleTimeValueTrackingTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "92")
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.SOLUTIONS_FOLDER,
                 ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName()
         );
     }

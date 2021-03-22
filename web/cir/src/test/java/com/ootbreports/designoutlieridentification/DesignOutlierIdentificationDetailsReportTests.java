@@ -32,20 +32,19 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1985")
-    @Description("Validate report is available navigation - menu")
+    @TestRail(testCaseId = "6179")
+    @Description("Validate details report is available navigation - menu")
     public void testReportAvailableByMenu() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.SOLUTIONS_FOLDER,
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName()
         );
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1985")
-    @Description("Validate report is available navigation - library")
+    @TestRail(testCaseId = "6181")
+    @Description("Validate details report is available navigation - library")
     public void testReportAvailableByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
@@ -55,8 +54,8 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1985")
-    @Description("Validate report is available navigation - search")
+    @TestRail(testCaseId = "6180")
+    @Description("Validate details report is available navigation - search")
     public void testReportAvailableBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(

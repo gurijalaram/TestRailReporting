@@ -50,7 +50,6 @@ public class CastingDtcReportTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-            Constants.DTC_METRICS_FOLDER,
             ReportNamesEnum.CASTING_DTC.getReportName()
         );
     }

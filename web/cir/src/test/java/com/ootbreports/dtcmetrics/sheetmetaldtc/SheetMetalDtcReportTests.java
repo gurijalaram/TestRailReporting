@@ -48,7 +48,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName()
         );
     }

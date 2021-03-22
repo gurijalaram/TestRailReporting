@@ -30,6 +30,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -54,13 +55,12 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1915")
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByMenuAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-            Constants.GENERAL_FOLDER,
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
         );
     }

@@ -47,11 +47,11 @@ public class CommonReportTests extends TestBase {
      *
      * @param reportName - String
      */
-    public void testReportAvailabilityByNavigation(String firstFolder, String reportName) {
+    public void testReportAvailabilityByNavigation(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToViewRepositoryPage()
-            .navigateToReportFolder(firstFolder, reportName);
+            .navigateToReportFolder(reportName);
 
         assertThat(reportName, is(equalTo(genericReportPage.getReportName(reportName))));
     }

@@ -43,7 +43,6 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     public void testPlasticDtcReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-            Constants.DTC_METRICS_FOLDER,
             ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName()
         );
     }

@@ -47,7 +47,6 @@ public class MachiningDtcReportTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-            Constants.DTC_METRICS_FOLDER,
             ReportNamesEnum.MACHINING_DTC.getReportName()
         );
     }
