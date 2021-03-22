@@ -8,6 +8,8 @@ import com.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.ootbreports.componentcost.ComponentCostReportTests;
 import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingDetailsTests;
 import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingTests;
+import com.ootbreports.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
+import com.ootbreports.designoutlieridentification.DesignOutlierIdentificationReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcReportTests;
 import com.ootbreports.dtcmetrics.machiningdtc.MachiningDtcReportTests;
@@ -35,6 +37,8 @@ import testsuites.suiteinterface.OnPremTest;
         ComponentCostReportTests.class,
         CycleTimeValueTrackingTests.class,
         CycleTimeValueTrackingDetailsTests.class,
+        DesignOutlierIdentificationReportTests.class,
+        DesignOutlierIdentificationDetailsReportTests.class,
         LoginTests.class,
         PlasticDtcReportTests.class,
         MachiningDtcReportTests.class,
