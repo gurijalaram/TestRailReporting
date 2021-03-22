@@ -80,6 +80,12 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-of-type(38)")
     private WebElement machiningDtcBubbleTwo;
 
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(3)")
+    private WebElement designOutlierChartSpotOne;
+
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(4)")
+    private WebElement designOutlierChartSpotTwo;
+
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[39]")
     private WebElement sheetMetalDtcBubble;
 
@@ -884,13 +890,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String listName, String expectedCount) {
-        String genericLocator = "//div[@title='%s']//span[@title='%s']";
-
-        By availableLocator = By.xpath(String.format(genericLocator, listName, "Available: " + expectedCount));
-        pageUtils.waitForElementToAppear(availableLocator);
-
-        By selectedLocator = By.xpath(String.format(genericLocator, listName, "Selected: " + expectedCount));
-        pageUtils.waitForElementToAppear(selectedLocator);
+        waitForCorrectAvailableSelectedCount(listName, "Available: ", expectedCount);
+        waitForCorrectAvailableSelectedCount(listName, "Selected: ", expectedCount);
         return this;
     }
 
@@ -1277,7 +1278,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Sets day value in date picker
      */
     private void setDayValuePicker(int dayValue) {
-        By dayLocator = By.xpath(String.format("//a[contains(text(), '%d') and @class='ui-state-default']", dayValue));
+        By dayLocator = By.xpath(String.format("//a[contains(text(), '%d') and contains(@class, 'ui-state-default')]", dayValue));
         driver.findElement(dayLocator).click();
     }
 
@@ -1436,8 +1437,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Method to return value from Bubble in DTC Casting or Machining DTC Report
      * @return BigDecimal value
      */
-    public BigDecimal getFBCValueFromBubbleTooltip() {
-        WebElement elementToUse = tooltipElementMap.get("FBC Value");
+    public BigDecimal getFBCValueFromBubbleTooltip(String valueIndexToGet) {
+        WebElement elementToUse = tooltipElementMap.get(valueIndexToGet);
         pageUtils.waitForElementToAppear(elementToUse);
 
         return new BigDecimal(
@@ -1504,7 +1505,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void hoverMachiningBubbleTwice() {
         pageUtils.waitForElementToAppear(machiningDtcBubbleTwo);
-        setReportName(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2");
+        setReportName(ReportNamesEnum.MACHINING_DTC.getReportName().concat(" 2"));
         hoverPartNameBubbleDtcReports();
         waitForCorrectPartNameMachiningDtc(true);
         hoverPartNameBubbleDtcReports();
@@ -2228,12 +2229,14 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     private void initialiseBubbleMap() {
         bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName(), machiningDtcBubble);
-        bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName() + " 2", machiningDtcBubbleTwo);
+        bubbleMap.put(ReportNamesEnum.MACHINING_DTC.getReportName().concat(" 2"), machiningDtcBubbleTwo);
         bubbleMap.put(ReportNamesEnum.CASTING_DTC.getReportName(), castingDtcBubble);
         bubbleMap.put(ReportNamesEnum.PLASTIC_DTC.getReportName(), plasticDtcBubble);
         bubbleMap.put(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), castingDtcBubbleTwo);
         bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), sheetMetalDtcBubble);
-        bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName() + " 2", sheetMetalDtcBubbleTwo);
+        bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName().concat(" 2"), sheetMetalDtcBubbleTwo);
+        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(), designOutlierChartSpotOne);
+        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"), designOutlierChartSpotTwo);
     }
 
     /**

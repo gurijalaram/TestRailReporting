@@ -11,6 +11,8 @@ public enum ReportNamesEnum {
     COMPONENT_COST_INTERNAL_USE("Component Cost Internal Use"),
     CYCLE_TIME_VALUE_TRACKING("Cycle Time Value Tracking"),
     CYCLE_TIME_VALUE_TRACKING_DETAILS("Cycle Time Value Tracking Details"),
+    DESIGN_OUTLIER_IDENTIFICATION("Design Outlier Identification"),
+    DESIGN_OUTLIER_IDENTIFICATION_DETAILS("Design Outlier Identification Details"),
     DTC_PART_SUMMARY("DTC Part Summary"),
     MACHINING_DTC("Machining DTC"),
     MACHINING_DTC_DETAILS("Machining DTC Details"),
