@@ -32,6 +32,9 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     @FindBy(css = ".inputs-container div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
     private WebElement processGroupDropdown;
 
+    @FindBy(css = ".inputs-container div[id='qa-process-group-select-field'] input")
+    private WebElement processGroupInput;
+
     @FindBy(css = ".inputs-container div[id='qa-vpe-select-field'] [data-icon='chevron-down']")
     private WebElement vpeDropdown;
 
@@ -106,6 +109,17 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      */
     public PrimaryInputsPage selectProcessGroup(String processGroup) {
         primaryInputsController.selectProcessGroup(processGroupDropdown, processGroup);
+        return this;
+    }
+
+    /**
+     * Inputs the pg
+     *
+     * @param processGroup - the process group
+     * @return current page object
+     */
+    public PrimaryInputsPage inputProcessGroup(String processGroup) {
+        primaryInputsController.inputProcessGroup(processGroupInput, processGroup);
         return this;
     }
 

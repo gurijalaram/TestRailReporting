@@ -39,7 +39,7 @@ public class CostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), is(true));
 
-        evaluatePage.selectProcessGroup(processGroupEnum.getProcessGroup())
+        evaluatePage.inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
