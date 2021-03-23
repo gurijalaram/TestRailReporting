@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,12 @@ import java.util.stream.Collectors;
 public class PrimaryInputsController {
 
     private static final Logger logger = LoggerFactory.getLogger(PrimaryInputsController.class);
+
+    @FindBy(css = "div[id='qa-process-group-select-field'] .apriori-select")
+    private WebElement pgSelect;
+
+    @FindBy(css = "div[id='qa-vpe-select-field'] .apriori-select")
+    private WebElement vpeSelect;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -30,13 +37,28 @@ public class PrimaryInputsController {
     /**
      * Selects the pg dropdown
      *
-     * @param processGroup - the process group
+     * @param processGroupDropdown - the process group dropdown
+     * @param processGroup         - the process group
      * @return current page object
      */
     public PrimaryInputsController selectProcessGroup(WebElement processGroupDropdown, String processGroup) {
         pageUtils.waitForElementAndClick(processGroupDropdown);
         By group = By.cssSelector(String.format("button[value='%s']", processGroup));
         pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
+        return this;
+    }
+
+    /**
+     * Inputs the pg
+     *
+     * @param processGroupInput - the process group locator
+     * @param processGroup      - the process group
+     * @return current page object
+     */
+    public PrimaryInputsController inputProcessGroup(WebElement processGroupInput, String processGroup) {
+        pageUtils.waitForElementAndClick(pgSelect);
+        processGroupInput.sendKeys(processGroup);
+        processGroupInput.sendKeys(Keys.ENTER);
         return this;
     }
 
@@ -65,6 +87,20 @@ public class PrimaryInputsController {
         pageUtils.waitForElementAndClick(vpeDropdown);
         By vp = By.cssSelector(String.format("button[value='%s']", vpe));
         pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
+        return this;
+    }
+
+    /**
+     * Inputs the vpe dropdown
+     *
+     * @param vpeInput - the vpe input
+     * @param vpe      - the vpe
+     * @return current page object
+     */
+    public PrimaryInputsController inputVpe(WebElement vpeInput, String vpe) {
+        pageUtils.waitForElementAndClick(vpeSelect);
+        vpeInput.sendKeys(vpe);
+        vpeInput.sendKeys(Keys.ENTER);
         return this;
     }
 
