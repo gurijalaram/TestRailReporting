@@ -23,16 +23,20 @@ import com.apriori.entity.request.publish.createpublishworkorder.PublishWorkOrde
 import com.apriori.entity.response.CreateWorkorderResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.ListOfCostOrderStatuses;
 import com.apriori.entity.response.cost.iterations.ListOfCostIterations;
-import com.apriori.entity.response.publish.publishworkorderresult.PublishWorkOrderInfoResult;
 import com.apriori.entity.response.upload.FileCommand;
 import com.apriori.entity.response.upload.FileOrdersUpload;
+import com.apriori.entity.response.upload.FileUploadInputs;
 import com.apriori.entity.response.upload.FileUploadOrder;
 import com.apriori.entity.response.upload.FileUploadOutputs;
-import com.apriori.entity.response.upload.FileUploadWorkOrder;
-import com.apriori.entity.response.upload.FileWorkOrder;
-import com.apriori.entity.response.upload.LoadCadMetadataCommand;
-import com.apriori.entity.response.upload.LoadCadMetadataCommandType;
+import com.apriori.entity.response.upload.GeneratePartImagesInputs;
 import com.apriori.entity.response.upload.LoadCadMetadataInputs;
+import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
+import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
+import com.apriori.entity.response.upload.WorkorderCommands;
+import com.apriori.entity.response.upload.WorkorderDetailsResponse;
+import com.apriori.entity.response.upload.FileWorkOrder;
+import com.apriori.entity.response.upload.WorkorderRequest;
+import com.apriori.entity.response.upload.WorkorderCommand;
 import com.apriori.entity.response.upload.WorkorderStatusResponse;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -41,7 +45,6 @@ import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 
-import com.apriori.utils.users.UserUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,8 +75,8 @@ public class FileUploadResources {
     private static String costWorkOrderId;
     private static String publishWorkOrderId;
     private static int iteration;
-    private static final HashMap<String, String> token = new APIAuthentication().initAuthorizationHeaderContent(
-            new APIAuthentication().getAccessToken("aPrioriCIGenerateUser@apriori.com"));
+    private static final HashMap<String, String> token = new APIAuthentication()
+            .initAuthorizationHeaderNoContent("aPrioriCIGenerateUser@apriori.com");
 
     private final String orderSuccess = "SUCCESS";
     private final String orderFailed = "FAILED";
@@ -92,17 +95,35 @@ public class FileUploadResources {
      */
     public void uploadLoadCadMetadataGeneratePartImages(String fileName, String scenarioName, String processGroup) {
         // Create, submit and check file upload workorder
-        initializeFileUpload(fileName, processGroup);
-        String fileUploadWorkorderId = createFileUploadWorkorder(fileName, scenarioName);
+        FileResponse fileResponse = initializeFileUpload(fileName, processGroup);
+        String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+                new FileUploadInputs()
+                        .setScenarioName(scenarioName)
+                        .setFileKey(fileResponse.getIdentity())
+                        .setFileName(fileName));
         submitWorkorder(fileUploadWorkorderId);
-        getWorkorderDetails(fileUploadWorkorderId, FileUploadWorkOrder.class);
+        FileUploadOutputs fileUploadOutputs = (FileUploadOutputs) checkGetWorkorderDetails(fileUploadWorkorderId);
 
         // Create, submit and check Load CAD Metadata workorder
-        String loadCadMetadataWorkorderId = createLoadCadMetadataWorkorder();
+        String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
+                new LoadCadMetadataInputs()
+                        .setFileMetadataIdentity(fileResponse.getIdentity())
+                        .setRequestedBy(fileResponse.getUserIdentity())
+        );
         submitWorkorder(loadCadMetadataWorkorderId);
-        getWorkorderDetails(loadCadMetadataWorkorderId, LoadCadMetadataInputs.class);
+        LoadCadMetadataOutputs loadCadMetadataOutputs =
+                (LoadCadMetadataOutputs) checkGetWorkorderDetails(loadCadMetadataWorkorderId);
 
         // Create, submit and check Generate Part Images workorder
+        String generatePartImagesWorkorderId = createWorkorder(
+                WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
+                new GeneratePartImagesInputs()
+                    .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
+                    .setRequestedBy(fileResponse.getUserIdentity())
+        );
+        submitWorkorder(generatePartImagesWorkorderId);
+        GeneratePartImagesOutputs generatePartImagesOutputs =
+                (GeneratePartImagesOutputs) checkGetWorkorderDetails(generatePartImagesWorkorderId);
     }
 
     /**
@@ -120,7 +141,7 @@ public class FileUploadResources {
         initializeFileUpload(fileName, processGroup);
         String fileUploadWorkorderId = createFileUploadWorkorder(fileName, scenarioName);
         submitWorkorder(fileUploadWorkorderId);
-        getWorkorderDetails(fileUploadWorkorderId, FileUploadOutputs.class);
+        getWorkorderDetails(fileUploadWorkorderId);
 
         initializeCostScenario(fileObject, processGroup);
         String costWorkorderId = createCostWorkOrder();
@@ -137,7 +158,7 @@ public class FileUploadResources {
      *
      * @param fileName - the filename
      */
-    private void initializeFileUpload(String fileName, String processGroup) {
+    private FileResponse initializeFileUpload(String fileName, String processGroup) {
         String url = baseUrl + "apriori/cost/session/ws/files";
 
         headers.put(contentType, "multipart/form-data");
@@ -150,6 +171,7 @@ public class FileUploadResources {
 
         fileIdentity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");
         userIdentity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "userIdentity");
+        return (FileResponse) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 
     /**
@@ -180,47 +202,45 @@ public class FileUploadResources {
     /**
      * Creates file upload
      */
-    private String createLoadCadMetadataWorkorder() {
+    private String createWorkorder(String commandType, Object inputs) {
         String fileURL = baseUrl + "apriori/cost/session/ws/workorder/orders";
 
         headers.put(contentType, applicationJson);
 
-        RequestEntity loadCadMetadataRequestEntity = RequestEntity.init(fileURL, CreateWorkorderResponse.class)
+        RequestEntity workorderRequestEntity = RequestEntity.init(fileURL, CreateWorkorderResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setBody(new LoadCadMetadataCommand()
-                .setCommand(new LoadCadMetadataCommandType()
-                    .setCommandType("LOAD_CAD_METADATA")
-                    .setInputs(new LoadCadMetadataInputs()
-                        .setFileMetadataIdentity(fileIdentity)
-                        .setRequestedBy(userIdentity))));
+            .setBody(new WorkorderRequest()
+                .setCommand(new WorkorderCommand(
+                    commandType,
+                    inputs))
+                );
 
-        return jsonNode(GenericRequestUtil.post(loadCadMetadataRequestEntity, new RequestAreaApi()).getBody(), "id");
+        return jsonNode(GenericRequestUtil.post(workorderRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
     /**
      * Checks if workorder processing has successfully completed
      *
      * @param workorderId - workorder id
-     * @param klass - class to use
      * @return Object
      */
-    private Object getWorkorderDetails(String workorderId, Class klass) {
+    private Object getWorkorderDetails(String workorderId) {
         String workorderDetailsURL = baseUrl + "apriori/cost/session/ws/workorder/orders/" + workorderId;
 
         headers.put(contentType, applicationJson);
 
-        RequestEntity orderRequestEntity = RequestEntity.init(workorderDetailsURL, klass)
+        RequestEntity orderRequestEntity = RequestEntity.init(workorderDetailsURL, WorkorderDetailsResponse.class)
             .setHeaders(headers)
             .setHeaders(token);
 
         return GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getResponseEntity();
     }
 
-    private FileUploadOutputs getFileUploadWorkorderDetails(String workorderId) {
+    private Object checkGetWorkorderDetails(String workorderId) {
         String status = checkWorkorderStatus(workorderId);
         if (status.equals("SUCCESS")) {
-            FileUploadWorkOrder workorderDetails = (FileUploadWorkOrder) getWorkorderDetails(workorderId, FileUploadWorkOrder.class);
+            WorkorderDetailsResponse workorderDetails = (WorkorderDetailsResponse) getWorkorderDetails(workorderId);
             return workorderDetails.getCommand().getOutputs();
         }
         return null;
@@ -383,7 +403,7 @@ public class FileUploadResources {
         do {
             String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orderstatus/" + workorderId;
 
-            requestEntityBody = RequestEntity.init(orderURL, WorkorderStatusResponse.class)
+            requestEntityBody = RequestEntity.init(orderURL, String.class)
                     .setHeaders(headers)
                     .setHeaders(token);
 

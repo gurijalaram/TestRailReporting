@@ -1,13 +1,9 @@
 package com.apriori;
 
-import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileUploadResources;
-import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
