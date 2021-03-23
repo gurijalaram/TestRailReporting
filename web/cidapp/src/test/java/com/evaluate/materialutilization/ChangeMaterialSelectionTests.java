@@ -151,7 +151,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
 
-    asdf@Test
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"864", "866", "867", "889"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
@@ -175,7 +175,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
-            .openComponent(scenarioName, "bracket_basic");
+            .openScenario(scenarioName, "bracket_basic");
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));
     }
@@ -233,7 +233,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("Inconel 625")));
     }
 
-    asdf@Test
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"884", "888"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
@@ -248,12 +248,12 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
             .clickExplore()
-            .openComponent(scenarioName, "MACHINED BOX AMERICAS");
+            .openScenario(scenarioName, "MACHINED BOX AMERICAS");
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1095"), is(true));
     }
 
-    aasdf@Test
+    @Test
     @TestRail(testCaseId = {"885"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
