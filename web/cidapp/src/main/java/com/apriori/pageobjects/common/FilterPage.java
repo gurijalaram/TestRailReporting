@@ -45,28 +45,22 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     @FindBy(css = "button [data-icon='clear']")
     private WebElement clearButton;
 
-    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
-    @FindBy(css = ".col-4 .apriori-select[0]")
+    @FindBy(css = "qa-searchCriterion[0].subject")
     private WebElement propertyDropdown;
 
-    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
-    @FindBy(css = ".col-4 input[0]")
+    @FindBy(css = "qa-searchCriterion[0].subject input")
     private WebElement propertyInput;
 
-    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
-    @FindBy(css = ".col-4 .apriori-select[1]")
+    @FindBy(css = "qa-searchCriterion[0].operation")
     private WebElement operationDropdown;
 
-    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
-    @FindBy(css = ".col-4 input")
+    @FindBy(css = "qa-searchCriterion[0].operation input")
     private WebElement operationInput;
 
-    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
-    @FindBy(css = ".col-3 [data-icon='chevron-down']")
+    @FindBy(css = "qa-searchCriterion[0].target")
     private WebElement valueDropdown;
 
-    // TODO: 22/03/2021 locator to be updated to be unique after conversation with Jacob
-    @FindBy(css = ".col-3 input")
+    @FindBy(css = "qa-searchCriterion[0].target input")
     private WebElement valueInput;
 
     private PageUtils pageUtils;
@@ -187,22 +181,58 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         return this;
     }
 
-    public FilterPage setProperty(String property) {
+    /**
+     * Adds a new criteria
+     *
+     * @param property  - the property
+     * @param operation - the operation
+     * @param value     - the value
+     * @return current page object
+     */
+    public FilterPage addCriteria(String property, String operation, String value) {
+        inputProperty(property)
+            .inputOperation(operation)
+            .inputValue(value);
+        return this;
+    }
+
+    /**
+     * Inputs the property
+     *
+     * @param property - the property
+     * @return current page object
+     */
+    private FilterPage inputProperty(String property) {
         pageUtils.waitForElementAndClick(propertyDropdown);
         propertyInput.sendKeys(property);
         propertyInput.sendKeys(Keys.ENTER);
         return this;
     }
 
-    public FilterPage setOperation(String operation) {
+    /**
+     * Inputs the operation
+     *
+     * @param operation - the operation
+     * @return current page object
+     */
+    private FilterPage inputOperation(String operation) {
         pageUtils.waitForElementAndClick(operationDropdown);
         operationInput.sendKeys(operation);
         operationInput.sendKeys(Keys.ENTER);
         return this;
     }
 
-    public FilterPage inputValue(String value) {
-
+    /**
+     * Inputs the value
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    private FilterPage inputValue(String value) {
+        pageUtils.waitForElementAndClick(valueDropdown);
+        valueInput.sendKeys(value);
+        valueInput.sendKeys(Keys.ENTER);
+        return this;
     }
 
     /**
