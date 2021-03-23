@@ -25,7 +25,6 @@ import java.io.File;
 public class NewScenarioNameTests extends TestBase {
 
     private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
