@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -25,6 +26,7 @@ import java.io.File;
 public class NewScenarioNameTests extends TestBase {
 
     private CidAppLoginPage loginPage;
+    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
@@ -79,7 +81,7 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(), is(testNewScenarioName));
     }
 
-    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"5953"})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
@@ -114,8 +116,8 @@ public class NewScenarioNameTests extends TestBase {
             .setRowOne("Part Name", "Contains", "MultiUpload")
             .apply(ExplorePage.class);
 
-        assertThat(explorePage.getListOfComponents(scenarioA, "MultiUpload"), equalTo(1));
-        assertThat(explorePage.getListOfComponents(scenarioB, "MultiUpload"), equalTo(1));
-        assertThat(explorePage.getListOfComponents(scenarioC, "MultiUpload"), equalTo(1));
-    }*/
+        assertThat(explorePage.getListOfScenarios(scenarioA, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(scenarioB, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(scenarioC, "MultiUpload"), equalTo(1));
+    }
 }
