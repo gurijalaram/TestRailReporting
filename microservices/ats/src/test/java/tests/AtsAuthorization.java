@@ -41,7 +41,6 @@ public class AtsAuthorization extends TestUtil {
 
         AuthorizationResponse response = SecurityManager.authorizeUser(Constants.getSecretKey(),
             Constants.getAtsServiceHost(),
-            Constants.getAtsAuthApplication(),
             Constants.getAtsAuthTargetCloudContext(),
                 token,
                 HttpStatus.SC_OK);
