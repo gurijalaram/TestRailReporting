@@ -39,7 +39,7 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"389", "1091"})
+    @TestRail(testCaseId = "6209")
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
@@ -53,7 +53,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
@@ -74,7 +74,7 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"390", "569", "403"})
+    @TestRail(testCaseId = "6210")
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
 
@@ -106,7 +106,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"391"})
+    @TestRail(testCaseId = "6211")
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
 
@@ -119,7 +119,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -136,7 +136,7 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"393"})
+    @TestRail(testCaseId = "6212")
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
 
@@ -150,7 +150,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .inputProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
