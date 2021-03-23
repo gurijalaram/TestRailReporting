@@ -33,7 +33,7 @@ public class CdsConfigurationsTests {
     public void getBlacklistedEmailDomains() {
         url = String.format(url, "configurations/blacklisted-email-domains");
 
-        ResponseWrapper<ConfigurationResponse> response = cdsTestUtil.getResponse(url, ConfigurationResponse.class);
+        ResponseWrapper<ConfigurationResponse> response = cdsTestUtil.getCommonRequest(url, ConfigurationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

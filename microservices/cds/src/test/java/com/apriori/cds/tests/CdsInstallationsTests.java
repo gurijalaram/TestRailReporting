@@ -59,7 +59,7 @@ public class CdsInstallationsTests {
     public void getInstallations() {
         url = String.format(url, "installations");
 
-        ResponseWrapper<InstallationResponse> response = cdsTestUtil.getResponse(url, InstallationResponse.class);
+        ResponseWrapper<InstallationResponse> response = cdsTestUtil.getCommonRequest(url, InstallationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -140,7 +140,7 @@ public class CdsInstallationsTests {
         String installationIdentity = installation.getResponseEntity().getResponse().getIdentity();
         installationIdentityEndpoint = String.format(url, String.format("customers/%s/deployments/%s/installations/%s", customerIdentity, deploymentIdentity, installationIdentity));
 
-        ResponseWrapper<InstallationItems> identity = cdsTestUtil.getResponse(installationIdentityEndpoint, InstallationItems.class);
+        ResponseWrapper<InstallationItems> identity = cdsTestUtil.getCommonRequest(installationIdentityEndpoint, InstallationItems.class);
 
         assertThat(identity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(identity.getResponseEntity().getResponse().getIdentity(), is(equalTo(installationIdentity)));

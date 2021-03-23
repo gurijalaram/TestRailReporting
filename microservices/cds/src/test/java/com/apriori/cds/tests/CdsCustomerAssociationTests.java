@@ -35,7 +35,7 @@ public class CdsCustomerAssociationTests {
     public void getCustomerAssociations() {
         url = String.format(url, String.format("customers/%s/customer-associations", Constants.getAPrioriInternalCustomerIdentity()));
 
-        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getResponse(url, CustomerAssociationResponse.class);
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(url, CustomerAssociationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -48,12 +48,12 @@ public class CdsCustomerAssociationTests {
     public void getCustomerAssociationByIdentity() {
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations", Constants.getAPrioriInternalCustomerIdentity()));
 
-        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getResponse(associationEndpoint, CustomerAssociationResponse.class);
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(associationEndpoint, CustomerAssociationResponse.class);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String associationIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String associationIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s", Constants.getAPrioriInternalCustomerIdentity(), associationIdentity));
-        ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getResponse(associationIdentityEndpoint, CustomerAssociationItems.class);
+        ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getCommonRequest(associationIdentityEndpoint, CustomerAssociationItems.class);
 
         assertThat(association.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(association.getResponseEntity().getResponse().getIdentity(), is(equalTo(associationIdentity)));

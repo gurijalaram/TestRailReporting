@@ -94,7 +94,7 @@ public class CdsLicenseTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
-        ResponseWrapper<Licenses> license = cdsTestUtil.getResponse(customerLicenseEndpoint,  Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint,  Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(license.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
@@ -123,12 +123,12 @@ public class CdsLicenseTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
-        ResponseWrapper<Licenses> license = cdsTestUtil.getResponse(customerLicenseEndpoint,  Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint,  Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String licenseIdentityEndpoint = String.format(url, String.format("customers/%s/licenses/%s", customerIdentity, licenseIdentity));
 
-        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getResponse(licenseIdentityEndpoint,  LicenseResponse.class);
+        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(licenseIdentityEndpoint,  LicenseResponse.class);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licenseResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(licenseIdentity)));
     }

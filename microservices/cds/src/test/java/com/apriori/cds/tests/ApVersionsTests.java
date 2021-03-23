@@ -33,7 +33,7 @@ public class ApVersionsTests {
     public void getApVersions() {
         url = String.format(url, "ap-versions");
 
-        ResponseWrapper<ApVersions> response = cdsTestUtil.getResponse(url, ApVersions.class);
+        ResponseWrapper<ApVersions> response = cdsTestUtil.getCommonRequest(url, ApVersions.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

@@ -87,7 +87,7 @@ public class CdsDeploymentsTests {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<Deployments> deployment = cdsTestUtil.getResponse(deploymentsEndpoint, Deployments.class);
+        ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(deploymentsEndpoint, Deployments.class);
 
         assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -118,7 +118,7 @@ public class CdsDeploymentsTests {
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
         String deploymentIdentityEndpoint = String.format(url, String.format("customers/%s/deployments/%s", customerIdentity, deploymentIdentity));
 
-        ResponseWrapper<Deployment> deployment = cdsTestUtil.getResponse(deploymentIdentityEndpoint, Deployment.class);
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.getCommonRequest(deploymentIdentityEndpoint, Deployment.class);
 
         assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getResponse().getIdentity(), is(equalTo(deploymentIdentity)));

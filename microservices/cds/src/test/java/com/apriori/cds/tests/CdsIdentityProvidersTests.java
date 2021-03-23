@@ -121,7 +121,7 @@ public class CdsIdentityProvidersTests {
         String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
-        ResponseWrapper<IdentityProviderResponse> idp = cdsTestUtil.getResponse(idpIdentityEndpoint, IdentityProviderResponse.class);
+        ResponseWrapper<IdentityProviderResponse> idp = cdsTestUtil.getCommonRequest(idpIdentityEndpoint, IdentityProviderResponse.class);
 
         assertThat(idp.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
         assertThat(idp.getResponseEntity().getResponse().getIdentity(), is(equalTo(idpIdentity)));
@@ -151,7 +151,7 @@ public class CdsIdentityProvidersTests {
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
         String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
-        ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getResponse(identityProviderEndpoint, IdentityProviderPagination.class);
+        ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getCommonRequest(identityProviderEndpoint, IdentityProviderPagination.class);
 
         assertThat(idpPagination.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(idpPagination.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));

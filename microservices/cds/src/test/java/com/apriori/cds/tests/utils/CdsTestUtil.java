@@ -37,7 +37,7 @@ public class CdsTestUtil extends TestUtil {
      * @param <T>   - generic object
      * @return generic object
      */
-    public <T> ResponseWrapper<T> getResponse(String url, Class klass) {
+    public <T> ResponseWrapper<T> getCommonRequest(String url, Class klass) {
         return GenericRequestUtil.get(
             RequestEntity.init(url, klass).setUrlEncodingEnabled(true),
             new RequestAreaApi()

@@ -19,7 +19,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsSitesApplicationsTests   {
+public class CdsSitesApplicationsTests {
     private String url;
 
     private String customerIdentityEndpoint;
@@ -58,11 +58,10 @@ public class CdsSitesApplicationsTests   {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity,  siteName, siteID);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String licensedApplicationsEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
@@ -73,8 +72,7 @@ public class CdsSitesApplicationsTests   {
     @Test
     @TestRail(testCaseId = "6060")
     @Description("Returns a specific LicensedApplication for a specific customer site")
-    public void  getApplicationSite() {
-        String customersEndpoint = String.format(url, "customers");
+    public void getApplicationSite() {
 
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
@@ -83,22 +81,20 @@ public class CdsSitesApplicationsTests   {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String licensedApplicationsEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
-        ResponseWrapper<LicensedApplication> licensedApp = addApplicationToSite(licensedApplicationsEndpoint, LicensedApplication.class);
+        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
         licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
 
-        ResponseWrapper<LicensedApplication> licensedApplicationResponse = getCommonRequest(licensedAppIdentityEndpoint, true, LicensedApplication.class);
+        ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(licensedAppIdentityEndpoint, LicensedApplication.class);
         assertThat(licensedApplicationResponse.getResponseEntity().getResponse().getApplication(), is(equalTo("aPriori Professional")));
         assertThat(licensedApplicationResponse.getResponseEntity().getResponse().getApplicationIdentity(), is(equalTo(Constants.getApProApplicationIdentity())));
     }

@@ -36,7 +36,7 @@ public class CdsApplicationsTests {
     public void getAllApplications() {
         url = String.format(url, "applications");
 
-        ResponseWrapper<Applications> response = cdsTestUtil.getResponse(url, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(url, Applications.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -49,7 +49,7 @@ public class CdsApplicationsTests {
     public void getApplicationById() {
         url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity()));
 
-        ResponseWrapper<Application> response = cdsTestUtil.getResponse(url, Application.class);
+        ResponseWrapper<Application> response = cdsTestUtil.getCommonRequest(url, Application.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("aPriori Professional")));
@@ -61,7 +61,7 @@ public class CdsApplicationsTests {
     public void getCustomersAuthorizedForApplication() {
         url = String.format(url, String.format("applications/%s/customers", Constants.getApProApplicationIdentity()));
 
-        ResponseWrapper<Customers> response = cdsTestUtil.getResponse(url, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(url, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

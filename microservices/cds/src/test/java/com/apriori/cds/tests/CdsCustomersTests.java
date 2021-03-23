@@ -55,7 +55,7 @@ public class CdsCustomersTests {
     public void getCustomers() {
         url = String.format(url, "customers");
 
-        ResponseWrapper<Customers> response = cdsTestUtil.getResponse(url, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(url, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -93,7 +93,7 @@ public class CdsCustomersTests {
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        ResponseWrapper<Customer> response = cdsTestUtil.getResponse(customerIdentityEndpoint, Customer.class);
+        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(customerIdentityEndpoint, Customer.class);
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getResponse().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
@@ -114,7 +114,7 @@ public class CdsCustomersTests {
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String applicationsEndpoint = String.format(url, String.format("customers/%s/applications", customerIdentity));
 
-        ResponseWrapper<Applications> response = cdsTestUtil.getResponse(applicationsEndpoint, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(applicationsEndpoint, Applications.class);
         assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), CoreMatchers.is(equalTo(0)));
     }
