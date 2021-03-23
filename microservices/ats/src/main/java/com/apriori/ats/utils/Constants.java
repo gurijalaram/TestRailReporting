@@ -30,11 +30,13 @@ public class Constants {
     private static String atsAuthTargetCloudContext;
     private static String secretKey;
     private static String baseUrl;
+    private static String protocol;
+    private static String serviceUrl;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile(DEFAULT_ENVIRONMENT_VALUE.concat(".properties"));
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
@@ -130,5 +132,32 @@ public class Constants {
      */
     public static String getSecretKey() {
         return secretKey = System.getProperty("atsSecretKey") == null ? PROPERTIES.getProperty("ats.secret.key") : System.getProperty("atsSecretKey");
+    }
+
+    /**
+     * Get service url
+     *
+     * @return string
+     */
+    public static String getServiceUrl() {
+        return serviceUrl = System.getProperty("atsServiceUrl") == null ? PROPERTIES.getProperty("ats.service.url") : System.getProperty("atsServiceUrl");
+    }
+
+    /**
+     * Get automation username prefix
+     *
+     * @return string
+     */
+    public static String getAutomationUsername() {
+        return PROPERTIES.getProperty("automation.username");
+    }
+
+    /**
+     * Get automation password
+     *
+     * @return string
+     */
+    public static String getAutomationPassword() {
+        return PROPERTIES.getProperty("automation.password");
     }
 }

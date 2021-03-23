@@ -61,7 +61,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
             .setExportDateUsingInput(false, "")
-            .waitForCorrectExportSetListCount("Single export set selection.", "0");
+            .waitForCorrectExportSetListCount("Export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -82,7 +82,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
             .setExportDateUsingPicker(false)
-            .waitForCorrectExportSetListCount("Single export set selection.", "0");
+            .waitForCorrectExportSetListCount("Export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -266,7 +266,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
-        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
+        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
@@ -275,7 +275,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
-        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
+        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
@@ -401,7 +401,7 @@ public class InputControlsTests extends TestBase {
      * @param exportSet  - String
      * @param massMetric - String
      */
-    public void testMassMetricDtcReports(String reportName, String exportSet, String massMetric) {
+    public void testMassMetricReportsWithChart(String reportName, String exportSet, String massMetric) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()

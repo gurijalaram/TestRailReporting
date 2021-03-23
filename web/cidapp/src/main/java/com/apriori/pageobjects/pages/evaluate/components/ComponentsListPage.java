@@ -6,6 +6,7 @@ import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.PrimaryInputsPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
@@ -16,6 +17,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
@@ -32,6 +35,21 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @FindBy(xpath = "//button[.='Selection']")
     private WebElement selectionButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-upload-button")
+    private WebElement uploadButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-set-inputs-button")
+    private WebElement costInputsButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-override-button")
+    private WebElement pencilButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-exclude-button")
+    private WebElement eyeSlashButton;
+
+    @FindBy(id = "qa-sub-component-action-bar-include-button")
+    private WebElement eyeButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -111,6 +129,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Opens cost inputs page
+     *
+     * @return new page object
+     */
+    public PrimaryInputsPage setCostInputs() {
+        pageUtils.waitForElementAndClick(costInputsButton);
+        return new PrimaryInputsPage(driver);
+    }
+
+    /**
      * Opens the help page
      *
      * @return new page object
@@ -128,4 +156,48 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         return panelController.closePanel();
     }
 
+    /**
+     * Multi-highlight scenarios
+     *
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ComponentsListPage multiHighlightScenarios(String... componentScenarioName) {
+        scenarioTableController.multiHighlightScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Multi-select scenario
+     *
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ComponentsListPage multiSelectScenarios(String... componentScenarioName) {
+        scenarioTableController.multiSelectScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Highlights the scenario in the table using the keyboard control key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ComponentsListPage controlHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.controlHighlightScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
+     * Gets the icon in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    public List<String> getRowDetails(String componentName, String scenarioName) {
+        return scenarioTableController.getRowDetails(componentName, scenarioName);
+    }
 }
