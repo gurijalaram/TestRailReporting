@@ -47,8 +47,8 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization();
 
@@ -79,7 +79,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostResults("Piece Part Cost"), is(closeTo(20.44, 1)));
@@ -121,8 +121,8 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();
@@ -131,7 +131,7 @@ public class MaterialStockTests extends TestBase {
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("Yes")));
 
         stockPage.closePanel()
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();

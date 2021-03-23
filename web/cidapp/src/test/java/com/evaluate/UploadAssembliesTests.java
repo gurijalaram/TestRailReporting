@@ -50,7 +50,7 @@ public class UploadAssembliesTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, bigRingComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .inputProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -59,7 +59,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, smallRingComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .inputProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -68,7 +68,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, pinComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .inputProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -77,7 +77,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, hingeAsm, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .inputProcessGroup(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
 

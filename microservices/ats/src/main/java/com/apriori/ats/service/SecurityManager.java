@@ -31,13 +31,13 @@ public class SecurityManager {
         return token.getToken();
     }
 
-    public static AuthorizationResponse authorizeUser(String secretKey, String url, String application, String targetCloudContext,
+    public static AuthorizationResponse authorizeUser(String secretKey, String url, String targetCloudContext,
                                                       String token, int statusCode) {
         url = "https://" + url;
         url = url.concat(String.format("/authorize?key=%s", secretKey));
         AuthorizeRequest request = new AuthorizeRequest();
 
-        AuthorizeRequest body = request.setApplication(application).setTargetCloudContext(targetCloudContext).setToken(token);
+        AuthorizeRequest body = request.setTargetCloudContext(targetCloudContext).setToken(token);
 
         return (AuthorizationResponse) GenericRequestUtil.postMultipart(
             RequestEntity.init(url, AuthorizationResponse.class)
