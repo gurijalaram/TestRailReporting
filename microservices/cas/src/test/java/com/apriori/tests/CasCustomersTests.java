@@ -32,6 +32,8 @@ public class CasCustomersTests extends TestUtil {
 
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CasTestUtil casTestUtil = new CasTestUtil();
+    private String url = String.format(Constants.getApiUrl(), "customers/");
 
     @Before
     public void getToken() {
@@ -61,9 +63,7 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5645"})
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/");
-
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
             new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -72,7 +72,7 @@ public class CasCustomersTests extends TestUtil {
         String identity = customer.getIdentity();
         String name = customer.getName();
 
-        String identityEndpoint = apiUrl + identity;
+        String identityEndpoint = url + identity;
 
         ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, Customer.class,
             new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -85,9 +85,7 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer identified by its name")
     public void getCustomerByName() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers");
-
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -134,13 +132,12 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5642", "5644"})
     @Description("Add a new customer, get it by name, update the customer and get it by identity")
     public void createUpdateCustomer() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> response = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
@@ -155,7 +152,7 @@ public class CasCustomersTests extends TestUtil {
         String identity = responseName.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String identityUrl = url + identity;
 
-        ResponseWrapper<Customer> patchResponse = new CasTestUtil().updateCustomer(identityUrl, Customer.class, token, email);
+        ResponseWrapper<Customer> patchResponse = casTestUtil.updateCustomer(identity, token, email);
 
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getResponse().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
@@ -172,20 +169,19 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5826"})
     @Description("Resetting the MFA enrollment status of every user for the customer")
     public void ResettingMFA() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> response = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         String identity = response.getResponseEntity().getResponse().getIdentity();
         String mfaUrl = url + identity + "/reset-mfa";
 
-        ResponseWrapper resettingResponse = new CasTestUtil().resetMfa(mfaUrl, token);
+        ResponseWrapper resettingResponse = casTestUtil.resetMfa(mfaUrl, token);
 
         assertThat(resettingResponse.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
     }

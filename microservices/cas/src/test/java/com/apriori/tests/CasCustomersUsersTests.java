@@ -28,6 +28,8 @@ import org.junit.Test;
 public class CasCustomersUsersTests extends TestUtil {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CasTestUtil casTestUtil = new CasTestUtil();
+    private String url = String.format(Constants.getApiUrl(), "customers/");
 
     @Before
     public void getToken() {
@@ -44,19 +46,18 @@ public class CasCustomersUsersTests extends TestUtil {
     @TestRail(testCaseId = {"5661", "5662", "5663"})
     @Description("Add a user to a customer, return a list of users for the customer, get the User identified by its identity.")
     public void addCustomerUsers() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
 
         String usersEndpoint = url + customerIdentity + "/users/";
 
-        ResponseWrapper<CustomerUser> user = new CasTestUtil().addUser(usersEndpoint, CustomerUser.class, token, userName);
+        ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, token, userName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
@@ -80,27 +81,23 @@ public class CasCustomersUsersTests extends TestUtil {
     @TestRail(testCaseId = "5664")
     @Description("Update the User.")
     public void updateCustomerUsers() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
 
-        String usersEndpoint = url + customerIdentity + "/users/";
-
-        ResponseWrapper<CustomerUser> user = new CasTestUtil().addUser(usersEndpoint, CustomerUser.class, token, userName);
+        ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, token, userName);
 
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
 
         String identity = user.getResponseEntity().getResponse().getIdentity();
         String profileIdentity = user.getResponseEntity().getResponse().getUserProfile().getIdentity();
-        String patchUrl = usersEndpoint + identity;
 
-        ResponseWrapper<UpdateUser> updatedUser = new CasTestUtil().updateUser(patchUrl, UpdateUser.class, token, userName, identity, customerIdentity, profileIdentity);
+        ResponseWrapper<UpdateUser> updatedUser = casTestUtil.updateUser(token, userName, identity, customerIdentity, profileIdentity);
 
         assertThat(updatedUser.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(updatedUser.getResponseEntity().getResponse().getUserProfile().getDepartment(), is(equalTo("QA")));
@@ -110,26 +107,23 @@ public class CasCustomersUsersTests extends TestUtil {
     @TestRail(testCaseId = "5667")
     @Description("Reset the MFA configuration for a user.")
     public void resettingUserMfa() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
 
-        String usersEndpoint = url + customerIdentity + "/users/";
-
-        ResponseWrapper<CustomerUser> user = new CasTestUtil().addUser(usersEndpoint, CustomerUser.class, token, userName);
+        ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, token, userName);
 
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
 
         String identity = user.getResponseEntity().getResponse().getIdentity();
-        String mfaUrl = usersEndpoint + identity + "/reset-mfa";
+        String mfaUrl = url + customerIdentity + "/users/" + identity + "/reset-mfa";
 
-        ResponseWrapper resetMfa = new CasTestUtil().resetMfa(mfaUrl, token);
+        ResponseWrapper resetMfa = casTestUtil.resetMfa(mfaUrl, token);
 
         assertThat(resetMfa.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
     }

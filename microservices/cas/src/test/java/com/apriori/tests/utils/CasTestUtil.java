@@ -1,7 +1,6 @@
 package com.apriori.tests.utils;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
 
@@ -10,9 +9,12 @@ import com.apriori.entity.response.BatchItemsPost;
 import com.apriori.entity.response.CustomProperties;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUserProfile;
+import com.apriori.entity.response.PostBatch;
+import com.apriori.entity.response.SingleCustomer;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UpdatedProfile;
+import com.apriori.entity.response.ValidateSite;
 
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
@@ -29,20 +31,21 @@ import java.util.Collections;
 
 public class CasTestUtil extends TestUtil {
 
+    private String url = String.format(Constants.getApiUrl(), "customers/");
+
     /**
      * POST call to add a customer
      *
-     * @param url            - the endpoint
-     * @param klass          - the response class
      * @param token          - the token
      * @param name           - the customer name
      * @param cloudReference - the cloud reference name
      * @param description    - the description
      * @param email          - the email pattern
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper <SingleCustomer>
      */
-    public <T> ResponseWrapper<T> addCustomer(String url, Class klass, String token, String name, String cloudReference, String description, String email) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<SingleCustomer> addCustomer(String token, String name, String cloudReference, String description, String email) {
+
+        RequestEntity requestEntity = RequestEntity.init(url, SingleCustomer.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("customer",
                 new Customer().setName(name)
@@ -61,14 +64,14 @@ public class CasTestUtil extends TestUtil {
     /**
      * PATCH call to update a customer
      *
-     * @param url   - the endpoint
-     * @param klass - the response class
      * @param token - the token
      * @param email - the email pattern
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper <Customer>
      */
-    public <T> ResponseWrapper<T> updateCustomer(String url, Class klass, String token, String email) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<Customer> updateCustomer(String identity, String token, String email) {
+        String endpoint = url + identity;
+
+        RequestEntity requestEntity = RequestEntity.init(endpoint, Customer.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("customer",
                 new Customer().setEmailDomains(Arrays.asList(email + ".com", email + ".co.uk")));
@@ -89,14 +92,14 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url    - the endpoint
-     * @param klass  - the response class
      * @param token  - token
      * @param siteId - site ID
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper <ValidateSite>
      */
-    public <T> ResponseWrapper<T> validateSite(String url, Class klass, String token, String siteId) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<ValidateSite> validateSite(String identity, String token, String siteId) {
+        String endpoint = url + identity + "/sites/validate";
+
+        RequestEntity requestEntity = RequestEntity.init(endpoint, ValidateSite.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("site",
                 new Site().setSiteId(siteId));
@@ -105,15 +108,15 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url      - the endpoint
-     * @param klass    - the response class
      * @param token    - token
      * @param siteId   - site ID
      * @param siteName - site name
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper <Site>
      */
-    public <T> ResponseWrapper<T> addSite(String url, Class klass, String token, String siteId, String siteName) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<Site> addSite(String identity, String token, String siteId, String siteName) {
+        String endpoint = url + identity + "/sites";
+
+        RequestEntity requestEntity = RequestEntity.init(endpoint, Site.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("site",
                 new Site().setSiteId(siteId)
@@ -125,14 +128,14 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url      - the endpoint
-     * @param klass    - the response class
      * @param token    - token
      * @param userName - username
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper <CustomerUser>
      */
-    public <T> ResponseWrapper<T> addUser(String url, Class klass, String token, String userName) {
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+    public ResponseWrapper<CustomerUser> addUser(String identity, String token, String userName) {
+        String endpoint = url + identity + "/users/";
+
+        RequestEntity requestEntity = RequestEntity.init(endpoint, CustomerUser.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("user",
                 new CustomerUser().setUserType("AP_CLOUD_USER")
@@ -150,21 +153,20 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url              - the endpoint
-     * @param klass            - the response class
      * @param token            - token
      * @param userName         - username
      * @param identity         - user identity
      * @param customerIdentity - customer identity
      * @param profileIdentity  - user profile identity
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper <UpdateUser>
      */
-    public <T> ResponseWrapper<T> updateUser(String url, Class klass, String token, String userName, String identity, String customerIdentity, String profileIdentity) {
+    public ResponseWrapper<UpdateUser> updateUser(String token, String userName, String identity, String customerIdentity, String profileIdentity) {
         LocalDateTime createdAt = LocalDateTime.parse("2020-11-23T10:15:30");
         LocalDateTime updatedAt = LocalDateTime.parse("2021-02-19T10:25");
         LocalDateTime profileCreatedAt = LocalDateTime.parse("2020-11-23T13:34");
+        String endpoint = url + customerIdentity + "/users/" + identity;
 
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+        RequestEntity requestEntity = RequestEntity.init(endpoint, UpdateUser.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("user",
                 new UpdateUser().setUserType("AP_CLOUD_USER")
@@ -194,14 +196,14 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url - the endpoint
-     * @param klass - the response class
      * @param token - token
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper <PostBatch>
      */
-    public <T> ResponseWrapper<T> addBatchFile(String url, Class klass, String token) {
+    public ResponseWrapper<PostBatch> addBatchFile(String customerIdentity, String token) {
+        String endpoint = url + customerIdentity + "/batches/";
+
         final File batchFile = FileResourceUtil.getResourceAsFile("users.csv");
-        RequestEntity requestEntity = RequestEntity.init(url, klass)
+        RequestEntity requestEntity = RequestEntity.init(endpoint, PostBatch.class)
                 .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
                 .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile));
 
@@ -209,12 +211,13 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url - the endpoint
      * @param token - token
      * @return <T>ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> deleteBatch(String url, String token) {
-        RequestEntity requestEntity = RequestEntity.init(url, null)
+    public <T> ResponseWrapper<T> deleteBatch(String customerIdentity, String batchIdentity, String token) {
+        String endpoint = url + customerIdentity + "/batches/" + batchIdentity;
+
+        RequestEntity requestEntity = RequestEntity.init(endpoint, null)
                 .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
         return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
@@ -227,8 +230,9 @@ public class CasTestUtil extends TestUtil {
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> newUsersFromBatch(String token, String customerIdentity, String batchIdentity) {
-        String url = String.format(Constants.getApiUrl(), "customers/" + customerIdentity + "/batches/" + batchIdentity + "/items");
-        RequestEntity requestEntity = RequestEntity.init(url, null)
+        String endpoint = url + customerIdentity + "/batches/" + batchIdentity + "/items";
+
+        RequestEntity requestEntity = RequestEntity.init(endpoint, null)
                 .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
                 .setBody(new BatchItemsPost().setBatchItems(Arrays.asList(batchIdentity)));
 
@@ -243,8 +247,9 @@ public class CasTestUtil extends TestUtil {
      * @return ResponseWrapper <BatchItem>
      */
     public ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity, String token) {
-        String url = String.format(Constants.getApiUrl(), "customers/" + customerIdentity + "/batches/" + batchIdentity + "/items/" + itemIdentity);
-        RequestEntity requestEntity = RequestEntity.init(url, BatchItem.class)
+        String endpoint = url + customerIdentity + "/batches/" + batchIdentity + "/items/" + itemIdentity;
+
+        RequestEntity requestEntity = RequestEntity.init(endpoint, BatchItem.class)
                 .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
                 .setBody("batchItem",
                     new BatchItem().setUserName("maggie")
