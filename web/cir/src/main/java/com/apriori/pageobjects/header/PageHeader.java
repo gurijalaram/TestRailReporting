@@ -345,7 +345,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     public ViewSearchResultsPage searchForReport(String textToType) {
         pageUtils.waitForElementAndClick(searchInput);
         searchInput.sendKeys(textToType);
-        searchButton.click();
+        pageUtils.waitForElementAndClick(searchButton);
         pageUtils.isPageLoaded(homePageTitle);
         return new ViewSearchResultsPage(driver);
     }

@@ -4,18 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AuthorizeRequest {
     @JsonProperty
-    private String application;
-
-    @JsonProperty
     private String targetCloudContext;
 
     @JsonProperty
     private String token;
-
-    public AuthorizeRequest setApplication(String application) {
-        this.application = application;
-        return this;
-    }
 
     public AuthorizeRequest setTargetCloudContext(String targetCloudContext) {
         this.targetCloudContext = targetCloudContext;
