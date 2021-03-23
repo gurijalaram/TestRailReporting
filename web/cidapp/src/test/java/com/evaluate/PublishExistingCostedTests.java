@@ -38,7 +38,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Ignore
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"389", "1091"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
@@ -64,11 +63,11 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class);
-            /*.filter();
+            .filter()
             .setWorkspace("Public")
             .setScenarioType("Part")
             .setRowOne("Part Name", "Contains", partName)
-            .apply(ExplorePage.class);*/
+            .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, partName), is(greaterThan(0)));
     }
