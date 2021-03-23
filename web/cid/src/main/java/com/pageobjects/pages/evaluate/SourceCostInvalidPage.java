@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class SourceCostInvalidPage extends LoadableComponent<SourceCostInvalidPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(SourceCostInvalidPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(SourceCostInvalidPage.class);
 
     @FindBy(css = "div[data-ap-comp='additionalOrderInputs'] .modal-content")
     private WebElement modalDialog;
@@ -32,7 +32,7 @@ public class SourceCostInvalidPage extends LoadableComponent<SourceCostInvalidPa
     public SourceCostInvalidPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

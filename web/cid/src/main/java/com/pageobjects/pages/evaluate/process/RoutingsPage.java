@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class RoutingsPage extends LoadableComponent<RoutingsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(RoutingsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(RoutingsPage.class);
 
     @FindBy(css = "div[data-ap-comp='routingSelectionTable'] td")
     private WebElement routingTableCell;
@@ -57,7 +57,7 @@ public class RoutingsPage extends LoadableComponent<RoutingsPage> {
     public RoutingsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

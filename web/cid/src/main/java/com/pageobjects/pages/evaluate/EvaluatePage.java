@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 public class EvaluatePage extends EvaluateHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(EvaluatePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
     private Map<String, String> columnSelectorMap = new HashMap<>();
 
@@ -227,7 +227,7 @@ public class EvaluatePage extends EvaluateHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseColumnSelectorMap();
         this.get();
@@ -332,6 +332,14 @@ public class EvaluatePage extends EvaluateHeader {
     public CostDetailsPage openAssemblyCostDetails() {
         pageUtils.waitForElementAndClick(assemblyResultsDetails);
         return new CostDetailsPage(driver);
+    }
+
+    /**
+     * Waits for costs to load before proceeding
+     */
+    public void waitForCostsToLoad() {
+        By locator = By.xpath("//td[@data-ap-field='targetCost' and @title='0.00']");
+        pageUtils.waitForElementToAppear(locator);
     }
 
     /**

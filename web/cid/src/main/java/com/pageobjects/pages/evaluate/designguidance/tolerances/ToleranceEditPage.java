@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ToleranceEditPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ToleranceEditPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
@@ -89,7 +89,7 @@ public class ToleranceEditPage extends LoadableComponent<ToleranceEditPage> {
     public ToleranceEditPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

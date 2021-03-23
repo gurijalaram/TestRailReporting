@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(HelpDocPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
 
     @FindBy(css = ".navbar-brand")
     private WebElement brandImage;
@@ -26,7 +26,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
     public HelpDocPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

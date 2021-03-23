@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class ModalDialogController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ModalDialogController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ModalDialogController.class);
 
     @FindBy(id = "secondary-process-select-all-btn")
     private WebElement selectAllButton;
@@ -49,13 +49,16 @@ public class ModalDialogController {
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
 
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
+    private WebElement costButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
     public ModalDialogController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -157,5 +160,15 @@ public class ModalDialogController {
     public ModalDialogController collapseAll() {
         pageUtils.waitForElementAndClick(collapseAllButton);
         return this;
+    }
+
+    /**
+     * Cost
+     *
+     * @return current page object
+     */
+    public <T> T cost(Class<T> klass) {
+        pageUtils.waitForElementAppear(costButton);
+        return PageFactory.initElements(driver, klass);
     }
 }

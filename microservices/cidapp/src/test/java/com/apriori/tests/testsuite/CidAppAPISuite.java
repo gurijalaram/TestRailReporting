@@ -1,6 +1,6 @@
 package com.apriori.tests.testsuite;
 
-import com.apriori.tests.ComponentsControllerTests;
+import com.apriori.tests.controllers.ComponentsControllerTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 

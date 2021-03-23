@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class CiaUserGuide extends PageHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CiaUserGuide.class);
+    private static final Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
 
     @FindBy(css = "div[id='page_content'] > div")
     private WebElement pageTitle;
@@ -27,7 +27,7 @@ public class CiaUserGuide extends PageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

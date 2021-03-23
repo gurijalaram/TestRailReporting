@@ -13,18 +13,18 @@ import org.slf4j.LoggerFactory;
 
 public class ComponentTableActions extends LoadableComponent<ComponentTableActions> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ComponentTableActions.class);
+    private static final Logger logger = LoggerFactory.getLogger(ComponentTableActions.class);
 
     @FindBy(css = "input[name='search']")
     private WebElement searchInput;
 
     @FindBy(css = "button[type='submit']")
-    private WebElement submitButton;
+    private WebElement searchIconButton;
 
-    @FindBy(id = "qa-scenario-list-filter-button")
-    private WebElement filtersButton;
+    @FindBy(id = "qa-sub-component-detail-filter-button")
+    private WebElement filterButton;
 
-    @FindBy(id = "qa-scenario-list-configure-button")
+    @FindBy(id = "qa-sub-component-detail-column-config-button")
     private WebElement configureButton;
 
     private PageUtils pageUtils;
@@ -33,7 +33,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     public ComponentTableActions(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -57,7 +57,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      */
     public ScenarioTableController clickSearch(String componentName) {
         search(componentName);
-        submitButton.click();
+        searchIconButton.click();
         return new ScenarioTableController(driver);
     }
 
@@ -80,7 +80,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @return current page object
      */
     private ComponentTableActions search(String componentName) {
-        pageUtils.waitForElementToAppear(submitButton);
+        pageUtils.waitForElementToAppear(searchIconButton);
         searchInput.clear();
         searchInput.sendKeys(componentName);
         return this;
@@ -101,8 +101,8 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      *
      * @return new page object
      */
-    public FiltersPage filters() {
-        pageUtils.waitForElementAndClick(filtersButton);
-        return new FiltersPage(driver);
+    public FilterPage filter() {
+        pageUtils.waitForElementAndClick(filterButton);
+        return new FilterPage(driver);
     }
 }

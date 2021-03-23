@@ -55,7 +55,7 @@ public class NewScenarioNameTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1576", "1586", "1587", "1589"})
+    @TestRail(testCaseId = {"5950", "5951", "5952"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
 
@@ -72,7 +72,7 @@ public class NewScenarioNameTests extends TestBase {
         evaluatePage.costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
-            .highlightComponent(testScenarioName, "partbody_2")
+            .highlightScenario(testScenarioName, "partbody_2")
             .createScenario()
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
@@ -82,7 +82,7 @@ public class NewScenarioNameTests extends TestBase {
 
     /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1588"})
+    @TestRail(testCaseId = {"5953"})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;

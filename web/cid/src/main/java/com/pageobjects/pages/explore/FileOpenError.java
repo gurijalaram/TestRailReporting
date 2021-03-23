@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class FileOpenError extends LoadableComponent<FileOpenError> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(FileOpenError.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileOpenError.class);
 
     @FindBy(css = "div[data-ap-comp='genericDialog'] .modal-content")
     private WebElement modalDialog;
@@ -29,7 +29,7 @@ public class FileOpenError extends LoadableComponent<FileOpenError> {
     public FileOpenError(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

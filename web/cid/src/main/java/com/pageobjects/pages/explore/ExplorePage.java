@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ExplorePage extends ExploreHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(css = "select[data-ap-field='filter'] option")
     private List<WebElement> workspaceDropdownList;
@@ -51,7 +51,7 @@ public class ExplorePage extends ExploreHeader {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTablePage = new ScenarioTablePage(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 public class WorkflowValidator {
-    private final Logger logger = LoggerFactory.getLogger(WorkflowValidator.class);
+    private static final Logger logger = LoggerFactory.getLogger(WorkflowValidator.class);
 
     private WorkflowPage workflowPage;
 
@@ -19,18 +19,33 @@ public class WorkflowValidator {
         workflowPage = new WorkflowPage(driver);
     }
 
+    /**
+     * Validate a new workflow has been created
+     *
+     * @param values
+     */
     public void validateCreatedWorkflow(Map<String, Object> values) {
         Assert.assertEquals("New Workflow popup header is incorrect", WorkflowFeatures.NEW_WORKFLOW_HEADER,
                 (String)values.get("label"));
         Assert.assertTrue("Workflow was not created", (boolean)values.get("workflowExists"));
     }
 
+    /**
+     * Validate the selected workflow has been edited
+     *
+     * @param values
+     */
     public void validateEditedWorkflow(Map<String, Object> values) {
         Assert.assertEquals("Edit Workflow modal header is incorrect", WorkflowFeatures.EDIT_WORKFLOW_HEADER,
                 (String)values.get("label"));
         Assert.assertTrue("Workflow was not edited", (boolean)values.get("workflowExists"));
     }
 
+    /**
+     * Validate the selected workflow has been deleted
+     *
+     * @param values
+     */
     public void validateDeletedWorkflow(Map<String, Object> values) {
         Assert.assertEquals("Delete workflow modal header is incorrect", WorkflowFeatures.DELETE_HEADER_TEXT,
                 (String)values.get("header"));

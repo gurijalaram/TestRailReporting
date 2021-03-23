@@ -13,6 +13,7 @@
         "identity",
         "createdAt",
         "createdBy",
+        "updatedAt",
         "customerIdentity",
         "userProfile",
         "email",
@@ -20,8 +21,6 @@
         "active",
         "mfaRequired",
         "customProperties",
-        "createdByName",
-        "licenseAssignments",
         "userType"
       ],
       "properties": {
@@ -37,6 +36,10 @@
           "$id": "#/properties/response/properties/createdBy",
           "type": "string"
         },
+        "updatedAt": {
+          "$id": "#/properties/response/properties/updatedAt",
+          "type": "string"
+        },
         "customerIdentity": {
           "$id": "#/properties/response/properties/customerIdentity",
           "type": "string"
@@ -49,11 +52,7 @@
             "createdAt",
             "createdBy",
             "givenName",
-            "familyName",
-            "jobTitle",
-            "department",
-            "supervisor",
-            "townCity"
+            "familyName"
           ],
           "properties": {
             "identity": {
@@ -74,22 +73,6 @@
             },
             "familyName": {
               "$id": "#/properties/response/properties/userProfile/properties/familyName",
-              "type": "string"
-            },
-            "jobTitle": {
-              "$id": "#/properties/response/properties/userProfile/properties/jobTitle",
-              "type": "string"
-            },
-            "department": {
-              "$id": "#/properties/response/properties/userProfile/properties/department",
-              "type": "string"
-            },
-            "supervisor": {
-              "$id": "#/properties/response/properties/userProfile/properties/supervisor",
-              "type": "string"
-            },
-            "townCity": {
-              "$id": "#/properties/response/properties/userProfile/properties/townCity",
               "type": "string"
             }
           }
@@ -113,17 +96,6 @@
         "customProperties": {
           "$id": "#/properties/response/properties/customProperties",
           "type": "object"
-        },
-        "createdByName": {
-          "$id": "#/properties/response/properties/createdByName",
-          "type": "string"
-        },
-        "licenseAssignments": {
-          "$id": "#/properties/response/properties/licenseAssignments",
-          "type": "array",
-          "items": {
-            "$id": "#/properties/response/properties/licenseAssignments/items"
-          }
         },
         "userType": {
           "$id": "#/properties/response/properties/userType",

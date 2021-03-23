@@ -48,8 +48,9 @@ public class DecimalPlaceTests extends TestBase {
     @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295"})
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"bracket_basic.prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
@@ -59,8 +60,8 @@ public class DecimalPlaceTests extends TestBase {
             .setDropdown("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExploreToolbar.class)
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -143,7 +144,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(19.47846, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
 
-        evaluatePage.selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.inputVpe(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));

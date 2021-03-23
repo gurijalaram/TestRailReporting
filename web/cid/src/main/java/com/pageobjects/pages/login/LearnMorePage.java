@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class LearnMorePage extends LoadableComponent<LearnMorePage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(LearnMorePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(LearnMorePage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -30,7 +30,7 @@ public class LearnMorePage extends LoadableComponent<LearnMorePage> {
     public LearnMorePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

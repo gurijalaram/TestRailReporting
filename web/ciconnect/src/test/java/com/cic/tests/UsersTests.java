@@ -7,6 +7,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Before;
 import org.junit.Test;
 
 public class UsersTests extends TestBase {
@@ -14,8 +15,13 @@ public class UsersTests extends TestBase {
     private UsersPage usersPage;
     private LoginPage loginPage;
 
+
     public UsersTests() {
         super();
+    }
+
+    @Before
+    public void setup() {
         workflowPage = new WorkflowPage(driver);
         usersPage = new UsersPage(driver);
         loginPage = new LoginPage(driver);

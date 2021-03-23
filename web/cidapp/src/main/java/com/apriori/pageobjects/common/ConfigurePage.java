@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class ConfigurePage extends LoadableComponent<ConfigurePage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ConfigurePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConfigurePage.class);
 
     @FindBy(xpath = "//label[.='Number of sticky columns']/ancestor::div//div[contains(@class,'apriori-select')]")
     private WebElement stickyDropdown;
@@ -26,7 +26,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

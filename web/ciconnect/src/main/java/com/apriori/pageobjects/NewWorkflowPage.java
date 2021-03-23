@@ -16,8 +16,11 @@ import org.slf4j.LoggerFactory;
 import utils.Constants;
 import utils.UIUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class NewWorkflowPage {
-    private final Logger logger = LoggerFactory.getLogger(NewWorkflowPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(NewWorkflowPage.class);
 
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83")
     private WebElement newWorkflowModal;
@@ -25,6 +28,8 @@ public class NewWorkflowPage {
     private WebElement createNewWorkflow;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_textbox-148 > table > tbody > tr > td > input")
     private WebElement newWorflowNameField;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_textarea-152 > div > textarea")
+    private WebElement newWorkflowDescription;
     @FindBy(css = "#runtime > div.ss-content.ss-open > div.ss-list > div:nth-child(7)")
     private WebElement newWorkflowConnectorSelection;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_DrowpdownWidget-154-bounding-box")
@@ -73,8 +78,6 @@ public class NewWorkflowPage {
     private WebElement yearlyTab;
     @FindBy(id = "YearsInput")
     private WebElement yearsInput;
-    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_textarea-152 > div > textarea")
-    private WebElement newWorkflowDecription;
     @FindBy(id = "root_pagemashupcontainer-1_navigation-83-popup_checkbox-149-input")
     private WebElement newWorkflowEnabledCB;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-183 > button")
@@ -104,10 +107,24 @@ public class NewWorkflowPage {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 
+    public boolean isNextButtonEnabled() {
+        return pageUtils.isElementEnabled(newWorkflowNextButton);
+    }
+
+    /**
+     * Does a "New Workflow" pop exist
+     *
+     * @return new workflow popup exists
+     */
     public boolean modalExists() {
         return newWorkflowModal.isDisplayed();
     }
 
+    /**
+     * Get the "New Workflow" popup label
+     *
+     * @return popup label
+     */
     public String getLabel() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(createNewWorkflow));
@@ -115,21 +132,123 @@ public class NewWorkflowPage {
 
     }
 
-    public void createNewWorkFlow(String name, int iteration) {
-        // Fill Details page
+    /**
+     *
+     * @param name The name of the new workflow
+     */
+    public void fillWorkflowNameField(String name) {
         pageUtils.waitForElementAndClick(newWorflowNameField);
         newWorflowNameField.sendKeys(name);
+    }
+
+    /**
+     *
+     * @return The name field exists
+     */
+    public boolean nameFieldExists() {
+        return pageUtils.isElementDisplayed(newWorflowNameField);
+    }
+
+    /**
+     *
+     * @param description Description of the new workflow
+     */
+    public void fillWorkflowDescriptionField(String description) {
+        pageUtils.waitForElementAndClick(newWorkflowDescription);
+        newWorkflowDescription.sendKeys(description);
+    }
+
+    /**
+     *
+     * @return Description field exists
+     */
+    public boolean descriptionFiledExistis() {
+        return pageUtils.isElementDisplayed(newWorkflowDescription);
+    }
+
+    /**
+     * Select an exisiing connector
+     */
+    public void selectWorkflowConnector() {
         pageUtils.waitForElementAndClick(newWorkflowConnectorDropDown);
         pageUtils.waitForElementAndClick(newWorkflowConnectorSelection);
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-        pageUtils.waitForElementAndClick(newWorkflowNextButton);
 
+        // A hard wait is needed here due to timing issues with the "Conector Dropdown"
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+    }
+
+    /**
+     *
+     * @return Connector dropdown exists
+     */
+    public boolean connectorDropdownExists() {
+        return pageUtils.isElementDisplayed(newWorkflowConnectorDropDown);
+    }
+
+    /**
+     *
+     * @return Value map with the state of each schedule tab
+     */
+    public Map<String, Boolean> schedulesExist() {
+        Map<String, Boolean> values = new HashMap<>();
+        values.put("minutes", pageUtils.isElementDisplayed(minutesTab));
+        values.put("hourly", pageUtils.isElementDisplayed(hourlyTab));
+        values.put("daily", pageUtils.isElementDisplayed(dailyTab));
+        values.put("weekly", pageUtils.isElementDisplayed(weeklyTab));
+        values.put("monthly", pageUtils.isElementDisplayed(monthlyTab));
+        values.put("yearly", pageUtils.isElementDisplayed(yearlyTab));
+
+        return values;
+    }
+
+    /**
+     * Create a basic workflow with just a name & connector
+     *
+     * @param name workflow name
+     * @param iteration If creating more than one workflow, iteration is the current workflow count.
+     *                   For example, if you intend to create 4 new workflows and you are creating your third
+     *                   workflow, the iteration would be 3.
+     */
+    public void createNewWorkflow(String name, int iteration) {
+        createNewWorkflow(name, null, true,iteration);
+    }
+
+    /**
+     * Create a basic new work flow
+     *
+     * @param name The name of of the new workflow
+     * @param description Workflow description. If null no description will be added
+     * @param iteration If creating more than one workflow, iteration is the current workflow count.
+     *                  For example, if you intend to create 4 new workflows and you are creating your third
+     *                  workflow, the iteration would be 3.
+     */
+    public void createNewWorkflow(String name, String description, boolean selectConnector, int iteration) {
+        // Fill Details page
+        if (name != null) {
+            fillWorkflowNameField(name);
+        }
+
+        if (description != null) {
+            fillWorkflowDescriptionField(description);
+        }
+
+        if (selectConnector) {
+            selectWorkflowConnector();
+        }
+
+        pageUtils.waitForElementAndClick(newWorkflowNextButton);
         fillQueryDefinitions();
         fillCostingInputs(iteration);
-
         pageUtils.waitForElementAndClick(saveButton);
     }
 
+    /**
+     * Creates a css webelement string with specified a specified id
+     *
+     * @param css Marked up webelement css string
+     * @param interation The number of times the New Workflow popup has been called
+     * @return
+     */
     private WebElement getIncrementedElement(String css, int interation) {
         Integer id = interation * 5;
         String elementCss = css.replace("[ID]", id.toString());
@@ -137,6 +256,9 @@ public class NewWorkflowPage {
         return webElement;
     }
 
+    /**
+     * Fills in the Query Definition fiels with DEFAULT values
+     */
     private void fillQueryDefinitions() {
         Select opt = new Select(queryDropDown);
         opt.selectByIndex(1);
@@ -147,6 +269,11 @@ public class NewWorkflowPage {
         pageUtils.waitForElementAndClick(queryAddRowButton);
     }
 
+    /**
+     * Fill in the Costing Inputs fields with DEFAULT values
+     *
+     * @param iteration The number of times the New Workflow popup has been called
+     */
     private void fillCostingInputs(int iteration) {
         WebElement ciConnectField = getIncrementedElement(ciConnectFieldCss, iteration);
         pageUtils.waitFor(3000);

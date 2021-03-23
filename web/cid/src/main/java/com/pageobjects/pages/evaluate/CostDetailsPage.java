@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class CostDetailsPage extends EvaluatePanelToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CostDetailsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(CostDetailsPage.class);
 
     @FindBy(css = "[data-ap-comp='costResultChartArea']")
     private WebElement costResultChart;
@@ -49,7 +49,7 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -153,9 +153,8 @@ public class CostDetailsPage extends EvaluatePanelToolbar {
      * @return String
      */
     public String getPiecePartCostString() {
-        By locator = By.xpath("//td[@data-ap-field='targetCost' and @title='0.00']");
-        pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(By.xpath("//span[@data-ap-field='totalCost']")).getAttribute("title");
+        By locator = By.xpath("//span[@data-ap-field='totalCost']");
+        return driver.findElement(locator).getAttribute("title");
     }
 
     /**

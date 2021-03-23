@@ -19,7 +19,7 @@ import java.io.File;
 
 public class ExploreToolbar extends MainNavBar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExploreToolbar.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExploreToolbar.class);
 
     @FindBy(xpath = "//button[.='New']")
     private WebElement newButton;
@@ -52,7 +52,7 @@ public class ExploreToolbar extends MainNavBar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(newButton);
         pageUtils.waitForElementAppear(publishButton);

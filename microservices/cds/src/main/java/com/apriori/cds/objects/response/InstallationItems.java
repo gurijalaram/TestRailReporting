@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/InstallationSchema.json")
@@ -38,12 +39,32 @@ public class InstallationItems {
     private String s3Bucket;
     private String tenant;
     private String tenantGroup;
+    private String siteIdentity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
     private String updatedBy;
     private String url;
+    private List<Object> applications = null;
     private InstallationItems response;
+
+    public String getSiteIdentity() {
+        return siteIdentity;
+    }
+
+    public InstallationItems setSiteIdentity(String siteIdentity) {
+        this.siteIdentity = siteIdentity;
+        return this;
+    }
+
+    public List<Object> getApplications() {
+        return applications;
+    }
+
+    public InstallationItems setApplications(List<Object> applications) {
+        this.applications = applications;
+        return this;
+    }
 
     public InstallationItems getResponse() {
         return response;

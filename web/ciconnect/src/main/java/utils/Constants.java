@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Constants {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
+    private static final Logger logger = LoggerFactory.getLogger(Constants.class);
 
     public static final String DEFAULT_USER_NAME_KEY = System.getProperty("username");
     public static final String DEFAULT_PASSWORD_KEY = System.getProperty("password");
@@ -46,6 +46,13 @@ public class Constants {
     public static final String DEFAULT_NAME_UPPER_CASE = "0   0   0   A Upper Workflow Automation";
     public static final String DEFAULT_NAME_LOWER_CASE = "0   0   0   a Lower Workflow Automation";
 
+    public static final String DEFAULT_WORKFLOW_DESCRIPTION = "This workflow was created by automation";
+
+    //Workflow field boundaries
+    public static final int MAXIMUM_WORKFLOW_NAME_CHARACTERS = 64;
+    public static final int MINIMAL_WORKFLOW_NAME_CHARACTERS = 1;
+    public static final int MAXIMUM_WORKFLOW_DESCRIPTION_CHARACTERS = 255;
+
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
@@ -56,7 +63,7 @@ public class Constants {
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            LOGGER.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

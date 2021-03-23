@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
@@ -14,13 +13,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 /**
  * @author cfrith
  */
 
 public class ExplorePage extends ExploreToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(css = "button[class='dropdown-toggle btn btn-primary']")
     private WebElement paginatorDropdown;
@@ -28,18 +29,19 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
 
+    @FindBy(css = "[id='qa-scenario-list-configure-button']")
+    private WebElement configureButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
-    private ComponentTableActions componentTableActions;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
-        this.componentTableActions = new ComponentTableActions(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(scenarioCount);
     }
@@ -69,7 +71,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return a new page object
      */
-    public EvaluatePage openComponent(String componentName, String scenarioName) {
+    public EvaluatePage openScenario(String componentName, String scenarioName) {
         scenarioTableController.openScenario(componentName, scenarioName);
         return new EvaluatePage(driver);
     }
@@ -81,7 +83,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage highlightComponent(String componentName, String scenarioName) {
+    public ExplorePage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
@@ -93,7 +95,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return size of the element as int
      */
-    public int getListOfComponents(String componentName, String scenarioName) {
+    public int getListOfScenarios(String componentName, String scenarioName) {
         return scenarioTableController.getListOfScenarios(componentName, scenarioName);
     }
 
@@ -103,6 +105,50 @@ public class ExplorePage extends ExploreToolbar {
      * @return new page object
      */
     public ConfigurePage configure() {
-        return componentTableActions.configure();
+        pageUtils.waitForElementAndClick(configureButton);
+        return new ConfigurePage(driver);
+    }
+
+    /**
+     * Multi-highlight scenarios
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ExplorePage multiHighlightScenarios(String... componentScenarioName) {
+        scenarioTableController.multiHighlightScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Multi-select scenario
+     * @param componentScenarioName - component name and method name
+     * @return current page object
+     */
+    public ExplorePage multiSelectScenarios(String... componentScenarioName) {
+        scenarioTableController.multiSelectScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * Highlights the scenario in the table using the keyboard control key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage controlHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.controlHighlightScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
+     * Gets the icon in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    public List<String> getRowDetails(String componentName, String scenarioName) {
+        return scenarioTableController.getRowDetails(componentName, scenarioName);
     }
 }

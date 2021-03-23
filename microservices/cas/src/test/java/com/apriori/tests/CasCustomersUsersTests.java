@@ -9,10 +9,10 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.CustomerUser;
+import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.SingleCustomer;
 import com.apriori.entity.response.UpdateUser;
-import com.apriori.entity.response.User;
-import com.apriori.entity.response.Users;
 
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.Constants;
@@ -56,12 +56,12 @@ public class CasCustomersUsersTests extends TestUtil {
 
         String usersEndpoint = url + customerIdentity + "/users/";
 
-        ResponseWrapper<User> user = new CasTestUtil().addUser(usersEndpoint, User.class, token, userName);
+        ResponseWrapper<CustomerUser> user = new CasTestUtil().addUser(usersEndpoint, CustomerUser.class, token, userName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
 
-        ResponseWrapper<Users> customerUsers = new CommonRequestUtil().getCommonRequest(usersEndpoint, true, Users.class,
+        ResponseWrapper<CustomerUsers> customerUsers = new CommonRequestUtil().getCommonRequest(usersEndpoint, true, CustomerUsers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(customerUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -70,7 +70,7 @@ public class CasCustomersUsersTests extends TestUtil {
         String userIdentity = customerUsers.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String userUrl = usersEndpoint + userIdentity;
 
-        ResponseWrapper<User> singleUser = new CommonRequestUtil().getCommonRequest(userUrl, true, User.class,
+        ResponseWrapper<CustomerUser> singleUser = new CommonRequestUtil().getCommonRequest(userUrl, true, CustomerUser.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(singleUser.getResponseEntity().getResponse().getIdentity(), is(equalTo(userIdentity)));
@@ -92,7 +92,7 @@ public class CasCustomersUsersTests extends TestUtil {
 
         String usersEndpoint = url + customerIdentity + "/users/";
 
-        ResponseWrapper<User> user = new CasTestUtil().addUser(usersEndpoint, User.class, token, userName);
+        ResponseWrapper<CustomerUser> user = new CasTestUtil().addUser(usersEndpoint, CustomerUser.class, token, userName);
 
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
 
@@ -122,7 +122,7 @@ public class CasCustomersUsersTests extends TestUtil {
 
         String usersEndpoint = url + customerIdentity + "/users/";
 
-        ResponseWrapper<User> user = new CasTestUtil().addUser(usersEndpoint, User.class, token, userName);
+        ResponseWrapper<CustomerUser> user = new CasTestUtil().addUser(usersEndpoint, CustomerUser.class, token, userName);
 
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
 

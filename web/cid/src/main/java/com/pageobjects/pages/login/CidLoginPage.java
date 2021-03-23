@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class CidLoginPage extends LoadableComponent<CidLoginPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CidLoginPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(CidLoginPage.class);
     private static String loginPageUrl = Constants.getDefaultUrl();
 
     @FindBy(css = "input[name='email']")
@@ -80,14 +80,14 @@ public class CidLoginPage extends LoadableComponent<CidLoginPage> {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = loginPageUrl;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        LOGGER.info("CURRENTLY ON INSTANCE: " + url);
+        logger.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }

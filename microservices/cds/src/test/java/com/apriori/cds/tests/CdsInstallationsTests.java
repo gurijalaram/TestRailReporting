@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.InstallationResponse;
+import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -31,6 +32,7 @@ public class CdsInstallationsTests extends CdsTestUtil {
     private String url;
 
     private String customerIdentity;
+    private String licensedAppIdentityEndpoint;
     private String customerIdentityEndpoint;
     private String installationIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -44,6 +46,9 @@ public class CdsInstallationsTests extends CdsTestUtil {
     public void cleanUp() {
         if (installationIdentityEndpoint != null) {
             delete(installationIdentityEndpoint);
+        }
+        if (licensedAppIdentityEndpoint != null) {
+            delete(licensedAppIdentityEndpoint);
         }
         if (customerIdentityEndpoint != null) {
             delete(customerIdentityEndpoint);
@@ -81,22 +86,28 @@ public class CdsInstallationsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
+        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
         ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
 
-        String installationEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations")));
-        ResponseWrapper<InstallationItems> installation = addInstallation(installationEndpoint, InstallationItems.class, realmKey, cloudRef);
+        String licensedApplicationsEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
+        ResponseWrapper<LicensedApplication> licensedApp = addApplicationToSite(licensedApplicationsEndpoint, LicensedApplication.class);
+        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
+
+        String installationEndpoint = String.format(url, String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
+        ResponseWrapper<InstallationItems> installation = addInstallation(installationEndpoint, InstallationItems.class, realmKey, cloudRef, siteIdentity);
         assertThat(installation.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String installationIdentity = installation.getResponseEntity().getResponse().getIdentity();
-        installationIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations/").concat(installationIdentity)));
+        installationIdentityEndpoint = String.format(url, String.format("customers/%s/deployments/%s/installations/%s", customerIdentity, deploymentIdentity, installationIdentity));
 
         assertThat(installation.getResponseEntity().getResponse().getName(), is(equalTo("Automation Installation")));
         assertThat(installation.getResponseEntity().getResponse().getRegion(), is(equalTo("na-1")));
@@ -120,22 +131,28 @@ public class CdsInstallationsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
+        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
         ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
 
-        String installationsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations")));
-        ResponseWrapper<InstallationItems> installation = addInstallation(installationsEndpoint, InstallationItems.class, realmKey, cloudRef);
+        String licensedApplicationsEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
+        ResponseWrapper<LicensedApplication> licensedApp = addApplicationToSite(licensedApplicationsEndpoint, LicensedApplication.class);
+        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
+
+        String installationsEndpoint = String.format(url, String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
+        ResponseWrapper<InstallationItems> installation = addInstallation(installationsEndpoint, InstallationItems.class, realmKey, cloudRef, siteIdentity);
         assertThat(installation.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String installationIdentity = installation.getResponseEntity().getResponse().getIdentity();
-        installationIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations/").concat(installationIdentity)));
+        installationIdentityEndpoint = String.format(url, String.format("customers/%s/deployments/%s/installations/%s", customerIdentity, deploymentIdentity, installationIdentity));
 
         ResponseWrapper<InstallationItems> identity = getCommonRequest(installationIdentityEndpoint, true, InstallationItems.class);
 
@@ -161,22 +178,28 @@ public class CdsInstallationsTests extends CdsTestUtil {
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
         ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
+        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
         ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
 
-        String installationsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations")));
-        ResponseWrapper<InstallationItems> installation = addInstallation(installationsEndpoint, InstallationItems.class, realmKey, cloudRef);
+        String licensedApplicationsEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
+        ResponseWrapper<LicensedApplication> licensedApp = addApplicationToSite(licensedApplicationsEndpoint, LicensedApplication.class);
+        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
+
+        String installationsEndpoint = String.format(url, String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
+        ResponseWrapper<InstallationItems> installation = addInstallation(installationsEndpoint, InstallationItems.class, realmKey, cloudRef, siteIdentity);
         assertThat(installation.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String installationIdentity = installation.getResponseEntity().getResponse().getIdentity();
-        installationIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/").concat(deploymentIdentity).concat("/installations/").concat(installationIdentity)));
+        installationIdentityEndpoint = String.format(url, String.format("customers/%s/deployments/%s/installations/%s", customerIdentity, deploymentIdentity, installationIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(installationIdentityEndpoint, InstallationItems.class)
             .setHeaders("Content-Type", "application/json")
@@ -184,6 +207,6 @@ public class CdsInstallationsTests extends CdsTestUtil {
                 new InstallationItems().setCloudReference("eu-1"));
 
         ResponseWrapper<InstallationItems> updatedCloudRef = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
-        assertThat(updatedCloudRef.getResponseEntity().getResponse().getCloudReference(),is(equalTo("eu-1")));
+        assertThat(updatedCloudRef.getResponseEntity().getResponse().getCloudReference(), is(equalTo("eu-1")));
     }
 }
