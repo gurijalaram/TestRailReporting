@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -49,10 +48,11 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .clickExplore()
             .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "SheetMetal")
-            .apply(ExplorePage.class);
+            .inputCurrentFilter("Private")
+            .saveAs()
+            .inputName("Automation")
+            .addCriteria("Component Name", "Contains", "SheetMetal")
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal"), is(equalTo(1)));
     }
@@ -74,10 +74,11 @@ public class FilterCriteriaTests extends TestBase {
             .costScenario()
             .clickExplore()
             .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Process Group", "is", "Casting - Die")
-            .apply(ExplorePage.class);
+            .inputCurrentFilter("Private")
+            .saveAs()
+            .inputName("Automation")
+            .addCriteria("Process Group", "is", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Casting"), is(equalTo(1)));
     }
@@ -96,10 +97,11 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .clickExplore()
             .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "Wall")
-            .apply(ExplorePage.class);
+            .inputCurrentFilter("Private")
+            .saveAs()
+            .inputName("Automation")
+            .addCriteria("Part Name", "Contains", "Wall")
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "CurvedWall"), is(equalTo(1)));
     }
@@ -118,10 +120,11 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .clickExplore()
             .filter()
-            .setWorkspace("Private")
-            .setScenarioType("Assembly")
-            .setRowOne("Part Name", "Contains", "Piston_assembly")
-            .apply(ExplorePage.class);
+            .inputCurrentFilter("Private")
+            .saveAs()
+            .inputName("Automation")
+            .addCriteria("Component Name", "Contains", "Piston_assembly")
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
@@ -169,12 +172,13 @@ public class FilterCriteriaTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .publishScenario()
-            .publish(PublishPage.class)
+            .publish(ExplorePage.class)
             .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "Push Pin")
-            .apply(ExplorePage.class);
+            .inputCurrentFilter("Public")
+            .saveAs()
+            .inputName("Automation")
+            .addCriteria("Component Name", "Contains", "Push Pin")
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), is(equalTo(1)));
     }
@@ -275,7 +279,7 @@ public class FilterCriteriaTests extends TestBase {
         String partName = "1027311-001";
 
         loginPage = new CidAppLoginPage(driver);
-       /* comparePage = loginPage.login(UserUtil.getUser())
+        /*comparePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
