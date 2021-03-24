@@ -57,6 +57,6 @@ public class CdsCustomerAssociationTests {
 
         assertThat(association.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(association.getResponseEntity().getResponse().getIdentity(), is(equalTo(associationIdentity)));
-        assertThat(association.getResponseEntity().getResponse().getDescription(), containsString("is a customer of aPriori"));
+        assertThat(association.getResponseEntity().getResponse().getDescription(), containsString("customer of aPriori"));
     }
 }
