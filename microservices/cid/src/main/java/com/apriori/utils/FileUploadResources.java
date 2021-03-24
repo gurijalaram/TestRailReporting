@@ -48,13 +48,17 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.google.common.net.UrlEscapers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.DataInput;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -99,16 +103,18 @@ public class FileUploadResources {
         String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
                 new FileUploadInputs()
                         .setScenarioName(scenarioName)
-                        .setFileKey(fileResponse.getIdentity())
+                        .setFileKey(fileResponse.getResponse().getIdentity())
                         .setFileName(fileName));
         submitWorkorder(fileUploadWorkorderId);
         FileUploadOutputs fileUploadOutputs = (FileUploadOutputs) checkGetWorkorderDetails(fileUploadWorkorderId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        //List<FileUploadOutputs> fileUploadOutputsList = objectMapper.readValue(fileUploadOutputs, new TypeReference<List<FileUploadOutputs>>(){});
 
         // Create, submit and check Load CAD Metadata workorder
         String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
                 new LoadCadMetadataInputs()
-                        .setFileMetadataIdentity(fileResponse.getIdentity())
-                        .setRequestedBy(fileResponse.getUserIdentity())
+                        .setFileMetadataIdentity(fileResponse.getResponse().getIdentity())
+                        .setRequestedBy(fileResponse.getResponse().getUserIdentity())
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         LoadCadMetadataOutputs loadCadMetadataOutputs =
@@ -119,7 +125,7 @@ public class FileUploadResources {
                 WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
                 new GeneratePartImagesInputs()
                     .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
-                    .setRequestedBy(fileResponse.getUserIdentity())
+                    .setRequestedBy(fileResponse.getResponse().getUserIdentity())
         );
         submitWorkorder(generatePartImagesWorkorderId);
         GeneratePartImagesOutputs generatePartImagesOutputs =
@@ -169,8 +175,6 @@ public class FileUploadResources {
             .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup),fileName)))
             .setFormParams(new FormParams().use("filename", fileName));
 
-        fileIdentity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "identity");
-        userIdentity = jsonNode(GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getBody(), "userIdentity");
         return (FileResponse) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 
@@ -403,11 +407,11 @@ public class FileUploadResources {
         do {
             String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orderstatus/" + workorderId;
 
-            requestEntityBody = RequestEntity.init(orderURL, String.class)
+            requestEntityBody = RequestEntity.init(orderURL, null)
                     .setHeaders(headers)
                     .setHeaders(token);
 
-            status = GenericRequestUtil.get(requestEntityBody, new RequestAreaApi()).getBody();
+            status = GenericRequestUtil.get(requestEntityBody, new RequestAreaApi()).getBody().replace("\"", "");
 
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -416,7 +420,7 @@ public class FileUploadResources {
                 Thread.currentThread().interrupt();
             }
 
-        } while ((!status.equals(orderSuccess)) && (!status.equals(orderFailed)) && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
+        } while (!status.equals(orderSuccess) && !status.equals(orderFailed) && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
         return status;
     }
