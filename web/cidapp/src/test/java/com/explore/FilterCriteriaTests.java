@@ -36,7 +36,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2276"})
+    @TestRail(testCaseId = {"6213"})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -58,6 +58,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "6214")
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
 
@@ -82,6 +83,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "6215")
     @Description("Test private criteria part contains")
     public void testPrivateCriteriaContains() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -103,6 +105,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "6216")
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -120,11 +123,12 @@ public class FilterCriteriaTests extends TestBase {
             .setRowOne("Part Name", "Contains", "Piston_assembly")
             .apply(ExplorePage.class);
 
-        assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
 
     @Ignore
     @Test
+    @TestRail(testCaseId = "6217")
     @Description("Test private criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -153,7 +157,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2277"})
+    @TestRail(testCaseId = {"6218"})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -177,6 +181,7 @@ public class FilterCriteriaTests extends TestBase {
 
     @Ignore
     @Test
+    @TestRail(testCaseId = "6219")
     @Description("Test public criteria assembly description")
     public void testPublicCriteriaAssemblyDesc() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -206,6 +211,7 @@ public class FilterCriteriaTests extends TestBase {
 
     @Ignore
     @Test
+    @TestRail(testCaseId = "6220")
     @Description("Test public criteria comparison")
     public void testPublicCriteriaComparison() {
         String testComparisonName = new GenerateStringUtil().generateScenarioName();
@@ -228,6 +234,7 @@ public class FilterCriteriaTests extends TestBase {
 
     @Ignore
     @Test
+    @TestRail(testCaseId = "6221")
     @Description("Test public criteria assembly description")
     public void testFilterAttributes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -255,7 +262,7 @@ public class FilterCriteriaTests extends TestBase {
     @Ignore
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"444"})
+    @TestRail(testCaseId = {"6222"})
     @Description("Within the recent view, a type field is visible to the user.")
     public void recentComparisonsTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
