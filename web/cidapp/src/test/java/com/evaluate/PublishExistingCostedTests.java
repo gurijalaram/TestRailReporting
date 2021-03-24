@@ -62,12 +62,12 @@ public class PublishExistingCostedTests extends TestBase {
             .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class);
+            .publish(ExplorePage.class)
             .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", partName)
-            .apply(ExplorePage.class);
+            .inputCurrentFilter("Public")
+            .saveAs()
+            .addCriteria("Component Name", "Contains", partName)
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, partName), is(greaterThan(0)));
     }
