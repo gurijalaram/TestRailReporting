@@ -7,8 +7,10 @@ import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
 import com.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.ootbreports.componentcost.ComponentCostReportTests;
-import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingDetailsTests;
-import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingTests;
+import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingDetailsReportTests;
+import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingReportTests;
+import com.ootbreports.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
+import com.ootbreports.designoutlieridentification.DesignOutlierIdentificationReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcReportTests;
@@ -23,6 +25,9 @@ import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.ootbreports.scenariocomparison.ScenarioComparisonReportTests;
+import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
+import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
+import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -38,8 +43,10 @@ import testsuites.suiteinterface.ReportsTest;
     CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
     ComponentCostReportTests.class,
-    CycleTimeValueTrackingTests.class,
-    CycleTimeValueTrackingDetailsTests.class,
+    CycleTimeValueTrackingReportTests.class,
+    CycleTimeValueTrackingDetailsReportTests.class,
+    DesignOutlierIdentificationReportTests.class,
+    DesignOutlierIdentificationDetailsReportTests.class,
     LoginTests.class,
     MachiningDtcReportTests.class,
     MachiningDtcDetailsReportTests.class,
@@ -51,7 +58,10 @@ import testsuites.suiteinterface.ReportsTest;
     ScenarioComparisonReportTests.class,
     SheetMetalDtcReportTests.class,
     SheetMetalDtcDetailsReportTests.class,
-    SheetMetalDtcComparisonReportTests.class
+    SheetMetalDtcComparisonReportTests.class,
+    TargetAndQuotedCostValueTrackingDetailsReportTests.class,
+    TargetAndQuotedCostValueTrackingReportTests.class,
+    TargetAndQuotedCostTrendReportTests.class
 })
 public class ReportingSuite {
 }

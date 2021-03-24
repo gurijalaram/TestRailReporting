@@ -25,13 +25,13 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
-public class TargetAndQuotedCostTrendTests extends TestBase {
+public class TargetAndQuotedCostTrendReportTests extends TestBase {
 
     private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
-    public TargetAndQuotedCostTrendTests() {
+    public TargetAndQuotedCostTrendReportTests() {
         super();
     }
 

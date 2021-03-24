@@ -27,13 +27,13 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
-public class TargetAndQuotedCostValueTrackingTests extends TestBase {
+public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     private TargetAndQuotedCostValueTrackingPage targetAndQuotedCostValueTrackingPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
-    public TargetAndQuotedCostValueTrackingTests() {
+    public TargetAndQuotedCostValueTrackingReportTests() {
         super();
     }
 

@@ -20,12 +20,12 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
-public class CycleTimeValueTrackingDetailsTests extends TestBase {
+public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
     private CycleTimeValueTrackingPage cycleTimeValueTrackingPage;
     private CommonReportTests commonReportTests;
 
-    public CycleTimeValueTrackingDetailsTests() {
+    public CycleTimeValueTrackingDetailsReportTests() {
         super();
     }
 

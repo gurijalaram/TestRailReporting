@@ -18,13 +18,13 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
 
-public class CycleTimeValueTrackingTests extends TestBase {
+public class CycleTimeValueTrackingReportTests extends TestBase {
 
     private CycleTimeValueTrackingPage cycleTimeValueTrackingPage;
     private ComponentCostReportPage componentCostReportPage;
     private CommonReportTests commonReportTests;
 
-    public CycleTimeValueTrackingTests() {
+    public CycleTimeValueTrackingReportTests() {
         super();
     }
 
