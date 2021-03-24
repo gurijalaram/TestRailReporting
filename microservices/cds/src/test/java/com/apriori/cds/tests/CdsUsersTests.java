@@ -20,8 +20,9 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsUsersTests extends CdsTestUtil {
+public class CdsUsersTests {
     private String url;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -34,7 +35,7 @@ public class CdsUsersTests extends CdsTestUtil {
     @Description("API returns a list of all the available users in the CDS DB")
     public void getUsers() {
         url = String.format(url, "users");
-        ResponseWrapper<Users> response = getCommonRequest(url, true, Users.class);
+        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(url, Users.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -47,12 +48,12 @@ public class CdsUsersTests extends CdsTestUtil {
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
         String usersUrl = String.format(url, "users");
-        ResponseWrapper<Users> responseWrapper = getCommonRequest(usersUrl, true, Users.class);
+        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(usersUrl, Users.class);
 
         String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
         String identityUrl = String.format(url, String.format("users/%s", userIdentity));
-        ResponseWrapper<User> response = getCommonRequest(identityUrl, true, User.class);
+        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(identityUrl, User.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getCustomerIdentity(), is(not(emptyString())));
@@ -64,12 +65,12 @@ public class CdsUsersTests extends CdsTestUtil {
     @Description("API returns a user's credentials based on the supplied identity")
     public void getUsersCredentials() {
         String usersUrl = String.format(url, "users");
-        ResponseWrapper<Users> responseWrapper = getCommonRequest(usersUrl, true, Users.class);
+        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(usersUrl, Users.class);
 
         String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
         String credentialsUrl = String.format(url, String.format("users/%s/credentials", userIdentity));
-        ResponseWrapper<CredentialsItems> response = getCommonRequest(credentialsUrl, true, CredentialsItems.class);
+        ResponseWrapper<CredentialsItems> response = cdsTestUtil.getCommonRequest(credentialsUrl, CredentialsItems.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getPasswordHash(), is(equalTo("4e35d124f1dde23c44e907a2e87f1ba346e1ee71")));
