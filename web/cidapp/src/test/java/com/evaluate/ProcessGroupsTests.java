@@ -397,7 +397,7 @@ public class ProcessGroupsTests extends TestBase {
     @Description("Testing process group Roto and Blow Molding")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupBlowMolding() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ROTO_BLOW_MOLDING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "225_gasket-1-solid1.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
