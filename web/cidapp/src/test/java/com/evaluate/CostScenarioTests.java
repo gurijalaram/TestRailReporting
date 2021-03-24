@@ -29,7 +29,7 @@ public class CostScenarioTests extends TestBase {
     @Category(SmokeTests.class)
     @Description("Cost Scenario")
     public void testCostScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
 
