@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/AccessControlSchema.json")
-public class AccessControl {
-    private AccessControl response;
+public class AccessControlResponse {
+    private AccessControlResponse response;
     private String identity;
     private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
@@ -28,11 +28,11 @@ public class AccessControl {
     private Boolean outOfContext;
     private String customerAssociationIdentity;
 
-    public AccessControl getResponse() {
+    public AccessControlResponse getResponse() {
         return response;
     }
 
-    public AccessControl setResponse(AccessControl response) {
+    public AccessControlResponse setResponse(AccessControlResponse response) {
         this.response = response;
         return this;
     }
@@ -41,7 +41,7 @@ public class AccessControl {
         return identity;
     }
 
-    public AccessControl setIdentity(String identity) {
+    public AccessControlResponse setIdentity(String identity) {
         this.identity = identity;
         return this;
     }
@@ -50,7 +50,7 @@ public class AccessControl {
         return createdBy;
     }
 
-    public AccessControl setCreatedBy(String createdBy) {
+    public AccessControlResponse setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -59,7 +59,7 @@ public class AccessControl {
         return createdAt;
     }
 
-    public AccessControl setCreatedAt(LocalDateTime createdAt) {
+    public AccessControlResponse setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -68,7 +68,7 @@ public class AccessControl {
         return customerIdentity;
     }
 
-    public AccessControl setCustomerIdentity(String customerIdentity) {
+    public AccessControlResponse setCustomerIdentity(String customerIdentity) {
         this.customerIdentity = customerIdentity;
         return this;
     }
@@ -77,7 +77,7 @@ public class AccessControl {
         return deploymentIdentity;
     }
 
-    public AccessControl setDeploymentIdentity(String deploymentIdentity) {
+    public AccessControlResponse setDeploymentIdentity(String deploymentIdentity) {
         this.deploymentIdentity = deploymentIdentity;
         return this;
     }
@@ -86,7 +86,7 @@ public class AccessControl {
         return userIdentity;
     }
 
-    public AccessControl setUserIdentity(String userIdentity) {
+    public AccessControlResponse setUserIdentity(String userIdentity) {
         this.userIdentity = userIdentity;
         return this;
     }
@@ -95,7 +95,7 @@ public class AccessControl {
         return installationIdentity;
     }
 
-    public AccessControl setInstallationIdentity(String installationIdentity) {
+    public AccessControlResponse setInstallationIdentity(String installationIdentity) {
         this.installationIdentity = installationIdentity;
         return this;
     }
@@ -104,7 +104,7 @@ public class AccessControl {
         return applicationIdentity;
     }
 
-    public AccessControl setApplicationIdentity(String applicationIdentity) {
+    public AccessControlResponse setApplicationIdentity(String applicationIdentity) {
         this.applicationIdentity = applicationIdentity;
         return this;
     }
@@ -113,7 +113,7 @@ public class AccessControl {
         return roleIdentity;
     }
 
-    public AccessControl setRoleIdentity(String roleIdentity) {
+    public AccessControlResponse setRoleIdentity(String roleIdentity) {
         this.roleIdentity = roleIdentity;
         return this;
     }
@@ -122,7 +122,7 @@ public class AccessControl {
         return outOfContext;
     }
 
-    public AccessControl setOutOfContext(Boolean outOfContext) {
+    public AccessControlResponse setOutOfContext(Boolean outOfContext) {
         this.outOfContext = outOfContext;
         return this;
     }
@@ -131,7 +131,7 @@ public class AccessControl {
         return customerAssociationIdentity;
     }
 
-    public AccessControl setCustomerAssociationIdentity(String customerAssociationIdentity) {
+    public AccessControlResponse setCustomerAssociationIdentity(String customerAssociationIdentity) {
         this.customerAssociationIdentity = customerAssociationIdentity;
         return this;
     }
