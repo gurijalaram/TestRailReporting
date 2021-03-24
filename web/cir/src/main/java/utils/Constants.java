@@ -60,7 +60,7 @@ public class Constants {
     public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-staging-sprockets";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
 
     public static final String SCENARIO_TYPE = "";
     public static final String ELEMENT_NAME = "";
