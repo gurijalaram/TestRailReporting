@@ -11,13 +11,13 @@ import java.util.List;
 @Schema(location = "cds/AccessControlsSchema.json")
 public class AccessControls extends Pagination {
     private AccessControls response;
-    private List<AccessControl> items;
+    private List<AccessControlResponse> items;
 
     public AccessControls getResponse() {
         return response;
     }
 
-    public List<AccessControl> getItems() {
+    public List<AccessControlResponse> getItems() {
         return this.items;
     }
 }
