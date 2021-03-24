@@ -34,11 +34,14 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = "input[name='scenarioName']")
     private WebElement scenarioNameInput;
 
-    @FindBy(css = "//div[class='Toastify__toast-body']")
+    @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
     @FindBy(xpath = "//input[@name='scenarioName']/following-sibling::span")
     private WebElement scenarioNameWarning;
+
+    @FindBy(css = "h4")
+    private WebElement fileInputError;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -105,6 +108,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Gets alert warning
+     *
      * @return string
      */
     public String getAlertWarning() {
@@ -113,11 +117,21 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     /**
      * Gets scenario name warning
+     *
      * @return string
      */
     public String getFieldWarningText() {
         scenarioNameInput.sendKeys(Keys.TAB);
         return pageUtils.waitForElementToAppear(scenarioNameWarning).getText();
+    }
+
+    /**
+     * Gets file input error
+     *
+     * @return string
+     */
+    public String getFileInputError() {
+        return pageUtils.waitForElementToAppear(fileInputError).getText();
     }
 
     /**
