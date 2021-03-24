@@ -46,6 +46,7 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -90,6 +91,8 @@ public class FileUploadResources {
     NewPartRequest newPartRequest = null;
     private String baseUrl = System.getProperty("baseUrl");
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
     /**
      * Method to upload part, load CAD metadata and generate part images
      *
@@ -106,9 +109,7 @@ public class FileUploadResources {
                         .setFileKey(fileResponse.getResponse().getIdentity())
                         .setFileName(fileName));
         submitWorkorder(fileUploadWorkorderId);
-        FileUploadOutputs fileUploadOutputs = (FileUploadOutputs) checkGetWorkorderDetails(fileUploadWorkorderId);
-        ObjectMapper objectMapper = new ObjectMapper();
-        //List<FileUploadOutputs> fileUploadOutputsList = objectMapper.readValue(fileUploadOutputs, new TypeReference<List<FileUploadOutputs>>(){});
+        FileUploadOutputs fileUploadOutputs = objectMapper.convertValue(checkGetWorkorderDetails(fileUploadWorkorderId), FileUploadOutputs.class);
 
         // Create, submit and check Load CAD Metadata workorder
         String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
@@ -118,7 +119,7 @@ public class FileUploadResources {
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         LoadCadMetadataOutputs loadCadMetadataOutputs =
-                (LoadCadMetadataOutputs) checkGetWorkorderDetails(loadCadMetadataWorkorderId);
+                objectMapper.convertValue(checkGetWorkorderDetails(loadCadMetadataWorkorderId), LoadCadMetadataOutputs.class);
 
         // Create, submit and check Generate Part Images workorder
         String generatePartImagesWorkorderId = createWorkorder(
@@ -129,7 +130,7 @@ public class FileUploadResources {
         );
         submitWorkorder(generatePartImagesWorkorderId);
         GeneratePartImagesOutputs generatePartImagesOutputs =
-                (GeneratePartImagesOutputs) checkGetWorkorderDetails(generatePartImagesWorkorderId);
+                objectMapper.convertValue(checkGetWorkorderDetails(generatePartImagesWorkorderId), GeneratePartImagesOutputs.class);
     }
 
     /**

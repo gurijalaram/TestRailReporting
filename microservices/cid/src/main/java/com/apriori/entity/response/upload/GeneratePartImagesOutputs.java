@@ -6,6 +6,14 @@ public class GeneratePartImagesOutputs {
     private String thumbnailImageIdentity;
     private String desktopImageIdentity;
 
+    public GeneratePartImagesOutputs GeneratePartImagesOutputs(String cadMetadataIdentity, String webImageIdentity, String thumbnailImageIdentity, String desktopImageIdentity) {
+        this.cadMetadataIdentity = cadMetadataIdentity;
+        this.webImageIdentity = webImageIdentity;
+        this.thumbnailImageIdentity = thumbnailImageIdentity;
+        this.desktopImageIdentity = desktopImageIdentity;
+        return this;
+    }
+
     public String getWebImageIdentity() {
         return webImageIdentity;
     }
