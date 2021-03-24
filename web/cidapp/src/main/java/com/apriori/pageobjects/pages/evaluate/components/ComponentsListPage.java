@@ -51,6 +51,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(id = "qa-sub-component-action-bar-include-button")
     private WebElement eyeButton;
 
+    @FindBy(id = "qa-sub-component-detail-column-config-button")
+    private WebElement configureButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -105,7 +108,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return new page object
      */
     public ConfigurePage configure() {
-        return componentTableActions.configure();
+        return componentTableActions.configure(configureButton);
     }
 
     /**
