@@ -73,6 +73,6 @@ public class CdsUsersTests {
         ResponseWrapper<CredentialsItems> response = cdsTestUtil.getCommonRequest(credentialsUrl, CredentialsItems.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getPasswordHash(), is(equalTo("4e35d124f1dde23c44e907a2e87f1ba346e1ee71")));
+        assertThat(response.getResponseEntity().getResponse().getPasswordHash(), is(not(emptyString())));
     }
 }
