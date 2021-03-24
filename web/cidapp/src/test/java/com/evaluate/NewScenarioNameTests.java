@@ -109,12 +109,12 @@ public class NewScenarioNameTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class);
+            .publish(ExplorePage.class)
             .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "MultiUpload")
-            .apply(ExplorePage.class);
+            .inputCurrentFilter("Public")
+            .saveAs()
+            .addCriteria("Component Name", "Contains", "MultiUpload")
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(scenarioA, "MultiUpload"), equalTo(1));
         assertThat(explorePage.getListOfScenarios(scenarioB, "MultiUpload"), equalTo(1));
