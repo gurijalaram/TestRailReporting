@@ -24,9 +24,6 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     @FindBy(id = "qa-sub-component-detail-filter-button")
     private WebElement filterButton;
 
-    @FindBy(id = "qa-sub-component-detail-column-config-button")
-    private WebElement configureButton;
-
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -46,7 +43,6 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(searchInput);
-        pageUtils.waitForElementAppear(configureButton);
     }
 
     /**
@@ -89,9 +85,11 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     /**
      * Open configure page
      *
+     * @param configureButton - the configure button
+     *
      * @return new page object
      */
-    public ConfigurePage configure() {
+    public ConfigurePage configure(WebElement configureButton) {
         pageUtils.waitForElementAndClick(configureButton);
         return new ConfigurePage(driver);
     }

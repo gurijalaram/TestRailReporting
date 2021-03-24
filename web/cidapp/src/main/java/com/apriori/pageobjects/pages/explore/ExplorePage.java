@@ -109,12 +109,12 @@ public class ExplorePage extends ExploreToolbar {
      * @return new page object
      */
     public ConfigurePage configure() {
-        pageUtils.waitForElementAndClick(configureButton);
-        return new ConfigurePage(driver);
+        return componentTableActions.configure(configureButton);
     }
 
     /**
      * Multi-highlight scenarios
+     *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
@@ -125,6 +125,7 @@ public class ExplorePage extends ExploreToolbar {
 
     /**
      * Multi-select scenario
+     *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
