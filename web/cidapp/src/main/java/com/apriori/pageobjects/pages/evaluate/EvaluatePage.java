@@ -167,7 +167,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage inputProcessGroup(String processGroup) {
-        primaryInputsController.inputProcessGroup(processGroupInput, processGroup);
+        primaryInputsController.typeAheadProcessGroup(processGroupInput, processGroup);
         return this;
     }
 
@@ -178,7 +178,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
-        primaryInputsController.selectVPE(vpeDropdown, vpe);
+        primaryInputsController.selectVpe(vpeDropdown, vpe);
         return this;
     }
 
@@ -189,7 +189,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage inputVpe(String vpe) {
-        primaryInputsController.inputVpe(vpeInput, vpe);
+        primaryInputsController.typeAheadVpe(vpeInput, vpe);
         return this;
     }
 

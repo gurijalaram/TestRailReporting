@@ -119,7 +119,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return current page object
      */
     public PrimaryInputsPage inputProcessGroup(String processGroup) {
-        primaryInputsController.inputProcessGroup(processGroupInput, processGroup);
+        primaryInputsController.typeAheadProcessGroup(processGroupInput, processGroup);
         return this;
     }
 
@@ -130,7 +130,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return current page object
      */
     public PrimaryInputsPage selectVPE(String vpe) {
-        primaryInputsController.selectVPE(vpeDropdown, vpe);
+        primaryInputsController.selectVpe(vpeDropdown, vpe);
         return this;
     }
 
