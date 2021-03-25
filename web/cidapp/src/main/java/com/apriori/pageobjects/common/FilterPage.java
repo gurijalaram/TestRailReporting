@@ -88,12 +88,12 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
-     * Inputs the filter
+     * Uses type ahead to input the filter
      *
      * @param filter - the filter
      * @return current page object
      */
-    public FilterPage dropInputCurrentFilter(String filter) {
+    public FilterPage typeAheadFilter(String filter) {
         dropdownUtil.input(filterDropDown, filterInput, filter);
         return this;
     }
@@ -190,41 +190,41 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage addCriteria(String property, String operation, String value) {
-        dropInputProperty(property)
-            .inputOperation(operation)
-            .inputValue(value);
+        typeAheadProperty(property)
+            .typeAheadOperation(operation)
+            .typeAheadValue(value);
         return this;
     }
 
     /**
-     * Inputs the property
+     * Uses type ahead to input the property
      *
      * @param property - the property
      * @return current page object
      */
-    private FilterPage dropInputProperty(String property) {
+    private FilterPage typeAheadProperty(String property) {
         dropdownUtil.input(propertyDropdown, propertyInput, property);
         return this;
     }
 
     /**
-     * Inputs the operation
+     * Uses type ahead to input the operation
      *
      * @param operation - the operation
      * @return current page object
      */
-    private FilterPage inputOperation(String operation) {
+    private FilterPage typeAheadOperation(String operation) {
         dropdownUtil.input(operationDropdown, operationInput, operation);
         return this;
     }
 
     /**
-     * Inputs the value
+     * Uses type ahead to input the value
      *
      * @param value - the value
      * @return current page object
      */
-    private FilterPage inputValue(String value) {
+    private FilterPage typeAheadValue(String value) {
         dropdownUtil.input(valueDropdown, valueInput, value);
         return this;
     }
