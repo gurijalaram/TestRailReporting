@@ -29,6 +29,8 @@ import org.junit.Test;
 public class CasBatchItemTests extends TestUtil {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CasTestUtil casTestUtil = new CasTestUtil();
+    private String url = String.format(Constants.getApiUrl(), "customers/");
 
     @Before
     public void getToken() {
@@ -45,21 +47,19 @@ public class CasBatchItemTests extends TestUtil {
     @TestRail(testCaseId = "5671")
     @Description("Returns a list of batch items for the customer batch.")
     public void getBatchItems() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
-        String postEndpoint = url + customerIdentity + "/batches/";
 
-        ResponseWrapper<PostBatch> batch = new CasTestUtil().addBatchFile(postEndpoint, PostBatch.class, token);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
-        String itemsUrl = postEndpoint + batchIdentity + "/items/";
+        String itemsUrl = url + customerIdentity + "/batches/" + batchIdentity + "/items/";
 
         ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -72,22 +72,20 @@ public class CasBatchItemTests extends TestUtil {
     @TestRail(testCaseId = "5672")
     @Description("Creates users from Batch by provided identities.")
     public void createBatchItems() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
-        String postEndpoint = url + customerIdentity + "/batches/";
 
-        ResponseWrapper<PostBatch> batch = new CasTestUtil().addBatchFile(postEndpoint, PostBatch.class, token);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper batchItems = new CasTestUtil().newUsersFromBatch(token, customerIdentity, batchIdentity);
+        ResponseWrapper batchItems = casTestUtil.newUsersFromBatch(customerIdentity, batchIdentity);
 
         assertThat(batchItems.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
@@ -96,21 +94,19 @@ public class CasBatchItemTests extends TestUtil {
     @TestRail(testCaseId = "5674")
     @Description("Get the Batch Item identified by its identity.")
     public void getItemById() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
-        String postEndpoint = url + customerIdentity + "/batches/";
 
-        ResponseWrapper<PostBatch> batch = new CasTestUtil().addBatchFile(postEndpoint, PostBatch.class, token);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
-        String itemsUrl = postEndpoint + batchIdentity + "/items/";
+        String itemsUrl = url + customerIdentity + "/batches/" + batchIdentity + "/items/";
 
         ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -129,33 +125,31 @@ public class CasBatchItemTests extends TestUtil {
     }
 
     // TODO endpoint is not implemented
-    @Ignore
+    @Ignore("Endpoint is not implemented")
     @Test
     @TestRail(testCaseId = "5673")
     @Description("Update an existing Batch Item identified by its identity.")
     public void updateBatchItem() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
-        String postEndpoint = url + customerIdentity + "/batches/";
 
-        ResponseWrapper<PostBatch> batch = new CasTestUtil().addBatchFile(postEndpoint, PostBatch.class, token);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
-        String itemsUrl = postEndpoint + batchIdentity + "/items/";
+        String itemsUrl = url + customerIdentity + "/batches/" + batchIdentity + "/items/";
 
         ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         String itemId = getItems.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        ResponseWrapper<BatchItem> updateItem = new CasTestUtil().updateBatchItem(customerIdentity, batchIdentity, itemId, token);
+        ResponseWrapper<BatchItem> updateItem = casTestUtil.updateBatchItem(customerIdentity, batchIdentity, itemId);
 
         assertThat(updateItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
