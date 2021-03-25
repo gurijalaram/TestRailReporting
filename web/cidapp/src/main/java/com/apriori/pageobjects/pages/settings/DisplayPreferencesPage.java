@@ -12,7 +12,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.TypeAheadUtil;
 
 public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferencesPage> {
 
@@ -24,13 +23,11 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
-    private TypeAheadUtil typeAheadUtil;
 
     public DisplayPreferencesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        this.typeAheadUtil = new TypeAheadUtil(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -73,7 +70,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
         WebElement labelDropdown = driver.findElement(By.xpath(String.format(labelLocator, label)));
         WebElement valueInput = driver.findElement(By.xpath(String.format(labelLocator.concat("//input"), label)));
 
-        typeAheadUtil.input(labelDropdown, valueInput, value);
+        pageUtils.typeAheadInput(labelDropdown, valueInput, value);
         return this;
     }
 

@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.TypeAheadUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,11 +26,9 @@ public class PrimaryInputsController {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private TypeAheadUtil typeAheadUtil;
 
     public PrimaryInputsController(WebDriver driver) {
         this.driver = driver;
-        this.typeAheadUtil = new TypeAheadUtil(driver);
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -59,7 +56,7 @@ public class PrimaryInputsController {
      * @return current page object
      */
     public PrimaryInputsController typeAheadProcessGroup(WebElement processGroupInput, String processGroup) {
-        typeAheadUtil.input(pgDropdown, processGroupInput, processGroup);
+        pageUtils.typeAheadInput(pgDropdown, processGroupInput, processGroup);
         return this;
     }
 
@@ -99,7 +96,7 @@ public class PrimaryInputsController {
      * @return current page object
      */
     public PrimaryInputsController typeAheadVpe(WebElement vpeInput, String vpe) {
-        typeAheadUtil.input(vpeDropdown, vpeInput, vpe);
+        pageUtils.typeAheadInput(vpeDropdown, vpeInput, vpe);
         return this;
     }
 
