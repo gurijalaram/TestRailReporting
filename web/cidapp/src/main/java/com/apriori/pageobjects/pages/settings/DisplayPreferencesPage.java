@@ -61,11 +61,12 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
 
     /**
      * Input info for any section
+     *
      * @param label - the label
      * @param value - the value
      * @return current page object
      */
-    public DisplayPreferencesPage inputSection(String label, String value){
+    public DisplayPreferencesPage inputSection(String label, String value) {
         String labelLocator = "//label[.='%s']/following-sibling::div[contains(@class,'apriori-select')]";
         By theLabel = By.xpath(String.format(labelLocator, label));
         By theValue = By.xpath(String.format(labelLocator.concat("//input"), label));
