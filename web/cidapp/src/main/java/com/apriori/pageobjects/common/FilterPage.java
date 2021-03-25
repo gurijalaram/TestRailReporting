@@ -2,7 +2,6 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,13 +9,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.DropdownUtil;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(FilterPage.class);
 
     @FindBy(css = "[class='name-field'] .apriori-select")
-    private WebElement filterSelect;
+    private WebElement filterDropDown;
 
     @FindBy(css = "[class='name-field'] input")
     private WebElement filterInput;
@@ -66,10 +66,12 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private DropdownUtil dropdownUtil;
 
     public FilterPage(WebDriver driver) {
         this.driver = driver;
         this.modalDialogController = new ModalDialogController(driver);
+        this.dropdownUtil = new DropdownUtil(driver);
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -82,7 +84,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(filterSelect);
+        pageUtils.waitForElementAppear(filterDropDown);
     }
 
     /**
@@ -91,10 +93,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param filter - the filter
      * @return current page object
      */
-    public FilterPage inputCurrentFilter(String filter) {
-        pageUtils.waitForElementAndClick(filterSelect);
-        filterInput.sendKeys(filter);
-        filterInput.sendKeys(Keys.ENTER);
+    public FilterPage dropInputCurrentFilter(String filter) {
+        dropdownUtil.input(filterDropDown, filterInput, filter);
         return this;
     }
 
@@ -190,7 +190,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage addCriteria(String property, String operation, String value) {
-        inputProperty(property)
+        dropInputProperty(property)
             .inputOperation(operation)
             .inputValue(value);
         return this;
@@ -202,10 +202,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param property - the property
      * @return current page object
      */
-    private FilterPage inputProperty(String property) {
-        pageUtils.waitForElementAndClick(propertyDropdown);
-        propertyInput.sendKeys(property);
-        propertyInput.sendKeys(Keys.ENTER);
+    private FilterPage dropInputProperty(String property) {
+        dropdownUtil.input(propertyDropdown, propertyInput, property);
         return this;
     }
 
@@ -216,9 +214,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage inputOperation(String operation) {
-        pageUtils.waitForElementAndClick(operationDropdown);
-        operationInput.sendKeys(operation);
-        operationInput.sendKeys(Keys.ENTER);
+        dropdownUtil.input(operationDropdown, operationInput, operation);
         return this;
     }
 
@@ -229,9 +225,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage inputValue(String value) {
-        pageUtils.waitForElementAndClick(valueDropdown);
-        valueInput.sendKeys(value);
-        valueInput.sendKeys(Keys.ENTER);
+        dropdownUtil.input(valueDropdown, valueInput, value);
         return this;
     }
 

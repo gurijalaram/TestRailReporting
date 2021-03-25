@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.DropdownUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,16 +20,18 @@ public class PrimaryInputsController {
     private static final Logger logger = LoggerFactory.getLogger(PrimaryInputsController.class);
 
     @FindBy(css = "div[id='qa-process-group-select-field'] .apriori-select")
-    private WebElement pgSelect;
+    private WebElement pgDropdown;
 
     @FindBy(css = "div[id='qa-vpe-select-field'] .apriori-select")
-    private WebElement vpeSelect;
+    private WebElement vpeDropdown;
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private DropdownUtil dropdownUtil;
 
     public PrimaryInputsController(WebDriver driver) {
         this.driver = driver;
+        this.dropdownUtil = new DropdownUtil(driver);
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -56,9 +59,7 @@ public class PrimaryInputsController {
      * @return current page object
      */
     public PrimaryInputsController inputProcessGroup(WebElement processGroupInput, String processGroup) {
-        pageUtils.waitForElementAndClick(pgSelect);
-        processGroupInput.sendKeys(processGroup);
-        processGroupInput.sendKeys(Keys.ENTER);
+        dropdownUtil.input(pgDropdown, processGroupInput, processGroup);
         return this;
     }
 
@@ -98,9 +99,7 @@ public class PrimaryInputsController {
      * @return current page object
      */
     public PrimaryInputsController inputVpe(WebElement vpeInput, String vpe) {
-        pageUtils.waitForElementAndClick(vpeSelect);
-        vpeInput.sendKeys(vpe);
-        vpeInput.sendKeys(Keys.ENTER);
+        dropdownUtil.input(vpeDropdown, vpeInput, vpe);
         return this;
     }
 
