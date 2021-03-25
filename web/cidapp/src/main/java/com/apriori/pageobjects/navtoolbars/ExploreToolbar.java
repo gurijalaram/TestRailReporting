@@ -45,6 +45,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-new-scenario']")
     private WebElement scenarioButton;
 
+    @FindBy(css = "[role='menuitem'] svg[data-icon='info-circle']")
+    private WebElement infoButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -134,5 +137,16 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(newButton);
         pageUtils.waitForElementAndClick(scenarioButton);
         return new ScenarioPage(driver);
+    }
+
+    /**
+     * Add scenario info
+     *
+     * @return new page object
+     */
+    public InfoPage addScenarioNotes() {
+        pageUtils.waitForElementAndClick(actionsButton);
+        pageUtils.waitForElementAndClick(infoButton);
+        return new InfoPage(driver);
     }
 }
