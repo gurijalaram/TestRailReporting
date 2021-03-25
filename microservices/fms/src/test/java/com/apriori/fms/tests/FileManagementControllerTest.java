@@ -52,7 +52,7 @@ public class FileManagementControllerTest extends TestUtil {
     @TestRail(testCaseId = "3939")
     @Description("Upload a file for a targetCloudContext with an authorized user")
     public void upLoadFile() {
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED,
             FileManagementController.uploadFile(
                 token,
                 ProcessGroupEnum.SHEET_METAL,
