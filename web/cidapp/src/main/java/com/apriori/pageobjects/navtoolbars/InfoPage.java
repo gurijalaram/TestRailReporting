@@ -93,6 +93,24 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     }
 
     /**
+     * Get description
+     *
+     * @return string
+     */
+    public String getDescription() {
+        return descriptionInput.getAttribute("textContent");
+    }
+
+    /**
+     * Get notes
+     *
+     * @return string
+     */
+    public String getNotes() {
+        return notesInput.getAttribute("textContent");
+    }
+
+    /**
      * Selects the submit button
      *
      * @return generic page object
