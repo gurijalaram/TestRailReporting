@@ -20,8 +20,9 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsApplicationsTests extends CdsTestUtil {
+public class CdsApplicationsTests {
     private String url;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -35,7 +36,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     public void getAllApplications() {
         url = String.format(url, "applications");
 
-        ResponseWrapper<Applications> response = getCommonRequest(url, true, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(url, Applications.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -48,7 +49,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     public void getApplicationById() {
         url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity()));
 
-        ResponseWrapper<Application> response = getCommonRequest(url, false, Application.class);
+        ResponseWrapper<Application> response = cdsTestUtil.getCommonRequest(url, Application.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("aPriori Professional")));
@@ -60,7 +61,7 @@ public class CdsApplicationsTests extends CdsTestUtil {
     public void getCustomersAuthorizedForApplication() {
         url = String.format(url, String.format("applications/%s/customers", Constants.getApProApplicationIdentity()));
 
-        ResponseWrapper<Customers> response = getCommonRequest(url, false, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(url, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

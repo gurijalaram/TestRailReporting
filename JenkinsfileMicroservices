@@ -102,7 +102,7 @@ pipeline {
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
-            sh "docker image prune --force"
+            sh "docker system prune --force"
             cleanWs()
         }
     }

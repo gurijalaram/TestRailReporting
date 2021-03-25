@@ -46,6 +46,9 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Back']")
     private WebElement backButton;
 
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Save']")
+    private WebElement saveButton;
+
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
 
@@ -110,6 +113,16 @@ public class ModalDialogController {
     public ModalDialogController back() {
         pageUtils.waitForElementAndClick(backButton);
         return this;
+    }
+
+    /**
+     * Select the save button
+     *
+     * @return generic page object
+     */
+    public <T> T save(Class<T> klass) {
+        pageUtils.waitForElementAndClick(saveButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**

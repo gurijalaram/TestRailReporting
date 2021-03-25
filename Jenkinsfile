@@ -162,7 +162,7 @@ pipeline {
                     sh "docker rmi -f selenium/node-chrome"
                 }
             }
-            sh "docker image prune --force"
+            sh "docker system prune --force"
             cleanWs()
         }
     }
