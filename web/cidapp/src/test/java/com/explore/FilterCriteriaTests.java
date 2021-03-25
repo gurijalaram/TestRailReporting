@@ -17,8 +17,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -26,7 +24,6 @@ public class FilterCriteriaTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    //private ComparePage comparePage;
 
     private File resourceFile;
 
@@ -48,7 +45,7 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .clickExplore()
             .filter()
-            .inputCurrentFilter("Private")
+            .typeAheadFilter("Private")
             .saveAs()
             .inputName("Automation")
             .addCriteria("Component Name", "Contains", "SheetMetal")
@@ -74,7 +71,7 @@ public class FilterCriteriaTests extends TestBase {
             .costScenario()
             .clickExplore()
             .filter()
-            .inputCurrentFilter("Private")
+            .typeAheadFilter("Private")
             .saveAs()
             .inputName("Automation")
             .addCriteria("Process Group", "is", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -97,7 +94,7 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .clickExplore()
             .filter()
-            .inputCurrentFilter("Private")
+            .typeAheadFilter("Private")
             .saveAs()
             .inputName("Automation")
             .addCriteria("Part Name", "Contains", "Wall")
@@ -120,7 +117,7 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .clickExplore()
             .filter()
-            .inputCurrentFilter("Private")
+            .typeAheadFilter("Private")
             .saveAs()
             .inputName("Automation")
             .addCriteria("Component Name", "Contains", "Piston_assembly")
@@ -129,7 +126,6 @@ public class FilterCriteriaTests extends TestBase {
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
 
-    @Ignore
     @Test
     @TestRail(testCaseId = "6217")
     @Description("Test private criteria assembly status")
@@ -140,23 +136,23 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        /*explorePage = loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Analysis", "High", "Test Description", "Test Notes")
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("piston_assembly", testScenarioName, "Update", "okay")
-            .closeJobQueue(EvaluatePage.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
+            .addScenarioNotes()
+            .typeAheadInSection("Status", "Analysis")
+            .typeAheadInSection("Cost Maturity", "High")
+            .inputDescription("Test Description")
+            .inputNotes("Test Notes")
+            .submit(EvaluatePage.class)
+            .publishScenario()
+            .publish(ExplorePage.class)
             .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Assembly")
-            .setRowOne("Status", "is", "Analysis")
-            .apply(ExplorePage.class);
+            .typeAheadFilter("Public")
+            .saveAs()
+            .addCriteria("Status", "is", "Analysis")
+            .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));*/
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
 
     @Test
@@ -174,7 +170,7 @@ public class FilterCriteriaTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
-            .inputCurrentFilter("Public")
+            .typeAheadFilter("Public")
             .saveAs()
             .inputName("Automation")
             .addCriteria("Component Name", "Contains", "Push Pin")
@@ -193,47 +189,23 @@ public class FilterCriteriaTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        /*loginPage = new CidAppLoginPage(driver);
+        loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectScenarioInfoNotes()
-            .enterScenarioInfoNotes("Complete", "High", "Test Description", "Test Notes")
-            .save(EvaluatePage.class)
-            .openJobQueue()
-            .checkJobQueueActionStatus("piston_assembly", testScenarioName, "Update", "okay")
-            .closeJobQueue(EvaluatePage.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
+            .addScenarioNotes()
+            .typeAheadInSection("Status", "Complete")
+            .typeAheadInSection("Cost Maturity", "High")
+            .inputDescription("Test Description")
+            .inputNotes("Test Notes")
+            .submit(ExplorePage.class)
             .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Assembly")
-            .setRowOne("Description", "Contains", "Test Description")
-            .apply(ExplorePage.class);
+            .typeAheadFilter("Public")
+            .saveAs()
+            .inputName("Automation")
+            .addCriteria("Description", "Contains", "Test Description")
+            .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfAssemblies(testScenarioName, "Piston_assembly"), is(equalTo(1)));*/
-    }
-
-    @Ignore
-    @Test
-    @TestRail(testCaseId = "6220")
-    @Description("Test public criteria comparison")
-    public void testPublicCriteriaComparison() {
-        String testComparisonName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        /*explorePage = loginPage.login(UserUtil.getUser())
-            .createNewComparison()
-            .enterComparisonName(testComparisonName)
-            .save(GenericHeader.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Comparison")
-            .setRowOne("Part Name", "Contains", testComparisonName)
-            .apply(ExplorePage.class);
-
-        assertThat(explorePage.getListOfComparisons(testComparisonName), is(equalTo(1)));*/
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
 
     @Ignore
@@ -261,76 +233,5 @@ public class FilterCriteriaTests extends TestBase {
             .apply(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "PowderMetalShaft"), is(equalTo(1)));*/
-    }
-
-    @Ignore
-    @Test
-    @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6222"})
-    @Description("Within the recent view, a type field is visible to the user.")
-    public void recentComparisonsTest() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "1027312-101-A1333.stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String testComparisonNameA = new GenerateStringUtil().generateComparisonName();
-        String testComparisonNameB = new GenerateStringUtil().generateComparisonName();
-        String testAssemblyName = "1027312-101-A1333";
-        String partName = "1027311-001";
-
-        loginPage = new CidAppLoginPage(driver);
-        /*comparePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .publishScenario()
-            .publish(PublishPage.class)
-            .createNewComparison()
-            .enterComparisonName(testComparisonNameA)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Assembly")
-            .setRowOne("Part Name", "Contains", testAssemblyName)
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(scenarioName, testAssemblyName)
-            .apply(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", partName)
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(scenarioName, partName)
-            .apply(ComparePage.class)
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .createNewComparison()
-            .enterComparisonName(testComparisonNameB)
-            .save(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Assembly")
-            .setRowOne("Part Name", "Contains", testAssemblyName)
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(scenarioName, testAssemblyName)
-            .apply(ComparePage.class)
-            .addScenario()
-            .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", partName)
-            .apply(ScenarioTablePage.class)
-            .selectComparisonScenario(scenarioName, partName)
-            .apply(GenericHeader.class)
-            .selectExploreButton()
-            .selectWorkSpace("Recent");
-
-        assertThat(explorePage.isComparisonIconDisplayedInTypeCell(testComparisonNameA), is(true));
-        assertThat(explorePage.isComparisonIconDisplayedInTypeCell(testComparisonNameB), is(true));
-        assertThat(explorePage.isPartIconDisplayedInTypeCell(partName, scenarioName), is(true));
-        assertThat(explorePage.isAssemblyIconDisplayedInTypeCell(testAssemblyName, scenarioName), is(true));*/
     }
 }
