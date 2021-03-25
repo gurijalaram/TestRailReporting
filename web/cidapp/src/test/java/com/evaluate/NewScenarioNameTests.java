@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -17,7 +18,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -34,7 +34,7 @@ public class NewScenarioNameTests extends TestBase {
         super();
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"5424"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
@@ -53,7 +53,7 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(), is(testScenarioName));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"5950", "5951", "5952"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
@@ -80,7 +80,7 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(), is(testNewScenarioName));
     }
 
-    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"5953"})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
@@ -108,15 +108,16 @@ public class NewScenarioNameTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class);
+            .publish(ExplorePage.class)
             .filter()
-            .setWorkspace("Public")
-            .setScenarioType("Part")
-            .setRowOne("Part Name", "Contains", "MultiUpload")
-            .apply(ExplorePage.class);
+            .inputCurrentFilter("Public")
+            .inputName("Automation")
+            .saveAs()
+            .addCriteria("Component Name", "Contains", "MultiUpload")
+            .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfComponents(scenarioA, "MultiUpload"), equalTo(1));
-        assertThat(explorePage.getListOfComponents(scenarioB, "MultiUpload"), equalTo(1));
-        assertThat(explorePage.getListOfComponents(scenarioC, "MultiUpload"), equalTo(1));
-    }*/
+        assertThat(explorePage.getListOfScenarios(scenarioA, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(scenarioB, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(scenarioC, "MultiUpload"), equalTo(1));
+    }
 }
