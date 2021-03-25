@@ -2,7 +2,6 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +15,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private static final Logger logger = LoggerFactory.getLogger(FilterPage.class);
 
     @FindBy(css = "[class='name-field'] .apriori-select")
-    private WebElement filterSelect;
+    private WebElement filterDropDown;
 
     @FindBy(css = "[class='name-field'] input")
     private WebElement filterInput;
@@ -82,19 +81,17 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(filterSelect);
+        pageUtils.waitForElementAppear(filterDropDown);
     }
 
     /**
-     * Inputs the filter
+     * Uses type ahead to input the filter
      *
      * @param filter - the filter
      * @return current page object
      */
-    public FilterPage inputCurrentFilter(String filter) {
-        pageUtils.waitForElementAndClick(filterSelect);
-        filterInput.sendKeys(filter);
-        filterInput.sendKeys(Keys.ENTER);
+    public FilterPage typeAheadFilter(String filter) {
+        pageUtils.typeAheadInput(filterDropDown, filterInput, filter);
         return this;
     }
 
@@ -190,48 +187,42 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage addCriteria(String property, String operation, String value) {
-        inputProperty(property)
-            .inputOperation(operation)
-            .inputValue(value);
+        typeAheadProperty(property)
+            .typeAheadOperation(operation)
+            .typeAheadValue(value);
         return this;
     }
 
     /**
-     * Inputs the property
+     * Uses type ahead to input the property
      *
      * @param property - the property
      * @return current page object
      */
-    private FilterPage inputProperty(String property) {
-        pageUtils.waitForElementAndClick(propertyDropdown);
-        propertyInput.sendKeys(property);
-        propertyInput.sendKeys(Keys.ENTER);
+    private FilterPage typeAheadProperty(String property) {
+        pageUtils.typeAheadInput(propertyDropdown, propertyInput, property);
         return this;
     }
 
     /**
-     * Inputs the operation
+     * Uses type ahead to input the operation
      *
      * @param operation - the operation
      * @return current page object
      */
-    private FilterPage inputOperation(String operation) {
-        pageUtils.waitForElementAndClick(operationDropdown);
-        operationInput.sendKeys(operation);
-        operationInput.sendKeys(Keys.ENTER);
+    private FilterPage typeAheadOperation(String operation) {
+        pageUtils.typeAheadInput(operationDropdown, operationInput, operation);
         return this;
     }
 
     /**
-     * Inputs the value
+     * Uses type ahead to input the value
      *
      * @param value - the value
      * @return current page object
      */
-    private FilterPage inputValue(String value) {
-        pageUtils.waitForElementAndClick(valueDropdown);
-        valueInput.sendKeys(value);
-        valueInput.sendKeys(Keys.ENTER);
+    private FilterPage typeAheadValue(String value) {
+        pageUtils.typeAheadInput(valueDropdown, valueInput, value);
         return this;
     }
 

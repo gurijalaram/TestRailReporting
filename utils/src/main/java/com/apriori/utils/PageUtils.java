@@ -788,4 +788,19 @@ public class PageUtils {
     public String getUrlToCheck() {
         return System.getProperty("baseUrl");
     }
+
+    /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param dropdownInput    - the locator
+     * @param value            - the value
+     * @return current page object
+     */
+    public void typeAheadInput(WebElement dropdownSelector, WebElement dropdownInput, String value) {
+        waitForElementAndClick(dropdownSelector);
+        dropdownInput.clear();
+        dropdownInput.sendKeys(value);
+        dropdownInput.sendKeys(Keys.ENTER);
+    }
 }
