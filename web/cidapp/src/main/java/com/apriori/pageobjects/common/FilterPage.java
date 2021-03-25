@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.DropdownUtil;
+import utils.TypeAheadUtil;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
@@ -66,12 +66,12 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
-    private DropdownUtil dropdownUtil;
+    private TypeAheadUtil typeAheadUtil;
 
     public FilterPage(WebDriver driver) {
         this.driver = driver;
         this.modalDialogController = new ModalDialogController(driver);
-        this.dropdownUtil = new DropdownUtil(driver);
+        this.typeAheadUtil = new TypeAheadUtil(driver);
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -94,7 +94,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage typeAheadFilter(String filter) {
-        dropdownUtil.input(filterDropDown, filterInput, filter);
+        typeAheadUtil.input(filterDropDown, filterInput, filter);
         return this;
     }
 
@@ -203,7 +203,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage typeAheadProperty(String property) {
-        dropdownUtil.input(propertyDropdown, propertyInput, property);
+        typeAheadUtil.input(propertyDropdown, propertyInput, property);
         return this;
     }
 
@@ -214,7 +214,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage typeAheadOperation(String operation) {
-        dropdownUtil.input(operationDropdown, operationInput, operation);
+        typeAheadUtil.input(operationDropdown, operationInput, operation);
         return this;
     }
 
@@ -225,7 +225,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage typeAheadValue(String value) {
-        dropdownUtil.input(valueDropdown, valueInput, value);
+        typeAheadUtil.input(valueDropdown, valueInput, value);
         return this;
     }
 

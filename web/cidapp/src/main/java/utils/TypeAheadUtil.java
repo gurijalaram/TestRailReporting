@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class DropdownUtil {
+public class TypeAheadUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(DropdownUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(TypeAheadUtil.class);
 
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    public DropdownUtil(WebDriver driver) {
+    public TypeAheadUtil(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -35,7 +35,7 @@ public class DropdownUtil {
      * @param value            - the value
      * @return current page object
      */
-    public DropdownUtil input(WebElement dropdownSelector, WebElement dropdownInput, String value) {
+    public TypeAheadUtil input(WebElement dropdownSelector, WebElement dropdownInput, String value) {
         pageUtils.waitForElementAndClick(dropdownSelector);
         dropdownInput.sendKeys(value);
         dropdownInput.sendKeys(Keys.ENTER);

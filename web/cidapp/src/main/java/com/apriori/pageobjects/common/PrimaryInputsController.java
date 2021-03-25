@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.DropdownUtil;
+import utils.TypeAheadUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,11 +27,11 @@ public class PrimaryInputsController {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private DropdownUtil dropdownUtil;
+    private TypeAheadUtil typeAheadUtil;
 
     public PrimaryInputsController(WebDriver driver) {
         this.driver = driver;
-        this.dropdownUtil = new DropdownUtil(driver);
+        this.typeAheadUtil = new TypeAheadUtil(driver);
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -52,14 +52,14 @@ public class PrimaryInputsController {
     }
 
     /**
-     * Inputs the pg
+     * Uses type ahead to input the pg
      *
      * @param processGroupInput - the process group locator
      * @param processGroup      - the process group
      * @return current page object
      */
-    public PrimaryInputsController inputProcessGroup(WebElement processGroupInput, String processGroup) {
-        dropdownUtil.input(pgDropdown, processGroupInput, processGroup);
+    public PrimaryInputsController typeAheadProcessGroup(WebElement processGroupInput, String processGroup) {
+        typeAheadUtil.input(pgDropdown, processGroupInput, processGroup);
         return this;
     }
 
@@ -84,7 +84,7 @@ public class PrimaryInputsController {
      * @param vpe         - the vpe
      * @return current page object
      */
-    public PrimaryInputsController selectVPE(WebElement vpeDropdown, String vpe) {
+    public PrimaryInputsController selectVpe(WebElement vpeDropdown, String vpe) {
         pageUtils.waitForElementAndClick(vpeDropdown);
         By vp = By.cssSelector(String.format("button[value='%s']", vpe));
         pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
@@ -92,14 +92,14 @@ public class PrimaryInputsController {
     }
 
     /**
-     * Inputs the vpe dropdown
+     * Uses type ahead to input the vpe dropdown
      *
      * @param vpeInput - the vpe input
      * @param vpe      - the vpe
      * @return current page object
      */
-    public PrimaryInputsController inputVpe(WebElement vpeInput, String vpe) {
-        dropdownUtil.input(vpeDropdown, vpeInput, vpe);
+    public PrimaryInputsController typeAheadVpe(WebElement vpeInput, String vpe) {
+        typeAheadUtil.input(vpeDropdown, vpeInput, vpe);
         return this;
     }
 
