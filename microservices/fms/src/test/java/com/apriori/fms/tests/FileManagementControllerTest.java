@@ -32,9 +32,9 @@ public class FileManagementControllerTest extends TestUtil {
     @Description("Get files for a targetCloudContext with an authorized user")
     public void getFiles() {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-        FileManagementController.getFiles(
-            token
-        ).getStatusCode());
+            FileManagementController.getFiles(
+                token
+            ).getStatusCode());
     }
 
     @Test
@@ -42,10 +42,10 @@ public class FileManagementControllerTest extends TestUtil {
     @Description("Get file by identity for a targetCloudContext with an authorized user")
     public void getFileByIdentity() {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-        FileManagementController.getFileByIdentity(
-            token,
-            Constants.getFmsFileIdentity()
-        ).getStatusCode());
+            FileManagementController.getFileByIdentity(
+                token,
+                Constants.getFmsFileIdentity()
+            ).getStatusCode());
     }
 
     @Test
@@ -53,10 +53,10 @@ public class FileManagementControllerTest extends TestUtil {
     @Description("Upload a file for a targetCloudContext with an authorized user")
     public void upLoadFile() {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-        FileManagementController.uploadFile(
-            token,
-            ProcessGroupEnum.SHEET_METAL,
-            "bracket_basic.prt"
-        ).getStatusCode());
+            FileManagementController.uploadFile(
+                token,
+                ProcessGroupEnum.SHEET_METAL,
+                "bracket_basic.prt"
+            ).getStatusCode());
     }
 }
