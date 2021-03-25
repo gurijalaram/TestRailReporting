@@ -115,7 +115,7 @@ public class CasSitesTests extends TestUtil {
 
         String siteId = sitesResponse.getResponseEntity().getResponse().getItems().get(0).getSiteId();
 
-        ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(identity, token, siteId);
+        ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(identity, siteId);
 
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(siteResponse.getResponseEntity().getResponse().getStatus(), is(equalTo("EXISTS")));
@@ -133,13 +133,13 @@ public class CasSitesTests extends TestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         String identity = response.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper<Site> site = casTestUtil.addSite(identity, token, siteID, siteName);
+        ResponseWrapper<Site> site = casTestUtil.addSite(identity, siteID, siteName);
 
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(site.getResponseEntity().getResponse().getSiteId(), is(equalTo(siteID)));

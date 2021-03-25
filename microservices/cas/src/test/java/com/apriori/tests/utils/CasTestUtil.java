@@ -2,6 +2,7 @@ package com.apriori.tests.utils;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
+import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 
 import com.apriori.entity.response.BatchItem;
@@ -24,6 +25,8 @@ import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import org.apache.http.HttpStatus;
+
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -31,19 +34,25 @@ import java.util.Collections;
 
 public class CasTestUtil extends TestUtil {
 
+    private static String token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
+            Constants.getCasServiceHost(),
+            HttpStatus.SC_CREATED,
+            Constants.getCasTokenUsername(),
+            Constants.getCasTokenEmail(),
+            Constants.getCasTokenIssuer(),
+            Constants.getCasTokenSubject());
     private String url = String.format(Constants.getApiUrl(), "customers/");
 
     /**
      * POST call to add a customer
      *
-     * @param token          - the token
      * @param name           - the customer name
      * @param cloudReference - the cloud reference name
      * @param description    - the description
      * @param email          - the email pattern
      * @return ResponseWrapper <SingleCustomer>
      */
-    public ResponseWrapper<SingleCustomer> addCustomer(String token, String name, String cloudReference, String description, String email) {
+    public ResponseWrapper<SingleCustomer> addCustomer(String name, String cloudReference, String description, String email) {
 
         RequestEntity requestEntity = RequestEntity.init(url, SingleCustomer.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
@@ -64,11 +73,10 @@ public class CasTestUtil extends TestUtil {
     /**
      * PATCH call to update a customer
      *
-     * @param token - the token
      * @param email - the email pattern
      * @return ResponseWrapper <Customer>
      */
-    public ResponseWrapper<Customer> updateCustomer(String identity, String token, String email) {
+    public ResponseWrapper<Customer> updateCustomer(String identity, String email) {
         String endpoint = url + identity;
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, Customer.class)
@@ -81,10 +89,9 @@ public class CasTestUtil extends TestUtil {
 
     /**
      * @param url   - the endpoint
-     * @param token - token
      * @return <T>ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> resetMfa(String url, String token) {
+    public <T> ResponseWrapper<T> resetMfa(String url) {
         RequestEntity requestEntity = RequestEntity.init(url, null)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
@@ -92,11 +99,10 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param token  - token
      * @param siteId - site ID
      * @return ResponseWrapper <ValidateSite>
      */
-    public ResponseWrapper<ValidateSite> validateSite(String identity, String token, String siteId) {
+    public ResponseWrapper<ValidateSite> validateSite(String identity, String siteId) {
         String endpoint = url + identity + "/sites/validate";
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, ValidateSite.class)
@@ -108,12 +114,11 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param token    - token
      * @param siteId   - site ID
      * @param siteName - site name
      * @return ResponseWrapper <Site>
      */
-    public ResponseWrapper<Site> addSite(String identity, String token, String siteId, String siteName) {
+    public ResponseWrapper<Site> addSite(String identity, String siteId, String siteName) {
         String endpoint = url + identity + "/sites";
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, Site.class)
@@ -128,11 +133,10 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param token    - token
      * @param userName - username
      * @return ResponseWrapper <CustomerUser>
      */
-    public ResponseWrapper<CustomerUser> addUser(String identity, String token, String userName) {
+    public ResponseWrapper<CustomerUser> addUser(String identity, String userName) {
         String endpoint = url + identity + "/users/";
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, CustomerUser.class)
@@ -153,14 +157,13 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param token            - token
      * @param userName         - username
      * @param identity         - user identity
      * @param customerIdentity - customer identity
      * @param profileIdentity  - user profile identity
      * @return ResponseWrapper <UpdateUser>
      */
-    public ResponseWrapper<UpdateUser> updateUser(String token, String userName, String identity, String customerIdentity, String profileIdentity) {
+    public ResponseWrapper<UpdateUser> updateUser(String userName, String identity, String customerIdentity, String profileIdentity) {
         LocalDateTime createdAt = LocalDateTime.parse("2020-11-23T10:15:30");
         LocalDateTime updatedAt = LocalDateTime.parse("2021-02-19T10:25");
         LocalDateTime profileCreatedAt = LocalDateTime.parse("2020-11-23T13:34");
@@ -196,10 +199,9 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param token - token
      * @return ResponseWrapper <PostBatch>
      */
-    public ResponseWrapper<PostBatch> addBatchFile(String customerIdentity, String token) {
+    public ResponseWrapper<PostBatch> addBatchFile(String customerIdentity) {
         String endpoint = url + customerIdentity + "/batches/";
 
         final File batchFile = FileResourceUtil.getResourceAsFile("users.csv");
@@ -211,10 +213,9 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param token - token
      * @return <T>ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> deleteBatch(String customerIdentity, String batchIdentity, String token) {
+    public <T> ResponseWrapper<T> deleteBatch(String customerIdentity, String batchIdentity) {
         String endpoint = url + customerIdentity + "/batches/" + batchIdentity;
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, null)
@@ -224,12 +225,11 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param token - token
      * @param customerIdentity - the customer identity
      * @param batchIdentity - batch identity
      * @return <T>ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> newUsersFromBatch(String token, String customerIdentity, String batchIdentity) {
+    public <T> ResponseWrapper<T> newUsersFromBatch(String customerIdentity, String batchIdentity) {
         String endpoint = url + customerIdentity + "/batches/" + batchIdentity + "/items";
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, null)
@@ -243,10 +243,9 @@ public class CasTestUtil extends TestUtil {
      * @param customerIdentity - the customer identity
      * @param batchIdentity - batch identity
      * @param itemIdentity - item identity
-     * @param token - token
      * @return ResponseWrapper <BatchItem>
      */
-    public ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity, String token) {
+    public ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity) {
         String endpoint = url + customerIdentity + "/batches/" + batchIdentity + "/items/" + itemIdentity;
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, BatchItem.class)

@@ -137,7 +137,7 @@ public class CasCustomersTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
@@ -152,7 +152,7 @@ public class CasCustomersTests extends TestUtil {
         String identity = responseName.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String identityUrl = url + identity;
 
-        ResponseWrapper<Customer> patchResponse = casTestUtil.updateCustomer(identity, token, email);
+        ResponseWrapper<Customer> patchResponse = casTestUtil.updateCustomer(identity, email);
 
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getResponse().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
@@ -174,14 +174,14 @@ public class CasCustomersTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         String identity = response.getResponseEntity().getResponse().getIdentity();
         String mfaUrl = url + identity + "/reset-mfa";
 
-        ResponseWrapper resettingResponse = casTestUtil.resetMfa(mfaUrl, token);
+        ResponseWrapper resettingResponse = casTestUtil.resetMfa(mfaUrl);
 
         assertThat(resettingResponse.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
     }

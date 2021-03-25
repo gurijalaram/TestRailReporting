@@ -50,12 +50,12 @@ public class CasCustomerBatchTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
 
         String batchEndpoint = url + customerIdentity + "/batches/";
 
-        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity, token);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
 
@@ -68,7 +68,7 @@ public class CasCustomerBatchTests extends TestUtil {
         assertThat(customerBatches.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customerBatches.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        ResponseWrapper deleteBatch = casTestUtil.deleteBatch(customerIdentity, batchIdentity, token);
+        ResponseWrapper deleteBatch = casTestUtil.deleteBatch(customerIdentity, batchIdentity);
 
         assertThat(deleteBatch.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
@@ -82,11 +82,11 @@ public class CasCustomerBatchTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity, token);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
         String batchUrl = url + customerIdentity + "/batches/" + batchIdentity;
@@ -97,7 +97,7 @@ public class CasCustomerBatchTests extends TestUtil {
         assertThat(customerBatch.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customerBatch.getResponseEntity().getResponse().getIdentity(), is(equalTo(batchIdentity)));
 
-        ResponseWrapper deleteBatch = casTestUtil.deleteBatch(customerIdentity, batchIdentity, token);
+        ResponseWrapper deleteBatch = casTestUtil.deleteBatch(customerIdentity, batchIdentity);
 
         assertThat(deleteBatch.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
