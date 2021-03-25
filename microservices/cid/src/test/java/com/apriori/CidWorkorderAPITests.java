@@ -43,7 +43,7 @@ public class CidWorkorderAPITests extends TestUtil {
     public void createDataUploadApi(String fileName, String scenarioName, String processGroup) {
         Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        new FileUploadResources().uploadCostPublishApi(token, fileObject, fileName, scenarioName, processGroup);
+        new FileUploadResources().uploadCostPublishApi(fileObject, fileName, scenarioName, processGroup);
     }
 
     public static class CustomMapper extends IdentityMapper {

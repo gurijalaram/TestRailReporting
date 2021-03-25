@@ -2,6 +2,7 @@ package com.apriori.entity.response.upload;
 
 public enum WorkorderCommands {
 
+    COSTING("COSTING"),
     LOAD_CAD_FILE("LOADCADFILE"),
     LOAD_CAD_METADATA("LOAD_CAD_METADATA"),
     GENERATE_PART_IMAGES("GENERATE_PART_IMAGES");
