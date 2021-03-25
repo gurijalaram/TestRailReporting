@@ -21,28 +21,28 @@ public class ExploreToolbar extends MainNavBar {
 
     private static final Logger logger = LoggerFactory.getLogger(ExploreToolbar.class);
 
-    @FindBy(xpath = "//button[.='New']")
+    @FindBy(css = "[id='qa-sub-header-new-dropdown']")
     private WebElement newButton;
 
-    @FindBy(xpath = "//button[.='Component']")
+    @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
 
-    @FindBy(xpath = "//button[.='Publish']")
+    @FindBy(css = "[id='qa-sub-header-publish-button']")
     private WebElement publishButton;
 
-    @FindBy(xpath = "//button[.='Revert']")
+    @FindBy(css = "[id='qa-sub-header-revert-button']")
     private WebElement revertButton;
 
-    @FindBy(xpath = "//button[.='Delete']")
+    @FindBy(css = "[id='qa-sub-header-delete-button']")
     private WebElement deleteButton;
 
-    @FindBy(xpath = "//button[.='Actions']")
+    @FindBy(css = "[id='qa-sub-header-actions-dropdown']")
     private WebElement actionsButton;
 
-    @FindBy(xpath = "//button[.='Edit']")
+    @FindBy(css = "[id='qa-sub-header-edit-button']")
     private WebElement editButton;
 
-    @FindBy(xpath = "//button[.='Scenario']")
+    @FindBy(css = "[id='qa-sub-header-new-scenario']")
     private WebElement scenarioButton;
 
     private PageUtils pageUtils;
@@ -73,7 +73,7 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
-     * @param klass    - the class name
+     * @param klass        - the class name
      * @return new page object
      */
     public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
@@ -96,7 +96,7 @@ public class ExploreToolbar extends MainNavBar {
      * Selects the file dropdown and enters file details
      *
      * @param scenarioName - the name of the scenario
-     * @param filePath      - location of the file
+     * @param filePath     - location of the file
      * @return new page object
      */
     public FileUploadPage uploadComponent(String scenarioName, File filePath) {
@@ -117,6 +117,7 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Edit the scenario
+     *
      * @return new page object
      */
     public EvaluatePage editScenario() {
@@ -126,6 +127,7 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Create new scenario
+     *
      * @return new page object
      */
     public ScenarioPage createScenario() {
