@@ -57,7 +57,7 @@ public class DecimalPlaceTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .openSettings()
-            .inputSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
+            .typeAheadInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExplorePage.class)
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
@@ -77,7 +77,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.000000, 1));
 
         evaluatePage.openSettings()
-            .inputSection("Decimal Places", DecimalPlaceEnum.ONE.getDecimalPlaces())
+            .typeAheadInSection("Decimal Places", DecimalPlaceEnum.ONE.getDecimalPlaces())
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3kg"));
@@ -104,7 +104,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(19.5, 1));
 
         evaluatePage.openSettings()
-            .inputSection("Decimal Places", DecimalPlaceEnum.FOUR.getDecimalPlaces())
+            .typeAheadInSection("Decimal Places", DecimalPlaceEnum.FOUR.getDecimalPlaces())
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3095kg"));
@@ -133,7 +133,7 @@ public class DecimalPlaceTests extends TestBase {
         costDetailsPage.closePanel();
 
         evaluatePage.openSettings()
-            .inputSection("Decimal Places", DecimalPlaceEnum.FIVE.getDecimalPlaces())
+            .typeAheadInSection("Decimal Places", DecimalPlaceEnum.FIVE.getDecimalPlaces())
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));

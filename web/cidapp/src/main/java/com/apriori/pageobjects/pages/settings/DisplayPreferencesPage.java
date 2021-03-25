@@ -5,7 +5,6 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -60,20 +59,18 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     }
 
     /**
-     * Input info for any section
+     * Uses type ahead to input info for any section
      *
      * @param label - the label
      * @param value - the value
      * @return current page object
      */
-    public DisplayPreferencesPage inputSection(String label, String value) {
+    public DisplayPreferencesPage typeAheadInSection(String label, String value) {
         String labelLocator = "//label[.='%s']/following-sibling::div[contains(@class,'apriori-select')]";
-        By theLabel = By.xpath(String.format(labelLocator, label));
-        By theValue = By.xpath(String.format(labelLocator.concat("//input"), label));
-        WebElement valueWebElement = driver.findElement(theValue);
-        pageUtils.waitForElementAndClick(theLabel);
-        valueWebElement.sendKeys(value);
-        valueWebElement.sendKeys(Keys.ENTER);
+        WebElement labelDropdown = driver.findElement(By.xpath(String.format(labelLocator, label)));
+        WebElement valueInput = driver.findElement(By.xpath(String.format(labelLocator.concat("//input"), label)));
+
+        pageUtils.typeAheadInput(labelDropdown, valueInput, value);
         return this;
     }
 
