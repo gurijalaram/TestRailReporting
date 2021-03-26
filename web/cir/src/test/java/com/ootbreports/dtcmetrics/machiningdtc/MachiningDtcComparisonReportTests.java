@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
 
@@ -158,7 +157,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -171,7 +170,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()

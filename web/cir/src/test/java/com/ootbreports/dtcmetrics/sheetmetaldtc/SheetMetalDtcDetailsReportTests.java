@@ -174,7 +174,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly - Piece Part Cost")
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
                 ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -187,7 +187,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly - Fully Burdened Cost")
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
                 ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()

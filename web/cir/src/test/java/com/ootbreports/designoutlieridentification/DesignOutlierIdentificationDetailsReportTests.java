@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.DesignOutlierIdentificationReportPage;
+import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
@@ -17,13 +17,15 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
+
+import java.math.BigDecimal;
 
 public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
-    private DesignOutlierIdentificationReportPage designOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
+    private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
     public  DesignOutlierIdentificationDetailsReportTests() {
@@ -116,14 +118,32 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     @TestRail(testCaseId = "1995")
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
-        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-                        DesignOutlierIdentificationReportPage.class);
+                        GenericReportPage.class);
 
-        designOutlierIdentificationReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
 
-        assertThat(designOutlierIdentificationReportPage.getExportDateCount(), is(equalTo("2")));
+        assertThat(genericReportPage.getExportDateCount(), is(equalTo("2")));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6249")
+    @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header) - details report")
+    public void testMinAndMaxCostFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxCostFilterDesignOutlierIdentificationReport();
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6250")
+    @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header) - details report")
+    public void testMinAndMaxMassFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassFilterDesignOutlierIdentificationReport();
     }
 }

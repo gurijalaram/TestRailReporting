@@ -491,6 +491,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Steel')]")
     private WebElement cycleTimeValueTrackingDetailsMaterialComposition;
 
+    @FindBy(xpath = "//div[@id='exportDate']//div[@class='jr-mSingleselect jr']")
+    private WebElement exportDateList;
+
     private String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
     private String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
 
@@ -2188,6 +2191,61 @@ public class GenericReportPage extends ReportsPageHeader {
         }
 
         return vpeValues;
+    }
+
+    /**
+     * Gets export date count
+     * @return String
+     */
+    public String getExportDateCount() {
+        pageUtils.waitForElementToAppear(exportDateList);
+        return exportDateList.getAttribute("childElementCount");
+    }
+
+    /**
+     * Inputs value into max or min cost or mass fields
+     * @param valueToSet - cost or mass input field
+     * @param maxMinValue - max or min input field
+     * @param valueToInput - value to input into field
+     */
+    public void inputMaxOrMinCostOrMass(String valueToSet, String maxMinValue, String valueToInput) {
+        By locator = By.xpath(String.format("//div[@id='aPriori%s%s']//input", valueToSet, maxMinValue));
+        WebElement input = driver.findElement(locator);
+        pageUtils.waitForElementToAppear(input);
+        input.clear();
+        input.click();
+        input.sendKeys(valueToInput);
+    }
+
+    /**
+     * Gets Cost min or max above chart value
+     * @param maxOrMin - max or min value to get
+     * @return value as string
+     */
+    public String getCostMinOrMaxAboveChartValue(String maxOrMin) {
+        By locator = By.xpath(
+                String.format(
+                        "//span[contains(text(), 'aPriori Cost %s:')]/ancestor::td[2]/following-sibling::td[1]/span",
+                        maxOrMin)
+        );
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Gets Mass min or max above chart value
+     * @param maxOrMin - max or min value to get
+     * @return value as string
+     */
+    public String getMassMinOrMaxAboveChartValue(String maxOrMin) {
+        By locator = By.xpath(
+                String.format(
+                        "//span[contains(text(), 'aPriori Mass %s:')]/../following-sibling::td[1]/span",
+                        maxOrMin
+                )
+        );
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 
     /**

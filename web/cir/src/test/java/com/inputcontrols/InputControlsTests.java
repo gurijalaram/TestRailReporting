@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -25,9 +26,13 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.explore.ExplorePage;
+import io.qameta.allure.Description;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -312,7 +317,24 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
+     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, as well as
+     * Cost Outlier Identification, and Details and Comparison versions of reports
+     *
+     * @param reportName - String
+     * @param exportSet - String
+     * @param costMetric - String
+     */
+    public void testCostMetricInputControlGeneric(String reportName, String exportSet,
+                                                  String costMetric) {
+        testCostMetricCore(reportName, exportSet, costMetric);
+    }
+
+    /**
      * Generic test for cost metric input control
+     *
+     * @param reportName - name of report to navigate to
+     * @param exportSetName - export set to select
+     * @param costMetric - cost metric to select
      */
     public void testCostMetricInputControlMachiningSheetMetalDtc(String reportName, String exportSetName,
                                                                  String costMetric) {
@@ -324,18 +346,6 @@ public class InputControlsTests extends TestBase {
         genericReportPage.getCostMetricValueFromBubble();
 
         assertThat(genericReportPage.getCostMetricValueFromBubble(), is(equalTo(String.format("%s : ", costMetric))));
-    }
-
-    /**
-     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, Details and
-     * Comparison
-     *
-     * @param reportName - String
-     * @param costMetric - String
-     */
-    public void testCostMetricInputControlComparisonDetailsDtcReports(String reportName, String exportSet,
-                                                                      String costMetric) {
-        testCostMetricCore(reportName, exportSet, costMetric);
     }
 
     /**
@@ -877,6 +887,134 @@ public class InputControlsTests extends TestBase {
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
         assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
+    }
+
+    /**
+     * Generic test for min and max cost filter on Design Outlier Identification report
+     */
+    public void testMinAndMaxCostFilterDesignOutlierIdentificationReport() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                        GenericReportPage.class);
+
+        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+
+        String minValue = "2.00";
+        String maxValue = "6,125.00";
+        genericReportPage.inputMaxOrMinCostOrMass(
+                "Cost",
+                "Min",
+                minValue
+        );
+        genericReportPage.inputMaxOrMinCostOrMass(
+                "Cost",
+                "Max",
+                maxValue.replace(",", "")
+        );
+        genericReportPage.clickOk();
+
+        assertThat(genericReportPage.getCostMinOrMaxAboveChartValue(
+                "Min"),
+                is(equalTo(minValue))
+        );
+        assertThat(genericReportPage.getCostMinOrMaxAboveChartValue(
+                "Max"),
+                is(equalTo(maxValue))
+        );
+
+        genericReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+        );
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal fbcValueOne = genericReportPage.getFBCValueFromBubbleTooltip(
+                "FBC Value");
+
+        genericReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
+        );
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal fbcValueTwo = genericReportPage.getFBCValueFromBubbleTooltip(
+                "FBC Value");
+
+        assertThat(fbcValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(fbcValueOne.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+
+        assertThat(fbcValueTwo.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(fbcValueTwo.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+    }
+
+    /**
+     * Generic test for min and max mass filter
+     */
+    public void testMinAndMaxMassFilterDesignOutlierIdentificationReport() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                        GenericReportPage.class);
+
+        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+
+        String minValue = "1.00";
+        String maxValue = "1,173.00";
+        genericReportPage.inputMaxOrMinCostOrMass(
+                "Mass",
+                "Min",
+                minValue
+        );
+        genericReportPage.inputMaxOrMinCostOrMass(
+                "Mass",
+                "Max",
+                maxValue.replace(",", "")
+        );
+        genericReportPage.clickOk();
+
+        assertThat(genericReportPage.getMassMinOrMaxAboveChartValue(
+                "Min"),
+                is(equalTo(minValue.concat("0")))
+        );
+        assertThat(genericReportPage.getMassMinOrMaxAboveChartValue(
+                "Max"),
+                is(equalTo(maxValue.concat("0")))
+        );
+
+        genericReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+        );
+        for (int i = 0; i < 3; i++) {
+            genericReportPage.hoverPartNameBubbleDtcReports();
+        }
+        BigDecimal massValueOne = genericReportPage.getFBCValueFromBubbleTooltip(
+                "Finish Mass Value"
+        );
+
+        genericReportPage.setReportName(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
+        );
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal massValueTwo = genericReportPage.getFBCValueFromBubbleTooltip(
+                "Finish Mass Value"
+        );
+
+        assertThat(massValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(massValueOne.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+
+        assertThat(massValueTwo.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(massValueTwo.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
     }
 
     private void testCostMetricCoreTargetQuotedCostReports(String reportName, String costMetric) {
