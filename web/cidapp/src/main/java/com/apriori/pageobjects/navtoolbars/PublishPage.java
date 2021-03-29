@@ -62,15 +62,30 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     /**
      * Set dropdown for any field
      *
-     * @param dropdown - the dropdown
+     * @param label - the dropdown
      * @param value    - the value
      * @return current page object
      */
-    public PublishPage setDropdown(String dropdown, String value) {
-        By theDropdown = By.xpath(String.format("//label[.='%s']/following-sibling::div[contains(@class,'apriori-select form-control')]", dropdown));
+    public PublishPage setDropdown(String label, String value) {
+        By theDropdown = By.xpath(String.format("//label[.='%s']/following-sibling::div[contains(@class,'apriori-select form-control')]", label));
         pageUtils.waitForElementAndClick(theDropdown);
         By theValue = By.xpath(String.format("//button[@value='%s']", value.toUpperCase()));
         pageUtils.scrollWithJavaScript(driver.findElement(theValue), true).click();
+        return this;
+    }
+
+    /**
+     * Uses type ahead to input info for any section
+     *
+     * @param label - the label
+     * @param value - the value
+     * @return current page object
+     */
+    public PublishPage typeAheadInSection(String label, String value) {
+        String labelLocator = "//label[.='%s']/..//div[contains(@class,'apriori-select')]";
+        WebElement labelDropdown = driver.findElement(By.xpath(String.format(labelLocator, label)));
+        WebElement valueInput = driver.findElement(By.xpath(String.format(labelLocator.concat("//input"), label)));
+        pageUtils.typeAheadInput(labelDropdown, valueInput, value);
         return this;
     }
 

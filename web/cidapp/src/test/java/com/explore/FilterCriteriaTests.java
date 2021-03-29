@@ -149,6 +149,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .typeAheadFilter("Public")
             .saveAs()
+            .inputName("Automation")
             .addCriteria("Status", "is", "Analysis")
             .submit(ExplorePage.class);
 
@@ -219,19 +220,30 @@ public class FilterCriteriaTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        /*explorePage = loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .publishScenario("Analysis", "Initial", "Ciene Frith")
-            .selectLock()
-            .selectPublishButton()
+            .publishScenario()
+            .typeAheadInSection("Status", "Analysis")
+            .typeAheadInSection("Cost Maturity", "Initial")
+            // TODO: 29/03/2021 ciene - assignee doesn't work at the moment. will be implemented in the future
+            //.typeAheadInSection("Assignee", "Ciene Frith")
+            .lock()
+            .publish(ExplorePage.class)
             .filter()
-            .setWorkspace("Public, Private")
-            .setScenarioType("Part")
-            .setRowOne("Status", "is", "Analysis")
-            .setRowTwo("Cost Maturity", "is", "Initial")
-            .setRowThree("Assignee", "is", "Ciene Frith")
-            .apply(ExplorePage.class);
+            .saveAs()
+            .inputName("Automation")
+            .typeAheadFilter("Status")
+            .typeAheadFilter("In")
+            .typeAheadFilter("Analysis")
+            // TODO: 29/03/2021 ciene - the following steps require automation to set multiple rows.  these are commented for now until we have better locators
+            //.typeAheadFilter("Cost Maturity")
+            //.typeAheadFilter("In")
+            //.typeAheadFilter("Initial")
+            //.typeAheadFilter("Assignee")
+            //.typeAheadFilter("In")
+            //.typeAheadFilter("Ciene Frith")
+            .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "PowderMetalShaft"), is(equalTo(1)));*/
+        assertThat(explorePage.getListOfScenarios(testScenarioName, "PowderMetalShaft"), is(equalTo(1)));
     }
 }
