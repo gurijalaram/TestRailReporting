@@ -15,6 +15,7 @@ import java.util.List;
 @Schema(location = "cidapp/ComponentIterationResponse.json")
 public class ComponentIteration {
     private ComponentIteration response;
+    private Boolean isCadConnected;
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -44,6 +45,15 @@ public class ComponentIteration {
 
     public ComponentIteration getResponse() {
         return this.response;
+    }
+
+    public Boolean getIsCadConnected() {
+        return isCadConnected;
+    }
+
+    public ComponentIteration setIsCadConnected(Boolean isCadConnected) {
+        this.isCadConnected = isCadConnected;
+        return this;
     }
 
     public String getIdentity() {
