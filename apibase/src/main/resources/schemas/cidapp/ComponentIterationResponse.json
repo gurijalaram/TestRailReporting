@@ -1082,6 +1082,9 @@
         "hasThumbnail": {
           "type": "boolean"
         },
+        "partNestingDiagram": {
+          "type": "object"
+        },
         "hasWebImage": {
           "type": "boolean"
         },

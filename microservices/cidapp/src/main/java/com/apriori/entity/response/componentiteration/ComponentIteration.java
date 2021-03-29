@@ -37,6 +37,7 @@ public class ComponentIteration {
     private AnalysisOfChildren analysisOfChildren;
     private AnalysisOfScenario analysisOfScenario;
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
+    private PartNestingDiagram partNestingDiagram;
     private Boolean hasThumbnail;
     private Boolean hasWebImage;
     private Thumbnail thumbnail;
@@ -206,6 +207,15 @@ public class ComponentIteration {
 
     public ComponentIteration setAnalysisOfScenarioAndChildren(AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren) {
         this.analysisOfScenarioAndChildren = analysisOfScenarioAndChildren;
+        return this;
+    }
+
+    public PartNestingDiagram getPartNestingDiagram() {
+        return partNestingDiagram;
+    }
+
+    public ComponentIteration setPartNestingDiagram(PartNestingDiagram partNestingDiagram) {
+        this.partNestingDiagram = partNestingDiagram;
         return this;
     }
 
