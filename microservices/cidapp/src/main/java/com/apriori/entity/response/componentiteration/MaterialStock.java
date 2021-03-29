@@ -1,4 +1,4 @@
-package com.apriori.entity.reponse.componentiteration;
+package com.apriori.entity.response.componentiteration;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 

@@ -1,17 +1,19 @@
-package com.apriori.entity.reponse.componentiteration;
+package com.apriori.entity.response.componentiteration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DrawableNode {
-    private Integer value;
+public class FaceIndex {
+    private List<Integer> value = null;
     private Key key;
 
-    public Integer getValue() {
+    public List<Integer> getValue() {
         return value;
     }
 
-    public DrawableNode setValue(Integer value) {
+    public FaceIndex setValue(List<Integer> value) {
         this.value = value;
         return this;
     }
@@ -20,7 +22,7 @@ public class DrawableNode {
         return key;
     }
 
-    public DrawableNode setKey(Key key) {
+    public FaceIndex setKey(Key key) {
         this.key = key;
         return this;
     }

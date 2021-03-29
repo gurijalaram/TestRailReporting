@@ -2,10 +2,10 @@ package com.apriori.tests.utils;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.JwtTokenUtil;
-import com.apriori.entity.reponse.ComponentIdentityResponse;
-import com.apriori.entity.reponse.GetComponentResponse;
-import com.apriori.entity.reponse.PostComponentResponse;
-import com.apriori.entity.reponse.componentiteration.ComponentIteration;
+import com.apriori.entity.response.ComponentIdentityResponse;
+import com.apriori.entity.response.GetComponentResponse;
+import com.apriori.entity.response.PostComponentResponse;
+import com.apriori.entity.response.componentiteration.ComponentIteration;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
