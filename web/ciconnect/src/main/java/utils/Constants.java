@@ -19,7 +19,7 @@ public class Constants {
     public static final String DEFAULT_PASSWORD_KEY = System.getProperty("password");
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cic-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cic-qa-21.1";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
@@ -28,10 +28,9 @@ public class Constants {
     // Login Credentials
     public static final String USER_EMAIL = "dmorrow@apriori.com";
     public static final String USER_PASSWORD = "T3sterQ@99";
-    public static final String URL = "https://ci-connect.core.qa.apriori.net/Thingworx";
 
     //New Workflow Connector - need to be connected to PLM
-    public static final String NWF_CONNECTOR = "0 Test CSRF Token Timeout";
+    public static final String NWF_CONNECTOR = "automation - aP Internal - WC";
 
     //Default part id
     public static final String DEFAULT_PART_ID = "12345";
@@ -61,8 +60,8 @@ public class Constants {
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
             String properties = PROPERTIES.stringPropertyNames().stream()
-                .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
-                .collect(Collectors.joining());
+                    .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
+                    .collect(Collectors.joining());
             logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();

@@ -66,11 +66,10 @@ public class WorkflowPage {
     /**
      * Refreshes the workflow page to reload the the DOM. This prevents stale element errors
      *
-     * @param workflowPage Worflowpage object
      */
-    public void refeshPage(WorkflowPage workflowPage) {
-        workflowPage.clickUserTab();
-        workflowPage.clickWorkflowTab();
+    public void refreshPage() {
+        clickUserTab();
+        clickWorkflowTab();
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
     }
 
