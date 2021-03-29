@@ -209,7 +209,6 @@ public class FilterCriteriaTests extends TestBase {
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
     }
 
-    @Ignore
     @Test
     @TestRail(testCaseId = "6221")
     @Description("Test public criteria assembly description")
