@@ -272,7 +272,4 @@ public class ComponentIteration {
 
     class AnalysisOfChildren {
     }
-
-    class CustomAttributes {
-    }
 }
