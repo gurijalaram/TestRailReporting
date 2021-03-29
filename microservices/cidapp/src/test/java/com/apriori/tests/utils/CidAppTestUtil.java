@@ -27,7 +27,8 @@ public class CidAppTestUtil {
         Constants.getCidTokenIssuer(),
         Constants.getCidTokenSubject());
 
-    private String url = Constants.getApiUrl();
+    private String url;
+    private String serviceUrl = Constants.getApiUrl();
 
     /**
      * Adds a new component
@@ -37,7 +38,7 @@ public class CidAppTestUtil {
      * @return responsewrapper
      */
     public ResponseWrapper<PostComponentResponse> postComponents(String scenarioName, String processGroup, String partName) {
-        url = String.format(url, "components");
+        url = String.format(serviceUrl, "components");
 
         RequestEntity requestEntity = RequestEntity.init(url, PostComponentResponse.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
@@ -55,7 +56,7 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<GetComponentResponse> getComponents() {
-        url = String.format(url, "components");
+        url = String.format(serviceUrl, "components");
 
         RequestEntity requestEntity = RequestEntity.init(url, GetComponentResponse.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -70,7 +71,7 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(String identity) {
-        url = String.format(url, String.format("components/%s", identity));
+        url = String.format(serviceUrl, String.format("components/%s", identity));
 
         RequestEntity requestEntity = RequestEntity.init(url, ComponentIdentityResponse.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -86,7 +87,7 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(String componentIdentity, String scenarioIdentity) {
-        url = String.format(url, String.format("components/%s/scenarios/%s/iterations/latest", componentIdentity, scenarioIdentity));
+        url = String.format(serviceUrl, String.format("components/%s/scenarios/%s/iterations/latest", componentIdentity, scenarioIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, ComponentIteration.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
