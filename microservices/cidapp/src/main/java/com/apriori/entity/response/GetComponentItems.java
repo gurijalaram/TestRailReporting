@@ -26,6 +26,7 @@ public class GetComponentItems {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
+    private String originalFilename;
 
     public GetComponentItems getResponse() {
         return response;
@@ -61,5 +62,9 @@ public class GetComponentItems {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getOriginalFilename() {
+        return originalFilename;
     }
 }
