@@ -187,7 +187,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage addCriteria(String property, String operation, String value) {
-        typeAheadProperty(property)
+        add()
+            .typeAheadProperty(property)
             .typeAheadOperation(operation)
             .typeAheadValue(value);
         return this;
