@@ -15,7 +15,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -180,7 +179,6 @@ public class FilterCriteriaTests extends TestBase {
         assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), is(equalTo(1)));
     }
 
-    @Ignore
     @Test
     @TestRail(testCaseId = "6219")
     @Description("Test public criteria assembly description")
