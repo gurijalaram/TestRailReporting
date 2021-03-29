@@ -223,22 +223,16 @@ public class FilterCriteriaTests extends TestBase {
             .typeAheadInSection("Status", "Analysis")
             .typeAheadInSection("Cost Maturity", "Initial")
             // TODO: 29/03/2021 ciene - assignee doesn't work at the moment. will be implemented in the future
-            //.typeAheadInSection("Assignee", "Ciene Frith")
+            //.addCriteria("Assignee", "In", "Ciene Frith")
             .lock()
             .publish(ExplorePage.class)
             .filter()
             .saveAs()
             .inputName("Automation")
-            .typeAheadFilter("Status")
-            .typeAheadFilter("In")
-            .typeAheadFilter("Analysis")
+            .addCriteria("Status", "In", "Analysis")
             // TODO: 29/03/2021 ciene - the following steps require automation to set multiple rows.  these are commented for now until we have better locators
-            //.typeAheadFilter("Cost Maturity")
-            //.typeAheadFilter("In")
-            //.typeAheadFilter("Initial")
-            //.typeAheadFilter("Assignee")
-            //.typeAheadFilter("In")
-            //.typeAheadFilter("Ciene Frith")
+            //.addCriteria("Cost Maturity, "In", "Initial")
+            //.addCriteria("Assignee", "In", "Ciene Frith")
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "PowderMetalShaft"), is(equalTo(1)));
