@@ -84,4 +84,8 @@ public class CostingInput {
         this.vpeName = vpeName;
         return this;
     }
+
+    class CustomAttributes {
+
+    }
 }

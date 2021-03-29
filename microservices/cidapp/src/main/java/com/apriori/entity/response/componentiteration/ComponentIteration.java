@@ -263,4 +263,16 @@ public class ComponentIteration {
         this.materialStock = materialStock;
         return this;
     }
+
+    class PartNestingDiagram {
+    }
+
+    class AnalysisOfScenarioAndChildren {
+    }
+
+    class AnalysisOfChildren {
+    }
+
+    class CustomAttributes {
+    }
 }
