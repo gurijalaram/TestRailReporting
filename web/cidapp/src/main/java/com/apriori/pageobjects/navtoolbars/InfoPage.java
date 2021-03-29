@@ -59,7 +59,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage typeAheadInSection(String label, String value) {
-        String labelLocator = "//label[.='%']/..//div[contains(@class,'apriori-select')]";
+        String labelLocator = "//label[.='%s']/..//div[contains(@class,'apriori-select')]";
         WebElement labelDropdown = driver.findElement(By.xpath(String.format(labelLocator, label)));
         WebElement valueInput = driver.findElement(By.xpath(String.format(labelLocator.concat("//input"), label)));
         pageUtils.typeAheadInput(labelDropdown, valueInput, value);
