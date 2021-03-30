@@ -29,7 +29,8 @@ public class CdsLicenseTests extends CdsTestUtil {
     private String url;
     private String userIdentityEndpoint;
     private String customerIdentityEndpoint;
-    private String customerAssociationUserIdentity;
+    private String userAssociationIdentity;
+    private String deleteEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     @Before
@@ -39,8 +40,8 @@ public class CdsLicenseTests extends CdsTestUtil {
 
     @After
     public void cleanUp() {
-        if (customerAssociationUserIdentity != null) {
-            delete(customerAssociationUserIdentity);
+        if (deleteEndpoint != null) {
+            delete(deleteEndpoint);
         }
         if (userIdentityEndpoint != null) {
             delete(userIdentityEndpoint);
@@ -192,11 +193,11 @@ public class CdsLicenseTests extends CdsTestUtil {
 
         String associationUserEndPoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = addAssociationUser(associationUserEndPoint, SubLicenseAssociationUser.class, userIdentity);
-        customerAssociationUserIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
+        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
 
-        String deleteEndPoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, customerAssociationUserIdentity));
+        deleteEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity));
 
-        ResponseWrapper<String> deleteResponse = delete(deleteEndPoint);
+        ResponseWrapper<String> deleteResponse = delete(deleteEndpoint);
         assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 }
