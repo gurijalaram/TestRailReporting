@@ -2,6 +2,7 @@ package com.apriori.tests.utils;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.JwtTokenUtil;
+import com.apriori.entity.request.CostRequest;
 import com.apriori.entity.response.ComponentIdentityResponse;
 import com.apriori.entity.response.GetComponentResponse;
 import com.apriori.entity.response.PostComponentResponse;
@@ -107,7 +108,15 @@ public class CidAppTestUtil {
         url = String.format(serviceUrl, String.format("components/%s/scenarios/%s/cost", componentIdentity, scenarioIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, CostResponse.class)
-            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setHeaders("Content-Type", "application/json")
+            .setBody("costingInputs",
+                new CostRequest().setAnnualVolume(5500)
+                    .setBatchSize(458)
+                    .setMaterialName("Aluminum, Stock, ANSI 1050A")
+                    .setProcessGroupName("Sheet Metal")
+                    .setProductionLife(5.0)
+                    .setVpeName("aPriori USA"));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
