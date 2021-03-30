@@ -109,7 +109,6 @@ public class CidAppTestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, CostResponse.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
-            .setHeaders("Content-Type", "application/json")
             .setBody("costingInputs",
                 new CostRequest().setAnnualVolume(5500)
                     .setBatchSize(458)

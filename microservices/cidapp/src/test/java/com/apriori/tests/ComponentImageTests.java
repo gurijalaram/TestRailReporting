@@ -39,6 +39,6 @@ public class ComponentImageTests {
 
         ResponseWrapper<ComponentIteration> getComponentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(getComponentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(getComponentIterationResponse.getResponseEntity().getScenarioMetadata().getBoundingBox(), hasItems(-3.259932279586792, -200.0, -138.5635986328125, 276.724609375, 200.0, 15.436402320861816));
+        assertThat(getComponentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getBoundingBox(), hasItems(-3.259932279586792, -200.0, -138.5635986328125, 276.724609375, 200.0, 15.436402320861816));
     }
 }

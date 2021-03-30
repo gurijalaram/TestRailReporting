@@ -264,12 +264,9 @@ public class ComponentIteration {
         return this;
     }
 
-    class PartNestingDiagram {
+    static class AnalysisOfScenarioAndChildren {
     }
 
-    class AnalysisOfScenarioAndChildren {
-    }
-
-    class AnalysisOfChildren {
+    static class AnalysisOfChildren {
     }
 }
