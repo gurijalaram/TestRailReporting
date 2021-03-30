@@ -37,6 +37,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
+    private Map<String, WebElement> costDesignOutlierMap = new HashMap<>();
     private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
     private Map<String, WebElement> tooltipElementMap = new HashMap<>();
     private Map<String, WebElement> currencyMap = new HashMap<>();
@@ -85,6 +86,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(4)")
     private WebElement designOutlierChartSpotTwo;
+
+    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[30]")
+    private WebElement costOutlierChartSpotOne;
+
+    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[53]")
+    private WebElement costOutlierChartSpotTwo;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[39]")
     private WebElement sheetMetalDtcBubble;
@@ -362,8 +369,20 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = "label[title='Assembly Select'] span[class='warning']")
     private WebElement assemblyNumberSearchCriteriaError;
 
+    @FindBy(css = "label[title='Minimum aPriori Cost'] span[class='warning']")
+    private WebElement minAprioriCostError;
+
+    @FindBy(css = "label[title='Maximum aPriori Cost'] span[class='warning']")
+    private WebElement maxAprioriCostError;
+
     @FindBy(xpath = "//span[@class='_jrHyperLink Reference']")
     private WebElement dtcPartSummaryPartName;
+
+    @FindBy(xpath = "(//*[local-name()='tspan'])[62]")
+    private WebElement costOutlierAprioriCost;
+
+    @FindBy(xpath = "(//*[local-name()='tspan'])[7]")
+    private WebElement designOutlierAprioriCost;
 
     @FindBy(xpath = "(//*[local-name() = 'text' and @style='font-size:12px;color:#333333;fill:#333333;']/*)[2]")
     private WebElement tooltipFinishMassName;
@@ -494,6 +513,24 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='exportDate']//div[@class='jr-mSingleselect jr']")
     private WebElement exportDateList;
 
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[16]/td[27]")
+    private WebElement costOutlierApCostOne;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[126]/td[27]")
+    private WebElement costOutlierApCostTwo;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
+    private WebElement designOutlierApCostOne;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[90]/td[24]")
+    private WebElement designOutlierApCostTwo;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
+    private WebElement designOutlierMassOne;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[90]/td[21]")
+    private WebElement designOutlierMassTwo;
+
     private String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
     private String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
 
@@ -507,6 +544,7 @@ public class GenericReportPage extends ReportsPageHeader {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseDtcComparisonDtcIssueMap();
+        initialiseCostDesignOutlierMap();
         initialiseTooltipElementMap();
         initialiseDtcScoreBubbleMap();
         initialiseCurrencyMap();
@@ -727,6 +765,15 @@ public class GenericReportPage extends ReportsPageHeader {
             driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", sortOrder))).click();
         }
         return this;
+    }
+
+    /**
+     * Scroll down to specified element
+     *
+     * @param elementToScrollTo - WebElement
+     */
+    public void scrollDown(WebElement elementToScrollTo) {
+        pageUtils.scrollWithJavaScript(elementToScrollTo, true);
     }
 
     /**
@@ -1482,7 +1529,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Hovers over bubble in DTC Reports
      */
     public void hoverPartNameBubbleDtcReports() {
-        WebElement elementToUse = bubbleMap.get(this.reportName);
+        WebElement elementToUse = bubbleMap.get(reportName);
         pageUtils.waitForElementToAppear(elementToUse);
         Actions builder = new Actions(driver).moveToElement(elementToUse);
         builder.build().perform();
@@ -1984,6 +2031,24 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Checks if cost error is enabled
+     *
+     * @param minOrMax - String
+     * @param costOrMass - String
+     * @return boolean
+     */
+    public boolean isCostOrMassMaxOrMinErrorEnabled(String minOrMax, String costOrMass) {
+        costOrMass = costOrMass.equals("Mass") ? costOrMass.concat(" (kg)") : costOrMass;
+        WebElement elementToUse = minOrMax.equals("Minimum") ? minAprioriCostError : maxAprioriCostError;
+        By locator = By.xpath(String.format(
+                "//label[@title='%s aPriori %s']/span[@class='warning' and contains(text(), "
+                        .concat("'Specify')]"), minOrMax, costOrMass));
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return pageUtils.isElementEnabled(elementToUse);
+    }
+
+    /**
      * Gets Assembly Number Search Error text
      * @return String
      */
@@ -2204,13 +2269,16 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Inputs value into max or min cost or mass fields
+     *
      * @param valueToSet - cost or mass input field
      * @param maxMinValue - max or min input field
      * @param valueToInput - value to input into field
      */
-    public void inputMaxOrMinCostOrMass(String valueToSet, String maxMinValue, String valueToInput) {
+    public void inputMaxOrMinCostOrMass(boolean costReport, String valueToSet, String maxMinValue, String valueToInput) {
+        By costLocator = By.xpath(String.format("//div[@id='componentCost%s']//input", maxMinValue));
         By locator = By.xpath(String.format("//div[@id='aPriori%s%s']//input", valueToSet, maxMinValue));
-        WebElement input = driver.findElement(locator);
+        By locatorToUse = costReport ? costLocator : locator;
+        WebElement input = driver.findElement(locatorToUse);
         pageUtils.waitForElementToAppear(input);
         input.clear();
         input.click();
@@ -2219,33 +2287,30 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Gets Cost min or max above chart value
+     *
+     * @param reportName - report name
+     * @param massOrCost - max or cost to get
      * @param maxOrMin - max or min value to get
      * @return value as string
      */
-    public String getCostMinOrMaxAboveChartValue(String maxOrMin) {
-        By locator = By.xpath(
-                String.format(
-                        "//span[contains(text(), 'aPriori Cost %s:')]/ancestor::td[2]/following-sibling::td[1]/span",
-                        maxOrMin)
-        );
+    public String getMassOrCostMinOrMaxAboveChartValue(String reportName, String massOrCost, String maxOrMin) {
+        String designDetailsLocator = "//span[contains(text(), '%sinum aPriori %s')]/ancestor::td/following-sibling::td[1]/span";
+        String generalLocator = "//span[contains(text(), 'aPriori %s %s:')]/ancestor::td/following-sibling::td[1]/span";
+        String locatorToUse = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS) ? designDetailsLocator : generalLocator;
+        By locator = By.xpath(String.format(locatorToUse, massOrCost, maxOrMin));
+
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
     }
 
     /**
-     * Gets Mass min or max above chart value
-     * @param maxOrMin - max or min value to get
-     * @return value as string
+     * Gets value from Design or Cost Outlier Details report table
+     *
+     * @param valueIndex - String
+     * @return WebElement
      */
-    public String getMassMinOrMaxAboveChartValue(String maxOrMin) {
-        By locator = By.xpath(
-                String.format(
-                        "//span[contains(text(), 'aPriori Mass %s:')]/../following-sibling::td[1]/span",
-                        maxOrMin
-                )
-        );
-        pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(locator).getText();
+    public String getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(String valueIndex) {
+        return costDesignOutlierMap.get(valueIndex).getText();
     }
 
     /**
@@ -2294,7 +2359,11 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), sheetMetalDtcBubble);
         bubbleMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName().concat(" 2"), sheetMetalDtcBubbleTwo);
         bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(), designOutlierChartSpotOne);
-        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"), designOutlierChartSpotTwo);
+        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"),
+                designOutlierChartSpotTwo);
+        bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), costOutlierChartSpotOne);
+        bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"),
+                costOutlierChartSpotTwo);
     }
 
     /**
@@ -2319,6 +2388,8 @@ public class GenericReportPage extends ReportsPageHeader {
         tooltipElementMap.put("DTC Score Value", tooltipDtcScoreValue);
         tooltipElementMap.put("Annual Spend Name", tooltipAnnualSpendName);
         tooltipElementMap.put("Annual Spend Value", tooltipAnnualSpendValue);
+        tooltipElementMap.put("aPriori Cost Value (Cost Outlier)", costOutlierAprioriCost);
+        tooltipElementMap.put("aPriori Cost Value (Design Outlier)", designOutlierAprioriCost);
     }
 
     /**
@@ -2328,5 +2399,17 @@ public class GenericReportPage extends ReportsPageHeader {
         dtcComparisonDtcIssueMap.put("Draft", dtcComparisonDtcDraftIssues);
         dtcComparisonDtcIssueMap.put("Material", dtcComparisonDtcMaterialIssues);
         dtcComparisonDtcIssueMap.put("Radius", dtcComparisonDtcRadiusIssues);
+    }
+
+    /**
+     * Initialises Cost Design map
+     */
+    private void initialiseCostDesignOutlierMap() {
+        costDesignOutlierMap.put("Cost Outlier Identification Details Cost", costOutlierApCostOne);
+        costDesignOutlierMap.put("Cost Outlier Identification Details Cost 2", costOutlierApCostTwo);
+        costDesignOutlierMap.put("Design Outlier Identification Details Cost", designOutlierApCostOne);
+        costDesignOutlierMap.put("Design Outlier Identification Details Cost 2", designOutlierApCostTwo);
+        costDesignOutlierMap.put("Design Outlier Identification Details Mass", designOutlierMassOne);
+        costDesignOutlierMap.put("Design Outlier Identification Details Mass 2", designOutlierMassTwo);
     }
 }

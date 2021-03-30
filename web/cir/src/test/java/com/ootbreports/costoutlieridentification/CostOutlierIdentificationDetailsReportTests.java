@@ -3,6 +3,7 @@ package com.ootbreports.costoutlieridentification;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
+import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import testsuites.suiteinterface.ReportsTest;
 
 public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
+    private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
     public CostOutlierIdentificationDetailsReportTests() {
@@ -48,6 +50,30 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
                 ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "1956")
+    @Description("Min & Max costs filter works")
+    public void testMinMaxAprioriCost() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Cost"
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6253")
+    @Description("Min and max cost filter - junk value test")
+    public void testMinAndMaxCostFilterJunkValues() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Cost"
         );
     }
 }

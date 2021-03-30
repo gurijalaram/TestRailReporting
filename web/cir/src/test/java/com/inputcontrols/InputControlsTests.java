@@ -12,7 +12,6 @@ import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
-import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -26,13 +25,9 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.explore.ExplorePage;
-import io.qameta.allure.Description;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -890,119 +885,36 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test for min and max cost filter on Design Outlier Identification report
+     * Generic test for min and max mass filter - for Design and Cost Outlier Identification Reports
+     *
+     * @param reportName - String
+     * @param costOrMass - String
      */
-    public void testMinAndMaxCostFilterDesignOutlierIdentificationReport() {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                        GenericReportPage.class);
-
-        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
-
-        String minValue = "2.00";
-        String maxValue = "6,125.00";
-        genericReportPage.inputMaxOrMinCostOrMass(
-                "Cost",
-                "Min",
-                minValue
-        );
-        genericReportPage.inputMaxOrMinCostOrMass(
-                "Cost",
-                "Max",
-                maxValue.replace(",", "")
-        );
-        genericReportPage.clickOk();
-
-        assertThat(genericReportPage.getCostMinOrMaxAboveChartValue(
-                "Min"),
-                is(equalTo(minValue))
-        );
-        assertThat(genericReportPage.getCostMinOrMaxAboveChartValue(
-                "Max"),
-                is(equalTo(maxValue))
-        );
-
-        genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
-        );
-        genericReportPage.hoverPartNameBubbleDtcReports();
-        BigDecimal fbcValueOne = genericReportPage.getFBCValueFromBubbleTooltip(
-                "FBC Value");
-
-        genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
-        );
-        genericReportPage.hoverPartNameBubbleDtcReports();
-        BigDecimal fbcValueTwo = genericReportPage.getFBCValueFromBubbleTooltip(
-                "FBC Value");
-
-        assertThat(fbcValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
-        assertThat(fbcValueOne.compareTo(
-                new BigDecimal(maxValue.replace(",", ""))),
-                is(equalTo(-1))
-        );
-
-        assertThat(fbcValueTwo.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
-        assertThat(fbcValueTwo.compareTo(
-                new BigDecimal(maxValue.replace(",", ""))),
-                is(equalTo(-1))
-        );
-    }
-
-    /**
-     * Generic test for min and max mass filter
-     */
-    public void testMinAndMaxMassFilterDesignOutlierIdentificationReport() {
-        genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                        GenericReportPage.class);
-
-        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
-
+    public void testMinAndMaxMassOrCostFilterDesignCostOutlierMainReports(String reportName, String costOrMass) {
         String minValue = "1.00";
         String maxValue = "1,173.00";
-        genericReportPage.inputMaxOrMinCostOrMass(
-                "Mass",
-                "Min",
-                minValue
-        );
-        genericReportPage.inputMaxOrMinCostOrMass(
-                "Mass",
-                "Max",
-                maxValue.replace(",", "")
-        );
-        genericReportPage.clickOk();
+        String maxValToUse = reportName.contains("Cost") ? "945.00" : maxValue;
+        genericReportPage = testMinAndMaxMassOrCostFilterCore(reportName, costOrMass, minValue, maxValToUse);
 
-        assertThat(genericReportPage.getMassMinOrMaxAboveChartValue(
-                "Min"),
-                is(equalTo(minValue.concat("0")))
-        );
-        assertThat(genericReportPage.getMassMinOrMaxAboveChartValue(
-                "Max"),
-                is(equalTo(maxValue.concat("0")))
-        );
-
-        genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
-        );
+        genericReportPage.setReportName(reportName);
+        genericReportPage.scrollDown(driver.findElement(By.xpath("//span[contains(text(), 'aPriori Technologies')]")));
         for (int i = 0; i < 3; i++) {
             genericReportPage.hoverPartNameBubbleDtcReports();
         }
-        BigDecimal massValueOne = genericReportPage.getFBCValueFromBubbleTooltip(
-                "Finish Mass Value"
-        );
 
-        genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
-        );
+        String valueToGetIndex = "aPriori Cost Value ";
+        if (costOrMass.equals("Cost")) {
+            valueToGetIndex = reportName.contains("Design") ? valueToGetIndex.concat("(Design Outlier)") :
+                    valueToGetIndex.concat("(Cost Outlier)");
+        } else {
+            valueToGetIndex = "Finish Mass Value";
+        }
+
+        BigDecimal massValueOne = genericReportPage.getFBCValueFromBubbleTooltip(valueToGetIndex);
+
+        genericReportPage.setReportName(reportName.concat(" 2"));
         genericReportPage.hoverPartNameBubbleDtcReports();
-        BigDecimal massValueTwo = genericReportPage.getFBCValueFromBubbleTooltip(
-                "Finish Mass Value"
-        );
+        BigDecimal massValueTwo = genericReportPage.getFBCValueFromBubbleTooltip(valueToGetIndex);
 
         assertThat(massValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
         assertThat(massValueOne.compareTo(
@@ -1015,6 +927,124 @@ public class InputControlsTests extends TestBase {
                 new BigDecimal(maxValue.replace(",", ""))),
                 is(equalTo(-1))
         );
+    }
+
+    /**
+     * Generic test for min and max mass filter - for Design and Cost Outlier Identification Details Reports
+     *
+     * @param reportName - String
+     * @param costOrMass - String
+     */
+    public void testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(String reportName, String costOrMass) {
+        String minValue = "1.00";
+        String maxValue = "1,173.00";
+        String maxValToUse = reportName.contains("Cost") ? "945" : maxValue;
+        genericReportPage = testMinAndMaxMassOrCostFilterCore(reportName, costOrMass, minValue, maxValToUse);
+
+        // check details table
+        BigDecimal costOutlierDetailsCostOne = new BigDecimal(
+                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
+                        "Cost Outlier Identification Details Cost")
+        );
+
+        BigDecimal costOutlierDetailsCostTwo = new BigDecimal(
+                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
+                        "Cost Outlier Identification Details Cost 2")
+        );
+
+        /*BigDecimal designOutlierDetailsCostOne = new BigDecimal(
+                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
+                        "Design Outlier Identification Details Cost")
+        );
+
+        BigDecimal designOutlierDetailsCostTwo = new BigDecimal(
+                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
+                        "Design Outlier Identification Details Cost 2")
+        );
+
+        BigDecimal designOutlierDetailsMassOne = new BigDecimal(
+                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
+                        "Design Outlier Identification Details Mass")
+        );
+
+        BigDecimal designOutlierDetailsMassTwo = new BigDecimal(
+                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
+                        "Design Outlier Identification Details Mass 2")
+        );*/
+    }
+
+    /**
+     * Generic test for decimal places on cost filter on Design and Cost Outlier Identification and Details reports
+     */
+    public void testMinAndMaxMassOrCostFilterJunkValues(String reportName, String costOrMass) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
+
+        boolean costReport = reportName.contains("Cost");
+        genericReportPage.inputMaxOrMinCostOrMass(
+                costReport,
+                costOrMass,
+                "Min",
+                "hello world"
+        );
+        genericReportPage.inputMaxOrMinCostOrMass(
+                costReport,
+                costOrMass,
+                "Max",
+                "goodbye world"
+        );
+
+        genericReportPage.clickOk();
+
+        assertThat(
+                genericReportPage.isCostOrMassMaxOrMinErrorEnabled("Minimum", costOrMass),
+                is(equalTo(true))
+        );
+        assertThat(
+                genericReportPage.isCostOrMassMaxOrMinErrorEnabled("Maximum", costOrMass),
+                is(equalTo(true))
+        );
+    }
+
+    private GenericReportPage testMinAndMaxMassOrCostFilterCore(String reportName, String costOrMass, String minValue,
+                                                                String maxValue) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
+
+        boolean costReport = reportName.contains("Cost");
+        genericReportPage.inputMaxOrMinCostOrMass(
+                costReport,
+                costOrMass,
+                "Min",
+                minValue
+        );
+        genericReportPage.inputMaxOrMinCostOrMass(
+                costReport,
+                costOrMass,
+                "Max",
+                maxValue.replace(",", "")
+        );
+        genericReportPage.clickOk();
+
+        assertThat(genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
+                reportName,
+                costOrMass,
+                "Min"),
+                is(equalTo(minValue))
+        );
+        assertThat(genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
+                reportName,
+                costOrMass,
+                "Max"),
+                is(equalTo(maxValue))
+        );
+        return genericReportPage;
     }
 
     private void testCostMetricCoreTargetQuotedCostReports(String reportName, String costMetric) {

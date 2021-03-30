@@ -20,8 +20,6 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 
-import java.math.BigDecimal;
-
 public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     private InputControlsTests inputControlsTests;
@@ -132,18 +130,48 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     @Test
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "6249")
-    @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header) - details report")
+    @Description("Min and max cost filter works")
     public void testMinAndMaxCostFilter() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinAndMaxCostFilterDesignOutlierIdentificationReport();
+        inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Cost"
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6261")
+    @Description("Min and max cost filter - junk value test")
+    public void testMinAndMaxCostFilterJunkValue() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Cost"
+        );
     }
 
     @Test
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "6250")
-    @Description("MIN. & MAX. costs filter works (incl. extreme values, confirm chart header) - details report")
+    @Description("Min and max mass filter works")
     public void testMinAndMaxMassFilter() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinAndMaxMassFilterDesignOutlierIdentificationReport();
+        inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Mass"
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6264")
+    @Description("Min and max mass filter - junk value test")
+    public void testMinAndMaxMassFilterJunkValue() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Mass"
+        );
     }
 }

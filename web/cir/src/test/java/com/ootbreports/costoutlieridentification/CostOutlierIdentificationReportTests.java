@@ -1,7 +1,5 @@
 package com.ootbreports.costoutlieridentification;
 
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -12,11 +10,9 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 
-import java.math.BigDecimal;
-
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -85,69 +81,26 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "1956")
-    @Description("Min & Max costs filter works (incl. extreme values, negitive values, MAX<MIN., confirm chart header)")
+    @Description("Min & Max costs filter works")
     public void testMinMaxAprioriCost() {
-        /*genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                        GenericReportPage.class);
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierMainReports(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                "Cost"
+        );
+    }
 
-        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
-
-        String minValue = "1.00";
-        String maxValue = "1,173.00";
-        genericReportPage.inputMaxOrMinCostOrMass(
-                "Mass",
-                "Min",
-                minValue
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6253")
+    @Description("Min and max cost filter - junk value test")
+    public void testMinAndMaxCostFilterJunkValues() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                "Cost"
         );
-        genericReportPage.inputMaxOrMinCostOrMass(
-                "Mass",
-                "Max",
-                maxValue.replace(",", "")
-        );
-        genericReportPage.clickOk();
-
-        assertThat(genericReportPage.getMassMinOrMaxAboveChartValue(
-                "Min"),
-                is(equalTo(minValue.concat("0")))
-        );
-        assertThat(genericReportPage.getMassMinOrMaxAboveChartValue(
-                "Max"),
-                is(equalTo(maxValue.concat("0")))
-        );
-
-        genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
-        );
-        for (int i = 0; i < 3; i++) {
-            genericReportPage.hoverPartNameBubbleDtcReports();
-        }
-        BigDecimal massValueOne = genericReportPage.getFBCValueFromBubbleTooltip(
-                "Finish Mass Value"
-        );
-
-        genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
-        );
-        genericReportPage.hoverPartNameBubbleDtcReports();
-        BigDecimal massValueTwo = genericReportPage.getFBCValueFromBubbleTooltip(
-                "Finish Mass Value"
-        );
-
-        assertThat(massValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
-        assertThat(massValueOne.compareTo(
-                new BigDecimal(maxValue.replace(",", ""))),
-                is(equalTo(-1))
-        );
-
-        assertThat(massValueTwo.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
-        assertThat(massValueTwo.compareTo(
-                new BigDecimal(maxValue.replace(",", ""))),
-                is(equalTo(-1))
-        );*/
     }
 }
