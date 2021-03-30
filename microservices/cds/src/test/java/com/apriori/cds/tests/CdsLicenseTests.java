@@ -42,7 +42,7 @@ public class CdsLicenseTests {
     @After
     public void cleanUp() {
         if (deleteEndpoint != null) {
-            delete(deleteEndpoint);
+            cdsTestUtil.delete(deleteEndpoint);
         }
         if (userIdentityEndpoint != null) {
             cdsTestUtil.delete(userIdentityEndpoint);
@@ -156,13 +156,13 @@ public class CdsLicenseTests {
         String subLicenseId = UUID.randomUUID().toString();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
         String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(usersEndpoint, User.class, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
