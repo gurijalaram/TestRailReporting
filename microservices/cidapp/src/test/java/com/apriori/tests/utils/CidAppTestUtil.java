@@ -6,6 +6,7 @@ import com.apriori.entity.response.ComponentIdentityResponse;
 import com.apriori.entity.response.GetComponentResponse;
 import com.apriori.entity.response.PostComponentResponse;
 import com.apriori.entity.response.componentiteration.ComponentIteration;
+import com.apriori.entity.response.scenarios.CostResponse;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -93,5 +94,21 @@ public class CidAppTestUtil {
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
         return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * Post to cost a component
+     *
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @return response object
+     */
+    public ResponseWrapper<CostResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
+        url = String.format(serviceUrl, String.format("components/%s/scenarios/%s/cost", componentIdentity, scenarioIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, CostResponse.class)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 }
