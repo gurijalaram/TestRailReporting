@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.entity.reponse.PostComponentResponse;
 import com.apriori.entity.reponse.componentiteration.ComponentIteration;
-import com.apriori.utils.CidAppTestUtil;
+import com.apriori.tests.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;

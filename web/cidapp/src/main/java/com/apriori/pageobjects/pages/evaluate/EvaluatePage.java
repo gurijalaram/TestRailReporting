@@ -1,5 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.common.CustomAttributesInputsController;
+import com.apriori.pageobjects.common.PrimaryInputsController;
+import com.apriori.pageobjects.common.SecondaryInputsController;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
@@ -7,7 +10,6 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtiliz
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -63,8 +65,14 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
     private WebElement processGroupDropdown;
 
+    @FindBy(css = "div[id='qa-process-group-select-field'] input")
+    private WebElement processGroupInput;
+
     @FindBy(css = "div[id='qa-vpe-select-field'] [data-icon='chevron-down']")
     private WebElement vpeDropdown;
+
+    @FindBy(css = "div[id='qa-vpe-select-field'] input")
+    private WebElement vpeInput;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
@@ -110,11 +118,17 @@ public class EvaluatePage extends EvaluateToolbar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
+    private PrimaryInputsController primaryInputsController;
+    private SecondaryInputsController secondaryInputsController;
+    private CustomAttributesInputsController customAttributesInputsController;
 
     public EvaluatePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.primaryInputsController = new PrimaryInputsController(driver);
+        this.secondaryInputsController = new SecondaryInputsController(driver);
+        this.customAttributesInputsController = new CustomAttributesInputsController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -142,12 +156,18 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(String processGroup) {
-        pageUtils.waitForElementAndClick(processGroupDropdown);
-        By group = By.cssSelector(String.format("button[value='%s']", processGroup));
+        primaryInputsController.selectProcessGroup(processGroupDropdown, processGroup);
+        return this;
+    }
 
-        if (!checkCurrentDropdown("qa-process-group-select-field", processGroup)) {
-            pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
-        }
+    /**
+     * Inputs the pg
+     *
+     * @param processGroup - the process group
+     * @return current page object
+     */
+    public EvaluatePage inputProcessGroup(String processGroup) {
+        primaryInputsController.typeAheadProcessGroup(processGroupInput, processGroup);
         return this;
     }
 
@@ -158,24 +178,19 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectVPE(String vpe) {
-        pageUtils.waitForElementAndClick(vpeDropdown);
-        By vp = By.cssSelector(String.format("button[value='%s']", vpe));
-
-        if (!checkCurrentDropdown("qa-vpe-select-field", vpe)) {
-            pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
-        }
+        primaryInputsController.selectVpe(vpeDropdown, vpe);
         return this;
     }
 
     /**
-     * Checks the current dropdown in case its already selected
+     * Inputs the vpe dropdown
      *
-     * @param dropdown - the dropdown
-     * @param field    - the field
-     * @return true/false
+     * @param vpe      - the vpe
+     * @return current page object
      */
-    private boolean checkCurrentDropdown(String dropdown, String field) {
-        return driver.findElement(By.cssSelector(String.format("[id='%s'] button div", dropdown))).getAttribute("textContent").equals(field);
+    public EvaluatePage inputVpe(String vpe) {
+        primaryInputsController.typeAheadVpe(vpeInput, vpe);
+        return this;
     }
 
     /**
@@ -185,9 +200,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage enterAnnualVolume(String annualVolume) {
-        annualVolumeInput.clear();
-        annualVolumeInput.sendKeys(Keys.DELETE);
-        annualVolumeInput.sendKeys(annualVolume);
+        primaryInputsController.enterAnnualVolume(annualVolumeInput, annualVolume);
         return this;
     }
 
@@ -198,9 +211,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage enterAnnualYears(String productionLife) {
-        productionLifeInput.clear();
-        productionLifeInput.sendKeys(Keys.DELETE);
-        productionLifeInput.sendKeys(productionLife);
+        primaryInputsController.enterAnnualYears(productionLifeInput, productionLife);
         return this;
     }
 
@@ -220,7 +231,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public MaterialSelectorPage openMaterialSelectorTable() {
-        pageUtils.waitForElementAndClick(materialsPencil);
+        primaryInputsController.openMaterialSelectorTable(materialsPencil);
         return new MaterialSelectorPage(driver);
     }
 
@@ -293,7 +304,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public SecondaryProcessesPage openSecondaryProcesses() {
-        pageUtils.waitForElementAndClick(secondaryProcessesPencil);
+        primaryInputsController.openSecondaryProcesses(secondaryProcessesPencil);
         return new SecondaryProcessesPage(driver);
     }
 
@@ -303,7 +314,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list of string
      */
     public List<String> getSecondaryProcesses() {
-        return secondaryProcesses.stream().map(WebElement::getText).collect(Collectors.toList());
+        return primaryInputsController.getSecondaryProcesses(secondaryProcesses);
     }
 
     /**

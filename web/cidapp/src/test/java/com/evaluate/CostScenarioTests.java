@@ -29,7 +29,7 @@ public class CostScenarioTests extends TestBase {
     @Category(SmokeTests.class)
     @Description("Cost Scenario")
     public void testCostScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
 
@@ -39,7 +39,7 @@ public class CostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), is(true));
 
-        evaluatePage.selectProcessGroup(processGroupEnum.getProcessGroup())
+        evaluatePage.inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));

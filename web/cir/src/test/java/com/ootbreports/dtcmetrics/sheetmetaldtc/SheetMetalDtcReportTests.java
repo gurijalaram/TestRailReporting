@@ -48,7 +48,6 @@ public class SheetMetalDtcReportTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                Constants.DTC_METRICS_FOLDER,
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName()
         );
     }
@@ -203,7 +202,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly - Finish Mass")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -216,7 +215,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly - Rough Mass")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
                 ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 MassMetricEnum.ROUGH_MASS.getMassMetricName()
@@ -241,7 +240,7 @@ public class SheetMetalDtcReportTests extends TestBase {
         sheetMetalDtcReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal largerAnnualSpend = sheetMetalDtcReportPage.getAnnualSpendFromBubbleTooltip();
 
-        sheetMetalDtcReportPage.setReportName(ReportNamesEnum.SHEET_METAL_DTC.getReportName() + " 2");
+        sheetMetalDtcReportPage.setReportName(ReportNamesEnum.SHEET_METAL_DTC.getReportName().concat(" 2"));
         sheetMetalDtcReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal smallerAnnualSpend = sheetMetalDtcReportPage.getAnnualSpendFromBubbleTooltip();
 

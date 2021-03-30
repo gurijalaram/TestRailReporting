@@ -46,8 +46,14 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Back']")
     private WebElement backButton;
 
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Save']")
+    private WebElement saveButton;
+
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
+
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
+    private WebElement costButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -110,6 +116,16 @@ public class ModalDialogController {
     }
 
     /**
+     * Select the save button
+     *
+     * @return generic page object
+     */
+    public <T> T save(Class<T> klass) {
+        pageUtils.waitForElementAndClick(saveButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
      * Select all
      *
      * @return current page object
@@ -157,5 +173,15 @@ public class ModalDialogController {
     public ModalDialogController collapseAll() {
         pageUtils.waitForElementAndClick(collapseAllButton);
         return this;
+    }
+
+    /**
+     * Cost
+     *
+     * @return current page object
+     */
+    public <T> T cost(Class<T> klass) {
+        pageUtils.waitForElementAppear(costButton);
+        return PageFactory.initElements(driver, klass);
     }
 }

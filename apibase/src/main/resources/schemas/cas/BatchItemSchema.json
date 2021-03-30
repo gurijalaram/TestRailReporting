@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "required": [
+        "identity",
+        "id",
+        "customerIdentity",
+        "batchIdentity",
+        "createdAt",
+        "createdBy",
+        "userName",
+        "givenName",
+        "familyName",
+        "prefix",
+        "suffix",
+        "jobTitle",
+        "email",
+        "department",
+        "cityTown",
+        "stateProvince",
+        "county",
+        "countryCode",
+        "timezone",
+        "createdByName",
+        "cdsStatus"
+      ],
+                "properties": {
+                  "identity": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identity",
+                    "type": "string"
+                  },
+                  "id": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/id",
+                    "type": "string"
+                  },
+                  "customerIdentity": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/customerIdentity",
+                    "type": "string"
+                  },
+                  "batchIdentity": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/batchIdentity",
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdAt",
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdBy",
+                    "type": "string"
+                  },
+                  "userName": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/userName",
+                    "type": "string"
+                  },
+                  "givenName": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/givenName",
+                    "type": "string"
+                  },
+                  "familyName": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/familyName",
+                    "type": "string"
+                  },
+                  "prefix": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/prefix",
+                    "type": "string"
+                  },
+                  "suffix": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/suffix",
+                    "type": "string"
+                  },
+                  "jobTitle": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/jobTitle",
+                    "type": "string"
+                  },
+                  "email": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/email",
+                    "type": "string"
+                  },
+                  "department": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/department",
+                    "type": "string"
+                  },
+                  "cityTown": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/cityTown",
+                    "type": "string"
+                  },
+                  "stateProvince": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/stateProvince",
+                    "type": "string"
+                  },
+                  "county": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/county",
+                    "type": "string"
+                  },
+                  "countryCode": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/countryCode",
+                    "type": "string"
+                  },
+                  "timezone": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/timezone",
+                    "type": "string"
+                  },
+                  "createdByName": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdByName",
+                    "type": "string"
+                  },
+                  "cdsStatus": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/cdsStatus",
+                    "type": "string"
+                  }
+                }
+    }
+  }
+}

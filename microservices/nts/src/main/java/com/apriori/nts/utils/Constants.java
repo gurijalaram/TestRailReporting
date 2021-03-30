@@ -17,7 +17,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "nts";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
@@ -32,7 +32,7 @@ public class Constants {
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile(DEFAULT_ENVIRONMENT_VALUE.concat(".properties"));
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));

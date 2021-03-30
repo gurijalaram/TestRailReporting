@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -7,7 +8,8 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
@@ -33,7 +35,7 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    //@TestRail(testCaseId = {"578", "5429", "5441"})
+    @TestRail(testCaseId = "6101")
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -43,16 +45,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
+
+        evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "5441"})
+    @TestRail(testCaseId = "6102")
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -62,16 +67,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
+
+        evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "5441"})
+    @TestRail(testCaseId = "6103")
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -81,16 +89,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
+
+        evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "5441"})
+    @TestRail(testCaseId = "6104")
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -100,16 +111,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
+
+        evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "5441"})
+    @TestRail(testCaseId = "6105")
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -119,16 +133,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
+
+        evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
-    //@TestRail(testCaseId = {"578", "5429", "5441"})
+    @TestRail(testCaseId = "6106")
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -138,11 +155,14 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
+
+        evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
+            .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
     }
 }
