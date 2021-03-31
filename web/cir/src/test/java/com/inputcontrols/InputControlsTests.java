@@ -938,39 +938,36 @@ public class InputControlsTests extends TestBase {
     public void testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(String reportName, String costOrMass) {
         String minValue = "1.00";
         String maxValue = "1,173.00";
-        String maxValToUse = reportName.contains("Cost") ? "945" : maxValue;
+        String maxValToUse = reportName.contains("Cost") ? "945.00" : maxValue;
         genericReportPage = testMinAndMaxMassOrCostFilterCore(reportName, costOrMass, minValue, maxValToUse);
 
-        // check details table
-        BigDecimal costOutlierDetailsCostOne = new BigDecimal(
-                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
-                        "Cost Outlier Identification Details Cost")
-        );
+        if (reportName.contains("Cost")) {
+            BigDecimal costOutlierDetailsCostOne =
+                    getValueFromCostOrDesignDetailsReport(genericReportPage, reportName.concat(" Cost"));
 
-        BigDecimal costOutlierDetailsCostTwo = new BigDecimal(
-                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
-                        "Cost Outlier Identification Details Cost 2")
-        );
+            BigDecimal costOutlierDetailsCostTwo =
+                    getValueFromCostOrDesignDetailsReport(genericReportPage, reportName.concat(" Cost 2"));
 
-        /*BigDecimal designOutlierDetailsCostOne = new BigDecimal(
-                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
-                        "Design Outlier Identification Details Cost")
-        );
+            assertMinAndMaxValues(costOutlierDetailsCostOne, minValue, maxValToUse);
+            assertMinAndMaxValues(costOutlierDetailsCostTwo, minValue, maxValToUse);
+        } else {
+            BigDecimal designOutlierDetailsCostOne = getValueFromCostOrDesignDetailsReport(genericReportPage,
+                    reportName.concat(" Cost"));
 
-        BigDecimal designOutlierDetailsCostTwo = new BigDecimal(
-                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
-                        "Design Outlier Identification Details Cost 2")
-        );
+            BigDecimal designOutlierDetailsCostTwo = getValueFromCostOrDesignDetailsReport(genericReportPage,
+                    reportName.concat(" Cost 2"));
 
-        BigDecimal designOutlierDetailsMassOne = new BigDecimal(
-                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
-                        "Design Outlier Identification Details Mass")
-        );
+            BigDecimal designOutlierDetailsMassOne = getValueFromCostOrDesignDetailsReport(genericReportPage,
+                    reportName.concat(" Mass"));
 
-        BigDecimal designOutlierDetailsMassTwo = new BigDecimal(
-                genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(
-                        "Design Outlier Identification Details Mass 2")
-        );*/
+            BigDecimal designOutlierDetailsMassTwo = getValueFromCostOrDesignDetailsReport(genericReportPage,
+                    reportName.concat(" Mass 2"));
+
+            assertMinAndMaxValues(designOutlierDetailsCostOne, minValue, maxValToUse);
+            assertMinAndMaxValues(designOutlierDetailsCostTwo, minValue, maxValToUse);
+            assertMinAndMaxValues(designOutlierDetailsMassOne, minValue, maxValToUse);
+            assertMinAndMaxValues(designOutlierDetailsMassTwo, minValue, maxValToUse);
+        }
     }
 
     /**
@@ -1006,6 +1003,21 @@ public class InputControlsTests extends TestBase {
         assertThat(
                 genericReportPage.isCostOrMassMaxOrMinErrorEnabled("Maximum", costOrMass),
                 is(equalTo(true))
+        );
+    }
+
+    private BigDecimal getValueFromCostOrDesignDetailsReport(GenericReportPage genericReportPage, String valueIndex) {
+        return new BigDecimal(genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(valueIndex));
+    }
+
+    private void assertMinAndMaxValues(BigDecimal valueToAssert, String firstValue, String secondValue) {
+        assertThat(valueToAssert.compareTo(
+                new BigDecimal(firstValue.replace(",", ""))),
+                is(equalTo(1))
+        );
+        assertThat(valueToAssert.compareTo(
+                new BigDecimal(secondValue.replace(",", ""))),
+                is(equalTo(-1))
         );
     }
 

@@ -516,26 +516,26 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[16]/td[27]")
     private WebElement costOutlierApCostOne;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[126]/td[27]")
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[117]/td[24]")
     private WebElement costOutlierApCostTwo;
 
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
     private WebElement designOutlierApCostOne;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[90]/td[24]")
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[86]/td[24]")
     private WebElement designOutlierApCostTwo;
 
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
     private WebElement designOutlierMassOne;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[90]/td[21]")
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[86]/td[21]")
     private WebElement designOutlierMassTwo;
 
-    private String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
-    private String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
+    private final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
+    private final String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public GenericReportPage(WebDriver driver) {
         super(driver);
@@ -2294,10 +2294,20 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return value as string
      */
     public String getMassOrCostMinOrMaxAboveChartValue(String reportName, String massOrCost, String maxOrMin) {
-        String designDetailsLocator = "//span[contains(text(), '%sinum aPriori %s')]/ancestor::td/following-sibling::td[1]/span";
-        String generalLocator = "//span[contains(text(), 'aPriori %s %s:')]/ancestor::td/following-sibling::td[1]/span";
-        String locatorToUse = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS) ? designDetailsLocator : generalLocator;
-        By locator = By.xpath(String.format(locatorToUse, massOrCost, maxOrMin));
+        By generalLocator = By.xpath(
+                String.format(
+                        "//span[contains(text(), 'aPriori %s %s:')]/ancestor::td/following-sibling::td[1]/span",
+                        massOrCost,
+                        maxOrMin)
+        );
+        By designDetailsLocator = By.xpath(
+                String.format(
+                        "//span[contains(text(), '%simum aPriori %s')]/ancestor::td/following-sibling::td[1]/span",
+                        maxOrMin,
+                        massOrCost)
+        );
+        By locator = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName()) ?
+                designDetailsLocator : generalLocator;
 
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
