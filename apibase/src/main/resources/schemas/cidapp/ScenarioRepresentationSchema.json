@@ -11,20 +11,18 @@
         "identity",
         "createdAt",
         "createdBy",
+        "updatedAt",
         "customerIdentity",
         "scenarioName",
         "scenarioType",
         "scenarioState",
+        "previousScenarioState",
         "lastAction",
         "ownedBy",
         "locked",
         "published",
         "ownedByName",
         "createdByName"
-      ],
-      "optional": [
-        "previousScenarioState",
-        "updatedAt"
       ],
       "properties": {
         "identity": {

@@ -365,7 +365,7 @@ public class PropertyInfoMap {
         return this;
     }
 
-    class Min80Thickness {
+    static class Min80Thickness {
         private String name;
         private String unitTypeName;
 
@@ -388,7 +388,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class AverageThicknessDev {
+    static class AverageThicknessDev {
         private String name;
         private String unitTypeName;
 
@@ -411,7 +411,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class AverageThickness {
+    static class AverageThickness {
         private String name;
         private String unitTypeName;
 
@@ -434,7 +434,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class NumSideCores {
+    static class NumSideCores {
         private String name;
 
         public String getName() {
@@ -447,7 +447,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class NonSolidSurfaceArea {
+    static class NonSolidSurfaceArea {
         private String name;
         private String unitTypeName;
 
@@ -470,7 +470,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class NumSurfaces {
+    static class NumSurfaces {
         private String name;
 
         public String getName() {
@@ -483,7 +483,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class NumInsertCores {
+    static class NumInsertCores {
         private String name;
 
         public String getName() {
@@ -496,7 +496,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class MinThickness {
+    static class MinThickness {
         private String name;
         private String unitTypeName;
 
@@ -519,7 +519,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class MaxThickness {
+    static class MaxThickness {
         private String name;
         private String unitTypeName;
 
@@ -542,7 +542,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class ArtifactTypeName {
+    static class ArtifactTypeName {
         private String name;
 
         public String getName() {
@@ -555,7 +555,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class FileBaseName {
+    static class FileBaseName {
         private String name;
 
         public String getName() {
@@ -568,7 +568,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class ToolThickness {
+    static class ToolThickness {
         private String name;
         private String unitTypeName;
 
@@ -591,7 +591,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class BlankBoxWidth {
+    static class BlankBoxWidth {
         private String name;
         private String unitTypeName;
 
@@ -614,7 +614,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class TemperatureUnitName {
+    static class TemperatureUnitName {
         private String name;
 
         public String getName() {
@@ -627,7 +627,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class PartModelName {
+    static class PartModelName {
         private String name;
 
         public String getName() {
@@ -640,7 +640,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class ChildArtifactCount {
+    static class ChildArtifactCount {
         private String name;
 
         public String getName() {
@@ -653,7 +653,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class Width {
+    static class Width {
         private String name;
         private String unitTypeName;
 
@@ -676,7 +676,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class Volume {
+    static class Volume {
         private String name;
         private String unitTypeName;
 
@@ -699,7 +699,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class DistanceUnits {
+    static class DistanceUnits {
         private String name;
 
         public String getName() {
@@ -712,7 +712,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class FileFormat {
+    static class FileFormat {
         private String name;
 
         public String getName() {
@@ -725,7 +725,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class CadMaterialName {
+    static class CadMaterialName {
         private String name;
 
         public String getName() {
@@ -738,7 +738,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class CadVersion {
+    static class CadVersion {
         private String name;
 
         public String getName() {
@@ -751,7 +751,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class CadKeyText {
+    static class CadKeyText {
         private String name;
 
         public String getName() {
@@ -764,7 +764,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class CadConfiguration {
+    static class CadConfiguration {
         private String name;
 
         public String getName() {
@@ -777,7 +777,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class Descriptor {
+    static class Descriptor {
         private String name;
 
         public String getName() {
@@ -790,7 +790,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class BlankBoxLength {
+    static class BlankBoxLength {
         private String name;
         private String unitTypeName;
 
@@ -813,7 +813,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class EngineType {
+    static class EngineType {
         private String name;
 
         public String getName() {
@@ -826,7 +826,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class Height {
+    static class Height {
         private String name;
         private String unitTypeName;
 
@@ -849,7 +849,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class Length {
+    static class Length {
         private String name;
         private String unitTypeName;
 
@@ -872,7 +872,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class MassUnitName {
+    static class MassUnitName {
         private String name;
 
         public String getName() {
@@ -885,7 +885,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class MinGcdVersion {
+    static class MinGcdVersion {
         private String name;
 
         public String getName() {
@@ -898,7 +898,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class SurfaceArea {
+    static class SurfaceArea {
         private String name;
         private String unitTypeName;
 
@@ -921,7 +921,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class Thickness {
+    static class Thickness {
         private String name;
         private String unitTypeName;
 
@@ -944,7 +944,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class ThicknessStdDev {
+    static class ThicknessStdDev {
         private String name;
         private String unitTypeName;
 
@@ -967,7 +967,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class TimeUnitName {
+    static class TimeUnitName {
         private String name;
 
         public String getName() {
@@ -980,7 +980,7 @@ public class PropertyInfoMap {
         }
     }
 
-    class ToolMinThickness {
+    static class ToolMinThickness {
         private String name;
         private String unitTypeName;
 

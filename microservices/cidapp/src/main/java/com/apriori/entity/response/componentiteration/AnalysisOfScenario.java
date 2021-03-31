@@ -75,6 +75,7 @@ public class AnalysisOfScenario {
     private Double utilization;
     private Double utilizationWithAddendum;
     private Double utilizationWithoutAddendum;
+    private String virtualMaterialStockName;
     private Double width;
 
     public String getIdentity() {
@@ -713,6 +714,15 @@ public class AnalysisOfScenario {
 
     public AnalysisOfScenario setUtilizationWithoutAddendum(Double utilizationWithoutAddendum) {
         this.utilizationWithoutAddendum = utilizationWithoutAddendum;
+        return this;
+    }
+
+    public String getVirtualMaterialStockName() {
+        return virtualMaterialStockName;
+    }
+
+    public AnalysisOfScenario setVirtualMaterialStockName(String virtualMaterialStockName) {
+        this.virtualMaterialStockName = virtualMaterialStockName;
         return this;
     }
 
