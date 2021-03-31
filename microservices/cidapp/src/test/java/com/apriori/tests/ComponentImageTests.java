@@ -87,7 +87,7 @@ public class ComponentImageTests {
     @Test
     @TestRail(testCaseId = "5851")
     @Description("Test active axes values are correct")
-    public void axesEntriesValuesTest() {
+    public void activeAxesValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), "700-33770-01_A0.stp");
