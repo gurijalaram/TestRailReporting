@@ -1,12 +1,12 @@
 package com.apriori.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.entity.response.PostComponentResponse;
+import com.apriori.entity.response.componentiteration.ActiveAxes;
 import com.apriori.entity.response.componentiteration.ComponentIteration;
 import com.apriori.entity.response.scenarios.CostResponse;
 import com.apriori.entity.response.scenarios.ImageResponse;
@@ -19,6 +19,8 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
+
+import java.util.stream.Collectors;
 
 public class ComponentImageTests {
 
@@ -81,7 +83,7 @@ public class ComponentImageTests {
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries(), hasItem("null"));
+        assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size(), is(equalTo(12)));
     }
 
     @Test
@@ -111,6 +113,6 @@ public class ComponentImageTests {
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries(), hasItem("null"));
+        assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getActiveAxes().stream().map(ActiveAxes::getDisplayName).collect(Collectors.toList()), hasItems("TurningAxis:2"));
     }
 }
