@@ -19,8 +19,14 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
 
 public class CidAppTestUtil {
+    private static final Logger logger = LoggerFactory.getLogger(CidAppTestUtil.class);
+
     private static String token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
         Constants.getCidServiceHost(),
         HttpStatus.SC_CREATED,
@@ -98,6 +104,43 @@ public class CidAppTestUtil {
     }
 
     /**
+     * Gets the scenario representation
+     *
+     * @param transientState    - the impermanent state
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @return response object
+     */
+    public ResponseWrapper<CostResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
+        url = String.format(serviceUrl, String.format("components/%s/scenarios/%s", componentIdentity, scenarioIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, CostResponse.class)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        long startTime = System.currentTimeMillis() / 1000;
+        String scenarioState;
+        ResponseWrapper<CostResponse> scenarioRepresentation;
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        do {
+            scenarioRepresentation = GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+            scenarioState = scenarioRepresentation.getResponseEntity().getResponse().getScenarioState();
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                logger.error(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        } while ((scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - startTime) < 180));
+        return scenarioRepresentation;
+    }
+
+    /**
      * Post to cost a component
      *
      * @param componentIdentity - the component identity
@@ -119,4 +162,5 @@ public class CidAppTestUtil {
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
+
 }
