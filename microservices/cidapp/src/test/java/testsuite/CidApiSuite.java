@@ -1,6 +1,6 @@
-package com.apriori.tests.testsuite;
+package testsuite;
 
-import com.apriori.tests.controllers.ComponentsControllerTests;
+import com.apriori.tests.ComponentImageTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
@@ -10,8 +10,8 @@ import org.junit.runners.Suite;
 @ProjectRunID("361")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    ComponentsControllerTests.class
+    ComponentImageTests.class
 })
-public class CidAppAPISuite {
+public class CidApiSuite {
 
 }
