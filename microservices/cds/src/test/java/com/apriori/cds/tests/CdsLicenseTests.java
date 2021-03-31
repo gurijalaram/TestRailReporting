@@ -1,10 +1,14 @@
 package com.apriori.cds.tests;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.cds.entity.response.LicenseResponse;
+import com.apriori.cds.entity.response.SubLicense;
+import com.apriori.cds.entity.response.SubLicenses;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Licenses;
 import com.apriori.cds.objects.response.Site;
@@ -18,6 +22,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -138,6 +143,79 @@ public class CdsLicenseTests {
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(licenseIdentityEndpoint, LicenseResponse.class);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licenseResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(licenseIdentity)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "6641")
+    @Description("Get a sub license")
+    public void getSubLicenses() {
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
+        String emailPattern = "\\S+@".concat(customerName);
+        String siteName = generateStringUtil.generateSiteName();
+        String siteId = generateStringUtil.generateSiteID();
+        String licenseId = UUID.randomUUID().toString();
+        String subLicenseId = UUID.randomUUID().toString();
+        String userName = generateStringUtil.generateUserName();
+
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
+        String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
+
+        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
+        assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        String licenseIdentity = licenseResponse.getResponseEntity().getResponse().getIdentity();
+        String subLicenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses", customerIdentity, siteIdentity, licenseIdentity));
+
+        ResponseWrapper<SubLicenses> subLicense = cdsTestUtil.getCommonRequest(subLicenseEndpoint, SubLicenses.class);
+
+        assertThat(subLicense.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_OK)));
+        assertThat(subLicense.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "6642")
+    @Description("Get a sub license by Identity")
+    public void getSubLicenseIdentity() {
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String salesForceId = generateStringUtil.generateSalesForceId();
+        String emailPattern = "\\S+@".concat(customerName);
+        String siteName = generateStringUtil.generateSiteName();
+        String siteId = generateStringUtil.generateSiteID();
+        String licenseId = UUID.randomUUID().toString();
+        String subLicenseId = UUID.randomUUID().toString();
+        String userName = generateStringUtil.generateUserName();
+
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
+        String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
+
+        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
+        assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        String licenseIdentity = licenseResponse.getResponseEntity().getResponse().getIdentity();
+        String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
+        String subLicenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
+
+        ResponseWrapper<SubLicense> subLicense = cdsTestUtil.getCommonRequest(subLicenseEndpoint, SubLicense.class);
+
+        assertThat(subLicense.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_OK)));
+        assertThat(subLicense.getResponseEntity().getResponse().getName(),containsString("Sub License"));
     }
 
     @Test
