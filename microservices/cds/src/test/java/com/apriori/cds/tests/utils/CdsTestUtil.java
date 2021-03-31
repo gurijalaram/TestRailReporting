@@ -283,11 +283,11 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
-        url = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
+        url = String.format(serviceUrl, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, SubLicenseAssociationUser.class)
-            .setBody("license",
-                new SubLicenseAssociationUser().setIdentity(userIdentity)
+            .setBody("userAssociation",
+                new AssociationUserItems().setUserIdentity(userIdentity)
                     .setCreatedBy("#SYSTEM00000"));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
