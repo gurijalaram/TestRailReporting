@@ -8,6 +8,7 @@ import com.apriori.entity.response.GetComponentResponse;
 import com.apriori.entity.response.PostComponentResponse;
 import com.apriori.entity.response.componentiteration.ComponentIteration;
 import com.apriori.entity.response.scenarios.CostResponse;
+import com.apriori.entity.response.scenarios.ImageResponse;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -117,7 +118,8 @@ public class CidAppTestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, CostResponse.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
-        long startTime = System.currentTimeMillis() / 1000;
+        long START_TIME = System.currentTimeMillis() / 1000;
+        final long MAX_WAIT_TIME = 180;
         String scenarioState;
         ResponseWrapper<CostResponse> scenarioRepresentation;
 
@@ -136,7 +138,7 @@ public class CidAppTestUtil {
                 logger.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
-        } while ((scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - startTime) < 180));
+        } while ((scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME));
         return scenarioRepresentation;
     }
 
@@ -163,4 +165,19 @@ public class CidAppTestUtil {
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 
+    /**
+     * Gets the hoops image
+     *
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @return response object
+     */
+    public ResponseWrapper<ImageResponse> getHoopsImage(String componentIdentity, String scenarioIdentity) {
+        url = String.format(serviceUrl, String.format("components/%s/scenarios/%s/hoops-image", componentIdentity, scenarioIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, ImageResponse.class)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+    }
 }
