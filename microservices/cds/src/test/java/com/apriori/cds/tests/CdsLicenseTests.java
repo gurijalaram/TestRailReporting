@@ -101,7 +101,7 @@ public class CdsLicenseTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
-        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint,  Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint, Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(license.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
@@ -130,12 +130,12 @@ public class CdsLicenseTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
-        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint,  Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint, Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
         String licenseIdentityEndpoint = String.format(url, String.format("customers/%s/licenses/%s", customerIdentity, licenseIdentity));
 
-        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(licenseIdentityEndpoint,  LicenseResponse.class);
+        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(licenseIdentityEndpoint, LicenseResponse.class);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licenseResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(licenseIdentity)));
     }
@@ -144,8 +144,6 @@ public class CdsLicenseTests {
     @TestRail(testCaseId = "6145")
     @Description("Deletes an existing user sub-license association")
     public void deleteCustomerSubLicense() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -156,37 +154,33 @@ public class CdsLicenseTests {
         String subLicenseId = UUID.randomUUID().toString();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
-        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
-        ResponseWrapper<User> user = cdsTestUtil.addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteId);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
-        String licenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
-        ResponseWrapper<LicenseResponse> licenseResponse = addLicense(licenseEndpoint, LicenseResponse.class, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
 
-        ResponseWrapper<Licenses> license = getCommonRequest(customerLicenseEndpoint, true, Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint, Licenses.class);
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        String associationUserEndPoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
-        ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = addAssociationUser(associationUserEndPoint, SubLicenseAssociationUser.class, userIdentity);
+        ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
         userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
 
         deleteEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity));
 
-        ResponseWrapper<String> deleteResponse = delete(deleteEndpoint);
+        ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(deleteEndpoint);
         assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 }

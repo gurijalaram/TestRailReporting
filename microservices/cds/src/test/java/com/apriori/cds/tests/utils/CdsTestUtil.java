@@ -16,6 +16,7 @@ import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
+import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
 import com.apriori.cds.utils.Constants;
@@ -266,6 +267,27 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, AssociationUserItems.class)
             .setBody("userAssociation",
                 new AssociationUserItems().setUserIdentity(userIdentity)
+                    .setCreatedBy("#SYSTEM00000"));
+
+        return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * POST call to add sub license association user
+     *
+     * @param customerIdentity   - the customer id
+     * @param siteIdentity       - the site id
+     * @param licenseIdentity    - the license id
+     * @param subLicenseIdentity - the sub license id
+     * @param userIdentity       - the user id
+     * @return new object
+     */
+    public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
+        url = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
+
+        RequestEntity requestEntity = RequestEntity.init(url, SubLicenseAssociationUser.class)
+            .setBody("license",
+                new SubLicenseAssociationUser().setIdentity(userIdentity)
                     .setCreatedBy("#SYSTEM00000"));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
