@@ -85,7 +85,7 @@ public class CostingInput {
         return this;
     }
 
-    class CustomAttributes {
+    static class CustomAttributes {
 
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ScenarioMetadata {
     private String identity;
-    private List<Object> activeAxes = null;
+    private List<ActiveAxes> activeAxes = null;
     private ActiveDimensions activeDimensions;
     private List<AxesEntry> axesEntries = null;
     private List<Double> boundingBox = null;
@@ -24,11 +24,11 @@ public class ScenarioMetadata {
         return this;
     }
 
-    public List<Object> getActiveAxes() {
+    public List<ActiveAxes> getActiveAxes() {
         return activeAxes;
     }
 
-    public ScenarioMetadata setActiveAxes(List<Object> activeAxes) {
+    public ScenarioMetadata setActiveAxes(List<ActiveAxes> activeAxes) {
         this.activeAxes = activeAxes;
         return this;
     }
