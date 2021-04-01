@@ -26,95 +26,107 @@ public class SubLicenseAssociationItems {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public SubLicenseAssociationItems setIdentity(String identity) {
         this.identity = identity;
+        return this;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public SubLicenseAssociationItems setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public SubLicenseAssociationItems setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     public UserProfile getUserProfile() {
         return userProfile;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
+    public SubLicenseAssociationItems setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public SubLicenseAssociationItems setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public SubLicenseAssociationItems setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public Boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public SubLicenseAssociationItems setActive(Boolean active) {
         this.active = active;
+        return this;
     }
 
     public List<UserSite> getSites() {
         return sites;
     }
 
-    public void setSites(List<UserSite> sites) {
+    public SubLicenseAssociationItems setSites(List<UserSite> sites) {
         this.sites = sites;
+        return this;
     }
 
     public CustomAttributes getCustomAttributes() {
         return customAttributes;
     }
 
-    public void setCustomAttributes(CustomAttributes customAttributes) {
+    public SubLicenseAssociationItems setCustomAttributes(CustomAttributes customAttributes) {
         this.customAttributes = customAttributes;
+        return this;
     }
 
     public String getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public SubLicenseAssociationItems setUserType(String userType) {
         this.userType = userType;
+        return this;
     }
 
     public Boolean getMfaRequired() {
         return mfaRequired;
     }
 
-    public void setMfaRequired(Boolean mfaRequired) {
+    public SubLicenseAssociationItems setMfaRequired(Boolean mfaRequired) {
         this.mfaRequired = mfaRequired;
+        return this;
     }
 
     public String getCustomerIdentity() {
         return customerIdentity;
     }
 
-    public void setCustomerIdentity(String customerIdentity) {
+    public SubLicenseAssociationItems setCustomerIdentity(String customerIdentity) {
         this.customerIdentity = customerIdentity;
+        return this;
     }
 }
