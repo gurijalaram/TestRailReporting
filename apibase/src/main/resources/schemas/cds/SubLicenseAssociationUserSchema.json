@@ -1,116 +1,21 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "http://example.com/example.json",
-  "type": "object",
+  "required": [
+    "response"
+  ],
   "properties": {
-    "identity": {
-      "$id": "#/properties/identity",
-      "type": "string"
-    },
-    "createdBy": {
-      "$id": "#/properties/createdBy",
-      "type": "string"
-    },
-    "createdAt": {
-      "$id": "#/properties/createdAt",
-      "type": "string"
-    },
-    "userProfile": {
-      "$id": "#/properties/userProfile",
-      "type": "object",
+    "response": {
+      "required": [
+        "identity",
+        "createdBy"
+      ],
       "properties": {
         "identity": {
-          "$id": "#/properties/userProfile/properties/identity",
-          "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/userProfile/properties/createdBy",
-          "type": "string"
-        },
-        "createdAt": {
-          "$id": "#/properties/userProfile/properties/createdAt",
-          "type": "string"
-        },
-        "givenName": {
-          "$id": "#/properties/userProfile/properties/givenName",
-          "type": "string"
-        },
-        "familyName": {
-          "$id": "#/properties/userProfile/properties/familyName",
-          "type": "string"
-        },
-        "jobTitle": {
-          "$id": "#/properties/userProfile/properties/jobTitle",
-          "type": "string"
-        },
-        "department": {
-          "$id": "#/properties/userProfile/properties/department",
-          "type": "string"
-        },
-        "supervisor": {
-          "$id": "#/properties/userProfile/properties/supervisor",
-          "type": "string"
         }
       }
-    },
-    "email": {
-      "$id": "#/properties/email",
-      "type": "string"
-    },
-    "username": {
-      "$id": "#/properties/username",
-      "type": "string"
-    },
-    "active": {
-      "$id": "#/properties/active",
-      "type": "boolean"
-    },
-    "sites": {
-      "$id": "#/properties/sites",
-      "type": "array",
-      "items": {
-        "$id": "#/properties/sites/items",
-        "anyOf": [
-          {
-            "$id": "#/properties/sites/items/anyOf/0",
-            "type": "object",
-            "properties": {
-              "identity": {
-                "$id": "#/properties/sites/items/anyOf/0/properties/identity",
-                "type": "string"
-              },
-              "createdBy": {
-                "$id": "#/properties/sites/items/anyOf/0/properties/createdBy",
-                "type": "string"
-              },
-              "createdAt": {
-                "$id": "#/properties/sites/items/anyOf/0/properties/createdAt",
-                "type": "string"
-              },
-              "siteIdentity": {
-                "$id": "#/properties/sites/items/anyOf/0/properties/siteIdentity",
-                "type": "string"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "customAttributes": {
-      "$id": "#/properties/customAttributes",
-      "type": "object"
-    },
-    "userType": {
-      "$id": "#/properties/userType",
-      "type": "string"
-    },
-    "mfaRequired": {
-      "$id": "#/properties/mfaRequired",
-      "type": "boolean"
-    },
-    "customerIdentity": {
-      "$id": "#/properties/customerIdentity",
-      "type": "string"
     }
   }
 }

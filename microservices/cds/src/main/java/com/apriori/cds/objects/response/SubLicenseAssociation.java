@@ -8,16 +8,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/SubLicenseAssociationUserSchema.json")
+@Schema(location = "cds/SubLicenseAssociationSchema.json")
 public class SubLicenseAssociation extends Pagination {
-    private List<SubLicenseAssociationUser> items;
+    private List<SubLicenseAssociationItems> items;
     private SubLicenseAssociation response;
 
     public SubLicenseAssociation getResponse() {
         return this.response;
     }
 
-    public List<SubLicenseAssociationUser> getItems() {
+    public List<SubLicenseAssociationItems> getItems() {
         return this.items;
     }
     }

@@ -216,7 +216,7 @@ public class CdsLicenseTests {
         ResponseWrapper<SubLicense> subLicense = cdsTestUtil.getCommonRequest(subLicenseEndpoint, SubLicense.class);
 
         assertThat(subLicense.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_OK)));
-        assertThat(subLicense.getResponseEntity().getResponse().getName(),containsString("Sub License"));
+        assertThat(subLicense.getResponseEntity().getResponse().getName(), containsString("License"));
     }
 
     @Test
@@ -256,6 +256,7 @@ public class CdsLicenseTests {
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
         userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
+
         assertThat(associationUserItemsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(associationUserItemsResponse.getResponseEntity().getResponse().getCreatedBy(), is(equalTo("#SYSTEM00000")));
         deleteEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity));
@@ -304,8 +305,7 @@ public class CdsLicenseTests {
         ResponseWrapper<SubLicenseAssociation> associationUserResponse = cdsTestUtil.getCommonRequest(userAssociationEndpoint, SubLicenseAssociation.class);
 
         assertThat(associationUserResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        //assertThat(associationUserResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-
+        assertThat(associationUserResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         deleteEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity));
     }
 
