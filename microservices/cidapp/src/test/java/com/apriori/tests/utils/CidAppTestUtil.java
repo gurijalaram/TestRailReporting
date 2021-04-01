@@ -119,7 +119,8 @@ public class CidAppTestUtil {
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
         long START_TIME = System.currentTimeMillis() / 1000;
-        final long MAX_WAIT_TIME = 180;
+        final long POLLING_INTERVAL = 5l;
+        final long MAX_WAIT_TIME = 180l;
         String scenarioState;
         ResponseWrapper<CostResponse> scenarioRepresentation;
 
@@ -133,7 +134,7 @@ public class CidAppTestUtil {
             scenarioRepresentation = GenericRequestUtil.get(requestEntity, new RequestAreaApi());
             scenarioState = scenarioRepresentation.getResponseEntity().getResponse().getScenarioState();
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
                 logger.error(e.getMessage());
                 Thread.currentThread().interrupt();
