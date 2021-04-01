@@ -80,7 +80,7 @@ public class ComponentImageTests {
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size(), is(equalTo(12)));
+        assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size(), is(equalTo(6)));
     }
 
     @Test
