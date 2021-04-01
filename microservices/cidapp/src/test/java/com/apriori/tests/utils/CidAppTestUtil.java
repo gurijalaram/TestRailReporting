@@ -101,7 +101,35 @@ public class CidAppTestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, ComponentIteration.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
+        checkNonNullAxesEntries(requestEntity);
+
         return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+    }
+
+    /**
+     * Checks size of axes entries is not null and empty before proceeding
+     * @param requestEntity
+     * @return
+     */
+    private boolean checkNonNullAxesEntries(RequestEntity requestEntity) {
+        long START_TIME = System.currentTimeMillis() / 1000;
+        final long POLLING_INTERVAL = 100L;
+        final long MAX_WAIT_TIME = 180L;
+        ResponseWrapper<ComponentIteration> axesEntriesResponse;
+        boolean axesEntriesFlag = true;
+        int axesEntries = 0;
+
+        do {
+            axesEntriesResponse = GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+            try {
+                axesEntries = axesEntriesResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size();
+                TimeUnit.MILLISECONDS.sleep(POLLING_INTERVAL);
+            } catch (InterruptedException | NullPointerException e) {
+                axesEntriesFlag = false;
+                logger.error(e.getMessage());
+            }
+        } while (axesEntries == 0 && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+        return axesEntriesFlag;
     }
 
     /**

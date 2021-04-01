@@ -78,9 +78,6 @@ public class ComponentImageTests {
         ResponseWrapper<CostResponse> costState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ImageResponse> imageResponse = cidAppTestUtil.getHoopsImage(componentIdentity, scenarioIdentity);
-        assertThat(imageResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size(), is(equalTo(12)));
@@ -108,11 +105,8 @@ public class ComponentImageTests {
         ResponseWrapper<CostResponse> costState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ImageResponse> imageResponse = cidAppTestUtil.getHoopsImage(componentIdentity, scenarioIdentity);
-        assertThat(imageResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getActiveAxes().stream().map(ActiveAxes::getDisplayName).collect(Collectors.toList()), hasItems("TurningAxis:2"));
+        assertThat(componentIterationResponse.getResponseEntity().getResponse().getScenarioMetadata().getActiveAxes().stream().map(ActiveAxes::getDisplayName).collect(Collectors.toList()), hasItems("SetupAxis:1"));
     }
 }
