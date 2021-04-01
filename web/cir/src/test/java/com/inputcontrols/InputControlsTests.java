@@ -936,38 +936,27 @@ public class InputControlsTests extends TestBase {
      * @param costOrMass - String
      */
     public void testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(String reportName, String costOrMass) {
-        String minValue = "1.00";
-        String maxValue = "1,173.00";
-        String maxValToUse = reportName.contains("Cost") ? "945.00" : maxValue;
-        genericReportPage = testMinAndMaxMassOrCostFilterCore(reportName, costOrMass, minValue, maxValToUse);
+        String minValueToUse = costOrMass.equals("Mass") ? "1.000" : "1.00";
+        String maxValueToUse = costOrMass.equals("Mass") ? "1,173.00" : "945.00";
 
-        if (reportName.contains("Cost")) {
-            BigDecimal costOutlierDetailsCostOne =
-                    getValueFromCostOrDesignDetailsReport(genericReportPage, reportName.concat(" Cost"));
+        genericReportPage = testMinAndMaxMassOrCostFilterCore(
+                reportName,
+                costOrMass,
+                minValueToUse,
+                maxValueToUse
+        );
 
-            BigDecimal costOutlierDetailsCostTwo =
-                    getValueFromCostOrDesignDetailsReport(genericReportPage, reportName.concat(" Cost 2"));
+        BigDecimal valueOne = getValueFromCostOrDesignDetailsReport(
+                genericReportPage,
+                reportName.concat(String.format(" %s", costOrMass))
+        );
+        BigDecimal valueTwo = getValueFromCostOrDesignDetailsReport(
+                genericReportPage,
+                reportName.concat(String.format(" %s 2", costOrMass))
+        );
 
-            assertMinAndMaxValues(costOutlierDetailsCostOne, minValue, maxValToUse);
-            assertMinAndMaxValues(costOutlierDetailsCostTwo, minValue, maxValToUse);
-        } else {
-            BigDecimal designOutlierDetailsCostOne = getValueFromCostOrDesignDetailsReport(genericReportPage,
-                    reportName.concat(" Cost"));
-
-            BigDecimal designOutlierDetailsCostTwo = getValueFromCostOrDesignDetailsReport(genericReportPage,
-                    reportName.concat(" Cost 2"));
-
-            BigDecimal designOutlierDetailsMassOne = getValueFromCostOrDesignDetailsReport(genericReportPage,
-                    reportName.concat(" Mass"));
-
-            BigDecimal designOutlierDetailsMassTwo = getValueFromCostOrDesignDetailsReport(genericReportPage,
-                    reportName.concat(" Mass 2"));
-
-            assertMinAndMaxValues(designOutlierDetailsCostOne, minValue, maxValToUse);
-            assertMinAndMaxValues(designOutlierDetailsCostTwo, minValue, maxValToUse);
-            assertMinAndMaxValues(designOutlierDetailsMassOne, minValue, maxValToUse);
-            assertMinAndMaxValues(designOutlierDetailsMassTwo, minValue, maxValToUse);
-        }
+        assertMinAndMaxValues(valueOne, minValueToUse, maxValueToUse);
+        assertMinAndMaxValues(valueTwo, minValueToUse, maxValueToUse);
     }
 
     /**

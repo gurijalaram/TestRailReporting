@@ -528,7 +528,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
     private WebElement designOutlierMassOne;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[86]/td[21]")
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[36]/td[21]")
     private WebElement designOutlierMassTwo;
 
     private final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
