@@ -34,6 +34,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @TestRail(testCaseId = "6645")
     @Description("Test successful login")
     public void testLogin() {
 
@@ -45,6 +46,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @TestRail(testCaseId = "6646")
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
 
@@ -56,6 +58,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @TestRail(testCaseId = "6647")
     @Description("Test unsuccessful login with incorrect email, correct password")
     public void testIncorrectEmail() {
 
@@ -67,6 +70,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @TestRail(testCaseId = "6648")
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
 
@@ -78,6 +82,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @TestRail(testCaseId = "6649")
     @Description("Validate Login Dialog")
     public void loginDialog() {
 
@@ -91,7 +96,7 @@ public class LoginTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1574"})
+    @TestRail(testCaseId = "6650")
     @Description("Validate forgotten password link")
     public void forgotPassword() {
 
@@ -103,7 +108,7 @@ public class LoginTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"1575"})
+    @TestRail(testCaseId = "6651")
     @Description("Validate Welcome Message")
     public void welcomeMessage() {
 
@@ -118,7 +123,7 @@ public class LoginTests extends TestBase {
 
     /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1590", "1583", "1180"})
+    @TestRail(testCaseId = "6652")
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
     public void cadConnectionRemains() {
 
