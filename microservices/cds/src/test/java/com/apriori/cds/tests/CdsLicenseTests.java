@@ -215,7 +215,7 @@ public class CdsLicenseTests {
         ResponseWrapper<SubLicense> subLicense = cdsTestUtil.getCommonRequest(subLicenseEndpoint, SubLicense.class);
 
         assertThat(subLicense.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(subLicense.getResponseEntity().getResponse().getName(), containsString("Sub License"));
+        assertThat(subLicense.getResponseEntity().getResponse().getName(), containsString("License"));
     }
 
     @Test
