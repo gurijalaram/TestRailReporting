@@ -20,4 +20,4 @@ public class SubLicenseAssociation extends Pagination {
     public List<SubLicenseAssociationItems> getItems() {
         return this.items;
     }
-    }
+}
