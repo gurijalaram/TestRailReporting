@@ -125,7 +125,7 @@ public class CidAppTestUtil {
             } catch (InterruptedException | NullPointerException e) {
                 logger.error(e.getMessage());
             }
-        } while (axesEntries == 0 || ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+        } while ((axesEntries == 0) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
         return axesEntriesResponse;
     }
 
@@ -164,7 +164,7 @@ public class CidAppTestUtil {
                 logger.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
-        } while ((scenarioState.equals(transientState.toUpperCase()) || ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME));
+        } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
         return scenarioRepresentation;
     }
 
