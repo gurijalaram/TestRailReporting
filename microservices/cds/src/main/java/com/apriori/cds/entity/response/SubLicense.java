@@ -1,5 +1,6 @@
 package com.apriori.cds.entity.response;
 
+import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateDeserializer_yyyyMMdd;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "cds/SubLicenseSchema.json")
 public class SubLicense {
     private String identity;
     private String createdBy;
@@ -29,6 +31,16 @@ public class SubLicense {
     private LocalDate expiresAt;
     private String licenseSignature;
     private Integer numAssignedUsers;
+    private SubLicense response;
+
+    public SubLicense getResponse() {
+        return response;
+    }
+
+    public SubLicense setResponse(SubLicense response) {
+        this.response = response;
+        return this;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
