@@ -119,8 +119,8 @@ public class CidAppTestUtil {
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
         long START_TIME = System.currentTimeMillis() / 1000;
-        final long POLLING_INTERVAL = 5l;
-        final long MAX_WAIT_TIME = 180l;
+        final long POLLING_INTERVAL = 5L;
+        final long MAX_WAIT_TIME = 180L;
         String scenarioState;
         ResponseWrapper<CostResponse> scenarioRepresentation;
 
