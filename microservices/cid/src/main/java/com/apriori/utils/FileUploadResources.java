@@ -10,8 +10,6 @@ import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.entity.request.cost.createcostworkorder.CostOrderCommand;
-import com.apriori.entity.request.cost.createcostworkorder.CostOrderCommandType;
 import com.apriori.entity.request.cost.createcostworkorder.CostOrderInputs;
 import com.apriori.entity.request.cost.createcostworkorder.CostOrderScenario;
 import com.apriori.entity.request.cost.createcostworkorder.CostOrderScenarioIteration;
@@ -20,20 +18,12 @@ import com.apriori.entity.request.cost.productioninfo.ProductionInfoMaterial;
 import com.apriori.entity.request.cost.productioninfo.ProductionInfoScenario;
 import com.apriori.entity.request.cost.productioninfo.ProductionInfoScenarioKey;
 import com.apriori.entity.request.cost.productioninfo.ProductionInfoVpe;
-import com.apriori.entity.request.publish.createpublishworkorder.PublishCommand;
-import com.apriori.entity.request.publish.createpublishworkorder.PublishInputs;
-import com.apriori.entity.request.publish.createpublishworkorder.PublishScenarioIterationKey;
-import com.apriori.entity.request.publish.createpublishworkorder.PublishScenarioKey;
-import com.apriori.entity.request.publish.createpublishworkorder.PublishWorkOrderInfo;
 import com.apriori.entity.response.CreateWorkorderResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
-import com.apriori.entity.response.cost.costworkorderstatus.ListOfCostOrderStatuses;
 import com.apriori.entity.response.cost.iterations.ListOfCostIterations;
-import com.apriori.entity.response.upload.FileCommand;
-import com.apriori.entity.response.upload.FileOrdersUpload;
 import com.apriori.entity.response.upload.FileUploadInputs;
-import com.apriori.entity.response.upload.FileUploadOrder;
 import com.apriori.entity.response.upload.FileUploadOutputs;
+import com.apriori.entity.response.upload.FileUploadScenarioKey;
 import com.apriori.entity.response.upload.GeneratePartImagesInputs;
 import com.apriori.entity.response.upload.LoadCadMetadataInputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
@@ -43,7 +33,6 @@ import com.apriori.entity.response.upload.WorkorderDetailsResponse;
 import com.apriori.entity.response.upload.FileWorkOrder;
 import com.apriori.entity.response.upload.WorkorderRequest;
 import com.apriori.entity.response.upload.WorkorderCommand;
-import com.apriori.entity.response.upload.WorkorderStatusResponse;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
@@ -52,21 +41,16 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
 import com.google.common.net.UrlEscapers;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.DataInput;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -75,17 +59,6 @@ public class FileUploadResources {
     private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
     private static final long WAIT_TIME = 180;
 
-    private static String identity;
-    private static String fileIdentity;
-    private static String userIdentity;
-    private static String orderId;
-    private static int inputSetId;
-    private static String stateName;
-    private static int workspaceId;
-    private static String typeName;
-    private static String masterName;
-    private static String costWorkOrderId;
-    private static String publishWorkOrderId;
     private static int iteration;
     private static final HashMap<String, String> token = new APIAuthentication()
             .initAuthorizationHeaderNoContent("aPrioriCIGenerateUser@apriori.com");
@@ -97,7 +70,6 @@ public class FileUploadResources {
     private final String applicationJson = "application/json";
     private final String textPlain = "text/plain";
     Map<String, String> headers = new HashMap<>();
-    NewPartRequest newPartRequest = null;
     private String baseUrl = System.getProperty("baseUrl");
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -185,13 +157,11 @@ public class FileUploadResources {
                 FileUploadOutputs.class
         );
 
-        initializeCostScenario(
-                fileUploadOutputs,
-                fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(),
-                fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(),
-                fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName(),
-                processGroup,
-                fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId());
+        int inputSetId = initializeCostScenario(
+                fileObject,
+                fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
+                processGroup
+        );
         String costWorkorderId = createWorkorder(WorkorderCommands.COSTING.getWorkorderCommand(),
                 new CostOrderInputs()
                         .setInputSetId(inputSetId)
@@ -229,31 +199,6 @@ public class FileUploadResources {
             .setFormParams(new FormParams().use("filename", fileName));
 
         return (FileResponse) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity();
-    }
-
-    /**
-     * Creates file upload
-     *
-     * @param fileName     - the file name
-     * @param scenarioName - the scenario name
-     */
-    private String createFileUploadWorkorder(String fileName, String scenarioName) {
-        String fileURL = baseUrl + "apriori/cost/session/ws/workorder/orders";
-
-        headers.put(contentType, applicationJson);
-
-        RequestEntity fileRequestEntity = RequestEntity.init(fileURL, CreateWorkorderResponse.class)
-            .setHeaders(headers)
-            .setHeaders(token)
-            .setBody(new FileCommand()
-                .setCommand(new FileOrdersUpload()
-                    .setCommandType("LOADCADFILE")
-                    .setInputs(new FileUploadOrder()
-                        .setScenarioName(scenarioName)
-                        .setFileKey(fileIdentity)
-                        .setFileName(fileName.replaceAll("\\s", "")))));
-
-        return jsonNode(GenericRequestUtil.post(fileRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
     /**
@@ -324,15 +269,20 @@ public class FileUploadResources {
     /**
      * Initialize cost scenario
      *
-     * @param fileObject - file object
-     * @param typeName - type name
-     * @param masterName - master name
-     * @param stateName - state name
+     * @param scenarioKey scenario iteration
      * @param processGroup process group
      */
-    private void initializeCostScenario(Object fileObject, String typeName, String masterName, String stateName, String processGroup, Integer workspaceId) {
-        iteration = getLatestIteration(token, typeName, masterName, stateName, workspaceId);
-        String orderURL = baseUrl + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations/" + iteration + "/production-info";
+    private Integer initializeCostScenario(Object fileObject, FileUploadScenarioKey scenarioKey, String processGroup) {
+        iteration = getLatestIteration(
+                token,
+                scenarioKey.getTypeName(),
+                scenarioKey.getMasterName(),
+                scenarioKey.getStateName(),
+                scenarioKey.getWorkspaceId()
+        );
+        String orderURL = baseUrl + "apriori/cost/session/ws/workspace/" + scenarioKey.getWorkspaceId() +
+                "/scenarios/" + scenarioKey.getTypeName() + "/" + UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()) + "/" +
+                scenarioKey.getStateName() + "/iterations/" + iteration + "/production-info";
 
         headers.put(contentType, applicationJson);
 
@@ -340,40 +290,9 @@ public class FileUploadResources {
             .setHeaders(headers)
             .setHeaders(token)
             .setBody(
-                productionInfo(fileObject, workspaceId, typeName, stateName, masterName, processGroup));
+                productionInfo(fileObject, scenarioKey, processGroup));
 
-        inputSetId = Integer.parseInt(jsonNode(GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody(), "id"));
-    }
-
-    /**
-     * Create cost work order
-     */
-    private String createCostWorkOrder() {
-        iteration = getLatestIteration(token, "", "", "", 2);
-        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders";
-
-        headers.put(contentType, applicationJson);
-
-        RequestEntity orderRequestEntity = RequestEntity.init(orderURL, CreateWorkorderResponse.class)
-            .setHeaders(headers)
-            .setHeaders(token)
-            .setBody(new CostOrderCommand().setCommand(new CostOrderCommandType()
-                .setCommandType("COSTING")
-                .setInputs(new CostOrderInputs().setInputSetId(inputSetId)
-                    .setScenarioIterationKey(new CostOrderScenarioIteration().setIteration(iteration)
-                        .setScenarioKey(new CostOrderScenario().setMasterName(masterName)
-                            .setStateName(stateName)
-                            .setTypeName(typeName)
-                            .setWorkspaceId(workspaceId))))));
-
-        return jsonNode(GenericRequestUtil.post(orderRequestEntity, new RequestAreaApi()).getBody(), "id");
-    }
-
-    /**
-     * Submits scenario for costing
-     */
-    private void submitCostWorkOrder() {
-        submitWorkorder(costWorkOrderId);
+        return Integer.parseInt(jsonNode(GenericRequestUtil.post(costRequestEntity, new RequestAreaApi()).getBody(), "id"));
     }
 
     /**
@@ -383,82 +302,14 @@ public class FileUploadResources {
      * @return
      */
     private int getLatestIteration(HashMap<String, String> token, String typeName, String masterName, String stateName, Integer workspaceId) {
-        String orderURL = baseUrl + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName + "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName + "/iterations";
+        String orderURL = baseUrl + "apriori/cost/session/ws/workspace/" + workspaceId + "/scenarios/" + typeName +
+                "/" + UrlEscapers.urlFragmentEscaper().escape(masterName) + "/" + stateName;
 
         RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, ListOfCostIterations.class)
             .setHeaders(headers)
             .setHeaders(token);
 
         return Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(), "iteration"));
-    }
-
-    /**
-     * Initializes publish scenario
-     */
-    private String createPublishScenario() {
-        iteration = getLatestIteration(token, "", "", "", 2);
-        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders";
-
-        headers.put(contentType, applicationJson);
-
-        RequestEntity publishRequestEntity = RequestEntity.init(orderURL, CreateWorkorderResponse.class)
-            .setHeaders(headers)
-            .setHeaders(token)
-            .setBody(new PublishWorkOrderInfo().setCommand(
-                new PublishCommand().setCommandType("PUBLISH")
-                    .setInputs(new PublishInputs().setOverwrite(false)
-                        .setLock(false)
-                        .setScenarioIterationKey(new PublishScenarioIterationKey().setScenarioKey(
-                            new PublishScenarioKey().setTypeName(typeName)
-                                .setStateName(stateName)
-                                .setWorkspaceId(workspaceId)
-                                .setMasterName(masterName))
-                            .setIteration(iteration)))));
-
-        return jsonNode(GenericRequestUtil.post(publishRequestEntity, new RequestAreaApi()).getBody(), "id");
-    }
-
-    /**
-     * Submits publish work order
-     */
-    private void submitPublishWorkOrder(String workorderId) {
-        submitWorkorder(publishWorkOrderId);
-    }
-
-    /**
-     * Checks costing status
-     *
-     * @param token - the user token
-     * @return request entity
-     */
-    private RequestEntity checkCostOrder(HashMap<String, String> token) {
-        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders/by-id?id=" + costWorkOrderId;
-
-        return RequestEntity.init(orderURL, ListOfCostOrderStatuses.class)
-            .setHeaders(headers)
-            .setHeaders(token);
-    }
-
-    /**
-     * Checks publish order
-     *
-     * @param token - the user token
-     * @param klass - the class
-     * @return request entity
-     */
-    private RequestEntity checkPublishOrder(HashMap<String, String> token, Class klass) {
-        String orderURL = baseUrl + "apriori/cost/session/ws/workorder/orders/" + publishWorkOrderId;
-
-        return RequestEntity.init(orderURL, klass)
-            .setHeaders(headers)
-            .setHeaders(token);
-    }
-
-    /**
-     * Checks publish result
-     */
-    private void checkPublishResult(String workorderId) {
-        checkWorkorderStatus(workorderId);
     }
 
     /**
@@ -521,21 +372,22 @@ public class FileUploadResources {
     /**
      * Sets the production info
      *
-     * @param workspaceId  - the workspace id
-     * @param typeName     - type name
-     * @param stateName    - the state name
-     * @param masterName   - the master name
      * @param processGroup - the process group
      * @return production info
      */
-    private ProductionInfo productionInfo(Object fileObject, int workspaceId, String typeName, String stateName, String masterName, String processGroup) {
-        newPartRequest = (NewPartRequest) fileObject;
+    private ProductionInfo productionInfo(Object fileObject, FileUploadScenarioKey scenarioKey, String processGroup) {
+        NewPartRequest newPartRequest = (NewPartRequest) fileObject;
+        int workspaceId = scenarioKey.getWorkspaceId();
+        String typeName = scenarioKey.getTypeName();
+        String stateName = scenarioKey.getStateName();
+        String masterName = scenarioKey.getMasterName();
 
         return new ProductionInfo()
-            .setScenarioKey(new ProductionInfoScenario().setWorkspaceId(workspaceId)
-                .setTypeName(typeName)
-                .setStateName(stateName)
-                .setMasterName(masterName))
+            .setScenarioKey(new ProductionInfoScenario()
+                    .setWorkspaceId(workspaceId)
+                    .setTypeName(typeName)
+                    .setStateName(stateName)
+                    .setMasterName(masterName))
             .setCompType(newPartRequest.getCompType())
             .setInitialized(false)
             .setAvailablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
@@ -544,10 +396,11 @@ public class FileUploadResources {
             .setPgEnabled(true)
 
             .setVpeBean(new ProductionInfoVpe()
-                .setScenarioKey(new ProductionInfoScenarioKey().setWorkspaceId(workspaceId)
-                    .setTypeName(typeName)
-                    .setStateName(stateName)
-                    .setMasterName(masterName))
+                .setScenarioKey(new ProductionInfoScenarioKey()
+                        .setWorkspaceId(workspaceId)
+                        .setTypeName(typeName)
+                        .setStateName(stateName)
+                        .setMasterName(masterName))
 
                 .setPrimaryPgName(processGroup)
                 .setPrimaryVpeName(newPartRequest.getVpeName())
