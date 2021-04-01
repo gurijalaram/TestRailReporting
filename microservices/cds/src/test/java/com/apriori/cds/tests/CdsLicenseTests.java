@@ -22,7 +22,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -177,7 +176,7 @@ public class CdsLicenseTests {
 
         ResponseWrapper<SubLicenses> subLicense = cdsTestUtil.getCommonRequest(subLicenseEndpoint, SubLicenses.class);
 
-        assertThat(subLicense.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_OK)));
+        assertThat(subLicense.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(subLicense.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
@@ -214,8 +213,8 @@ public class CdsLicenseTests {
 
         ResponseWrapper<SubLicense> subLicense = cdsTestUtil.getCommonRequest(subLicenseEndpoint, SubLicense.class);
 
-        assertThat(subLicense.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_OK)));
-        assertThat(subLicense.getResponseEntity().getResponse().getName(),containsString("Sub License"));
+        assertThat(subLicense.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(subLicense.getResponseEntity().getResponse().getName(), containsString("Sub License"));
     }
 
     @Test
