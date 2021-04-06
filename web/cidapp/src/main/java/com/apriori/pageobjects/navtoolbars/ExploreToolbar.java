@@ -160,7 +160,7 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return current page object
      */
-    public ExploreToolbar lockScenario() {
+    public ExploreToolbar lock() {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(lockButton);
         return this;
@@ -171,7 +171,7 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return current page object
      */
-    public ExploreToolbar unlockScenario() {
+    public ExploreToolbar unlock() {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(unlockButton);
         return this;
