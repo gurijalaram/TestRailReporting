@@ -27,10 +27,13 @@ public class TableUtils {
      */
     public WebElement findTableItemByName(WebElement table, String name) {
         pageUtils.waitForElementToBeClickable(table);
-        List<WebElement> rows = table.findElements(By.tagName("tr"))
+        List<WebElement> rows =
+                table.findElements(By.tagName("tr"))
                 .stream()
                 .skip(1)
                 .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(name))
+                //.forEach(user -> System.out.println(user.findElements(By.tagName("td")).get(0).getText() + " :: " +
+                //name));
                 .collect(Collectors.toList());
         if (rows.size() > 0) {
             return rows.get(0);

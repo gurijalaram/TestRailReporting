@@ -20,6 +20,9 @@
         "attachments",
         "status"
       ],
+      "optional": [
+        "errorMessage"
+        ],
       "properties": {
         "identity": {
           "type": "string"
