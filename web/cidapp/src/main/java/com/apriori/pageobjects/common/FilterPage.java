@@ -188,9 +188,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public FilterPage addCriteria(String property, String operation, String value) {
         add()
-            .typeAheadProperty(property)
-            .typeAheadOperation(operation)
-            .typeAheadValue(value);
+            .inputProperty(property)
+            .inputOperation(operation)
+            .inputValue(value);
         return this;
     }
 
@@ -200,7 +200,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param property - the property
      * @return current page object
      */
-    private FilterPage typeAheadProperty(String property) {
+    private FilterPage inputProperty(String property) {
         pageUtils.typeAheadInput(propertyDropdown, propertyInput, property);
         return this;
     }
@@ -211,7 +211,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param operation - the operation
      * @return current page object
      */
-    private FilterPage typeAheadOperation(String operation) {
+    private FilterPage inputOperation(String operation) {
         pageUtils.typeAheadInput(operationDropdown, operationInput, operation);
         return this;
     }
@@ -222,7 +222,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param value - the value
      * @return current page object
      */
-    private FilterPage typeAheadValue(String value) {
+    private FilterPage inputValue(String value) {
         pageUtils.typeAheadInput(valueDropdown, valueInput, value);
         return this;
     }
