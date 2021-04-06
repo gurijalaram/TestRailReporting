@@ -23,7 +23,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     private static final Logger logger = LoggerFactory.getLogger(ScenarioTableController.class);
 
-    @FindBy(css = "[class='apriori-table scenario-iteration-table scrollable-y selectable']")
+    @FindBy(css = ".apriori-table.scenario-iteration-table")
     private WebElement componentTable;
 
     private PageUtils pageUtils;

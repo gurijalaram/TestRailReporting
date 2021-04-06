@@ -9,6 +9,7 @@ import com.evaluate.ListOfVPETests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
+import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.ReCostScenarioTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.UploadAssembliesTests;
@@ -40,7 +41,8 @@ import org.junit.runners.Suite;
     HelpTests.class,
     LoginTests.class,
     DecimalPlaceTests.class,
-    UploadAssembliesTests.class
+    UploadAssembliesTests.class,
+    PublishExistingCostedTests.class
 })
 public class CIDSmokeTestSuite {
 }

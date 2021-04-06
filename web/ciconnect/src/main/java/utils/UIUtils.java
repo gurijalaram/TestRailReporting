@@ -1,5 +1,7 @@
 package utils;
 
+import com.apriori.utils.PageUtils;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,6 +9,8 @@ import java.util.Date;
 import java.util.Random;
 
 public class UIUtils {
+    private PageUtils pageUtils;
+
     /**
      * Generate a serial date string and concatenate to the supplied string.
      * This assures the returned string is unique.
@@ -29,7 +33,7 @@ public class UIUtils {
      */
     public static String generateString(int max) {
         Random random = new Random();
-        return random.ints(48, 123)
+        return random.ints(97, 123)
                 .limit(max)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();

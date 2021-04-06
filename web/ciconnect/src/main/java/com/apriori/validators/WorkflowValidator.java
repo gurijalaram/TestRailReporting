@@ -54,17 +54,34 @@ public class WorkflowValidator {
         Assert.assertFalse("Workflow was not deleted", (boolean)values.get("workflowExists"));
     }
 
+    /**
+     * Validates the appropriate enabled state of the buttons on the Workflow schedule page
+     *
+     * @param values a collection of the actual button states
+     * @param expectedValue
+     */
     public void validateButtonStates(Map<String, Object> values, boolean expectedValue) {
         Assert.assertEquals("Edit button was enabled", expectedValue, (boolean)values.get("editButtonEnabled"));
         Assert.assertEquals("Delete button was enable", expectedValue, (boolean)values.get("deleteButtonEnabled"));
         Assert.assertEquals("Invoke button was enabled", expectedValue, (boolean)values.get("invokeButtonEnabled"));
     }
 
+    /**
+     * Validates that the popup is displayed when appropriate
+     *
+     * @param values popup displayed state
+     * @param expectedValue
+     */
     public void validatePopupDisplayed(Map<String, Object> values, boolean expectedValue) {
         Assert.assertEquals("Edit popup is displayed", expectedValue, (boolean)values.get("editPopupDisplayed"));
         Assert.assertEquals("Delete popup is displayed", expectedValue, (boolean)values.get("deletePopupDisplayed"));;
     }
 
+    /**
+     * Validates default ordering of worflows
+     *
+     * @param values
+     */
     public void validateDefaultWorkflowOrdering(Map<String, Object> values) {
         String firstWorkflowName = workflowPage.getRowName((int)values.get("numericNameIndex"));
         String secondWorkflowName = workflowPage.getRowName((int)values.get("upperNameIndex"));

@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
+import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -35,12 +37,14 @@ public class ExplorePage extends ExploreToolbar {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
+    private ComponentTableActions componentTableActions;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
+        this.componentTableActions = new ComponentTableActions(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(scenarioCount);
@@ -105,12 +109,12 @@ public class ExplorePage extends ExploreToolbar {
      * @return new page object
      */
     public ConfigurePage configure() {
-        pageUtils.waitForElementAndClick(configureButton);
-        return new ConfigurePage(driver);
+        return componentTableActions.configure(configureButton);
     }
 
     /**
      * Multi-highlight scenarios
+     *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
@@ -121,6 +125,7 @@ public class ExplorePage extends ExploreToolbar {
 
     /**
      * Multi-select scenario
+     *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
@@ -150,5 +155,14 @@ public class ExplorePage extends ExploreToolbar {
      */
     public List<String> getRowDetails(String componentName, String scenarioName) {
         return scenarioTableController.getRowDetails(componentName, scenarioName);
+    }
+
+    /**
+     * Open filters page
+     *
+     * @return new page object
+     */
+    public FilterPage filter() {
+        return componentTableActions.filter();
     }
 }

@@ -20,6 +20,7 @@ public class NewWorkflowValidator {
 
     /**
      * Validates that that expected fields are present on the DETAILS tab
+     *
      * @param values
      */
     public void validateInputFields(Map<String, Boolean> values) {
@@ -36,6 +37,7 @@ public class NewWorkflowValidator {
 
     /**
      * Validates string validation for input fields
+     *
      * @param values
      */
     public void validateFieldInput(Map<String, Boolean> values) {
@@ -51,6 +53,7 @@ public class NewWorkflowValidator {
 
     /**
      * Validates the NEXT button is only enabled if the NAME and CONNECTOR fields are filled out
+     *
      * @param values
      */
     public void validateNextButton(Map<String, Boolean> values) {
