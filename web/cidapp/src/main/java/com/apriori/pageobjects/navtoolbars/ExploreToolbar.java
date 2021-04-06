@@ -48,6 +48,12 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[role='menuitem'] svg[data-icon='info-circle']")
     private WebElement infoButton;
 
+    @FindBy(id = "qa-sub-header-action-lock")
+    private WebElement lockButton;
+
+    @FindBy(id = "qa-sub-header-action-unlock")
+    private WebElement unlockButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -147,5 +153,31 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(infoButton);
         return new InfoPage(driver);
+    }
+
+    /**
+     * Lock the scenario
+     *
+     * @param klass - the class
+     * @param <T>   - the return type
+     * @return generic page object
+     */
+    public <T> T lockScenario(Class<T> klass) {
+        pageUtils.waitForElementAndClick(actionsButton);
+        pageUtils.waitForElementAndClick(lockButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Unlock the scenario
+     *
+     * @param klass - the class
+     * @param <T>   - the return type
+     * @return generic page object
+     */
+    public <T> T unlockScenario(Class<T> klass) {
+        pageUtils.waitForElementAndClick(actionsButton);
+        pageUtils.waitForElementAndClick(unlockButton);
+        return PageFactory.initElements(driver, klass);
     }
 }
