@@ -30,9 +30,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement renameButton;
 
     @FindBy(css = "button [data-icon='times-circle']")
-    private WebElement deleteButton;
-
-    @FindBy(css = "button [data-icon='times-circle']")
     private WebElement cancelButton;
 
     @FindBy(css = "input[name='name']")
@@ -61,6 +58,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
     @FindBy(css = "qa-searchCriterion[0].target input")
     private WebElement valueInput;
+
+    @FindBy(css = "qa-searchCriterion[0].delete")
+    private WebElement deleteButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
