@@ -169,7 +169,7 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Unlock the scenario
      *
-     * @return generic page object
+     * @return current page object
      */
     public ExploreToolbar unlockScenario() {
         pageUtils.waitForElementAndClick(actionsButton);
