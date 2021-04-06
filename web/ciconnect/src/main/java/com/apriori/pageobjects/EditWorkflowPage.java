@@ -57,12 +57,14 @@ public class EditWorkflowPage {
     private WebElement queryPageNextButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-108 > button")
     private WebElement costingNextButton;
-    @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-44 > button")
-    private WebElement saveButton;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-43 > button")
+    private WebElement notificationNextButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-183 > button")
     private WebElement editWorkflowCancelButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-104 > button")
     private WebElement queryNext;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-288 > button")
+    private WebElement saveButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -125,6 +127,7 @@ public class EditWorkflowPage {
         pageUtils.waitForElementAndClick(editWorkflowNextButton);
         pageUtils.waitForElementAndClick(queryNext);
         pageUtils.waitForElementAndClick(queryPageNextButton);
+        pageUtils.waitForElementAndClick(notificationNextButton);
         pageUtils.waitForElementAndClick(saveButton);
     }
 

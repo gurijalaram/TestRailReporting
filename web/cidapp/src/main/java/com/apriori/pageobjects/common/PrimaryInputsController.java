@@ -19,10 +19,10 @@ public class PrimaryInputsController {
     private static final Logger logger = LoggerFactory.getLogger(PrimaryInputsController.class);
 
     @FindBy(css = "div[id='qa-process-group-select-field'] .apriori-select")
-    private WebElement pgSelect;
+    private WebElement pgDropdown;
 
     @FindBy(css = "div[id='qa-vpe-select-field'] .apriori-select")
-    private WebElement vpeSelect;
+    private WebElement vpeDropdown;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -49,16 +49,14 @@ public class PrimaryInputsController {
     }
 
     /**
-     * Inputs the pg
+     * Uses type ahead to input the pg
      *
      * @param processGroupInput - the process group locator
      * @param processGroup      - the process group
      * @return current page object
      */
-    public PrimaryInputsController inputProcessGroup(WebElement processGroupInput, String processGroup) {
-        pageUtils.waitForElementAndClick(pgSelect);
-        processGroupInput.sendKeys(processGroup);
-        processGroupInput.sendKeys(Keys.ENTER);
+    public PrimaryInputsController typeAheadProcessGroup(WebElement processGroupInput, String processGroup) {
+        pageUtils.typeAheadInput(pgDropdown, processGroupInput, processGroup);
         return this;
     }
 
@@ -83,7 +81,7 @@ public class PrimaryInputsController {
      * @param vpe         - the vpe
      * @return current page object
      */
-    public PrimaryInputsController selectVPE(WebElement vpeDropdown, String vpe) {
+    public PrimaryInputsController selectVpe(WebElement vpeDropdown, String vpe) {
         pageUtils.waitForElementAndClick(vpeDropdown);
         By vp = By.cssSelector(String.format("button[value='%s']", vpe));
         pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
@@ -91,16 +89,14 @@ public class PrimaryInputsController {
     }
 
     /**
-     * Inputs the vpe dropdown
+     * Uses type ahead to input the vpe dropdown
      *
      * @param vpeInput - the vpe input
      * @param vpe      - the vpe
      * @return current page object
      */
-    public PrimaryInputsController inputVpe(WebElement vpeInput, String vpe) {
-        pageUtils.waitForElementAndClick(vpeSelect);
-        vpeInput.sendKeys(vpe);
-        vpeInput.sendKeys(Keys.ENTER);
+    public PrimaryInputsController typeAheadVpe(WebElement vpeInput, String vpe) {
+        pageUtils.typeAheadInput(vpeDropdown, vpeInput, vpe);
         return this;
     }
 

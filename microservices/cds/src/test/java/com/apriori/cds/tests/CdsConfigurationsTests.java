@@ -18,8 +18,9 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsConfigurationsTests extends CdsTestUtil {
+public class CdsConfigurationsTests {
     private String url;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -32,7 +33,7 @@ public class CdsConfigurationsTests extends CdsTestUtil {
     public void getBlacklistedEmailDomains() {
         url = String.format(url, "configurations/blacklisted-email-domains");
 
-        ResponseWrapper<ConfigurationResponse> response = getCommonRequest(url, true, ConfigurationResponse.class);
+        ResponseWrapper<ConfigurationResponse> response = cdsTestUtil.getCommonRequest(url, ConfigurationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

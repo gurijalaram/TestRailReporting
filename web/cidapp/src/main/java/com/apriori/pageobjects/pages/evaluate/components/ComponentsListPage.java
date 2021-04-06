@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ComponentsListPage.class);
+    private final Logger logger = LoggerFactory.getLogger(ComponentsListPage.class);
 
     @FindBy(css = ".evaluate-view-drawer [data-icon='list']")
     private WebElement listButton;
@@ -51,6 +51,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(id = "qa-sub-component-action-bar-include-button")
     private WebElement eyeButton;
 
+    @FindBy(id = "qa-sub-component-detail-column-config-button")
+    private WebElement configureButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -63,7 +66,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         this.panelController = new PanelController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -105,7 +108,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return new page object
      */
     public ConfigurePage configure() {
-        return componentTableActions.configure();
+        return componentTableActions.configure(configureButton);
     }
 
     /**

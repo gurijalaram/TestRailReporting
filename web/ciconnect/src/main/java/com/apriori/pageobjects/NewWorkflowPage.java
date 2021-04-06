@@ -17,6 +17,7 @@ import utils.Constants;
 import utils.UIUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class NewWorkflowPage {
@@ -30,7 +31,7 @@ public class NewWorkflowPage {
     private WebElement newWorflowNameField;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_textarea-152 > div > textarea")
     private WebElement newWorkflowDescription;
-    @FindBy(css = "#runtime > div.ss-content.ss-open > div.ss-list > div:nth-child(7)")
+    @FindBy(css = "#runtime > div.ss-content.ss-open > div.ss-list")
     private WebElement newWorkflowConnectorSelection;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_DrowpdownWidget-154-bounding-box")
     private WebElement newWorkflowConnectorDropDown;
@@ -51,7 +52,7 @@ public class NewWorkflowPage {
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-108 > button")
     private WebElement queryPageNextButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-43 > button")
-    private WebElement saveButton;
+    private WebElement notificationNextButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_crontabBuilderWidget-115")
     private WebElement scheduleTabs;
     @FindBy(id = "msMinutesTab")
@@ -91,23 +92,33 @@ public class NewWorkflowPage {
     private WebElement queryPopup;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-104 > button")
     private WebElement queryNext;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_DrowpdownWidget-171")
+    private WebElement emailDropDown;
+    @FindBy(css = "#runtime > div.ss-content.ss-37701.ss-open > div.ss-list > div:nth-child(2)")
+    private WebElement emailTemplateSelection;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-288 > button")
+    private WebElement saveButton;
 
     private String ciConnectFieldCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-3";
     private String valueDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-20";
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private UIUtils uiUtils;
 
     public NewWorkflowPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         this.pageUtils = PageUtils.getInstance(driver);
-        this.uiUtils = new UIUtils();
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 
+    /**
+     * checks if the next button is enabled
+     *
+     * @return true if the button is enabled
+     */
     public boolean isNextButtonEnabled() {
+        pageUtils.waitFor(2000);
         return pageUtils.isElementEnabled(newWorkflowNextButton);
     }
 
@@ -146,6 +157,7 @@ public class NewWorkflowPage {
      * @return The name field exists
      */
     public boolean nameFieldExists() {
+        pageUtils.waitForElementAppear(newWorflowNameField);
         return pageUtils.isElementDisplayed(newWorflowNameField);
     }
 
@@ -171,7 +183,15 @@ public class NewWorkflowPage {
      */
     public void selectWorkflowConnector() {
         pageUtils.waitForElementAndClick(newWorkflowConnectorDropDown);
-        pageUtils.waitForElementAndClick(newWorkflowConnectorSelection);
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+
+        List<WebElement> options = newWorkflowConnectorSelection.findElements(By.cssSelector("div"));
+        for (WebElement option : options) {
+            if (option.getText().equalsIgnoreCase(Constants.NWF_CONNECTOR)) {
+                pageUtils.waitForElementAndClick(option);
+                return;
+            }
+        }
 
         // A hard wait is needed here due to timing issues with the "Conector Dropdown"
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
@@ -239,6 +259,7 @@ public class NewWorkflowPage {
         pageUtils.waitForElementAndClick(newWorkflowNextButton);
         fillQueryDefinitions();
         fillCostingInputs(iteration);
+        pageUtils.waitForElementAndClick(notificationNextButton);
         pageUtils.waitForElementAndClick(saveButton);
     }
 
@@ -257,7 +278,7 @@ public class NewWorkflowPage {
     }
 
     /**
-     * Fills in the Query Definition fiels with DEFAULT values
+     * Fills in the Query Definition fields with DEFAULT values
      */
     private void fillQueryDefinitions() {
         Select opt = new Select(queryDropDown);
