@@ -1,6 +1,7 @@
 package com.apriori.entity.response.upload;
 
 public class GeneratePartImagesOutputs {
+
     private String cadMetadataIdentity;
     private String webImageIdentity;
     private String thumbnailImageIdentity;

@@ -1,6 +1,7 @@
 package com.apriori.entity.response.upload;
 
 public class WorkorderRequest {
+
     private WorkorderCommand command;
 
     public WorkorderCommand getCommand() {

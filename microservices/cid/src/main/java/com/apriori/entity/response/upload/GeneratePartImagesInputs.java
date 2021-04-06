@@ -1,6 +1,7 @@
 package com.apriori.entity.response.upload;
 
 public class GeneratePartImagesInputs {
+
     private String cadMetadataIdentity;
     private String requestedBy;
 

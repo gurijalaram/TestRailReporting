@@ -20,15 +20,12 @@ import org.junit.runner.RunWith;
 
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @RunWith(JUnitParamsRunner.class)
 public class CidWorkorderAPITests extends TestUtil {
 
     private static PropertyStore propertyStore;
-
-    private final HashMap<String, String> token = new APIAuthentication().initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
 
     @BeforeClass
     public static void testSetup() {

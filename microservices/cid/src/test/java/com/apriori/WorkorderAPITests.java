@@ -17,8 +17,6 @@ public class WorkorderAPITests {
     @Test
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void loadCadMetadataAndGeneratePartImages() {
-        //Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
-
         new FileUploadResources().uploadLoadCadMetadataGeneratePartImages(
                 "bracket_basic.prt",
                 "Initial",
