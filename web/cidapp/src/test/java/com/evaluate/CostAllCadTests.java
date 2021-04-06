@@ -297,7 +297,7 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), (is(true)));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED.getCostingText()), (is(true)));
     }
 
     @Test
