@@ -3,7 +3,7 @@ package com.apriori.utils.enums;
 public enum NewCostingLabelEnum {
 
     COSTING_IN_PROGRESS("Costing in Progress"),
-    UP_TO_DATE("Up To Date"),
+    COST_UP_TO_DATE("Cost up To Date"),
     CREATED("Created"),
     FETCHING("Fetching"),
     UNCOSTED_SCENARIO("Uncosted Scenario"),
