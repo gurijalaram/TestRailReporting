@@ -41,7 +41,11 @@ public class CidWorkorderAPITests extends TestUtil {
     @FileParameters(value = "classpath:auto_api_upload.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")
     @Description("Upload, cost and publish a part using CID API")
     public void createDataUploadApi(String fileName, String scenarioName, String processGroup) {
-        Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
+        Object fileObject = JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                        "CreatePartData.json"
+                ).getPath(), NewPartRequest.class
+        );
 
         new FileUploadResources().uploadCostPublishApi(fileObject, fileName, scenarioName, processGroup);
     }
