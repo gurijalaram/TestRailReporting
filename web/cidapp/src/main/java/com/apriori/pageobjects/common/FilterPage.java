@@ -66,6 +66,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private int index;
 
     public FilterPage(WebDriver driver) {
         this.driver = driver;
@@ -188,6 +189,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage addCriteria(String property, String operation, String value) {
+        index = getIndex();
         add()
             .inputProperty(property)
             .inputOperation(operation)
@@ -202,8 +204,23 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage inputProperty(String property) {
+        WebElement propertyDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index)));
+        WebElement propertyInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject'] input", index)));
         pageUtils.typeAheadInput(propertyDropdown, propertyInput, property);
         return this;
+    }
+
+    /**
+     * Counts the number of criteria rows that exist and sets the index based on this number
+     *
+     * @return int
+     */
+    private int getIndex() {
+        int rows = 0;
+        if (pageUtils.isElementDisplayed(By.cssSelector(".inputs-row.row"))) {
+            rows = driver.findElements(By.cssSelector(".inputs-row.row")).size();
+        }
+        return rows > 0 ? rows : 0;
     }
 
     /**
