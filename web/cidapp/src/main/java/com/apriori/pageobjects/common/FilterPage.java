@@ -42,24 +42,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     @FindBy(css = "button [data-icon='clear']")
     private WebElement clearButton;
 
-    @FindBy(css = "qa-searchCriterion[0].subject")
-    private WebElement propertyDropdown;
-
-    @FindBy(css = "qa-searchCriterion[0].subject input")
-    private WebElement propertyInput;
-
-    @FindBy(css = "qa-searchCriterion[0].operation")
-    private WebElement operationDropdown;
-
-    @FindBy(css = "qa-searchCriterion[0].operation input")
-    private WebElement operationInput;
-
-    @FindBy(css = "qa-searchCriterion[0].target")
-    private WebElement valueDropdown;
-
-    @FindBy(css = "qa-searchCriterion[0].target input")
-    private WebElement valueInput;
-
     @FindBy(css = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
 
@@ -211,25 +193,14 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
-     * Counts the number of criteria rows that exist and sets the index based on this number
-     *
-     * @return int
-     */
-    private int getIndex() {
-        int rows = 0;
-        if (pageUtils.isElementDisplayed(By.cssSelector(".inputs-row.row"))) {
-            rows = driver.findElements(By.cssSelector(".inputs-row.row")).size();
-        }
-        return rows > 0 ? rows : 0;
-    }
-
-    /**
      * Uses type ahead to input the operation
      *
      * @param operation - the operation
      * @return current page object
      */
     private FilterPage inputOperation(String operation) {
+        WebElement operationDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index)));
+        WebElement operationInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation'] input", index)));
         pageUtils.typeAheadInput(operationDropdown, operationInput, operation);
         return this;
     }
@@ -241,8 +212,23 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage inputValue(String value) {
+        WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("id='qa-searchCriterion[%s].target']", index)));
+        WebElement valueInput = driver.findElement(By.cssSelector(String.format("id='qa-searchCriterion[%s].target'] input", index)));
         pageUtils.typeAheadInput(valueDropdown, valueInput, value);
         return this;
+    }
+
+    /**
+     * Counts the number of criteria rows that exist and sets the index based on this number
+     *
+     * @return int
+     */
+    private int getIndex() {
+        int rows = 0;
+        if (pageUtils.isElementDisplayed(By.cssSelector(".inputs-row.row"))) {
+            rows = driver.findElements(By.cssSelector(".inputs-row.row")).size();
+        }
+        return rows > 0 ? rows : 0;
     }
 
     /**
