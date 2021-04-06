@@ -110,7 +110,7 @@ public class NewScenarioNameTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
-            .typeAheadFilter("Public")
+            .inputFilter("Public")
             .inputName("Automation")
             .saveAs()
             .addCriteria("Component Name", "Contains", "MultiUpload")

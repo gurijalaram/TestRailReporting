@@ -2,6 +2,7 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -90,7 +91,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param filter - the filter
      * @return current page object
      */
-    public FilterPage typeAheadFilter(String filter) {
+    public FilterPage inputFilter(String filter) {
         pageUtils.typeAheadInput(filterDropDown, filterInput, filter);
         return this;
     }
