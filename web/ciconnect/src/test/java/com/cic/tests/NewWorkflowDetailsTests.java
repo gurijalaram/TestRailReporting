@@ -74,19 +74,28 @@ public class NewWorkflowDetailsTests extends TestBase {
         // Test maximum character name string
         values = newWorkflowFeatures.doFieldInputInspection(DetailFields.NAME.toString());
         valuesB.put("maximum-name", (Boolean)values.get("workflowExists"));
+        workflowNames.add(values.get("name").toString());
+        workflowPage.newWorkflow();
         // Test minimum character name string
         values = newWorkflowFeatures.doFieldInputInspectionMin(DetailFields.NAME.toString());
         valuesB.put("minimum-name", (Boolean)values.get("workflowExists"));
+        workflowNames.add(values.get("name").toString());
+        workflowPage.newWorkflow();
         // Test maximum character name string with special characters
         values = newWorkflowFeatures.doFieldInputInspectionSpecial(DetailFields.NAME.toString());
         valuesB.put("maximum-special-name", (Boolean)values.get("workflowExists"));
+        workflowNames.add(values.get("name").toString());
+        workflowPage.newWorkflow();
         // Test name string with an unsupported special character
         values = newWorkflowFeatures.doFieldInputInspectionUnsupportedSpecial(DetailFields.NAME.toString());
         valuesB.put("maximum-unspecial-name", (Boolean)values.get("workflowExists"));
+        workflowNames.add(values.get("name").toString());
+        workflowPage.newWorkflow();
 
         // Test maximum character description string
         values = newWorkflowFeatures.doFieldInputInspection(DetailFields.DESCRIPTION.toString());
         valuesB.put("maximum-description", (Boolean)values.get("workflowExists"));
+        workflowNames.add(values.get("name").toString());
 
         validator.validateFieldInput(valuesB);
     }

@@ -22,12 +22,15 @@ public class NewWorkflowFeatures {
     private Map<String, Object> values;
     private Map<String, Boolean> valuesB;
     private PageUtils pageUtils;
+    private int newWorkflowIteration;
+
 
     public NewWorkflowFeatures(WebDriver driver) {
         this.driver = driver;
         this.workflowPage = new WorkflowPage(this.driver);
         this.newWorkflowPage = new NewWorkflowPage(driver);
         this.pageUtils = PageUtils.getInstance(driver);
+        newWorkflowIteration = 1;
     }
     
     /**
@@ -100,7 +103,9 @@ public class NewWorkflowFeatures {
                 return null;
         }
 
-        newWorkflowPage.createNewWorkflow(name, description, true, 1);
+        newWorkflowPage.createNewWorkflow(name, description, true, newWorkflowIteration);
+        newWorkflowIteration += 1;
+        workflowPage.refreshPage();
         Boolean workflowExisits = workflowPage.workflowExists(name);
         values.put("workflowExists", workflowExisits);
         values.put("name", name);
