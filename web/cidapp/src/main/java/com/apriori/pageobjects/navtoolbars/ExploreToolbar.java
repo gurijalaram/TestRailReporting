@@ -158,26 +158,22 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Lock the scenario
      *
-     * @param klass - the class
-     * @param <T>   - the return type
-     * @return generic page object
+     * @return current page object
      */
-    public <T> T lockScenario(Class<T> klass) {
+    public ExploreToolbar lockScenario() {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(lockButton);
-        return PageFactory.initElements(driver, klass);
+        return this;
     }
 
     /**
      * Unlock the scenario
      *
-     * @param klass - the class
-     * @param <T>   - the return type
      * @return generic page object
      */
-    public <T> T unlockScenario(Class<T> klass) {
+    public ExploreToolbar unlockScenario() {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(unlockButton);
-        return PageFactory.initElements(driver, klass);
+        return this;
     }
 }
