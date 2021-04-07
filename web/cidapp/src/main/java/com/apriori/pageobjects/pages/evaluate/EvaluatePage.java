@@ -19,6 +19,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,11 +109,11 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
 
-    @FindBy(css = "[id='qa-vpe-select-field'] [name='vpeName']")
-    private List<WebElement> vpes;
+    @FindBy(css = "[id='qa-vpe-select-field']")
+    private WebElement vpeList;
 
-    @FindBy(css = "[id='qa-process-group-select-field'] [name='processGroupName']")
-    private List<WebElement> processGroups;
+    @FindBy(css = "[id='qa-process-group-select-field']")
+    private WebElement processGroupList;
 
     @FindBy(css = ".sub-components-summary.card .pill-text")
     private WebElement componentsDetailsButton;
@@ -461,7 +462,8 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list as string
      */
     public List<String> getListOfProcessGroups() {
-        return processGroups.stream().map(processGroup -> processGroup.getAttribute("textContent")).collect(Collectors.toList());
+        pageUtils.waitForElementAndClick(processGroupList);
+        return Arrays.stream(processGroupList.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
@@ -470,7 +472,8 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list as string
      */
     public List<String> getListOfVPEs() {
-        return vpes.stream().map(vpe -> vpe.getAttribute("textContent")).collect(Collectors.toList());
+        pageUtils.waitForElementAndClick(vpeList);
+        return Arrays.stream(vpeList.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
