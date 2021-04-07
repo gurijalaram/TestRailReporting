@@ -64,7 +64,6 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
-            .inputFilter("Public")
             .saveAs()
             .inputName("Automation")
             .addCriteria("Component Name", "Contains", partName)
