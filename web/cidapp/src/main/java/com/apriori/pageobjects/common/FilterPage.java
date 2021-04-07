@@ -212,8 +212,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage inputValue(String value) {
-        WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("id='qa-searchCriterion[%s].target']", index)));
-        WebElement valueInput = driver.findElement(By.cssSelector(String.format("id='qa-searchCriterion[%s].target'] input", index)));
+        WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
+        WebElement valueInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] input", index)));
         pageUtils.typeAheadInput(valueDropdown, valueInput, value);
         return this;
     }
