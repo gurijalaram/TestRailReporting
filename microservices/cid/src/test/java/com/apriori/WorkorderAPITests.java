@@ -4,9 +4,12 @@ import com.apriori.utils.Constants;
 import com.apriori.utils.FileUploadResources;
 
 import com.apriori.utils.TestRail;
+
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.categories.CidAPITest;
 
 public class WorkorderAPITests {
 
@@ -16,6 +19,7 @@ public class WorkorderAPITests {
     }
 
     @Test
+    @Category(CidAPITest.class)
     @TestRail(testCaseId = "6933")
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void loadCadMetadataAndGeneratePartImages() {
