@@ -12,6 +12,7 @@ import com.apriori.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -115,6 +116,10 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = ".sub-components-summary.card .pill-text")
     private WebElement componentsDetailsButton;
+
+    @FindBy(id = "qa-scenario-select-field")
+    @CacheLookup
+    private WebElement scenarioName;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -492,8 +497,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public String getCurrentScenarioName() {
-        By byScenario = By.xpath("//label[.='Current Scenario']/following-sibling::div//button[contains(@class,'secondary')]");
-        return pageUtils.waitForElementToAppear(byScenario).getAttribute("textContent");
+        return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
     }
 
     /**
