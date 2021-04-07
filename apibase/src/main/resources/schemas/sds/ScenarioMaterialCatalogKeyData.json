@@ -1,11 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
-  "required": [
-    "type",
-    "required",
-    "properties"
-  ],
   "properties": {
     "type": {
       "type": "string"
@@ -29,9 +24,6 @@
       "properties": {
         "first": {
           "type": "object",
-          "required": [
-            "type"
-          ],
           "properties": {
             "type": {
               "type": "string"
@@ -40,9 +32,6 @@
         },
         "second": {
           "type": "object",
-          "required": [
-            "type"
-          ],
           "properties": {
             "type": {
               "type": "string"

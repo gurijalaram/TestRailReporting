@@ -19,7 +19,7 @@
             "anyOf": [
               {
                 "type": "object",
-                "$ref": "Components.json"
+                "$ref": "ComponentsItems.json"
               }
             ]
           }

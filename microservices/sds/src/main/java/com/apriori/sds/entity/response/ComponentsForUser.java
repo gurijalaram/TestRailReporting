@@ -7,16 +7,16 @@ import java.util.List;
 
 @Schema(location = "sds/ComponentsForUser.json")
 public class ComponentsForUser {
-    private List<Components> componentsList;
+    private List<Component> componentList;
     private ComponentsForUser response;
     private Pagination pagination;
 
-    public List<Components> getComponentsList() {
-        return componentsList;
+    public List<Component> getComponentsList() {
+        return componentList;
     }
 
-    public void setComponentsList(List<Components> componentsList) {
-        this.componentsList = componentsList;
+    public void setComponentsList(List<Component> componentList) {
+        this.componentList = componentList;
     }
 
     public void setResponse(ComponentsForUser response) {
