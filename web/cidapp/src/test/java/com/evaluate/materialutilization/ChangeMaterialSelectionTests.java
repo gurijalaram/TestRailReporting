@@ -17,6 +17,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -37,6 +38,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "6186")
+    @Issue("BA-1758")
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -208,6 +210,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "6192")
+    @Issue("BA-1758")
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -297,6 +300,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "6196")
+    @Issue("BA-1758")
     @Description("Test opening material selection and selecting cancel after making a selection")
     public void changeMaterialSelectionTestCancel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
