@@ -25,6 +25,7 @@ public class FilterCriteriaTests extends TestBase {
     private ExplorePage explorePage;
 
     private File resourceFile;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public FilterCriteriaTests() {
         super();
@@ -37,7 +38,8 @@ public class FilterCriteriaTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "SheetMetal.prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -45,7 +47,7 @@ public class FilterCriteriaTests extends TestBase {
             .clickExplore()
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName)
             .addCriteria("Component Name", "Contains", "SheetMetal")
             .submit(ExplorePage.class);
 
@@ -60,7 +62,8 @@ public class FilterCriteriaTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -70,7 +73,7 @@ public class FilterCriteriaTests extends TestBase {
             .clickExplore()
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName)
             .addCriteria("Process Group", "is", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .submit(ExplorePage.class);
 
@@ -84,7 +87,8 @@ public class FilterCriteriaTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -92,7 +96,7 @@ public class FilterCriteriaTests extends TestBase {
             .clickExplore()
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName)
             .addCriteria("Part Name", "Contains", "Wall")
             .submit(ExplorePage.class);
 
@@ -106,7 +110,8 @@ public class FilterCriteriaTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -114,7 +119,7 @@ public class FilterCriteriaTests extends TestBase {
             .clickExplore()
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName)
             .addCriteria("Component Name", "Contains", "Piston_assembly")
             .submit(ExplorePage.class);
 
@@ -128,7 +133,8 @@ public class FilterCriteriaTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -143,7 +149,7 @@ public class FilterCriteriaTests extends TestBase {
             .publish(ExplorePage.class)
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName)
             .addCriteria("Status", "is", "Analysis")
             .submit(ExplorePage.class);
 
@@ -157,7 +163,8 @@ public class FilterCriteriaTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -166,7 +173,7 @@ public class FilterCriteriaTests extends TestBase {
             .publish(ExplorePage.class)
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName)
             .addCriteria("Component Name", "Contains", "Push Pin")
             .submit(ExplorePage.class);
 
@@ -180,7 +187,8 @@ public class FilterCriteriaTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -193,7 +201,7 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class)
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName)
             .addCriteria("Description", "Contains", "Test Description")
             .submit(ExplorePage.class);
 
@@ -207,7 +215,9 @@ public class FilterCriteriaTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
+        String filterName2 = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -218,7 +228,7 @@ public class FilterCriteriaTests extends TestBase {
             .publish(ExplorePage.class)
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName)
             .addCriteria("Assignee", "In", "Ciene Frith")
             .submit(ExplorePage.class)
             .lock()
@@ -226,7 +236,7 @@ public class FilterCriteriaTests extends TestBase {
             .publish(ExplorePage.class)
             .filter()
             .saveAs()
-            .inputName("Automation")
+            .inputName(filterName2)
             .addCriteria("Status", "In", "Analysis")
             .addCriteria("Cost Maturity", "In", "Initial")
             .addCriteria("Assignee", "In", "Ciene Frith")
