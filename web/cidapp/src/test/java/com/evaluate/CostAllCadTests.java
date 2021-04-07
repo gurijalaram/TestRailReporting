@@ -59,8 +59,8 @@ public class CostAllCadTests extends TestBase {
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
         assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$17.66")));
-        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.30")));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.74")));
+        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.80")));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.89")));
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app
