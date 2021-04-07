@@ -1,53 +1,28 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "object",
-  "title": "The root schema",
-  "description": "The root schema comprises the entire JSON document.",
-  "default": {},
   "additionalProperties": true,
   "properties": {
     "version": {
-      "type": "integer",
-      "title": "The version schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": 0
+      "type": "integer"
     },
     "id": {
-      "type": "string",
-      "title": "The id schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ""
+      "type": "string"
     },
     "priority": {
-      "type": "string",
-      "title": "The priority schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ""
+      "type": "string"
     },
     "userId": {
-      "type": "string",
-      "title": "The userId schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ""
+      "type": "string"
     },
     "status": {
-      "type": "string",
-      "title": "The status schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ""
+      "type": "string"
     },
     "searchKey": {
-      "type": "string",
-      "title": "The searchKey schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ""
+      "type": "string"
     },
     "command": {
       "type": "object",
-      "title": "The command schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": {},
       "required": [
         "commandType",
         "inputs"
@@ -55,16 +30,10 @@
       "additionalProperties": true,
       "properties": {
         "commandType": {
-          "type": "string",
-          "title": "The commandType schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": ""
+          "type": "string"
         },
         "inputs": {
           "type": "object",
-          "title": "The inputs schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": {},
           "required": [
             "scenarioName",
             "fileKey",
@@ -73,30 +42,18 @@
           "additionalProperties": true,
           "properties": {
             "scenarioName": {
-              "type": "string",
-              "title": "The scenarioName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": ""
+              "type": "string"
             },
             "fileKey": {
-              "type": "string",
-              "title": "The fileKey schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": ""
+              "type": "string"
             },
             "fileName": {
-              "type": "string",
-              "title": "The fileName schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": ""
+              "type": "string"
             }
           }
         },
         "outputs": {
           "type": "object",
-          "title": "The outputs schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": {},
           "required": [
             "scenarioIterationKey"
           ],
@@ -104,9 +61,6 @@
           "properties": {
             "scenarioIterationKey": {
               "type": "object",
-              "title": "The scenarioIterationKey schema",
-              "description": "An explanation about the purpose of this instance.",
-              "default": {},
               "required": [
                 "scenarioKey",
                 "iteration"
@@ -115,9 +69,6 @@
               "properties": {
                 "scenarioKey": {
                   "type": "object",
-                  "title": "The scenarioKey schema",
-                  "description": "An explanation about the purpose of this instance.",
-                  "default": {},
                   "required": [
                     "stateName",
                     "masterName",
@@ -127,36 +78,21 @@
                   "additionalProperties": true,
                   "properties": {
                     "stateName": {
-                      "type": "string",
-                      "title": "The stateName schema",
-                      "description": "An explanation about the purpose of this instance.",
-                      "default": ""
+                      "type": "string"
                     },
                     "masterName": {
-                      "type": "string",
-                      "title": "The masterName schema",
-                      "description": "An explanation about the purpose of this instance.",
-                      "default": ""
+                      "type": "string"
                     },
                     "typeName": {
-                      "type": "string",
-                      "title": "The typeName schema",
-                      "description": "An explanation about the purpose of this instance.",
-                      "default": ""
+                      "type": "string"
                     },
                     "workspaceId": {
-                      "type": "integer",
-                      "title": "The workspaceId schema",
-                      "description": "An explanation about the purpose of this instance.",
-                      "default": 0
+                      "type": "integer"
                     }
                   }
                 },
                 "iteration": {
-                  "type": "integer",
-                  "title": "The iteration schema",
-                  "description": "An explanation about the purpose of this instance.",
-                  "default": 0
+                  "type": "integer"
                 }
               }
             }
@@ -165,22 +101,13 @@
       }
     },
     "dateSubmitted": {
-      "type": "string",
-      "title": "The dateSubmitted schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ""
+      "type": "string"
     },
     "dateStarted": {
-      "type": "string",
-      "title": "The dateStarted schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ""
+      "type": "string"
     },
     "dateCompleted": {
-      "type": "string",
-      "title": "The dateCompleted schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ""
+      "type": "string"
     }
   }
 }

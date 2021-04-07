@@ -14,8 +14,9 @@ public class CostIteration {
     private String inputsUrl;
     private String keyState;
 
-    public void setScenarioIterationKey(IterationScenario scenarioIterationKey) {
+    public CostIteration setScenarioIterationKey(IterationScenario scenarioIterationKey) {
         this.scenarioIterationKey = scenarioIterationKey;
+        return this;
     }
 
     public IterationScenario getScenarioIterationKey() {
@@ -26,64 +27,71 @@ public class CostIteration {
         return scenarioKey;
     }
 
-    public void setScenarioKey(IterationScenarioKey scenarioKey) {
+    public CostIteration setScenarioKey(IterationScenarioKey scenarioKey) {
         this.scenarioKey = scenarioKey;
+        return this;
     }
-
 
     public boolean isLocked() {
         return locked;
     }
 
-    public void setLocked(boolean locked) {
+    public CostIteration setLocked(boolean locked) {
         this.locked = locked;
+        return this;
     }
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public CostIteration setUrl(String url) {
         this.url = url;
+        return this;
     }
 
     public String getResultsUrl() {
         return resultsUrl;
     }
 
-    public void setResultsUrl(String resultsUrl) {
+    public CostIteration setResultsUrl(String resultsUrl) {
         this.resultsUrl = resultsUrl;
+        return this;
     }
 
     public String getImageDataUrl() {
         return imageDataUrl;
     }
 
-    public void setImageDataUrl(String imageDataUrl) {
+    public CostIteration setImageDataUrl(String imageDataUrl) {
         this.imageDataUrl = imageDataUrl;
+        return this;
     }
 
     public String getGcdInfoUrl() {
         return gcdInfoUrl;
     }
 
-    public void setGcdInfoUrl(String gcdInfoUrl) {
+    public CostIteration setGcdInfoUrl(String gcdInfoUrl) {
         this.gcdInfoUrl = gcdInfoUrl;
+        return this;
     }
 
     public String getInputsUrl() {
         return inputsUrl;
     }
 
-    public void setInputsUrl(String inputsUrl) {
+    public CostIteration setInputsUrl(String inputsUrl) {
         this.inputsUrl = inputsUrl;
+        return this;
     }
 
     public String getKeyState() {
         return keyState;
     }
 
-    public void setKeyState(String keyState) {
+    public CostIteration setKeyState(String keyState) {
         this.keyState = keyState;
+        return this;
     }
 }

@@ -86,7 +86,6 @@ public class FileUploadResources {
      * @param processGroup - process group to use
      */
     public void uploadLoadCadMetadataGeneratePartImages(String fileName, String scenarioName, String processGroup) {
-        // Create, submit and check file upload workorder
         FileResponse fileResponse = initializeFileUpload(fileName, processGroup);
         String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
                 new FileUploadInputs()
@@ -99,7 +98,6 @@ public class FileUploadResources {
                 FileUploadOutputs.class
         );
 
-        // Create, submit and check Load CAD Metadata workorder
         String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
                 new LoadCadMetadataInputs()
                         .setFileMetadataIdentity(fileResponse.getResponse().getIdentity())
@@ -111,7 +109,6 @@ public class FileUploadResources {
                 LoadCadMetadataOutputs.class
         );
 
-        // Create, submit and check Generate Part Images workorder
         String generatePartImagesWorkorderId = createWorkorder(
                 WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
                 new GeneratePartImagesInputs()
@@ -124,7 +121,6 @@ public class FileUploadResources {
                 GeneratePartImagesOutputs.class
         );
 
-        // Get images
         String webImageResponse = getAllImages(generatePartImagesOutputs.getWebImageIdentity()).toString();
         String desktopImageResponse = getAllImages(generatePartImagesOutputs.getDesktopImageIdentity()).toString();
         String thumbnailImageResponse = getAllImages(generatePartImagesOutputs.getThumbnailImageIdentity()).toString();

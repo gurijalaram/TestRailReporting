@@ -7,7 +7,9 @@ public class GeneratePartImagesOutputs {
     private String thumbnailImageIdentity;
     private String desktopImageIdentity;
 
-    public GeneratePartImagesOutputs GeneratePartImagesOutputs(String cadMetadataIdentity, String webImageIdentity, String thumbnailImageIdentity, String desktopImageIdentity) {
+    public GeneratePartImagesOutputs GeneratePartImagesOutputs(String cadMetadataIdentity, String webImageIdentity,
+                                                               String thumbnailImageIdentity,
+                                                               String desktopImageIdentity) {
         this.cadMetadataIdentity = cadMetadataIdentity;
         this.webImageIdentity = webImageIdentity;
         this.thumbnailImageIdentity = thumbnailImageIdentity;
@@ -19,31 +21,35 @@ public class GeneratePartImagesOutputs {
         return webImageIdentity;
     }
 
-    public void setWebImageIdentity(String webImageIdentity) {
+    public GeneratePartImagesOutputs setWebImageIdentity(String webImageIdentity) {
         this.webImageIdentity = webImageIdentity;
+        return this;
     }
 
     public String getThumbnailImageIdentity() {
         return thumbnailImageIdentity;
     }
 
-    public void setThumbnailImageIdentity(String thumbnailImageIdentity) {
+    public GeneratePartImagesOutputs setThumbnailImageIdentity(String thumbnailImageIdentity) {
         this.thumbnailImageIdentity = thumbnailImageIdentity;
+        return this;
     }
 
     public String getDesktopImageIdentity() {
         return desktopImageIdentity;
     }
 
-    public void setDesktopImageIdentity(String desktopImageIdentity) {
+    public GeneratePartImagesOutputs setDesktopImageIdentity(String desktopImageIdentity) {
         this.desktopImageIdentity = desktopImageIdentity;
+        return this;
     }
 
     public String getCadMetadataIdentity() {
         return cadMetadataIdentity;
     }
 
-    public void setCadMetadataIdentity(String cadMetadataIdentity) {
+    public GeneratePartImagesOutputs setCadMetadataIdentity(String cadMetadataIdentity) {
         this.cadMetadataIdentity = cadMetadataIdentity;
+        return this;
     }
 }

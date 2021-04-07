@@ -27,24 +27,27 @@ public class LoadCadMetadataInputs {
         return keepFreeBodies;
     }
 
-    public void setKeepFreeBodies(boolean keepFreeBodies) {
+    public LoadCadMetadataInputs setKeepFreeBodies(boolean keepFreeBodies) {
         this.keepFreeBodies = keepFreeBodies;
+        return this;
     }
 
     public boolean getFreeBodiesPreserveCad() {
         return freeBodiesPreserveCad;
     }
 
-    public void setFreeBodiesPreserveCad(boolean freeBodiesPreserveCad) {
+    public LoadCadMetadataInputs setFreeBodiesPreserveCad(boolean freeBodiesPreserveCad) {
         this.freeBodiesPreserveCad = freeBodiesPreserveCad;
+        return this;
     }
 
     public boolean getFreeBodiesIgnoreMissingComponents() {
         return freeBodiesIgnoreMissingComponents;
     }
 
-    public void setFreeBodiesIgnoreMissingComponents(boolean freeBodiesIgnoreMissingComponents) {
+    public LoadCadMetadataInputs setFreeBodiesIgnoreMissingComponents(boolean freeBodiesIgnoreMissingComponents) {
         this.freeBodiesIgnoreMissingComponents = freeBodiesIgnoreMissingComponents;
+        return this;
     }
 
     public String getRequestedBy() {
