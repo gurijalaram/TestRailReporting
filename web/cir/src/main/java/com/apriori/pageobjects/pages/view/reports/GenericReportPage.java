@@ -93,6 +93,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[53]")
     private WebElement costOutlierChartSpotTwo;
 
+    @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[47]")
+    private WebElement costOutlierCentreSpot;
+
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[39]")
     private WebElement sheetMetalDtcBubble;
 
@@ -267,6 +270,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@style='font-weight:bold'])[1]")
     private WebElement partNameDtcReports;
 
+    @FindBy(xpath = "(//*[local-name()='g']//*[local-name()='tspan'])[49]")
+    private WebElement costOutlierPartName;
+
     @FindBy(id = "jr-ui-datepicker-div")
     private WebElement datePickerDiv;
 
@@ -380,6 +386,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "(//*[local-name()='tspan'])[62]")
     private WebElement costOutlierAprioriCost;
+
+    @FindBy(xpath = "(//*[local-name()='tspan'])[68]")
+    private WebElement costOutlierAprioriCostBottom;
 
     @FindBy(xpath = "(//*[local-name()='tspan'])[7]")
     private WebElement designOutlierAprioriCost;
@@ -2128,6 +2137,12 @@ public class GenericReportPage extends ReportsPageHeader {
         return driver.findElement(locator).getAttribute("textContent");
     }
 
+    public BigDecimal getFirstFbcCostOutlierDetailsReport() {
+        By locator = By.xpath("//div[@id='reportContainer']//table//tr[16]/td[27]/span");
+        pageUtils.waitForElementToAppear(locator);
+        return new BigDecimal(driver.findElement(locator).getText());
+    }
+
     /**
      * Gets Scenario Name from Casting Dtc Details report
      * @param getRowOneScenarioName boolean
@@ -2306,8 +2321,8 @@ public class GenericReportPage extends ReportsPageHeader {
                         maxOrMin,
                         massOrCost)
         );
-        By locator = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName()) ?
-                designDetailsLocator : generalLocator;
+        By locator = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName())
+                ? designDetailsLocator : generalLocator;
 
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
@@ -2355,6 +2370,7 @@ public class GenericReportPage extends ReportsPageHeader {
         partNameMap.put(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), partNameDtcReports);
         partNameMap.put(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(), partNameDtcReports);
         partNameMap.put(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), partNameDtcReports);
+        partNameMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), costOutlierPartName);
     }
 
     /**
@@ -2374,6 +2390,7 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), costOutlierChartSpotOne);
         bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"),
                 costOutlierChartSpotTwo);
+        bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName().concat(" 3"), costOutlierCentreSpot);
     }
 
     /**
@@ -2399,6 +2416,7 @@ public class GenericReportPage extends ReportsPageHeader {
         tooltipElementMap.put("Annual Spend Name", tooltipAnnualSpendName);
         tooltipElementMap.put("Annual Spend Value", tooltipAnnualSpendValue);
         tooltipElementMap.put("aPriori Cost Value (Cost Outlier)", costOutlierAprioriCost);
+        tooltipElementMap.put("aPriori Cost Value (Cost Outlier) Bottom", costOutlierAprioriCostBottom);
         tooltipElementMap.put("aPriori Cost Value (Design Outlier)", designOutlierAprioriCost);
     }
 
