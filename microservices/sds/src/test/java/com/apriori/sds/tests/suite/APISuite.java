@@ -8,6 +8,7 @@ import com.apriori.sds.tests.ScenarioAssociationsTest;
 import com.apriori.sds.tests.ScenariosTest;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

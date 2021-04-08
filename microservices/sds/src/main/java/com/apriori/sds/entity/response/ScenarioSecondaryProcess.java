@@ -2,10 +2,13 @@ package com.apriori.sds.entity.response;
 
 import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Schema(location = "sds/ScenarioSecondaryProcesses.json")
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ScenarioSecondaryProcess extends JacksonUtil {
     private String name;
     private String displayName;

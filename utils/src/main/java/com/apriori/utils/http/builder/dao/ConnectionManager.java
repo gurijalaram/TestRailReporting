@@ -316,13 +316,13 @@ public class ConnectionManager<T> {
                     String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
                         returnType.getName()));
             }
-//
-//            ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) -> {
-//                com.fasterxml.jackson.databind.ObjectMapper om = new com.fasterxml.jackson.databind.ObjectMapper().findAndRegisterModules();
-//                om.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
-//                om.enable(SerializationFeature.WRAP_ROOT_VALUE);
-//                return om;
-//            }));
+
+            //            ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) -> {
+            //                com.fasterxml.jackson.databind.ObjectMapper om = new com.fasterxml.jackson.databind.ObjectMapper().findAndRegisterModules();
+            //                om.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+            //                om.enable(SerializationFeature.WRAP_ROOT_VALUE);
+            //                return om;
+            //            }));
 
             T responseEntity = response.assertThat()
                 .body(matchesJsonSchema(resource))
