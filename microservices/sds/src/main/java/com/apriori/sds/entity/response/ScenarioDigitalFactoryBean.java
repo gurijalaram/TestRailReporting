@@ -1,10 +1,12 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.LombokUtil;
+import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
+import lombok.Data;
 
 @Schema(location = "sds/ScenarioDigitalFactoryBean.json")
-public class ScenarioDigitalFactoryBean extends LombokUtil {
+@Data
+public class ScenarioDigitalFactoryBean extends JacksonUtil {
     private String primaryVpeName;
     private Boolean initialized;
     private ScenarioKey scenarioKey;

@@ -22,7 +22,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     @Test
     @TestRail(testCaseId = "6928")
     @Description("Find scenario associations for a given scenario matching a specified query.")
-    public void getAssociations() throws UnsupportedEncodingException {
+    public void getAssociations() {
 
         ResponseWrapper<Object> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, null,

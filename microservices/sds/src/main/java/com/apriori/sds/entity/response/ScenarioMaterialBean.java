@@ -1,10 +1,12 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.LombokUtil;
+import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
+import lombok.Data;
 
 @Schema(location = "sds/ScenarioMaterialBean.json")
-public class ScenarioMaterialBean extends LombokUtil {
+@Data
+public class ScenarioMaterialBean extends JacksonUtil {
     private Boolean isCadMaterialNameValid;
     private String utilizationMode;
     private Boolean initialized;

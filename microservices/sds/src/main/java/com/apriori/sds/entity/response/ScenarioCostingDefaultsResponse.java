@@ -1,12 +1,14 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.LombokUtil;
+import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
+import lombok.Data;
 
 import java.util.List;
 
-@Schema(location = "sds/ScenarioCostingDefaults.json")
-public class ScenarioCostingDefaultsResponse extends LombokUtil {
+@Schema(location = "sds/ScenarioCostingDefaultsResponse.json")
+@Data
+public class ScenarioCostingDefaultsResponse extends JacksonUtil {
     private ScenarioCostingDefaultsResponse response;
     private String[] availablePgNames;
     private Boolean machiningModeEnabled;

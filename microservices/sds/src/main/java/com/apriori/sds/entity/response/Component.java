@@ -1,16 +1,18 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.LombokUtil;
+import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Schema(location = "sds/ComponentResponse.json")
-public class Component extends LombokUtil {
+@Data
+public class Component extends JacksonUtil {
     private Component response;
     private String customerIdentity;
     private String componentType;

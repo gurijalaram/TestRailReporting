@@ -1,10 +1,12 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.LombokUtil;
+import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
+import lombok.Data;
 
 @Schema(location = "sds/ScenarioMaterialCatalogKeyData.json")
-public class ScenarioMaterialCatalogKeyData extends LombokUtil {
+@Data
+public class ScenarioMaterialCatalogKeyData extends JacksonUtil {
     private String first;
     private String second;
 }

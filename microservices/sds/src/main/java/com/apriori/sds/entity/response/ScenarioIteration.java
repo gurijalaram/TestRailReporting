@@ -1,18 +1,20 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.LombokUtil;
+import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "sds/ScenarioIteration.json")
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ScenarioIteration extends LombokUtil {
+@Schema(location = "sds/ScenarioIterationResponse.json")
+@Data
+public class ScenarioIteration extends JacksonUtil {
+    private ScenarioIteration response;
     private String customerIdentity;
     private Object scenarioProcesses;
     private String hasThumbnail;

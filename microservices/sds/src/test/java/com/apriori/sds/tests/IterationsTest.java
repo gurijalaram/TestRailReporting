@@ -2,8 +2,8 @@ package com.apriori.sds.tests;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
+import com.apriori.sds.entity.response.ScenarioIteration;
 import com.apriori.sds.entity.response.ScenarioIterationItemsResponse;
-import com.apriori.sds.entity.response.ScenarioIterationResponse;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -18,20 +18,15 @@ public class IterationsTest extends SDSTestUtil {
     @TestRail(testCaseId = "6932")
     @Description("Find iterations for a given scenario matching a specified query.")
     public void getIterations() {
-        ResponseWrapper<ScenarioIterationItemsResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID
-            );
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        this.receiveIterations();
     }
 
     @Test
     @TestRail(testCaseId = "6930")
     @Description("Get the latest iteration.")
-    public void getIterationsLatest() {
-        ResponseWrapper<ScenarioIterationResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationResponse.class,
+    public void getIterationLatest() {
+        ResponseWrapper<ScenarioIteration> response =
+            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID
             );
 
@@ -42,11 +37,24 @@ public class IterationsTest extends SDSTestUtil {
     @TestRail(testCaseId = "6931")
     @Description("Get the current representation of a iteration.")
     public void getIterationsByIdentity() {
-        ResponseWrapper<ScenarioIterationResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIterationResponse.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID, "82H7F7I9M1CI"
+        ScenarioIterationItemsResponse iterationsResponse = this.receiveIterations().getResponseEntity();
+
+        ResponseWrapper<ScenarioIteration> response =
+            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID,
+                iterationsResponse.getResponse().getItems().get(0).getIdentity()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+    }
+
+    private ResponseWrapper<ScenarioIterationItemsResponse> receiveIterations() {
+        ResponseWrapper<ScenarioIterationItemsResponse> response = new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class,
+            new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID
+        );
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+
+        return response;
     }
 }

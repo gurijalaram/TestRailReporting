@@ -3,11 +3,11 @@ package com.apriori.sds.tests;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
+import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
 import com.apriori.sds.entity.response.ScenarioHoopsImage;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.entity.response.ScenarioManifest;
-import com.apriori.sds.entity.response.ScenarioResponse;
 import com.apriori.sds.entity.response.ScenarioSecondaryProcess;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -21,37 +21,22 @@ public class ScenariosTest extends SDSTestUtil {
     @Test
     @TestRail(testCaseId = "6922")
     @Description("Find scenarios for a given component matching a specified query.")
-    public void getScenario() {
-        ResponseWrapper<ScenarioItemsResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID
-            );
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+    public void getScenarios() {
+        this.receiveScenarios();
     }
+
 
     @Test
     @TestRail(testCaseId = "6923")
     @Description("Get the current representation of a scenario.")
-    public void getByIdentity() {
-        ResponseWrapper<ScenarioResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class,
+    public void getScenarioByIdentity() {
+        ResponseWrapper<Scenario> response =
+            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
-
-//    @Test
-//    public void testTT() {
-//        Object fileObject = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
-//
-//        new FileUploadResources().uploadCostPublishApi(new APIAuthentication().initAuthorizationHeaderContent(token),
-//            fileObject,
-//            "2modeltest-machine1.SLDPRT",
-//            "testScenarioName",
-//            "2-Model Machining");
-//    }
 
     @Test
     @TestRail(testCaseId = "6924")
@@ -101,4 +86,14 @@ public class ScenariosTest extends SDSTestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
+    private ResponseWrapper<ScenarioItemsResponse> receiveScenarios() {
+        ResponseWrapper<ScenarioItemsResponse> response =
+            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID
+            );
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+
+        return response;
+    }
 }

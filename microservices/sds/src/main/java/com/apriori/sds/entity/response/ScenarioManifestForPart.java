@@ -1,10 +1,12 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.LombokUtil;
+import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
+import lombok.Data;
 
 @Schema(location = "sds/ScenarioManifestForPart.json")
-public class ScenarioManifestForPart extends LombokUtil {
+@Data
+public class ScenarioManifestForPart extends JacksonUtil {
     private String path;
     private String error;
     private String message;

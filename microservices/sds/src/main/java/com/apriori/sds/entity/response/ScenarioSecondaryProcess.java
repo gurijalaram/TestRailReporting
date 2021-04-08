@@ -1,10 +1,12 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.LombokUtil;
+import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
+import lombok.Data;
 
 @Schema(location = "sds/ScenarioSecondaryProcesses.json")
-public class ScenarioSecondaryProcess extends LombokUtil {
+@Data
+public class ScenarioSecondaryProcess extends JacksonUtil {
     private String name;
     private String displayName;
     private String plantName;

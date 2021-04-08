@@ -18,24 +18,30 @@ public class ComponentsTest extends SDSTestUtil {
     @TestRail(testCaseId = "6937")
     @Description("Find components for a customer matching a specified query.")
     public void getComponents() {
-        ResponseWrapper<ComponentsItemsResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token)
-            );
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        this.receiveComponents();
     }
 
     @Test
     @TestRail(testCaseId = "6938")
     @Description("Get the current representation of a component.")
-    public void getComponentsByIdentity() {
+    public void getComponentByIdentity() {
+        ComponentsItemsResponse componentsListResponse = this.receiveComponents().getResponseEntity();
         ResponseWrapper<Component> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COMPONENT_SINGLE_BY_IDENTITY, Component.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token),
-                "84KCI42IEGLJ"
+                componentsListResponse.getResponse().getItems().get(0).getIdentity()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+    }
+
+    private ResponseWrapper<ComponentsItemsResponse> receiveComponents() {
+        ResponseWrapper<ComponentsItemsResponse> response = new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class,
+            new APIAuthentication().initAuthorizationHeaderContent(token)
+        );
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+
+        return response;
     }
 }
