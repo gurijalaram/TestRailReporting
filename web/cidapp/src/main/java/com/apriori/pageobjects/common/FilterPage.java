@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
@@ -17,34 +18,24 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
     @FindBy(css = "[class='name-field'] .apriori-select")
     private WebElement filterDropDown;
-
     @FindBy(css = "[class='name-field'] input")
     private WebElement filterInput;
-
     @FindBy(css = ".btn-secondary [data-icon='plus']")
     private WebElement newButton;
-
     @FindBy(css = "[data-icon='file-export']")
     private WebElement saveAsButton;
-
     @FindBy(css = "[data-icon='pencil']")
     private WebElement renameButton;
-
     @FindBy(css = "button [data-icon='times-circle']")
     private WebElement cancelButton;
-
     @FindBy(css = "input[name='name']")
     private WebElement nameInput;
-
     @FindBy(css = "button [data-icon='plus']")
     private WebElement addButton;
-
     @FindBy(css = "button [data-icon='clear']")
     private WebElement clearButton;
-
     @FindBy(css = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
-
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -165,6 +156,23 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     /**
      * Adds a new criteria
      *
+     * @param property - the property
+     * @param value    - the value
+     * @return current page object
+     */
+    public FilterPage addCriteria(String property, String value) {
+        index = getIndex();
+
+        add()
+            .inputProperty(property)
+            .inputValue(property, value);
+
+        return this;
+    }
+
+    /**
+     * Adds a new criteria
+     *
      * @param property  - the property
      * @param operation - the operation
      * @param value     - the value
@@ -172,10 +180,12 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public FilterPage addCriteria(String property, String operation, String value) {
         index = getIndex();
+
         add()
-            .inputProperty(property)
-            .inputOperation(operation)
-            .inputValue(value);
+            .inputProperty(property.trim())
+            .inputOperation(operation.trim())
+            .inputValue(property.trim(), value.trim());
+
         return this;
     }
 
@@ -208,13 +218,25 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     /**
      * Uses type ahead to input the value
      *
-     * @param value - the value
+     * @param value    - the value
+     * @param property - the property
      * @return current page object
      */
-    private FilterPage inputValue(String value) {
-        WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
-        WebElement valueInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] input", index)));
-        pageUtils.typeAheadInput(valueDropdown, valueInput, value);
+    private FilterPage inputValue(String property, String value) {
+        boolean toggleValue = Constants.TOGGLE_VALUES.stream().anyMatch(str -> str.trim().equalsIgnoreCase(property));
+
+        if (toggleValue) {
+            driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] button", index))).click();
+        } else {
+            WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
+            WebElement valueInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] input", index)));
+
+            Constants.INPUT_VALUES.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> {
+                valueInput.clear();
+                valueInput.sendKeys(value);
+            });
+            Constants.TYPE_INPUT_VALUES.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadInput(valueDropdown, valueInput, value));
+        }
         return this;
     }
 
