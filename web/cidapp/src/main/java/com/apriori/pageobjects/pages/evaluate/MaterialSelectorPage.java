@@ -104,8 +104,11 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      */
     public MaterialSelectorPage selectMaterial(String materialName) {
         By material = By.xpath(String.format("//div[@role='row']//div[contains(text(),'%s')]", materialName));
-        pageUtils.waitForElementToAppear(material);
-        pageUtils.scrollWithJavaScript(driver.findElement(material), true).click();
+        pageUtils.scrollWithJavaScript(driver.findElement(material), true);
+
+        if (!pageUtils.jsGetParentElement(driver.findElement(By.xpath(String.format("//div[@role='row']//div[.='%s']", materialName)))).getAttribute("class").contains("selected")) {
+            pageUtils.waitForElementAndClick(material);
+        }
         return this;
     }
 
