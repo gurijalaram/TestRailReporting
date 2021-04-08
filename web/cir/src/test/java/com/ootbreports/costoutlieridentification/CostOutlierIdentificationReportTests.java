@@ -115,7 +115,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1959")
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Main Report")
     public void testDataIntegrityAgainstCID() {
@@ -146,5 +146,16 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         BigDecimal cidFbc = evaluatePage.getBurdenedCostValue();
 
         assertThat(reportsCostValue.compareTo(cidFbc), is(equalTo(0)));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "1947")
+    @Description("Export date range presents correctly filtered export sets")
+    public void testExportSetFilterByDateCalendarWidget() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testExportSetFilterUsingDatePicker(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName()
+        );
     }
 }

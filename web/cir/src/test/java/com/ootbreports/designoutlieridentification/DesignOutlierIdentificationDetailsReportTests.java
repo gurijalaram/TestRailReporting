@@ -128,7 +128,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "6249")
     @Description("Min and max cost filter works")
     public void testMinAndMaxCostFilter() {
@@ -140,7 +140,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "6261")
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValue() {
@@ -152,7 +152,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "6250")
     @Description("Min and max mass filter works")
     public void testMinAndMaxMassFilter() {
@@ -164,7 +164,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "6264")
     @Description("Min and max mass filter - junk value test")
     public void testMinAndMaxMassFilterJunkValue() {
