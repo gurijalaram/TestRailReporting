@@ -31,11 +31,14 @@ public class EvaluatePage extends EvaluateToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
-    @FindBy(css = ".left-panel.p-3")
-    private WebElement leftPanel;
+    @FindBy(css = ".costing-inputs .spinner-border")
+    private List<WebElement> panelLoaders;
 
     @FindBy(css = ".webviewer-canvas")
     private WebElement viewerCanvas;
+
+    @FindBy(css = ".scenario-state-preview [data-icon='check']")
+    private WebElement checkIcon;
 
     @FindBy(css = "svg[data-icon='home']")
     private WebElement homeButton;
@@ -138,8 +141,8 @@ public class EvaluatePage extends EvaluateToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-        pageUtils.waitForElementAppear(leftPanel);
-        pageUtils.waitForElementAppear(viewerCanvas);
+        pageUtils.invisibilityOfElements(panelLoaders);
+        pageUtils.waitForElementToAppear(checkIcon);
     }
 
     /**
