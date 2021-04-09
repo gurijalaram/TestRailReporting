@@ -677,6 +677,21 @@ public class PageUtils {
     }
 
     /**
+     * Waits for the element to be invisible
+     *
+     * @param locator - the locator of the element
+     * @return true/false
+     */
+    public boolean invisibilityOfElement(WebElement locator) {
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
+
+        return new WebDriverWait(driver, timeoutInMinutes)
+                .withMessage("\nNot expecting: " + locator)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until(ExpectedConditions.invisibilityOf(locator));
+    }
+
+    /**
      * Checks the element's size on the page is greater than 0 and returns true/false
      *
      * @param locator - the element as list
