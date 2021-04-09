@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "componentIdentity",
+        "componentName",
+        "componentType",
+        "cadMetadataIdentity",
+        "scenarioIdentity",
+        "scenarioName",
+        "scenarioState",
+        "occurrences",
+        "totalComponents",
+        "totalSubComponents",
+        "subComponents"
+      ],
+      "properties": {
+        "componentIdentity": {
+          "type": "string"
+        },
+        "componentName": {
+          "type": "string"
+        },
+        "componentType": {
+          "type": "string"
+        },
+        "cadMetadataIdentity": {
+          "type": "string"
+        },
+        "scenarioIdentity": {
+          "type": "string"
+        },
+        "scenarioName": {
+          "type": "string"
+        },
+        "scenarioState": {
+          "type": "string"
+        },
+        "occurrences": {
+          "type": "integer"
+        },
+        "totalComponents": {
+          "type": "integer"
+        },
+        "totalSubComponents": {
+          "type": "integer"
+        },
+        "subComponents": {
+          "type": "array",
+          "$ref": "ScenarioManifestSubComponents.json"
+        }
+      }
+    }
+  }
+}
