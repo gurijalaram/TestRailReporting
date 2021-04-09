@@ -66,7 +66,7 @@ public class PublishExistingCostedTests extends TestBase {
             .filter()
             .saveAs()
             .inputName("Automation")
-            .addCriteria("Component Name", "Contains", partName)
+            .addCriteriaWithOption("Component Name", "Contains", partName)
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, partName), is(greaterThan(0)));

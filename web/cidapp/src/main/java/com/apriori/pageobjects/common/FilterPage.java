@@ -162,7 +162,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param value    - the value
      * @return current page object
      */
-    public FilterPage addCriteria(String property, String value) {
+    public FilterPage addCriteriaWithOption(String property, String value) {
         index = getIndex();
 
         add()
@@ -180,7 +180,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param value     - the value
      * @return current page object
      */
-    public FilterPage addCriteria(String property, String operation, String value) {
+    public FilterPage addCriteriaWithOption(String property, String operation, String value) {
         index = getIndex();
 
         add()
