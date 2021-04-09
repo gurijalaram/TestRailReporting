@@ -38,7 +38,7 @@ public class EvaluatePage extends EvaluateToolbar {
     private WebElement viewerCanvas;
 
     @FindBy(css = ".scenario-state-preview [data-icon='cog']")
-    private WebElement cogIcon;
+    private List<WebElement> cogIcon;
 
     @FindBy(css = "svg[data-icon='home']")
     private WebElement homeButton;
@@ -142,7 +142,7 @@ public class EvaluatePage extends EvaluateToolbar {
         PageFactory.initElements(driver, this);
         this.get();
         pageUtils.invisibilityOfElements(panelLoaders);
-        pageUtils.invisibilityOfElement(cogIcon);
+        pageUtils.invisibilityOfElements(cogIcon);
     }
 
     /**
@@ -194,7 +194,7 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Inputs the vpe dropdown
      *
-     * @param vpe      - the vpe
+     * @param vpe - the vpe
      * @return current page object
      */
     public EvaluatePage inputVpe(String vpe) {
