@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Constants;
 
+import java.util.List;
+
 public class FilterPage extends LoadableComponent<FilterPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(FilterPage.class);
@@ -231,18 +233,40 @@ public class FilterPage extends LoadableComponent<FilterPage> {
             WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
             WebElement valueInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] input", index)));
 
-            Constants.INPUT_VALUES.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> {
-                valueInput.clear();
-                valueInput.sendKeys(value);
-            });
-            Constants.TYPE_INPUT_VALUES.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadInput(valueDropdown, valueInput, value));
+            valuesEntry(property, value, valueInput, Constants.INPUT_VALUES);
 
-            Constants.DATE_VALUES.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> {
-                valueInput.clear();
-                valueInput.sendKeys(value);
-            });
+            inputValuesEntry(property, value, valueDropdown, valueInput, Constants.TYPE_INPUT_VALUES);
+
+            valuesEntry(property, value, valueInput, Constants.DATE_VALUES);
         }
         return this;
+    }
+
+    /**
+     * Input values
+     *
+     * @param property      - the property
+     * @param value         - the value
+     * @param valueDropdown - the value dropdown
+     * @param valueInput    - the value input
+     */
+    private void inputValuesEntry(String property, String value, WebElement valueDropdown, WebElement valueInput, List<String> valueList) {
+        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadInput(valueDropdown, valueInput, value));
+    }
+
+    /**
+     * Input values
+     *
+     * @param property   - the property
+     * @param value      - the value
+     * @param valueInput - the value input
+     * @param valueList  - the value list
+     */
+    private void valuesEntry(String property, String value, WebElement valueInput, List<String> valueList) {
+        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> {
+            pageUtils.waitForElementToAppear(valueInput).clear();
+            valueInput.sendKeys(value);
+        });
     }
 
     /**
