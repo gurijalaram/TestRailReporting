@@ -43,7 +43,7 @@ public class IterationsTest extends SDSTestUtil {
         ResponseWrapper<ScenarioIteration> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID,
-                iterationsResponse.getResponse().getItems().get(0).getIdentity()
+                iterationsResponse.getItems().get(0).getIdentity()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());

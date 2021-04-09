@@ -36,7 +36,7 @@ public class ApVersionsTests {
         ResponseWrapper<ApVersions> response = cdsTestUtil.getCommonRequest(url, ApVersions.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getVersion(), is(not(emptyString())));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getItems().get(0).getVersion(), is(not(emptyString())));
     }
 }
