@@ -466,7 +466,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfProcessGroups() {
         pageUtils.waitForElementAndClick(processGroupList);
-        return Arrays.stream(processGroupList.getText().split("\n")).collect(Collectors.toList());
+        return Arrays.stream(processGroupList.getText().split("\n")).filter(x -> x.equalsIgnoreCase("Process Group")).collect(Collectors.toList());
     }
 
     /**
@@ -476,7 +476,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfVPEs() {
         pageUtils.waitForElementAndClick(vpeList);
-        return Arrays.stream(vpeList.getText().split("\n")).collect(Collectors.toList());
+        return Arrays.stream(vpeList.getText().split("\n")).filter(x -> x.equalsIgnoreCase("VPE")).collect(Collectors.toList());
     }
 
     /**
