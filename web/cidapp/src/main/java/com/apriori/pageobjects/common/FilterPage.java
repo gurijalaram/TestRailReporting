@@ -236,6 +236,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
                 valueInput.sendKeys(value);
             });
             Constants.TYPE_INPUT_VALUES.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadInput(valueDropdown, valueInput, value));
+
+            Constants.DATE_VALUES.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> {
+                valueInput.clear();
+                valueInput.sendKeys(value);
+            });
         }
         return this;
     }
