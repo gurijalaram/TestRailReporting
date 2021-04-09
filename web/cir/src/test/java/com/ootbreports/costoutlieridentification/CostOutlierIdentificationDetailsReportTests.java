@@ -18,6 +18,7 @@ import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -118,5 +119,42 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         BigDecimal cidFbc = evaluatePage.getBurdenedCostValue();
 
         assertThat(reportsFbc.compareTo(cidFbc), is(equalTo(0)));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "1965")
+    @Description("Validate details report generates")
+    public void testDetailsReportGenerates() {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                        GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .clickOk();
+
+        genericReportPage.waitForReportToLoad();
+
+        assertThat(genericReportPage.isCostOutlierSvgDisplayedAndEnabled("1"),
+                is(equalTo(true))
+        );
+        assertThat(genericReportPage.isCostOutlierSvgDisplayedAndEnabled("2"),
+                is(equalTo(true))
+        );
+        assertThat(genericReportPage.isCostOutlierTableTitleDisplayed(true),
+                is(equalTo(true))
+        );
+        assertThat(genericReportPage.isCostOutlierTableTitleDisplayed(false),
+                is(equalTo(true))
+        );
+
+        genericReportPage.clickDetailsLink();
+        assertThat(genericReportPage.isCostOutlierDetailsTableTitleDisplayed("Percent"),
+                is(equalTo(true))
+        );
+        assertThat(genericReportPage.isCostOutlierDetailsTableTitleDisplayed("Annualized"),
+                is(equalTo(true))
+        );
     }
 }

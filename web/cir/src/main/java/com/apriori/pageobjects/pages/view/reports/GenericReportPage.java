@@ -495,6 +495,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[@class='_jrHyperLink ReportExecution']/span")
     private WebElement plasticDtcDetailsRowOnePartName;
 
+    @FindBy(xpath = "//span[contains(text(), 'details')]")
+    private WebElement costOutlierDetailsLink;
+
     @FindBy(xpath = "(//*[local-name()='g'])[13]//*[local-name()='rect'][1]")
     private WebElement castingDtcComparisonFirstBarFirstChart;
 
@@ -539,6 +542,12 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[36]/td[21]")
     private WebElement designOutlierMassTwo;
+
+    @FindBy(xpath = "(//span[contains(text(), 'Annualized Potential Savings')])[2]")
+    private WebElement costOutlierAnnualisedPotentialSavings;
+
+    @FindBy(xpath = "(//span[contains(text(), 'Percent Difference')])[2]")
+    private WebElement costOutlierPercentDifference;
 
     private final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
     private final String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
@@ -2326,6 +2335,56 @@ public class GenericReportPage extends ReportsPageHeader {
 
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Checks if Cost Outlier Identification report SVG is displayed and enabled
+     *
+     * @param index String
+     * @return boolean
+     */
+    public boolean isCostOutlierSvgDisplayedAndEnabled(String index) {
+        By locator = By.xpath(String.format("(//div[@id='reportContainer']//*[local-name()='svg'])[%s]", index));
+        WebElement element = driver.findElement(locator);
+        return element.isDisplayed() && element.isEnabled();
+    }
+
+    /**
+     * Checks if Cost Outlier Identification Report Title is displayed
+     *
+     * @param useAnnualisedPotentialSavings boolean
+     * @return boolean
+     */
+    public boolean isCostOutlierTableTitleDisplayed(boolean useAnnualisedPotentialSavings) {
+        WebElement elementToUse =
+                useAnnualisedPotentialSavings ? costOutlierAnnualisedPotentialSavings : costOutlierPercentDifference;
+        return elementToUse.isDisplayed() && elementToUse.isEnabled();
+    }
+
+    /**
+     * Clicks details link on Cost Outlier Identification Report to go to Details report
+     */
+    public void clickDetailsLink() {
+        By locator = By.xpath("//span[contains(text(), 'details')]");
+        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementAndClick(locator);
+        pageUtils.windowHandler(1);
+        waitForReportToLoad();
+    }
+
+    /**
+     * Checks if Cost Outlier Identification Details table is displayed
+     *
+     * @param name String
+     * @return boolean
+     */
+    public boolean isCostOutlierDetailsTableTitleDisplayed(String name) {
+        By titleLocator = By.xpath("//span[contains(text(), 'Cost Outlier Identification Details')]");
+        pageUtils.waitForElementToAppear(titleLocator);
+
+        By tableTitleLocator = By.xpath((String.format("(//span[contains(text(), '%s ')])[2]", name)));
+        WebElement element = driver.findElement(tableTitleLocator);
+        return pageUtils.isElementDisplayed(tableTitleLocator) && element.isEnabled();
     }
 
     /**
