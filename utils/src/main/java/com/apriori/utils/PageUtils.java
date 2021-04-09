@@ -203,6 +203,16 @@ public class PageUtils {
         executor.executeScript("window.open()");
     }
 
+    /**
+     * Use javascript to get the parent node of the element
+     * @param element - the element
+     * @return webelement
+     */
+    public WebElement jsGetParentElement(WebElement element) {
+        return (WebElement) ((JavascriptExecutor) driver).executeScript(
+            "return arguments[0].parentElement", element);
+    }
+
     public void actionClick(WebElement targetElement) {
         Actions builder = new Actions(driver);
         builder.click(targetElement).build().perform();

@@ -117,5 +117,6 @@ screenshots/
 /pageobjects/build/
 /utils/build/
 /cidapp/build/
+/sds/build/
 build/
 /vim.exe.stackdump

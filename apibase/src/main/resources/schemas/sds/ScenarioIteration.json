@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "#/properties/response",
+  "type": "object",
+  "required": [
+    "identity",
+    "createdAt",
+    "createdBy",
+    "updatedAt",
+    "createdByName",
+    "customerIdentity",
+    "iteration",
+    "scenarioIterationKey",
+    "costingInput",
+    "scenarioCustomAttributes",
+    "scenarioDtcIssues",
+    "scenarioGcd",
+    "scenarioMetadata",
+    "scenarioProcesses",
+    "analysisOfChildren",
+    "analysisOfScenario",
+    "analysisOfScenarioAndChildren",
+    "hasWebImage",
+    "thumbnail",
+    "material"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "identity": {
+      "$id": "#/properties/response/properties/identity",
+      "type": "string"
+    },
+    "createdAt": {
+      "$id": "#/properties/response/properties/createdAt",
+      "type": "string"
+    },
+    "createdBy": {
+      "$id": "#/properties/response/properties/createdBy",
+      "type": "string"
+    },
+    "updatedAt": {
+      "$id": "#/properties/response/properties/updatedAt",
+      "type": "string"
+    },
+    "createdByName": {
+      "$id": "#/properties/response/properties/createdByName",
+      "type": "string"
+    },
+    "customerIdentity": {
+      "$id": "#/properties/response/properties/customerIdentity",
+      "type": "string"
+    },
+    "iteration": {
+      "$id": "#/properties/response/properties/iteration",
+      "type": "number"
+    },
+    "scenarioIterationKey": {
+      "$id": "#/properties/response/properties/scenarioIterationKey",
+      "type": "string"
+    },
+    "costingInput": {
+      "$id": "#/properties/response/properties/costingInput",
+      "type": "object"
+    },
+    "scenarioCustomAttributes": {
+      "$id": "#/properties/response/properties/scenarioCustomAttributes",
+      "type": "array"
+    },
+    "scenarioDtcIssues": {
+      "$id": "#/properties/response/properties/scenarioDtcIssues",
+      "type": "array"
+    },
+    "scenarioGcd": {
+      "$id": "#/properties/response/properties/scenarioGcd",
+      "type": "object"
+    },
+    "scenarioMetadata": {
+      "$id": "#/properties/response/properties/scenarioMetadata",
+      "type": "object"
+    },
+    "scenarioProcesses": {
+      "$id": "#/properties/response/properties/scenarioProcesses",
+      "type": "array"
+    },
+    "analysisOfChildren": {
+      "$id": "#/properties/response/properties/analysisOfChildren",
+      "type": "object"
+    },
+    "analysisOfScenario": {
+      "$id": "#/properties/response/properties/analysisOfScenario",
+      "type": "object"
+    },
+    "analysisOfScenarioAndChildren": {
+      "$id": "#/properties/response/properties/analysisOfScenarioAndChildren",
+      "type": "object"
+    },
+    "hasThumbnail": {
+      "$id": "#/properties/response/properties/hasThumbnail",
+      "type": "boolean"
+    },
+    "hasWebImage": {
+      "$id": "#/properties/response/properties/hasWebImage",
+      "type": "boolean"
+    },
+    "thumbnail": {
+      "$id": "#/properties/response/properties/thumbnail",
+      "type": "object"
+    },
+    "material": {
+      "$id": "#/properties/response/properties/material",
+      "type": "object"
+    }
+  }
+}
+

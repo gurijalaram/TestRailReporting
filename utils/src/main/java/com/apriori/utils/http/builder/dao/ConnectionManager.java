@@ -18,14 +18,20 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.HttpClientConfig;
+import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
 import io.restassured.http.Headers;
+import io.restassured.internal.mapping.Jackson2Mapper;
+import io.restassured.mapper.ObjectMapper;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
@@ -310,6 +316,13 @@ public class ConnectionManager<T> {
                     String.format("%s has an invalid resource location in its @Schema notation (hint, check the path of the file inside the resources folder)",
                         returnType.getName()));
             }
+
+            //            ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) -> {
+            //                com.fasterxml.jackson.databind.ObjectMapper om = new com.fasterxml.jackson.databind.ObjectMapper().findAndRegisterModules();
+            //                om.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+            //                om.enable(SerializationFeature.WRAP_ROOT_VALUE);
+            //                return om;
+            //            }));
 
             T responseEntity = response.assertThat()
                 .body(matchesJsonSchema(resource))
