@@ -668,7 +668,7 @@ public class PageUtils {
      * @return true/false
      */
     public boolean invisibilityOfElements(List<WebElement> locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
 
         return new WebDriverWait(driver, timeoutInMinutes)
             .withMessage("\nNot expecting: " + locator)
