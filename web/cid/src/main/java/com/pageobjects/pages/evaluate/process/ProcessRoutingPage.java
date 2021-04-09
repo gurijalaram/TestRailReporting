@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 
 public class ProcessRoutingPage extends EvaluatePanelToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ProcessRoutingPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessRoutingPage.class);
 
     @FindBy(css = "div[data-ap-comp='processCycleTime']")
     private WebElement routingTable;
@@ -90,7 +90,7 @@ public class ProcessRoutingPage extends EvaluatePanelToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

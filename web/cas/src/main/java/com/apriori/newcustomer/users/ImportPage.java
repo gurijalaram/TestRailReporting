@@ -16,7 +16,7 @@ import java.io.File;
 
 public class ImportPage extends LoadableComponent<ImportPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ImportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImportPage.class);
 
     @FindBy(id = "batch-upload")
     private WebElement uploadCard;
@@ -43,7 +43,7 @@ public class ImportPage extends LoadableComponent<ImportPage> {
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
         this.fileImport = new FileImport(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

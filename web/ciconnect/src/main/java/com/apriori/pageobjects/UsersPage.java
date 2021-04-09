@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UsersPage {
-    private final Logger logger = LoggerFactory.getLogger(UsersPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(UsersPage.class);
 
     @FindBy(css = "#root_menu-19 > li:nth-child(2) > table > tbody > tr > td > a > span")
     private WebElement userTab;
@@ -34,6 +34,11 @@ public class UsersPage {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 
+    /**
+     * Validates the Schedule Workflow list is sorted alphabetically
+     *
+     * @return True if the workflow list is sorted alphabetical
+     */
     public Map<String, List<String>> validateUsersSortedAlphabetical() {
         pageUtils.waitForElementToBeClickable(userList);
         List<String> users = new ArrayList<>();

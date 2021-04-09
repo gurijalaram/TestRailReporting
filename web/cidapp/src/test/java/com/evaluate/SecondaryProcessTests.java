@@ -76,15 +76,16 @@ public class SecondaryProcessTests extends TestBase {
     @TestRail(testCaseId = {"5120", "5121", "5123"})
     @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
     public void secondaryProcessXray() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulding.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PlasticMoulding.CATPart");
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS, 10% Glass")
             .submit();
@@ -228,15 +229,16 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Stress Relief")
     public void secondaryProcessStressRelief() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit()
@@ -251,15 +253,16 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Anodize")
     public void secondaryProcessAnodize() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("s")
             .submit()
@@ -274,15 +277,16 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Certification")
     public void secondaryProcessCertification() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"SheetMetal.prt");
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit()
@@ -401,15 +405,16 @@ public class SecondaryProcessTests extends TestBase {
     @Test
     @Description("Test secondary process Passivation")
     public void secondaryProcessPassivation() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"SheetMetal.prt");
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit()
@@ -460,15 +465,16 @@ public class SecondaryProcessTests extends TestBase {
     @TestRail(testCaseId = {"5117"})
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
             .submit()
@@ -758,15 +764,16 @@ public class SecondaryProcessTests extends TestBase {
     @TestRail(testCaseId = {"5122"})
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PlasticMoulding.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PlasticMoulding.CATPart");
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openSecondaryProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .cancel()
@@ -780,15 +787,16 @@ public class SecondaryProcessTests extends TestBase {
     @TestRail(testCaseId = {"5127"})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Casting.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
             .submit(EvaluateToolbar.class)

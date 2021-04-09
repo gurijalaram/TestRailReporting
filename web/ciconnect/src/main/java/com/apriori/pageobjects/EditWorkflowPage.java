@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EditWorkflowPage {
-    private final Logger logger = LoggerFactory.getLogger(EditWorkflowPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(EditWorkflowPage.class);
 
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup")
     private WebElement editWorkflowModal;
@@ -57,12 +57,14 @@ public class EditWorkflowPage {
     private WebElement queryPageNextButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-108 > button")
     private WebElement costingNextButton;
-    @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-44 > button")
-    private WebElement saveButton;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-43 > button")
+    private WebElement notificationNextButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-183 > button")
     private WebElement editWorkflowCancelButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-104 > button")
     private WebElement queryNext;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-84-popup_button-288 > button")
+    private WebElement saveButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -74,20 +76,37 @@ public class EditWorkflowPage {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 
+    /**
+     * Select the first query in the Query dropdown list
+     */
     public void selectQuery() {
         Select opt = new Select(queryDropDown);
         opt.selectByIndex(1);
     }
 
+    /**
+     * Checks that a Edit Workflow popup exists
+     *
+     * @return True if Edit Workflow popup exists
+     */
     public boolean modalExists() {
         pageUtils.waitForElementToAppear(editWorkflowNextButton);
         return editWorkflowModal.isDisplayed();
     }
 
+    /**
+     * Cancel editing a workflow
+     */
     public void cancelEdit() {
         pageUtils.waitForElementAndClick(editWorkflowCancelButton);
     }
 
+    /**
+     * Edit an existing workflow
+     *
+     * @param field The field to edit
+     * @param newValue The new value to enter
+     */
     public void editWorkflow(String field, String newValue) {
         switch (field.toUpperCase()) {
             case "NAME":
@@ -101,16 +120,22 @@ public class EditWorkflowPage {
                 editWorkFlowDescription.sendKeys(newValue);
                 break;
             default:
-                logger.error("Field " + field + ", does not exist");
+                logger.debug("Field " + field + ", does not exist");
                 return;
         }
 
         pageUtils.waitForElementAndClick(editWorkflowNextButton);
         pageUtils.waitForElementAndClick(queryNext);
         pageUtils.waitForElementAndClick(queryPageNextButton);
+        pageUtils.waitForElementAndClick(notificationNextButton);
         pageUtils.waitForElementAndClick(saveButton);
     }
 
+    /**
+     * Get the Edit popup label
+     *
+     * @return Edit popup header
+     */
     public String getLabel() {
         pageUtils.waitForElementAppear(editWorkflowLabel);
         return editWorkflowLabel.getText();

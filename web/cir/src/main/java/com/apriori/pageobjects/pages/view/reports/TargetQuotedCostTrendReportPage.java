@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(TargetQuotedCostTrendReportPage.class);
 
     @FindBy(xpath = "//div[@id='projectRollup']//a")
     private WebElement projectRollupDropdown;
@@ -55,6 +55,18 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     @FindBy(xpath = "(//div[@class='highcharts_parent_container']/div//*[local-name() = 'tspan'])[3]")
     private WebElement milestoneName;
 
+    @FindBy(xpath = "(//span[@class='_jrHyperLink ReportExecution'])[1]/span")
+    private WebElement firstProject;
+
+    @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[17]/td[29]/span")
+    private WebElement costDifferenceFromApriori;
+
+    @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[5]/td[6]/span")
+    private WebElement currentAprioriCost;
+
+    @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[22]/td[26]/span")
+    private WebElement annualizedCurrentAprioriCost;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -62,7 +74,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -232,13 +244,38 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     }
 
     /**
-     * Gets specified value from report
-     * @param index String - index of value to get
+     * Gets first project name from Value Tracking Reports
      * @return String
      */
-    public String getValueFromReport(String index) {
-        By locator = By.xpath(String.format("//table[contains(@class, 'jrPage')]//tr[22]/td[%s]/span", index));
-        pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(locator).getText();
+    public String getFirstProject() {
+        pageUtils.waitForElementToAppear(firstProject);
+        return firstProject.getText();
+    }
+
+    /**
+     * Get quoted cost difference from apriori cost in Value Tracking reports
+     * @return String
+     */
+    public String getQuotedCostDifferenceFromApCost() {
+        pageUtils.waitForElementToAppear(costDifferenceFromApriori);
+        return costDifferenceFromApriori.getText();
+    }
+
+    /**
+     * Get current Apriori cost from Value Tracking Details Report
+     * @return String
+     */
+    public String getCurrentAprioriCost() {
+        pageUtils.waitForElementToAppear(currentAprioriCost);
+        return currentAprioriCost.getText();
+    }
+
+    /**
+     * Get annualized current Apriori cost from Value Tracking Details Report
+     * @return String
+     */
+    public String getAnnualizedCost() {
+        pageUtils.waitForElementToAppear(annualizedCurrentAprioriCost);
+        return annualizedCurrentAprioriCost.getText();
     }
 }

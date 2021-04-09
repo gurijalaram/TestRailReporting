@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class UsersListPage extends LoadableComponent<UsersListPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UsersListPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(UsersListPage.class);
 
     @FindBy(css = "a[name='userImport']")
     private WebElement importTab;
@@ -45,7 +45,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.navToolbar = new NavToolbar(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

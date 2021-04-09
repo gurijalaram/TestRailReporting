@@ -69,7 +69,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ConnectionManager<T> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
     private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
     private static Map<String, String> authTokens = new ConcurrentHashMap<>();
     private Class<T> returnType;
@@ -260,7 +260,7 @@ public class ConnectionManager<T> {
         }
 
         if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
-            LOGGER.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
+            logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
             RequestEntity authEntity = RequestEntity
                 .initDefaultFormAuthorizationData(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
                     requestEntity.getUserAuthenticationEntity().getPassword()

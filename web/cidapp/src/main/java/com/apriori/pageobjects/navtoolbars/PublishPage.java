@@ -3,7 +3,6 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class PublishPage extends LoadableComponent<PublishPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(PublishPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(PublishPage.class);
 
     @FindBy(xpath = "//h5[.='Publish Scenario']")
     private WebElement headerDialog;
@@ -37,6 +36,24 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "input[name='scenarioName']")
     private WebElement scenarioNameInput;
 
+    @FindBy(css = "[id='qa-publish-form-status-select'] .apriori-select")
+    private WebElement statusDropdown;
+
+    @FindBy(css = "[id='qa-publish-form-status-select'] input")
+    private WebElement statusInput;
+
+    @FindBy(css = "[id='qa-publish-form-cost-maturity-select'] .apriori-select")
+    private WebElement costMaturityDropdown;
+
+    @FindBy(css = "[id='qa-publish-form-cost-maturity-select'] input")
+    private WebElement costMaturityInput;
+
+    @FindBy(css = "[id='qa-publish-form-assigned-to-select'] .apriori-select")
+    private WebElement assigneeDropdown;
+
+    @FindBy(css = "[id='qa-publish-form-assigned-to-select'] input")
+    private WebElement assigneeInput;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -45,7 +62,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -60,22 +77,41 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     }
 
     /**
-     * Set dropdown for any field
+     * Uses type ahead to input the status
      *
-     * @param dropdown - the dropdown
-     * @param value    - the value
+     * @param status - the status
      * @return current page object
      */
-    public PublishPage setDropdown(String dropdown, String value) {
-        By theDropdown = By.xpath(String.format("//label[.='%s']/following-sibling::div[contains(@class,'apriori-select form-control')]", dropdown));
-        pageUtils.waitForElementAndClick(theDropdown);
-        By theValue = By.xpath(String.format("//button[@value='%s']", value.toUpperCase()));
-        pageUtils.scrollWithJavaScript(driver.findElement(theValue), true).click();
+    public PublishPage typeAheadStatus(String status) {
+        pageUtils.typeAheadInput(statusDropdown, statusInput, status);
+        return this;
+    }
+
+    /**
+     * Uses type ahead to input the cost maturity
+     *
+     * @param costMaturity - the cost maturity
+     * @return current page object
+     */
+    public PublishPage typeAheadCostMaturity(String costMaturity) {
+        pageUtils.typeAheadInput(costMaturityDropdown, costMaturityInput, costMaturity);
+        return this;
+    }
+
+    /**
+     * Uses type ahead to input the assignee
+     *
+     * @param assignee - the assignee
+     * @return current page object
+     */
+    public PublishPage typeAheadAssignee(String assignee) {
+        pageUtils.typeAheadInput(assigneeDropdown, assigneeInput, assignee);
         return this;
     }
 
     /**
      * Click locked tick box
+     *
      * @return current page object
      */
     public PublishPage lock() {
@@ -85,6 +121,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     /**
      * Get conflict error message
+     *
      * @return string
      */
     public String getConflictMessage() {
@@ -93,6 +130,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     /**
      * Selects the override button
+     *
      * @return current page object
      */
     public PublishPage override() {
@@ -102,6 +140,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     /**
      * Change scenario name
+     *
      * @param scenarioName - scenario name
      * @return current page object
      */

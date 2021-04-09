@@ -24,10 +24,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsSitesTests extends CdsTestUtil {
+public class CdsSitesTests {
     private String url;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -37,16 +38,17 @@ public class CdsSitesTests extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
+            cdsTestUtil.delete(customerIdentityEndpoint);
         }
     }
 
     @Test
+    @TestRail(testCaseId = "5969")
     @Description("Get a list of Sites in CDS Db")
     public void getSites() {
         url = String.format(url, "sites");
 
-        ResponseWrapper<Sites> response = getCommonRequest(url, true, Sites.class);
+        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(url, Sites.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -54,15 +56,16 @@ public class CdsSitesTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "5309")
     @Description("Get details of a site by its Identity")
     public void getSiteByIdentity() {
         String sitesUrl = String.format(url, "sites");
 
-        ResponseWrapper<Sites> response = getCommonRequest(sitesUrl, true, Sites.class);
+        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(sitesUrl, Sites.class);
         String siteIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
         String identityUrl = String.format(url, String.format("sites/%s", siteIdentity));
-        ResponseWrapper<Site> responseWrapper = getCommonRequest(identityUrl, true, Site.class);
+        ResponseWrapper<Site> responseWrapper = cdsTestUtil.getCommonRequest(identityUrl, Site.class);
 
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseWrapper.getResponseEntity().getResponse().getIdentity(), is(equalTo(siteIdentity)));
@@ -72,8 +75,6 @@ public class CdsSitesTests extends CdsTestUtil {
     @TestRail(testCaseId = "3299")
     @Description("Add a site to a customer")
     public void addCustomerSite() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -81,12 +82,11 @@ public class CdsSitesTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
 
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
 
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(site.getResponseEntity().getResponse().getName(), is(equalTo(siteName)));
@@ -96,19 +96,17 @@ public class CdsSitesTests extends CdsTestUtil {
     @TestRail(testCaseId = "3279")
     @Description("Get Sites for a customer")
     public void getCustomerSites() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
+        String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
-        ResponseWrapper<Sites> response = getCommonRequest(siteEndpoint, true, Sites.class);
+        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(siteEndpoint, Sites.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(0)));
@@ -118,8 +116,6 @@ public class CdsSitesTests extends CdsTestUtil {
     @TestRail(testCaseId = "5310")
     @Description("Add a site to a customer")
     public void getCustomerSiteDetails() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -127,47 +123,42 @@ public class CdsSitesTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
 
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
-        String identityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites/").concat(siteIdentity)));
+        String identityEndpoint = String.format(url, String.format("customers/%s/sites/%s", customerIdentity, siteIdentity));
 
-        ResponseWrapper<Site> response = getCommonRequest(identityEndpoint, true, Site.class);
+        ResponseWrapper<Site> response = cdsTestUtil.getCommonRequest(identityEndpoint, Site.class);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(site.getResponseEntity().getResponse().getName(), is(equalTo(siteName)));
         assertThat(site.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));
     }
 
     @Test
-    @TestRail(testCaseId = "5310")
+    @TestRail(testCaseId = "5970")
     public void deleteSite() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        String deleteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        String deleteEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<String> deleteResponse = delete(deleteEndpoint);
+        ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(deleteEndpoint);
 
         assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
-        assertThat(deleteResponse.getResponseEntity(), is(emptyString()));
     }
 }

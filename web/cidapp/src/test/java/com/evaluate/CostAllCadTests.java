@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -15,7 +14,6 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -44,13 +42,14 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421", "565", "567"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machined Box AMERICAS.SLDPRT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Machined Box AMERICAS.SLDPRT");
 
         loginPage = new CidAppLoginPage(driver);
         costDetailsPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -60,8 +59,8 @@ public class CostAllCadTests extends TestBase {
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
         assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$17.66")));
-        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.30")));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.74")));
+        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.80")));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.89")));
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app
@@ -95,20 +94,21 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - par")
     public void testCADFormatPar() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("26136.par");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"26136.par");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -116,19 +116,20 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap DFM.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Plastic moulded cap DFM.CATPart");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -136,20 +137,21 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("turning.prt.4");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"turning.prt.4");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -157,20 +159,21 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("turning.prt.4");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"turning.prt.4");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -178,20 +181,21 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Locker_bottom_panel.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Locker_bottom_panel.prt");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -199,20 +203,21 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("VERTICAL PLATE.ipt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"VERTICAL PLATE.ipt");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -220,20 +225,21 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("partbody_2.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"partbody_2.stp");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -241,20 +247,21 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParaSolid() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("bracket_basic_steel_PMI.x_t");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"bracket_basic_steel_PMI.x_t");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -262,41 +269,44 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Plastic moulded cap thinPart.SAT");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Plastic moulded cap thinPart.SAT");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), (is(true)));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), (is(true)));
     }
 
     @Test
     @TestRail(testCaseId = {"1605"})
     @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
     public void translationTest() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("LargePart.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"LargePart.prt.1");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), (is(true)));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED.getCostingText()), (is(true)));
     }
 
     @Test
     @TestRail(testCaseId = {"5447", "2317"})
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("LargePart.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"LargePart.prt.1");
 
         loginPage = new CidAppLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())
@@ -309,8 +319,9 @@ public class CostAllCadTests extends TestBase {
     @TestRail(testCaseId = {"5426"})
     @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
     public void failedBlankScenarioName() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())

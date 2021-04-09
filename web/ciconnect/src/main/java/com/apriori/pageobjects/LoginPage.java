@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import utils.Constants;
 
 public class LoginPage {
-    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
@@ -34,9 +34,9 @@ public class LoginPage {
         pageUtils = PageUtils.getInstance(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (loadNewPage) {
-            driver.get(Constants.URL);
+            driver.get(Constants.getDefaultUrl());
         }
-        logger.info("CURRENTLY ON INSTANCE: " + Constants.URL);
+        logger.info("CURRENTLY ON INSTANCE: " + Constants.getDefaultUrl());
         PageFactory.initElements(driver, this);
     }
 

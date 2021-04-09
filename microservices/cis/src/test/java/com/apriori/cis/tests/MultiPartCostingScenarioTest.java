@@ -40,7 +40,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
         ERROR, COMPLETE, INCOMPLETE
     }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultiPartCostingScenarioTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(MultiPartCostingScenarioTest.class);
     
     private static Boolean exitTest = false;
     private static String batchIdentity;
@@ -69,7 +69,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
         try {
             BatchResources.startCosting(batchIdentity);
         } catch (Exception ignored) {
-            LOGGER.info("Empty response", ignored);
+            logger.info("Empty response", ignored);
 
         }
 
@@ -116,8 +116,8 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
             try {
                 partIdentity = CisUtils.getIdentity(batchPart, Part.class);
             } catch (Exception e) {
-                LOGGER.error(e.getMessage());
-                LOGGER.error(Arrays.toString(e.getStackTrace()));
+                logger.error(e.getMessage());
+                logger.error(Arrays.toString(e.getStackTrace()));
             }
 
             partIdentities.add(partIdentity);
@@ -145,14 +145,14 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
                     return CostingElementStatus.COMPLETE;
                 }
             } catch (InterruptedException e) {
-                LOGGER.error(e.getMessage());
-                LOGGER.error(Arrays.toString(e.getStackTrace()));
+                logger.error(e.getMessage());
+                logger.error(Arrays.toString(e.getStackTrace()));
                 throw e;
             }
 
             if (exitTest) {
                 String errors = CisUtils.getErrors(batchPart, Part.class);
-                LOGGER.error(errors);
+                logger.error(errors);
                 fail("Part was in state 'ERRORED'");
                 return CostingElementStatus.ERROR;
             }
@@ -174,8 +174,8 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
                     return CostingElementStatus.COMPLETE;
                 }
             } catch (Exception e) {
-                LOGGER.error(e.getMessage());
-                LOGGER.error(Arrays.toString(e.getStackTrace()));
+                logger.error(e.getMessage());
+                logger.error(Arrays.toString(e.getStackTrace()));
                 throw e;
 
             }
@@ -207,8 +207,8 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
             try {
                 Thread.sleep(10000);
             } catch (Exception e) {
-                LOGGER.error(e.getMessage());
-                LOGGER.error(Arrays.toString(e.getStackTrace()));
+                logger.error(e.getMessage());
+                logger.error(Arrays.toString(e.getStackTrace()));
                 throw e;
             }
         }
@@ -243,8 +243,8 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
 
             countDownLatch.await();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error(Arrays.toString(e.getStackTrace()));
+            logger.error(e.getMessage());
+            logger.error(Arrays.toString(e.getStackTrace()));
             throw e;
 
         } finally {

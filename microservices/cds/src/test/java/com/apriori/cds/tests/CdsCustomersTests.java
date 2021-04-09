@@ -29,12 +29,13 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class CdsCustomersTests extends CdsTestUtil {
+public class CdsCustomersTests {
     private String url;
 
     private String customerIdentity;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -44,7 +45,7 @@ public class CdsCustomersTests extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
+            cdsTestUtil.delete(customerIdentityEndpoint);
         }
     }
 
@@ -54,7 +55,7 @@ public class CdsCustomersTests extends CdsTestUtil {
     public void getCustomers() {
         url = String.format(url, "customers");
 
-        ResponseWrapper<Customers> response = getCommonRequest(url, true, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(url, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -62,16 +63,15 @@ public class CdsCustomersTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "3298")
     @Description("Add API customers")
     public void addCustomerTest() {
-        String customerEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customerEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
@@ -79,60 +79,57 @@ public class CdsCustomersTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "3278")
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        ResponseWrapper<Customer> response = getCommonRequest(customerIdentityEndpoint, true, Customer.class);
+        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(customerIdentityEndpoint, Customer.class);
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getResponse().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
 
     @Test
-    @Description("Get customer by Identity")
+    @TestRail(testCaseId = "5957")
+    @Description("Get customer applications")
     public void getCustomersApplications() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String applicationsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/applications")));
+        String applicationsEndpoint = String.format(url, String.format("customers/%s/applications", customerIdentity));
 
-        ResponseWrapper<Applications> response = getCommonRequest(applicationsEndpoint, true, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(applicationsEndpoint, Applications.class);
         assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), CoreMatchers.is(equalTo(0)));
     }
 
     @Test
+    @TestRail(testCaseId = "5305")
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateCustomerName());
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
 
         customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));

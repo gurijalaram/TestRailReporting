@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(MaterialSelectorPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(MaterialSelectorPage.class);
 
     @FindBy(xpath = "//label[.='Type']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement typeDropdown;
@@ -42,7 +42,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -104,8 +104,11 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      */
     public MaterialSelectorPage selectMaterial(String materialName) {
         By material = By.xpath(String.format("//div[@role='row']//div[contains(text(),'%s')]", materialName));
-        pageUtils.waitForElementToAppear(material);
-        pageUtils.scrollWithJavaScript(driver.findElement(material), true).click();
+        pageUtils.scrollWithJavaScript(driver.findElement(material), true);
+
+        if (!pageUtils.jsGetParentElement(driver.findElement(By.xpath(String.format("//div[@role='row']//div[.='%s']", materialName)))).getAttribute("class").contains("selected")) {
+            pageUtils.waitForElementAndClick(material);
+        }
         return this;
     }
 

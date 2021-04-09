@@ -38,7 +38,7 @@ import java.util.List;
 public class PageUtils {
 
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
-    static final Logger LOGGER = LoggerFactory.getLogger(PageUtils.class);
+    static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
     private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
             StaleElementReferenceException.class, ElementNotInteractableException.class);
@@ -203,6 +203,16 @@ public class PageUtils {
         executor.executeScript("window.open()");
     }
 
+    /**
+     * Use javascript to get the parent node of the element
+     * @param element - the element
+     * @return webelement
+     */
+    public WebElement jsGetParentElement(WebElement element) {
+        return (WebElement) ((JavascriptExecutor) driver).executeScript(
+            "return arguments[0].parentElement", element);
+    }
+
     public void actionClick(WebElement targetElement) {
         Actions builder = new Actions(driver);
         builder.click(targetElement).build().perform();
@@ -245,7 +255,7 @@ public class PageUtils {
                 return wait.until(steadinessOfElementLocated(locator, true));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
-                LOGGER.debug("Trying to recover from a stale element reference exception");
+                logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
             } catch (TimeoutException e) {
                 count = count + 1;
@@ -275,7 +285,7 @@ public class PageUtils {
                     try {
                         element = driver.findElement(locator);
                     } catch (NoSuchElementException e) {
-                        LOGGER.debug("Element not found");
+                        logger.debug("Element not found");
                         return null;
                     }
                 }
@@ -369,7 +379,7 @@ public class PageUtils {
                 return wait.until(condition);
             } catch (StaleElementReferenceException e) {
                 // e.toString();
-                LOGGER.debug("Trying to recover from a stale element reference exception");
+                logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
             } catch (TimeoutException e) {
                 count = count + 1;
@@ -386,14 +396,14 @@ public class PageUtils {
                 return wait.until(visibilityOf(parentElement.findElement(childLocator)));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
-                LOGGER.debug("Trying to recover from a stale element reference exception");
+                logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
             } catch (TimeoutException e) {
                 count = count + 1;
-                LOGGER.debug("TimeoutException {}x", count);
+                logger.debug("TimeoutException {}x", count);
             } catch (NoSuchElementException e) {
                 count = count + 1;
-                LOGGER.debug("NoSuchElementException {}x", count);
+                logger.debug("NoSuchElementException {}x", count);
                 waitFor((BASIC_WAIT_TIME_IN_SECONDS / 20) * 1000);
             }
         }
@@ -408,13 +418,13 @@ public class PageUtils {
                 return wait.until(visibilityOf(parentElement.findElement(childLocator)));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
-                LOGGER.debug("Trying to recover from a stale element reference exception");
+                logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
             } catch (TimeoutException e) {
                 count = count + 1;
             } catch (NoSuchElementException e) {
                 count = count + 1;
-                LOGGER.debug("NoSuchElementException {}x", count);
+                logger.debug("NoSuchElementException {}x", count);
                 waitFor((waitTimeInSecond / 2) * 1000);
             }
         }
@@ -429,7 +439,7 @@ public class PageUtils {
                 return wait.until(ExpectedConditions.elementToBeClickable(locator));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
-                LOGGER.debug("Trying to recover from a stale element reference exception");
+                logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
             } catch (TimeoutException e) {
                 count = count + 1;
@@ -447,7 +457,7 @@ public class PageUtils {
                 return wait.until(ExpectedConditions.elementToBeClickable(element));
             } catch (StaleElementReferenceException e) {
                 // e.toString();
-                LOGGER.debug("Trying to recover from a stale element reference exception");
+                logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
             } catch (TimeoutException e) {
                 count = count + 1;
@@ -478,7 +488,7 @@ public class PageUtils {
                 keyAction = Keys.RIGHT;
                 break;
             default:
-                LOGGER.error("unknown/no scroll action found");
+                logger.error("unknown/no scroll action found");
                 break;
         }
 
@@ -497,13 +507,13 @@ public class PageUtils {
                     return driver.findElement(scenario);
                 }
             } catch (ElementNotInteractableException e) {
-                LOGGER.debug("Trying to recover from an element not interactable exception");
+                logger.debug("Trying to recover from an element not interactable exception");
                 count = count + 1;
             } catch (NoSuchElementException e) {
-                LOGGER.debug("Trying to recover from no such element exception");
+                logger.debug("Trying to recover from no such element exception");
                 count = count + 1;
             } catch (StaleElementReferenceException e) {
-                LOGGER.debug("Trying to recover from a stale element reference exception");
+                logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
             }
         }
@@ -534,10 +544,10 @@ public class PageUtils {
                     return driver.findElements(scenario);
                 }
             } catch (ElementNotInteractableException e) {
-                LOGGER.debug("Trying to recover from an element not interactable exception");
+                logger.debug("Trying to recover from an element not interactable exception");
                 count = count + 1;
             } catch (StaleElementReferenceException e) {
-                LOGGER.debug("Trying to recover from a stale element reference exception");
+                logger.debug("Trying to recover from a stale element reference exception");
                 count = count + 1;
             }
         }
@@ -787,5 +797,20 @@ public class PageUtils {
      */
     public String getUrlToCheck() {
         return System.getProperty("baseUrl");
+    }
+
+    /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param dropdownInput    - the locator
+     * @param value            - the value
+     * @return current page object
+     */
+    public void typeAheadInput(WebElement dropdownSelector, WebElement dropdownInput, String value) {
+        waitForElementAndClick(dropdownSelector);
+        dropdownInput.clear();
+        dropdownInput.sendKeys(value);
+        dropdownInput.sendKeys(Keys.ENTER);
     }
 }

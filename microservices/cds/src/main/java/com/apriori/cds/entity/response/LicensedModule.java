@@ -1,5 +1,6 @@
 package com.apriori.cds.entity.response;
 
+import com.apriori.utils.json.deserializers.DateDeserializer_yyyyMMdd;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,8 +20,8 @@ public class LicensedModule {
     private LocalDateTime createdAt;
     private String name;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime expiresAt;
+    @JsonDeserialize(using = DateDeserializer_yyyyMMdd.class)
+    private LocalDate expiresAt;
     private String licenseSignature;
 
     public LocalDateTime getCreatedAt() {
@@ -58,11 +60,11 @@ public class LicensedModule {
         return this;
     }
 
-    public LocalDateTime getExpiresAt() {
+    public LocalDate getExpiresAt() {
         return expiresAt;
     }
 
-    public LicensedModule setExpiresAt(LocalDateTime expiresAt) {
+    public LicensedModule setExpiresAt(LocalDate expiresAt) {
         this.expiresAt = expiresAt;
         return this;
     }

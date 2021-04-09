@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PartResources extends CisBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PartResources.class);
+    private static final Logger logger = LoggerFactory.getLogger(PartResources.class);
 
     private static final String endpointParts = "parts";
     private static final String endpointPartsWithIdentity = "parts/%s";

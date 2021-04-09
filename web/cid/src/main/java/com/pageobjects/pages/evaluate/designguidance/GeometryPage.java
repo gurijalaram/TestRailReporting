@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class GeometryPage extends EvaluatePanelToolbar {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(GeometryPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(GeometryPage.class);
 
     @FindBy(css = "div[data-ap-comp='gcdTreeTable']")
     private WebElement gcdTable;
@@ -42,7 +42,7 @@ public class GeometryPage extends EvaluatePanelToolbar {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.columnUtils = new ColumnUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

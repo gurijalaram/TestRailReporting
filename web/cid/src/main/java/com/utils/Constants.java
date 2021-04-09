@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 
 public class Constants {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
+    private static final Logger logger = LoggerFactory.getLogger(Constants.class);
 
     public static final String EVALUATE_TOOLTIP_TEXT = "There is no active scenario.\n- Select one in Explore\nOR\n- Use New to create a new one.";
     public static final String COMPARE_TOOLTIP_TEXT = "There is no active comparison.\n- Select one in Explore\nOR\n- Use New to create a new one.";
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-int";
     public static final String ARROW_DOWN = "arrow_down";
     public static final String PAGE_DOWN = "page_down";
     public static final String HORIZONTAL_SCROLL = "horizontal_scroll";
@@ -38,7 +38,7 @@ public class Constants {
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            LOGGER.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

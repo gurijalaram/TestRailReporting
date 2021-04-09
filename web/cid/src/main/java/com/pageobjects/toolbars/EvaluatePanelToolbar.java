@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class EvaluatePanelToolbar extends LoadableComponent<EvaluatePanelToolbar> {
 
-    private final Logger logger = LoggerFactory.getLogger(EvaluatePanelToolbar.class);
+    private static final Logger logger = LoggerFactory.getLogger(EvaluatePanelToolbar.class);
 
     @FindBy(css = "button[data-ap-comp='expandPanelButton']")
     private WebElement chevronButton;

@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DeleteWorkflowPage {
-    private final Logger logger = LoggerFactory.getLogger(DeleteWorkflowPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeleteWorkflowPage.class);
 
     @FindBy(css = "#confirmBox")
     private WebElement deleteWorklowModal;
@@ -31,19 +31,37 @@ public class DeleteWorkflowPage {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 
+    /**
+     * Check if the Delete popup exists
+     *
+     * @return True if the Delete popup exists
+     */
     public boolean modalExists() {
         pageUtils.waitForElementToAppear(deleteWorklowModal);
         return deleteWorklowModal.isDisplayed();
     }
 
+    /**
+     * Get the message on the Delete poopup
+     *
+     * @return The message
+     */
     public String getModalMessage() {
         return deleteModalMessage.getText();
     }
 
+    /**
+     * Get the header on the the Delete popup
+     *
+     * @return The header
+     */
     public String getModalHeader() {
         return deleteModalHeader.getText();
     }
 
+    /**
+     * Delete the selected workflow
+     */
     public void deleteWorkflow() {
         pageUtils.waitForElementAndClick(deleteButton);
     }

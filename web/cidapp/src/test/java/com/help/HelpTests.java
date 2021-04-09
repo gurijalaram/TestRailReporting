@@ -46,13 +46,14 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void moreInputsHelp() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openInputDetails()
             .openHelp();
@@ -64,13 +65,14 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void materialUtilHelp() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
             .openHelp();
@@ -82,13 +84,14 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void designGuidanceHelp() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openHelp();
@@ -100,13 +103,14 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void processDetailsHelp() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openProcesses()
             .openHelp();
@@ -118,13 +122,14 @@ public class HelpTests extends TestBase {
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void costResultsHelp() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openCostDetails()
             .openHelp();

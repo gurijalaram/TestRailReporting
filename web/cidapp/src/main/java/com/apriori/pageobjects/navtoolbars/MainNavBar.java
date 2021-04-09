@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class MainNavBar extends LoadableComponent<MainNavBar> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ExplorePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
@@ -31,16 +31,16 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     @FindBy(xpath = "//button[.='Compare']")
     private WebElement compareButton;
 
-    @FindBy(xpath = "//button[.='Settings']")
+    @FindBy(id = "qa-header-preferences-button")
     private WebElement settingsButton;
 
-    @FindBy(xpath = "//button[@class='transparent dropdown-toggle btn btn-secondary'] [.='Help']")
+    @FindBy(id = "qa-header-help-button")
     private WebElement helpDropdown;
 
-    @FindBy(xpath = "//button[@class='dropdown-item'] [.='Help']")
+    @FindBy(xpath = "//button[.='Help']")
     private WebElement helpButton;
 
-    @FindBy(xpath = "//button[@class='dropdown-item'] [.='About']")
+    @FindBy(xpath = "//button[.='About']")
     private WebElement aboutButton;
 
     private PageUtils pageUtils;
@@ -49,7 +49,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     public MainNavBar(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

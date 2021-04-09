@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class SheetMetalDtcReportPage extends GenericReportPage {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(SheetMetalDtcReportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(SheetMetalDtcReportPage.class);
 
     @FindBy(xpath = "//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]")
     private WebElement exportSetOnReport;
@@ -27,7 +27,7 @@ public class SheetMetalDtcReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

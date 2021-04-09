@@ -20,16 +20,16 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsCustomerUsersTests extends CdsTestUtil {
+public class CdsCustomerUsersTests {
     private String url;
     private String userIdentityEndpoint;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -39,10 +39,10 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (userIdentityEndpoint != null) {
-            delete(userIdentityEndpoint);
+            cdsTestUtil.delete(userIdentityEndpoint);
         }
         if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
+            cdsTestUtil.delete(customerIdentityEndpoint);
         }
     }
 
@@ -50,52 +50,47 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
     @TestRail(testCaseId = "3293")
     @Description("Add a user to a customer")
     public void addCustomerUsers() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        assertThat(user.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_CREATED)));
+        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
     }
 
     @Test
     @TestRail(testCaseId = "3250")
-    @Description("Add a user to a customer")
+    @Description("Get a list of users for a customer")
     public void getCustomerUsers() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
+        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<Users> response = getCommonRequest(usersEndpoint, true, Users.class);
+        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(usersEndpoint, Users.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
@@ -106,86 +101,77 @@ public class CdsCustomerUsersTests extends CdsTestUtil {
     @TestRail(testCaseId = "3281")
     @Description("Add a user to a customer")
     public void getCustomerUserByIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<User> response = getCommonRequest(userIdentityEndpoint, true, User.class);
+        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(userIdentityEndpoint, User.class);
 
-        assertThat(response.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getIdentity(), is(equalTo(userIdentity)));
         assertThat(response.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
     }
 
     @Test
-    @TestRail(testCaseId = "3281")
+    @TestRail(testCaseId = "3295")
     @Description("Update a user")
     public void patchUserByIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
-        ResponseWrapper<User> patchResponse = patchUser(userIdentityEndpoint, User.class);
+        ResponseWrapper<User> patchResponse = cdsTestUtil.patchUser(customerIdentity, userIdentity);
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getResponse().getUserProfile().getDepartment(), is(equalTo("Design Dept")));
     }
 
     @Test
-    @TestRail(testCaseId = "3281")
+    @TestRail(testCaseId = "5967")
     @Description("Delete user wrong identity")
     public void deleteWrongUserIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-        String usersEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users")));
 
-        ResponseWrapper<User> user = addUser(usersEndpoint, User.class, userName, customerName);
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat(userIdentity))));
-        String wrongIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/users/".concat("L2H992829CFB"))));
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        String wrongIdentityEndpoint = String.format(url, String.format("customers/%s/users/L2H992829CFB", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(wrongIdentityEndpoint, ErrorMessage.class);
         ResponseWrapper<ErrorMessage> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());

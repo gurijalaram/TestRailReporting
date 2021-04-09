@@ -26,7 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
@@ -51,7 +50,6 @@ public class CastingDtcReportTests extends TestBase {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-            Constants.DTC_METRICS_FOLDER,
             ReportNamesEnum.CASTING_DTC.getReportName()
         );
     }
@@ -175,7 +173,7 @@ public class CastingDtcReportTests extends TestBase {
 
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();
-        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip();
+        BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
         String partName = genericReportPage.getPartNameDtcReports();
         genericReportPage.openNewCidTabAndFocus(1);
 
@@ -255,7 +253,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.FINISH_MASS.getMassMetricName()
@@ -268,7 +266,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricDtcReports(
+        inputControlsTests.testMassMetricReportsWithChart(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             MassMetricEnum.ROUGH_MASS.getMassMetricName()

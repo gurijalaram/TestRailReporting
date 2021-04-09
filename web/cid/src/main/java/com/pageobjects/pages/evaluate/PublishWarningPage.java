@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(PublishWarningPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(PublishWarningPage.class);
 
     @FindBy(css = ".modal-title")
     private WebElement dialogTitle;
@@ -44,7 +44,7 @@ public class PublishWarningPage extends LoadableComponent<PublishWarningPage> {
     public PublishWarningPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -4,6 +4,8 @@ import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.enums.reports.ReportNamesEnum;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +20,7 @@ import java.util.Map;
 
 public class ViewRepositoryPage extends ReportsPageHeader {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewRepositoryPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
     private Map<String, String[]> navigationMap = new HashMap<>();
 
     @FindBy(xpath = "//div[contains(text(), 'Repository')]")
@@ -34,27 +36,30 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         initialiseNavigationMap();
     }
 
     /**
      * Navigates to specified report folder
-     * @param afterReportsFolder - String
+     *
      * @param lastFolder - String
      * @return Instance of current page object
      */
-    public GenericReportPage navigateToReportFolder(String afterReportsFolder, String lastFolder) {
+    public GenericReportPage navigateToReportFolder(String lastFolder) {
         navigateToFolder("Organization");
         navigateToFolder("aPriori");
         navigateToFolder("Reports");
 
-        if (!afterReportsFolder.equals(Constants.GENERAL_FOLDER)) {
-            navigateToFolder(navigationMap.get(lastFolder)[0]);
-            navigateToFolder(navigationMap.get(lastFolder)[1]);
-        } else {
-            navigateToFolder(Constants.GENERAL_FOLDER);
+        String[] foldersToGoTo = navigationMap.get(lastFolder);
+        navigateToFolder(foldersToGoTo[0]);
+
+        if (foldersToGoTo.length != 1) {
+            navigateToFolder(foldersToGoTo[1]);
+            if (foldersToGoTo.length == 3) {
+                navigateToFolder(foldersToGoTo[2]);
+            }
         }
 
         return new GenericReportPage(driver);
@@ -93,11 +98,64 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      * Initialises Navigation Hash Map
      */
     private void initialiseNavigationMap() {
-        navigationMap.put("Casting DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Casting"});
-        navigationMap.put("Machining DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Machining"});
-        navigationMap.put("Plastic DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Plastic"});
-        navigationMap.put("Sheet Metal DTC", new String[]{Constants.DTC_METRICS_FOLDER, "Sheet Metal"});
-        navigationMap.put("Cycle Time", new String[]{"Design To Cost", "Cycle Time"});
-        navigationMap.put("Target and Quoted Cost", new String[]{"Design To Cost", "Target And Quoted Cost"});
+        navigationMap.put(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+
+        navigationMap.put(
+                ReportNamesEnum.CASTING_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+
+        navigationMap.put(
+                ReportNamesEnum.MACHINING_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+
+        navigationMap.put(
+                ReportNamesEnum.PLASTIC_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+
+        navigationMap.put(
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER });
+
+        navigationMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.CYCLE_TIME_FOLDER });
+        navigationMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.CYCLE_TIME_FOLDER });
+
+        navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.TARGET_AND_QUOTED_COST_FOLDER });
+        navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.TARGET_AND_QUOTED_COST_FOLDER });
+        navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName(),
+            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
+                Constants.TARGET_AND_QUOTED_COST_FOLDER });
+
+        navigationMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
+        navigationMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
     }
 }

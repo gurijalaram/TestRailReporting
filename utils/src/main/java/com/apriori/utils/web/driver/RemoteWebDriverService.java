@@ -25,7 +25,7 @@ import java.security.InvalidParameterException;
 
 public class RemoteWebDriverService extends BrowserManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RemoteWebDriverService.class);
+    private static final Logger logger = LoggerFactory.getLogger(RemoteWebDriverService.class);
 
     private RemoteWebDriver result;
     private DesiredCapabilities dc = new DesiredCapabilities();
@@ -47,7 +47,7 @@ public class RemoteWebDriverService extends BrowserManager {
 
     @Override
     public WebDriver startService() {
-        LOGGER.info("server: " + server);
+        logger.info("server: " + server);
 
         String uuid = StringUtils.isEmpty(System.getProperty("uuid")) ? "ParallelTestsRun" : System.getProperty("uuid");
 
@@ -59,7 +59,7 @@ public class RemoteWebDriverService extends BrowserManager {
         try {
             switch (browser) {
                 case CHROME:
-                    LOGGER.info("Starting ChromeDriver........ ");
+                    logger.info("Starting ChromeDriver........ ");
 
                     ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
                     dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
@@ -68,7 +68,7 @@ public class RemoteWebDriverService extends BrowserManager {
                     break;
 
                 case FIREFOX:
-                    LOGGER.info("Starting GeckoDriver........ ");
+                    logger.info("Starting GeckoDriver........ ");
 
                     FirefoxProfile fp = new FirefoxProfile();
                     dc.setCapability(FirefoxDriver.PROFILE, fp);
@@ -76,7 +76,7 @@ public class RemoteWebDriverService extends BrowserManager {
                     break;
 
                 case EDGE:
-                    LOGGER.info("Starting EdgeDriver........ ");
+                    logger.info("Starting EdgeDriver........ ");
 
                     dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
                     break;
@@ -86,7 +86,7 @@ public class RemoteWebDriverService extends BrowserManager {
             }
             result = new RemoteWebDriver(new URL(server), dc);
             result.setFileDetector(new LocalFileDetector());
-            LOGGER.info("Full list of Capabilities: " + (result).getCapabilities().toString());
+            logger.info("Full list of Capabilities: " + (result).getCapabilities().toString());
 
         } catch (UnreachableBrowserException | MalformedURLException e) {
             e.printStackTrace();

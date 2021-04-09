@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 
 public class ScenarioComparisonReportPage extends GenericReportPage {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ScenarioComparisonReportPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ScenarioComparisonReportPage.class);
 
     @FindBy(xpath = "//span[contains(text(), 'FULLY')]/../following-sibling::td[2]")
     private WebElement firstFbc;
@@ -55,7 +55,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -92,6 +92,12 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
             );
             pageUtils.waitForElementToAppear(locator);
         }
+
+        By filteredLocator = By.xpath("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')])[1]");
+        pageUtils.waitForElementToAppear(filteredLocator);
+
+        GenericReportPage genericReportPage = new GenericReportPage(driver);
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1,247");
     }
 
     /**

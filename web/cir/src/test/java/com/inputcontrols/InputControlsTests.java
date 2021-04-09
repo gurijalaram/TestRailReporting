@@ -61,7 +61,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
             .setExportDateUsingInput(false, "")
-            .waitForCorrectExportSetListCount("Single export set selection.", "0");
+            .waitForCorrectExportSetListCount("Export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -82,7 +82,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
             .setExportDateUsingPicker(false)
-            .waitForCorrectExportSetListCount("Single export set selection.", "0");
+            .waitForCorrectExportSetListCount("Export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -266,7 +266,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
-        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
+        usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
@@ -275,7 +275,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
-        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip();
+        gbpGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
@@ -363,13 +363,45 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
+     * Generic test for cost metric input control on Value Tracking report
+     * @param reportName String
+     * @param costMetric String
+     */
+    public void testCostMetricTargetQuotedCostValueTrackingReport(String reportName, String costMetric) {
+        testCostMetricCoreTargetQuotedCostReports(reportName, costMetric);
+
+        String expectedFirstProjectName = costMetric.contains("Fully") ? "4" : "1";
+        String expectedQuotedCostDifference = costMetric.contains("Fully") ? "318.50" : "264.13";
+
+        assertThat(targetQuotedCostTrendReportPage.getFirstProject(),
+                is(equalTo(String.format("PROJECT %s", expectedFirstProjectName))));
+        assertThat(targetQuotedCostTrendReportPage.getQuotedCostDifferenceFromApCost(),
+                is(equalTo(expectedQuotedCostDifference)));
+    }
+
+    /**
+     * Generic test for cost metric input control on Value Tracking Details report
+     * @param reportName String
+     * @param costMetric String
+     */
+    public void testCostMetricTargetQuotedCostValueTrackingDetailsReport(String reportName, String costMetric) {
+        testCostMetricCoreTargetQuotedCostReports(reportName, costMetric);
+
+        String expectedCurrentAprioriCost = costMetric.contains("Fully") ? "264.92" : "264.61";
+        String expectedAnnualizedAprioriCost = costMetric.contains("Fully") ? "1,453,962.46" : "1,453,623.64";
+
+        assertThat(targetQuotedCostTrendReportPage.getCurrentAprioriCost(), is(equalTo(expectedCurrentAprioriCost)));
+        assertThat(targetQuotedCostTrendReportPage.getAnnualizedCost(), is(equalTo(expectedAnnualizedAprioriCost)));
+    }
+
+    /**
      * Generic test for mass metric input control
      *
      * @param reportName - String
      * @param exportSet  - String
      * @param massMetric - String
      */
-    public void testMassMetricDtcReports(String reportName, String exportSet, String massMetric) {
+    public void testMassMetricReportsWithChart(String reportName, String exportSet, String massMetric) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
@@ -556,10 +588,8 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
-        String inputString = reportName.equals(ReportNamesEnum.SCENARIO_COMPARISON.getReportName()) ? "bhegan" : "Ben Hegan";
-
-        genericReportPage.searchListForName(listName, inputString);
-        assertThat(genericReportPage.isListOptionVisible(listName, inputString), is(true));
+        genericReportPage.searchListForName(listName, Constants.NAME_TO_SELECT);
+        assertThat(genericReportPage.isListOptionVisible(listName, Constants.NAME_TO_SELECT), is(true));
 
         genericReportPage.searchListForName(listName, "fakename");
         assertThat(genericReportPage.getCountOfListItems(listName), is(equalTo("0")));
@@ -849,6 +879,24 @@ public class InputControlsTests extends TestBase {
         assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
     }
 
+    private void testCostMetricCoreTargetQuotedCostReports(String reportName, String costMetric) {
+        targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, TargetQuotedCostTrendReportPage.class)
+                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+                .selectCostMetric(costMetric)
+                .clickOk()
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+
+        String expectedCostMetric = costMetric;
+        if (reportName.contains("Details") && costMetric.contains("Fully")) {
+            expectedCostMetric = "Fully Burdened";
+        }
+        assertThat(targetQuotedCostTrendReportPage.getCostMetricValueFromAboveChart(),
+                is(equalTo(expectedCostMetric)));
+    }
+
     private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -874,7 +922,7 @@ public class InputControlsTests extends TestBase {
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
-        assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("\n%s", costMetric))));
+        assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("%s", costMetric))));
     }
 
     private void partOneOfCheckBothProcessGroupTest(String reportName, String exportSetName, String processGroupName) {

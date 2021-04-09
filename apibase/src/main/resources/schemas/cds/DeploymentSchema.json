@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
     "response"
@@ -16,11 +15,11 @@
         "description",
         "apVersion",
         "active",
-        "installations",
-        "applications",
         "customerIdentity",
-        "deploymentType",
-        "sites"
+        "deploymentType"
+      ],
+      "optional": [
+        "installations"
       ],
       "properties": {
         "isDefault": {
@@ -52,79 +51,11 @@
           "items": {
           }
         },
-        "applications": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "object",
-                "required": [
-                  "isCloudHomeApp",
-                  "isSingleTenant",
-                  "isPublic",
-                  "identity",
-                  "createdBy",
-                  "createdAt",
-                  "name",
-                  "cloudReference",
-                  "serviceName",
-                  "description",
-                  "iconUrl"
-                ],
-                "properties": {
-                  "isCloudHomeApp": {
-                    "type": "boolean"
-                  },
-                  "isSingleTenant": {
-                    "type": "boolean"
-                  },
-                  "isPublic": {
-                    "type": "boolean"
-                  },
-                  "identity": {
-                    "type": "string"
-                  },
-                  "createdBy": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "cloudReference": {
-                    "type": "string"
-                  },
-                  "serviceName": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "iconUrl": {
-                    "type": "string"
-                  }
-                }
-              }
-            ]
-          }
-        },
         "customerIdentity": {
           "type": "string"
         },
         "deploymentType": {
           "type": "string"
-        },
-        "sites": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "string"
-              }
-            ]
-          }
         }
       }
     }

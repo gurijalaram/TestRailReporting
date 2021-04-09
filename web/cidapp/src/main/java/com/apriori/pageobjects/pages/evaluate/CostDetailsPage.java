@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CostDetailsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(CostDetailsPage.class);
 
     @FindBy(css = "g[class='highcharts-series-group']")
     private WebElement costResultChart;
@@ -35,7 +35,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

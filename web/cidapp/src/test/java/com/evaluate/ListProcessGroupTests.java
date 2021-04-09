@@ -7,6 +7,8 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -28,10 +30,12 @@ public class ListProcessGroupTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "6197")
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface.CATPart");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -40,7 +44,8 @@ public class ListProcessGroupTests extends TestBase {
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
     }
 
-    /*@Test
+    @Test
+    @TestRail(testCaseId = "6198")
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
 
@@ -51,5 +56,5 @@ public class ListProcessGroupTests extends TestBase {
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class);
 
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(AssemblyProcessGroupEnum.getNames()));
-    }*/
+    }
 }

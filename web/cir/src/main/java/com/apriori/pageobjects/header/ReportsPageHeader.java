@@ -13,7 +13,7 @@ import utils.Constants;
 
 public class ReportsPageHeader extends PageHeader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReportsPageHeader.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReportsPageHeader.class);
 
     @FindBy(xpath = "//div[@id='reportViewFrame']/div/div/div[@class='title']")
     private WebElement reportTitle;
@@ -73,7 +73,7 @@ public class ReportsPageHeader extends PageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 

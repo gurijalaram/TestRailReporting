@@ -3,7 +3,6 @@ package com.apriori.cds.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.objects.response.Customer;
@@ -22,10 +21,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CdsDeploymentsTests extends CdsTestUtil {
+public class CdsDeploymentsTests {
     private String url;
     private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -35,7 +35,7 @@ public class CdsDeploymentsTests extends CdsTestUtil {
     @After
     public void cleanUp() {
         if (customerIdentityEndpoint != null) {
-            delete(customerIdentityEndpoint);
+            cdsTestUtil.delete(customerIdentityEndpoint);
         }
     }
 
@@ -43,8 +43,6 @@ public class CdsDeploymentsTests extends CdsTestUtil {
     @TestRail(testCaseId = "3301")
     @Description("Add a deployment to a customer")
     public void addCustomerDeployment() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -52,28 +50,24 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("Production Deployment")));
-        assertThat(response.getResponseEntity().getResponse().getSites(), hasItem(siteIdentity));
+        assertThat(response.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));
     }
 
     @Test
     @TestRail(testCaseId = "5314")
     @Description("Get a list of deployments for a customer")
     public void getCustomerDeployments() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -81,20 +75,19 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<Deployments> deployment = getCommonRequest(deploymentsEndpoint, true, Deployments.class);
+        ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(deploymentsEndpoint, Deployments.class);
 
         assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -104,8 +97,6 @@ public class CdsDeploymentsTests extends CdsTestUtil {
     @TestRail(testCaseId = "5315")
     @Description("Add a deployment to a customer")
     public void getDeploymentByIdentity() {
-        String customersEndpoint = String.format(url, "customers");
-
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
@@ -113,23 +104,21 @@ public class CdsDeploymentsTests extends CdsTestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = addCustomer(customersEndpoint, Customer.class, customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        String siteEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/sites")));
-        ResponseWrapper<Site> site = addSite(siteEndpoint, Site.class, siteName, siteID);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
 
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments")));
-        ResponseWrapper<Deployment> response = addDeployment(deploymentsEndpoint, Deployment.class, siteIdentity);
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
-        String deploymentIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity.concat("/deployments/".concat(deploymentIdentity))));
+        String deploymentIdentityEndpoint = String.format(url, String.format("customers/%s/deployments/%s", customerIdentity, deploymentIdentity));
 
-        ResponseWrapper<Deployment> deployment = getCommonRequest(deploymentIdentityEndpoint, true, Deployment.class);
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.getCommonRequest(deploymentIdentityEndpoint, Deployment.class);
 
         assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getResponse().getIdentity(), is(equalTo(deploymentIdentity)));

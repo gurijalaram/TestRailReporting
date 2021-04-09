@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class ModalDialogController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ModalDialogController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ModalDialogController.class);
 
     @FindBy(id = "secondary-process-select-all-btn")
     private WebElement selectAllButton;
@@ -46,8 +46,14 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Back']")
     private WebElement backButton;
 
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Save']")
+    private WebElement saveButton;
+
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
+
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
+    private WebElement costButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -55,7 +61,7 @@ public class ModalDialogController {
     public ModalDialogController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -110,6 +116,16 @@ public class ModalDialogController {
     }
 
     /**
+     * Select the save button
+     *
+     * @return generic page object
+     */
+    public <T> T save(Class<T> klass) {
+        pageUtils.waitForElementAndClick(saveButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
      * Select all
      *
      * @return current page object
@@ -157,5 +173,15 @@ public class ModalDialogController {
     public ModalDialogController collapseAll() {
         pageUtils.waitForElementAndClick(collapseAllButton);
         return this;
+    }
+
+    /**
+     * Cost
+     *
+     * @return current page object
+     */
+    public <T> T cost(Class<T> klass) {
+        pageUtils.waitForElementAppear(costButton);
+        return PageFactory.initElements(driver, klass);
     }
 }

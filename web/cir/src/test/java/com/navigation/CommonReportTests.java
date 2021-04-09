@@ -47,11 +47,11 @@ public class CommonReportTests extends TestBase {
      *
      * @param reportName - String
      */
-    public void testReportAvailabilityByNavigation(String firstFolder, String reportName) {
+    public void testReportAvailabilityByNavigation(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToViewRepositoryPage()
-            .navigateToReportFolder(firstFolder, reportName);
+            .navigateToReportFolder(reportName);
 
         assertThat(reportName, is(equalTo(genericReportPage.getReportName(reportName))));
     }
@@ -136,7 +136,7 @@ public class CommonReportTests extends TestBase {
                     is(equalTo(partNames[1])));
         }
 
-        /*assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
+        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
             is(equalTo(partNames[0])));
         assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
             is(equalTo(partNames[1])));
@@ -154,7 +154,7 @@ public class CommonReportTests extends TestBase {
         assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
             is(equalTo(partNames[0])));
         assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
-            is(equalTo(partNames[1])));*/
+            is(equalTo(partNames[1])));
     }
 
     /**
@@ -434,6 +434,7 @@ public class CommonReportTests extends TestBase {
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
+        evaluatePage.waitForCostsToLoad();
         CostDetailsPage costDetailsPage = evaluatePage.openAssemblyCostDetails();
 
         assertThat(reportsPartName, is(equalTo(evaluatePage.getPartName())));

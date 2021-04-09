@@ -32,6 +32,8 @@ public class CasSitesTests extends TestUtil {
 
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CasTestUtil casTestUtil = new CasTestUtil();
+    private String url = String.format(Constants.getApiUrl(), "customers/");
 
     @Before
     public void getToken() {
@@ -48,16 +50,14 @@ public class CasSitesTests extends TestUtil {
     @TestRail(testCaseId = {"5649"})
     @Description("Returns a list of sites for the customer")
     public void getCustomerSites() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/");
-
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        String siteEndpoint = apiUrl + identity + "/sites";
+        String siteEndpoint = url + identity + "/sites";
 
         ResponseWrapper<Sites> siteResponse = new CommonRequestUtil().getCommonRequest(siteEndpoint, true, Sites.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -71,15 +71,13 @@ public class CasSitesTests extends TestUtil {
     @TestRail(testCaseId = "5650")
     @Description("Get the Site identified by its identity.")
     public void getSiteByIdentity() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/");
-
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String customerIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String siteEndpoint = apiUrl + customerIdentity + "/sites/";
+        String siteEndpoint = url + customerIdentity + "/sites/";
 
         ResponseWrapper<Sites> sitesResponse = new CommonRequestUtil().getCommonRequest(siteEndpoint, true, Sites.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -101,15 +99,13 @@ public class CasSitesTests extends TestUtil {
     @TestRail(testCaseId = "5651")
     @Description("Validates Customer's Site record by site ID.")
     public void validateCustomerSite() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/");
-
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
+        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String sitesEndpoint = apiUrl + identity + "/sites/";
+        String sitesEndpoint = url + identity + "/sites/";
 
         ResponseWrapper<Sites> sitesResponse = new CommonRequestUtil().getCommonRequest(sitesEndpoint, true, Sites.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -118,9 +114,8 @@ public class CasSitesTests extends TestUtil {
         assertThat(sitesResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String siteId = sitesResponse.getResponseEntity().getResponse().getItems().get(0).getSiteId();
-        String validateUrl = sitesEndpoint + "validate";
 
-        ResponseWrapper<ValidateSite> siteResponse = new CasTestUtil().validateSite(validateUrl, ValidateSite.class, token, siteId);
+        ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(identity, siteId);
 
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(siteResponse.getResponseEntity().getResponse().getStatus(), is(equalTo("EXISTS")));
@@ -131,7 +126,6 @@ public class CasSitesTests extends TestUtil {
     @TestRail(testCaseId = "5648")
     @Description("Create a new Site for the Customer")
     public void createCustomerSite() {
-        String url = String.format(Constants.getApiUrl(), "customers/");
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
@@ -139,14 +133,13 @@ public class CasSitesTests extends TestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<SingleCustomer> response = new CasTestUtil().addCustomer(url, SingleCustomer.class, token, customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
         String identity = response.getResponseEntity().getResponse().getIdentity();
-        String siteUrl = url + identity + "/sites";
 
-        ResponseWrapper<Site> site = new CasTestUtil().addSite(siteUrl, Site.class, token, siteID, siteName);
+        ResponseWrapper<Site> site = casTestUtil.addSite(identity, siteID, siteName);
 
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(site.getResponseEntity().getResponse().getSiteId(), is(equalTo(siteID)));

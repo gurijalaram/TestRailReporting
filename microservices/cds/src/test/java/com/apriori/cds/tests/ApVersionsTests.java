@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import com.apriori.cds.objects.response.ApVersions;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -17,8 +18,9 @@ import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ApVersionsTests extends CdsTestUtil {
+public class ApVersionsTests {
     private String url;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void setServiceUrl() {
@@ -26,11 +28,12 @@ public class ApVersionsTests extends CdsTestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "5958")
     @Description("Get a list of ap Versions in CDSDb")
     public void getApVersions() {
-        url = String.format(url,"ap-versions");
+        url = String.format(url, "ap-versions");
 
-        ResponseWrapper<ApVersions> response = getCommonRequest(url, true, ApVersions.class);
+        ResponseWrapper<ApVersions> response = cdsTestUtil.getCommonRequest(url, ApVersions.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

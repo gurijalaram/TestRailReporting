@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class Constants {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Constants.class);
+    private static final Logger logger = LoggerFactory.getLogger(Constants.class);
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String LOGOUT_HEADER = "CI DESIGN AUTOMATION";
@@ -25,8 +25,12 @@ public class Constants {
     public static final String PRIVACY_POLICY_URL = "https://www.apriori.com/privacy-policy";
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
     public static final String GENERAL_FOLDER = "General";
+    public static final String SOURCING_FOLDER = "Sourcing";
     public static final String SOLUTIONS_FOLDER = "Solutions";
+    public static final String CYCLE_TIME_FOLDER = "Cycle Time";
     public static final String DTC_METRICS_FOLDER = "DTC Metrics";
+    public static final String DESIGN_TO_COST_FOLDER = "Design To Cost";
+    public static final String TARGET_AND_QUOTED_COST_FOLDER = "Target And Quoted Cost";
     public static final String PUBLIC_WORKSPACE = "Public";
     public static final String PRIVATE_WORKSPACE = "Private";
     public static final String ASSEMBLY_STRING = "[assembly]";
@@ -53,6 +57,7 @@ public class Constants {
     public static final String FORGOT_PWD_MSG_STAGING_ENV = "WE'VE JUST SENT YOU AN EMAIL TO RESET YOUR PASSWORD.";
     public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
     public static final String INVALID_ERROR_MESSAGE = "Invalid";
+    public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
@@ -77,7 +82,7 @@ public class Constants {
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            LOGGER.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

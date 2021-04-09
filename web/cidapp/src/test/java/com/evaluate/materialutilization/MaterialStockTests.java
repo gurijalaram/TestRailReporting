@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.evaluate.materialutilization.StockPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
@@ -27,7 +28,6 @@ public class MaterialStockTests extends TestBase {
     private CidAppLoginPage loginPage;
     private StockPage stockPage;
     private MaterialUtilizationPage materialUtilizationPage;
-    private EvaluatePage evaluatePage;
 
     private File resourceFile;
 
@@ -37,7 +37,7 @@ public class MaterialStockTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    /*@TestRail(testCaseId = {"862", "871"})*/
+    @TestRail(testCaseId = "5115")
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -47,8 +47,8 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization();
 
@@ -68,7 +68,7 @@ public class MaterialStockTests extends TestBase {
 
     /*@Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"962", "965", "966", "967", "974", "970", "298"})
+    @TestRail(testCaseId = {"5148", "5151", "5152", "5153", "5156", "5160"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -79,7 +79,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getCostResults("Piece Part Cost"), is(closeTo(20.44, 1)));
@@ -87,8 +87,8 @@ public class MaterialStockTests extends TestBase {
         evaluatePage.openMaterialUtilization()
             .goToStockTab();
 
-        assertThat(stockPage.checkTableDetails("Auto"), is(true));
-        assertThat(stockPage.checkTableDetails("7.65"), is(true));
+        assertThat(stockPage.getStockInfo("Selection Method"), is(equalTo("Auto")));
+        assertThat(stockPage.getStockInfo("Unit Cost (USD / kg)"), is(equalTo("7.65")));
 
         stockPage.editStock()
             .selectStock("4.00  mm x 1500 mm x 3000 mm")
@@ -108,9 +108,9 @@ public class MaterialStockTests extends TestBase {
         assertThat(stockPage.checkTableDetails("7.65"), is(true));
     }*/
 
-    /*@Test
+    @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"968", "969", "876"})
+    @TestRail(testCaseId = {"5154", "5155", "5156"})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
 
@@ -121,46 +121,22 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();
 
-        assertThat(stockPage.checkTableDetails("ROUND_BAR"), is(true));
-        assertThat(stockPage.checkTableDetails("Virtual Stock Yes"), is(true));
+        assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("ROUND_BAR")));
+        assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("Yes")));
 
         stockPage.closePanel()
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();
 
-        assertThat(stockPage.checkTableDetails("3 in OD. 20 ft lengths"), is(true));
-        assertThat(stockPage.checkTableDetails("Virtual Stock No"), is(true));
-    }*/
-
-    /*@Test
-    @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3839", "869"})
-    @Description("validate the user can collapse and expand material properties")
-    public void materialProperties() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
-
-        loginPage = new CidAppLoginPage(driver);
-        materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .costScenario()
-            .openMaterialUtilization()
-            .toggleMaterialPropertiesPanel()
-            .toggleUtilizationPanel();
-
-        assertThat(materialUtilizationPage.utilizationPanelExpanded(), is("collapsed"));
-        assertThat(materialUtilizationPage.materialPanelExpanded(), is("collapsed"));
-    }*/
+        assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("3 in OD. 20 ft lengths")));
+        assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
+    }
 }

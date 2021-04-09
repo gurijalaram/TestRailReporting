@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferencesPage> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(DisplayPreferencesPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(DisplayPreferencesPage.class);
 
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
@@ -28,7 +28,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        LOGGER.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -55,6 +55,22 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
         pageUtils.waitForElementAndClick(theDropdown);
         By theValue = By.xpath(String.format("//button[.='%s']", value));
         pageUtils.scrollWithJavaScript(driver.findElement(theValue), true).click();
+        return this;
+    }
+
+    /**
+     * Uses type ahead to input info for any section
+     *
+     * @param label - the label
+     * @param value - the value
+     * @return current page object
+     */
+    public DisplayPreferencesPage typeAheadInSection(String label, String value) {
+        String labelLocator = "//label[.='%s']/following-sibling::div[contains(@class,'apriori-select')]";
+        WebElement labelDropdown = driver.findElement(By.xpath(String.format(labelLocator, label)));
+        WebElement valueInput = driver.findElement(By.xpath(String.format(labelLocator.concat("//input"), label)));
+
+        pageUtils.typeAheadInput(labelDropdown, valueInput, value);
         return this;
     }
 

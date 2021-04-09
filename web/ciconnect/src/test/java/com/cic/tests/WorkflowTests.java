@@ -11,8 +11,8 @@ import com.apriori.validators.WorkflowValidator;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,7 @@ public class WorkflowTests  extends TestBase {
     private WorkflowValidator validator;
     private LoginPage loginPage;
     private WorkflowPage workflowPage;
+    private UIUtils uiUtils;
 
     public WorkflowTests() {
         super();
@@ -37,6 +38,7 @@ public class WorkflowTests  extends TestBase {
         workflowNames = new ArrayList<>();
         validator = new WorkflowValidator(driver);
         workflowPage = new WorkflowPage(driver);
+        uiUtils = new UIUtils();
 
         skipDeletion = false;
     }
@@ -110,7 +112,7 @@ public class WorkflowTests  extends TestBase {
             workflowPage.selectWorkflow(workflow);
             workflowPage.clickDeleteButton();
             deleteWorkflowPage.deleteWorkflow();
-            workflowPage.refeshPage(workflowPage);
+            workflowPage.refreshPage();
         }
     }
 }

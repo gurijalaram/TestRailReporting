@@ -1,5 +1,7 @@
 package com.apriori.cds.entity.response;
 
+import com.apriori.utils.http.enums.Schema;
+import com.apriori.utils.json.deserializers.DateDeserializer_yyyyMMdd;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,10 +9,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "cds/SubLicenseSchema.json")
 public class SubLicense {
     private String identity;
     private String createdBy;
@@ -23,10 +27,20 @@ public class SubLicense {
     private Integer maxNumUsers;
     private Integer numPurchasedUsers;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime expiresAt;
+    @JsonDeserialize(using = DateDeserializer_yyyyMMdd.class)
+    private LocalDate expiresAt;
     private String licenseSignature;
     private Integer numAssignedUsers;
+    private SubLicense response;
+
+    public SubLicense getResponse() {
+        return response;
+    }
+
+    public SubLicense setResponse(SubLicense response) {
+        this.response = response;
+        return this;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -118,11 +132,11 @@ public class SubLicense {
         return this;
     }
 
-    public LocalDateTime getExpiresAt() {
+    public LocalDate getExpiresAt() {
         return expiresAt;
     }
 
-    public SubLicense setExpiresAt(LocalDateTime expiresAt) {
+    public SubLicense setExpiresAt(LocalDate expiresAt) {
         this.expiresAt = expiresAt;
         return this;
     }
