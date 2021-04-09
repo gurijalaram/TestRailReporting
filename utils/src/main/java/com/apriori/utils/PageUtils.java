@@ -39,12 +39,11 @@ public class PageUtils {
 
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
     static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
+    private static PageUtils instance = null;
     private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
-            StaleElementReferenceException.class, ElementNotInteractableException.class);
+        StaleElementReferenceException.class, ElementNotInteractableException.class);
     private String currentlyOn = "CURRENTLY_ON_PAGE:";
-
-    private static PageUtils instance = null;
 
     public PageUtils(WebDriver driver) {
         this.driver = driver;
@@ -205,6 +204,7 @@ public class PageUtils {
 
     /**
      * Use javascript to get the parent node of the element
+     *
      * @param element - the element
      * @return webelement
      */
@@ -321,11 +321,11 @@ public class PageUtils {
     private boolean isOnTop(WebElement element) {
 
         return (boolean) ((JavascriptExecutor) driver).executeScript(
-                "var elm = arguments[0];" +
-                        "var doc = elm.ownerDocument || document;" +
-                        "var rect = elm.getBoundingClientRect();" +
-                        "return elm === doc.elementFromPoint(rect.left + (rect.width / 2), rect.top + (rect.height / 2));",
-                element);
+            "var elm = arguments[0];" +
+                "var doc = elm.ownerDocument || document;" +
+                "var rect = elm.getBoundingClientRect();" +
+                "return elm === doc.elementFromPoint(rect.left + (rect.width / 2), rect.top + (rect.height / 2));",
+            element);
     }
 
     /**
@@ -367,8 +367,8 @@ public class PageUtils {
 
     private WebElement waitForAppear(WebElement element) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(visibilityOf(element));
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(visibilityOf(element));
     }
 
     private <T> T waitForAppear(ExpectedCondition<T> condition, String message) {
@@ -563,14 +563,14 @@ public class PageUtils {
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((WebDriver driver) -> {
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((WebDriver driver) -> {
+                new Select(locator).selectByVisibleText(dropdownOption);
+                if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
                     new Select(locator).selectByVisibleText(dropdownOption);
-                    if (!new Select(locator).getFirstSelectedOption().equals(dropdownOption)) {
-                        new Select(locator).selectByVisibleText(dropdownOption);
-                    }
-                    return true;
-                });
+                }
+                return true;
+            });
     }
 
     /**
@@ -581,8 +581,8 @@ public class PageUtils {
      */
     public void waitForElementNotDisplayed(WebElement locator, int timeoutInMinutes) {
         new WebDriverWait(driver, (BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(not((ExpectedCondition<Boolean>) element -> (locator).isDisplayed()));
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(not((ExpectedCondition<Boolean>) element -> (locator).isDisplayed()));
     }
 
     /**
@@ -596,9 +596,9 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 3;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-                .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + locator.getText())
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+            .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + locator.getText())
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
     }
 
     /**
@@ -610,9 +610,9 @@ public class PageUtils {
      */
     public boolean textNotPresentInElement(WebElement locator, String text, int timeoutInMinutes) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
-                .withMessage("\nNot expecting: " + text + "\nFound: " + locator.getText())
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
+            .withMessage("\nNot expecting: " + text + "\nFound: " + locator.getText())
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
     }
 
     /**
@@ -623,12 +623,12 @@ public class PageUtils {
     public void waitForElementAndClick(WebElement locator) {
         waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-                .withMessage("Cannot click element locator: " + locator)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((WebDriver webDriver) -> {
-                    locator.click();
-                    return true;
-                });
+            .withMessage("Cannot click element locator: " + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((WebDriver webDriver) -> {
+                locator.click();
+                return true;
+            });
     }
 
     /**
@@ -639,12 +639,12 @@ public class PageUtils {
     public void waitForElementAndClick(By locator) {
         waitForElementToBeClickable(locator);
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-                .withMessage("Cannot click element locator: " + locator)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((WebDriver webDriver) -> {
-                    driver.findElement(locator).click();
-                    return true;
-                });
+            .withMessage("Cannot click element locator: " + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((WebDriver webDriver) -> {
+                driver.findElement(locator).click();
+                return true;
+            });
     }
 
     /**
@@ -657,8 +657,8 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-                .withMessage("\nExpected attribute: " + attribute + "\t" + "\nFound: " + locator.getAttribute(attribute))
-                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
+            .withMessage("\nExpected attribute: " + attribute + "\t" + "\nFound: " + locator.getAttribute(attribute))
+            .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
     }
 
     /**
@@ -668,12 +668,12 @@ public class PageUtils {
      * @return true/false
      */
     public boolean invisibilityOfElements(List<WebElement> locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-                .withMessage("\nNot expecting: " + locator)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(ExpectedConditions.invisibilityOfAllElements(locator));
+            .withMessage("\nNot expecting: " + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(ExpectedConditions.invisibilityOfAllElements(locator));
     }
 
     /**
@@ -686,8 +686,8 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-                .withMessage("\nElement not visible using locator: " + locator)
-                .until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
+            .withMessage("\nElement not visible using locator: " + locator)
+            .until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
     }
 
     /**
@@ -702,9 +702,9 @@ public class PageUtils {
         final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, timeOut)
-                .withMessage("\nExpected: " + text + "\t" + "\nFound: " + locator.getAttribute(attribute))
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
+            .withMessage("\nExpected: " + text + "\t" + "\nFound: " + locator.getAttribute(attribute))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
     }
 
     /**
@@ -715,9 +715,9 @@ public class PageUtils {
      */
     public boolean checkElementFirstOption(WebElement locator, String text) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-                .withMessage("\nExpected option not in dropdown: " + text + "\nLocator: " + locator)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
+            .withMessage("\nExpected option not in dropdown: " + text + "\nLocator: " + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
     }
 
     /**
@@ -728,9 +728,9 @@ public class PageUtils {
      */
     public void checkDropdownOptions(WebElement locator, String option) {
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-                .withMessage("\nExpected option not in dropdown: " + option + "\nLocator: " + locator)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getText().contains(option))));
+            .withMessage("\nExpected option not in dropdown: " + option + "\nLocator: " + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getText().contains(option))));
     }
 
     /**
