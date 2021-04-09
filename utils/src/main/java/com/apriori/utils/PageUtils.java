@@ -375,7 +375,7 @@ public class PageUtils {
         int count = 0;
         while (count < 12) {
             try {
-                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS);
+                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
                 return wait.until(condition);
             } catch (StaleElementReferenceException e) {
                 // e.toString();
