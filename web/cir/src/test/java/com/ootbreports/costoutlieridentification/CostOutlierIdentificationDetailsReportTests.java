@@ -122,7 +122,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1965")
     @Description("Validate details report generates")
     public void testDetailsReportGenerates() {
@@ -155,6 +155,30 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         );
         assertThat(genericReportPage.isCostOutlierDetailsTableTitleDisplayed("Annualized"),
                 is(equalTo(true))
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "3988")
+    @Description("Percent difference threshold filter - details report - junk value")
+    public void testPercentDifferenceFilterJunkValue() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testAnnualisedOrPercentError(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Percent"
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6992")
+    @Description("Annualised potential savings threshold filter - details report - junk value")
+    public void testAnnualisedFilterJunkValue() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testAnnualisedOrPercentError(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Annualized"
         );
     }
 }

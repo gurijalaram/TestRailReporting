@@ -610,6 +610,21 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     *
+     * @param annualisedOrPercent
+     * @param inputValue
+     * @return
+     */
+    public GenericReportPage inputAnnualisedOrPercentValue(String annualisedOrPercent, String inputValue) {
+        By locator = By.xpath(String.format("//label[contains(@title, '%s')]/input", annualisedOrPercent));
+        pageUtils.waitForElementAndClick(locator);
+        WebElement inputField = driver.findElement(locator);
+        pageUtils.clearInput(inputField);
+        inputField.sendKeys(inputValue);
+        return this;
+    }
+
+    /**
      * Clicks Distance Outlier input and scrolls down
      * @return current page object
      */
@@ -2064,6 +2079,21 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return pageUtils.isElementEnabled(elementToUse);
+    }
+
+    /**
+     *
+     * @param annualisedOrPercent
+     * @return
+     */
+    public boolean isAnnualisedOrPercentErrorEnabled(String annualisedOrPercent) {
+        By locator = By.xpath(
+                String.format(
+                        "//label[contains(@title, '%s')]/span[@class='warning' and contains(text(), 'BigDecimal')]",
+                        annualisedOrPercent)
+        );
+        pageUtils.waitForElementToAppear(locator);
+        return pageUtils.isElementEnabled(driver.findElement(locator));
     }
 
     /**

@@ -149,13 +149,37 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "1947")
     @Description("Export date range presents correctly filtered export sets")
     public void testExportSetFilterByDateCalendarWidget() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingDatePicker(
                 ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName()
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6986")
+    @Description("Percent difference threshold filter - main report - junk value")
+    public void testPercentDifferenceFilterJunkValue() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testAnnualisedOrPercentError(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                "Percent"
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6991")
+    @Description("Annualised potential savings threshold filter - main report - junk value")
+    public void testAnnualisedFilterJunkValue() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testAnnualisedOrPercentError(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                "Annualized"
         );
     }
 }

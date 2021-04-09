@@ -995,6 +995,21 @@ public class InputControlsTests extends TestBase {
         );
     }
 
+    /**
+     *
+     */
+    public void testAnnualisedOrPercentError(String reportName, String fieldToUse) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .inputAnnualisedOrPercentValue(fieldToUse, "abcd")
+                .clickOk();
+
+        assertThat(genericReportPage.isAnnualisedOrPercentErrorEnabled(fieldToUse), is(equalTo(true)));
+    }
+
     private BigDecimal getValueFromCostOrDesignDetailsReport(GenericReportPage genericReportPage, String valueIndex) {
         return new BigDecimal(genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(valueIndex));
     }
