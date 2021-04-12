@@ -2,6 +2,9 @@ package com.apriori.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "FileOrderResponseSchema.json")
 public class CreateWorkorderResponse {
     private String id;

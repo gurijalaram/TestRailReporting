@@ -2,6 +2,9 @@ package com.apriori.entity.response.upload;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "WorkorderDetailsResponse.json")
 public class WorkorderDetailsResponse {
     private Integer version;
