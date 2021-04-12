@@ -172,6 +172,11 @@ public class ExplorePage extends ExploreToolbar {
         return componentTableActions.filter(filterButton);
     }
 
+    /**
+     * Opens the preview panel
+     *
+     * @return new page object
+     */
     public PreviewPage previewPanel() {
         pageUtils.waitForElementAndClick(previewButton);
         return new PreviewPage(driver);
