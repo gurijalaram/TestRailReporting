@@ -184,7 +184,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "6987")
     @Description("Percent difference threshold filter - main report - decimal places")
     public void testPercentDifferenceFilterDecimalPlaces() {
