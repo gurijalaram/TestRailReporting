@@ -33,11 +33,14 @@ public class EvaluatePage extends EvaluateToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
-    @FindBy(css = ".left-panel.p-3")
-    private WebElement leftPanel;
+    @FindBy(css = ".costing-inputs .spinner-border")
+    private List<WebElement> panelLoaders;
 
     @FindBy(css = ".webviewer-canvas")
     private WebElement viewerCanvas;
+
+    @FindBy(css = ".scenario-state-preview [data-icon='cog']")
+    private List<WebElement> cogIcon;
 
     @FindBy(css = "svg[data-icon='home']")
     private WebElement homeButton;
@@ -142,8 +145,8 @@ public class EvaluatePage extends EvaluateToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-        pageUtils.waitForElementAppear(leftPanel);
-        pageUtils.waitForElementAppear(viewerCanvas);
+        pageUtils.invisibilityOfElements(panelLoaders);
+        pageUtils.invisibilityOfElements(cogIcon);
     }
 
     /**
@@ -195,7 +198,7 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Inputs the vpe dropdown
      *
-     * @param vpe      - the vpe
+     * @param vpe - the vpe
      * @return current page object
      */
     public EvaluatePage inputVpe(String vpe) {
@@ -467,7 +470,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfProcessGroups() {
         pageUtils.waitForElementAndClick(processGroupList);
-        return Arrays.stream(processGroupList.getText().split("\n")).collect(Collectors.toList());
+        return Arrays.stream(processGroupList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("Process Group")).collect(Collectors.toList());
     }
 
     /**
@@ -477,7 +480,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfVPEs() {
         pageUtils.waitForElementAndClick(vpeList);
-        return Arrays.stream(vpeList.getText().split("\n")).collect(Collectors.toList());
+        return Arrays.stream(vpeList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("VPE")).collect(Collectors.toList());
     }
 
     /**
