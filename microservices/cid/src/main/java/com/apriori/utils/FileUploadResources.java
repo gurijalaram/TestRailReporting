@@ -196,9 +196,6 @@ public class FileUploadResources {
                 checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
-        /*String createPublishWorkorderId = createPublishScenario();
-        submitPublishWorkOrder(createPublishWorkorderId);
-        checkPublishResult(createPublishWorkorderId);*/
     }
 
     /**
