@@ -1812,8 +1812,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * Check if no data available element is displayed and enabled
      * @return boolean
      */
-    public boolean isDataAvailableLabelDisplayedAndEnabled() {
-        return noDataAvailableElement.isDisplayed() && noDataAvailableElement.isEnabled();
+    public boolean isDataAvailableLabelDisplayedAndEnabled(String index) {
+        WebElement elementToUse = driver.findElement(By.xpath(
+                String.format(
+                        "(//span[contains(text(), 'No data available')])[%s]",
+                        index))
+        );
+        return elementToUse.isDisplayed() && elementToUse.isEnabled();
     }
 
     /**

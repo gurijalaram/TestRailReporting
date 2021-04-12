@@ -446,7 +446,7 @@ public class InputControlsTests extends TestBase {
 
         if (reportName.equals(ReportNamesEnum.MACHINING_DTC.getReportName()) &&
             processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
-            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(equalTo(true)));
         } else if (reportName.equals(ReportNamesEnum.CASTING_DTC.getReportName()) ||
                 reportName.equals(ReportNamesEnum.SHEET_METAL_DTC.getReportName())) {
             genericReportPage.setReportName(reportName);
@@ -755,7 +755,7 @@ public class InputControlsTests extends TestBase {
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName())) {
             genericReportPage.waitForReportToLoad();
-            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(true));
         } else {
             BigDecimal valueForAssert = new BigDecimal("6631000.00");
             assertThat(
@@ -786,7 +786,7 @@ public class InputControlsTests extends TestBase {
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
             genericReportPage.waitForReportToLoad();
-            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(true));
         } else {
             assertThat(genericReportPage.getCountOfChartElements().compareTo(initialChartCount), is(equalTo(-1)));
         }
@@ -1036,6 +1036,28 @@ public class InputControlsTests extends TestBase {
                     genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(fieldToUse).equals("10.0%"),
                     is(equalTo(true))
             );
+        }
+    }
+
+    /**
+     * Generic test - Annualised or Percent filter (no data available) on Cost Outlier Identification Report (+ Details)
+     *
+     * @param reportName String
+     * @param valueToTest String
+     */
+    public void testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(String reportName, String valueToTest) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .inputAnnualisedOrPercentValue(valueToTest, "10.00")
+                .clickOk();
+
+        genericReportPage.waitForReportToLoad();
+        assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(equalTo(true)));
+        if (!reportName.contains("Details")) {
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("2"), is(equalTo(true)));
         }
     }
 

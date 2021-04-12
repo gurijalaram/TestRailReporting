@@ -193,4 +193,28 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 "Percent"
         );
     }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "7023")
+    @Description("Annualised potential savings threshold filter - main report - no data available")
+    public void testAnnualisedPotentialSavingsNoDataAvailable() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Annualized"
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "7025")
+    @Description("Percent difference threshold filter - main report - no data available")
+    public void testPercentDifferenceThresholdNoDataAvailable() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Percent"
+        );
+    }
 }
