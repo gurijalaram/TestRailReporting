@@ -44,7 +44,11 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ABS,10")
+            .selectMaterial("ABS, 10% Glass")
+            .submit()
             .costScenario()
             .clickExplore()
             .highlightScenario(testScenarioName, partName)
@@ -66,15 +70,19 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ABS,10")
+            .selectMaterial("ABS, 10% Glass")
+            .submit()
             .costScenario()
             .clickExplore()
             .highlightScenario(testScenarioName, "225_gasket-1-solid1")
             .previewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));
-        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.91, 1));
-        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(1.64, 1));
-        assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(20057.85, 1));
+        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.50, 1));
+        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(0.88, 1));
+        assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10591.57, 1));
     }
 }
