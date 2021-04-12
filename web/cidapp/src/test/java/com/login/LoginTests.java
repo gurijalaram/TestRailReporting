@@ -21,7 +21,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -131,7 +130,7 @@ public class LoginTests extends TestBase {
         assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = "6652")
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
