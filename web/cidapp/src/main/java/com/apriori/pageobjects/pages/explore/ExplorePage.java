@@ -37,6 +37,9 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(id = "qa-scenario-list-filter-button")
     private WebElement filterButton;
 
+    @FindBy(id = "qa-scenario-list-preview-button")
+    private WebElement previewButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -167,5 +170,15 @@ public class ExplorePage extends ExploreToolbar {
      */
     public FilterPage filter() {
         return componentTableActions.filter(filterButton);
+    }
+
+    /**
+     * Opens the preview panel
+     *
+     * @return new page object
+     */
+    public PreviewPage previewPanel() {
+        pageUtils.waitForElementAndClick(previewButton);
+        return new PreviewPage(driver);
     }
 }
