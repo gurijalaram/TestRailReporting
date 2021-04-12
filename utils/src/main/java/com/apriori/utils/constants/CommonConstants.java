@@ -52,7 +52,7 @@ public class CommonConstants {
      * @return string
      */
     public static String getCsvFile() {
-        return csvFile = csvFile == null ? System.getProperty("csvFile", "staging-sprockets-users.csv") : System.getProperty("csvFile");
+        return csvFile = csvFile == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
     }
 
     public static String getCisPartIdentity() {

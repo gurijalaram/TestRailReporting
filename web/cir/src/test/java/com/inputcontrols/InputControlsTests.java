@@ -1010,6 +1010,35 @@ public class InputControlsTests extends TestBase {
         assertThat(genericReportPage.isAnnualisedOrPercentErrorEnabled(fieldToUse), is(equalTo(true)));
     }
 
+    /**
+     * Generic test for decimal places on any report - annualised potential savings or percent difference
+     *
+     * @param reportName String
+     * @param fieldToUse String
+     */
+    public void testAnnualisedOrPercentDecimalPlaces(String reportName, String fieldToUse) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .inputAnnualisedOrPercentValue(fieldToUse, "10.000")
+                .clickOk();
+
+        assertThat(
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(fieldToUse).equals("10.0%"),
+                is(equalTo(true))
+        );
+
+        if (!reportName.contains("Details")) {
+            genericReportPage.clickDetailsLink();
+            assertThat(
+                    genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(fieldToUse).equals("10.0%"),
+                    is(equalTo(true))
+            );
+        }
+    }
+
     private BigDecimal getValueFromCostOrDesignDetailsReport(GenericReportPage genericReportPage, String valueIndex) {
         return new BigDecimal(genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(valueIndex));
     }

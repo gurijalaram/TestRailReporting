@@ -160,7 +160,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "6986")
     @Description("Percent difference threshold filter - main report - junk value")
     public void testPercentDifferenceFilterJunkValue() {
@@ -172,7 +172,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = "6991")
     @Description("Annualised potential savings threshold filter - main report - junk value")
     public void testAnnualisedFilterJunkValue() {
@@ -180,6 +180,18 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         inputControlsTests.testAnnualisedOrPercentError(
                 ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
                 "Annualized"
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "6987")
+    @Description("Percent difference threshold filter - main report - decimal places")
+    public void testPercentDifferenceFilterDecimalPlaces() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testAnnualisedOrPercentDecimalPlaces(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                "Percent"
         );
     }
 }

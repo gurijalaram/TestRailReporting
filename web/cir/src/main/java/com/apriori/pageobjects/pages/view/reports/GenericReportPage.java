@@ -610,10 +610,11 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Inputs annualised or percent value
      *
-     * @param annualisedOrPercent
-     * @param inputValue
-     * @return
+     * @param annualisedOrPercent String
+     * @param inputValue String
+     * @return GenericReportPage instance
      */
     public GenericReportPage inputAnnualisedOrPercentValue(String annualisedOrPercent, String inputValue) {
         By locator = By.xpath(String.format("//label[contains(@title, '%s')]/input", annualisedOrPercent));
@@ -622,6 +623,18 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.clearInput(inputField);
         inputField.sendKeys(inputValue);
         return this;
+    }
+
+    /**
+     * Gets cost outlier report annualised or percent value from above chart
+     *
+     * @param annualisedOrPercent String
+     * @return String
+     */
+    public String getCostOutlierAnnualisedOrPercentValueFromAboveChart(String annualisedOrPercent) {
+        By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[2]/span", annualisedOrPercent));
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 
     /**
