@@ -34,6 +34,9 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "[id='qa-scenario-list-configure-button']")
     private WebElement configureButton;
 
+    @FindBy(id = "qa-scenario-list-filter-button")
+    private WebElement filterButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -163,6 +166,6 @@ public class ExplorePage extends ExploreToolbar {
      * @return new page object
      */
     public FilterPage filter() {
-        return componentTableActions.filter();
+        return componentTableActions.filter(filterButton);
     }
 }

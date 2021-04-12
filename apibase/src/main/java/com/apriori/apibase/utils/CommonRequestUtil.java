@@ -3,6 +3,7 @@ package com.apriori.apibase.utils;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import java.util.Map;
@@ -20,6 +21,15 @@ public class CommonRequestUtil extends TestUtil {
         return GenericRequestUtil.get(
             RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding)
             .setHeaders(headers),
+            new RequestAreaApi()
+        );
+    }
+
+    public  <T> ResponseWrapper<T> getCommonRequestWithInlineVariables(EndpointEnum url, Class klass, Map<String, String> headers, Object... inlineVariables) {
+        return GenericRequestUtil.get(
+            RequestEntity.init(url, klass).setUrlEncodingEnabled(true)
+                .setHeaders(headers)
+                .setInlineVariables(inlineVariables),
             new RequestAreaApi()
         );
     }

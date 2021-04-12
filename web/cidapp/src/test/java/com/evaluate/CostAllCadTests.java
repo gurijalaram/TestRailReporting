@@ -59,8 +59,8 @@ public class CostAllCadTests extends TestBase {
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
         assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$17.66")));
-        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.30")));
-        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.74")));
+        assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.80")));
+        assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.89")));
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app
@@ -108,7 +108,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -173,7 +173,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -195,7 +195,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -217,7 +217,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -239,7 +239,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -261,7 +261,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
     }
 
     @Test
@@ -282,7 +282,7 @@ public class CostAllCadTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), (is(true)));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), (is(true)));
     }
 
     @Test
@@ -297,7 +297,7 @@ public class CostAllCadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_SCENARIO.getCostingText()), (is(true)));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED.getCostingText()), (is(true)));
     }
 
     @Test

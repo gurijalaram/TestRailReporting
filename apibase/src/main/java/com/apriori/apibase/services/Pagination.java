@@ -2,45 +2,39 @@ package com.apriori.apibase.services;
 
 import com.apriori.utils.http.enums.Schema;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "PaginationSchema.json")
-public class Pagination {
-    @JsonProperty
+public class Pagination extends JacksonUtil {
     private Boolean isFirstPage;
-    @JsonProperty
     private Boolean isLastPage;
-    @JsonProperty
     private Integer pageNumber;
-    @JsonProperty
     private Integer pageSize;
-    @JsonProperty
     private Integer pageItemCount;
-    @JsonProperty
     private Integer totalItemCount;
-    @JsonProperty
     private Integer totalPageCount;
-    @JsonProperty
     private Boolean hasNextPage;
-    @JsonProperty
     private Boolean hasPreviousPage;
 
-    public Pagination setIsFirstPage(Boolean isFirstPage) {
-        this.isFirstPage = isFirstPage;
+    public Boolean getFirstPage() {
+        return isFirstPage;
+    }
+
+    public Pagination setFirstPage(Boolean firstPage) {
+        isFirstPage = firstPage;
         return this;
     }
 
-    public Boolean getIsFirstPage() {
-        return this.isFirstPage;
+    public Boolean getLastPage() {
+        return isLastPage;
     }
 
-    public Pagination setIsLastPage(Boolean isLastPage) {
-        this.isLastPage = isLastPage;
+    public Pagination setLastPage(Boolean lastPage) {
+        isLastPage = lastPage;
         return this;
     }
 
-    public Boolean getIsLastPage() {
-        return this.isLastPage;
+    public Integer getPageNumber() {
+        return pageNumber;
     }
 
     public Pagination setPageNumber(Integer pageNumber) {
@@ -48,8 +42,8 @@ public class Pagination {
         return this;
     }
 
-    public Integer getPageNumber() {
-        return this.pageNumber;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
     public Pagination setPageSize(Integer pageSize) {
@@ -57,8 +51,8 @@ public class Pagination {
         return this;
     }
 
-    public Integer getPageSize() {
-        return this.pageSize;
+    public Integer getPageItemCount() {
+        return pageItemCount;
     }
 
     public Pagination setPageItemCount(Integer pageItemCount) {
@@ -66,8 +60,8 @@ public class Pagination {
         return this;
     }
 
-    public Integer getPageItemCount() {
-        return this.pageItemCount;
+    public Integer getTotalItemCount() {
+        return totalItemCount;
     }
 
     public Pagination setTotalItemCount(Integer totalItemCount) {
@@ -75,8 +69,8 @@ public class Pagination {
         return this;
     }
 
-    public Integer getTotalItemCount() {
-        return this.totalItemCount;
+    public Integer getTotalPageCount() {
+        return totalPageCount;
     }
 
     public Pagination setTotalPageCount(Integer totalPageCount) {
@@ -84,8 +78,8 @@ public class Pagination {
         return this;
     }
 
-    public Integer getTotalPageCount() {
-        return this.totalPageCount;
+    public Boolean getHasNextPage() {
+        return hasNextPage;
     }
 
     public Pagination setHasNextPage(Boolean hasNextPage) {
@@ -93,16 +87,12 @@ public class Pagination {
         return this;
     }
 
-    public Boolean getHasNextPage() {
-        return this.hasNextPage;
+    public Boolean getHasPreviousPage() {
+        return hasPreviousPage;
     }
 
     public Pagination setHasPreviousPage(Boolean hasPreviousPage) {
         this.hasPreviousPage = hasPreviousPage;
         return this;
-    }
-
-    public Boolean getHasPreviousPage() {
-        return this.hasPreviousPage;
     }
 }

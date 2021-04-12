@@ -2,6 +2,7 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
+
+import java.util.List;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
@@ -16,55 +20,28 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
     @FindBy(css = "[class='name-field'] .apriori-select")
     private WebElement filterDropDown;
-
     @FindBy(css = "[class='name-field'] input")
     private WebElement filterInput;
-
     @FindBy(css = ".btn-secondary [data-icon='plus']")
     private WebElement newButton;
-
     @FindBy(css = "[data-icon='file-export']")
     private WebElement saveAsButton;
-
     @FindBy(css = "[data-icon='pencil']")
     private WebElement renameButton;
-
-    @FindBy(css = "button [data-icon='times-circle']")
-    private WebElement deleteButton;
-
     @FindBy(css = "button [data-icon='times-circle']")
     private WebElement cancelButton;
-
     @FindBy(css = "input[name='name']")
     private WebElement nameInput;
-
     @FindBy(css = "button [data-icon='plus']")
     private WebElement addButton;
-
     @FindBy(css = "button [data-icon='clear']")
     private WebElement clearButton;
-
-    @FindBy(css = "qa-searchCriterion[0].subject")
-    private WebElement propertyDropdown;
-
-    @FindBy(css = "qa-searchCriterion[0].subject input")
-    private WebElement propertyInput;
-
-    @FindBy(css = "qa-searchCriterion[0].operation")
-    private WebElement operationDropdown;
-
-    @FindBy(css = "qa-searchCriterion[0].operation input")
-    private WebElement operationInput;
-
-    @FindBy(css = "qa-searchCriterion[0].target")
-    private WebElement valueDropdown;
-
-    @FindBy(css = "qa-searchCriterion[0].target input")
-    private WebElement valueInput;
-
+    @FindBy(css = "qa-searchCriterion[0].delete")
+    private WebElement deleteButton;
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private int index;
 
     public FilterPage(WebDriver driver) {
         this.driver = driver;
@@ -90,7 +67,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param filter - the filter
      * @return current page object
      */
-    public FilterPage typeAheadFilter(String filter) {
+    public FilterPage inputFilter(String filter) {
         pageUtils.typeAheadInput(filterDropDown, filterInput, filter);
         return this;
     }
@@ -181,15 +158,36 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     /**
      * Adds a new criteria
      *
+     * @param property - the property
+     * @param value    - the value
+     * @return current page object
+     */
+    public FilterPage addCriteriaWithOption(String property, String value) {
+        index = getIndex();
+
+        add()
+            .inputProperty(property)
+            .inputValue(property, value);
+
+        return this;
+    }
+
+    /**
+     * Adds a new criteria
+     *
      * @param property  - the property
      * @param operation - the operation
      * @param value     - the value
      * @return current page object
      */
-    public FilterPage addCriteria(String property, String operation, String value) {
-        typeAheadProperty(property)
-            .typeAheadOperation(operation)
-            .typeAheadValue(value);
+    public FilterPage addCriteriaWithOption(String property, String operation, String value) {
+        index = getIndex();
+
+        add()
+            .inputProperty(property.trim())
+            .inputOperation(operation.trim())
+            .inputValue(property.trim(), value.trim());
+
         return this;
     }
 
@@ -199,7 +197,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param property - the property
      * @return current page object
      */
-    private FilterPage typeAheadProperty(String property) {
+    private FilterPage inputProperty(String property) {
+        WebElement propertyDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index)));
+        WebElement propertyInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject'] input", index)));
         pageUtils.typeAheadInput(propertyDropdown, propertyInput, property);
         return this;
     }
@@ -210,7 +210,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param operation - the operation
      * @return current page object
      */
-    private FilterPage typeAheadOperation(String operation) {
+    private FilterPage inputOperation(String operation) {
+        WebElement operationDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index)));
+        WebElement operationInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation'] input", index)));
         pageUtils.typeAheadInput(operationDropdown, operationInput, operation);
         return this;
     }
@@ -218,12 +220,66 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     /**
      * Uses type ahead to input the value
      *
-     * @param value - the value
+     * @param value    - the value
+     * @param property - the property
      * @return current page object
      */
-    private FilterPage typeAheadValue(String value) {
-        pageUtils.typeAheadInput(valueDropdown, valueInput, value);
+    private FilterPage inputValue(String property, String value) {
+        boolean toggleValue = Constants.TOGGLE_VALUES.stream().anyMatch(str -> str.trim().equalsIgnoreCase(property));
+
+        if (toggleValue) {
+            driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] button", index))).click();
+        } else {
+            WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
+            WebElement valueInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] input", index)));
+
+            valuesEntry(property, value, valueInput, Constants.INPUT_VALUES);
+
+            inputValuesEntry(property, value, valueDropdown, valueInput, Constants.TYPE_INPUT_VALUES);
+
+            valuesEntry(property, value, valueInput, Constants.DATE_VALUES);
+        }
         return this;
+    }
+
+    /**
+     * Input values
+     *
+     * @param property      - the property
+     * @param value         - the value
+     * @param valueDropdown - the value dropdown
+     * @param valueInput    - the value input
+     */
+    private void inputValuesEntry(String property, String value, WebElement valueDropdown, WebElement valueInput, List<String> valueList) {
+        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadInput(valueDropdown, valueInput, value));
+    }
+
+    /**
+     * Input values
+     *
+     * @param property   - the property
+     * @param value      - the value
+     * @param valueInput - the value input
+     * @param valueList  - the value list
+     */
+    private void valuesEntry(String property, String value, WebElement valueInput, List<String> valueList) {
+        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> {
+            pageUtils.waitForElementToAppear(valueInput).clear();
+            valueInput.sendKeys(value);
+        });
+    }
+
+    /**
+     * Counts the number of criteria rows that exist and sets the index based on this number
+     *
+     * @return int
+     */
+    private int getIndex() {
+        int rows = 0;
+        if (pageUtils.isElementDisplayed(By.cssSelector(".inputs-row.row"))) {
+            rows = driver.findElements(By.cssSelector(".inputs-row.row")).size();
+        }
+        return rows > 0 ? rows : 0;
     }
 
     /**
