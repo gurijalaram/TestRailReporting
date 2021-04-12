@@ -7,7 +7,12 @@ public enum StatusIconEnum {
     LOCK("lock"),
     UNLOCK("unlock"),
     USER("user"),
-    VERIFIED("shield-check");
+    VERIFIED("shield-check"),
+    ASSEMBLY("assembly"),
+    PUBLIC("public"),
+    PRIVATE("private"),
+    MISSING("missing"),
+    VIRTUAL("virtual");
 
     private final String statusIcon;
 
