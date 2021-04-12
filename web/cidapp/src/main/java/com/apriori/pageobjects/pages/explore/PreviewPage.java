@@ -1,7 +1,9 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,9 +29,11 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
 
     private PageUtils pageUtils;
     private WebDriver driver;
+    private StatusIcon statusIcon;
 
     public PreviewPage(WebDriver driver) {
         this.driver = driver;
+        this.statusIcon = new StatusIcon(driver);
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -98,6 +102,16 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     public EvaluatePage openScenario() {
         pageUtils.waitForElementAndClick(scenarioThumbnailButton);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Checks icon is displayed
+     *
+     * @param icon - the icon
+     * @return true/false
+     */
+    public boolean isIconDisplayed(StatusIconEnum icon) {
+        return statusIcon.isIconDisplayed(icon);
     }
 
     /**

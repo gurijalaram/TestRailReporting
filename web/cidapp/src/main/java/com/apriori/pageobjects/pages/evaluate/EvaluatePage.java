@@ -3,11 +3,13 @@ package com.apriori.pageobjects.pages.evaluate;
 import com.apriori.pageobjects.common.CustomAttributesInputsController;
 import com.apriori.pageobjects.common.PrimaryInputsController;
 import com.apriori.pageobjects.common.SecondaryInputsController;
+import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -127,6 +129,7 @@ public class EvaluatePage extends EvaluateToolbar {
     private PrimaryInputsController primaryInputsController;
     private SecondaryInputsController secondaryInputsController;
     private CustomAttributesInputsController customAttributesInputsController;
+    private StatusIcon statusIcon;
 
     public EvaluatePage(WebDriver driver) {
         super(driver);
@@ -135,6 +138,7 @@ public class EvaluatePage extends EvaluateToolbar {
         this.primaryInputsController = new PrimaryInputsController(driver);
         this.secondaryInputsController = new SecondaryInputsController(driver);
         this.customAttributesInputsController = new CustomAttributesInputsController(driver);
+        this.statusIcon = new StatusIcon(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -512,5 +516,15 @@ public class EvaluatePage extends EvaluateToolbar {
     public String getComponentResults(String label) {
         By componentResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
         return pageUtils.waitForElementToAppear(componentResult).getAttribute("textContent");
+    }
+
+    /**
+     * Checks icon is displayed
+     *
+     * @param icon - the icon
+     * @return true/false
+     */
+    public boolean isIconDisplayed(StatusIconEnum icon) {
+        return statusIcon.isIconDisplayed(icon);
     }
 }
