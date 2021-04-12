@@ -26,6 +26,7 @@ public class GenerateStringUtil {
      *
      * @return string
      */
+    @Attachment
     public String generateComparisonName() {
         return "AutoComparison" + new Random().nextInt(1000) + "-" + System.nanoTime();
     }
@@ -35,6 +36,7 @@ public class GenerateStringUtil {
      *
      * @return string
      */
+    @Attachment
     public String generateWorkflowName() {
         return "AutoWorkflow" + new Random().nextInt(1000) + "-" + System.nanoTime();
     }
@@ -44,6 +46,7 @@ public class GenerateStringUtil {
      *
      * @return string
      */
+    @Attachment
     public String generateEmail() {
         return "fakeuser" + new Random().nextInt(1000) + "@apriori.com";
     }
@@ -116,5 +119,15 @@ public class GenerateStringUtil {
     @Attachment
     public String generateRealmKey() {
         return "AutoRealmKey" + RandomStringUtils.randomNumeric(26);
+    }
+
+    /**
+     * Generates a filter name
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateFilterName() {
+        return "AutoFilter" + RandomStringUtils.randomAlphabetic(6);
     }
 }

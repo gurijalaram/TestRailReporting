@@ -32,6 +32,7 @@ public class PublishExistingCostedTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public PublishExistingCostedTests() {
         super();
@@ -47,6 +48,7 @@ public class PublishExistingCostedTests extends TestBase {
         String partName = "testpart-4";
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        String filterName = generateStringUtil.generateFilterName();
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".prt");
 
@@ -64,9 +66,9 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
-            .typeAheadFilter("Public")
             .saveAs()
-            .addCriteria("Component Name", "Contains", partName)
+            .inputName(filterName)
+            .addCriteriaWithOption("Component Name", "Contains", partName)
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, partName), is(greaterThan(0)));

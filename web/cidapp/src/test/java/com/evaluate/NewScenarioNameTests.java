@@ -29,6 +29,7 @@ public class NewScenarioNameTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public NewScenarioNameTests() {
         super();
@@ -41,7 +42,7 @@ public class NewScenarioNameTests extends TestBase {
     public void testEnterNewScenarioName() {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, "partbody_2.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -60,8 +61,8 @@ public class NewScenarioNameTests extends TestBase {
     public void testPublishEnterNewScenarioName() {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, "partbody_2.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String testNewScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = generateStringUtil.generateScenarioName();
+        String testNewScenarioName = generateStringUtil.generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -88,9 +89,10 @@ public class NewScenarioNameTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
-        String scenarioA = new GenerateStringUtil().generateScenarioName();
-        String scenarioB = new GenerateStringUtil().generateScenarioName();
-        String scenarioC = new GenerateStringUtil().generateScenarioName();
+        String scenarioA = generateStringUtil.generateScenarioName();
+        String scenarioB = generateStringUtil.generateScenarioName();
+        String scenarioC = generateStringUtil.generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -110,10 +112,9 @@ public class NewScenarioNameTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
-            .typeAheadFilter("Public")
-            .inputName("Automation")
+            .inputName(filterName)
             .saveAs()
-            .addCriteria("Component Name", "Contains", "MultiUpload")
+            .addCriteriaWithOption("Component Name", "Contains", "MultiUpload")
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(scenarioA, "MultiUpload"), equalTo(1));

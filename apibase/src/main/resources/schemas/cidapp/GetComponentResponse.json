@@ -60,7 +60,8 @@
                   "createdByName",
                   "customerIdentity",
                   "componentName",
-                  "componentType"
+                  "componentType",
+                  "originalFilename"
                 ],
                 "properties": {
                   "identity": {
@@ -83,6 +84,9 @@
                   },
                   "componentType": {
                     "type": "string"
+                  },
+                  "originalFilename": {
+                    "type": "string"
                   }
                 }
               },
@@ -96,7 +100,8 @@
                   "createdByName",
                   "customerIdentity",
                   "componentName",
-                  "componentType"
+                  "componentType",
+                  "originalFilename"
                 ],
                 "properties": {
                   "identity": {
@@ -121,6 +126,9 @@
                     "type": "string"
                   },
                   "componentType": {
+                    "type": "string"
+                  },
+                  "originalFilename": {
                     "type": "string"
                   }
                 }

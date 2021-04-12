@@ -12,12 +12,14 @@ import com.apriori.utils.PageUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,11 +31,14 @@ public class EvaluatePage extends EvaluateToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
-    @FindBy(css = ".left-panel.p-3")
-    private WebElement leftPanel;
+    @FindBy(css = ".costing-inputs .spinner-border")
+    private List<WebElement> panelLoaders;
 
     @FindBy(css = ".webviewer-canvas")
     private WebElement viewerCanvas;
+
+    @FindBy(css = ".scenario-state-preview [data-icon='cog']")
+    private List<WebElement> cogIcon;
 
     @FindBy(css = "svg[data-icon='home']")
     private WebElement homeButton;
@@ -107,14 +112,18 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
 
-    @FindBy(css = "[id='qa-vpe-select-field'] [name='vpeName']")
-    private List<WebElement> vpes;
+    @FindBy(css = "[id='qa-vpe-select-field']")
+    private WebElement vpeList;
 
-    @FindBy(css = "[id='qa-process-group-select-field'] [name='processGroupName']")
-    private List<WebElement> processGroups;
+    @FindBy(css = "[id='qa-process-group-select-field']")
+    private WebElement processGroupList;
 
     @FindBy(css = ".sub-components-summary.card .pill-text")
     private WebElement componentsDetailsButton;
+
+    @FindBy(id = "qa-scenario-select-field")
+    @CacheLookup
+    private WebElement scenarioName;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -132,8 +141,8 @@ public class EvaluatePage extends EvaluateToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-        pageUtils.waitForElementAppear(leftPanel);
-        pageUtils.waitForElementAppear(viewerCanvas);
+        pageUtils.invisibilityOfElements(panelLoaders);
+        pageUtils.invisibilityOfElements(cogIcon);
     }
 
     /**
@@ -185,7 +194,7 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Inputs the vpe dropdown
      *
-     * @param vpe      - the vpe
+     * @param vpe - the vpe
      * @return current page object
      */
     public EvaluatePage inputVpe(String vpe) {
@@ -456,7 +465,8 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list as string
      */
     public List<String> getListOfProcessGroups() {
-        return processGroups.stream().map(processGroup -> processGroup.getAttribute("textContent")).collect(Collectors.toList());
+        pageUtils.waitForElementAndClick(processGroupList);
+        return Arrays.stream(processGroupList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("Process Group")).collect(Collectors.toList());
     }
 
     /**
@@ -465,7 +475,8 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list as string
      */
     public List<String> getListOfVPEs() {
-        return vpes.stream().map(vpe -> vpe.getAttribute("textContent")).collect(Collectors.toList());
+        pageUtils.waitForElementAndClick(vpeList);
+        return Arrays.stream(vpeList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("VPE")).collect(Collectors.toList());
     }
 
     /**
@@ -492,8 +503,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public String getCurrentScenarioName() {
-        By byScenario = By.xpath("//label[.='Current Scenario']/following-sibling::div//button[contains(@class,'secondary')]");
-        return pageUtils.waitForElementToAppear(byScenario).getAttribute("textContent");
+        return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
     }
 
     /**

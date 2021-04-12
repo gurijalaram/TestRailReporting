@@ -54,6 +54,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(id = "qa-sub-component-detail-column-config-button")
     private WebElement configureButton;
 
+    @FindBy(id = "qa-sub-component-detail-filter-button")
+    private WebElement filterButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -117,7 +120,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return new page object
      */
     public FilterPage filter() {
-        return componentTableActions.filter();
+        return componentTableActions.filter(filterButton);
     }
 
 
