@@ -85,12 +85,12 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     /**
      * Open configure page
      *
-     * @param configureButton - the configure button
+     * @param element - the configure button
      *
      * @return new page object
      */
-    public ConfigurePage configure(WebElement configureButton) {
-        pageUtils.waitForElementAndClick(configureButton);
+    public ConfigurePage configure(WebElement element) {
+        pageUtils.waitForElementAndClick(element);
         return new ConfigurePage(driver);
     }
 
@@ -99,8 +99,8 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      *
      * @return new page object
      */
-    public FilterPage filter() {
-        pageUtils.waitForElementAndClick(filterButton);
+    public FilterPage filter(WebElement element) {
+        pageUtils.waitForElementAndClick(element);
         return new FilterPage(driver);
     }
 }
