@@ -74,7 +74,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
-     * Checks if the component is present on the page by size > 0 or < 1
+     * Checks if the component is present on the page by size == 0 or > 0
      *
      * @param componentName - component name
      * @param scenarioName  - scenario name
