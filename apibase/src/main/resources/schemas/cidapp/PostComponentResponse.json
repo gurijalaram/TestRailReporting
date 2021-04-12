@@ -3,16 +3,18 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
+    "iterationIdentity",
     "componentIdentity",
     "scenarioIdentity"
   ],
   "properties": {
+    "iterationIdentity": {
+      "type": "string"
+    },
     "componentIdentity": {
-      "$id": "#/properties/componentIdentity",
       "type": "string"
     },
     "scenarioIdentity": {
-      "$id": "#/properties/scenarioIdentity",
       "type": "string"
     }
   }

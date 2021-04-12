@@ -3,7 +3,6 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,6 +21,18 @@ public class InfoPage extends LoadableComponent<InfoPage> {
 
     @FindBy(xpath = "//label[.='Status']")
     private WebElement statusLabel;
+
+    @FindBy(css = "[id='qa-scenario-info-form-status-select'] .apriori-select")
+    private WebElement statusDropdown;
+
+    @FindBy(css = "[id='qa-scenario-info-form-status-select'] input")
+    private WebElement statusInput;
+
+    @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] .apriori-select")
+    private WebElement costMaturityDropdown;
+
+    @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] input")
+    private WebElement costMaturityInput;
 
     @FindBy(css = "textarea[name='description']")
     private WebElement descriptionInput;
@@ -52,17 +63,24 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     }
 
     /**
-     * Uses type ahead to input info for any section
+     * Uses type ahead to input the status
      *
-     * @param label - the label
-     * @param value - the value
+     * @param status - the status
      * @return current page object
      */
-    public InfoPage typeAheadInSection(String label, String value) {
-        String labelLocator = "//label[.='%']/..//div[contains(@class,'apriori-select')]";
-        WebElement labelDropdown = driver.findElement(By.xpath(String.format(labelLocator, label)));
-        WebElement valueInput = driver.findElement(By.xpath(String.format(labelLocator.concat("//input"), label)));
-        pageUtils.typeAheadInput(labelDropdown, valueInput, value);
+    public InfoPage inputStatus(String status) {
+        pageUtils.typeAheadInput(statusDropdown, statusInput, status);
+        return this;
+    }
+
+    /**
+     * Uses type ahead to input the cost maturity
+     *
+     * @param costMaturity - the cost maturity
+     * @return current page object
+     */
+    public InfoPage inputCostMaturity(String costMaturity) {
+        pageUtils.typeAheadInput(costMaturityDropdown, costMaturityInput, costMaturity);
         return this;
     }
 

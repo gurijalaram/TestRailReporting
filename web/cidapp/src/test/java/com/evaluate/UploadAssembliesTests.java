@@ -56,7 +56,7 @@ public class UploadAssembliesTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit()
             .costScenario();
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, smallRingComp, EvaluatePage.class)
             .inputProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -65,7 +65,7 @@ public class UploadAssembliesTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit()
             .costScenario();
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, pinComp, EvaluatePage.class)
             .inputProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -74,12 +74,12 @@ public class UploadAssembliesTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit()
             .costScenario();
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, hingeAsm, EvaluatePage.class)
             .inputProcessGroup(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
 
         assertThat(evaluatePage.getComponentResults("Total"), is(equalTo("3")));
         assertThat(evaluatePage.getComponentResults("Unique"), is(equalTo("3")));
