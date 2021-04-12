@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -20,6 +21,9 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
 
     @FindBy(css = ".selection-title")
     private WebElement selectionTitle;
+
+    @FindBy(css = ".scenario-thumbnail.large")
+    private WebElement scenarioThumbnailButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -84,6 +88,16 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
         By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
         pageUtils.waitForElementToAppear(result);
         return Double.parseDouble(driver.findElement(result).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Opens scenario from preview page
+     *
+     * @return new page object
+     */
+    public EvaluatePage openScenario() {
+        pageUtils.waitForElementAndClick(scenarioThumbnailButton);
+        return new EvaluatePage(driver);
     }
 
     /**
