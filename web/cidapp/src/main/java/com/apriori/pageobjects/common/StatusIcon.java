@@ -30,7 +30,7 @@ public class StatusIcon {
      * @return true/false
      */
     public boolean isIconDisplayed(StatusIconEnum icon) {
-        By iconStatus = By.cssSelector(String.format(".scenario-status-icons [data-icon='%s']", icon));
+        By iconStatus = By.cssSelector(String.format(".scenario-status-icons [data-icon='%s']", icon.getStatusIcon()));
         return driver.findElement(iconStatus).isDisplayed();
     }
 }
