@@ -7,7 +7,8 @@ public enum NewCostingLabelEnum {
     CREATED("Created"),
     FETCHING("Fetching"),
     NOT_COSTED("Not Costed"),
-    UNCOSTED_CHANGES("Uncosted Changes");
+    UNCOSTED_CHANGES("Uncosted Changes"),
+    COSTING_FAILED("Costing Failed");
 
     private final String costingText;
 
