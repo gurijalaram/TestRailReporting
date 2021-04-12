@@ -27,6 +27,9 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     @FindBy(css = ".scenario-thumbnail.large")
     private WebElement scenarioThumbnailButton;
 
+    @FindBy(css = ".scenario-preview")
+    private WebElement previewData;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -105,6 +108,15 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     }
 
     /**
+     * Checks image is displayed
+     *
+     * @return true/false
+     */
+    public boolean isImageDisplayed() {
+        return scenarioThumbnailButton.isDisplayed();
+    }
+
+    /**
      * Checks icon is displayed
      *
      * @param icon - the icon
@@ -112,6 +124,15 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
      */
     public boolean isIconDisplayed(StatusIconEnum icon) {
         return statusIcon.isIconDisplayed(icon);
+    }
+
+    /**
+     * Checks preview panel is displayed
+     *
+     * @return true/false
+     */
+    public boolean isPreviewPanelDisplayed() {
+        return previewData.isDisplayed();
     }
 
     /**
