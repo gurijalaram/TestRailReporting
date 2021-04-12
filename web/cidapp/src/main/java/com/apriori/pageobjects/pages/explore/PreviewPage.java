@@ -75,6 +75,18 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     }
 
     /**
+     * Gets material details - result is returned as a double with strings and special characters parsed
+     *
+     * @param label - the label
+     * @return double
+     */
+    public double getMaterialResult(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        pageUtils.waitForElementToAppear(result);
+        return Double.parseDouble(driver.findElement(result).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
      * Gets the scenario 'by' locator
      *
      * @param componentName - name of the part
