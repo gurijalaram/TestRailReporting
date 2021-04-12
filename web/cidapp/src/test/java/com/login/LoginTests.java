@@ -5,19 +5,26 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
+
+import java.io.File;
 
 public class LoginTests extends TestBase {
 
@@ -27,6 +34,9 @@ public class LoginTests extends TestBase {
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
+    private EvaluatePage evaluatePage;
+
+    private File resourceFile;
 
     public LoginTests() {
         super();
@@ -121,7 +131,7 @@ public class LoginTests extends TestBase {
         assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
     }
 
-    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = "6652")
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
@@ -131,19 +141,16 @@ public class LoginTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(scenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openAdminDropdown()
-            .selectLogOut();
+            .publishScenario()
+            .publish(EvaluatePage.class)
+            .logout()
+            .login(UserUtil.getUser())
+            .openScenario("225_gasket-1-solid1", scenarioName);
 
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .openScenario(scenarioName, "225_gasket-1-solid1");
-
-        assertThat(evaluatePage.isCADConnectionStatus(), is("CAD file connected"));
-    }*/
+        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
+    }
 }
