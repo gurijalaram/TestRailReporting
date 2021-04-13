@@ -1,6 +1,5 @@
 package com.apriori.utils.http.builder.dao;
 
-
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
