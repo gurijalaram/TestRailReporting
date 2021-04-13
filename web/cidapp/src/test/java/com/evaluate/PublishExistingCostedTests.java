@@ -71,7 +71,7 @@ public class PublishExistingCostedTests extends TestBase {
             .addCriteriaWithOption("Component Name", "Contains", partName)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, partName), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), is(greaterThan(0)));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(scenarioNameB, partName), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(partName, scenarioNameB), is(greaterThan(0)));
     }
 
     @Test
