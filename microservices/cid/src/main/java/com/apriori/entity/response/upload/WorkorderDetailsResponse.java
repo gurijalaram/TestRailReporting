@@ -2,13 +2,18 @@ package com.apriori.entity.response.upload;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "FileUploadWorkOrderResponse.json")
-public class FileUploadWorkOrder {
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "WorkorderDetailsResponse.json")
+public class WorkorderDetailsResponse {
     private Integer version;
     private String id;
+    private String priority;
     private String status;
+    private String userId;
     private String searchKey;
-    private FileUploadCommand command;
+    private Command command;
     private String dateSubmitted;
     private String dateStarted;
     private String dateCompleted;
@@ -29,12 +34,28 @@ public class FileUploadWorkOrder {
         this.id = id;
     }
 
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getSearchKey() {
@@ -45,11 +66,11 @@ public class FileUploadWorkOrder {
         this.searchKey = searchKey;
     }
 
-    public FileUploadCommand getCommand() {
+    public Command getCommand() {
         return command;
     }
 
-    public void setCommand(FileUploadCommand command) {
+    public void setCommand(Command command) {
         this.command = command;
     }
 
@@ -76,4 +97,35 @@ public class FileUploadWorkOrder {
     public void setDateCompleted(String dateCompleted) {
         this.dateCompleted = dateCompleted;
     }
+
+    public class Command {
+        private String commandType;
+        private Object inputs;
+        private Object outputs;
+
+        public String getCommandType() {
+            return commandType;
+        }
+
+        public void setCommandType(String commandType) {
+            this.commandType = commandType;
+        }
+
+        public Object getInputs() {
+            return inputs;
+        }
+
+        public void setInputs(Object inputs) {
+            this.inputs = inputs;
+        }
+
+        public Object getOutputs() {
+            return outputs;
+        }
+
+        public void setOutputs(Object outputs) {
+            this.outputs = outputs;
+        }
+    }
+
 }
