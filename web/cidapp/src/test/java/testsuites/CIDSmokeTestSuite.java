@@ -15,6 +15,7 @@ import com.evaluate.SecondaryProcessTests;
 import com.evaluate.UploadAssembliesTests;
 import com.evaluate.materialutilization.ChangeMaterialSelectionTests;
 import com.evaluate.materialutilization.MaterialStockTests;
+import com.explore.PreviewPanelTests;
 import com.explore.UploadComponentTests;
 import com.explore.UploadTests;
 import com.help.HelpTests;
@@ -42,7 +43,8 @@ import org.junit.runners.Suite;
     LoginTests.class,
     DecimalPlaceTests.class,
     UploadAssembliesTests.class,
-    PublishExistingCostedTests.class
+    PublishExistingCostedTests.class,
+    PreviewPanelTests.class
 })
 public class CIDSmokeTestSuite {
 }
