@@ -1,6 +1,6 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
-def timeStamp = new Date().format("yyyyMMddHHmmss")
+def uuid = UUID.randomUUID()
 def javaOpts = ""
 def url
 def threadCount
@@ -38,7 +38,7 @@ pipeline {
 
                     // Write file.
                     buildInfo.buildNumber = env.BUILD_TAG
-                    buildInfo.buildTimestamp = timeStamp
+                    buildInfo.buildTimestamp = uuid
                     buildInfo.commitHash = env.GIT_COMMIT
                     writeYaml file: buildInfoFile, data: buildInfo
 
@@ -91,8 +91,8 @@ pipeline {
                         --build-arg TEST_MODE=${TEST_MODE} \
                         --build-arg FOLDER=${folder} \
                         --no-cache \
-                        --tag ${buildInfo.name}-build-${timeStamp}:latest \
-                        --label \"build-date=${timeStamp}\" \
+                        --tag ${buildInfo.name}-build-${uuid}:latest \
+                        --label \"build-date=${uuid}\" \
                         .
                 """
             }
@@ -111,8 +111,8 @@ pipeline {
                         -e AWS_PROFILE='development' \
                         -e AWS_DEFAULT_REGION='us-east-1' \
                         -itd \
-                        --name ${buildInfo.name}-build-${timeStamp} \
-                        ${buildInfo.name}-build-${timeStamp}:latest
+                        --name ${buildInfo.name}-build-${uuid} \
+                        ${buildInfo.name}-build-${uuid}:latest
                      """
                      }
 
@@ -129,7 +129,7 @@ pipeline {
                 sh """
                     sleep 15s
                     docker exec \
-                        ${buildInfo.name}-build-${timeStamp} \
+                        ${buildInfo.name}-build-${uuid} \
                         java \
                         ${javaOpts} \
                         -jar automation-tests.jar \
@@ -140,7 +140,7 @@ pipeline {
                 echo "Publishing Results"
                 sh """
                     docker cp \
-                    ${buildInfo.name}-build-${timeStamp}:app/target/allure-results \
+                    ${buildInfo.name}-build-${uuid}:app/target/allure-results \
                     .
                 """
                 allure includeProperties: false, jdk: "", results: [[path: "allure-results"]]
@@ -151,8 +151,8 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-            sh "docker rm -f ${buildInfo.name}-build-${timeStamp}"
-            sh "docker rmi ${buildInfo.name}-build-${timeStamp}:latest"
+            sh "docker rm -f ${buildInfo.name}-build-${uuid}"
+            sh "docker rmi ${buildInfo.name}-build-${uuid}:latest"
             script {
                 if ("${params.TEST_MODE}" == "LOCAL") {
                     sh "docker rm -f \$(docker ps --filter name=chrome -q)"
