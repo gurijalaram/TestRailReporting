@@ -176,4 +176,14 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(unlockButton);
         return this;
     }
+
+    /**
+     * Deletes a scenario
+     *
+     * @return new page object
+     */
+    public DeletePage delete() {
+        pageUtils.waitForElementAndClick(deleteButton);
+        return new DeletePage(driver);
+    }
 }
