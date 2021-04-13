@@ -30,7 +30,7 @@ public class ComponentsTest extends SDSTestUtil {
         ResponseWrapper<Component> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COMPONENT_SINGLE_BY_IDENTITY, Component.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token),
-                componentsListResponse.getResponse().getItems().get(0).getIdentity()
+                componentsListResponse.getItems().get(0).getIdentity()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
