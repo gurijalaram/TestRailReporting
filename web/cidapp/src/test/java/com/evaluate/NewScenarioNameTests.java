@@ -73,7 +73,7 @@ public class NewScenarioNameTests extends TestBase {
         evaluatePage.costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
-            .highlightScenario(testScenarioName, "partbody_2")
+            .highlightScenario("partbody_2", testScenarioName)
             .createScenario()
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
