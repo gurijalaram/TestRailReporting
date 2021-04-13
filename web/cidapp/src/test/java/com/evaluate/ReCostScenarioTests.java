@@ -53,7 +53,7 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
@@ -141,7 +141,7 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
@@ -163,6 +163,6 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage.inputVpe(VPEEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 }

@@ -3,7 +3,6 @@ package com.explore;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.apibase.services.cis.objects.ProcessGroup;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -38,6 +37,6 @@ public class UploadComponentTests extends TestBase {
         evaluateToolbar = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluateToolbar.class);
 
-        assertThat(evaluateToolbar.isCostLabel(NewCostingLabelEnum.CREATED.getCostingText()), is(true));
+        assertThat(evaluateToolbar.isCostLabel(NewCostingLabelEnum.CREATED), is(true));
     }
 }

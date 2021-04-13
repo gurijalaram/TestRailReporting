@@ -75,9 +75,9 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return boolean
      */
-    public boolean isCostLabel(String text) {
+    public boolean isCostLabel(NewCostingLabelEnum label) {
         pageUtils.waitForElementToAppear(costLabel);
-        return pageUtils.textPresentInElement(costLabel, text);
+        return pageUtils.textPresentInElement(costLabel, label.getCostingText());
     }
 
     /**
