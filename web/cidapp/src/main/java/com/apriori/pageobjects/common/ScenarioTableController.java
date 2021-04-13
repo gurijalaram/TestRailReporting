@@ -26,6 +26,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = ".apriori-table.scenario-iteration-table")
     private WebElement componentTable;
 
+    @FindBy(css = ".apriori-table.scenario-iteration-table .spinner-border")
+    private List<WebElement> componentTableSpinner;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -45,6 +48,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(componentTable);
+        pageUtils.invisibilityOfElements(componentTableSpinner);
     }
 
     /**

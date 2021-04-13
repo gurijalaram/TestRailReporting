@@ -3,6 +3,7 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpPage;
+import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.utils.PageUtils;
 
@@ -42,6 +43,12 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
 
     @FindBy(xpath = "//button[.='About']")
     private WebElement aboutButton;
+
+    @FindBy(css = ".user-dropdown.dropdown.show")
+    private WebElement userDropdown;
+
+    @FindBy(css = "[data-icon='sign-out-alt']")
+    private WebElement logoutButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -125,5 +132,16 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     public MainNavBar clickCompare() {
         pageUtils.waitForElementAndClick(exploreButton);
         return this;
+    }
+
+    /**
+     * Logout of the application
+     *
+     * @return new page object
+     */
+    public CidAppLoginPage logout() {
+        pageUtils.waitForElementAndClick(userDropdown);
+        pageUtils.waitForElementAndClick(logoutButton);
+        return new CidAppLoginPage(driver);
     }
 }
