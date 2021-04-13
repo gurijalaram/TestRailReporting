@@ -51,7 +51,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Component Name", "Contains", "SheetMetal")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "SheetMetal"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("SheetMetal", testScenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Process Group", "is", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "Casting"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Casting", testScenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Part Name", "Contains", "Wall")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "CurvedWall"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("CurvedWall", testScenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Component Name", "Contains", "Piston_assembly")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Piston_assembly", testScenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -153,7 +153,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Status", "is", "Analysis")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Piston_assembly", testScenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -177,7 +177,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Component Name", "Contains", "Push Pin")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Push Pin", testScenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -205,7 +205,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Description", "Contains", "Test Description")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "Piston_assembly"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Piston_assembly", testScenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -242,6 +242,6 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "PowderMetalShaft"), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("PowderMetalShaft", testScenarioName), is(equalTo(1)));
     }
 }
