@@ -18,6 +18,9 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -317,18 +320,15 @@ public class ConnectionManager<T> {
                         returnType.getName()));
             }
 
-            //            ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) -> {
-            //                com.fasterxml.jackson.databind.ObjectMapper om = new com.fasterxml.jackson.databind.ObjectMapper().findAndRegisterModules();
-            //                om.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
-            //                om.enable(SerializationFeature.WRAP_ROOT_VALUE);
-            //                return om;
-            //            }));
+            ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) ->
+                new com.apriori.utils.http.builder.dao.ObjectMapper())
+            );
 
             T responseEntity = response.assertThat()
                 .body(matchesJsonSchema(resource))
                 .extract()
                 .response()
-                .as((Type) returnType);
+                .as((Type) returnType, objectMapper);
 
             return ResponseWrapper.build(responseCode, responseHeaders, responseBody, responseEntity);
         } else {

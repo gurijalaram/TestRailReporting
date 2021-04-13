@@ -10,8 +10,8 @@ import org.junit.BeforeClass;
 public class SDSTestUtil extends TestUtil {
 
     protected static String token;
-    protected static final String COMPONENT_ID = "66FCD4FH4JEL";
-    protected static final String SCENARIO_ID = "66FCAE7LKMH3";
+    protected static final String COMPONENT_ID = "5A8GN7EB6EH3";
+    protected static final String SCENARIO_ID = "5A5N4ECAJ2EJ";
 
     @BeforeClass
     public static void getToken() {

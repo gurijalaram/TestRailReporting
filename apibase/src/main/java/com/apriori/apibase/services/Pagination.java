@@ -4,7 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 
 
 @Schema(location = "PaginationSchema.json")
-public class Pagination extends JacksonUtil {
+public class Pagination {
     private Boolean isFirstPage;
     private Boolean isLastPage;
     private Integer pageNumber;
