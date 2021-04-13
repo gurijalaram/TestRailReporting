@@ -2,15 +2,19 @@ package com.apriori.features;
 
 import com.apriori.pageobjects.DeleteWorkflowPage;
 import com.apriori.pageobjects.EditWorkflowPage;
+import com.apriori.pageobjects.LoginPage;
+import com.apriori.pageobjects.NavBarPage;
 import com.apriori.pageobjects.NewWorkflowPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Constants;
+import utils.TableUtils;
 import utils.UIUtils;
 
 import java.util.ArrayList;
@@ -27,14 +31,18 @@ public class WorkflowFeatures {
     public static String EDIT_WORKFLOW_HEADER = "Edit Workflow";
 
     private WebDriver driver;
+    private LoginPage loginPage;
+    private NavBarPage navBarPage;
     private WorkflowPage workflowPage;
     private NewWorkflowPage newWorkflowPage;
     private EditWorkflowPage editWorkflowPage;
     private DeleteWorkflowPage deleteWorkflowPage;
     private PageUtils pageUtils;
     private UIUtils uiUtils;
+    private TableUtils tableUtils;
     private Map<String, Object> values;
     private Map<String, Boolean> valuesB;
+    private Map<String, String> valuesS;
 
     private enum WorkflowAction {
         CREATE,
@@ -43,12 +51,15 @@ public class WorkflowFeatures {
 
     public WorkflowFeatures(WebDriver driver) {
         this.driver = driver;
+        this.loginPage = new LoginPage(driver);
+        this.navBarPage = new NavBarPage(driver);
         this.workflowPage = new WorkflowPage(this.driver);
         this.newWorkflowPage = new NewWorkflowPage(driver);
         this.editWorkflowPage = new EditWorkflowPage(driver);
         this.deleteWorkflowPage = new DeleteWorkflowPage(driver);
-        this.pageUtils = PageUtils.getInstance(driver);
+        this.pageUtils = new PageUtils(driver);
         this.uiUtils = new UIUtils();
+        this.tableUtils = new TableUtils(driver);
     }
 
     /**
@@ -118,7 +129,6 @@ public class WorkflowFeatures {
         }
 
         workflowPage.refreshPage();
-        //name = correctWorkflowNameSpacing(name);
         exists = workflowPage.workflowExists(name);
 
         values.put("label", label);
@@ -229,6 +239,142 @@ public class WorkflowFeatures {
         return values;
     }
 
+    /**
+     * Retrieve the last modified user after a workflow has been updated
+     *
+     * @return The last modified user
+     */
+    public Map<String, String> lastModifiedFieldUpdated() {
+        valuesS = new HashMap<>();
+
+        Map<String, Object> cwfValues = createWorkflow();
+        String preModifiedName = workflowPage.getRowValue(1, WorkflowPage.Field.LAST_MODIFIED);
+        editWorkflowPage.editWorkflow("Description", "Edited Workflow");
+        navBarPage.logOut();
+        loginPage.login(Constants.SECOND_USER_EMAIL, Constants.SECOND_USER_PASSWORD);
+
+        String postModifiedName;
+        if (workflowPage.workflowListExists()) {
+            postModifiedName = workflowPage.getRowValue(1, WorkflowPage.Field.LAST_MODIFIED);
+            valuesS.put("postModifiedName", postModifiedName);
+            valuesS.put("preModifiedName", preModifiedName);
+            valuesS.put("workflowName", cwfValues.get("workflowName").toString());
+            return valuesS;
+        }
+
+        return null;
+    }
+
+    /**
+     * Inspect the Schedule page paginator
+     *
+     * @return Paginator values and state
+     */
+    public Map<String, Object> inspectSchedulePaginator() {
+        values = new HashMap<>();
+        int pageSize = workflowPage.getPageSize(Constants.DEFAULT_PAGE_SIZE);
+
+        values.put("pageSize", pageSize);
+        values.put("displayedWorkflows", workflowPage.getNumberOfDisplayedWorkflows());
+
+        values.put("rowRange", workflowPage.getRowRange());
+
+        String[] totalSplit = workflowPage.getRowTotal().split("of");
+        Integer rowTotal = Integer.parseInt(totalSplit[totalSplit.length - 1].trim());
+        values.put("rowTotal", rowTotal);
+
+        workflowPage.pageNext();
+        values.put("nextRowRange", workflowPage.getRowRange());
+
+        workflowPage.pageBack();
+        values.put("previousRowRange", workflowPage.getRowRange());
+
+        workflowPage.pageToTheEnd();
+        String rowRange = workflowPage.getRowRange();
+        Boolean lastRangeContainsTotalRows = rowRange.contains(rowTotal.toString());
+        values.put("isLastRowRange", lastRangeContainsTotalRows);
+
+        workflowPage.pageToTheBeginning();
+        values.put("beginningRowRange", workflowPage.getRowRange());
+
+        return values;
+    }
+
+    /**
+     * Changes the maximum page size
+     *
+     * @return
+     */
+    public Map<String, Integer> inspectPageSizeSettings() {
+        Map<String, Integer> valuesI = new HashMap<>();
+        int pageSize;
+
+        workflowPage.openMaxPageDropDown(Constants.DEFAULT_PAGE_SIZE);
+        pageSize = workflowPage.getPageSize(5);
+        valuesI.put("changedMaxPageSize", pageSize);
+        valuesI.put("displayedWorkflowsUpdated", workflowPage.getNumberOfDisplayedWorkflows());
+
+        return valuesI;
+    }
+
+    /**
+     * Check workflowlist display
+     * @return
+     */
+    public Map<String, Object> checkWorkflowListSorting() {
+        values = new HashMap<>();
+        List<String> workflowNames = new ArrayList<>();
+
+        String lowerName = UIUtils.saltString("0 0 0 0 0 0 0 Automation");
+        String upperName = UIUtils.saltString("Z Z Z Z Z Z Z Automation");
+        String workflowName;
+
+        newWorkflowPage.createNewWorkflow(upperName, 1);
+        newWorkflowPage.createNewWorkflow(lowerName, 2);
+        workflowNames.add(lowerName);
+        workflowNames.add(upperName);
+        values.put("upper-name", upperName);
+        values.put("lower-name", lowerName);
+
+        //Before click
+        workflowName = workflowPage.getFirstWorkflowName();
+        values.put("before-click-name", workflowName);
+
+        // First Click
+        workflowPage.clickOnFirstColumn();
+        workflowName = workflowPage.getFirstWorkflowName();
+        values.put("first-click-name", workflowName);
+
+        // Second click
+        workflowPage.clickOnFirstColumn();
+        workflowName = workflowPage.getFirstWorkflowName();
+        values.put("second-click-name", workflowName);
+        values.put("workflow-names", workflowNames);
+
+        return values;
+    }
+
+
+    /**
+     *
+     * @return List of Workflow list headers
+     */
+    public Map<String, Object> checkWorkflowListHeaders() {
+        values = new HashMap<>();
+
+        List<String> headers = workflowPage.getWorkflowListHeaders();
+        values.put("workflowListHeaders", headers);
+        return values;
+    }
+
+
+    /**
+     * When a workflow is created the workflow nam is displaed with a single space between words, even if the name
+     * contained 2 or more spaces. For validation purpose the name nput string is also converted to single spaces
+     *
+     * @param workflowName Worflow name
+     * @return Single space string
+     */
     private String correctWorkflowNameSpacing(String workflowName) {
         /* Need to modify the name because CIC removes multiple whitespaces and replaces it with
            a single space. The workflow name uses triple spaces to assure that the new workflow is at the top of the

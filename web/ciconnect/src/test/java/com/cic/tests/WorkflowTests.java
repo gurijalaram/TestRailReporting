@@ -12,9 +12,9 @@ import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.UIUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +25,8 @@ public class WorkflowTests  extends TestBase {
     private WorkflowValidator validator;
     private LoginPage loginPage;
     private WorkflowPage workflowPage;
-    private UIUtils uiUtils;
+    private Map<String, Object> values;
+    private Map<String, Integer> valuesI;
 
     public WorkflowTests() {
         super();
@@ -33,12 +34,12 @@ public class WorkflowTests  extends TestBase {
 
     @Before
     public void setup() {
-        loginPage = new LoginPage(driver);
         workflowFeatures = new WorkflowFeatures(driver);
         workflowNames = new ArrayList<>();
         validator = new WorkflowValidator(driver);
         workflowPage = new WorkflowPage(driver);
-        uiUtils = new UIUtils();
+        values = new HashMap<>();
+        valuesI = new HashMap<>();
 
         skipDeletion = false;
     }
@@ -54,6 +55,8 @@ public class WorkflowTests  extends TestBase {
     @TestRail(testCaseId = {"4109", "3586", "3588", "35877"})
     @Description("Test creating, editing and deletion of a worflow")
     public void testWorkflowCreateEditDelete() {
+        workflowPage = new WorkflowPage(driver);
+        loginPage = new LoginPage(driver);
         loginPage.login();
 
         /** Create Workflow **/
@@ -76,7 +79,6 @@ public class WorkflowTests  extends TestBase {
         // Since deletion is part of the test scenario and the prior features have passed, there's no need to attempt
         // to delete again
         skipDeletion = true;
-
     }
 
     @Test
@@ -84,6 +86,8 @@ public class WorkflowTests  extends TestBase {
     @Description("Test the state of the edit, delete and invoke buttons on the WF schedule screen. With a WF selected" +
             "and with no WF selected")
     public void testButtonState() {
+        workflowPage = new WorkflowPage(driver);
+        loginPage = new LoginPage(driver);
         loginPage.login();
 
         Map<String, Object> values = workflowFeatures.getButtonStates();
@@ -100,11 +104,38 @@ public class WorkflowTests  extends TestBase {
     @TestRail(testCaseId = {"3590"})
     @Description("Test default sorting of the WF schedule table")
     public void testDefaultSorting() {
+        workflowPage = new WorkflowPage(driver);
+        loginPage = new LoginPage(driver);
         loginPage.login();
 
         Map<String, Object> values = workflowFeatures.defaultSorting();
         validator.validateDefaultWorkflowOrdering(values);
         workflowNames = (ArrayList<String>) values.get("workflows");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"3594"})
+    @Description("Schedule tab paginator functions correctly")
+    public void testPaginationFunctionality() {
+        workflowPage = new WorkflowPage(driver);
+        loginPage = new LoginPage(driver);
+        loginPage.login();
+
+        values = workflowFeatures.inspectSchedulePaginator();
+        valuesI = workflowFeatures.inspectPageSizeSettings();
+        validator.validateSchedulePagination(values, valuesI);;
+    }
+
+    @Test
+    @TestRail(testCaseId = {"3809"})
+    @Description("Test sorting of workflowfs by name in the schedule table")
+    public void testWorkflowListSorting() {
+        workflowPage = new WorkflowPage(driver);
+        loginPage = new LoginPage(driver);
+        loginPage.login();
+
+        values = workflowFeatures.checkWorkflowListSorting();
+        validator.validateWorkflowListSorting(values);
     }
 
     private void deleteWorkflows(ArrayList<String> workflows, WorkflowPage workflowPage, DeleteWorkflowPage deleteWorkflowPage) {

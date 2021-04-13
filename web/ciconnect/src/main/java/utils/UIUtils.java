@@ -2,13 +2,19 @@ package utils;
 
 import com.apriori.utils.PageUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 public class UIUtils {
+    private static final Logger logger = LoggerFactory.getLogger(UIUtils.class);
+
     private PageUtils pageUtils;
 
     /**
@@ -22,7 +28,7 @@ public class UIUtils {
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
         String strDate = dateFormat.format(date);
-        return str.concat("_" + strDate);
+        return str.concat("_" + strDate + "_").concat(UUID.randomUUID().toString());
     }
 
     /**
@@ -53,5 +59,19 @@ public class UIUtils {
         }
 
         return str;
+    }
+
+    /**
+     * Converts the first letter of a string to upper case, the rest of the string is lower case
+     * (eg. "FOO" to "Foo")
+     *
+     * @param string
+     * @return
+     */
+    public static String getFirstLetterUpperCase(String string) {
+        StringBuilder firstLetterUpperCase = new StringBuilder();
+        firstLetterUpperCase.append(string, 0, 1);
+        firstLetterUpperCase.append(string.substring(1).toLowerCase());
+        return firstLetterUpperCase.toString();
     }
 }
