@@ -28,7 +28,7 @@ public class IterationsTest extends SDSTestUtil {
     public void getIterationLatest() {
         ResponseWrapper<ScenarioIteration> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID
+                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
@@ -42,7 +42,7 @@ public class IterationsTest extends SDSTestUtil {
 
         ResponseWrapper<ScenarioIteration> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID,
+                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId(),
                 iterationsResponse.getItems().get(0).getIdentity()
             );
 
@@ -51,7 +51,7 @@ public class IterationsTest extends SDSTestUtil {
 
     private ResponseWrapper<ScenarioIterationItemsResponse> receiveIterations() {
         ResponseWrapper<ScenarioIterationItemsResponse> response = new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID
+            new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
         );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
