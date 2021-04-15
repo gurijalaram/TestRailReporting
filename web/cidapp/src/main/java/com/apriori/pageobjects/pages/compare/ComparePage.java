@@ -100,6 +100,7 @@ public class ComparePage extends CompareToolbar {
 
     /**
      * Gets the card of each section
+     *
      * @param section - the section
      * @return list of string
      */
