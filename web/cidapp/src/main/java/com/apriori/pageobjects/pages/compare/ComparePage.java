@@ -68,8 +68,8 @@ public class ComparePage extends CompareToolbar {
      * @param section - the section
      * @return current page object
      */
-    public ComparePage expandSection(String section) {
-        actionSection(section, "arrow-down");
+    public ComparePage expand(String section) {
+        expandCollapseSection(section, "arrow-down");
         return this;
     }
 
@@ -79,8 +79,8 @@ public class ComparePage extends CompareToolbar {
      * @param section - the section
      * @return current page object
      */
-    public ComparePage collapseSection(String section) {
-        actionSection(section, "arrow-up");
+    public ComparePage collapse(String section) {
+        expandCollapseSection(section, "arrow-up");
         return this;
     }
 
@@ -90,7 +90,7 @@ public class ComparePage extends CompareToolbar {
      * @param section - the section
      * @param action  - the action
      */
-    private void actionSection(String section, String action) {
+    private void expandCollapseSection(String section, String action) {
         By byChevron = By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] [data-icon='chevron-down']", section));
         WebElement chevron = driver.findElement(byChevron);
         if (chevron.getAttribute("class").contains(action)) {
