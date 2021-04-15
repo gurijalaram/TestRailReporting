@@ -13,6 +13,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ComparePage extends CompareToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(ComparePage.class);
@@ -93,5 +96,15 @@ public class ComparePage extends CompareToolbar {
         if (chevron.getAttribute("class").contains(action)) {
             pageUtils.waitForElementAndClick(chevron);
         }
+    }
+
+    /**
+     * Gets the card of each section
+     * @param section - the section
+     * @return list of string
+     */
+    public List<String> getCard(String section) {
+        List<WebElement> subSections = driver.findElements(By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .comparison-row.comparison-summary-row", section)));
+        return subSections.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 }
