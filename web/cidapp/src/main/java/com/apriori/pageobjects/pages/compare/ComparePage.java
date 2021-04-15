@@ -5,6 +5,7 @@ import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,5 +57,41 @@ public class ComparePage extends CompareToolbar {
         descriptionInput.clear();
         descriptionInput.sendKeys(description);
         return this;
+    }
+
+    /**
+     * Expands section
+     *
+     * @param section - the section
+     * @return current page object
+     */
+    public ComparePage expandSection(String section) {
+        actionSection(section, "arrow-down");
+        return this;
+    }
+
+    /**
+     * Collapses section
+     *
+     * @param section - the section
+     * @return current page object
+     */
+    public ComparePage collapseSection(String section) {
+        actionSection(section, "arrow-up");
+        return this;
+    }
+
+    /**
+     * Performs expand/collapse on section
+     *
+     * @param section - the section
+     * @param action  - the action
+     */
+    private void actionSection(String section, String action) {
+        By byChevron = By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] [data-icon='chevron-down']", section));
+        WebElement chevron = driver.findElement(byChevron);
+        if (chevron.getAttribute("className").contains(action)) {
+            pageUtils.waitForElementAndClick(chevron);
+        }
     }
 }
