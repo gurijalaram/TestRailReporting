@@ -104,7 +104,7 @@ public class ComparePage extends CompareToolbar {
      * @return list of string
      */
     public List<String> getCard(String section) {
-        List<WebElement> subSections = driver.findElements(By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .comparison-row.comparison-summary-row", section)));
-        return subSections.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+        List<WebElement> cards = driver.findElements(By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .comparison-row.comparison-summary-row", section)));
+        return cards.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 }
