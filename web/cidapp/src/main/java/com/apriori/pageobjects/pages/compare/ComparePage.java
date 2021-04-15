@@ -90,7 +90,7 @@ public class ComparePage extends CompareToolbar {
     private void actionSection(String section, String action) {
         By byChevron = By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] [data-icon='chevron-down']", section));
         WebElement chevron = driver.findElement(byChevron);
-        if (chevron.getAttribute("className").contains(action)) {
+        if (chevron.getAttribute("class").contains(action)) {
             pageUtils.waitForElementAndClick(chevron);
         }
     }
