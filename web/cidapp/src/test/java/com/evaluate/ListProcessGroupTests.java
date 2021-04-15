@@ -30,7 +30,7 @@ public class ListProcessGroupTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6197")
+    @TestRail(testCaseId = {"6197"})
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
@@ -45,7 +45,7 @@ public class ListProcessGroupTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6198")
+    @TestRail(testCaseId = {"6198"})
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
 

@@ -31,7 +31,7 @@ public class CdsUsersTests {
 
 
     @Test
-    @TestRail(testCaseId = "3697")
+    @TestRail(testCaseId = {"3697"})
     @Description("API returns a list of all the available users in the CDS DB")
     public void getUsers() {
         url = String.format(url, "users");
@@ -44,7 +44,7 @@ public class CdsUsersTests {
 
 
     @Test
-    @TestRail(testCaseId = "3698")
+    @TestRail(testCaseId = {"3698"})
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
         String usersUrl = String.format(url, "users");
@@ -61,7 +61,7 @@ public class CdsUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5971")
+    @TestRail(testCaseId = {"5971"})
     @Description("API returns a user's credentials based on the supplied identity")
     public void getUsersCredentials() {
         String usersUrl = String.format(url, "users");

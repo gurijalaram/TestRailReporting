@@ -6,14 +6,11 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
-
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
@@ -27,7 +24,7 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
+    @TestRail(testCaseId = {"3363"})
     @Description("Validate Target and Quoted Cost Value Tracking Details report is available by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -38,7 +35,7 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
+    @TestRail(testCaseId = {"3363"})
     @Description("Validate Target and Quoted Cost Value Tracking Details report is available by navigation")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -49,7 +46,7 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
+    @TestRail(testCaseId = {"3363"})
     @Description("Validate Target and Quoted Cost Value Tracking Details report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -60,7 +57,7 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3364")
+    @TestRail(testCaseId = {"3364"})
     @Description("Validate Cost Metric Input Control")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -72,7 +69,7 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3364")
+    @TestRail(testCaseId = {"3364"})
     @Description("Validate Cost Metric Input Control")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);

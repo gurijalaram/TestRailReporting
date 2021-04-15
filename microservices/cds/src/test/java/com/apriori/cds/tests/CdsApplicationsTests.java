@@ -31,7 +31,7 @@ public class CdsApplicationsTests {
 
 
     @Test
-    @TestRail(testCaseId = "3251")
+    @TestRail(testCaseId = {"3251"})
     @Description("API returns a list of all the available applications in the CDS DB")
     public void getAllApplications() {
         url = String.format(url, "applications");
@@ -44,7 +44,7 @@ public class CdsApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3700")
+    @TestRail(testCaseId = {"3700"})
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
         url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity()));
@@ -56,7 +56,7 @@ public class CdsApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5811")
+    @TestRail(testCaseId = {"5811"})
     @Description(" API returns a paged list of customers authorized to use a particular application")
     public void getCustomersAuthorizedForApplication() {
         url = String.format(url, String.format("applications/%s/customers", Constants.getApProApplicationIdentity()));

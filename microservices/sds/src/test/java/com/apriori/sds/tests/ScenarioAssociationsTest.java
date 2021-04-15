@@ -9,19 +9,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
-import org.seleniumhq.jetty9.util.UrlEncoded;
 import util.SDSTestUtil;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 // TODO z: issue with request
 public class ScenarioAssociationsTest extends SDSTestUtil {
 
 
     @Test
-    @TestRail(testCaseId = "6928")
+    @TestRail(testCaseId = {"6928"})
     @Description("Find scenario associations for a given scenario matching a specified query.")
     public void getAssociations() {
 
@@ -36,7 +31,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
 
     @Test
-    @TestRail(testCaseId = "6929")
+    @TestRail(testCaseId = {"6929"})
     @Description("Get the current representation of a scenario assocation.")
     public void getAssociationsByIdentity() {
         ResponseWrapper<Object> response =

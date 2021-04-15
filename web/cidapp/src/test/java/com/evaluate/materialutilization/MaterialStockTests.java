@@ -37,7 +37,7 @@ public class MaterialStockTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = "5115")
+    @TestRail(testCaseId = {"5115"})
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;

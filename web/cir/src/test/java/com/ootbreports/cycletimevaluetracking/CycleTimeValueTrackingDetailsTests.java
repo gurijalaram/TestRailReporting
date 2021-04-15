@@ -31,7 +31,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "92")
+    @TestRail(testCaseId = {"92"})
     @Description("validate report available by navigation")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -42,7 +42,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "92")
+    @TestRail(testCaseId = {"92"})
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -53,7 +53,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "92")
+    @TestRail(testCaseId = {"92"})
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -64,7 +64,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2331")
+    @TestRail(testCaseId = {"2331"})
     @Description("Projects rollup drop list functionality test")
     public void testProjectRollupDropdownList() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
@@ -81,7 +81,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2332")
+    @TestRail(testCaseId = {"2332"})
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
@@ -101,7 +101,7 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2334")
+    @TestRail(testCaseId = {"2334"})
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)

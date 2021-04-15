@@ -30,7 +30,7 @@ public class CdsCustomerAssociationTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5387")
+    @TestRail(testCaseId = {"5387"})
     @Description("Get customer association for apriori Internal")
     public void getCustomerAssociations() {
         url = String.format(url, String.format("customers/%s/customer-associations", Constants.getAPrioriInternalCustomerIdentity()));
@@ -43,7 +43,7 @@ public class CdsCustomerAssociationTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5825")
+    @TestRail(testCaseId = {"5825"})
     @Description("Get customer association by association Identity")
     public void getCustomerAssociationByIdentity() {
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations", Constants.getAPrioriInternalCustomerIdentity()));

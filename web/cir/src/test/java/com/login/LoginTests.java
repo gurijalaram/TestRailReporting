@@ -28,7 +28,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "2695")
+    @TestRail(testCaseId = {"2695"})
     @Description("Successful login to CI Report")
     public void testLogin() {
         reportsPageHeader = new ReportsLoginPage(driver)
@@ -39,7 +39,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "2696")
+    @TestRail(testCaseId = {"2696"})
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
         loginPage = new ReportsLoginPage(driver)
@@ -50,7 +50,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "2697")
+    @TestRail(testCaseId = {"2697"})
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
         loginPage = new ReportsLoginPage(driver)
@@ -65,7 +65,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "2698")
+    @TestRail(testCaseId = {"2698"})
     @Description("Empty email/password field message displayed")
     public void testEmptyFieldsMessage() {
         loginPage = new ReportsLoginPage(driver)
@@ -76,7 +76,7 @@ public class LoginTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "2699")
+    @TestRail(testCaseId = {"2699"})
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {
         loginPage = new ReportsLoginPage(driver)

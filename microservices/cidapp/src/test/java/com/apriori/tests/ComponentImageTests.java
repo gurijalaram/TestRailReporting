@@ -27,7 +27,7 @@ public class ComponentImageTests {
     private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     @Test
-    @TestRail(testCaseId = "5834")
+    @TestRail(testCaseId = {"5834"})
     @Description("Test bounding values are correct")
     public void boundingBoxValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -57,7 +57,7 @@ public class ComponentImageTests {
     }
 
     @Test
-    @TestRail(testCaseId = "6639")
+    @TestRail(testCaseId = {"6639"})
     @Description("Test axes entries values are correct")
     public void axesEntriesValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -84,7 +84,7 @@ public class ComponentImageTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5851")
+    @TestRail(testCaseId = {"5851"})
     @Description("Test active axes values are correct")
     public void activeAxesValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();

@@ -54,7 +54,7 @@ public class CdsInstallationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5823")
+    @TestRail(testCaseId = {"5823"})
     @Description("API returns a list of all the installations in the CDS DB")
     public void getInstallations() {
         url = String.format(url, "installations");
@@ -67,7 +67,7 @@ public class CdsInstallationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5316")
+    @TestRail(testCaseId = {"5316"})
     @Description("Add a installation to a customer")
     public void addCustomerInstallation() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -106,7 +106,7 @@ public class CdsInstallationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5318")
+    @TestRail(testCaseId = {"5318"})
     @Description("get Installations by Identity")
     public void getInstallationByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -147,7 +147,7 @@ public class CdsInstallationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5317")
+    @TestRail(testCaseId = {"5317"})
     @Description("Update an installation")
     public void patchInstallationByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();

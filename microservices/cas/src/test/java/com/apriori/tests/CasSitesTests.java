@@ -68,7 +68,7 @@ public class CasSitesTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5650")
+    @TestRail(testCaseId = {"5650"})
     @Description("Get the Site identified by its identity.")
     public void getSiteByIdentity() {
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
@@ -96,7 +96,7 @@ public class CasSitesTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5651")
+    @TestRail(testCaseId = {"5651"})
     @Description("Validates Customer's Site record by site ID.")
     public void validateCustomerSite() {
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
@@ -123,7 +123,7 @@ public class CasSitesTests extends TestUtil {
 
     @Test
     @Issue("MIC-1678")
-    @TestRail(testCaseId = "5648")
+    @TestRail(testCaseId = {"5648"})
     @Description("Create a new Site for the Customer")
     public void createCustomerSite() {
         String customerName = generateStringUtil.generateCustomerName();

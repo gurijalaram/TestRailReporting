@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class Notifications {
     @Test
-    @TestRail(testCaseId = "4530")
+    @TestRail(testCaseId = {"4530"})
     @Description("Get a list of notifications using the NTS API")
     public void getNotifications() {
         NotificationService.getNotifications(Constants.getNtsServiceHost(), Constants.getSecretKey());

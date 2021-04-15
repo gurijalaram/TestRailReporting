@@ -13,7 +13,6 @@ import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItems;
 import com.apriori.entity.response.PostBatch;
 import com.apriori.entity.response.SingleCustomer;
-
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -44,7 +43,7 @@ public class CasBatchItemTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5671")
+    @TestRail(testCaseId = {"5671"})
     @Description("Returns a list of batch items for the customer batch.")
     public void getBatchItems() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -69,7 +68,7 @@ public class CasBatchItemTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5672")
+    @TestRail(testCaseId = {"5672"})
     @Description("Creates users from Batch by provided identities.")
     public void createBatchItems() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -91,7 +90,7 @@ public class CasBatchItemTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5674")
+    @TestRail(testCaseId = {"5674"})
     @Description("Get the Batch Item identified by its identity.")
     public void getItemById() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -127,7 +126,7 @@ public class CasBatchItemTests extends TestUtil {
     // TODO endpoint is not implemented
     @Ignore("Endpoint is not implemented")
     @Test
-    @TestRail(testCaseId = "5673")
+    @TestRail(testCaseId = {"5673"})
     @Description("Update an existing Batch Item identified by its identity.")
     public void updateBatchItem() {
         String customerName = generateStringUtil.generateCustomerName();

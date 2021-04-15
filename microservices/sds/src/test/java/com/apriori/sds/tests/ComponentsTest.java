@@ -16,14 +16,14 @@ import util.SDSTestUtil;
 public class ComponentsTest extends SDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = "6937")
+    @TestRail(testCaseId = {"6937"})
     @Description("Find components for a customer matching a specified query.")
     public void getComponents() {
         this.receiveComponents();
     }
 
     @Test
-    @TestRail(testCaseId = "6938")
+    @TestRail(testCaseId = {"6938"})
     @Description("Get the current representation of a component.")
     public void getComponentByIdentity() {
         ComponentsItemsResponse componentsListResponse = this.receiveComponents().getResponseEntity();

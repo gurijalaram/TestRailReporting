@@ -14,7 +14,6 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
@@ -28,21 +27,21 @@ public class ReportResourcesTest extends TestUtil {
     private static final Logger logger = LoggerFactory.getLogger(ReportResourcesTest.class);
 
     @Test
-    @TestRail(testCaseId = "4180")
+    @TestRail(testCaseId = {"4180"})
     @Description("API returns a list of all the reports in the CIS DB")
     public void getReports() {
         ReportResources.getReports();
     }
 
     @Test
-    @TestRail(testCaseId = "4182")
+    @TestRail(testCaseId = {"4182"})
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
         ReportResources.getReportRepresentation(Constants.getCisReportIdentity());
     }
 
     @Test
-    @TestRail(testCaseId = "4181")
+    @TestRail(testCaseId = {"4181"})
     @Description("Create a new report using the CIS API")
     public void createNewReport() {
         Object obj = JsonManager.deserializeJsonFromInputStream(
@@ -60,7 +59,7 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "4183")
+    @TestRail(testCaseId = {"4183"})
     @Description("Export a report using the CIS API")
     public void exportReport() {
         Integer count = 0;

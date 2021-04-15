@@ -17,7 +17,7 @@ import util.SDSTestUtil;
 public class CostingTemplatesTest extends SDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = "6934")
+    @TestRail(testCaseId = {"6934"})
     @Description("Find costing templates for a customer matching a specified query.")
     public void getCostingTemplates() {
         ResponseWrapper<CostingTemplatesResponse> response =
@@ -29,7 +29,7 @@ public class CostingTemplatesTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "6935")
+    @TestRail(testCaseId = {"6935"})
     @Description("Get the current representation of a costing template.")
     public void getCostingTemplateByIdentity() {
         ResponseWrapper<CostingTemplate> response =

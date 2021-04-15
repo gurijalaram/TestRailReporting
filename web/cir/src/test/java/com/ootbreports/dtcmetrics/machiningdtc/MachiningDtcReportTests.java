@@ -42,7 +42,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2024")
+    @TestRail(testCaseId = {"2024"})
     @Description("Verify report availability by navigation")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -53,7 +53,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3415")
+    @TestRail(testCaseId = {"3415"})
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -62,7 +62,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "3416")
+    @TestRail(testCaseId = {"3416"})
     @Description("Verify report availability by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -71,7 +71,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "3026")
+    @TestRail(testCaseId = {"3026"})
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
         inputControlsTests = new InputControlsTests(driver);
@@ -83,7 +83,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "3567")
+    @TestRail(testCaseId = {"3567"})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
         inputControlsTests = new InputControlsTests(driver);
@@ -92,7 +92,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3565")
+    @TestRail(testCaseId = {"3565"})
     @Description("Verify that earliest and latest export date fields function correctly using input field")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
@@ -101,7 +101,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3566")
+    @TestRail(testCaseId = {"3566"})
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
@@ -110,7 +110,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "3020")
+    @TestRail(testCaseId = {"3020"})
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
@@ -119,7 +119,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3021")
+    @TestRail(testCaseId = {"3021"})
     @Description("Verify apply button on Machining DTC input control panel functions correctly")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -132,7 +132,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3021")
+    @TestRail(testCaseId = {"3021"})
     @Description("Verify cancel button on Machining DTC input control panel works")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -141,7 +141,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3021")
+    @TestRail(testCaseId = {"3021"})
     @Description("Verify reset button on Machining DTC input control panel works")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -153,7 +153,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Ignore("not applicable due to reports configuration")
-    @TestRail(testCaseId = "3021")
+    @TestRail(testCaseId = {"3021"})
     @Description("Verify save button on Machining DTC input control panel functions correctly")
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -165,7 +165,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2026")
+    @TestRail(testCaseId = {"2026"})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetSelectionAndAvailability() {
         inputControlsTests = new InputControlsTests(driver);
@@ -178,7 +178,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3022")
+    @TestRail(testCaseId = {"3022"})
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropDown() {
         inputControlsTests = new InputControlsTests(driver);
@@ -190,7 +190,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1690")
+    @TestRail(testCaseId = {"1690"})
     @Description("Verify export sets are available for selection")
     public void testExportSetAvailability() {
         inputControlsTests = new InputControlsTests(driver);
@@ -199,7 +199,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3023")
+    @TestRail(testCaseId = {"3023"})
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -212,7 +212,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3023")
+    @TestRail(testCaseId = {"3023"})
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -225,7 +225,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1368")
+    @TestRail(testCaseId = {"1368"})
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -238,7 +238,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1368")
+    @TestRail(testCaseId = {"1368"})
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -251,7 +251,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3028")
+    @TestRail(testCaseId = {"3028"})
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupStockMachiningOnly() {
         inputControlsTests = new InputControlsTests(driver);
@@ -264,7 +264,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3028")
+    @TestRail(testCaseId = {"3028"})
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupTwoModelMachiningOnly() {
         inputControlsTests = new InputControlsTests(driver);
@@ -277,7 +277,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3028")
+    @TestRail(testCaseId = {"3028"})
     @Description("Verify Process Group input control functions correctly")
     public void testProcessGroupSandAndDieCasting() {
         inputControlsTests = new InputControlsTests(driver);
@@ -286,7 +286,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3029")
+    @TestRail(testCaseId = {"3029"})
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
@@ -298,7 +298,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3029")
+    @TestRail(testCaseId = {"3029"})
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
@@ -311,7 +311,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3029")
+    @TestRail(testCaseId = {"3029"})
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
@@ -324,7 +324,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3029")
+    @TestRail(testCaseId = {"3029"})
     @Description("Verify DTC Score input control functions correctly")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
@@ -337,7 +337,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2039")
+    @TestRail(testCaseId = {"2039"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -369,7 +369,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3572")
+    @TestRail(testCaseId = {"3572"})
     @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
     public void testInvalidHourValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
@@ -381,7 +381,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3573")
+    @TestRail(testCaseId = {"3573"})
     @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
     public void testInvalidMinuteValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
@@ -393,7 +393,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3575")
+    @TestRail(testCaseId = {"3575"})
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
     public void testInvalidYearValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
@@ -405,7 +405,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3576")
+    @TestRail(testCaseId = {"3576"})
     @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
     public void testInvalidMonthValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
@@ -417,7 +417,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3577")
+    @TestRail(testCaseId = {"3577"})
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
     public void testInvalidDayValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
@@ -429,7 +429,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3031")
+    @TestRail(testCaseId = {"3031"})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
         inputControlsTests = new InputControlsTests(driver);
@@ -442,7 +442,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3027")
+    @TestRail(testCaseId = {"3027"})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
@@ -454,7 +454,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2027")
+    @TestRail(testCaseId = {"2027"})
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsExportDates() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -474,7 +474,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2027")
+    @TestRail(testCaseId = {"2027"})
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsExportSets() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -492,7 +492,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2027")
+    @TestRail(testCaseId = {"2027"})
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsRollup() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -510,7 +510,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2027")
+    @TestRail(testCaseId = {"2027"})
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsMinimumAnnualSpend() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -535,7 +535,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2027")
+    @TestRail(testCaseId = {"2027"})
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsProcessGroup() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -554,7 +554,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2027")
+    @TestRail(testCaseId = {"2027"})
     @Description("Verify Select Parts list is correctly filtered by input control")
     public void testPartListFilterByInputControlsDtcScore() {
         genericReportPage = new ReportsLoginPage(driver)

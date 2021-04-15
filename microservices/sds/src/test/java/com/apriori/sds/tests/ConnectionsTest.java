@@ -15,7 +15,7 @@ import util.SDSTestUtil;
 public class ConnectionsTest extends SDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = "6936")
+    @TestRail(testCaseId = {"6936"})
     @Description("Find connections for a customer matching a specified query.")
     public void getConnections() {
         ResponseWrapper response =

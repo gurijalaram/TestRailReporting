@@ -13,7 +13,6 @@ import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.SingleCustomer;
 import com.apriori.entity.response.UpdateUser;
-
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -78,7 +77,7 @@ public class CasCustomersUsersTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5664")
+    @TestRail(testCaseId = {"5664"})
     @Description("Update the User.")
     public void updateCustomerUsers() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -104,7 +103,7 @@ public class CasCustomersUsersTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5667")
+    @TestRail(testCaseId = {"5667"})
     @Description("Reset the MFA configuration for a user.")
     public void resettingUserMfa() {
         String customerName = generateStringUtil.generateCustomerName();

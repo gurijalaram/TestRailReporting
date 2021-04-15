@@ -28,7 +28,7 @@ public class ApVersionsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5958")
+    @TestRail(testCaseId = {"5958"})
     @Description("Get a list of ap Versions in CDSDb")
     public void getApVersions() {
         url = String.format(url, "ap-versions");
