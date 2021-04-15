@@ -40,7 +40,6 @@ public class FileManagementController {
         return  GenericRequestUtil.get(requestEntity, new RequestAreaApi());
     }
 
-
     public static ResponseWrapper<FileResponse> uploadFile(String token, ProcessGroupEnum processGroup, String fileName) {
 
         RequestEntity requestEntity = RequestEntity.init(String.format(finalUrl, Constants.getFmsServiceHost()), FileResponse.class)
