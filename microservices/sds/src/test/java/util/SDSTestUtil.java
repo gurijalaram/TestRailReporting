@@ -9,7 +9,6 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.PostComponentResponse;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.utils.Constants;
-
 import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -17,8 +16,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-
-import java.util.Optional;
 
 public class SDSTestUtil extends TestUtil {
 
@@ -35,7 +32,7 @@ public class SDSTestUtil extends TestUtil {
 
     @AfterClass
     public static void clearTestingData() {
-        if(partPostComponentResponse != null) {
+        if (partPostComponentResponse != null) {
             removeTestingComponent(getComponentId(), getScenarioId());
         }
     }
