@@ -18,6 +18,8 @@ import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
+import java.util.Optional;
+
 public class SDSTestUtil extends TestUtil {
 
     private static final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
@@ -33,7 +35,10 @@ public class SDSTestUtil extends TestUtil {
 
     @AfterClass
     public static void clearTestingData() {
-        removeTestingComponent(getComponentId(), getScenarioId());
+        if(Optional.ofNullable(getComponentId()).isPresent() &&
+            Optional.ofNullable(getScenarioId()).isPresent()) {
+            removeTestingComponent(getComponentId(), getScenarioId());
+        }
     }
 
     protected static String getComponentId() {
