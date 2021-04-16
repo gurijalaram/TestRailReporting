@@ -62,4 +62,32 @@ public class NewWorkflowValidator {
         Assert.assertTrue("Next button was disabled after entering a name, description & connector", values.get(
                 "select-connector"));
     }
+
+    /**
+     * Validates scheduling functionality
+     *
+     * @param values
+     */
+    public void validateScheduling(Map<String, Object> values) {
+        Assert.assertTrue("Workflow with minutes schedule was not created", (boolean)values.get("minutes-schedule" +
+                "-workflow-exists"));
+        Assert.assertTrue("Workflow with every hour schedule was not created", (boolean)values.get("hourly-every" +
+                "-schedule-workflow-exists"));
+        Assert.assertTrue("Workflow with hourly schedule was not created", (boolean)values.get("hourly-schedule" +
+                "-workflow-exists"));
+        Assert.assertTrue("Workflow with every day schedule was not created", (boolean)values.get("daily-every" +
+                "-schedule-workflow-exists"));
+        Assert.assertTrue("Workflow with daily schedule was not created", (boolean)values.get("daily-schedule" +
+                "-workflow-exists"));
+        Assert.assertTrue("Workflow with weekly schedule was not created", (boolean)values.get("weekly-schedule" +
+                "-workflow-exists"));
+        Assert.assertTrue("Workflow with every month schedule was not created", (boolean)values.get("monthly" +
+                "-every-schedule-workflow-exists"));
+        Assert.assertTrue("Workflow with monthly schedule was not created", (boolean)values.get("monthly-schedule" +
+                "-workflow-exists"));
+        Assert.assertTrue("Workflow with every year schedule was not created", (boolean)values.get("yearly-ever" +
+                "-schedule-workflow-exists"));
+        Assert.assertTrue("Workflow with yearly schedule was not created", (boolean)values.get("yearly-schedule" +
+                "-workflow-exists"));
+    }
 }

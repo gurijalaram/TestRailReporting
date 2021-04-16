@@ -49,14 +49,6 @@ public class PageUtils {
         this.driver = driver;
     }
 
-    public static PageUtils getInstance(WebDriver driver) {
-        if (instance == null) {
-            instance = new PageUtils(driver);
-        }
-
-        return instance;
-    }
-
     public String currentlyOnPage(String pageName) {
         return currentlyOn + " " + pageName;
     }
@@ -812,5 +804,15 @@ public class PageUtils {
         dropdownInput.clear();
         dropdownInput.sendKeys(value);
         dropdownInput.sendKeys(Keys.ENTER);
+    }
+
+    /**
+     * Click on an element that is off screen. The element in this case would be marked as un-clickable.
+     * This method brings the element into focus without having to scroll
+     *
+     * @param element Element to click on
+     */
+    public void clickOnOffScreenElement(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("return arguments[0].click();", element);
     }
 }

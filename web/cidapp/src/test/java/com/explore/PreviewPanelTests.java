@@ -51,7 +51,7 @@ public class PreviewPanelTests extends TestBase {
             .submit()
             .costScenario()
             .clickExplore()
-            .highlightScenario(testScenarioName, partName)
+            .highlightScenario(partName, testScenarioName)
             .previewPanel();
 
         assertThat(previewPage.isPreviewPanelDisplayed(), is(true));
@@ -77,7 +77,7 @@ public class PreviewPanelTests extends TestBase {
             .submit()
             .costScenario()
             .clickExplore()
-            .highlightScenario(testScenarioName, "225_gasket-1-solid1")
+            .highlightScenario("225_gasket-1-solid1", testScenarioName)
             .previewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));

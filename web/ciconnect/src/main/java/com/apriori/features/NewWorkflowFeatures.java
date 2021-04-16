@@ -1,5 +1,8 @@
 package com.apriori.features;
 
+import com.apriori.objects.Workflow;
+import com.apriori.objects.WorkflowSchedule;
+import com.apriori.pageobjects.EditWorkflowPage;
 import com.apriori.pageobjects.NewWorkflowPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.PageUtils;
@@ -8,8 +11,10 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Constants;
+import utils.ScheduleFactory;
 import utils.UIUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,13 +28,17 @@ public class NewWorkflowFeatures {
     private Map<String, Boolean> valuesB;
     private PageUtils pageUtils;
     private int newWorkflowIteration;
+    private ScheduleFactory scheduleFactory;
 
+    private EditWorkflowPage editWorkflowPage;
+    private ArrayList<Workflow> workflows;
 
     public NewWorkflowFeatures(WebDriver driver) {
         this.driver = driver;
         this.workflowPage = new WorkflowPage(this.driver);
         this.newWorkflowPage = new NewWorkflowPage(driver);
-        this.pageUtils = PageUtils.getInstance(driver);
+        this.pageUtils = new PageUtils(driver);
+        this.scheduleFactory = new ScheduleFactory();
         newWorkflowIteration = 1;
     }
     
@@ -103,13 +112,97 @@ public class NewWorkflowFeatures {
                 return null;
         }
 
-        newWorkflowPage.createNewWorkflow(name, description, true, newWorkflowIteration);
-        newWorkflowIteration += 1;
+        newWorkflowPage.createNewWorkflow(name, description, newWorkflowIteration);
         workflowPage.refreshPage();
         Boolean workflowExisits = workflowPage.workflowExists(name);
         values.put("workflowExists", workflowExisits);
         values.put("name", name);
         return values;
+    }
+
+    /**
+     * Check the schedule functionality
+     * @return
+     */
+    public Map<String, Object> checkScheduleFunctionality() {
+        editWorkflowPage = new EditWorkflowPage(driver);
+        String scheduleName = "0 0 0 0 0 Schedule Test - ";
+        String wfName;
+        workflows = new ArrayList<>();
+        Workflow workflow;
+        ArrayList<String> workflowNames = new ArrayList<>();
+
+        // Minutes
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getMinuteSchedule(3), "minutes");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        //Hourly
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getHourlySchedule("01", "10"), "hourly");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getHourSchedule(5), "hourly-every");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        //Daily
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getDailySchedule("01", "10"), "daily");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getDailySchedule(4, "01", "10"),
+                "daily-every");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        //Weekly
+        wfName = UIUtils.saltString(scheduleName);
+        ArrayList<WorkflowSchedule.WeekDay> weekDays = new ArrayList<>();
+        weekDays.add(WorkflowSchedule.WeekDay.FRIDAY);
+        workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getWeeklySchedule(weekDays, "12", "30"),
+                "weekly");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        //Monthly
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getMonthlySchedule(5,3, "12", "30"),
+                "monthly-every");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName,
+                scheduleFactory.getMonthlySchedule(WorkflowSchedule.MonthlyOccurance.THIRD,
+                WorkflowSchedule.WeekDay.SATURDAY, 3, "01", "10"), "monthly");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        //Yearly
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName,
+                scheduleFactory.getYearlySchedule(WorkflowSchedule.Month.DECEMBER, 3,
+                "01",
+                "10"), "yearly-every");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        wfName = UIUtils.saltString(scheduleName);
+        workflow = setWorkflowScheduleAndName(wfName,
+                scheduleFactory.getYearlySchedule(WorkflowSchedule.MonthlyOccurance.FOURTH,
+                WorkflowSchedule.Month.FEBRUARY, WorkflowSchedule.WeekDay.MONDAY, "00", "00"), "yearly");
+        workflows.add(workflow);
+        workflowNames.add(wfName);
+
+        values = doCreateEditScheduleCheck();
+        values.put("workflows", workflowNames);
+        return  values;
     }
 
     /**
@@ -201,5 +294,39 @@ public class NewWorkflowFeatures {
         }
 
         return UIUtils.generateString(stringSize);
+    }
+
+    /**
+     * Creates a new workflow with a name and schedule
+     *
+     * @param name workflow name
+     * @param schedule workflow schedule
+     */
+    private Workflow setWorkflowScheduleAndName(String name, WorkflowSchedule schedule, String scheduleType) {
+        Workflow workflow = new Workflow();
+        workflow.setSchedule(schedule)
+                .setName(name)
+                .setScheduleType(scheduleType);
+        return workflow;
+    }
+
+    /**
+     * Creates a batch of workflows with schedules set
+     *
+     * @return
+     */
+    private Map<String, Object> doCreateEditScheduleCheck() {
+        values = new HashMap<>();
+
+        for (Workflow workflow : workflows) {
+            workflowPage.newWorkflow();
+            newWorkflowPage.createNewWorkflow(workflow.getName(), "", true, true,
+                    workflow.getSchedule(), newWorkflowIteration);
+            newWorkflowIteration += 1;
+            values.put(workflow.getScheduleType().concat("-schedule-workflow-exists"),
+                    workflowPage.workflowExists(workflow.getName()));
+        }
+
+        return values;
     }
 }

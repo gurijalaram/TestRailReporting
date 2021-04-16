@@ -1,23 +1,22 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
 @Schema(location = "sds/ComponentResponse.json")
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Component extends JacksonUtil {
-    private Component response;
+@JsonRootName("response")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Component {
     private String customerIdentity;
     private String componentType;
     private String createdBy;

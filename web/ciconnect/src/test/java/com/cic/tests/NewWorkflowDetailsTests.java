@@ -103,10 +103,21 @@ public class NewWorkflowDetailsTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3993"})
     @Description("Test navigation by next (disabled until required fields are populated) and previous buttons")
-    public void nextButtonState() {
+    public void testNextButtonState() {
         gotoDetailsTab();
         valuesB = newWorkflowFeatures.checkNWFNextButtonState("DETAILS");
         validator.validateNextButton(valuesB);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"3593"})
+    @Description("All schedule types formatted correctly in Schedule column of Schedule tab")
+    public void testSchedulingFunctionality() {
+        loginPage.login();
+
+        values =  newWorkflowFeatures.checkScheduleFunctionality();
+        workflowNames = (List)values.get("workflows");
+        validator.validateScheduling(values);
     }
 
     private void gotoDetailsTab() {
