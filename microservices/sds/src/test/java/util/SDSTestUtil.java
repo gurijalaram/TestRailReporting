@@ -35,8 +35,7 @@ public class SDSTestUtil extends TestUtil {
 
     @AfterClass
     public static void clearTestingData() {
-        if(Optional.ofNullable(getComponentId()).isPresent() &&
-            Optional.ofNullable(getScenarioId()).isPresent()) {
+        if(partPostComponentResponse != null) {
             removeTestingComponent(getComponentId(), getScenarioId());
         }
     }
