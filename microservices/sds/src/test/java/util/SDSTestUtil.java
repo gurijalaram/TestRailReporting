@@ -1,5 +1,7 @@
 package util;
 
+import static org.junit.Assert.assertEquals;
+
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
@@ -7,21 +9,18 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.PostComponentResponse;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.utils.Constants;
+
 import com.apriori.utils.CidAppTestUtil;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.utils.FormParams;
-import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
-import static org.junit.Assert.assertEquals;
-
 public class SDSTestUtil extends TestUtil {
+
+    private static final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     protected static String token;
     private static PostComponentResponse partPostComponentResponse;
@@ -29,12 +28,12 @@ public class SDSTestUtil extends TestUtil {
     @BeforeClass
     public static void initTestingComponentInfo() {
         initToken();
-        postTestingComponent();
+        partPostComponentResponse = postTestingComponent().getResponseEntity();
     }
 
     @AfterClass
     public static void clearTestingData() {
-        removeTestingComponent();
+        removeTestingComponent(getComponentId(), getScenarioId());
     }
 
     protected static String getComponentId() {
@@ -50,34 +49,40 @@ public class SDSTestUtil extends TestUtil {
     }
 
     protected static ResponseWrapper<PostComponentResponse> postTestingComponent() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String partName = "Casting.prt";
+        String processGroup = "Casting - Die";
+
         ResponseWrapper<PostComponentResponse> response =
-            new CommonRequestUtil().postCommonRequest(initRequestEntity());
+            cidAppTestUtil.postComponents(scenarioName,
+                processGroup,
+                partName);
 
-        assertEquals("The response code should be as expected ",  HttpStatus.SC_CREATED, response.getStatusCode());
+        assertEquals(String.format("The component with a part name %s, was not uploaded.", partName),
+            HttpStatus.SC_CREATED, response.getStatusCode());
 
-        partPostComponentResponse = response.getResponseEntity();
-
-        new CidAppTestUtil().getScenarioRepresentation("processing",
-            partPostComponentResponse.getComponentIdentity(),
-            partPostComponentResponse.getScenarioIdentity()
+        cidAppTestUtil.getScenarioRepresentation("processing",
+            response.getResponseEntity().getComponentIdentity(),
+            response.getResponseEntity().getScenarioIdentity()
         );
 
         return response;
     }
 
-    protected static ResponseWrapper removeTestingComponent() {
+    protected static ResponseWrapper removeTestingComponent(final String componentId, final String scenarioId) {
         ResponseWrapper response =
             new CommonRequestUtil().deleteCommonRequestWithInlineVariables(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null,
-                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
+                new APIAuthentication().initAuthorizationHeaderContent(token), componentId, scenarioId
             );
 
-        assertEquals("The response code should be as expected ",  HttpStatus.SC_OK, response.getStatusCode());
+        assertEquals(String.format("The component with scenario %s, was not removed", scenarioId),
+            HttpStatus.SC_OK, response.getStatusCode());
 
         return response;
     }
 
     private static String initToken() {
-        if( token == null ) {
+        if (token == null) {
             token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
                 Constants.getCidServiceHost(),
                 HttpStatus.SC_CREATED,
@@ -88,18 +93,5 @@ public class SDSTestUtil extends TestUtil {
         }
 
         return token;
-    }
-
-    private static RequestEntity initRequestEntity() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String partName = "Casting.prt";
-        String processGroup = "Casting - Die";
-
-        return RequestEntity.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
-            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
-            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), partName)))
-            .setFormParams(new FormParams().use("filename", "Casting.prt")
-                .use("override", "false")
-                .use("scenarioName", scenarioName));
     }
 }

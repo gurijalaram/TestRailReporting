@@ -2,6 +2,7 @@ package com.apriori.sds.tests;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
+import com.apriori.entity.response.PostComponentResponse;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
@@ -93,9 +94,16 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-//    @TestRail(testCaseId = "6925")
-//    @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
+    @TestRail(testCaseId = "7246")
+    @Description("Delete an existing scenario.")
     public void deleteScenario() {
-        removeTestingComponent();
+        final ResponseWrapper<PostComponentResponse> postComponentResponseWrapper = postTestingComponent();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postComponentResponseWrapper.getStatusCode());
+
+        final PostComponentResponse postComponentResponse = postComponentResponseWrapper.getResponseEntity();
+
+        final ResponseWrapper removeComponentResponseWrapper = removeTestingComponent(postComponentResponse.getComponentIdentity(),
+            postComponentResponse.getScenarioIdentity());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, removeComponentResponseWrapper.getStatusCode());
     }
 }
