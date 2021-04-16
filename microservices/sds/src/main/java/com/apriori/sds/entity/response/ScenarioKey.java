@@ -1,15 +1,16 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.apibase.services.JacksonUtil;
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Schema(location = "sds/ScenarioKey.json")
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class ScenarioKey extends JacksonUtil {
+@JsonRootName("response")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ScenarioKey {
     private String stateName;
     private String typeName;
     private String masterName;

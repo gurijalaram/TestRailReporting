@@ -14,9 +14,9 @@ public class ApiUtils {
             NoSuchMethodException, InvocationTargetException {
         Class [] emptyParameterSet = {};
         Method getResponse = klass.getDeclaredMethod("getResponse",emptyParameterSet);
-        Object response = getResponse.invoke(obj, null);
+        Object response = getResponse.invoke(obj);
         Method getId = klass.getDeclaredMethod(method, emptyParameterSet);
-        Object value = getId.invoke(response, null);
+        Object value = getId.invoke(response);
         return (String)value;
     }
 }

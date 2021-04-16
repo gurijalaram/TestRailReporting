@@ -25,9 +25,13 @@ public class Constants {
     public static String environment;
     private static String baseUrl;
 
+    private static final String ROW_RANGE = "Rows1-25";
+
     // Login Credentials
     public static final String USER_EMAIL = "dmorrow@apriori.com";
     public static final String USER_PASSWORD = "T3sterQ@99";
+    public static final String SECOND_USER_EMAIL = "";
+    public static final String SECOND_USER_PASSWORD = "";
 
     //New Workflow Connector - need to be connected to PLM
     public static final String NWF_CONNECTOR = "automation - aP Internal - WC";
@@ -37,6 +41,13 @@ public class Constants {
 
     //Default wait in millisecond
     public static final int DEFAULT_WAIT = 3000;
+
+    //Default worklflow list size
+    public static final int DEFAULT_PAGE_SIZE = 25;
+    public static final String MAX_PAGE_SIZE_25_TEXT = "25 rows per page";
+    public static final String MAX_PAGE_SIZE_100_TEXT = "100 rows per page";
+    public static final String DEFAULT_ROW_RANGE = "Rows1-25";
+    public static final String NEXT_ROW_RANGE = "Rows26-50";
 
     //Default worflow names
     public static final String DEFAULT_WORKFLOW_NAME = "0   0   0   0   0 Automation Workflow";

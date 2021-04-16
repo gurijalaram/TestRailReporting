@@ -73,7 +73,7 @@ public class NewScenarioNameTests extends TestBase {
         evaluatePage.costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
-            .highlightScenario(testScenarioName, "partbody_2")
+            .highlightScenario("partbody_2", testScenarioName)
             .createScenario()
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
@@ -117,8 +117,8 @@ public class NewScenarioNameTests extends TestBase {
             .addCriteriaWithOption("Component Name", "Contains", "MultiUpload")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(scenarioA, "MultiUpload"), equalTo(1));
-        assertThat(explorePage.getListOfScenarios(scenarioB, "MultiUpload"), equalTo(1));
-        assertThat(explorePage.getListOfScenarios(scenarioC, "MultiUpload"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioC), equalTo(1));
     }
 }

@@ -72,7 +72,7 @@ public class EditWorkflowPage {
     public EditWorkflowPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        this.pageUtils = PageUtils.getInstance(driver);
+        this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
     }
 

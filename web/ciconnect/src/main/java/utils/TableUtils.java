@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,14 +33,21 @@ public class TableUtils {
                 .stream()
                 .skip(1)
                 .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(name))
-                //.forEach(user -> System.out.println(user.findElements(By.tagName("td")).get(0).getText() + " :: " +
-                //name));
                 .collect(Collectors.toList());
         if (rows.size() > 0) {
             return rows.get(0);
         } else {
             return null;
         }
+    }
+
+    /**
+     * Returns the number of displayed rows in a table (skipping the header row)
+     * @param table
+     * @return
+     */
+    public Integer numberOfRows(WebElement table) {
+        return table.findElements(By.tagName("tr")).size() - 1;
     }
 
     /**
@@ -81,5 +89,23 @@ public class TableUtils {
         }
 
         return false;
+    }
+
+    /**
+     * Return a tables headers
+     *
+     * @param table
+     * @return List of headers
+     */
+    public List<String> getTableHeaders(WebElement table) {
+        pageUtils.waitForElementToBeClickable(table);
+        List<String> headers = new ArrayList<>();
+        table.findElements(By.tagName("tr"))
+                .stream()
+                .collect(Collectors.toList()).get(0)
+                .findElements(By.cssSelector("td"))
+                .forEach(column -> headers.add(column.getText()));
+
+        return headers;
     }
 }
