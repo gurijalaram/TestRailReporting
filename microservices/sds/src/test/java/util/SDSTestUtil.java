@@ -77,7 +77,7 @@ public class SDSTestUtil extends TestUtil {
             );
 
         assertEquals(String.format("The component with scenario %s, was not removed", scenarioId),
-            HttpStatus.SC_OK, response.getStatusCode());
+            HttpStatus.SC_NO_CONTENT, response.getStatusCode());
 
         return response;
     }
