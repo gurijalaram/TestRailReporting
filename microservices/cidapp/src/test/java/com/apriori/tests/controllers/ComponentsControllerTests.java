@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import com.apriori.entity.response.ComponentIdentityResponse;
 import com.apriori.entity.response.GetComponentResponse;
 import com.apriori.entity.response.PostComponentResponse;
-import com.apriori.tests.utils.CidAppTestUtil;
+import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 

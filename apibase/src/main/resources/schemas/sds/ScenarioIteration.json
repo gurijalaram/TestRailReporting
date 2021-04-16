@@ -13,7 +13,6 @@
     "scenarioIterationKey",
     "costingInput",
     "scenarioCustomAttributes",
-    "scenarioDtcIssues",
     "scenarioGcd",
     "scenarioMetadata",
     "scenarioProcesses",
@@ -21,8 +20,7 @@
     "analysisOfScenario",
     "analysisOfScenarioAndChildren",
     "hasWebImage",
-    "thumbnail",
-    "material"
+    "thumbnail"
   ],
   "additionalProperties": true,
   "properties": {

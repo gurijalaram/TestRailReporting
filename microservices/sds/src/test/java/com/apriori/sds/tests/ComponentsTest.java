@@ -2,6 +2,7 @@ package com.apriori.sds.tests;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
+import com.apriori.entity.response.PostComponentResponse;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Component;
 import com.apriori.sds.entity.response.ComponentsItemsResponse;
@@ -19,30 +20,39 @@ public class ComponentsTest extends SDSTestUtil {
     @TestRail(testCaseId = "6937")
     @Description("Find components for a customer matching a specified query.")
     public void getComponents() {
-        this.receiveComponents();
+        ResponseWrapper<ComponentsItemsResponse> response = new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class,
+            new APIAuthentication().initAuthorizationHeaderContent(token)
+        );
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
     @Test
     @TestRail(testCaseId = "6938")
     @Description("Get the current representation of a component.")
     public void getComponentByIdentity() {
-        ComponentsItemsResponse componentsListResponse = this.receiveComponents().getResponseEntity();
         ResponseWrapper<Component> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COMPONENT_SINGLE_BY_IDENTITY, Component.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token),
-                componentsListResponse.getItems().get(0).getIdentity()
+                getComponentId()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
-    private ResponseWrapper<ComponentsItemsResponse> receiveComponents() {
-        ResponseWrapper<ComponentsItemsResponse> response = new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token)
-        );
+    @Test
+    @TestRail(testCaseId = "7248")
+    @Description("Add a new component.")
+    public void postComponents() {
+        final ResponseWrapper<PostComponentResponse> postComponentResponseWrapper = postTestingComponent();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postComponentResponseWrapper.getStatusCode());
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        final PostComponentResponse postComponentResponse = postComponentResponseWrapper.getResponseEntity();
 
-        return response;
+        final ResponseWrapper removeComponentResponseWrapper = removeTestingComponent(postComponentResponse.getComponentIdentity(),
+            postComponentResponse.getScenarioIdentity());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, removeComponentResponseWrapper.getStatusCode());
     }
+
+
 }
