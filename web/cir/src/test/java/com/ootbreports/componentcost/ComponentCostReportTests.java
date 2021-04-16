@@ -39,7 +39,7 @@ public class ComponentCostReportTests extends TestBase {
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3323"})
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenu() {
+    public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
                 ReportNamesEnum.COMPONENT_COST.getReportName()
@@ -48,8 +48,8 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3323"})
-    @Description("Validate report is available by navigation")
+    @TestRail(testCaseId = {"7134"})
+    @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.COMPONENT_COST.getReportName());
@@ -57,8 +57,8 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = {"3323"})
-    @Description("Validate report is available by navigation")
+    @TestRail(testCaseId = {"7133"})
+    @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());

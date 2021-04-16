@@ -42,7 +42,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"3245"})
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenu() {
+    public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName()
@@ -51,7 +51,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3245"})
+    @TestRail(testCaseId = {"7321"})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -60,7 +60,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3245"})
+    @TestRail(testCaseId = {"7322"})
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);

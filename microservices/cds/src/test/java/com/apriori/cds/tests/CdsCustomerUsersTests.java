@@ -47,7 +47,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3293")
+    @TestRail(testCaseId = {"3293"})
     @Description("Add a user to a customer")
     public void addCustomerUsers() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -69,7 +69,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3250")
+    @TestRail(testCaseId = {"3250"})
     @Description("Get a list of users for a customer")
     public void getCustomerUsers() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -98,7 +98,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3281")
+    @TestRail(testCaseId = {"3281"})
     @Description("Add a user to a customer")
     public void getCustomerUserByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -126,7 +126,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3295")
+    @TestRail(testCaseId = {"3295"})
     @Description("Update a user")
     public void patchUserByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -152,7 +152,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5967")
+    @TestRail(testCaseId = {"5967"})
     @Description("Delete user wrong identity")
     public void deleteWrongUserIdentity() {
         String customerName = generateStringUtil.generateCustomerName();

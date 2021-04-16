@@ -34,8 +34,8 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1985"})
-    @Description("Validate report is available navigation - menu")
-    public void testReportAvailableByMenu() {
+    @Description("Validate report is available by navigation - Design Outlier Identification Report")
+    public void testReportAvailableByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
@@ -45,7 +45,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6178"})
-    @Description("Validate report is available navigation - library")
+    @Description("Validate report is available by library - Design Outlier Identification Report")
     public void testReportAvailableByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
@@ -56,7 +56,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1986"})
-    @Description("Validate report is available navigation - search")
+    @Description("Validate report is available by search - Design Outlier Identification Report")
     public void testReportAvailableBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
@@ -67,7 +67,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1997"})
-    @Description("Mass metric options available & selected cost metric report generated (incl. report header)")
+    @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
     public void testMassMetricFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -79,8 +79,8 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1997"})
-    @Description("Mass metric options available & selected cost metric report generated (incl. report header)")
+    @TestRail(testCaseId = {"7385"})
+    @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
     public void testMassMetricRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(

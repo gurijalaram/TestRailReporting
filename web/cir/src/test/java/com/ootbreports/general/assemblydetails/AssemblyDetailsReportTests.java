@@ -57,7 +57,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1915"})
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuAssemblyDetails() {
+    public void testReportAvailabilityByNavigationAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()

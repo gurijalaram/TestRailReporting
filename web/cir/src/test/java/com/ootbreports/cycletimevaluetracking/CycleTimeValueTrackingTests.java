@@ -29,8 +29,8 @@ public class CycleTimeValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"92"})
-    @Description("validate report available by navigation")
+    @TestRail(testCaseId = {"2325"})
+    @Description("Validate report is available by navigation - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -40,8 +40,8 @@ public class CycleTimeValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"92"})
-    @Description("Verify report availability by library")
+    @TestRail(testCaseId = {"7236"})
+    @Description("Verify report availability by library - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName());
@@ -49,8 +49,8 @@ public class CycleTimeValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"92"})
-    @Description("Verify report availability by search")
+    @TestRail(testCaseId = {"7238"})
+    @Description("Verify report availability by search - Cycle Time Value Tracking Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName());

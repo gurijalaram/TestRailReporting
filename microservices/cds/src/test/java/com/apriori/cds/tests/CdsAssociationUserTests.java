@@ -47,7 +47,7 @@ public class CdsAssociationUserTests  {
     }
 
     @Test
-    @TestRail(testCaseId = "5959")
+    @TestRail(testCaseId = {"5959"})
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
 
@@ -75,7 +75,7 @@ public class CdsAssociationUserTests  {
     }
 
     @Test
-    @TestRail(testCaseId = "5965")
+    @TestRail(testCaseId = {"5965"})
     @Description("Get users associated for customer")
     public void getAssociationUsers() {
 
@@ -108,7 +108,7 @@ public class CdsAssociationUserTests  {
     }
 
     @Test
-    @TestRail(testCaseId = "5964")
+    @TestRail(testCaseId = {"5964"})
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
 

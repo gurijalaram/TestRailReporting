@@ -23,6 +23,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
@@ -41,8 +42,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"92"})
-    @Description("validate report available by navigation")
+    @TestRail(testCaseId = {"7314"})
+    @Description("Validate report is available by navigation - Sheet Metal DTC Details Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -52,8 +53,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"92"})
-    @Description("Verify report availability by library")
+    @TestRail(testCaseId = {"7317"})
+    @Description("Validate report is available by library - Sheet Metal DTC Details Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName());
@@ -61,8 +62,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"92"})
-    @Description("Verify report availability by search")
+    @TestRail(testCaseId = {"7320"})
+    @Description("Validate report is available by search - Sheet Metal DTC Details Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName());
@@ -103,8 +104,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3041"})
-    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Apply")
+    @TestRail(testCaseId = {"7368"})
+    @Description("Verify apply button functionality - Sheet Metal DTC Details Report")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
@@ -116,8 +117,17 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3041"})
-    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Reset")
+    @TestRail(testCaseId = {"7371"})
+    @Description("Verify cancel button functionality - Sheet Metal DTC Details Report")
+    public void testCancelButton() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCancelButton(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName());
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = {"7374"})
+    @Description("Verify reset button functionality - Sheet Metal DTC Details Report")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
@@ -127,12 +137,15 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3041"})
-    @Description("Verify Input Controls panel buttons function correctly (Apply, OK, Reset, Cancel, Save) - Cancel")
-    public void testCancelButton() {
+    @Ignore("not applicable due to reports configuration")
+    @TestRail(testCaseId = {"7377"})
+    @Description("Verify save button functionality - Sheet Metal DTC Details Report")
+    public void testSaveButton() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCancelButton(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName());
+        inputControlsTests.testSaveButton(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
+        );
     }
 
     @Test
@@ -170,8 +183,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3043"})
-    @Description("Verify cost metric input control functions correctly - Piece Part Cost")
+    @TestRail(testCaseId = {"7421"})
+    @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
@@ -183,8 +196,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3043"})
-    @Description("Verify cost metric input control functions correctly - Fully Burdened Cost")
+    @TestRail(testCaseId = {"7422"})
+    @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
@@ -196,8 +209,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = {"3044"})
-    @Description("Verify Mass Metric input control functions correctly - Finish Mass")
+    @TestRail(testCaseId = {"7401"})
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -209,8 +222,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3044"})
-    @Description("Verify Mass Metric input control functions correctly - Rough Mass")
+    @TestRail(testCaseId = {"7402"})
+    @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -342,8 +355,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3046"})
-    @Description("Verify Currency Code input control functions correctly")
+    @TestRail(testCaseId = {"7379"})
+    @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Details Report")
     public void testCurrencyCodeInputControl() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCurrencyCodeDtcReports(

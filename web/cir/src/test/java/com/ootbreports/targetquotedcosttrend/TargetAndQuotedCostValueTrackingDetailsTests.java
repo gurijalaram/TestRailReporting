@@ -24,19 +24,8 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3363"})
-    @Description("Validate Target and Quoted Cost Value Tracking Details report is available by library")
-    public void testReportAvailabilityByLibrary() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
-        );
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3363"})
-    @Description("Validate Target and Quoted Cost Value Tracking Details report is available by navigation")
+    @TestRail(testCaseId = {"7324"})
+    @Description("Validate report is available by navigation - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -46,8 +35,19 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3363"})
-    @Description("Validate Target and Quoted Cost Value Tracking Details report is available by search")
+    @TestRail(testCaseId = {"7326"})
+    @Description("Validate report is available by library - Target and Quoted Cost Trend Report")
+    public void testReportAvailabilityByLibrary() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = {"7328"})
+    @Description("Validate report is available by search - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
@@ -57,8 +57,8 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3364"})
-    @Description("Validate Cost Metric Input Control")
+    @TestRail(testCaseId = {"7425"})
+    @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricTargetQuotedCostValueTrackingDetailsReport(
@@ -69,8 +69,8 @@ public class TargetAndQuotedCostValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3364"})
-    @Description("Validate Cost Metric Input Control")
+    @TestRail(testCaseId = {"7426"})
+    @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricTargetQuotedCostValueTrackingDetailsReport(
