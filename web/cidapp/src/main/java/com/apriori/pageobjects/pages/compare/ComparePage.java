@@ -8,11 +8,13 @@ import com.apriori.utils.enums.StatusIconEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -107,5 +109,30 @@ public class ComparePage extends CompareToolbar {
     public List<String> getCard(String section) {
         List<WebElement> cards = driver.findElements(By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .comparison-row.comparison-summary-row", section)));
         return cards.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
+     * Drags the element from source to target
+     * @param source - the source
+     * @param target - the target
+     * @return current object
+     */
+    public ComparePage dragAndDrop(String source, String target) {
+        String byElement = "[data-rbd-drag-handle-draggable-id='%s']";
+
+        WebElement webSource = driver.findElement(By.cssSelector(String.format(byElement, source)));
+        WebElement webTarget = driver.findElement(By.cssSelector(String.format(byElement, target)));
+
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(webSource)
+            .pause(Duration.ofMillis(100))
+            .moveByOffset(0, -5)
+            .moveByOffset(0, -5)
+            .moveToElement(webTarget)
+            .pause(Duration.ofMillis(500))
+            .release()
+            .pause(Duration.ofSeconds(1))
+            .perform();
+        return this;
     }
 }
