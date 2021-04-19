@@ -19,7 +19,11 @@ public class IterationsTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6932"})
     @Description("Find iterations for a given scenario matching a specified query.")
     public void getIterations() {
-        this.receiveIterations();
+        ResponseWrapper<ScenarioIterationItemsResponse> response = new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class,
+            new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
+        );
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
     @Test
@@ -28,7 +32,7 @@ public class IterationsTest extends SDSTestUtil {
     public void getIterationLatest() {
         ResponseWrapper<ScenarioIteration> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID
+                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
@@ -38,24 +42,12 @@ public class IterationsTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6931"})
     @Description("Get the current representation of a iteration.")
     public void getIterationsByIdentity() {
-        ScenarioIterationItemsResponse iterationsResponse = this.receiveIterations().getResponseEntity();
-
         ResponseWrapper<ScenarioIteration> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID,
-                iterationsResponse.getItems().get(0).getIdentity()
+                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId(),
+                getIterationId()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-    }
-
-    private ResponseWrapper<ScenarioIterationItemsResponse> receiveIterations() {
-        ResponseWrapper<ScenarioIterationItemsResponse> response = new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token), COMPONENT_ID, SCENARIO_ID
-        );
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-
-        return response;
     }
 }

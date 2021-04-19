@@ -10,7 +10,7 @@ import com.apriori.entity.response.componentiteration.ActiveAxes;
 import com.apriori.entity.response.componentiteration.ComponentIteration;
 import com.apriori.entity.response.scenarios.CostResponse;
 import com.apriori.entity.response.scenarios.ImageResponse;
-import com.apriori.tests.utils.CidAppTestUtil;
+import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;

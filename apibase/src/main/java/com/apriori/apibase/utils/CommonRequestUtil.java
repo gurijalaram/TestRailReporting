@@ -34,10 +34,26 @@ public class CommonRequestUtil extends TestUtil {
         );
     }
 
+    public  <T> ResponseWrapper<T> deleteCommonRequestWithInlineVariables(EndpointEnum url, Class klass, Map<String, String> headers, Object... inlineVariables) {
+        return GenericRequestUtil.delete(
+            RequestEntity.init(url, klass).setUrlEncodingEnabled(true)
+                .setHeaders(headers)
+                .setInlineVariables(inlineVariables),
+            new RequestAreaApi()
+        );
+    }
+
+    public  <T> ResponseWrapper<T> postCommonRequest(RequestEntity requestEntity) {
+        return GenericRequestUtil.post(
+            requestEntity,
+            new RequestAreaApi()
+        );
+    }
+
     public  <T> ResponseWrapper<T> postCommonRequest(String url, boolean urlEncoding, Class klass) {
         return GenericRequestUtil.post(
-                RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
-                new RequestAreaApi()
+            RequestEntity.init(url, klass).setUrlEncodingEnabled(urlEncoding),
+            new RequestAreaApi()
         );
     }
 

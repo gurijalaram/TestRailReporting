@@ -23,7 +23,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
         ResponseWrapper<Object> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, null,
                 new APIAuthentication().initAuthorizationHeaderContent(token),
-                COMPONENT_ID, SCENARIO_ID
+                getComponentId(), getScenarioId()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
@@ -37,7 +37,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
         ResponseWrapper<Object> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null,
                 new APIAuthentication().initAuthorizationHeaderContent(token),
-                COMPONENT_ID, SCENARIO_ID
+                getComponentId(), getScenarioId()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
