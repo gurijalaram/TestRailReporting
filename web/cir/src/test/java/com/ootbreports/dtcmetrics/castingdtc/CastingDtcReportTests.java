@@ -322,8 +322,8 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
-    @TestRail(testCaseId = "7505")
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = {"7505"})
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report ")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
@@ -334,8 +334,8 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7508"})
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = "7508")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
