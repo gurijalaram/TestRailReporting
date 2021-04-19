@@ -18,6 +18,9 @@ public enum SDSAPIEnum implements EdcQaAPI {
     GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/manifest"),
     GET_SCENARIO_SECONDARY_PROCESSES_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/secondary-processes"),
 
+    DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s"),
+
+
     // SCENARIO ASSOCIATIONS
     GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/associations/occurrences=1"),
     GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS("components/%s/scenarios/%s/associations/%s"),
@@ -31,6 +34,7 @@ public enum SDSAPIEnum implements EdcQaAPI {
 
     // COMPONENTS
     GET_COMPONENTS("components"),
+    POST_COMPONENTS("components"),
     GET_COMPONENT_SINGLE_BY_IDENTITY("components/%s");
 
 
