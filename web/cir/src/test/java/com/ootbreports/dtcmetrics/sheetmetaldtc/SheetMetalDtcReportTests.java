@@ -274,8 +274,8 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3048"})
-    @Description("Verify Process Group input control functions correctly - No Selection")
+    @TestRail(testCaseId = {"7445"})
+    @Description("Verify process group input control functionality - No Selection - Sheet Metal DTC Report")
     public void testProcessGroupInputControlNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testProcessGroupInputControlNoSelection(
@@ -286,8 +286,8 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3048"})
-    @Description("Verify Process Group input control functions correctly - Single Selection")
+    @TestRail(testCaseId = {"7448"})
+    @Description("Verify process group input control functionality - Single Selection - Sheet Metal DTC Report")
     public void testSingleProcessGroup() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSingleProcessGroup(
@@ -312,8 +312,8 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - No Selection")
+    @TestRail(testCaseId = {"7529"})
+    @Description("Verify DTC Score Input Control - No Selection - Sheet Metal DTC Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -324,8 +324,8 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - Low")
+    @TestRail(testCaseId = {"7532"})
+    @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -337,8 +337,8 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - Medium")
+    @TestRail(testCaseId = {"7535"})
+    @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -350,8 +350,8 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - High")
+    @TestRail(testCaseId = {"7538"})
+    @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(

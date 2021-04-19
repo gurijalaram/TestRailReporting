@@ -310,8 +310,8 @@ public class PlasticDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7517"})
+    @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -322,8 +322,8 @@ public class PlasticDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7520"})
+    @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -335,8 +335,8 @@ public class PlasticDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7523"})
+    @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -348,8 +348,8 @@ public class PlasticDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7526"})
+    @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(

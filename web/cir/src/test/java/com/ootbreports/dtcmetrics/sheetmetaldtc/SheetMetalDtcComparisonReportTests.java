@@ -320,8 +320,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3048"})
-    @Description("Verify Process Group input control functions correctly - No Selection")
+    @TestRail(testCaseId = {"7449"})
+    @Description("Verify process group input control functionality - No Selection - Sheet Metal DTC Comparison Report")
     public void testProcessGroupInputControlNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testProcessGroupInputControlNoSelection(
@@ -358,8 +358,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - No Selection")
+    @TestRail(testCaseId = {"7530"})
+    @Description("Verify DTC Score Input Control - No Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -370,21 +370,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - All")
-    public void testDtcScoreAll() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testDtcScoreComparisonReports(
-                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                DtcScoreEnum.ALL.getDtcScoreName()
-        );
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - Low")
+    @TestRail(testCaseId = {"7533"})
+    @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
@@ -396,8 +383,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - Medium")
+    @TestRail(testCaseId = {"7536"})
+    @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
@@ -409,14 +396,27 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3049"})
-    @Description("Verify DTC Score input control functions correctly - High")
+    @TestRail(testCaseId = {"7539"})
+    @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = {"7541"})
+    @Description("Verify DTC Score Input Control - All Selection - Sheet Metal DTC Comparison Report")
+    public void testDtcScoreAll() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testDtcScoreComparisonReports(
+                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                DtcScoreEnum.ALL.getDtcScoreName()
         );
     }
 }

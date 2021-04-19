@@ -251,8 +251,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3028"})
-    @Description("Verify Process Group input control functions correctly")
+    @TestRail(testCaseId = {"7452"})
+    @Description("Verify process group input control functionality - Stock Machining - Machining DTC Report")
     public void testProcessGroupStockMachiningOnly() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSingleProcessGroup(
@@ -264,8 +264,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3028"})
-    @Description("Verify Process Group input control functions correctly")
+    @TestRail(testCaseId = {"7451"})
+    @Description("Verify process group input control functionality - 2 Model Machining - Machining DTC Report")
     public void testProcessGroupTwoModelMachiningOnly() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSingleProcessGroup(
@@ -277,8 +277,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3028"})
-    @Description("Verify Process Group input control functions correctly")
+    @TestRail(testCaseId = {"7456"})
+    @Description("Verify process group input control functionality - 2 Model and Stock Machining - Machining DTC Report")
     public void testProcessGroupSandAndDieCasting() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsMachining();
@@ -286,8 +286,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7457"})
+    @Description("Verify DTC Score Input Control - No Selection - Machining DTC Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -298,8 +298,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7460"})
+    @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -311,8 +311,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7498"})
+    @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -324,8 +324,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7501"})
+    @Description("Verify DTC Score Input Control - High Selection - Machining DTC Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(

@@ -168,8 +168,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7519"})
+    @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Details Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -180,8 +180,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7522"})
+    @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Details Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreDetailsReports(
@@ -193,8 +193,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7525"})
+    @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Details Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreDetailsReports(
@@ -206,8 +206,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7528"})
+    @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Details Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreDetailsReports(

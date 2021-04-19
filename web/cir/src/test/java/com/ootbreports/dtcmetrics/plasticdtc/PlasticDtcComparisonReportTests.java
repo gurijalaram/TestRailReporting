@@ -168,8 +168,8 @@ public class PlasticDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7518"})
+    @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Comparison Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -180,8 +180,8 @@ public class PlasticDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7521"})
+    @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Comparison Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
@@ -193,8 +193,8 @@ public class PlasticDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7524"})
+    @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Comparison Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
@@ -206,8 +206,8 @@ public class PlasticDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7527"})
+    @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Comparison Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
@@ -219,8 +219,8 @@ public class PlasticDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1701"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7542"})
+    @Description("Verify DTC Score Input Control - All Selection - Plastic DTC Comparison Report")
     public void testDtcScoreAll() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(

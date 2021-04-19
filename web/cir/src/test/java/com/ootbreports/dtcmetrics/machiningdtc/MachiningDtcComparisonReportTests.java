@@ -205,8 +205,8 @@ public class MachiningDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7458"})
+    @Description("Verify DTC Score Input Control - No Selection - Machining DTC Comparison Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -217,8 +217,8 @@ public class MachiningDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7496"})
+    @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Comparison Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
@@ -230,8 +230,8 @@ public class MachiningDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7499"})
+    @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Comparison Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
@@ -243,8 +243,8 @@ public class MachiningDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7502"})
+    @Description("Verify DTC Score Input Control - High Selection - Machining DTC Comparison Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
@@ -256,8 +256,8 @@ public class MachiningDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3029"})
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7543"})
+    @Description("Verify DTC Score Input Control - All Selection - Machining DTC Comparison Report")
     public void testDtcScoreAll() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
