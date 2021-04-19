@@ -118,23 +118,51 @@ public class ComparePage extends CompareToolbar {
      * @param target - the target
      * @return current object
      */
-    public ComparePage dragAndDrop(String source, String target) {
+    public ComparePage dragAndDropCard(String source, String target) {
         String byElement = "[data-rbd-drag-handle-draggable-id='%s']";
 
         WebElement webSource = driver.findElement(By.cssSelector(String.format(byElement, source)));
         WebElement webTarget = driver.findElement(By.cssSelector(String.format(byElement, target)));
 
+        dragAndDrop(webSource, webTarget);
+        return this;
+    }
+
+    /**
+     * Drags the element from source to target
+     *
+     * @param source - the source
+     * @param target - the target
+     * @return current object
+     */
+    public ComparePage dragAndDropComparison(String source, String target) {
+        String[] streamSource = source.split(",");
+        String[] streamTarget = target.split(",");
+
+        WebElement byElementSource = driver.findElement(By.cssSelector(".card-header")).findElement(By.xpath(String.format("//div[.='%s / %s']", streamSource[0], streamSource[1])));
+        WebElement byElementTarget = driver.findElement(By.cssSelector(".card-header")).findElement(By.xpath(String.format("//div[.='%s / %s']", streamTarget[0], streamTarget[1])));
+
+        dragAndDrop(byElementSource, byElementTarget);
+        return this;
+    }
+
+    /**
+     * Drag and drop an element from source to target
+     *
+     * @param byElementSource - element source
+     * @param byElementTarget - element target
+     */
+    private void dragAndDrop(WebElement byElementSource, WebElement byElementTarget) {
         Actions actions = new Actions(driver);
-        actions.clickAndHold(webSource)
+        actions.clickAndHold(byElementSource)
             .pause(Duration.ofMillis(100))
             .moveByOffset(0, -5)
             .moveByOffset(0, -5)
-            .moveToElement(webTarget)
+            .moveToElement(byElementTarget)
             .pause(Duration.ofMillis(500))
             .release()
             .pause(Duration.ofSeconds(1))
             .perform();
-        return this;
     }
 
     /**
