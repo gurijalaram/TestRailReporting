@@ -113,6 +113,7 @@ public class ComparePage extends CompareToolbar {
 
     /**
      * Drags the element from source to target
+     *
      * @param source - the source
      * @param target - the target
      * @return current object
@@ -134,5 +135,16 @@ public class ComparePage extends CompareToolbar {
             .pause(Duration.ofSeconds(1))
             .perform();
         return this;
+    }
+
+    /**
+     * Gets card header text
+     * This method can be asserted in the following eg. assertThat(comparePage.getCardHeader(), Matchers.containsInRelativeOrder("Info & Notes", "Process"));
+     *
+     * @return list of string
+     */
+    public List<String> getCardHeader() {
+        List<WebElement> cardHeader = driver.findElements(By.cssSelector(".comparison-column [data-rbd-drag-handle-draggable-id] .section-header"));
+        return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 }

@@ -40,6 +40,12 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(id = "qa-scenario-list-preview-button")
     private WebElement previewButton;
 
+    @FindBy(id = "qa-scenario-list-filter-selector")
+    private WebElement filterDropdown;
+
+    @FindBy(css = "[id='qa-scenario-list-filter-selector'] input")
+    private WebElement filterInput;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -63,6 +69,17 @@ public class ExplorePage extends ExploreToolbar {
      */
     public boolean isScenarioCountPresent() {
         return scenarioCount.isDisplayed();
+    }
+
+    /**
+     * Uses type ahead to input the filter
+     *
+     * @param filter - the filter
+     * @return current page object
+     */
+    public ExplorePage inputFilter(String filter) {
+        pageUtils.typeAheadInput(filterDropdown, filterInput, filter);
+        return this;
     }
 
     /**
