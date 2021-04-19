@@ -139,8 +139,10 @@ public class ComparePage extends CompareToolbar {
         String[] streamSource = source.split(",");
         String[] streamTarget = target.split(",");
 
-        WebElement byElementSource = driver.findElement(By.cssSelector(".card-header")).findElement(By.xpath(String.format("//div[.='%s / %s']", streamSource[0], streamSource[1])));
-        WebElement byElementTarget = driver.findElement(By.cssSelector(".card-header")).findElement(By.xpath(String.format("//div[.='%s / %s']", streamTarget[0], streamTarget[1])));
+        By byEleS = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", streamSource[0].trim().toUpperCase(), streamSource[1].trim()));
+        WebElement byElementSource = pageUtils.waitForElementToAppear(byEleS);
+        By byEleT = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", streamTarget[0].trim().toUpperCase(), streamTarget[1].trim()));
+        WebElement byElementTarget = pageUtils.waitForElementToAppear(byEleT);
 
         dragAndDrop(byElementSource, byElementTarget);
         return this;
