@@ -29,6 +29,9 @@ public class ComparePage extends CompareToolbar {
     private WebElement descriptionInput;
 
     @FindBy(css = ".basis-column .apriori-card .card-header")
+    private WebElement basisColumnHeader;
+
+    @FindBy(css = "[data-rbd-droppable-id='basis-column']")
     private WebElement basisColumn;
 
     private PageUtils pageUtils;
@@ -141,10 +144,8 @@ public class ComparePage extends CompareToolbar {
     public ComparePage dragDropToBasis(String componentName, String scenarioName) {
         By bySource = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", componentName.trim().toUpperCase(), scenarioName.trim()));
         WebElement byElementSource = pageUtils.waitForElementToAppear(bySource);
-        By byTarget = By.cssSelector("[data-rbd-droppable-id='basis-column']");
-        WebElement byElementTarget = pageUtils.waitForElementToAppear(byTarget);
 
-        dragAndDrop(byElementSource, byElementTarget);
+        dragAndDrop(byElementSource, basisColumn);
         return this;
     }
 
@@ -184,6 +185,6 @@ public class ComparePage extends CompareToolbar {
      * @return string
      */
     public String getBasis() {
-        return pageUtils.waitForElementToAppear(basisColumn).getAttribute("textContent");
+        return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
     }
 }
