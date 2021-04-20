@@ -15,28 +15,28 @@ import java.util.Random;
 public class CustomerResourcesTest extends CustomerBase {
 
     @Test
-    @TestRail(testCaseId = "4145")
+    @TestRail(testCaseId = {"4145"})
     @Description("API returns a list of all the available customers in the CIS DB")
     public void getCustomers() {
         CustomerResources.getCustomers();
     }
 
     @Test
-    @TestRail(testCaseId = "4169")
+    @TestRail(testCaseId = {"4169"})
     @Description("API returns a list of tolerances associated with a specific CIS customer")
     public void getCostingPreferences() {
         CustomerResources.getCostingPreferences();
     }
 
     @Test
-    @TestRail(testCaseId = "4171")
+    @TestRail(testCaseId = {"4171"})
     @Description("API returns a list of process groups associated with a specific CIS customer")
     public void getProcessGoups() {
         CustomerResources.getProcessGroups();
     }
 
     @Test
-    @TestRail(testCaseId = "4172")
+    @TestRail(testCaseId = {"4172"})
     @Description("API returns a list of user defined attributes associated with a specific CIS customer")
     public void getUserDefinedAttributes() {
         CustomerResources.getUserDefinedAttributes();
@@ -44,14 +44,14 @@ public class CustomerResourcesTest extends CustomerBase {
 
 
     @Test
-    @TestRail(testCaseId = "4173")
+    @TestRail(testCaseId = {"4173"})
     @Description("API returns a list of VPEs associated with a specific CIS customer")
     public void getVirtualProductionEnvironments() {
         CustomerResources.getVirtualProductEnvironments();
     }
 
     @Test
-    @TestRail(testCaseId = "4170")
+    @TestRail(testCaseId = {"4170"})
     @Description("Update a customer's costing preferences")
     public void patchCostingPreferences() {
         Random rand = new Random();

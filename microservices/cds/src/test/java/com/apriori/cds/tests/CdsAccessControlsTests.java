@@ -50,7 +50,7 @@ public class CdsAccessControlsTests  {
     }
 
     @Test
-    @TestRail(testCaseId = "3289")
+    @TestRail(testCaseId = {"3289"})
     @Description("API returns a list of all the access controls in the CDS DB")
     public void getAccessControls() {
         url = String.format(url, "access-controls");
@@ -62,7 +62,7 @@ public class CdsAccessControlsTests  {
     }
 
     @Test
-    @TestRail(testCaseId = "3294")
+    @TestRail(testCaseId = {"3294"})
     @Issue("MIC-1972")
     @Description("Adding out of context access control")
     public void postAccessControl() {

@@ -43,7 +43,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5969")
+    @TestRail(testCaseId = {"5969"})
     @Description("Get a list of Sites in CDS Db")
     public void getSites() {
         url = String.format(url, "sites");
@@ -56,7 +56,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5309")
+    @TestRail(testCaseId = {"5309"})
     @Description("Get details of a site by its Identity")
     public void getSiteByIdentity() {
         String sitesUrl = String.format(url, "sites");
@@ -72,7 +72,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3299")
+    @TestRail(testCaseId = {"3299"})
     @Description("Add a site to a customer")
     public void addCustomerSite() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -93,7 +93,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3279")
+    @TestRail(testCaseId = {"3279"})
     @Description("Get Sites for a customer")
     public void getCustomerSites() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -113,7 +113,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5310")
+    @TestRail(testCaseId = {"5310"})
     @Description("Add a site to a customer")
     public void getCustomerSiteDetails() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -138,7 +138,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5970")
+    @TestRail(testCaseId = {"5970"})
     public void deleteSite() {
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();

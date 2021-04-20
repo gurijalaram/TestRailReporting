@@ -37,7 +37,7 @@ public class AdminNavigationTests extends TestBase {
 
     @Test
     @Category({CustomerSmokeTests.class, AdminSmokeTest.class})
-    @TestRail(testCaseId = "2980")
+    @TestRail(testCaseId = {"2980"})
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
         scenarioExport = new AdminLoginPage(driver)
@@ -50,7 +50,7 @@ public class AdminNavigationTests extends TestBase {
 
     @Test
     @Category(AdminSmokeTest.class)
-    @TestRail(testCaseId = "2981")
+    @TestRail(testCaseId = {"2981"})
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
         systemDataExport = new AdminLoginPage(driver)
@@ -63,7 +63,7 @@ public class AdminNavigationTests extends TestBase {
 
     @Test
     @Category(AdminSmokeTest.class)
-    @TestRail(testCaseId = "2982")
+    @TestRail(testCaseId = {"2982"})
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new AdminLoginPage(driver)
@@ -79,7 +79,7 @@ public class AdminNavigationTests extends TestBase {
 
     @Test
     @Category(AdminSmokeTest.class)
-    @TestRail(testCaseId = "2983")
+    @TestRail(testCaseId = {"2983"})
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new AdminLoginPage(driver)
@@ -93,7 +93,7 @@ public class AdminNavigationTests extends TestBase {
 
     @Test
     @Category(AdminSmokeTest.class)
-    @TestRail(testCaseId = "2984")
+    @TestRail(testCaseId = {"2984"})
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
         ciaUserGuide = new AdminLoginPage(driver)
@@ -109,7 +109,7 @@ public class AdminNavigationTests extends TestBase {
 
     @Test
     @Category(AdminSmokeTest.class)
-    @TestRail(testCaseId = "2985")
+    @TestRail(testCaseId = {"2985"})
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
         logout = new AdminLoginPage(driver)

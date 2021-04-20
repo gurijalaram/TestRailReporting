@@ -72,7 +72,7 @@ public class CdsIdentityProvidersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5963")
+    @TestRail(testCaseId = {"5963"})
     @Description("Update Identity provider for a customer")
     public void patchCustomerIdentityProviders() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -99,7 +99,7 @@ public class CdsIdentityProvidersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5962")
+    @TestRail(testCaseId = {"5962"})
     @Description("getIDP details by Identity")
     public void getIDPbyIdentity() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -128,7 +128,7 @@ public class CdsIdentityProvidersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5960")
+    @TestRail(testCaseId = {"5960"})
     @Description("getIDP list for customer")
     public void getListOfIDPsForCustomer() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -158,7 +158,7 @@ public class CdsIdentityProvidersTests {
     }
 
     @Test
-    @TestRail(testCaseId = " ")
+    @TestRail(testCaseId = {" "})
     @Description("Deletes identity provider")
     public void deleteCustomerIdentityProvider() {
         String customerName = generateStringUtil.generateCustomerName();

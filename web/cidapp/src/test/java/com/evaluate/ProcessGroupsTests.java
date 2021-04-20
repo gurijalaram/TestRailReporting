@@ -33,9 +33,9 @@ public class ProcessGroupsTests extends TestBase {
         super();
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = "5441")
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @TestRail(testCaseId = {"5441"})
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -52,9 +52,9 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Hammer"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = "6123")
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @TestRail(testCaseId = {"6123"})
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -71,8 +71,8 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("2 Axis Lathe"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Bar and Tube")
     @TestRail(testCaseId = {"6124"})
     public void testProcessGroupBarTube() {
@@ -91,10 +91,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Casting")
-    @TestRail(testCaseId = "6125")
+    @TestRail(testCaseId = {"6125"})
     public void testProcessGroupDieCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -111,10 +111,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("High Pressure Die Casting"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Extrusion")
-    @TestRail(testCaseId = "6126")
+    @TestRail(testCaseId = {"6126"})
     public void testProcessGroupExtrusion() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
@@ -131,10 +131,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Injection Molding"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Filleting")
-    @TestRail(testCaseId = "6127")
+    @TestRail(testCaseId = {"6127"})
     public void testProcessGroupFilleting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -151,10 +151,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Gear Making")
-    @TestRail(testCaseId = "6128")
+    @TestRail(testCaseId = {"6128"})
     public void testProcessGroupGearMaking() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -171,10 +171,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Lathe"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Machining-Contouring")
-    @TestRail(testCaseId = "6129")
+    @TestRail(testCaseId = {"6129"})
     public void testProcessGroupMachiningContouring() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -191,10 +191,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Machining-Gage Parts")
-    @TestRail(testCaseId = "6130")
+    @TestRail(testCaseId = {"6130"})
     public void testProcessGroupMachiningGageParts() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
@@ -212,10 +212,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Machining-Milling-4 Axis Mill")
-    @TestRail(testCaseId = "6132")
+    @TestRail(testCaseId = {"6132"})
     public void testProcessGroupMachining4AxisMill() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -232,10 +232,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("2 Axis Lathe"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Machining-Milling-5 Axis Mill")
-    @TestRail(testCaseId = "6131")
+    @TestRail(testCaseId = {"6131"})
     public void testProcessGroupMachining5AxisMill() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -252,10 +252,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Machining-Milling-Mill Turn")
-    @TestRail(testCaseId = "6133")
+    @TestRail(testCaseId = {"6133"})
     public void testProcessGroupMachiningMillTurn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -272,10 +272,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("2 Axis Lathe"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Partially Automated Machining")
-    @TestRail(testCaseId = "6134")
+    @TestRail(testCaseId = {"6134"})
     public void testProcessGroupPartiallyAutomatedMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -292,10 +292,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Perimeter Milling")
-    @TestRail(testCaseId = "6135")
+    @TestRail(testCaseId = {"6135"})
     public void testProcessGroupPerimeterMilling() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -312,10 +312,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Pocket Recognition - shared walls")
-    @TestRail(testCaseId = "6136")
+    @TestRail(testCaseId = {"6136"})
     public void testProcessGroupPocketRecognitionSharedWalls() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -332,10 +332,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("5 Axis Mill"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Rough Milling")
-    @TestRail(testCaseId = "6137")
+    @TestRail(testCaseId = {"6137"})
     public void testProcessGroupRoughMilling() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -352,10 +352,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Slot Examples")
-    @TestRail(testCaseId = "6138")
+    @TestRail(testCaseId = {"6138"})
     public void testProcessGroupSlotExamples() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -372,10 +372,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Lathe"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Turning")
-    @TestRail(testCaseId = "6139")
+    @TestRail(testCaseId = {"6139"})
     public void testProcessGroupTurning() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -392,8 +392,8 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("2 Axis Lathe"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Roto and Blow Molding")
     @TestRail(testCaseId = {"6061"})
     public void testProcessGroupBlowMolding() {
@@ -412,10 +412,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Rotational Mold"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Powder Metal")
-    @TestRail(testCaseId = "6142")
+    @TestRail(testCaseId = {"6142"})
     public void testProcessGroupPowderMetal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
@@ -432,8 +432,8 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Furnace Sintering"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Roll Bending")
     @TestRail(testCaseId = {"6141", "6144"})
     public void testProcessGroupRollBending() {
@@ -454,10 +454,10 @@ public class ProcessGroupsTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Plasma Cut"));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Description("Testing process group Sheet Metal-Transfer Die")
-    @TestRail(testCaseId = "6143")
+    @TestRail(testCaseId = {"6143"})
     public void testSheetMetalFiberLaser() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
