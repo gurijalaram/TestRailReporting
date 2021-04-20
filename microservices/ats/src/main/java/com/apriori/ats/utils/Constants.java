@@ -135,15 +135,6 @@ public class Constants {
     }
 
     /**
-     * Get service url
-     *
-     * @return string
-     */
-    public static String getServiceUrl() {
-        return serviceUrl = getAtsServiceHost().concat("/users/%s");
-    }
-
-    /**
      * Get automation username prefix
      *
      * @return string
