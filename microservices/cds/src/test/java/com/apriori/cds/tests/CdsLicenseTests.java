@@ -58,7 +58,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3302")
+    @TestRail(testCaseId = {"3302"})
     @Description("Post user licenses")
     public void postUserLicense() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -83,7 +83,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5313")
+    @TestRail(testCaseId = {"5313"})
     @Description("Get list of licenses for customer")
     public void getCustomerLicense() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -112,7 +112,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5968")
+    @TestRail(testCaseId = {"5968"})
     @Description("Get list of licenses for customer")
     public void getCustomerLicenseByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -146,7 +146,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = "6641")
+    @TestRail(testCaseId = {"6641"})
     @Description("Get a sub license")
     public void getSubLicenses() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -182,7 +182,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = "6642")
+    @TestRail(testCaseId = {"6642"})
     @Description("Get a sub license by Identity")
     public void getSubLicenseIdentity() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -219,7 +219,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = "6643")
+    @TestRail(testCaseId = {"6643"})
     @Description("Adds a user sub-license association")
     public void addUserSubLicense() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -262,7 +262,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = "6644")
+    @TestRail(testCaseId = {"6644"})
     @Description("Gets a list of users with a sub-license association")
     public void getUsersAssociatedWithSubLicense() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -309,7 +309,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = "6145")
+    @TestRail(testCaseId = {"6145"})
     @Description("Deletes an existing user sub-license association")
     public void deleteCustomerSubLicense() {
         String customerName = generateStringUtil.generateCustomerName();

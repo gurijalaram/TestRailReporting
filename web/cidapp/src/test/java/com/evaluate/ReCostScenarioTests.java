@@ -35,7 +35,7 @@ public class ReCostScenarioTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = "6101")
+    @TestRail(testCaseId = {"6101"})
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -57,7 +57,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6102")
+    @TestRail(testCaseId = {"6102"})
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -79,7 +79,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6103")
+    @TestRail(testCaseId = {"6103"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -101,7 +101,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6104")
+    @TestRail(testCaseId = {"6104"})
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -123,7 +123,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6105")
+    @TestRail(testCaseId = {"6105"})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -145,7 +145,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6106")
+    @TestRail(testCaseId = {"6106"})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;

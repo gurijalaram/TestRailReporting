@@ -40,7 +40,7 @@ public class CdsDeploymentsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3301")
+    @TestRail(testCaseId = {"3301"})
     @Description("Add a deployment to a customer")
     public void addCustomerDeployment() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -65,7 +65,7 @@ public class CdsDeploymentsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5314")
+    @TestRail(testCaseId = {"5314"})
     @Description("Get a list of deployments for a customer")
     public void getCustomerDeployments() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -94,7 +94,7 @@ public class CdsDeploymentsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5315")
+    @TestRail(testCaseId = {"5315"})
     @Description("Add a deployment to a customer")
     public void getDeploymentByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();

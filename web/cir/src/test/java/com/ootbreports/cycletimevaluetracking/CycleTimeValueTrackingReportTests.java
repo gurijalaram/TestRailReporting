@@ -14,7 +14,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
-
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
 
@@ -30,8 +29,8 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "92")
-    @Description("validate report available by navigation")
+    @TestRail(testCaseId = {"2325"})
+    @Description("Validate report is available by navigation - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -41,8 +40,8 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "92")
-    @Description("Verify report availability by library")
+    @TestRail(testCaseId = {"7236"})
+    @Description("Verify report availability by library - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName());
@@ -50,8 +49,8 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "92")
-    @Description("Verify report availability by search")
+    @TestRail(testCaseId = {"7238"})
+    @Description("Verify report availability by search - Cycle Time Value Tracking Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName());
@@ -59,7 +58,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2331")
+    @TestRail(testCaseId = {"2331"})
     @Description("Projects rollup drop list functionality test")
     public void testProjectRollupDropdownList() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
@@ -79,7 +78,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2332")
+    @TestRail(testCaseId = {"2332"})
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateFilterFunctionality() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
@@ -99,7 +98,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "2335")
+    @TestRail(testCaseId = {"2335"})
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)

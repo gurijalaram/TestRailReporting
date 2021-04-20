@@ -32,7 +32,7 @@ public class FileManagementControllerTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "3933")
+    @TestRail(testCaseId = {"3933"})
     @Description("Get files for a targetCloudContext with an authorized user")
     public void getFiles() {
         List<FileResponse> files = FileManagementController.getFiles(

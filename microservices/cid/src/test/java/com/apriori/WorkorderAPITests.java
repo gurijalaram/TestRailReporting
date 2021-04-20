@@ -2,10 +2,8 @@ package com.apriori;
 
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileUploadResources;
-
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
@@ -23,7 +21,7 @@ public class WorkorderAPITests {
 
     @Test
     @Category(CidAPITest.class)
-    @TestRail(testCaseId = "6933")
+    @TestRail(testCaseId = {"6933"})
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void loadCadMetadataAndGeneratePartImages() {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();

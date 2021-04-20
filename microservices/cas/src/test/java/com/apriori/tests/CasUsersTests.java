@@ -35,7 +35,7 @@ public class CasUsersTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5665")
+    @TestRail(testCaseId = {"5665"})
     @Description("Get user by identity.")
     public void getUserById() {
         String url = String.format(Constants.getApiUrl(), "users/18EFF425JA5J");
@@ -48,7 +48,7 @@ public class CasUsersTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5666")
+    @TestRail(testCaseId = {"5666"})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
         String url = String.format(Constants.getApiUrl(), "users/current");
