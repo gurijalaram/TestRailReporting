@@ -26,6 +26,12 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "[placeholder='Description']")
     private WebElement descriptionInput;
 
+    @FindBy(css = ".basis-column .apriori-card .card-header")
+    private WebElement basisColumnHeader;
+
+    @FindBy(css = "[data-rbd-droppable-id='basis-column']")
+    private WebElement basisColumn;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -107,5 +113,57 @@ public class ComparePage extends CompareToolbar {
     public List<String> getCard(String section) {
         List<WebElement> cards = driver.findElements(By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .comparison-row.comparison-summary-row", section)));
         return cards.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
+     * Drags the element from source to target
+     *
+     * @param source - the source
+     * @param target - the target
+     * @return current object
+     */
+    public ComparePage dragDropCard(String source, String target) {
+        String byElement = "[data-rbd-drag-handle-draggable-id='%s']";
+
+        WebElement webSource = driver.findElement(By.cssSelector(String.format(byElement, source)));
+        WebElement webTarget = driver.findElement(By.cssSelector(String.format(byElement, target)));
+
+        pageUtils.dragAndDrop(webSource, webTarget);
+        return this;
+    }
+
+    /**
+     * Drags the element from source to target
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current object
+     */
+    public ComparePage dragDropToBasis(String componentName, String scenarioName) {
+        By bySource = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", componentName.trim().toUpperCase(), scenarioName.trim()));
+        WebElement byElementSource = pageUtils.waitForElementToAppear(bySource);
+
+        pageUtils.dragAndDrop(byElementSource, basisColumn);
+        return this;
+    }
+
+    /**
+     * Gets card header text
+     * This method can be asserted in the following eg. assertThat(comparePage.getCardHeader(), Matchers.containsInRelativeOrder("Info & Notes", "Process"));
+     *
+     * @return list of string
+     */
+    public List<String> getCardHeader() {
+        List<WebElement> cardHeader = driver.findElements(By.cssSelector(".comparison-column [data-rbd-drag-handle-draggable-id] .section-header"));
+        return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets basis
+     *
+     * @return string
+     */
+    public String getBasis() {
+        return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
     }
 }
