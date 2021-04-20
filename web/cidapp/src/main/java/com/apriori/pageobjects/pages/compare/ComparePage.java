@@ -8,13 +8,11 @@ import com.apriori.utils.enums.StatusIconEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -130,7 +128,7 @@ public class ComparePage extends CompareToolbar {
         WebElement webSource = driver.findElement(By.cssSelector(String.format(byElement, source)));
         WebElement webTarget = driver.findElement(By.cssSelector(String.format(byElement, target)));
 
-        dragAndDrop(webSource, webTarget);
+        pageUtils.dragAndDrop(webSource, webTarget);
         return this;
     }
 
@@ -145,27 +143,8 @@ public class ComparePage extends CompareToolbar {
         By bySource = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", componentName.trim().toUpperCase(), scenarioName.trim()));
         WebElement byElementSource = pageUtils.waitForElementToAppear(bySource);
 
-        dragAndDrop(byElementSource, basisColumn);
+        pageUtils.dragAndDrop(byElementSource, basisColumn);
         return this;
-    }
-
-    /**
-     * Drag and drop an element from source to target
-     *
-     * @param byElementSource - element source
-     * @param byElementTarget - element target
-     */
-    private void dragAndDrop(WebElement byElementSource, WebElement byElementTarget) {
-        Actions actions = new Actions(driver);
-        actions.clickAndHold(byElementSource)
-            .pause(Duration.ofMillis(100))
-            .moveByOffset(0, -5)
-            .moveByOffset(0, -5)
-            .moveToElement(byElementTarget)
-            .pause(Duration.ofMillis(500))
-            .release()
-            .pause(Duration.ofSeconds(1))
-            .perform();
     }
 
     /**
