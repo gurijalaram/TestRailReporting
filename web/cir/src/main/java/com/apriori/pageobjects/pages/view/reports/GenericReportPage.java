@@ -1450,8 +1450,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage enterSaveName(String saveName) {
         pageUtils.waitForElementAndClick(saveInput);
-        saveInput.sendKeys(Keys.CONTROL + "a");
-        saveInput.sendKeys(Keys.DELETE);
+        pageUtils.clearInput(saveInput);
         saveInput.sendKeys(saveName);
         return this;
     }
@@ -2443,6 +2442,37 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(String valueIndex) {
         return costDesignOutlierMap.get(valueIndex).getText();
+    }
+
+    /**
+     * Gets count of bar charts on specified chart
+     *
+     * @param chartName - String
+     * @return int
+     */
+    public int getCostOutlierBarChartBarCount(String chartName) {
+        String chartIndex = chartName.equals("Annualised") ? "1" : "7";
+        return driver.findElements(By.xpath(
+                String.format(
+                        "(//*[@class='highcharts-series-group']//*[local-name() = 'g'])[%s]//*[local-name()='rect']",
+                        chartIndex
+                )
+        )).size();
+    }
+
+    /**
+     *
+     * @param chartName
+     * @return
+     */
+    public boolean isCostOutlierBarEnabledAndDisplayed(String chartName) {
+        String chartIndex = chartName.equals("Annualised") ? "1" : "7";
+        WebElement elementToUse = driver.findElement(
+                By.xpath(String.format(
+                        "(//*[@class='highcharts-series-group']//*[local-name() = 'g'])[%s]//*[local-name()='rect']",
+                        chartIndex))
+        );
+        return pageUtils.isElementDisplayed(elementToUse) && pageUtils.isElementEnabled(elementToUse);
     }
 
     /**

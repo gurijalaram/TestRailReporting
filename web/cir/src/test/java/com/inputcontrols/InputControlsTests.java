@@ -996,7 +996,10 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
+     * Generic test for junk value on annualised or percent error (Cost Outlier tests)
      *
+     * @param reportName String
+     * @param fieldToUse String
      */
     public void testAnnualisedOrPercentError(String reportName, String fieldToUse) {
         genericReportPage = new ReportsLoginPage(driver)

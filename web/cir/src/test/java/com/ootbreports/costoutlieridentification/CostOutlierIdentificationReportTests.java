@@ -218,4 +218,36 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 "Percent"
         );
     }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = {"1958"})
+    @Description("Percent difference threshold filter works - main report")
+    public void testPercentDifferenceThresholdFilter() {
+        String percentChartName = "Percent";
+        String annualisedChartName = "Annualised";
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
+                .inputAnnualisedOrPercentValue(percentChartName, "100")
+                .clickOk();
+
+        genericReportPage.waitForReportToLoad();
+
+        assertThat(genericReportPage.getCostOutlierBarChartBarCount(annualisedChartName),
+                is(equalTo(1))
+        );
+        assertThat(genericReportPage.getCostOutlierBarChartBarCount(percentChartName),
+                is(equalTo(1))
+        );
+
+        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(annualisedChartName),
+                is(equalTo(true))
+        );
+        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(percentChartName),
+                is(equalTo(true))
+        );
+    }
 }
