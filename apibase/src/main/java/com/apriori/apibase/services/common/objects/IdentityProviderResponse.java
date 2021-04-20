@@ -36,9 +36,19 @@ public class IdentityProviderResponse {
     private String signingCertificateExpiresAt;
     private Boolean signRequest;
     private AttributeMappings attributeMappings;
+    private String customerIdentity;
     private String signRequestAlgorithm;
     private String signRequestAlgorithmDigest;
     private String protocolBinding;
+
+    public String getCustomerIdentity() {
+        return customerIdentity;
+    }
+
+    public IdentityProviderResponse setCustomerIdentity(String customerIdentity) {
+        this.customerIdentity = customerIdentity;
+        return this;
+    }
 
     public String getUpdatedBy() {
         return updatedBy;
