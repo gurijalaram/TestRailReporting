@@ -84,7 +84,9 @@ public class TestRailRule extends TestWatcher {
     public void addResultForCase(Map<String, Object> parameterData)
         throws IOException, APIException {
 
-        if (!System.getProperty("mode", DEFAULT_TEST_MODE).equals(TestMode.QA.value())) {
+        // Do not post to Test Rail if mode (aka Test Mode) is Local.
+        // This allows for test development/break-fix
+        if (System.getProperty("mode", DEFAULT_TEST_MODE).equals(TestMode.LOCAL.value())) {
             return;
         }
 
