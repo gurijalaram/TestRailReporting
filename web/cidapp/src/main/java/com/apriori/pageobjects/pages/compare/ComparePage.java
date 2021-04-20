@@ -177,4 +177,15 @@ public class ComparePage extends CompareToolbar {
         List<WebElement> cardHeader = driver.findElements(By.cssSelector(".comparison-column [data-rbd-drag-handle-draggable-id] .section-header"));
         return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
+
+    /**
+     * Gets comparison header text
+     * This method can be asserted in the following eg. assertThat(comparePage.getCardHeader(), Matchers.containsInRelativeOrder("BRACKET_BASIC / Initial", "PUSH PIN / Initial"));
+     *
+     * @return list of string
+     */
+    public List<String> getComparisonHeader() {
+        List<WebElement> cardHeader = driver.findElements(By.cssSelector(".comparison-column.draggable .apriori-card .card-header"));
+        return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
 }
