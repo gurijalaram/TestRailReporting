@@ -28,6 +28,9 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "[placeholder='Description']")
     private WebElement descriptionInput;
 
+    @FindBy(css = ".basis-column .apriori-card .card-header")
+    private WebElement basisColumn;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -118,7 +121,7 @@ public class ComparePage extends CompareToolbar {
      * @param target - the target
      * @return current object
      */
-    public ComparePage dragAndDropCard(String source, String target) {
+    public ComparePage dragDropCard(String source, String target) {
         String byElement = "[data-rbd-drag-handle-draggable-id='%s']";
 
         WebElement webSource = driver.findElement(By.cssSelector(String.format(byElement, source)));
@@ -131,18 +134,15 @@ public class ComparePage extends CompareToolbar {
     /**
      * Drags the element from source to target
      *
-     * @param source - the source
-     * @param target - the target
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
      * @return current object
      */
-    public ComparePage dragAndDropComparison(String source, String target) {
-        String[] streamSource = source.split(",");
-        String[] streamTarget = target.split(",");
-
-        By byEleS = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", streamSource[0].trim().toUpperCase(), streamSource[1].trim()));
-        WebElement byElementSource = pageUtils.waitForElementToAppear(byEleS);
-        By byEleT = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", streamTarget[0].trim().toUpperCase(), streamTarget[1].trim()));
-        WebElement byElementTarget = pageUtils.waitForElementToAppear(byEleT);
+    public ComparePage dragDropToBasis(String componentName, String scenarioName) {
+        By bySource = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", componentName.trim().toUpperCase(), scenarioName.trim()));
+        WebElement byElementSource = pageUtils.waitForElementToAppear(bySource);
+        By byTarget = By.cssSelector("[data-rbd-droppable-id='basis-column']");
+        WebElement byElementTarget = pageUtils.waitForElementToAppear(byTarget);
 
         dragAndDrop(byElementSource, byElementTarget);
         return this;
@@ -179,13 +179,11 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
-     * Gets comparison header text
-     * This method can be asserted in the following eg. assertThat(comparePage.getCardHeader(), Matchers.containsInRelativeOrder("BRACKET_BASIC / Initial", "PUSH PIN / Initial"));
+     * Gets basis
      *
-     * @return list of string
+     * @return string
      */
-    public List<String> getComparisonHeader() {
-        List<WebElement> cardHeader = driver.findElements(By.cssSelector(".comparison-column.draggable .apriori-card .card-header"));
-        return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    public String getBasis() {
+        return pageUtils.waitForElementToAppear(basisColumn).getAttribute("textContent");
     }
 }
