@@ -23,7 +23,7 @@ public class ResetAutomationUsers {
 
     private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
 
-    String url = String.format(Constants.getServiceUrl(),
+    String url = String.format(Constants.getAtsServiceHost() + "/users/%s",
         Constants.getAutomationUsername()
             + "/password?key="
             + Constants.getSecretKey());
