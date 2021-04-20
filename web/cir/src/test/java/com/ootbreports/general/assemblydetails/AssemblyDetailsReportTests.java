@@ -56,9 +56,9 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1915")
+    @TestRail(testCaseId = {"1915"})
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenuAssemblyDetails() {
+    public void testReportAvailabilityByNavigationAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
             ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
@@ -67,7 +67,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3060")
+    @TestRail(testCaseId = {"3060"})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
@@ -76,7 +76,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1916")
+    @TestRail(testCaseId = {"1916"})
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
@@ -86,7 +86,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-66932")
     @Category({ReportsTest.class, OnPremTest.class, CustomerSmokeTests.class})
-    @TestRail(testCaseId = "1922")
+    @TestRail(testCaseId = {"1922"})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -126,7 +126,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3205")
+    @TestRail(testCaseId = {"3205"})
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -472,7 +472,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-66932")
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1919")
+    @TestRail(testCaseId = {"1919"})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
         inputControlsTests = new InputControlsTests(driver);
@@ -481,7 +481,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "3244")
+    @TestRail(testCaseId = {"3244"})
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
@@ -490,7 +490,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1930")
+    @TestRail(testCaseId = {"1930"})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -578,7 +578,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1918")
+    @TestRail(testCaseId = {"1918"})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -607,7 +607,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-66932")
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1920")
+    @TestRail(testCaseId = {"1920"})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
         inputControlsTests = new InputControlsTests(driver);
@@ -617,7 +617,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-66932")
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1931")
+    @TestRail(testCaseId = {"1931"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -646,7 +646,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1921")
+    @TestRail(testCaseId = {"1921"})
     @Description("Export Set search function works (plus other filters)")
     public void testExportSetSearch() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -664,7 +664,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1921")
+    @TestRail(testCaseId = {"1921"})
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
@@ -676,7 +676,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1921")
+    @TestRail(testCaseId = {"1921"})
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -720,7 +720,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1921")
+    @TestRail(testCaseId = {"1921"})
     @Description("Export set search function works (plus other filters)")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -733,7 +733,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1921")
+    @TestRail(testCaseId = {"1921"})
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
@@ -745,7 +745,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1921")
+    @TestRail(testCaseId = {"1921"})
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -781,7 +781,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1921")
+    @TestRail(testCaseId = {"1921"})
     @Description("Export set search function works (plus other filters)")
     public void testLastModifiedFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -794,7 +794,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1921")
+    @TestRail(testCaseId = {"1921"})
     @Description("Export set search function works (plus other filters)")
     public void testAssemblyNumberSearchCriteria() {
         inputControlsTests = new InputControlsTests(driver);
@@ -806,7 +806,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1924")
+    @TestRail(testCaseId = {"1924"})
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -851,7 +851,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1928")
+    @TestRail(testCaseId = {"1928"})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -878,7 +878,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1933")
+    @TestRail(testCaseId = {"1933"})
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -906,7 +906,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1927")
+    @TestRail(testCaseId = {"1927"})
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
         genericReportPage = new ReportsLoginPage(driver)

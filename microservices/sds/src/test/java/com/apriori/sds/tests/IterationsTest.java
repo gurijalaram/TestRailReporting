@@ -16,7 +16,7 @@ import util.SDSTestUtil;
 public class IterationsTest extends SDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = "6932")
+    @TestRail(testCaseId = {"6932"})
     @Description("Find iterations for a given scenario matching a specified query.")
     public void getIterations() {
         ResponseWrapper<ScenarioIterationItemsResponse> response = new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class,
@@ -27,7 +27,7 @@ public class IterationsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "6930")
+    @TestRail(testCaseId = {"6930"})
     @Description("Get the latest iteration.")
     public void getIterationLatest() {
         ResponseWrapper<ScenarioIteration> response =
@@ -39,7 +39,7 @@ public class IterationsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "6931")
+    @TestRail(testCaseId = {"6931"})
     @Description("Get the current representation of a iteration.")
     public void getIterationsByIdentity() {
         ResponseWrapper<ScenarioIteration> response =

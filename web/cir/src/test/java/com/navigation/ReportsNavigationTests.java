@@ -57,7 +57,7 @@ public class ReportsNavigationTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "2987")
+    @TestRail(testCaseId = {"2987"})
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new ReportsLoginPage(driver)
@@ -73,7 +73,7 @@ public class ReportsNavigationTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "2986")
+    @TestRail(testCaseId = {"2986"})
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
         logout = new ReportsLoginPage(driver)

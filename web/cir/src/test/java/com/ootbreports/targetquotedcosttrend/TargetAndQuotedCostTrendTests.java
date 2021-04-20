@@ -16,15 +16,12 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class TargetAndQuotedCostTrendTests extends TestBase {
 
@@ -38,19 +35,8 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3352")
-    @Description("Validate Target and Quoted Cost Trend report is available by library")
-    public void testReportAvailabilityByLibrary() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
-        );
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3352")
-    @Description("Validate Target and Quoted Cost Trend report is available by navigation")
+    @TestRail(testCaseId = {"3352"})
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -60,8 +46,19 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3354")
-    @Description("Validate Target and Quoted Cost Trend report is available by search")
+    @TestRail(testCaseId = {"7323"})
+    @Description("Validate report is available by library")
+    public void testReportAvailabilityByLibrary() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = {"3354"})
+    @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
@@ -71,7 +68,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3355")
+    @TestRail(testCaseId = {"3355"})
     @Description("Validate Projects Rollup drop-down Input Control functionality")
     public void testProjectRollupDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
@@ -89,7 +86,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3356")
+    @TestRail(testCaseId = {"3356"})
     @Description("Validate Project Name drop-down Input Control functionality")
     public void testProjectNameDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
@@ -116,7 +113,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3357")
+    @TestRail(testCaseId = {"3357"})
     @Description("Validate Export Date drop-down Input Control")
     public void testExportDateDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
@@ -135,8 +132,8 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3358")
-    @Description("Validate Cost Metric drop-down Input Control")
+    @TestRail(testCaseId = {"3358"})
+    @Description("Validate Cost Metric Input Control - PPC")
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
@@ -148,8 +145,8 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3358")
-    @Description("Validate Cost Metric drop-down Input Control")
+    @TestRail(testCaseId = {"7423"})
+    @Description("Validate Cost Metric Input Control - FBC")
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
@@ -161,7 +158,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3359")
+    @TestRail(testCaseId = {"3359"})
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
@@ -188,7 +185,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3360")
+    @TestRail(testCaseId = {"3360"})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidBase() {
         inputControlsTests = new InputControlsTests(driver);
@@ -197,7 +194,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3360")
+    @TestRail(testCaseId = {"3360"})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidFinal() {
         inputControlsTests = new InputControlsTests(driver);
@@ -206,7 +203,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3361")
+    @TestRail(testCaseId = {"3361"})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
     public void testHyperlinksToDetailsReportBaseMilestone() {
         inputControlsTests = new InputControlsTests(driver);
@@ -215,7 +212,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "3361")
+    @TestRail(testCaseId = {"3361"})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
     public void testHyperlinksToDetailsReportFinalMilestone() {
         inputControlsTests = new InputControlsTests(driver);

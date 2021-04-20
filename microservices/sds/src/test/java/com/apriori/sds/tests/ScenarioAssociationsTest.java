@@ -16,7 +16,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
 
     @Test
-    @TestRail(testCaseId = "6928")
+    @TestRail(testCaseId = {"6928"})
     @Description("Find scenario associations for a given scenario matching a specified query.")
     public void getAssociations() {
 
@@ -31,7 +31,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
 
     @Test
-    @TestRail(testCaseId = "6929")
+    @TestRail(testCaseId = {"6929"})
     @Description("Get the current representation of a scenario assocation.")
     public void getAssociationsByIdentity() {
         ResponseWrapper<Object> response =

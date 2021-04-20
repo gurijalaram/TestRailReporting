@@ -16,7 +16,6 @@ import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
-
 import com.navigation.CommonReportTests;
 import com.pageobjects.pages.evaluate.EvaluatePage;
 import com.pageobjects.pages.explore.ExplorePage;
@@ -27,7 +26,6 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
@@ -41,19 +39,8 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
-    @Description("Validate Target and Quoted Cost Value Tracking report is available by library")
-    public void testReportAvailabilityByLibrary() {
-        commonReportTests = new CommonReportTests(driver);
-        commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
-        );
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
-    @Description("Validate Target and Quoted Cost Value Tracking report is available by navigation")
+    @TestRail(testCaseId = {"7325"})
+    @Description("Validate report is available by navigation - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -63,8 +50,19 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3363")
-    @Description("Validate Target and Quoted Cost Value Tracking report is available by search")
+    @TestRail(testCaseId = {"7327"})
+    @Description("Validate report available by library - Target and Quoted Cost Trend Details Report")
+    public void testReportAvailabilityByLibrary() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = {"7329"})
+    @Description("Validate report is available by search - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
@@ -74,8 +72,8 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3364")
-    @Description("Validate Cost Metric Input Control")
+    @TestRail(testCaseId = {"3364"})
+    @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Report")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricTargetQuotedCostValueTrackingReport(
@@ -86,8 +84,8 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3364")
-    @Description("Validate Cost Metric Input Control")
+    @TestRail(testCaseId = {"7424"})
+    @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricTargetQuotedCostValueTrackingReport(
@@ -98,7 +96,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3365")
+    @TestRail(testCaseId = {"3365"})
     @Description("Validate Currency Code Input Control Functionality")
     public void testCurrencyCodeInputControl() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
@@ -125,7 +123,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "3368")
+    @TestRail(testCaseId = {"3368"})
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectOne() {
         testMilestoneProjectLink("1");
@@ -133,7 +131,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3368")
+    @TestRail(testCaseId = {"3368"})
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectTwo() {
         testMilestoneProjectLink("2");
@@ -141,7 +139,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3368")
+    @TestRail(testCaseId = {"3368"})
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectThree() {
         testMilestoneProjectLink("3");
@@ -149,7 +147,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3368")
+    @TestRail(testCaseId = {"3368"})
     @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
     public void testLinksToMilestoneProjectFour() {
         testMilestoneProjectLink("4");
@@ -157,7 +155,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3366")
+    @TestRail(testCaseId = {"3366"})
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateListFunctionality() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
@@ -180,7 +178,7 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3367")
+    @TestRail(testCaseId = {"3367"})
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)

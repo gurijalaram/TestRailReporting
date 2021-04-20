@@ -169,12 +169,12 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic save and remove buttons test
+     * Generic save button test
      *
      * @param reportName    - report to use
      * @param exportSetName - export set to use
      */
-    public void testSaveAndRemoveButtons(String reportName, String exportSetName) {
+    public void testSaveButton(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()

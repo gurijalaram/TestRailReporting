@@ -26,7 +26,7 @@ public class CdsRolesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3243")
+    @TestRail(testCaseId = {"3243"})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getRoles() {
         url = String.format(url, "roles");
@@ -40,7 +40,7 @@ public class CdsRolesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3699")
+    @TestRail(testCaseId = {"3699"})
     @Description("API returns a role's information based on the supplied identity")
     public void getRoleById() {
         String rolesUrl = String.format(url, "roles");

@@ -26,6 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
@@ -46,8 +47,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1676")
-    @Description("validate report available by navigation")
+    @TestRail(testCaseId = {"7240"})
+    @Description("Validate report is available by navigation - Casting DTC Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -57,8 +58,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1676")
-    @Description("Verify report availability by library")
+    @TestRail(testCaseId = {"7243"})
+    @Description("Verify report is available by library - Casting DTC Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -66,8 +67,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1676")
-    @Description("Verify report availability by search")
+    @TestRail(testCaseId = "7247")
+    @Description("Verify report availability by search - Casting DTC Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -75,7 +76,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1692")
+    @TestRail(testCaseId = {"1692"})
     @Description("Verify export set input controls function correctly")
     public void testCastingDtcExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
@@ -84,7 +85,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class, CustomerSmokeTests.class})
-    @TestRail(testCaseId = "1694")
+    @TestRail(testCaseId = {"1694"})
     @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
     public void testRollupDropDown() {
         inputControlsTests = new InputControlsTests(driver);
@@ -96,8 +97,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1693")
-    @Description("Verify apply button on Casting DTC input control panel functions correctly")
+    @TestRail(testCaseId = "7342")
+    @Description("Verify apply button functionality - Casting DTC Report")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
@@ -109,8 +110,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1693")
-    @Description("Verify cancel button on Casting DTC input control panel works")
+	@TestRail(testCaseId = {"7345"})
+    @Description("Verify cancel button functionality - Casting DTC Report")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCancelButton(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -118,8 +119,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1693")
-    @Description("Verify reset button on Casting DTC input control panel works")
+    @TestRail(testCaseId = {"7346"})
+    @Description("Verify reset button functionality - Casting DTC Report")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
@@ -130,11 +131,11 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Ignore("not applicable due to reports configuration")
-    @TestRail(testCaseId = "1693")
-    @Description("Verify save button on Casting DTC input control panel functions correctly")
-    public void testSaveAndRemoveButtons() {
+    @TestRail(testCaseId = {"7347"})
+    @Description("Verify save button functionality - Casting DTC Report")
+    public void testSaveButton() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testSaveAndRemoveButtons(
+        inputControlsTests.testSaveButton(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName()
         );
@@ -142,8 +143,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1691")
-    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    @TestRail(testCaseId = {"1691"})
+    @Description("Verify export date filters correctly filters export sets - Picker - Casting DTC Report")
     public void testBothExportDatesUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingDatePicker(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -151,8 +152,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1691")
-    @Description("Verify that earliest and latest export date fields function correctly using date picker")
+    @TestRail(testCaseId = {"7427"})
+    @Description("Verify export date filters correctly filters export sets - Input - Casting DTC Report")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -160,7 +161,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "102990")
+    @TestRail(testCaseId = {"102990"})
     @Description("Verify that aPriori costed scenarios are represented correctly")
     public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -199,7 +200,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1699")
+    @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
         inputControlsTests = new InputControlsTests(driver);
@@ -211,7 +212,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1703")
+    @TestRail(testCaseId = {"1703"})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
         inputControlsTests = new InputControlsTests(driver);
@@ -224,7 +225,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1695")
+    @TestRail(testCaseId = {"1695"})
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -237,8 +238,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1695")
-    @Description("Verify cost metric input control functions correctly")
+    @TestRail(testCaseId = {"7408"})
+    @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
@@ -250,7 +251,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1696")
+    @TestRail(testCaseId = {"1696"})
     @Description("Verify Mass Metric input control functions correctly")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -263,8 +264,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1696")
-    @Description("Verify Mass Metric input control functions correctly")
+	@TestRail(testCaseId = {"7388"})
+    @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -276,8 +277,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1704")
-    @Description("Verify Process Group input control functions correctly")
+    @TestRail(testCaseId = {"7454"})
+    @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
     public void testProcessGroupDieCastingOnly() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSingleProcessGroup(
@@ -289,8 +290,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1704")
-    @Description("Verify Process Group input control functions correctly")
+    @TestRail(testCaseId = {"7453"})
+    @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
     public void testProcessGroupSandCastingOnly() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSingleProcessGroup(
@@ -302,8 +303,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1704")
-    @Description("Verify Process Group input control functions correctly")
+    @TestRail(testCaseId = "7455")
+    @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
     public void testProcessGroupSandAndDieCasting() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsCasting();
@@ -311,7 +312,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1709")
+    @TestRail(testCaseId = {"1709"})
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
         inputControlsTests = new InputControlsTests(driver);
@@ -323,8 +324,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1372")
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = {"7505"})
+    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -335,8 +336,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1372")
-    @Description("Verify DTC Score input control functions correctly")
+    @TestRail(testCaseId = "7508")
+    @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -348,8 +349,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1372")
-    @Description("Verify DTC Score input control functions correctly")
+	@TestRail(testCaseId = {"7511"})
+    @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -361,8 +362,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1372")
-    @Description("Verify DTC Score input control functions correctly")
+	@TestRail(testCaseId = {"7514"})
+    @Description("Verify DTC Score Input Control - High Selection - Casting DTC Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
@@ -374,7 +375,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1710")
+    @TestRail(testCaseId = {"1710"})
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {
         commonReportTests = new CommonReportTests(driver);
