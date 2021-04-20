@@ -2,9 +2,12 @@ package com.apriori.cds.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.cds.objects.response.AccessControlResponse;
+import com.apriori.cds.objects.response.AccessControls;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.tests.utils.CdsTestUtil;
@@ -47,7 +50,19 @@ public class CdsAccessControlsTests  {
     }
 
     @Test
-    @TestRail(testCaseId = "3294")
+    @TestRail(testCaseId = {"3289"})
+    @Description("API returns a list of all the access controls in the CDS DB")
+    public void getAccessControls() {
+        url = String.format(url, "access-controls");
+        ResponseWrapper<AccessControls> response = cdsTestUtil.getCommonRequest(url, AccessControls.class);
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getOutOfContext(), is(notNullValue()));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"3294"})
     @Issue("MIC-1972")
     @Description("Adding out of context access control")
     public void postAccessControl() {

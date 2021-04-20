@@ -18,7 +18,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
@@ -26,14 +25,14 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
-    public  DesignOutlierIdentificationDetailsReportTests() {
+    public DesignOutlierIdentificationDetailsReportTests() {
         super();
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "6179")
-    @Description("Validate details report is available navigation - menu")
+    @TestRail(testCaseId = {"6179"})
+    @Description("Validate report is available by navigation - Design Outlier Identification Details Report")
     public void testReportAvailableByMenu() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -43,8 +42,8 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "6181")
-    @Description("Validate details report is available navigation - library")
+    @TestRail(testCaseId = {"6181"})
+    @Description("Validate report is available by library - Design Outlier Identification Details Report")
     public void testReportAvailableByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
@@ -54,8 +53,8 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "6180")
-    @Description("Validate details report is available navigation - search")
+    @TestRail(testCaseId = {"6180"})
+    @Description("Validate report is available by search - Design Outlier Identification Details Report")
     public void testReportAvailableBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
@@ -65,8 +64,8 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1997")
-    @Description("Mass metric options available & selected cost metric report generated (incl. report header)")
+    @TestRail(testCaseId = {"7387"})
+    @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
     public void testMassMetricFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -78,8 +77,8 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1997")
-    @Description("Mass metric options available & selected cost metric report generated (incl. report header)")
+    @TestRail(testCaseId = {"7386"})
+    @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
     public void testMassMetricRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -91,7 +90,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1988")
+    @TestRail(testCaseId = {"1988"})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateCalendar() {
         inputControlsTests = new InputControlsTests(driver);
@@ -102,7 +101,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1988")
+    @TestRail(testCaseId = {"1988"})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateInputField() {
         inputControlsTests = new InputControlsTests(driver);
@@ -113,7 +112,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1995")
+    @TestRail(testCaseId = {"1995"})
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
         designOutlierIdentificationReportPage = new ReportsLoginPage(driver)

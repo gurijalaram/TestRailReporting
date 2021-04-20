@@ -32,7 +32,7 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Description("Test preview panel data is displayed")
-    @TestRail(testCaseId = "6350")
+    @TestRail(testCaseId = {"6350"})
     public void testPreviewPanelDisplay() {
 
         String partName = "Casting";
@@ -59,7 +59,7 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
-    @TestRail(testCaseId = "6351")
+    @TestRail(testCaseId = {"6351"})
     public void previewPanelMetrics() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;

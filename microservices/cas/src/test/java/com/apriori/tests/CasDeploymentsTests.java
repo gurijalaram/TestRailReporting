@@ -35,7 +35,7 @@ public class CasDeploymentsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5657")
+    @TestRail(testCaseId = {"5657"})
     @Description("Returns a list of deployments for the customer.")
     public void getCustomersDeployments() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/deployments");
@@ -48,7 +48,7 @@ public class CasDeploymentsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5658")
+    @TestRail(testCaseId = {"5658"})
     @Description("Get the deployment identified by its identity.")
     public void getDeploymentByIdentity() {
         String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/deployments/");

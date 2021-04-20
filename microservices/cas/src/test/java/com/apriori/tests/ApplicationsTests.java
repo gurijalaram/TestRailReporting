@@ -35,7 +35,7 @@ public class ApplicationsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "5659")
+    @TestRail(testCaseId = {"5659"})
     @Description("Returns a list of applications for the customer.")
     public void getCustomerApplications() {
         String url = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/applications");

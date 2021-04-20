@@ -9,7 +9,6 @@ import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
-
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
@@ -38,9 +37,9 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3323")
+    @TestRail(testCaseId = {"3323"})
     @Description("Validate report is available by navigation")
-    public void testReportAvailabilityByMenu() {
+    public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
                 ReportNamesEnum.COMPONENT_COST.getReportName()
@@ -49,8 +48,8 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3323")
-    @Description("Validate report is available by navigation")
+    @TestRail(testCaseId = {"7134"})
+    @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.COMPONENT_COST.getReportName());
@@ -58,8 +57,8 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "3323")
-    @Description("Validate report is available by navigation")
+    @TestRail(testCaseId = {"7133"})
+    @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());
@@ -67,7 +66,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3324")
+    @TestRail(testCaseId = {"3324"})
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetSelection() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -92,7 +91,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3325")
+    @TestRail(testCaseId = {"3325"})
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -118,7 +117,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3326")
+    @TestRail(testCaseId = {"3326"})
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -140,7 +139,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3327")
+    @TestRail(testCaseId = {"3327"})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -161,7 +160,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "3329")
+    @TestRail(testCaseId = {"3329"})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -189,7 +188,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = "3328")
+    @TestRail(testCaseId = {"3328"})
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {
         componentCostReportPage = new ReportsLoginPage(driver)
