@@ -37,7 +37,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6186")
+    @TestRail(testCaseId = {"6186"})
     @Issue("BA-1758")
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
@@ -67,7 +67,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6187")
+    @TestRail(testCaseId = {"6187"})
     @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestDieCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -96,7 +96,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6188")
+    @TestRail(testCaseId = {"6188"})
     @Description("Test making changes to the Material for Plastic Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPlasticMolding() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -124,7 +124,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6189")
+    @TestRail(testCaseId = {"6189"})
     @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -155,7 +155,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = "6190")
+    @TestRail(testCaseId = {"6190"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
 
@@ -183,7 +183,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6191")
+    @TestRail(testCaseId = {"6191"})
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -209,7 +209,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6192")
+    @TestRail(testCaseId = {"6192"})
     @Issue("BA-1758")
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
@@ -238,7 +238,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = "6193")
+    @TestRail(testCaseId = {"6193"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
 
@@ -257,7 +257,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6194")
+    @TestRail(testCaseId = {"6194"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
 
@@ -276,7 +276,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6195")
+    @TestRail(testCaseId = {"6195"})
     @Description("Test opening material selection and selecting apply without making a selection")
     public void changeMaterialSelectionTestNoChange() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -299,7 +299,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6196")
+    @TestRail(testCaseId = {"6196"})
     @Issue("BA-1758")
     @Description("Test opening material selection and selecting cancel after making a selection")
     public void changeMaterialSelectionTestCancel() {

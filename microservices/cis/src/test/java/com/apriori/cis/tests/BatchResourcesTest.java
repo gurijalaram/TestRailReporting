@@ -19,7 +19,7 @@ public class BatchResourcesTest extends TestUtil {
 
 
     @Test
-    @TestRail(testCaseId = "4284")
+    @TestRail(testCaseId = {"4284"})
     @Description("API returns a list of Batches in the CIS DB")
     public void createNewBatches() {
 
@@ -36,14 +36,14 @@ public class BatchResourcesTest extends TestUtil {
 
 
     @Test
-    @TestRail(testCaseId = "4275")
+    @TestRail(testCaseId = {"4275"})
     @Description("API returns a list of Batches in the CIS DB")
     public void getBatches() {
         BatchResources.getBatches();
     }
 
     @Test
-    @TestRail(testCaseId = "4277")
+    @TestRail(testCaseId = {"4277"})
     @Description("API returns a representation of a single Batch in the CIS DB")
     public void getBatch() {
         BatchResources.getBatchRepresentation(Constants.getCisBatchIdentity());

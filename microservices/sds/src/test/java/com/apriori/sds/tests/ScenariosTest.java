@@ -21,7 +21,7 @@ import util.SDSTestUtil;
 public class ScenariosTest extends SDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = "6922")
+    @TestRail(testCaseId = {"6922"})
     @Description("Find scenarios for a given component matching a specified query.")
     public void getScenarios() {
         ResponseWrapper<ScenarioItemsResponse> response =
@@ -34,7 +34,7 @@ public class ScenariosTest extends SDSTestUtil {
 
 
     @Test
-    @TestRail(testCaseId = "6923")
+    @TestRail(testCaseId = {"6923"})
     @Description("Get the current representation of a scenario.")
     public void getScenarioByIdentity() {
         ResponseWrapper<Scenario> response =
@@ -46,7 +46,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "6924")
+    @TestRail(testCaseId = {"6924"})
     @Description("Get production defaults for a scenario.")
     public void getCostingDefaults() {
         ResponseWrapper<ScenarioCostingDefaultsResponse> response =
@@ -58,7 +58,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "6925")
+    @TestRail(testCaseId = {"6925"})
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getHoopsImage() {
         ResponseWrapper<ScenarioHoopsImage> response =
@@ -70,7 +70,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "6926")
+    @TestRail(testCaseId = {"6926"})
     @Description("Returns the manifest for a scenario if the component type is a container.")
     public void getManifest() {
         ResponseWrapper<ScenarioManifest> response =
@@ -82,7 +82,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "6927")
+    @TestRail(testCaseId = {"6927"})
     @Description("Get the available secondary processes for a scenario.")
     public void getSecondaryProcesses() {
         ResponseWrapper<ScenarioSecondaryProcess> response =

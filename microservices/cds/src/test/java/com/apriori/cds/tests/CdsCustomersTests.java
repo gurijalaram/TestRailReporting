@@ -50,7 +50,7 @@ public class CdsCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3252")
+    @TestRail(testCaseId = {"3252"})
     @Description("API returns a list of all the available customers in the CDS DB")
     public void getCustomers() {
         url = String.format(url, "customers");
@@ -63,7 +63,7 @@ public class CdsCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3298")
+    @TestRail(testCaseId = {"3298"})
     @Description("Add API customers")
     public void addCustomerTest() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -79,7 +79,7 @@ public class CdsCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "3278")
+    @TestRail(testCaseId = {"3278"})
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -99,7 +99,7 @@ public class CdsCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5957")
+    @TestRail(testCaseId = {"5957"})
     @Description("Get customer applications")
     public void getCustomersApplications() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -120,7 +120,7 @@ public class CdsCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = "5305")
+    @TestRail(testCaseId = {"5305"})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
         String customerName = generateStringUtil.generateCustomerName();

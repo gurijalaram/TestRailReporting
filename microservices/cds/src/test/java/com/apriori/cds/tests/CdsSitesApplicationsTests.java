@@ -43,7 +43,7 @@ public class CdsSitesApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "6058")
+    @TestRail(testCaseId = {"6058"})
     @Description("Add an application to a site")
     public void addApplicationSite() {
 
@@ -70,7 +70,7 @@ public class CdsSitesApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "6060")
+    @TestRail(testCaseId = {"6060"})
     @Description("Returns a specific LicensedApplication for a specific customer site")
     public void getApplicationSite() {
 

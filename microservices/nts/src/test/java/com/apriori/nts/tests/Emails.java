@@ -23,7 +23,7 @@ public class Emails {
     }
 
     @Test
-    @TestRail(testCaseId = "3828")
+    @TestRail(testCaseId = {"3828"})
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         String subject = String.format("%s_%d", Constants.getNtsEmailSubject(), System.currentTimeMillis());
@@ -34,7 +34,7 @@ public class Emails {
 
 
     @Test
-    @TestRail(testCaseId = "3880")
+    @TestRail(testCaseId = {"3880"})
     @Description("Get a list of emails using the NTS API")
     public void getEmails() {
         GetEmailResponse getEmailResponse = NotificationService.getEmails(baseUrl, Constants.getTargetCloudContext());
@@ -44,7 +44,7 @@ public class Emails {
     }
 
     @Test
-    @TestRail(testCaseId = "3881")
+    @TestRail(testCaseId = {"3881"})
     @Description("Get a single email using the NTS API")
     public void getEmail() {
         propertyStore = (PropertyStore) JsonManager.deserializeJsonFromInputStream(
