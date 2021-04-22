@@ -28,7 +28,18 @@ public class UIUtils {
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
         String strDate = dateFormat.format(date);
-        return str.concat("_" + strDate + "_").concat(UUID.randomUUID().toString());
+        return str.concat("_" + strDate + "_");
+    }
+
+    /**
+     * Generate a uuid and concatenate to the supplied string.
+     * This assures the returned string is unique.
+     *
+     * @param str The base string (String must be no longer than 27 characters)
+     * @return string with concatenated serial date string
+     */
+    public static String saltStringUUID(String str) {
+        return str.concat(UUID.randomUUID().toString());
     }
 
     /**

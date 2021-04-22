@@ -323,6 +323,7 @@ public class NewWorkflowPage {
      *                  workflow, the iteration would be 3.
      */
     public void createNewWorkflow(String name, String description, int iteration) {
+        createNewWorkflow(name, description, true, false, null, iteration);
 
     }
 

@@ -113,7 +113,7 @@ public class WorkflowValidator {
                 "second-click-name").toString());
 
         String[] headers = workflowPage.getExpectedWorkflowHeaders();
-        List<String> actualHeaders = (List<String>)values.get("headers");
+        List<String> actualHeaders = (List<String>)values.get("workflowListHeaders");
         for (int idx = 0; idx < headers.length; idx++) {
             Assert.assertTrue(String.format("%s was not present as a header",
                     headers[idx]), actualHeaders.contains(headers[idx]));
@@ -126,9 +126,10 @@ public class WorkflowValidator {
      * @param values
      */
     public void validateSchedulePagination(Map<String, Object> values, Map<String, Integer> valuesI) {
-        Assert.assertEquals("Displayed Pagesize was incorrect", Constants.DEFAULT_PAGE_SIZE, (int)values.get("pagesize"));
-        Assert.assertEquals("Number of displayed workflows was incorrect", Constants.DEFAULT_PAGE_SIZE, (int)values.get(
-                "getDisplayedWorkflows"));
+        Assert.assertEquals("Displayed Pagesize was incorrect", Constants.DEFAULT_PAGE_SIZE, (int)valuesI.get(
+                "pageSize"));
+        Assert.assertEquals("Number of displayed workflows was incorrect", Constants.DEFAULT_PAGE_SIZE,
+                (int)valuesI.get("displayedWorkflows"));
         Assert.assertEquals("Default row range is incorrect", Constants.DEFAULT_ROW_RANGE, values.get("rowRange").toString());
         Assert.assertEquals("Next row range is incorrect", Constants.NEXT_ROW_RANGE,
                 values.get("nextRowRange").toString());

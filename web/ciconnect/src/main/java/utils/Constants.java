@@ -46,8 +46,8 @@ public class Constants {
     public static final int DEFAULT_PAGE_SIZE = 25;
     public static final String MAX_PAGE_SIZE_25_TEXT = "25 rows per page";
     public static final String MAX_PAGE_SIZE_100_TEXT = "100 rows per page";
-    public static final String DEFAULT_ROW_RANGE = "Rows1-25";
-    public static final String NEXT_ROW_RANGE = "Rows26-50";
+    public static final String DEFAULT_ROW_RANGE = "Rows1 - 25";
+    public static final String NEXT_ROW_RANGE = "Rows26 - 50";
 
     //Default worflow names
     public static final String DEFAULT_WORKFLOW_NAME = "0   0   0   0   0 Automation Workflow";
