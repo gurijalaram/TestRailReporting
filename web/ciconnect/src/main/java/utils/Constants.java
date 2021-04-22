@@ -63,6 +63,10 @@ public class Constants {
     public static final int MINIMAL_WORKFLOW_NAME_CHARACTERS = 1;
     public static final int MAXIMUM_WORKFLOW_DESCRIPTION_CHARACTERS = 255;
 
+    //Query Definition
+    public static final String DEFAULT_RULE_FILTER = "partNumber";
+    public static final String DEFAULT_RULE_OPERATOR = "not_equal";
+
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 

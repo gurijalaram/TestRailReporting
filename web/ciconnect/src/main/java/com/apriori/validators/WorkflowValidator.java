@@ -17,7 +17,6 @@ public class WorkflowValidator {
     private static final Logger logger = LoggerFactory.getLogger(WorkflowValidator.class);
 
     private WorkflowPage workflowPage;
-    private WorkflowPage workflowPage1;
 
     public WorkflowValidator(WebDriver driver) {
         workflowPage = new WorkflowPage(driver);

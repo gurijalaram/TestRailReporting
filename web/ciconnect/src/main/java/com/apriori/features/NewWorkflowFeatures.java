@@ -256,7 +256,9 @@ public class NewWorkflowFeatures {
                 return null;
         }
 
-        return newWorkflowPage.isNextButtonEnabled();
+        Map<String, Boolean> states = newWorkflowPage.getNavigationButtonState(NewWorkflowPage.Tab.DETAILS,
+                NewWorkflowPage.NavigationButton.NEXT);
+        return states.get("enabled");
     }
 
     /**

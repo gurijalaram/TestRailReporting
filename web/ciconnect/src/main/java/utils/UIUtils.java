@@ -2,6 +2,10 @@ package utils;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,5 +88,17 @@ public class UIUtils {
         firstLetterUpperCase.append(string, 0, 1);
         firstLetterUpperCase.append(string.substring(1).toLowerCase());
         return firstLetterUpperCase.toString();
+    }
+
+    /**
+     * Checks if a scrollbar exists for the provided element
+     *
+     * @param element Weblement tp check if it is scrollable
+     * @return True if scrollbar exists
+     */
+    public static boolean scrollBarExists(WebElement element) {
+        int scrollHeight = Integer.parseInt(element.getAttribute("scrollHeight"));
+        int offsetHeight = Integer.parseInt(element.getAttribute("offsetHeight"));
+        return scrollHeight > offsetHeight;
     }
 }

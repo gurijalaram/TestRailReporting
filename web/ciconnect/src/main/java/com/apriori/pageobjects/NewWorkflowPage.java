@@ -13,7 +13,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import utils.Constants;
+import utils.UIUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +54,10 @@ public class NewWorkflowPage {
     private WebElement valueSelection;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-108 > button")
     private WebElement queryPageNextButton;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-104 > button")
+    private WebElement queryPageNextButtonDisabled;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-103 > button")
+    private WebElement queryPagePreviousButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-43 > button")
     private WebElement notificationNextButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_crontabBuilderWidget-115")
@@ -178,12 +184,57 @@ public class NewWorkflowPage {
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-288 > button")
     private WebElement saveButton;
 
+
     private String ciConnectFieldCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-3";
     private String valueDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-20";
     private String dayOfWeekCss = "input[value='[DAY]']";
 
     private WebDriver driver;
     private PageUtils pageUtils;
+
+    // Query Definitions
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_group_0 > div.rules-group-body > div")
+    private WebElement rulesList;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_group_0 > div.rules-group-header > div.btn-group.pull-right.group-actions")
+    private WebElement ruleButtons;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_0 > div" +
+            ".rule-filter-container > select")
+    private WebElement filterSelect;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_0 > div" +
+            ".rule-operator-container > select")
+    private WebElement operatorSelect;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_group_0 > div.rules-group-body > div")
+    private WebElement rulesListContainer;
+
+    private String deleteButtonCss = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_" +
+            "[RULE_NUMBER] > div.rule-header > div > button";
+    private String valueFieldCss = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_[RULE_NUMBER] > " +
+            "div.rule-value-container > input";
+    private String filterSelectCss = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_" +
+            "[RULE_NUMBER] > div.rule-filter-container > select";
+    private String operatorSelectCss = "#root_pagemashupcontainer-1_navigation-83-popup_QueryBuilder-110_rule_" +
+            "[RULE_NUMBER] > div.rule-operator-container > select";
+
+
+
+    private WebElement addRuleButton;
+    private WebElement addGroupButton;
+
+    /**
+     * Newworkflow modal tabs
+     */
+    public enum Tab {
+        DETAILS,
+        QUERY,
+        COSTING,
+        NOTIFICATION,
+        PUBLISH
+    }
+
+    public enum NavigationButton {
+        NEXT,
+        PREVIOUS
+    }
 
     public NewWorkflowPage(WebDriver driver) {
         this.driver = driver;
@@ -193,13 +244,160 @@ public class NewWorkflowPage {
     }
 
     /**
-     * checks if the next button is enabled
+     *  Determine if the rules list is scrollable
      *
-     * @return true if the button is enabled
+     * @return True if rules list is scrollable
      */
-    public boolean isNextButtonEnabled() {
+    public boolean rulesScrollBarExists() {
+        return UIUtils.scrollBarExists(rulesListContainer);
+    }
+
+    /**
+     * Add n number of empty rules
+     *
+     * @param numberOfRules Number of rules to add
+     */
+    public void addEmptyRules(int numberOfRules) {
+        addRuleButton = ruleButtons.findElement(By.cssSelector("button[data-add='rule']"));
+        for (int i = 1; i <= numberOfRules; i++) {
+            pageUtils.waitForElementAndClick(addRuleButton);
+        }
+    }
+
+    /**
+     * Determine if Add Group button exists
+     *
+     * @return true if button exists
+     */
+    public boolean groupsButtonExists() {
+        addGroupButton = ruleButtons.findElement(By.cssSelector("button[data-add='group']"));
+        return pageUtils.isElementDisplayed(addGroupButton);
+    }
+
+    /**
+     * Delete the last rule
+     *
+     * @return Number of rules
+     */
+    public int deleteRule() {
+        Integer ruleNumber = getNumberOfRules() - 1;
+        String deleteRule = deleteButtonCss.replace("[RULE_NUMBER]", ruleNumber.toString());
+        WebElement deleteButton = driver.findElement(By.cssSelector(deleteRule));
+        pageUtils.waitForElementAndClick(deleteButton);
+        return  getNumberOfRules();
+    }
+
+    /**
+     *  Add a new rule
+     *
+     * @return number of rules
+     */
+    public int addRule() {
+        addRuleButton = ruleButtons.findElement(By.cssSelector("button[data-add='rule']"));
+        pageUtils.waitForElementAndClick(addRuleButton);
+        int ruleNumber = getNumberOfRules() - 1;
+
+        Map<String, WebElement> elements;
+        elements = getQueryElements(ruleNumber, false);
+        fillQueryDefinitions(elements.get("filter"), null, elements.get("value"), false);
+        elements = getQueryElements(ruleNumber, true);
+        fillQueryDefinitions(elements.get("filter"), null, elements.get("value"), false);
+
+        return getNumberOfRules();
+    }
+
+    /**
+     * Get the number of rules displayed on the Query Definition tab
+     *
+     * @return Number of Rules
+     */
+    public int getNumberOfRules() {
+        pageUtils.waitForElementToBeClickable(rulesList);
+        List<WebElement> rules = rulesList.findElements(By.cssSelector("div.rule-container"));
+        return rules.size();
+    }
+
+    /**
+     * returns the next/previous buttons based on the current  tab
+     *
+     * @return Next & Previous buttons
+     */
+    public Map<String, WebElement> getButtons(Tab tab) {
         pageUtils.waitFor(2000);
-        return pageUtils.isElementEnabled(newWorkflowNextButton);
+        WebElement nextButton;
+        WebElement previousButton;
+
+        switch (tab) {
+            case DETAILS:
+                previousButton = null;
+                nextButton = newWorkflowNextButton;
+                break;
+            case QUERY:
+                previousButton = queryPagePreviousButton;
+                nextButton = queryPageNextButton;
+                break;
+            default:
+                logger.debug("Invalid tab");
+                return null;
+        }
+
+        Map<String, WebElement> buttons = new HashMap<>();
+        buttons.put("next", nextButton);
+        buttons.put("previous", previousButton);
+        return buttons;
+    }
+
+    /**
+     * Determines if the filter field exists
+     *
+     * @return True if field exists
+     */
+    public boolean queryFilterExists() {
+        pageUtils.waitForElementAppear(filterSelect);
+        return pageUtils.isElementDisplayed(filterSelect);
+    }
+
+    /**
+     * Determines if the operator field exists
+     *
+     * @return True if field exists
+     */
+    public boolean queryOperatorExists() {
+        return pageUtils.isElementDisplayed(operatorSelect);
+    }
+
+    /**
+     * Determines if the value field exists
+     *
+     * @return True if field exists
+     */
+    public boolean queryValueExists() {
+        return pageUtils.isElementDisplayed(queryValue);
+    }
+
+    /**
+     * The disabled next button is a different web element than an enabled next
+     * button. This is a check for the dissbled version
+     *
+     * @return True if the disabled next button exists
+     */
+    public boolean isQueryNextButtonDisabled() {
+        return pageUtils.isElementDisplayed(queryPageNextButtonDisabled);
+    }
+
+    /**
+     * Gets the current state of a navigation button
+     *
+     * @param tab The new wrokflow tab that contains the button
+     * @param button The navigation button to check state for
+     * @return map of the button's states
+     */
+    public Map<String, Boolean> getNavigationButtonState(Tab tab, NavigationButton button) {
+        Map<String, Boolean> buttonStates = new HashMap<>();
+        WebElement navigationButton = getButtons(tab).get(button.toString().toLowerCase());
+        buttonStates.put("exists", pageUtils.isElementDisplayed(navigationButton));
+        buttonStates.put("enabled", pageUtils.isElementEnabled(navigationButton));
+        return buttonStates;
     }
 
     /**
@@ -339,6 +537,25 @@ public class NewWorkflowPage {
      */
     public void createNewWorkflow(String name, String description, boolean selectConnector, boolean isSetSchedule,
                                   WorkflowSchedule schedule, int iteration) {
+        fillDetails(name, description, selectConnector, isSetSchedule, schedule);
+        pageUtils.waitForElementAndClick(newWorkflowNextButton);
+        fillQueryDefinitions();
+        fillCostingInputs(iteration);
+        pageUtils.waitForElementAndClick(notificationNextButton);
+        pageUtils.waitForElementAndClick(saveButton);
+    }
+
+    /**
+     * Fill in information on the new workflow details tab
+     *
+     * @param name Name of the workflow
+     * @param description Description of workflow
+     * @param selectConnector If true a connector will be selected
+     * @param isSetSchedule If true, a schedule will be set
+     * @param schedule Schedule information
+     */
+    public void fillDetails(String name, String description, boolean selectConnector,
+                                        boolean isSetSchedule, WorkflowSchedule schedule) {
         // Fill Details page
         if (name != null) {
             fillWorkflowNameField(name);
@@ -355,12 +572,6 @@ public class NewWorkflowPage {
         if (isSetSchedule) {
             setSchedule(schedule);
         }
-
-        pageUtils.waitForElementAndClick(newWorkflowNextButton);
-        fillQueryDefinitions();
-        fillCostingInputs(iteration);
-        pageUtils.waitForElementAndClick(notificationNextButton);
-        pageUtils.waitForElementAndClick(saveButton);
     }
 
     /**
@@ -394,6 +605,18 @@ public class NewWorkflowPage {
     }
 
     /**
+     * Fill in detail information and navigate to the Query Definition tab
+     *
+     * @param name Workflow name
+     * @return NewWorkflowPage object
+     */
+    public NewWorkflowPage gotoQueryDefinitions(String name) {
+        fillDetails(name, null, true, false, null);
+        pageUtils.waitForElementAndClick(newWorkflowNextButton);
+        return this;
+    }
+
+    /**
      * Creates a css webelement string with specified a specified id
      *
      * @param css Marked up webelement css string
@@ -408,17 +631,62 @@ public class NewWorkflowPage {
     }
 
     /**
-     * Fills in the Query Definition fields with DEFAULT values
+     * Select the first query filter
      */
-    private void fillQueryDefinitions() {
+    public void selectQueryFilter() {
         pageUtils.waitForElementToBeClickable(queryDropDown);
         Select opt = new Select(queryDropDown);
         opt.selectByIndex(1);
-        pageUtils.waitForElementAndClick(queryValue);
-        queryValue.sendKeys(Constants.DEFAULT_PART_ID);
+    }
+
+    /**
+     * Fills in the Query Definition fields with DEFAULT values
+     */
+    public void fillQueryDefinitions() {
+        fillQueryDefinitions(true);
+    }
+
+    /**
+     * Fills in the Query Definition fields with DEFAULT values
+     */
+    public void fillQueryDefinitions(boolean clickNext) {
+        fillQueryDefinitions(queryDropDown, null, queryValue, clickNext);
+
+    }
+
+    /**
+     * Fill in the query definition fields
+     *
+     * @param filter The filter object to use
+     * @param operator If not null, the operator drop down to use
+     * @param value The value to enter into the value field
+     * @param clickNext If true, the next button will be clicked. The clickNext parameter would be set to false
+     *                 for most feature specific tests, like check fields or add a rule. No need to click next
+     *                  because the tests are validated on the Query Definitions page.
+     *                  The clickNext parameter would be true for flow tests such as Create and Edit. I'll add this
+     *                  information to the javadoc so it's clearer why the clickNext parameter exists.
+     */
+    public void fillQueryDefinitions(WebElement filter, WebElement operator, WebElement value, boolean clickNext) {
+        pageUtils.waitForElementToBeClickable(filter);
+        Select optFilter = new Select(filter);
+        optFilter.selectByIndex(1);
+
+        if (operator != null) {
+            pageUtils.waitForElementToBeClickable(operator);
+            Select optOperator = new Select(operator);
+            optOperator.selectByIndex(1);
+        }
+
+        if (value != null) {
+            pageUtils.waitForElementAndClick(value);
+            value.sendKeys(Constants.DEFAULT_PART_ID);
+        }
+
         pageUtils.waitForElementAndClick(queryPopup);
-        pageUtils.waitForElementAndClick(queryNext);
-        pageUtils.waitForElementAndClick(queryAddRowButton);
+
+        if (clickNext) {
+            pageUtils.waitForElementAndClick(queryNext);
+        }
     }
 
     /**
@@ -427,11 +695,12 @@ public class NewWorkflowPage {
      * @param iteration The number of times the New Workflow popup has been called
      */
     private void fillCostingInputs(int iteration) {
+        pageUtils.waitForElementAndClick(queryAddRowButton);
         WebElement ciConnectField = getIncrementedElement(ciConnectFieldCss, iteration);
-        pageUtils.waitFor(3000);
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
         pageUtils.waitForElementAndClick(ciConnectField);
         pageUtils.waitForElementAndClick(ciConnectFieldSelection);
-        pageUtils.waitFor(3000);
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
         WebElement valueDD = getIncrementedElement(valueDDCss, iteration);
         pageUtils.waitForElementAndClick(valueDD);
         pageUtils.waitForElementAndClick(valueSelection);
@@ -592,6 +861,35 @@ public class NewWorkflowPage {
 
         pageUtils.selectDropdownOption(yearlyHours, schedule.getStartHour());
         pageUtils.selectDropdownOption(yearlyMinutes, schedule.getStartMinutes());
+
+    }
+
+    /**
+     * return page objects based on rule number
+     *
+     * @param ruleNumber The row number of the rule, if new rule then last rule number + 1
+     * @param filterSelected True if a filter for this rule number has been selected
+     * @return Filter, Operator and Value elements
+     */
+    private Map<String, WebElement> getQueryElements(Integer ruleNumber, boolean filterSelected) {
+        Map<String, WebElement> elements = new HashMap<>();
+        String filterSelectString = filterSelectCss.replace("[RULE_NUMBER]", ruleNumber.toString());
+        String operatorSelectString = operatorSelectCss.replace("[RULE_NUMBER]", ruleNumber.toString());
+        String valueFieldString = valueFieldCss.replace("[RULE_NUMBER]", ruleNumber.toString());
+
+        WebElement filterSelectEle = driver.findElement(By.cssSelector(filterSelectString));
+
+        WebElement operatorSelectEle = null;
+        WebElement valueFieldEle = null;
+        if (filterSelected) {
+            operatorSelectEle = driver.findElement(By.cssSelector(operatorSelectString));
+            valueFieldEle = driver.findElement(By.cssSelector(valueFieldString));
+        }
+
+        elements.put("filter", filterSelectEle);
+        elements.put("operator", operatorSelectEle);
+        elements.put("value", valueFieldEle);
+        return elements;
 
     }
 }
