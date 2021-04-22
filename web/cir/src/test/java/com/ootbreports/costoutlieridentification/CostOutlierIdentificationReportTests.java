@@ -37,7 +37,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1944")
+    @TestRail(testCaseId = {"1944"})
     @Description("Validate report is available by navigation - menu")
     public void testReportAvailableByMenu() {
         commonReportTests = new CommonReportTests(driver);
@@ -48,7 +48,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "6182")
+    @TestRail(testCaseId = {"6182"})
     @Description("Validate report is available by library")
     public void testReportAvailableByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -57,7 +57,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1945")
+    @TestRail(testCaseId = {"1945"})
     @Description("Validate report is available by search")
     public void testReportAvailableBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -66,7 +66,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1954")
+    @TestRail(testCaseId = {"1954"})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricFbcFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
@@ -79,7 +79,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1954")
+    @TestRail(testCaseId = {"1954"})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricPpcFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
@@ -92,7 +92,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1956")
+    @TestRail(testCaseId = {"1956"})
     @Description("Min & Max costs filter works")
     public void testMinMaxAprioriCost() {
         inputControlsTests = new InputControlsTests(driver);
@@ -104,7 +104,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "6253")
+    @TestRail(testCaseId = {"6253"})
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValues() {
         inputControlsTests = new InputControlsTests(driver);
@@ -116,7 +116,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1959")
+    @TestRail(testCaseId = {"1959"})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Main Report")
     public void testDataIntegrityAgainstCID() {
         String reportName = ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName();
@@ -150,7 +150,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "1947")
+    @TestRail(testCaseId = {"1947"})
     @Description("Export date range presents correctly filtered export sets")
     public void testExportSetFilterByDateCalendarWidget() {
         inputControlsTests = new InputControlsTests(driver);
@@ -161,7 +161,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "6986")
+    @TestRail(testCaseId = {"6986"})
     @Description("Percent difference threshold filter - main report - junk value")
     public void testPercentDifferenceFilterJunkValue() {
         inputControlsTests = new InputControlsTests(driver);
@@ -173,7 +173,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "6991")
+    @TestRail(testCaseId = {"6991"})
     @Description("Annualised potential savings threshold filter - main report - junk value")
     public void testAnnualisedFilterJunkValue() {
         inputControlsTests = new InputControlsTests(driver);
@@ -185,7 +185,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "6987")
+    @TestRail(testCaseId = {"6987"})
     @Description("Percent difference threshold filter - main report - decimal places")
     public void testPercentDifferenceFilterDecimalPlaces() {
         inputControlsTests = new InputControlsTests(driver);
@@ -197,7 +197,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
-    @TestRail(testCaseId = "7023")
+    @TestRail(testCaseId = {"7023"})
     @Description("Annualised potential savings threshold filter - main report - no data available")
     public void testAnnualisedPotentialSavingsNoDataAvailable() {
         inputControlsTests = new InputControlsTests(driver);
@@ -209,7 +209,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, CiaCirTestDevTest.class})
-    @TestRail(testCaseId = "7025")
+    @TestRail(testCaseId = {"7025"})
     @Description("Percent difference threshold filter - main report - no data available")
     public void testPercentDifferenceThresholdNoDataAvailable() {
         inputControlsTests = new InputControlsTests(driver);
@@ -225,7 +225,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     @Description("Percent difference threshold filter works - main report")
     public void testPercentDifferenceThresholdFilter() {
         String percentChartName = "Percent";
-        String annualisedChartName = "Annualised";
+        String annualisedChartName = "Annualized";
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
@@ -236,11 +236,63 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
         genericReportPage.waitForReportToLoad();
 
+        assertThat(
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(true,annualisedChartName),
+                is(equalTo("n/a"))
+        );
+
+        assertThat(
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(true, percentChartName),
+                is(equalTo("100.0%"))
+        );
+
         assertThat(genericReportPage.getCostOutlierBarChartBarCount(annualisedChartName),
                 is(equalTo(1))
         );
         assertThat(genericReportPage.getCostOutlierBarChartBarCount(percentChartName),
                 is(equalTo(1))
+        );
+
+        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(annualisedChartName),
+                is(equalTo(true))
+        );
+        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(percentChartName),
+                is(equalTo(true))
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = {"1957"})
+    @Description("Annualised potential savings threshold filter - main report")
+    public void testAnnualisedPotentialSavingsThresholdFilter() {
+        String percentChartName = "Percent";
+        String annualisedChartName = "Annualized";
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
+                .inputAnnualisedOrPercentValue(annualisedChartName, "10000")
+                .clickOk();
+
+        genericReportPage.waitForReportToLoad();
+
+        assertThat(
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(false, annualisedChartName),
+                is(equalTo("10,000.00"))
+        );
+
+        assertThat(
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(false, percentChartName),
+                is(equalTo("n/a"))
+        );
+
+        assertThat(genericReportPage.getCostOutlierBarChartBarCount(annualisedChartName),
+                is(equalTo(2))
+        );
+        assertThat(genericReportPage.getCostOutlierBarChartBarCount(percentChartName),
+                is(equalTo(2))
         );
 
         assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(annualisedChartName),

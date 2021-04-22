@@ -36,6 +36,7 @@ import java.util.Map;
 public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
+    private Map<String, WebElement> costOutlierValueElementMap = new HashMap<>();
     private Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
     private Map<String, WebElement> costDesignOutlierMap = new HashMap<>();
     private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
@@ -549,6 +550,18 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//span[contains(text(), 'Percent Difference')])[2]")
     private WebElement costOutlierPercentDifference;
 
+    @FindBy(xpath = "//div[@id='reportContainer']//tr[16]//td[34]/span")
+    private WebElement costOutlierPercentDifferenceValueInChartPercentSet;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//tr[19]//td[14]/span")
+    private WebElement costOutlierTotalAnnualisedValuePercentSet;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//tr[16]//td[33]/span")
+    private WebElement costOutlierPercentValueInChartAnnualisedSet;
+
+    @FindBy(xpath = "//div[@id='reportContainer']//tr[21]//td[14]/span")
+    private WebElement costOutlierTotalAnnualisedValueAnnualisedSet;
+
     private final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
     private final String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
 
@@ -561,6 +574,7 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        initialiseCostOutlierValueElementMap();
         initialiseDtcComparisonDtcIssueMap();
         initialiseCostDesignOutlierMap();
         initialiseTooltipElementMap();
@@ -631,8 +645,15 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param annualisedOrPercent String
      * @return String
      */
-    public String getCostOutlierAnnualisedOrPercentValueFromAboveChart(String annualisedOrPercent) {
-        By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[2]/span", annualisedOrPercent));
+    public String getCostOutlierAnnualisedOrPercentValueFromAboveChart(boolean isPercentSet, String annualisedOrPercent) {
+        // td index is 1 except for percent when percent is set
+        /*
+        percent set: annualised is 1 and percent is 2
+        annualised set: annualised is 1 and percent is also 1
+         */
+        String valueIndex = isPercentSet && annualisedOrPercent.equals("Percent") ? "2" : "1";
+        By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[%s]/span",
+                annualisedOrPercent, valueIndex));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
     }
@@ -2182,6 +2203,19 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Gets Annualised or Percent value from chart on Cost Outlier Identification Report
+     *
+     * @param percentOrAnnualised String
+     * @return String
+     */
+    public String getTotalAnnualisedOrPercentValue(String index) {
+        /*WebElement elementToUse = percentOrAnnualised.equals("Percent") ? costOutlierPercentDifferenceValueInChartPercentSet
+                : costOutlierTotalAnnualisedValuePercentSet;*/
+        return costOutlierValueElementMap.get(index).getText();
+        //return elementToUse.getText();
+    }
+
+    /**
      * Gets part name from Casting DTC Details Report
      * @param getRowOnePartName boolean
      * @return String
@@ -2193,6 +2227,11 @@ public class GenericReportPage extends ReportsPageHeader {
         return driver.findElement(locator).getAttribute("textContent");
     }
 
+    /**
+     * Gets first FBC on Cost Outlier Details report
+     *
+     * @return BigDecimal
+     */
     public BigDecimal getFirstFbcCostOutlierDetailsReport() {
         By locator = By.xpath("//div[@id='reportContainer']//table//tr[16]/td[27]/span");
         pageUtils.waitForElementToAppear(locator);
@@ -2451,7 +2490,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return int
      */
     public int getCostOutlierBarChartBarCount(String chartName) {
-        String chartIndex = chartName.equals("Annualised") ? "1" : "7";
+        String chartIndex = chartName.equals("Annualized") ? "1" : "7";
         return driver.findElements(By.xpath(
                 String.format(
                         "(//*[@class='highcharts-series-group']//*[local-name() = 'g'])[%s]//*[local-name()='rect']",
@@ -2466,7 +2505,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return
      */
     public boolean isCostOutlierBarEnabledAndDisplayed(String chartName) {
-        String chartIndex = chartName.equals("Annualised") ? "1" : "7";
+        String chartIndex = chartName.equals("Annualized") ? "1" : "7";
         WebElement elementToUse = driver.findElement(
                 By.xpath(String.format(
                         "(//*[@class='highcharts-series-group']//*[local-name() = 'g'])[%s]//*[local-name()='rect']",
@@ -2576,5 +2615,15 @@ public class GenericReportPage extends ReportsPageHeader {
         costDesignOutlierMap.put("Design Outlier Identification Details Cost 2", designOutlierApCostTwo);
         costDesignOutlierMap.put("Design Outlier Identification Details Mass", designOutlierMassOne);
         costDesignOutlierMap.put("Design Outlier Identification Details Mass 2", designOutlierMassTwo);
+    }
+
+    /**
+     * Initialise cost outlier value element map
+     */
+    private void initialiseCostOutlierValueElementMap() {
+       costOutlierValueElementMap.put("Percent Value Percent Set", costOutlierPercentDifferenceValueInChartPercentSet);
+       costOutlierValueElementMap.put("Annualised Value Percent Set", costOutlierTotalAnnualisedValuePercentSet);
+       costOutlierValueElementMap.put("Percent Value Annualised Set", costOutlierPercentValueInChartAnnualisedSet);
+       costOutlierValueElementMap.put("Annualised Value Annualised Set", costOutlierTotalAnnualisedValueAnnualisedSet);
     }
 }

@@ -1028,15 +1028,16 @@ public class InputControlsTests extends TestBase {
                 .inputAnnualisedOrPercentValue(fieldToUse, "10.000")
                 .clickOk();
 
+        boolean isPercentSet = fieldToUse.equals("Percent");
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(fieldToUse).equals("10.0%"),
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(isPercentSet, fieldToUse).equals("10.0%"),
                 is(equalTo(true))
         );
 
         if (!reportName.contains("Details")) {
             genericReportPage.clickDetailsLink();
             assertThat(
-                    genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(fieldToUse).equals("10.0%"),
+                    genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(isPercentSet, fieldToUse).equals("10.0%"),
                     is(equalTo(true))
             );
         }
