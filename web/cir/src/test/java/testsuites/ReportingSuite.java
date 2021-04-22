@@ -7,6 +7,8 @@ import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
 import com.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.ootbreports.componentcost.ComponentCostReportTests;
+import com.ootbreports.costoutlieridentification.CostOutlierIdentificationDetailsReportTests;
+import com.ootbreports.costoutlieridentification.CostOutlierIdentificationReportTests;
 import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingDetailsReportTests;
 import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingReportTests;
 import com.ootbreports.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
@@ -43,6 +45,8 @@ import testsuites.suiteinterface.ReportsTest;
     CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
     ComponentCostReportTests.class,
+    CostOutlierIdentificationReportTests.class,
+    CostOutlierIdentificationDetailsReportTests.class,
     CycleTimeValueTrackingReportTests.class,
     CycleTimeValueTrackingDetailsReportTests.class,
     DesignOutlierIdentificationReportTests.class,
