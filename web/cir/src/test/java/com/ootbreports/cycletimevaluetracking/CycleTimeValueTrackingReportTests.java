@@ -59,12 +59,15 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2331"})
-    @Description("Projects rollup drop list functionality test")
+    @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Report")
     public void testProjectRollupDropdownList() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(), CycleTimeValueTrackingPage.class);
+                .navigateToReport(
+                        ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
+                        CycleTimeValueTrackingPage.class
+                );
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("1")));
         String expectedProjectRollup = "AC CYCLE TIME VT 1";
@@ -79,7 +82,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2332"})
-    @Description("Export date lists all available versions from selected export set rollup")
+    @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
     public void testExportDateFilterFunctionality() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
                 .login()

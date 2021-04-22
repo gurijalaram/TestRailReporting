@@ -201,8 +201,8 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3361"})
-    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
+    @TestRail(testCaseId = {"7668"})
+    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Base Milestone")
     public void testHyperlinksToDetailsReportBaseMilestone() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTargetQuotedCostTrendReportHyperlinks("Base");
@@ -211,7 +211,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3361"})
-    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
+    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Final Milestone")
     public void testHyperlinksToDetailsReportFinalMilestone() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTargetQuotedCostTrendReportHyperlinks("Final");

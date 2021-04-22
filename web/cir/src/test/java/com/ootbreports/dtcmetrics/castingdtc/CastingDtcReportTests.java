@@ -76,7 +76,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1692"})
-    @Description("Verify export set input controls function correctly")
+    @Description("Verify Export Set list controls function correctly - Casting DTC Report")
     public void testCastingDtcExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -85,7 +85,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category({ReportsTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = {"1694"})
-    @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
+    @Description("Verify Roll-up input control functions correctly - Casting DTC Report")
     public void testRollupDropDown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
@@ -387,7 +387,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1700"})
-    @Description("Verify Minimum Annual Spend input control functions correctly")
+    @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Report")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinimumAnnualSpend(
