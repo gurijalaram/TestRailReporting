@@ -646,14 +646,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getCostOutlierAnnualisedOrPercentValueFromAboveChart(boolean isPercentSet, String annualisedOrPercent) {
-        // td index is 1 except for percent when percent is set
-        /*
-        percent set: annualised is 1 and percent is 2
-        annualised set: annualised is 1 and percent is also 1
-         */
         String valueIndex = isPercentSet && annualisedOrPercent.equals("Percent") ? "2" : "1";
-        By locator = By.xpath(String.format("//span[contains(text(), '%s')]/../following-sibling::td[%s]/span",
-                annualisedOrPercent, valueIndex));
+        By locator = By.xpath(
+                String.format(
+                        "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span",
+                        annualisedOrPercent,
+                        valueIndex)
+        );
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
     }
@@ -2203,16 +2202,13 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets Annualised or Percent value from chart on Cost Outlier Identification Report
+     * Gets Annualised or Percent value from chart on Cost Outlier Identification Details Report
      *
-     * @param percentOrAnnualised String
+     * @param index String
      * @return String
      */
     public String getTotalAnnualisedOrPercentValue(String index) {
-        /*WebElement elementToUse = percentOrAnnualised.equals("Percent") ? costOutlierPercentDifferenceValueInChartPercentSet
-                : costOutlierTotalAnnualisedValuePercentSet;*/
         return costOutlierValueElementMap.get(index).getText();
-        //return elementToUse.getText();
     }
 
     /**
@@ -2500,9 +2496,10 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Checks if cost outlier report bar is enabled and displayed
      *
-     * @param chartName
-     * @return
+     * @param chartName String
+     * @return boolean
      */
     public boolean isCostOutlierBarEnabledAndDisplayed(String chartName) {
         String chartIndex = chartName.equals("Annualized") ? "1" : "7";

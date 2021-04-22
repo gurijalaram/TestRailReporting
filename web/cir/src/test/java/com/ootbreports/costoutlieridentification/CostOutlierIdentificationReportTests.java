@@ -167,7 +167,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testAnnualisedOrPercentError(
                 ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                "Percent"
+                Constants.PERCENT_VALUE
         );
     }
 
@@ -179,7 +179,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testAnnualisedOrPercentError(
                 ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                "Annualized"
+                Constants.ANNUALISED_VALUE
         );
     }
 
@@ -191,7 +191,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testAnnualisedOrPercentDecimalPlaces(
                 ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                "Percent"
+                Constants.PERCENT_VALUE
         );
     }
 
@@ -203,7 +203,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(
                 ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                "Annualized"
+                Constants.ANNUALISED_VALUE
         );
     }
 
@@ -215,7 +215,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(
                 ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                "Percent"
+                Constants.PERCENT_VALUE
         );
     }
 
@@ -224,39 +224,43 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     @TestRail(testCaseId = {"1958"})
     @Description("Percent difference threshold filter works - main report")
     public void testPercentDifferenceThresholdFilter() {
-        String percentChartName = "Percent";
-        String annualisedChartName = "Annualized";
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
-                .inputAnnualisedOrPercentValue(percentChartName, "100")
+                .inputAnnualisedOrPercentValue(Constants.PERCENT_VALUE, "100")
                 .clickOk();
 
         genericReportPage.waitForReportToLoad();
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(true,annualisedChartName),
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                        true,
+                        Constants.ANNUALISED_VALUE
+                ),
                 is(equalTo("n/a"))
         );
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(true, percentChartName),
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                        true,
+                        Constants.PERCENT_VALUE
+                ),
                 is(equalTo("100.0%"))
         );
 
-        assertThat(genericReportPage.getCostOutlierBarChartBarCount(annualisedChartName),
+        assertThat(genericReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
                 is(equalTo(1))
         );
-        assertThat(genericReportPage.getCostOutlierBarChartBarCount(percentChartName),
+        assertThat(genericReportPage.getCostOutlierBarChartBarCount(Constants.PERCENT_VALUE),
                 is(equalTo(1))
         );
 
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(annualisedChartName),
+        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.ANNUALISED_VALUE),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(percentChartName),
+        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.PERCENT_VALUE),
                 is(equalTo(true))
         );
     }
@@ -266,39 +270,43 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     @TestRail(testCaseId = {"1957"})
     @Description("Annualised potential savings threshold filter - main report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
-        String percentChartName = "Percent";
-        String annualisedChartName = "Annualized";
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
-                .inputAnnualisedOrPercentValue(annualisedChartName, "10000")
+                .inputAnnualisedOrPercentValue(Constants.ANNUALISED_VALUE, "10000")
                 .clickOk();
 
         genericReportPage.waitForReportToLoad();
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(false, annualisedChartName),
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                        false,
+                        Constants.ANNUALISED_VALUE
+                ),
                 is(equalTo("10,000.00"))
         );
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(false, percentChartName),
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                        false,
+                        Constants.PERCENT_VALUE
+                ),
                 is(equalTo("n/a"))
         );
 
-        assertThat(genericReportPage.getCostOutlierBarChartBarCount(annualisedChartName),
+        assertThat(genericReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
                 is(equalTo(2))
         );
-        assertThat(genericReportPage.getCostOutlierBarChartBarCount(percentChartName),
+        assertThat(genericReportPage.getCostOutlierBarChartBarCount(Constants.PERCENT_VALUE),
                 is(equalTo(2))
         );
 
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(annualisedChartName),
+        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.ANNUALISED_VALUE),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(percentChartName),
+        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.PERCENT_VALUE),
                 is(equalTo(true))
         );
     }

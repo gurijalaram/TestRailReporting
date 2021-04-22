@@ -50,6 +50,9 @@ public class Constants {
     public static final String PART_SCENARIO_TYPE = "Part";
     public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
     public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
+    public static final String COST_NAME = "Cost";
+    public static final String ANNUALISED_VALUE = "Annualized";
+    public static final String PERCENT_VALUE = "Percent";
     public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
     public static final String FORGOT_PWD_MSG_QA_ENV = "IF THE SUPPLIED EMAIL ADDRESS IS VALID, YOU WILL RECEIVE AN " +
             "EMAIL SHORTLY WITH INSTRUCTIONS ON RESETTING YOUR PASSWORD. IF YOU DID NOT RECEIVE AN EMAIL AND STILL " +
