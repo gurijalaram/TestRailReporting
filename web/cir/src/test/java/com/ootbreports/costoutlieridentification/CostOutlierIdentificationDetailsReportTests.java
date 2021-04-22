@@ -195,7 +195,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7024"})
     @Description("Annualised potential savings threshold filter - details report - no data available")
     public void testAnnualisedPotentialSavingsNoDataAvailable() {
@@ -207,7 +207,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7026"})
     @Description("Percent difference threshold filter - details report - no data available")
     public void testPercentDifferenceThresholdNoDataAvailable() {
@@ -220,7 +220,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6990"})
     @Description("Annualised potential savings threshold filter - details report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
@@ -262,7 +262,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6985"})
     @Description("Percent difference threshold filter works - details report")
     public void testPercentDifferenceThresholdFilter() {

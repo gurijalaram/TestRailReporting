@@ -155,8 +155,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"102990"})
-    @Description("Verify that aPriori costed scenarios are represented correctly")
+    @TestRail(testCaseId = {"7619"})
+    @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Comparison Report")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()

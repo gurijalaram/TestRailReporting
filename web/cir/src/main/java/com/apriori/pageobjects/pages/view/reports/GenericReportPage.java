@@ -2618,9 +2618,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * Initialise cost outlier value element map
      */
     private void initialiseCostOutlierValueElementMap() {
-       costOutlierValueElementMap.put("Percent Value Percent Set", costOutlierPercentDifferenceValueInChartPercentSet);
-       costOutlierValueElementMap.put("Annualised Value Percent Set", costOutlierTotalAnnualisedValuePercentSet);
-       costOutlierValueElementMap.put("Percent Value Annualised Set", costOutlierPercentValueInChartAnnualisedSet);
-       costOutlierValueElementMap.put("Annualised Value Annualised Set", costOutlierTotalAnnualisedValueAnnualisedSet);
+        costOutlierValueElementMap.put("Percent Value Percent Set", costOutlierPercentDifferenceValueInChartPercentSet);
+        costOutlierValueElementMap.put("Annualised Value Percent Set", costOutlierTotalAnnualisedValuePercentSet);
+        costOutlierValueElementMap.put("Percent Value Annualised Set", costOutlierPercentValueInChartAnnualisedSet);
+        costOutlierValueElementMap.put("Annualised Value Annualised Set", costOutlierTotalAnnualisedValueAnnualisedSet);
     }
 }
