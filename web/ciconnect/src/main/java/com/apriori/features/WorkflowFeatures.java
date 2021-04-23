@@ -272,11 +272,6 @@ public class WorkflowFeatures {
      */
     public Map<String, Object> inspectSchedulePaginator() {
         values = new HashMap<>();
-        int pageSize = workflowPage.getPageSize(Constants.DEFAULT_PAGE_SIZE);
-
-        values.put("pageSize", pageSize);
-        values.put("displayedWorkflows", workflowPage.getNumberOfDisplayedWorkflows());
-
         values.put("rowRange", workflowPage.getRowRange());
 
         String[] totalSplit = workflowPage.getRowTotal().split("of");
@@ -307,13 +302,18 @@ public class WorkflowFeatures {
      */
     public Map<String, Integer> inspectPageSizeSettings() {
         Map<String, Integer> valuesI = new HashMap<>();
-        int pageSize;
+        int pageSize = workflowPage.getPageSize(Constants.DEFAULT_PAGE_SIZE);
+
+        valuesI.put("pageSize", pageSize);
+        valuesI.put("displayedWorkflows", workflowPage.getNumberOfDisplayedWorkflows());
 
         workflowPage.openMaxPageDropDown(Constants.DEFAULT_PAGE_SIZE);
+        workflowPage.clickOnMaxSizeDropDown(5);
         pageSize = workflowPage.getPageSize(5);
         valuesI.put("changedMaxPageSize", pageSize);
         valuesI.put("displayedWorkflowsUpdated", workflowPage.getNumberOfDisplayedWorkflows());
 
+        workflowPage.refreshPage();
         return valuesI;
     }
 
@@ -326,10 +326,12 @@ public class WorkflowFeatures {
         List<String> workflowNames = new ArrayList<>();
 
         String lowerName = UIUtils.saltString("0 0 0 0 0 0 0 Automation");
-        String upperName = UIUtils.saltString("Z Z Z Z Z Z Z Automation");
+        String upperName = UIUtils.saltString("zzzzzzzz Automation");
         String workflowName;
 
+        workflowPage.newWorkflow();
         newWorkflowPage.createNewWorkflow(upperName, 1);
+        workflowPage.newWorkflow();
         newWorkflowPage.createNewWorkflow(lowerName, 2);
         workflowNames.add(lowerName);
         workflowNames.add(upperName);
@@ -337,6 +339,7 @@ public class WorkflowFeatures {
         values.put("lower-name", lowerName);
 
         //Before click
+        workflowPage.refreshPage();
         workflowName = workflowPage.getFirstWorkflowName();
         values.put("before-click-name", workflowName);
 
@@ -349,24 +352,13 @@ public class WorkflowFeatures {
         workflowPage.clickOnFirstColumn();
         workflowName = workflowPage.getFirstWorkflowName();
         values.put("second-click-name", workflowName);
-        values.put("workflow-names", workflowNames);
-
-        return values;
-    }
-
-
-    /**
-     *
-     * @return List of Workflow list headers
-     */
-    public Map<String, Object> checkWorkflowListHeaders() {
-        values = new HashMap<>();
+        values.put("workflows", workflowNames);
 
         List<String> headers = workflowPage.getWorkflowListHeaders();
         values.put("workflowListHeaders", headers);
+
         return values;
     }
-
 
     /**
      * When a workflow is created the workflow nam is displaed with a single space between words, even if the name

@@ -85,7 +85,7 @@ public class NewWorkflowValidator {
                 "-every-schedule-workflow-exists"));
         Assert.assertTrue("Workflow with monthly schedule was not created", (boolean)values.get("monthly-schedule" +
                 "-workflow-exists"));
-        Assert.assertTrue("Workflow with every year schedule was not created", (boolean)values.get("yearly-ever" +
+        Assert.assertTrue("Workflow with every year schedule was not created", (boolean)values.get("yearly-every" +
                 "-schedule-workflow-exists"));
         Assert.assertTrue("Workflow with yearly schedule was not created", (boolean)values.get("yearly-schedule" +
                 "-workflow-exists"));

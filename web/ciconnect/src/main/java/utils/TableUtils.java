@@ -94,18 +94,14 @@ public class TableUtils {
     /**
      * Return a tables headers
      *
-     * @param table
+     * @param tableHeaders The header row of a table
      * @return List of headers
      */
-    public List<String> getTableHeaders(WebElement table) {
-        pageUtils.waitForElementToBeClickable(table);
+    public List<String> getTableHeaders(WebElement tableHeaders) {
+        pageUtils.waitForElementToBeClickable(tableHeaders);
         List<String> headers = new ArrayList<>();
-        table.findElements(By.tagName("tr"))
-                .stream()
-                .collect(Collectors.toList()).get(0)
-                .findElements(By.cssSelector("td"))
+        tableHeaders.findElements(By.tagName("td"))
                 .forEach(column -> headers.add(column.getText()));
-
         return headers;
     }
 }
