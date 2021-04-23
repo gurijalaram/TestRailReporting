@@ -133,36 +133,36 @@ public class NewWorkflowFeatures {
         ArrayList<String> workflowNames = new ArrayList<>();
 
         // Minutes
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getMinuteSchedule(3), "minutes");
         workflows.add(workflow);
         workflowNames.add(wfName);
 
         //Hourly
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getHourlySchedule("01", "10"), "hourly");
         workflows.add(workflow);
         workflowNames.add(wfName);
 
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getHourSchedule(5), "hourly-every");
         workflows.add(workflow);
         workflowNames.add(wfName);
 
         //Daily
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getDailySchedule("01", "10"), "daily");
         workflows.add(workflow);
         workflowNames.add(wfName);
 
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getDailySchedule(4, "01", "10"),
                 "daily-every");
         workflows.add(workflow);
         workflowNames.add(wfName);
 
         //Weekly
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         ArrayList<WorkflowSchedule.WeekDay> weekDays = new ArrayList<>();
         weekDays.add(WorkflowSchedule.WeekDay.FRIDAY);
         workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getWeeklySchedule(weekDays, "12", "30"),
@@ -171,13 +171,13 @@ public class NewWorkflowFeatures {
         workflowNames.add(wfName);
 
         //Monthly
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName, scheduleFactory.getMonthlySchedule(5,3, "12", "30"),
                 "monthly-every");
         workflows.add(workflow);
         workflowNames.add(wfName);
 
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName,
                 scheduleFactory.getMonthlySchedule(WorkflowSchedule.MonthlyOccurance.THIRD,
                 WorkflowSchedule.WeekDay.SATURDAY, 3, "01", "10"), "monthly");
@@ -185,7 +185,7 @@ public class NewWorkflowFeatures {
         workflowNames.add(wfName);
 
         //Yearly
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName,
                 scheduleFactory.getYearlySchedule(WorkflowSchedule.Month.DECEMBER, 3,
                 "01",
@@ -193,7 +193,7 @@ public class NewWorkflowFeatures {
         workflows.add(workflow);
         workflowNames.add(wfName);
 
-        wfName = UIUtils.saltString(scheduleName);
+        wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName,
                 scheduleFactory.getYearlySchedule(WorkflowSchedule.MonthlyOccurance.FOURTH,
                 WorkflowSchedule.Month.FEBRUARY, WorkflowSchedule.WeekDay.MONDAY, "00", "00"), "yearly");
@@ -256,7 +256,9 @@ public class NewWorkflowFeatures {
                 return null;
         }
 
-        return newWorkflowPage.isNextButtonEnabled();
+        Map<String, Boolean> states = newWorkflowPage.getNavigationButtonState(NewWorkflowPage.Tab.DETAILS,
+                NewWorkflowPage.NavigationButton.NEXT);
+        return states.get("enabled");
     }
 
     /**

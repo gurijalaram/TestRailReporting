@@ -121,8 +121,8 @@ public class WorkflowTests  extends TestBase {
         loginPage = new LoginPage(driver);
         loginPage.login();
 
-        values = workflowFeatures.inspectSchedulePaginator();
         valuesI = workflowFeatures.inspectPageSizeSettings();
+        values = workflowFeatures.inspectSchedulePaginator();
         validator.validateSchedulePagination(values, valuesI);;
     }
 
@@ -135,15 +135,20 @@ public class WorkflowTests  extends TestBase {
         loginPage.login();
 
         values = workflowFeatures.checkWorkflowListSorting();
+        workflowFeatures.deleteWorklow(values.get("lower-name").toString());
+        workflowPage.clickOnFirstColumn();
+        workflowPage.clickOnFirstColumn();
+        deleteWorkflow(values.get("upper-name").toString());
+
         validator.validateWorkflowListSorting(values);
     }
 
-    private void deleteWorkflows(ArrayList<String> workflows, WorkflowPage workflowPage, DeleteWorkflowPage deleteWorkflowPage) {
-        for (String workflow : workflows) {
-            workflowPage.selectWorkflow(workflow);
-            workflowPage.clickDeleteButton();
-            deleteWorkflowPage.deleteWorkflow();
-            workflowPage.refreshPage();
-        }
+    private void deleteWorkflow(String workflow) {
+        DeleteWorkflowPage deleteWorkflowPage = new DeleteWorkflowPage(driver);
+        workflowPage.selectWorkflow(workflow);
+        workflowPage.clickDeleteButton();
+        deleteWorkflowPage.deleteWorkflow();
+        workflowPage.refreshPage();
+
     }
 }

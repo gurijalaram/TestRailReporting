@@ -28,6 +28,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -823,5 +824,23 @@ public class PageUtils {
      */
     public void clickOnOffScreenElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("return arguments[0].click();", element);
+    }
+
+    /**
+     * Drag and drop an element from source to target
+     *  @param byElementSource - element source
+     * @param byElementTarget - element target
+     */
+    public void dragAndDrop(WebElement byElementSource, WebElement byElementTarget) {
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(byElementSource)
+            .pause(Duration.ofMillis(100))
+            .moveByOffset(0, -5)
+            .moveByOffset(0, -5)
+            .moveToElement(byElementTarget)
+            .pause(Duration.ofMillis(500))
+            .release()
+            .pause(Duration.ofSeconds(1))
+            .perform();
     }
 }

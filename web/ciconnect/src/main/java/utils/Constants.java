@@ -46,8 +46,8 @@ public class Constants {
     public static final int DEFAULT_PAGE_SIZE = 25;
     public static final String MAX_PAGE_SIZE_25_TEXT = "25 rows per page";
     public static final String MAX_PAGE_SIZE_100_TEXT = "100 rows per page";
-    public static final String DEFAULT_ROW_RANGE = "Rows1-25";
-    public static final String NEXT_ROW_RANGE = "Rows26-50";
+    public static final String DEFAULT_ROW_RANGE = "Rows1 - 25";
+    public static final String NEXT_ROW_RANGE = "Rows26 - 50";
 
     //Default worflow names
     public static final String DEFAULT_WORKFLOW_NAME = "0   0   0   0   0 Automation Workflow";
@@ -62,6 +62,10 @@ public class Constants {
     public static final int MAXIMUM_WORKFLOW_NAME_CHARACTERS = 64;
     public static final int MINIMAL_WORKFLOW_NAME_CHARACTERS = 1;
     public static final int MAXIMUM_WORKFLOW_DESCRIPTION_CHARACTERS = 255;
+
+    //Query Definition
+    public static final String DEFAULT_RULE_FILTER = "partNumber";
+    public static final String DEFAULT_RULE_OPERATOR = "not_equal";
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
