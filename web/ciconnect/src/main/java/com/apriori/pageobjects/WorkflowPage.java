@@ -30,9 +30,12 @@ public class WorkflowPage {
     private WebElement scheduleTab;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.objbox > table > tbody")
     private WebElement workflowList;
+    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.xhdr > table > tbody > tr:nth-child(2)")
+    private WebElement workflowHeaders;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.xhdr > table > tbody > tr:nth-child(2) > td:nth-child(1)")
     private WebElement firstColumn;
-    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.objbox > table > tbody > tr:nth-child(2) > td:nth-child(3)")
+    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.objbox > table > tbody > " +
+            "tr:nth-child(2) > td:nth-child(1)")
     private WebElement firstRowFirstColumn;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.xhdr > table")
     private WebElement workflowListHeaders;
@@ -48,6 +51,10 @@ public class WorkflowPage {
     private WebElement refreshButton;
     @FindBy(css = "#root_pagemashupcontainer-1_tabsv2-10 > div.tab-content > div.tabsv2-viewport > div > div > div:nth-child(2) > div")
     private WebElement viewHistoryTab;
+    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div.dhx_toolbar_btn > div")
+    private WebElement pageSizeButton;
+    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div")
+    private WebElement pageSizeLabel;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(11) > div")
     private WebElement pageSizeLabel25;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(13) > div")
@@ -56,16 +63,20 @@ public class WorkflowPage {
     private WebElement paginatorBeginning;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(2) > img")
     private WebElement paginatorPrevious;
-    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(10) > img")
+    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child" +
+            "(9) > img")
     private WebElement paginatorNext;
-    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(11) > img")
+    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child" +
+            "(10) > img")
     private WebElement paginatorLast;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(3) > div")
     private WebElement rowRangeLabel;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(4)")
     private WebElement rowTotal;
     @FindBy(css = "#runtime > div:nth-child(30) > table > tbody > tr.tr_btn > td.td_btn_txt > div > span")
-    private WebElement pageMaxDropDownSelection;
+    private WebElement pageMaxDropDownSelection5;
+    @FindBy(css = "#runtime > div:nth-child(47) > table > tbody > tr.tr_btn > td.td_btn_txt > div > span")
+    private WebElement pageMaxDropDownSelection25;
     @FindBy(css = "#runtime > div:nth-child(30) > table")
     private WebElement pageMaxSizeTable;
 
@@ -108,7 +119,7 @@ public class WorkflowPage {
         String[] expectedHeaders = {
             "Name",
             "Description",
-            "Last Modified",
+            "Last Modified By",
             "Schedule",
             "Connector",
             "Enabled",
@@ -121,7 +132,7 @@ public class WorkflowPage {
      * Return the worfkflow list's headers
      */
     public List<String> getWorkflowListHeaders() {
-        return tableUtils.getTableHeaders(workflowList);
+        return tableUtils.getTableHeaders(workflowHeaders);
     }
 
     /**
@@ -213,9 +224,9 @@ public class WorkflowPage {
      * @return Page size
      */
     public Integer getPageSize(int setMaxSize) {
-        WebElement pageSizeLabel = getPageSizeLabel(setMaxSize);
-        pageUtils.waitForElementAppear(pageSizeLabel);
-        String[] labelSplit = pageSizeLabel.getText().split("rows");
+        WebElement pageSizeLbl = getPageSizeLabel(setMaxSize);
+        pageUtils.waitForElementToBeClickable(pageSizeLabel);
+        String[] labelSplit = pageSizeLbl.getText().split("rows");
         return Integer.parseInt(labelSplit[0].trim());
     }
 
@@ -231,6 +242,23 @@ public class WorkflowPage {
                 return pageSizeLabel5;
             case 25:
                 return pageSizeLabel25;
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Gets the max page size selection
+     *
+     * @param size Maximum number of rows per page
+     * @return page size element
+     */
+    public WebElement getMaxSizeSelection(int size) {
+        switch (size) {
+            case 5:
+                return pageMaxDropDownSelection5;
+            case 25:
+                return pageMaxDropDownSelection25;
             default:
                 return null;
         }
@@ -393,28 +421,23 @@ public class WorkflowPage {
     /**
      * Open maximum page size drop down
      *
-     * @param size number of items visible on a page
+     * @return Workflowpage object
      */
-    public void openMaxPageDropDown(int size) {
-        WebElement pageSizeLabel = null;
-        switch (size) {
-            case 5:
-                pageSizeLabel = pageSizeLabel5;
-                break;
-            case 25:
-                pageSizeLabel = pageSizeLabel25;
-                break;
-            default:
-                logger.debug("Invalid size selection: " + size);
-        }
-
-        pageUtils.waitForElementAndClick(pageSizeLabel);
+    public WorkflowPage openMaxPageDropDown(int currentSize) {
+        WebElement pageSizeLbl = getPageSizeLabel(currentSize);
+        pageUtils.waitForElementAndClick(pageSizeLbl);
+        return this;
     }
 
     /**
      * Click on the maximum page size dropdown
+     *
+     * @param size Maximum number of workflows displayed on a page
+     * @return Workflowpage object
      */
-    public void clickOnMaxSizeDropDown() {
+    public WorkflowPage clickOnMaxSizeDropDown(int size) {
+        WebElement pageMaxDropDownSelection = getMaxSizeSelection(size);
         pageUtils.waitForElementAndClick(pageMaxDropDownSelection);
+        return this;
     }
 }
