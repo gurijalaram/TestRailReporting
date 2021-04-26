@@ -29,7 +29,7 @@ public class Constants {
 
     // Login Credentials
     public static final String USER_EMAIL = "dmorrow@apriori.com";
-    public static final String USER_PASSWORD = "T3sterQ@99";
+    public static final String USER_PASSWORD = "Q@1testerr";
     public static final String SECOND_USER_EMAIL = "";
     public static final String SECOND_USER_PASSWORD = "";
 
