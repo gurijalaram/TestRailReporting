@@ -172,10 +172,24 @@ public class ComparePage extends CompareToolbar {
 
     /**
      * Deletes basis
+     *
      * @return current page object
      */
     public ComparePage deleteBasis() {
         pageUtils.waitForElementAndClick(deleteBasis);
+        return this;
+    }
+
+    /**
+     * Deletes a comparison
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public ComparePage deleteComparison(String componentName, String scenarioName) {
+        By byComparison = By.xpath(String.format("//div[.='%s / %s']/parent::div//div[@class='close-button close-button-dark']", componentName.trim().toUpperCase(), scenarioName.trim()));
+        pageUtils.waitForElementAndClick(byComparison);
         return this;
     }
 }
