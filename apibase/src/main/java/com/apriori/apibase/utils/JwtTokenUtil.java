@@ -10,7 +10,6 @@ import com.apriori.utils.http.builder.service.RequestAreaApi;
 public class JwtTokenUtil {
 
     public String retrieveJwtToken(String secretKey, String url, int statusCode, String username, String email, String issuer, String subject) {
-        url = "https://" + url;
         url = url.concat(String.format("/tokens?key=%s", secretKey));
         TokenRequest body = new TokenRequest();
         TokenInformation information = new TokenInformation();
