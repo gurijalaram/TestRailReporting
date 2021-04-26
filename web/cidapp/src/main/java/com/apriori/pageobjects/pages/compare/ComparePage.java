@@ -32,6 +32,9 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "[data-rbd-droppable-id='basis-column']")
     private WebElement basisColumn;
 
+    @FindBy(css = "[data-rbd-droppable-id='basis-column'] .close-button")
+    private WebElement deleteBasis;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -165,5 +168,14 @@ public class ComparePage extends CompareToolbar {
      */
     public String getBasis() {
         return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
+    }
+
+    /**
+     * Deletes basis
+     * @return current page object
+     */
+    public ComparePage deleteBasis() {
+        pageUtils.waitForElementAndClick(deleteBasis);
+        return this;
     }
 }
