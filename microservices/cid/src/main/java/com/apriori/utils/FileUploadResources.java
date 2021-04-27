@@ -79,6 +79,140 @@ public class FileUploadResources {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
+     *  Uploads part to CID
+     *
+     * @param fileName - name of file to upload
+     * @param processGroup - process group of file
+     * @return FileResponse - response to use in next call
+     */
+    public FileResponse initialisePartUpload(String fileName, String processGroup) {
+        FileResponse fileResponse = initializeFileUpload(fileName, processGroup);
+        return fileResponse;
+    }
+
+    /**
+     * Upload part
+     *
+     * @param fileResponse response from file upload initialise
+     * @param scenarioName scenario name to use
+     * @return FileUploadOutputs
+     */
+    public FileUploadOutputs uploadPart(FileResponse fileResponse, String scenarioName) {
+        String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+                new FileUploadInputs()
+                        .setScenarioName(scenarioName)
+                        .setFileKey(fileResponse.getResponse().getIdentity())
+                        .setFileName(fileResponse.getFilename()));
+        submitWorkorder(fileUploadWorkorderId);
+        return objectMapper.convertValue(
+                checkGetWorkorderDetails(fileUploadWorkorderId),
+                FileUploadOutputs.class
+        );
+    }
+
+    /**
+     * Loads CAD Metadata
+     *
+     * @param fileResponse - response from file upload
+     * @return LoadCadMetadataOutputs - outputs to use in next call
+     */
+    public LoadCadMetadataOutputs loadCadMetadata(FileResponse fileResponse) {
+        String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
+                new LoadCadMetadataInputs()
+                        .setFileMetadataIdentity(fileResponse.getResponse().getIdentity())
+                        .setRequestedBy(fileResponse.getResponse().getUserIdentity())
+        );
+        submitWorkorder(loadCadMetadataWorkorderId);
+        LoadCadMetadataOutputs loadCadMetadataOutputs = objectMapper.convertValue(
+                checkGetWorkorderDetails(loadCadMetadataWorkorderId),
+                LoadCadMetadataOutputs.class
+        );
+        return loadCadMetadataOutputs;
+    }
+
+    /**
+     * Generates part images
+     *
+     * @param fileResponse - response from file upload
+     * @param loadCadMetadataOutputs - output from load cad metadata
+     * @return GeneratePartImagesOutputs - response to use in next call
+     */
+    public GeneratePartImagesOutputs generatePartImages(FileResponse fileResponse,
+                                                        LoadCadMetadataOutputs loadCadMetadataOutputs) {
+        String generatePartImagesWorkorderId = createWorkorder(
+                WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
+                new GeneratePartImagesInputs()
+                        .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
+                        .setRequestedBy(fileResponse.getResponse().getUserIdentity())
+        );
+        submitWorkorder(generatePartImagesWorkorderId);
+        GeneratePartImagesOutputs generatePartImagesOutputs = objectMapper.convertValue(
+                checkGetWorkorderDetails(generatePartImagesWorkorderId),
+                GeneratePartImagesOutputs.class
+        );
+        return generatePartImagesOutputs;
+    }
+
+    /**
+     * Cost uploaded part
+     *
+     * @param productionInfoInputs - production info inputs
+     * @param fileUploadOutputs - output from file upload
+     * @param processGroup - process group
+     */
+    public CostOrderStatusOutputs costPart(Object productionInfoInputs, FileUploadOutputs fileUploadOutputs, String processGroup) {
+        int inputSetId = initializeCostScenario(
+                productionInfoInputs,
+                fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
+                processGroup
+        );
+
+        String costWorkorderId = createWorkorder(WorkorderCommands.COSTING.getWorkorderCommand(),
+                new CostOrderInputs()
+                        .setInputSetId(inputSetId)
+                        .setScenarioIterationKey(new CostOrderScenarioIteration()
+                                .setIteration(iteration)
+                                .setScenarioKey(new CostOrderScenario()
+                                        .setMasterName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
+                                        .setStateName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
+                                        .setTypeName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
+                                        .setWorkspaceId(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
+                                ))
+        );
+        submitWorkorder(costWorkorderId);
+        return objectMapper.convertValue(
+                checkGetWorkorderDetails(costWorkorderId),
+                CostOrderStatusOutputs.class
+        );
+    }
+
+    /**
+     * Publish part
+     *
+     * @param costOutputs - outputs from cost
+     * @return PublishResultOutputs - outputs from publish
+     */
+    public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs) {
+        String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
+                new PublishInputs()
+                        .setScenarioIterationKey(new PublishScenarioIterationKey()
+                                .setIteration(iteration)
+                                .setScenarioKey(new PublishScenarioKey()
+                                        .setMasterName(costOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
+                                        .setStateName(costOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
+                                        .setTypeName(costOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
+                                        .setWorkspaceId(costOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
+                                ))
+        );
+
+        submitWorkorder(createPublishWorkorderId);
+        return objectMapper.convertValue(
+                checkGetWorkorderDetails(createPublishWorkorderId),
+                PublishResultOutputs.class
+        );
+    }
+
+    /**
      * Method to upload part, load CAD metadata and generate part images
      *
      * @param fileName - file to upload
@@ -121,9 +255,9 @@ public class FileUploadResources {
                 GeneratePartImagesOutputs.class
         );
 
-        String webImageResponse = getAllImages(generatePartImagesOutputs.getWebImageIdentity()).toString();
-        String desktopImageResponse = getAllImages(generatePartImagesOutputs.getDesktopImageIdentity()).toString();
-        String thumbnailImageResponse = getAllImages(generatePartImagesOutputs.getThumbnailImageIdentity()).toString();
+        String webImageResponse = getImageById(generatePartImagesOutputs.getWebImageIdentity()).toString();
+        String desktopImageResponse = getImageById(generatePartImagesOutputs.getDesktopImageIdentity()).toString();
+        String thumbnailImageResponse = getImageById(generatePartImagesOutputs.getThumbnailImageIdentity()).toString();
 
         assertThat(webImageResponse, is(notNullValue()));
         assertThat(desktopImageResponse, is(notNullValue()));
@@ -158,7 +292,8 @@ public class FileUploadResources {
         String webImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
         String desktopImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
 
-        imageValidation(webImageResponse, desktopImageResponse);
+        imageValidation(webImageResponse);
+        imageValidation(desktopImageResponse);
 
         int inputSetId = initializeCostScenario(
                 fileObject,
@@ -188,7 +323,8 @@ public class FileUploadResources {
         String webCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
         String desktopCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
 
-        imageValidation(webCostedImageResponse, desktopCostedImageResponse);
+        imageValidation(webCostedImageResponse);
+        imageValidation(desktopCostedImageResponse);
 
         String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
                 new PublishInputs()
@@ -211,19 +347,19 @@ public class FileUploadResources {
         String webPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
         String desktopPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
 
-        imageValidation(webPublishedImageResponse, desktopPublishedImageResponse);
+        imageValidation(webPublishedImageResponse);
+        imageValidation(desktopPublishedImageResponse);
     }
 
     /**
-     * @param webImageResponse - response of web image
-     * @param desktopImageResponse - response of desktop image
+     * Validates image of any type
+     *
+     * @param imageResponse - image to validate
      */
-    private void imageValidation(String webImageResponse, String desktopImageResponse) {
-        assertThat(webImageResponse, is(notNullValue()));
-        assertThat(desktopImageResponse, is(notNullValue()));
+    public void imageValidation(String imageResponse) {
+        assertThat(imageResponse, is(notNullValue()));
 
-        assertThat(Base64.isBase64(webImageResponse), is(equalTo(true)));
-        assertThat(Base64.isBase64(desktopImageResponse), is(equalTo(true)));
+        assertThat(Base64.isBase64(imageResponse), is(equalTo(true)));
     }
 
     /**
@@ -350,12 +486,12 @@ public class FileUploadResources {
     }
 
     /**
-     * Gets all images by image id
+     * Gets image by image id
      *
      * @param imageId - id to send
      * @return Object - response
      */
-    private Object getAllImages(String imageId) {
+    public Object getImageById(String imageId) {
         String getImagesUrl = baseUrl.concat("ws/viz/images/").concat(imageId);
 
         headers.put(acceptHeader, textPlain);
@@ -374,7 +510,7 @@ public class FileUploadResources {
      * @param imageType - web or desktop image
      * @return Object - response
      */
-    private Object getImageByScenarioIterationKey(ScenarioKey scenarioKey, String imageType) {
+    public Object getImageByScenarioIterationKey(ScenarioKey scenarioKey, String imageType) {
         iteration = getLatestIteration(
                 token,
                 scenarioKey.getTypeName(),

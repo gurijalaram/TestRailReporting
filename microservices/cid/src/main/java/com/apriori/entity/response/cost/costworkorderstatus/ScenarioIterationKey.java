@@ -2,7 +2,7 @@ package com.apriori.entity.response.cost.costworkorderstatus;
 
 import com.apriori.entity.response.upload.ScenarioKey;
 
-public class CostOrderStatusScenarioIterationKey {
+public class ScenarioIterationKey {
     private ScenarioKey scenarioKey;
     private Integer iteration;
 
@@ -10,7 +10,7 @@ public class CostOrderStatusScenarioIterationKey {
         return scenarioKey;
     }
 
-    public CostOrderStatusScenarioIterationKey setScenarioKey(ScenarioKey scenarioKey) {
+    public ScenarioIterationKey setScenarioKey(ScenarioKey scenarioKey) {
         this.scenarioKey = scenarioKey;
         return this;
     }
@@ -19,7 +19,7 @@ public class CostOrderStatusScenarioIterationKey {
         return iteration;
     }
 
-    public CostOrderStatusScenarioIterationKey setIteration(Integer iteration) {
+    public ScenarioIterationKey setIteration(Integer iteration) {
         this.iteration = iteration;
         return this;
     }
