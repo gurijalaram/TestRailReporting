@@ -23,10 +23,12 @@ public class ResetAutomationUsers {
 
     private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
 
-    String url = Constants.getServiceUrl()
-        + Constants.getAutomationUsername()
-        + "/password?key="
-        + Constants.getSecretKey();
+    String url = String.format(
+            "%s/users/%s/password?key=%s",
+            Constants.getAtsServiceHost(),
+            Constants.getAutomationUsername(),
+            Constants.getSecretKey()
+    );
 
     /**
      * The initial value in the 'range' is inclusive and upper bound value is exclusive
