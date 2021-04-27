@@ -161,8 +161,8 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = {"3349"})
-    @Description("Verify Created By input control works correctly")
+    @TestRail(testCaseId = {"7665"})
+    @Description("Verify Created By input control search works - Scenario Comparison Report")
     public void testCreatedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
@@ -173,8 +173,8 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = {"3349"})
-    @Description("Verify Created By input control works correctly")
+    @TestRail(testCaseId = {"3307"})
+    @Description("Verify created by input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testCreatedByFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -214,8 +214,8 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = {"3349"})
-    @Description("Verify Created By input control works correctly")
+    @TestRail(testCaseId = {"7667"})
+    @Description("Verify Created By input control buttons work - Scenario Comparison Report")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
@@ -227,8 +227,8 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3349"})
-    @Description("Verify Last Modified By input control works correctly")
+    @TestRail(testCaseId = {"7664"})
+    @Description("Verify Last Modified By input control search works - Scenario Comparison Report")
     public void testLastModifiedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
@@ -240,7 +240,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3349"})
-    @Description("Verify Last Modified By input control works correctly")
+    @Description("Verify Last Modified By input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testLastModifiedByFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -273,8 +273,8 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3349"})
-    @Description("Verify Last Modified By input control works correctly")
+    @TestRail(testCaseId = {"7666"})
+    @Description("Verify Last Modified By input control buttons work - Scenario Comparison Report")
     public void testLastModifiedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(

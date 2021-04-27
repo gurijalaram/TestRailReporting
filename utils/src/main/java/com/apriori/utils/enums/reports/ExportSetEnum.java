@@ -8,7 +8,8 @@ public enum ExportSetEnum {
     CASTING_DTC("---01-dtc-casting"),
     ROLL_UP_A("---01-roll-up-a"),
     SUB_SUB_ASM("---01-sub-sub-asm"),
-    SHEET_METAL_DTC("---01-sheet-metal-dtc");
+    SHEET_METAL_DTC("---01-sheet-metal-dtc"),
+    COST_OUTLIER_THRESHOLD_ROLLUP("---01-cost-outlier-threshold-rollup");
 
     private final String exportSetName;
 
