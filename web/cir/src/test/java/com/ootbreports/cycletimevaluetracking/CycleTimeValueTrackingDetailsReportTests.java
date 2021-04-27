@@ -23,12 +23,12 @@ import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
-public class CycleTimeValueTrackingDetailsTests extends TestBase {
+public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
     private CycleTimeValueTrackingPage cycleTimeValueTrackingPage;
     private CommonReportTests commonReportTests;
 
-    public CycleTimeValueTrackingDetailsTests() {
+    public CycleTimeValueTrackingDetailsReportTests() {
         super();
     }
 
@@ -67,13 +67,16 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2331"})
-    @Description("Projects rollup drop list functionality test")
+    @TestRail(testCaseId = {"7628"})
+    @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Details Report")
     public void testProjectRollupDropdownList() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(), CycleTimeValueTrackingPage.class);
+                .navigateToReport(
+                        ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                        CycleTimeValueTrackingPage.class
+                );
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
         cycleTimeValueTrackingPage.selectProjectRollup()
@@ -83,14 +86,15 @@ public class CycleTimeValueTrackingDetailsTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
-    @TestRail(testCaseId = {"2332"})
-    @Description("Export date lists all available versions from selected export set rollup")
+    @Category({ReportsTest.class, OnPremTest.class})
+    @TestRail(testCaseId = {"7627"})
+    @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Details Report")
     public void testExportDateFilterFunctionality() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                .navigateToReport(
+                        ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
                         CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 

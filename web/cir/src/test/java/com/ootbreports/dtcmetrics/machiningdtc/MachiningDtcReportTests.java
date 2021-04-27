@@ -456,8 +456,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2027"})
-    @Description("Verify Select Parts list is correctly filtered by input control")
+    @TestRail(testCaseId = {"7658"})
+    @Description("Verify Select Parts list is correctly filtered by input control - Export Dates - Machining DTC Report ")
     public void testPartListFilterByInputControlsExportDates() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -476,8 +476,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2027"})
-    @Description("Verify Select Parts list is correctly filtered by input control")
+    @TestRail(testCaseId = {"7659"})
+    @Description("Verify Select Parts list is correctly filtered by input control - Export Set - Machining DTC Report")
     public void testPartListFilterByInputControlsExportSets() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -494,8 +494,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2027"})
-    @Description("Verify Select Parts list is correctly filtered by input control")
+    @TestRail(testCaseId = {"7660"})
+    @Description("Verify Select Parts list is correctly filtered by input control - Rollup - Machining DTC Report")
     public void testPartListFilterByInputControlsRollup() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -512,8 +512,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2027"})
-    @Description("Verify Select Parts list is correctly filtered by input control")
+    @TestRail(testCaseId = {"7661"})
+    @Description("Verify Select Parts list is correctly filtered by input control - Min. Annual Spend - Machining DTC Report")
     public void testPartListFilterByInputControlsMinimumAnnualSpend() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -537,8 +537,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2027"})
-    @Description("Verify Select Parts list is correctly filtered by input control")
+    @TestRail(testCaseId = {"7662"})
+    @Description("\tVerify Select Parts list is correctly filtered by input control - Process Group - Machining DTC Report")
     public void testPartListFilterByInputControlsProcessGroup() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -556,8 +556,8 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2027"})
-    @Description("Verify Select Parts list is correctly filtered by input control")
+    @TestRail(testCaseId = {"7663"})
+    @Description("Verify Select Parts list is correctly filtered by input control - DTC Score - Machining DTC Report")
     public void testPartListFilterByInputControlsDtcScore() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()

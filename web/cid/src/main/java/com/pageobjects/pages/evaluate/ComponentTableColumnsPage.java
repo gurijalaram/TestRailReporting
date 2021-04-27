@@ -2,9 +2,6 @@ package com.pageobjects.pages.evaluate;
 
 import com.apriori.utils.PageUtils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +12,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,24 +87,6 @@ public class ComponentTableColumnsPage extends LoadableComponent<ComponentTableC
         new Select(availableList).selectByValue(column);
         selectRightArrow();
         return this;
-    }
-
-    /**
-     * Gets table values for PPC, CI, FBC and CT
-     *
-     * @return List of BigDecimals
-     */
-    public ArrayList<BigDecimal> getTableValues(String column) {
-        Document evaluateComponentView = Jsoup.parse(driver.getPageSource());
-        String baseCssSelector = "div[class='v-grid-tablewrapper'] > table > tbody > tr:nth-child(%s) td";
-        ArrayList<BigDecimal> figureValues = new ArrayList<>();
-
-        for (Element valueElement : evaluateComponentView.select(String.format(baseCssSelector, columnSelectorMap.get(column)))) {
-            if (valueElement.text().chars().allMatch(Character::isDigit)) {
-                figureValues.add(new BigDecimal(valueElement.text()));
-            }
-        }
-        return figureValues;
     }
 
     /**

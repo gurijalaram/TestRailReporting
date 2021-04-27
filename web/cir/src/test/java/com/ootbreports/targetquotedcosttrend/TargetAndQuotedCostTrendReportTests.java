@@ -23,13 +23,13 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
-public class TargetAndQuotedCostTrendTests extends TestBase {
+public class TargetAndQuotedCostTrendReportTests extends TestBase {
 
     private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
-    public TargetAndQuotedCostTrendTests() {
+    public TargetAndQuotedCostTrendReportTests() {
         super();
     }
 
@@ -203,8 +203,8 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3361"})
-    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
+    @TestRail(testCaseId = {"7668"})
+    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Base Milestone")
     public void testHyperlinksToDetailsReportBaseMilestone() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTargetQuotedCostTrendReportHyperlinks("Base");
@@ -213,7 +213,7 @@ public class TargetAndQuotedCostTrendTests extends TestBase {
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3361"})
-    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking Details report")
+    @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Final Milestone")
     public void testHyperlinksToDetailsReportFinalMilestone() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTargetQuotedCostTrendReportHyperlinks("Final");

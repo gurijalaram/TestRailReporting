@@ -26,7 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
@@ -77,7 +76,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1692"})
-    @Description("Verify export set input controls function correctly")
+    @Description("Verify Export Set list controls function correctly - Casting DTC Report")
     public void testCastingDtcExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -86,7 +85,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category({ReportsTest.class, OnPremTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = {"1694"})
-    @Description("Verify roll-up dropdown functions correctly for Casting DTC report")
+    @Description("Verify Roll-up input control functions correctly - Casting DTC Report")
     public void testRollupDropDown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
@@ -161,8 +160,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"102990"})
-    @Description("Verify that aPriori costed scenarios are represented correctly")
+    @TestRail(testCaseId = {"1715"})
+    @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Report")
     public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -229,7 +228,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -242,7 +241,7 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
             ReportNamesEnum.CASTING_DTC.getReportName(),
             ExportSetEnum.CASTING_DTC.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
@@ -336,7 +335,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "7508")
+    @TestRail(testCaseId = {"7508"})
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
@@ -387,8 +386,8 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = "1700")
-    @Description("Verify Minimum Annual Spend input control functions correctly")
+    @TestRail(testCaseId = {"1700"})
+    @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Report")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinimumAnnualSpend(

@@ -312,7 +312,24 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
+     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, as well as
+     * Cost Outlier Identification, and Details and Comparison versions of reports
+     *
+     * @param reportName - String
+     * @param exportSet - String
+     * @param costMetric - String
+     */
+    public void testCostMetricInputControlGeneric(String reportName, String exportSet,
+                                                  String costMetric) {
+        testCostMetricCore(reportName, exportSet, costMetric);
+    }
+
+    /**
      * Generic test for cost metric input control
+     *
+     * @param reportName - name of report to navigate to
+     * @param exportSetName - export set to select
+     * @param costMetric - cost metric to select
      */
     public void testCostMetricInputControlMachiningSheetMetalDtc(String reportName, String exportSetName,
                                                                  String costMetric) {
@@ -324,18 +341,6 @@ public class InputControlsTests extends TestBase {
         genericReportPage.getCostMetricValueFromBubble();
 
         assertThat(genericReportPage.getCostMetricValueFromBubble(), is(equalTo(String.format("%s : ", costMetric))));
-    }
-
-    /**
-     * Generic test for Cost Metric Input Control on Machining, Casting and Sheet Metal DTC Reports, Details and
-     * Comparison
-     *
-     * @param reportName - String
-     * @param costMetric - String
-     */
-    public void testCostMetricInputControlComparisonDetailsDtcReports(String reportName, String exportSet,
-                                                                      String costMetric) {
-        testCostMetricCore(reportName, exportSet, costMetric);
     }
 
     /**
@@ -441,7 +446,7 @@ public class InputControlsTests extends TestBase {
 
         if (reportName.equals(ReportNamesEnum.MACHINING_DTC.getReportName()) &&
             processGroupName.equals(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())) {
-            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(equalTo(true)));
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(equalTo(true)));
         } else if (reportName.equals(ReportNamesEnum.CASTING_DTC.getReportName()) ||
                 reportName.equals(ReportNamesEnum.SHEET_METAL_DTC.getReportName())) {
             genericReportPage.hoverSpecificPartNameBubble("20");
@@ -748,7 +753,7 @@ public class InputControlsTests extends TestBase {
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName())) {
             genericReportPage.waitForReportToLoad();
-            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(true));
         } else {
             BigDecimal valueForAssert = new BigDecimal("6631000.00");
             assertThat(
@@ -779,7 +784,7 @@ public class InputControlsTests extends TestBase {
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
             genericReportPage.waitForReportToLoad();
-            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled(), is(true));
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(true));
         } else {
             assertThat(genericReportPage.getCountOfChartElements().compareTo(initialChartCount), is(equalTo(-1)));
         }
@@ -875,6 +880,240 @@ public class InputControlsTests extends TestBase {
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
         assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
+    }
+
+    /**
+     * Generic test for min and max mass filter - for Design and Cost Outlier Identification Reports
+     *
+     * @param reportName - String
+     * @param costOrMass - String
+     */
+    public void testMinAndMaxMassOrCostFilterDesignCostOutlierMainReports(String reportName, String costOrMass) {
+        String minValue = "1.00";
+        String maxValue = "1,173.00";
+        String maxValToUse = reportName.contains("Cost") ? "945.00" : maxValue;
+        genericReportPage = testMinAndMaxMassOrCostFilterCore(reportName, costOrMass, minValue, maxValToUse);
+
+        genericReportPage.setReportName(reportName);
+        genericReportPage.scrollDown(driver.findElement(By.xpath("//span[contains(text(), 'aPriori Technologies')]")));
+        for (int i = 0; i < 3; i++) {
+            genericReportPage.hoverPartNameBubbleDtcReports();
+        }
+
+        String valueToGetIndex = "aPriori Cost Value ";
+        if (costOrMass.equals("Cost")) {
+            valueToGetIndex = reportName.contains("Design") ? valueToGetIndex.concat("(Design Outlier)") :
+                    valueToGetIndex.concat("(Cost Outlier)");
+        } else {
+            valueToGetIndex = "Finish Mass Value";
+        }
+
+        BigDecimal massValueOne = genericReportPage.getFBCValueFromBubbleTooltip(valueToGetIndex);
+
+        genericReportPage.setReportName(reportName.concat(" 2"));
+        genericReportPage.hoverPartNameBubbleDtcReports();
+        BigDecimal massValueTwo = genericReportPage.getFBCValueFromBubbleTooltip(valueToGetIndex);
+
+        assertThat(massValueOne.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(massValueOne.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+
+        assertThat(massValueTwo.compareTo(new BigDecimal(minValue)), is(equalTo(1)));
+        assertThat(massValueTwo.compareTo(
+                new BigDecimal(maxValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+    }
+
+    /**
+     * Generic test for min and max mass filter - for Design and Cost Outlier Identification Details Reports
+     *
+     * @param reportName - String
+     * @param costOrMass - String
+     */
+    public void testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(String reportName, String costOrMass) {
+        String minValueToUse = costOrMass.equals("Mass") ? "1.000" : "1.00";
+        String maxValueToUse = costOrMass.equals("Mass") ? "1,173.00" : "945.00";
+
+        genericReportPage = testMinAndMaxMassOrCostFilterCore(
+                reportName,
+                costOrMass,
+                minValueToUse,
+                maxValueToUse
+        );
+
+        BigDecimal valueOne = getValueFromCostOrDesignDetailsReport(
+                genericReportPage,
+                reportName.concat(String.format(" %s", costOrMass))
+        );
+        BigDecimal valueTwo = getValueFromCostOrDesignDetailsReport(
+                genericReportPage,
+                reportName.concat(String.format(" %s 2", costOrMass))
+        );
+
+        assertMinAndMaxValues(valueOne, minValueToUse, maxValueToUse);
+        assertMinAndMaxValues(valueTwo, minValueToUse, maxValueToUse);
+    }
+
+    /**
+     * Generic test for decimal places on cost filter on Design and Cost Outlier Identification and Details reports
+     */
+    public void testMinAndMaxMassOrCostFilterJunkValues(String reportName, String costOrMass) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
+
+        boolean costReport = reportName.contains("Cost");
+        genericReportPage.inputMaxOrMinCostOrMass(
+                costReport,
+                costOrMass,
+                "Min",
+                "hello world"
+        );
+        genericReportPage.inputMaxOrMinCostOrMass(
+                costReport,
+                costOrMass,
+                "Max",
+                "goodbye world"
+        );
+
+        genericReportPage.clickOk();
+
+        assertThat(
+                genericReportPage.isCostOrMassMaxOrMinErrorEnabled("Minimum", costOrMass),
+                is(equalTo(true))
+        );
+        assertThat(
+                genericReportPage.isCostOrMassMaxOrMinErrorEnabled("Maximum", costOrMass),
+                is(equalTo(true))
+        );
+    }
+
+    /**
+     * Generic test for junk value on annualised or percent error (Cost Outlier tests)
+     *
+     * @param reportName String
+     * @param fieldToUse String
+     */
+    public void testAnnualisedOrPercentError(String reportName, String fieldToUse) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .inputAnnualisedOrPercentValue(fieldToUse, "abcd")
+                .clickOk();
+
+        assertThat(genericReportPage.isAnnualisedOrPercentErrorEnabled(fieldToUse), is(equalTo(true)));
+    }
+
+    /**
+     * Generic test for decimal places on any report - annualised potential savings or percent difference
+     *
+     * @param reportName String
+     * @param fieldToUse String
+     */
+    public void testAnnualisedOrPercentDecimalPlaces(String reportName, String fieldToUse) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .inputAnnualisedOrPercentValue(fieldToUse, "10.000")
+                .clickOk();
+
+        boolean isPercentSet = fieldToUse.equals("Percent");
+        assertThat(
+                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(isPercentSet, fieldToUse).equals("10.0%"),
+                is(equalTo(true))
+        );
+
+        if (!reportName.contains("Details")) {
+            genericReportPage.clickDetailsLink();
+            assertThat(
+                    genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(isPercentSet, fieldToUse).equals("10.0%"),
+                    is(equalTo(true))
+            );
+        }
+    }
+
+    /**
+     * Generic test - Annualised or Percent filter (no data available) on Cost Outlier Identification Report (+ Details)
+     *
+     * @param reportName String
+     * @param valueToTest String
+     */
+    public void testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(String reportName, String valueToTest) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .inputAnnualisedOrPercentValue(valueToTest, "10.00")
+                .clickOk();
+
+        genericReportPage.waitForReportToLoad();
+        assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(equalTo(true)));
+        if (!reportName.contains("Details")) {
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("2"), is(equalTo(true)));
+        }
+    }
+
+    private BigDecimal getValueFromCostOrDesignDetailsReport(GenericReportPage genericReportPage, String valueIndex) {
+        return new BigDecimal(genericReportPage.getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(valueIndex));
+    }
+
+    private void assertMinAndMaxValues(BigDecimal valueToAssert, String firstValue, String secondValue) {
+        assertThat(valueToAssert.compareTo(
+                new BigDecimal(firstValue.replace(",", ""))),
+                is(equalTo(1))
+        );
+        assertThat(valueToAssert.compareTo(
+                new BigDecimal(secondValue.replace(",", ""))),
+                is(equalTo(-1))
+        );
+    }
+
+    private GenericReportPage testMinAndMaxMassOrCostFilterCore(String reportName, String costOrMass, String minValue,
+                                                                String maxValue) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
+
+        boolean costReport = reportName.contains("Cost");
+        genericReportPage.inputMaxOrMinCostOrMass(
+                costReport,
+                costOrMass,
+                "Min",
+                minValue
+        );
+        genericReportPage.inputMaxOrMinCostOrMass(
+                costReport,
+                costOrMass,
+                "Max",
+                maxValue.replace(",", "")
+        );
+        genericReportPage.clickOk();
+
+        assertThat(genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
+                reportName,
+                costOrMass,
+                "Min"),
+                is(equalTo(minValue))
+        );
+        assertThat(genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
+                reportName,
+                costOrMass,
+                "Max"),
+                is(equalTo(maxValue))
+        );
+        return genericReportPage;
     }
 
     private void testCostMetricCoreTargetQuotedCostReports(String reportName, String costMetric) {

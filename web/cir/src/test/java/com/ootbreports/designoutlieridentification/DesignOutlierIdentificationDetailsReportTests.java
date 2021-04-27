@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.DesignOutlierIdentificationReportPage;
+import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
@@ -22,8 +22,8 @@ import testsuites.suiteinterface.ReportsTest;
 
 public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
-    private DesignOutlierIdentificationReportPage designOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
+    private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
     public DesignOutlierIdentificationDetailsReportTests() {
@@ -116,14 +116,62 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1995"})
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
-        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
+        genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-                        DesignOutlierIdentificationReportPage.class);
+                        GenericReportPage.class);
 
-        designOutlierIdentificationReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
 
-        assertThat(designOutlierIdentificationReportPage.getExportDateCount(), is(equalTo("2")));
+        assertThat(genericReportPage.getExportDateCount(), is(equalTo("2")));
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "6249")
+    @Description("Min and max cost filter works")
+    public void testMinAndMaxCostFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Cost"
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "6261")
+    @Description("Min and max cost filter - junk value test")
+    public void testMinAndMaxCostFilterJunkValue() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Cost"
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "6250")
+    @Description("Min and max mass filter works")
+    public void testMinAndMaxMassFilter() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Mass"
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = "6264")
+    @Description("Min and max mass filter - junk value test")
+    public void testMinAndMaxMassFilterJunkValue() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                "Mass"
+        );
     }
 }

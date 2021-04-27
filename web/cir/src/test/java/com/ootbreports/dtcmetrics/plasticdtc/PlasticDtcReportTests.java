@@ -251,7 +251,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Report")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -264,7 +264,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
             ReportNamesEnum.PLASTIC_DTC.getReportName(),
             ExportSetEnum.ROLL_UP_A.getExportSetName(),
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()

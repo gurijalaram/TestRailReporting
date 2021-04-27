@@ -27,13 +27,13 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
-public class TargetAndQuotedCostValueTrackingTests extends TestBase {
+public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     private TargetAndQuotedCostValueTrackingPage targetAndQuotedCostValueTrackingPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
-    public TargetAndQuotedCostValueTrackingTests() {
+    public TargetAndQuotedCostValueTrackingReportTests() {
         super();
     }
 
@@ -124,31 +124,31 @@ public class TargetAndQuotedCostValueTrackingTests extends TestBase {
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3368"})
-    @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
+    @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 1")
     public void testLinksToMilestoneProjectOne() {
         testMilestoneProjectLink("1");
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3368"})
-    @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
+    @TestRail(testCaseId = {"7669"})
+    @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 2")
     public void testLinksToMilestoneProjectTwo() {
         testMilestoneProjectLink("2");
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3368"})
-    @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
+    @TestRail(testCaseId = {"7670"})
+    @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 3")
     public void testLinksToMilestoneProjectThree() {
         testMilestoneProjectLink("3");
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3368"})
-    @Description("Validate subreport hyperlinks to Target Cost Value Tracking details report for each milestone")
+    @TestRail(testCaseId = {"7671"})
+    @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 4")
     public void testLinksToMilestoneProjectFour() {
         testMilestoneProjectLink("4");
     }
