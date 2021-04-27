@@ -172,7 +172,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3067", "1929"})
+    @TestRail(testCaseId = {"3067"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -216,7 +216,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3068", "1929"})
+    @TestRail(testCaseId = {"3068"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
@@ -269,7 +269,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1934", "1929"})
+    @TestRail(testCaseId = {"1934"})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
@@ -640,7 +640,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1921"})
-    @Description("Export Set search function works (plus other filters)")
+    @Description("Export Set search function works - Assembly Details Report")
     public void testExportSetSearch() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -657,8 +657,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1921"})
-    @Description("Export set search function works (plus other filters)")
+    @TestRail(testCaseId = {"7683"})
+    @Description("Verify Created By Filter Search")
     public void testCreatedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
@@ -669,8 +669,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1921"})
-    @Description("Export set search function works (plus other filters)")
+    @TestRail(testCaseId = {"7684"})
+    @Description("Verify Created By Filter Operation")
     public void testCreatedByFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -713,8 +713,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1921"})
-    @Description("Export set search function works (plus other filters)")
+    @TestRail(testCaseId = {"7685"})
+    @Description("Verify Created By Filter Buttons")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
@@ -726,8 +726,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1921"})
-    @Description("Export set search function works (plus other filters)")
+    @TestRail(testCaseId = {"7686"})
+    @Description("Verify Last Modified By Filter Search")
     public void testLastModifiedFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterSearch(
@@ -738,8 +738,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1921"})
-    @Description("Export set search function works (plus other filters)")
+    @TestRail(testCaseId = {"7687"})
+    @Description("Verify Last Modified By Filter Operation")
     public void testLastModifiedFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
@@ -774,8 +774,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1921"})
-    @Description("Export set search function works (plus other filters)")
+    @TestRail(testCaseId = {"7688"})
+    @Description("Verify Last Modified By Filter Buttons")
     public void testLastModifiedFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
@@ -787,8 +787,8 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1921"})
-    @Description("Export set search function works (plus other filters)")
+    @TestRail(testCaseId = {"7689"})
+    @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testAssemblyNumberSearchCriteria(

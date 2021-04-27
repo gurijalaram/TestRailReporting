@@ -17,7 +17,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "ats";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
@@ -132,15 +132,6 @@ public class Constants {
      */
     public static String getSecretKey() {
         return secretKey = System.getProperty("atsSecretKey") == null ? PROPERTIES.getProperty("ats.secret.key") : System.getProperty("atsSecretKey");
-    }
-
-    /**
-     * Get service url
-     *
-     * @return string
-     */
-    public static String getServiceUrl() {
-        return serviceUrl = System.getProperty("atsServiceUrl") == null ? PROPERTIES.getProperty("ats.service.url") : System.getProperty("atsServiceUrl");
     }
 
     /**

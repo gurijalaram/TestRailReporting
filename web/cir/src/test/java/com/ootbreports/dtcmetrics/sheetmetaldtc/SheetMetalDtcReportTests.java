@@ -153,7 +153,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3040"})
-    @Description("Verify Export Set list controls function correctly - Panel Buttons")
+    @Description("Verify Export Set list controls function correctly - Panel Buttons - Sheet Metal DTC Reports")
     public void testExportSetListControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(ReportNamesEnum.SHEET_METAL_DTC.getReportName());
@@ -161,8 +161,8 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3040"})
-    @Description("Verify Export Set list controls function correctly - Search")
+    @TestRail(testCaseId = {"7690"})
+    @Description("Verify Export Set list controls function correctly - Search - Sheet Metal DTC Reports")
     public void testExportSetSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSearch(
@@ -238,7 +238,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3045"})
-    @Description("Verify Sort Order input control functions correctly - Annual Spend")
+    @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Report")
     public void testSortOrderAnnualSpend() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
                 .login()

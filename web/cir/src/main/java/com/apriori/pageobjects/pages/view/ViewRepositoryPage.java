@@ -156,5 +156,10 @@ public class ViewRepositoryPage extends ReportsPageHeader {
                 new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
         navigationMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
                 new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
+
+        navigationMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
+        navigationMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
     }
 }
