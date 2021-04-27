@@ -171,7 +171,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Category(ReportsTest.class)
@@ -794,7 +793,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Description("Export set search function works (plus other filters)")
     @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7689", "1921"})
     @Description("Verify Assembly Number Search Criteria")

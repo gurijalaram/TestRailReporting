@@ -109,7 +109,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"7345"})
+    @TestRail(testCaseId = {"7345"})
     @Description("Verify cancel button functionality - Casting DTC Report")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -263,7 +263,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"7388"})
+    @TestRail(testCaseId = {"7388"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -348,7 +348,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"7511"})
+    @TestRail(testCaseId = {"7511"})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
@@ -361,7 +361,7 @@ public class CastingDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"7514"})
+    @TestRail(testCaseId = {"7514"})
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);

@@ -46,7 +46,7 @@ public class PlasticDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"7303"})
+    @TestRail(testCaseId = {"7303"})
     @Description("Validate report is available by navigation - Plastic DTC Report")
     public void testPlasticDtcReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);

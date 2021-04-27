@@ -46,7 +46,7 @@ public class SheetMetalDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"7312"})
+    @TestRail(testCaseId = {"7312"})
     @Description("Validate report is available by navigation - Sheet Metal DTC Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);

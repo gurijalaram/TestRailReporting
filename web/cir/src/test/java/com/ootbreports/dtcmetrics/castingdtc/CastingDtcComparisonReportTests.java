@@ -398,7 +398,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7642"})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderAnnualSpend() {

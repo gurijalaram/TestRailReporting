@@ -143,7 +143,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7625"})
     @Description("Verify Scenario Name drop-down functions correctly - Assembly Cost (Letter) Report")
     public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
@@ -164,7 +164,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-	@Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7626"})
     @Description("Verify the user can select sub assemblies from within assembly Export Sets - Assembly Cost (Letter) Report")
     public void testSubAssemblySelectionAssemblyCostLetter() {

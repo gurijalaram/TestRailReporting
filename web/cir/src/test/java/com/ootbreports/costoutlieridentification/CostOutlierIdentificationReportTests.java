@@ -19,6 +19,7 @@ import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -207,7 +208,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7025"})
     @Description("Percent difference threshold filter - main report - no data available")
     public void testPercentDifferenceThresholdNoDataAvailable() {

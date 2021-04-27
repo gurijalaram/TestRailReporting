@@ -55,7 +55,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"3415"})
+    @TestRail(testCaseId = {"3415"})
     @Description("Validate report is available by library - Machining DTC Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -85,7 +85,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"3567"})
+    @TestRail(testCaseId = {"3567"})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
         inputControlsTests = new InputControlsTests(driver);
@@ -339,7 +339,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"2039"})
+    @TestRail(testCaseId = {"2039"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -371,7 +371,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"3572"})
+    @TestRail(testCaseId = {"3572"})
     @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
     public void testInvalidHourValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
@@ -395,7 +395,7 @@ public class MachiningDtcReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, OnPremTest.class})
-	@TestRail(testCaseId = {"3575"})
+    @TestRail(testCaseId = {"3575"})
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
     public void testInvalidYearValueExportSetFilter() {
         inputControlsTests = new InputControlsTests(driver);
