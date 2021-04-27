@@ -178,7 +178,7 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3862", "1239", "3863"})
+    @TestRail(testCaseId = {"6472", "6824", "6473"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
 
@@ -215,7 +215,7 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3877", "3876"})
+    @TestRail(testCaseId = {"6480", "6481"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
 
@@ -229,7 +229,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
@@ -252,7 +252,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3864", "3865"})
+    @TestRail(testCaseId = {"6474", "6475"})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
 
@@ -287,7 +287,7 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3872", "596", "3873"})
+    @TestRail(testCaseId = {"6476", "5439", "6477"})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
 
@@ -322,7 +322,7 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"3874", "3875"})
+    @TestRail(testCaseId = {"6478", "6479"})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
 
@@ -336,7 +336,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
@@ -356,7 +356,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1245"})
+    @TestRail(testCaseId = {"6830"})
     @Description("CAD file association can be updated & subsequently reverted")
     public void revertCADUpdate() {
 
@@ -370,7 +370,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(744, 1));
