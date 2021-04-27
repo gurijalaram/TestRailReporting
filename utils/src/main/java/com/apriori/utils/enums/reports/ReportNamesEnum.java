@@ -9,6 +9,8 @@ public enum ReportNamesEnum {
     CASTING_DTC_DETAILS("Casting DTC Details"),
     COMPONENT_COST("Component Cost"),
     COMPONENT_COST_INTERNAL_USE("Component Cost Internal Use"),
+    COST_OUTLIER_IDENTIFICATION("Cost Outlier Identification"),
+    COST_OUTLIER_IDENTIFICATION_DETAILS("Cost Outlier Identification Details"),
     CYCLE_TIME_VALUE_TRACKING("Cycle Time Value Tracking"),
     CYCLE_TIME_VALUE_TRACKING_DETAILS("Cycle Time Value Tracking Details"),
     DESIGN_OUTLIER_IDENTIFICATION("Design Outlier Identification"),
