@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ComparePage extends CompareToolbar {
 
@@ -32,6 +33,9 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "[data-rbd-droppable-id='basis-column']")
     private WebElement basisColumn;
 
+    @FindBy(xpath = "//p[.='Preparing Comparison']")
+    private List<WebElement> comparisonLoader;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -44,6 +48,7 @@ public class ComparePage extends CompareToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(headerSections);
+        pageUtils.invisibilityOfElements(comparisonLoader);
     }
 
     /**
@@ -165,5 +170,28 @@ public class ComparePage extends CompareToolbar {
      */
     public String getBasis() {
         return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
+    }
+
+    public ComparePage getCardInfo(String card, String componentName, String scenarioName) {
+        List<WebElement> byCard = driver.findElements(By.cssSelector("[data-rbd-droppable-id='header-sections'] .comparison-row"));
+        List<WebElement> byValue = driver.findElement(By.xpath(String.format("//div[.='%s / %s']/parent::div", componentName, scenarioName))).findElements(By.cssSelector(".comparison-row"));
+
+        int cardIndex = IntStream.range(0, byCard.size()).filter(x -> byCard.get(x).getText().equals(card)).findFirst().getAsInt();
+
+        String valueText = byValue.get(cardIndex).getAttribute("textContent");
+
+        List<WebElement> byIndex = driver.findElements(By.xpath(String.format("//div[.='%s / %s']/parent::div//div[.='%s']/parent::div//div[@class='comparison-row']", componentName, scenarioName, valueText)));
+
+        int positionIndex = IntStream.range(0, byIndex.size()).filter(x -> byIndex.get(x).getText().equals(valueText)).findFirst().getAsInt();
+
+        positionIndex = positionIndex > 0 ? positionIndex + 1 : positionIndex;
+
+        String arrowColour = driver.findElements(By.xpath(String.format("//div[.='%s / %s']/parent::div//div[.='%s']/parent::div//div[@class='comparison-row']/parent::div/..//div[@class='right']//div", componentName, scenarioName, valueText))).get(positionIndex).findElement(By.cssSelector("svg")).getAttribute("color");
+        String funnyColumnText = null;
+
+        if (positionIndex > 0) {
+            funnyColumnText = driver.findElements(By.xpath(String.format("//div[.='%s / %s']/parent::div//div[.='%s']/parent::div//div[@class='comparison-row']/parent::div/..//div[@class='right']//div", componentName, scenarioName, valueText))).get(positionIndex).findElement(By.cssSelector(".property-value")).getText();
+        }
+        return this;
     }
 }
