@@ -102,7 +102,7 @@ public class FileUploadResources {
                 new FileUploadInputs()
                         .setScenarioName(scenarioName)
                         .setFileKey(fileResponse.getResponse().getIdentity())
-                        .setFileName(fileResponse.getFilename()));
+                        .setFileName(fileResponse.getResponse().getFilename()));
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(fileUploadWorkorderId),
