@@ -49,7 +49,9 @@ public class Constants {
     public static final String DEFAULT_SCENARIO_NAME = "Initial";
     public static final String PART_SCENARIO_TYPE = "Part";
     public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
-    public static final String COMPARISON_SCENARIO_TYPE = "Comparison";
+    public static final String COST_NAME = "Cost";
+    public static final String ANNUALISED_VALUE = "Annualized";
+    public static final String PERCENT_VALUE = "Percent";
     public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
     public static final String FORGOT_PWD_MSG_QA_ENV = "IF THE SUPPLIED EMAIL ADDRESS IS VALID, YOU WILL RECEIVE AN " +
             "EMAIL SHORTLY WITH INSTRUCTIONS ON RESETTING YOUR PASSWORD. IF YOU DID NOT RECEIVE AN EMAIL AND STILL " +
@@ -61,11 +63,6 @@ public class Constants {
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
-
-    public static final String SCENARIO_TYPE = "";
-    public static final String ELEMENT_NAME = "";
-    public static final String SCENARIO_NAME = "";
-    public static final String EXPORT_SET_NAME = "";
 
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;

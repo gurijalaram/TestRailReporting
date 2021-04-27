@@ -153,8 +153,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3040"})
-    @Description("Verify Export Set list controls function correctly - Panel Buttons")
+    @TestRail(testCaseId = {"7694"})
+    @Description("Verify Export Set list controls function correctly - Panel Buttons - Sheet Metal DTC Comparison Reports")
     public void testExportSetListControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName());
@@ -162,8 +162,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3040"})
-    @Description("Verify Export Set list controls function correctly - Search")
+    @TestRail(testCaseId = {"7691"})
+    @Description("Verify Export Set list controls function correctly - Search - Sheet Metal DTC Comparison Reports")
     public void testExportSetSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSearch(
@@ -190,7 +190,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 CostMetricEnum.PIECE_PART_COST.getCostMetricName()
@@ -203,7 +203,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Comparison Report")
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCostMetricInputControlComparisonDetailsDtcReports(
+        inputControlsTests.testCostMetricInputControlGeneric(
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                 CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
@@ -238,8 +238,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
-    @TestRail(testCaseId = {"3045"})
-    @Description("Verify Sort Order input control functions correctly - Manufacturing Issues")
+    @TestRail(testCaseId = {"7672"})
+    @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Comparison Report")
     public void testSortOrderManufacturingIssues() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[]{"1271576 (Bulkload)", "BRACKET_V1 (rev1)"};
@@ -252,8 +252,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3045"})
-    @Description("Verify Sort Order input control functions correctly - Bends")
+    @TestRail(testCaseId = {"7673"})
+    @Description("Verify Sort Order input control functions correctly - Bends - Sheet Metal DTC Comparison Report")
     public void testSortOrderBends() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[]{"BRACKET_SHORTENED (rev1)", "BRACKET_SHORTENED_ISSUES (Initial)"};
@@ -266,8 +266,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3045"})
-    @Description("Verify Sort Order input control functions correctly - Tolerances")
+    @TestRail(testCaseId = {"7674"})
+    @Description("Verify Sort Order input control functions correctly - Tolerances - Sheet Metal DTC Comparison Report")
     public void testSortOrderTolerances() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[]{"BRACKET_V1 (rev1)", "BRACKET_V2 (rev1)"};
@@ -280,8 +280,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3045"})
-    @Description("Verify Sort Order input control functions correctly - Machining Time")
+    @TestRail(testCaseId = {"7675"})
+    @Description("Verify Sort Order input control functions correctly - Machining Times - Sheet Metal DTC Comparison Report")
     public void testSortOrderMachiningTime() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[]{"1271576 (Bulkload)", "BRACKET_V3 (rev1)"};
@@ -294,8 +294,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3045"})
-    @Description("Verify Sort Order input control functions correctly - Annual Spend")
+    @TestRail(testCaseId = {"7676"})
+    @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Comparison Report")
     public void testSortOrderAnnualSpend() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[]{"1271576 (Bulkload)", "3575137 (Bulkload)"};

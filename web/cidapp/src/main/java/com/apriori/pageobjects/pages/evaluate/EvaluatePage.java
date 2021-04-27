@@ -457,6 +457,7 @@ public class EvaluatePage extends EvaluateToolbar {
             : riskFactor.equalsIgnoreCase("Medium") ? "var(--info)"
             : riskFactor.equalsIgnoreCase("High") ? "var(--warning)"
             : riskFactor.equalsIgnoreCase("Critical") ? "var(--danger)"
+            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--secondary-light)"
             : null;
 
         By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
