@@ -1,14 +1,16 @@
 package com.apriori.entity.response.cost.costworkorderstatus;
 
+import com.apriori.entity.response.upload.ScenarioKey;
+
 public class CostOrderStatusScenarioIterationKey {
-    private CostOrderScenarioKey scenarioKey;
+    private ScenarioKey scenarioKey;
     private Integer iteration;
 
-    public CostOrderScenarioKey getScenarioKey() {
+    public ScenarioKey getScenarioKey() {
         return scenarioKey;
     }
 
-    public CostOrderStatusScenarioIterationKey setScenarioKey(CostOrderScenarioKey scenarioKey) {
+    public CostOrderStatusScenarioIterationKey setScenarioKey(ScenarioKey scenarioKey) {
         this.scenarioKey = scenarioKey;
         return this;
     }

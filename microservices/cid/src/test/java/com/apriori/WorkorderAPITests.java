@@ -1,10 +1,14 @@
 package com.apriori;
 
+import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.utils.Constants;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+
+import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
@@ -29,6 +33,25 @@ public class WorkorderAPITests {
                 "bracket_basic.prt",
                 testScenarioName,
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+        );
+    }
+
+    @Test
+    @Category(CidAPITest.class)
+    @TestRail(testCaseId = {"7697"})
+    @Description("Get image after each iteration - Upload, Cost, Publish")
+    public void uploadCostPublishGetImage() {
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        Object fileObject = JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                        "CreatePartData.json"
+                ).getPath(), NewPartRequest.class
+        );
+        new FileUploadResources().uploadCostPublishGetImageByScenarioIterationKey(
+                fileObject,
+                "Casting.prt",
+                testScenarioName,
+                ProcessGroupEnum.CASTING.getProcessGroup()
         );
     }
 }

@@ -1,6 +1,6 @@
-package com.apriori.entity.response.cost.costworkorderstatus;
+package com.apriori.entity.response.upload;
 
-public class CostOrderScenarioKey {
+public class ScenarioKey {
     private String stateName;
     private String masterName;
     private String typeName;
@@ -10,35 +10,31 @@ public class CostOrderScenarioKey {
         return stateName;
     }
 
-    public CostOrderScenarioKey setStateName(String stateName) {
+    public void setStateName(String stateName) {
         this.stateName = stateName;
-        return this;
     }
 
     public String getMasterName() {
         return masterName;
     }
 
-    public CostOrderScenarioKey setMasterName(String masterName) {
+    public void setMasterName(String masterName) {
         this.masterName = masterName;
-        return this;
     }
 
     public String getTypeName() {
         return typeName;
     }
 
-    public CostOrderScenarioKey setTypeName(String typeName) {
+    public void setTypeName(String typeName) {
         this.typeName = typeName;
-        return this;
     }
 
     public Integer getWorkspaceId() {
         return workspaceId;
     }
 
-    public CostOrderScenarioKey setWorkspaceId(Integer workspaceId) {
+    public void setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
-        return this;
     }
 }

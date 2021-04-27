@@ -1,14 +1,16 @@
 package com.apriori.entity.response.publish.publishworkorderresult;
 
+import com.apriori.entity.response.upload.ScenarioKey;
+
 public class PublishOutputsScenarioIteration {
-    private PublishOutputsScenarioKey scenarioKey;
+    private ScenarioKey scenarioKey;
     private Integer iteration;
 
-    public PublishOutputsScenarioKey getScenarioKey() {
+    public ScenarioKey getScenarioKey() {
         return scenarioKey;
     }
 
-    public PublishOutputsScenarioIteration setScenarioKey(PublishOutputsScenarioKey scenarioKey) {
+    public PublishOutputsScenarioIteration setScenarioKey(ScenarioKey scenarioKey) {
         this.scenarioKey = scenarioKey;
         return this;
     }
