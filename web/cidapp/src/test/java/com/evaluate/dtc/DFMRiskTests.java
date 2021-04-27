@@ -53,6 +53,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
     }
+
     @Test
     @TestRail(testCaseId = {"6454"})
     @Description("Validate DFM Risk - Medium for Stock Machining")
@@ -198,8 +199,9 @@ public class DFMRiskTests extends TestBase {
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
+
         // TODO uncomment this section when update cad file is implemented
-/*        evaluatePage.updateCadFile(cadResourceFile);
+        /*        evaluatePage.updateCadFile(cadResourceFile);
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
 
@@ -236,7 +238,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         // TODO uncomment this section when update cad file is implemented
-/*        evaluatePage.updateCadFile(cadResourceFile);
+        /*        evaluatePage.updateCadFile(cadResourceFile);
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
 
@@ -273,7 +275,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
 
         // TODO uncomment this section when update cad file is implemented
-/*        evaluatePage.updateCadFile(cadResourceFile);
+        /*        evaluatePage.updateCadFile(cadResourceFile);
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_INCOMPLETE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
@@ -343,7 +345,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
 
         // TODO uncomment this section when update cad file is implemented
-/*        evaluatePage.updateCadFile(cadResourceFile);
+        /*        evaluatePage.updateCadFile(cadResourceFile);
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
         assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
@@ -375,7 +377,7 @@ public class DFMRiskTests extends TestBase {
 
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(744, 1));
 
-// TODO uncomment this section when update cad file is implemented
+        // TODO uncomment this section when update cad file is implemented
         /*evaluatePage.updateCadFile(cadResourceFile);
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.TRANSLATING.getCostingText()), is(true));
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
