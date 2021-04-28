@@ -5,6 +5,7 @@ import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.evaluate.CostAllCadTests;
 import com.evaluate.CostScenarioTests;
+import com.evaluate.DeleteTests;
 import com.evaluate.ListOfVPETests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.NewScenarioNameTests;
@@ -46,7 +47,8 @@ import org.junit.runners.Suite;
     UploadAssembliesTests.class,
     PublishExistingCostedTests.class,
     PreviewPanelTests.class,
-    DFMRiskTests.class
+    DFMRiskTests.class,
+    DeleteTests.class
 })
 public class CIDSmokeTestSuite {
 }
