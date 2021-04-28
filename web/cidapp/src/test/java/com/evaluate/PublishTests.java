@@ -2,6 +2,7 @@ package com.evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -56,7 +57,7 @@ public class PublishTests extends TestBase {
             .publish(EvaluatePage.class)
             .clickExplore();
 
-        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), greaterThan(0));
+        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), is(greaterThan(0)));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -94,6 +95,6 @@ public class PublishTests extends TestBase {
             .addCriteriaWithOption("Scenario Name", "Contains", testScenarioName)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), greaterThan(0));
+        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), is(greaterThan(0)));
     }
 }
