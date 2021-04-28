@@ -71,6 +71,7 @@ public class PublishTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "testpart-4";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
+        String filterName = new GenerateStringUtil().generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -86,7 +87,12 @@ public class PublishTests extends TestBase {
             .inputCostMaturity("Low")
             .inputAssignee("Abe")
             .publish(EvaluatePage.class)
-            .clickExplore();
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteriaWithOption("Scenario Name", "Contains", testScenarioName)
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, partName), greaterThan(0));
     }
