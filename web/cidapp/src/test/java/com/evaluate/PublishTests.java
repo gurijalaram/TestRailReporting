@@ -49,14 +49,14 @@ public class PublishTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore();
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, partName), greaterThan(0));
+        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), greaterThan(0));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -75,7 +75,7 @@ public class PublishTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -94,6 +94,6 @@ public class PublishTests extends TestBase {
             .addCriteriaWithOption("Scenario Name", "Contains", testScenarioName)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, partName), greaterThan(0));
+        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), greaterThan(0));
     }
 }
