@@ -804,6 +804,7 @@ public class PageUtils {
         waitForElementAndClick(dropdownSelector);
         dropdownInput.clear();
         dropdownInput.sendKeys(value);
+        waitFor(500);
         dropdownInput.sendKeys(Keys.chord(Keys.ALT) + Keys.ENTER);
     }
 
