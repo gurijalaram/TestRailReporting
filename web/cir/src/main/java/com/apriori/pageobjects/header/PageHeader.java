@@ -304,8 +304,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return String - page title text
      */
     public String getHomeTitleText() {
-        pageUtils.waitForElementToAppear(homePageTitle);
-        return homePageTitle.getText();
+        return homePageTitle.getAttribute("innerText");
     }
 
     /**

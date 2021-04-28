@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.Constants;
 
 public class ReportsPageHeader extends PageHeader {
 
@@ -66,6 +65,9 @@ public class ReportsPageHeader extends PageHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
+    @FindBy(css = "div[class='pageHeader-title-text']")
+    private WebElement pageTitle;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -107,5 +109,15 @@ public class ReportsPageHeader extends PageHeader {
     public boolean isCreateDashboardsButtonDisplayed() {
         pageUtils.waitForElementToAppear(createDashboardsButton);
         return createDashboardsButton.isDisplayed();
+    }
+
+    /**
+     * Get page title text
+     *
+     * @return String - page title text
+     */
+    public String getTitleText() {
+        pageUtils.waitForElementToAppear(pageTitle);
+        return pageTitle.getText();
     }
 }

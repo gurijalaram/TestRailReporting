@@ -96,7 +96,7 @@ public class ReportsNavigationTests extends TestBase {
             .login()
             .navigateToHomePage();
 
-        assertThat(reportsPageHeader.getHomeTitleText(), is(equalTo("Home")));
+        assertThat(reportsPageHeader.getHomeTitleText(), is(containsString("Home")));
     }
 
     @Test
@@ -251,7 +251,7 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Ignore("Privacy policy link gone on 21.1 - not valid test anymore")
     @TestRail(testCaseId = {"2700"})
     @Description("Ensure that the link to the privacy policy works")
     public void testPrivacyPolicyNavigation() {
@@ -259,7 +259,7 @@ public class ReportsNavigationTests extends TestBase {
             .waitForPrivacyPolicyLinkVisibility()
             .goToPrivacyPolicy();
 
-        assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
+        assertThat(privacyPolicyPage.getPageHeading(), containsString(Constants.PRIVACY_POLICY_STRING));
         assertThat(privacyPolicyPage.getChildWindowURL(), is(equalTo(Constants.PRIVACY_POLICY_URL)));
         assertThat(privacyPolicyPage.getTabCount(), is(2));
     }

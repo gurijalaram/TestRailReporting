@@ -14,9 +14,6 @@ public class ViewSchedulesPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewSchedulesPage.class);
 
-    @FindBy(xpath = "//div[contains(@class, 'listOfJobs')]/div/div[1]/div")
-    private WebElement schedulesPageTitle;
-
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -44,7 +41,6 @@ public class ViewSchedulesPage extends ReportsPageHeader {
      * @return String - page title text
      */
     public String getSchedulesTitleText() {
-        pageUtils.waitForElementToAppear(schedulesPageTitle);
-        return schedulesPageTitle.getText();
+        return getTitleText();
     }
 }

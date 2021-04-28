@@ -14,9 +14,6 @@ public class LibraryPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(LibraryPage.class);
 
-    @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
-    private WebElement libraryPageTitle;
-
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -44,8 +41,7 @@ public class LibraryPage extends ReportsPageHeader {
      * @return String - page title text
      */
     public String getLibraryTitleText() {
-        pageUtils.waitForElementToAppear(libraryPageTitle);
-        return libraryPageTitle.getText();
+        return getTitleText();
     }
 
     /**
