@@ -35,13 +35,11 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"6933"})
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void loadCadMetadataAndGeneratePartImages() {
-        //String testScenarioName = new GenerateStringUtil().generateScenarioName();
         FileUploadResources fileUploadResources = new FileUploadResources();
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
-        //fileUploadResources.uploadPart(fileResponse, testScenarioName);
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
 
@@ -91,13 +89,6 @@ public class WorkorderAPITests {
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
         getAndValidateImage(publishResultOutputs.getScenarioIterationKey());
-
-        /*new FileUploadResources().uploadCostPublishGetImageByScenarioIterationKey(
-                productionInfoInputs,
-                "Casting.prt",
-                testScenarioName,
-                ProcessGroupEnum.CASTING.getProcessGroup()
-        );*/
     }
 
     private void getAndValidateImage(ScenarioIterationKey scenarioIterationKey) {
