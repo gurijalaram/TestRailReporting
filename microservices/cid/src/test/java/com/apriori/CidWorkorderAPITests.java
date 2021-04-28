@@ -2,13 +2,14 @@ package com.apriori;
 
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
-import com.apriori.apibase.utils.APIAuthentication;
+import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
 import junitparams.FileParameters;
@@ -44,7 +45,18 @@ public class CidWorkorderAPITests extends TestUtil {
                 ).getPath(), NewPartRequest.class
         );
 
-        new FileUploadResources().uploadCostPublishApi(productionInfoInputs, fileName, scenarioName, processGroup);
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+                fileName,
+                processGroup
+        );
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, scenarioName);
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(productionInfoInputs, fileUploadOutputs, processGroup);
+
+        fileUploadResources.publishPart(costOutputs);
+
+        //new FileUploadResources().uploadCostPublishApi(productionInfoInputs, fileName, scenarioName, processGroup);
     }
 
     public static class CustomMapper extends IdentityMapper {

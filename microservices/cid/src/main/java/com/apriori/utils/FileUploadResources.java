@@ -28,8 +28,8 @@ import com.apriori.entity.response.publish.publishworkorderresult.PublishResultO
 import com.apriori.entity.response.upload.FileUploadInputs;
 import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.entity.response.upload.FileWorkOrder;
-import com.apriori.entity.response.upload.GeneratePartImagesInputs;
-import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
+import com.apriori.entity.response.upload.GenerateImagesInputs;
+import com.apriori.entity.response.upload.GenerateImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataInputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
 import com.apriori.entity.response.upload.ScenarioKey;
@@ -131,26 +131,27 @@ public class FileUploadResources {
     }
 
     /**
-     * Generates part images
+     * Generates assembly or part images
      *
+     * @param workorderCommand - workorder command to use
      * @param fileResponse - response from file upload
      * @param loadCadMetadataOutputs - output from load cad metadata
      * @return GeneratePartImagesOutputs - response to use in next call
      */
-    public GeneratePartImagesOutputs generatePartImages(FileResponse fileResponse,
-                                                        LoadCadMetadataOutputs loadCadMetadataOutputs) {
+    public GenerateImagesOutputs generatePartOrAssemblyImages(String workorderCommand, FileResponse fileResponse,
+                                                              LoadCadMetadataOutputs loadCadMetadataOutputs) {
         String generatePartImagesWorkorderId = createWorkorder(
-                WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
-                new GeneratePartImagesInputs()
+                workorderCommand,
+                new GenerateImagesInputs()
                         .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
                         .setRequestedBy(fileResponse.getResponse().getUserIdentity())
         );
         submitWorkorder(generatePartImagesWorkorderId);
-        GeneratePartImagesOutputs generatePartImagesOutputs = objectMapper.convertValue(
+
+        return objectMapper.convertValue(
                 checkGetWorkorderDetails(generatePartImagesWorkorderId),
-                GeneratePartImagesOutputs.class
+                GenerateImagesOutputs.class
         );
-        return generatePartImagesOutputs;
     }
 
     /**
@@ -210,145 +211,6 @@ public class FileUploadResources {
                 checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
-    }
-
-    /**
-     * Method to upload part, load CAD metadata and generate part images
-     *
-     * @param fileName - file to upload
-     * @param scenarioName - scenario name to use
-     * @param processGroup - process group to use
-     */
-    public void uploadLoadCadMetadataGeneratePartImages(String fileName, String scenarioName, String processGroup) {
-        FileResponse fileResponse = initializeFileUpload(fileName, processGroup);
-        String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
-                new FileUploadInputs()
-                        .setScenarioName(scenarioName)
-                        .setFileKey(fileResponse.getResponse().getIdentity())
-                        .setFileName(fileName));
-        submitWorkorder(fileUploadWorkorderId);
-        FileUploadOutputs fileUploadOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(fileUploadWorkorderId),
-                FileUploadOutputs.class
-        );
-
-        String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
-                new LoadCadMetadataInputs()
-                        .setFileMetadataIdentity(fileResponse.getResponse().getIdentity())
-                        .setRequestedBy(fileResponse.getResponse().getUserIdentity())
-        );
-        submitWorkorder(loadCadMetadataWorkorderId);
-        LoadCadMetadataOutputs loadCadMetadataOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(loadCadMetadataWorkorderId),
-                LoadCadMetadataOutputs.class
-        );
-
-        String generatePartImagesWorkorderId = createWorkorder(
-                WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
-                new GeneratePartImagesInputs()
-                    .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
-                    .setRequestedBy(fileResponse.getResponse().getUserIdentity())
-        );
-        submitWorkorder(generatePartImagesWorkorderId);
-        GeneratePartImagesOutputs generatePartImagesOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(generatePartImagesWorkorderId),
-                GeneratePartImagesOutputs.class
-        );
-
-        String webImageResponse = getImageById(generatePartImagesOutputs.getWebImageIdentity()).toString();
-        String desktopImageResponse = getImageById(generatePartImagesOutputs.getDesktopImageIdentity()).toString();
-        String thumbnailImageResponse = getImageById(generatePartImagesOutputs.getThumbnailImageIdentity()).toString();
-
-        assertThat(webImageResponse, is(notNullValue()));
-        assertThat(desktopImageResponse, is(notNullValue()));
-        assertThat(thumbnailImageResponse, is(notNullValue()));
-
-        assertThat(Base64.isBase64(webImageResponse), is(equalTo(true)));
-        assertThat(Base64.isBase64(desktopImageResponse), is(equalTo(true)));
-        assertThat(Base64.isBase64(thumbnailImageResponse), is(equalTo(true)));
-    }
-
-    /**
-     * * Method to get images after upload, cost and publish a scenario
-     *
-     * @param fileObject - the file object
-     * @param fileName - file to upload
-     * @param scenarioName - the name of scenario
-     * @param processGroup - process group
-     */
-    public void uploadCostPublishGetImageByScenarioIterationKey(Object fileObject, String fileName, String scenarioName, String processGroup) {
-        FileResponse fileResponse = initializeFileUpload(fileName, processGroup);
-        String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
-                new FileUploadInputs()
-                        .setScenarioName(scenarioName)
-                        .setFileKey(fileResponse.getResponse().getIdentity())
-                        .setFileName(fileName));
-        submitWorkorder(fileUploadWorkorderId);
-        FileUploadOutputs fileUploadOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(fileUploadWorkorderId),
-                FileUploadOutputs.class
-        );
-
-        String webImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
-        String desktopImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
-
-        imageValidation(webImageResponse);
-        imageValidation(desktopImageResponse);
-
-        int inputSetId = initializeCostScenario(
-                fileObject,
-                fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
-                processGroup
-        );
-
-        String costWorkorderId = createWorkorder(WorkorderCommands.COSTING.getWorkorderCommand(),
-                new CostOrderInputs()
-                        .setInputSetId(inputSetId)
-                        .setScenarioIterationKey(new CostOrderScenarioIteration()
-                                .setIteration(iteration)
-                                .setScenarioKey(new CostOrderScenario()
-                                        .setMasterName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
-                                        .setStateName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
-                                        .setTypeName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
-                                        .setWorkspaceId(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
-                                ))
-        );
-
-        submitWorkorder(costWorkorderId);
-        CostOrderStatusOutputs costOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(fileUploadWorkorderId),
-                CostOrderStatusOutputs.class
-        );
-
-        String webCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
-        String desktopCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
-
-        imageValidation(webCostedImageResponse);
-        imageValidation(desktopCostedImageResponse);
-
-        String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
-                new PublishInputs()
-                        .setScenarioIterationKey(new PublishScenarioIterationKey()
-                                .setIteration(iteration)
-                                .setScenarioKey(new PublishScenarioKey()
-                                        .setMasterName(costOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
-                                        .setStateName(costOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
-                                        .setTypeName(costOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
-                                        .setWorkspaceId(costOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
-                                ))
-        );
-
-        submitWorkorder(createPublishWorkorderId);
-        PublishResultOutputs publishOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(createPublishWorkorderId),
-                PublishResultOutputs.class
-        );
-
-        String webPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
-        String desktopPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
-
-        imageValidation(webPublishedImageResponse);
-        imageValidation(desktopPublishedImageResponse);
     }
 
     /**
@@ -531,6 +393,24 @@ public class FileUploadResources {
                 .setHeaders(token);
 
         return GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getBody();
+    }
+
+    /**
+     * Checks the process group is valid before proceeding.  This check has to be done to ensure the system doesn't crash as per https://jira.apriori.com/browse/BA-1202
+     * @param processGroup - the process group
+     */
+    public void checkValidProcessGroup(String processGroup) {
+        boolean match = false;
+
+        for (String processGroupEnum : ProcessGroupEnum.getNames()) {
+            if (processGroupEnum.equals(processGroup)) {
+                match = true;
+                break;
+            }
+        }
+        if (!match) {
+            throw new RuntimeException(String.format("Process Group '%s' is not valid", processGroup));
+        }
     }
 
     private Object checkGetWorkorderDetails(String workorderId) {
@@ -738,23 +618,5 @@ public class FileUploadResources {
             throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();
-    }
-
-    /**
-     * Checks the process group is valid before proceeding.  This check has to be done to ensure the system doesn't crash as per https://jira.apriori.com/browse/BA-1202
-     * @param processGroup - the process group
-     */
-    private void checkValidProcessGroup(String processGroup) {
-        boolean match = false;
-
-        for (String processGroupEnum : ProcessGroupEnum.getNames()) {
-            if (processGroupEnum.equals(processGroup)) {
-                match = true;
-                break;
-            }
-        }
-        if (!match) {
-            throw new RuntimeException(String.format("Process Group '%s' is not valid", processGroup));
-        }
     }
 }

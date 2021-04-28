@@ -1,6 +1,6 @@
 package com.apriori.entity.response.upload;
 
-public class GeneratePartImagesInputs {
+public class GenerateImagesInputs {
 
     private String cadMetadataIdentity;
     private String requestedBy;
@@ -9,7 +9,7 @@ public class GeneratePartImagesInputs {
         return cadMetadataIdentity;
     }
 
-    public GeneratePartImagesInputs setCadMetadataIdentity(String cadMetadataIdentity) {
+    public GenerateImagesInputs setCadMetadataIdentity(String cadMetadataIdentity) {
         this.cadMetadataIdentity = cadMetadataIdentity;
         return this;
     }
@@ -18,7 +18,7 @@ public class GeneratePartImagesInputs {
         return requestedBy;
     }
 
-    public GeneratePartImagesInputs setRequestedBy(String requestedBy) {
+    public GenerateImagesInputs setRequestedBy(String requestedBy) {
         this.requestedBy = requestedBy;
         return this;
     }

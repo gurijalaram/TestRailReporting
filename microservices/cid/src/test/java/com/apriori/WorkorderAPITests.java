@@ -6,8 +6,9 @@ import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutpu
 import com.apriori.entity.response.cost.costworkorderstatus.ScenarioIterationKey;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileUploadOutputs;
-import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
+import com.apriori.entity.response.upload.GenerateImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
+import com.apriori.entity.response.upload.WorkorderCommands;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
@@ -34,7 +35,7 @@ public class WorkorderAPITests {
     @Category(CidAPITest.class)
     @TestRail(testCaseId = {"6933"})
     @Description("Upload a part, load CAD Metadata, and generate part images")
-    public void loadCadMetadataAndGeneratePartImages() {
+    public void testLoadCadMetadataAndGeneratePartImages() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
@@ -43,7 +44,8 @@ public class WorkorderAPITests {
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
 
-        GeneratePartImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartImages(
+        GenerateImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartOrAssemblyImages(
+                WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
                 fileResponse,
                 loadCadMetadataOutputs
         );
@@ -64,7 +66,7 @@ public class WorkorderAPITests {
     @Category(CidAPITest.class)
     @TestRail(testCaseId = {"7697"})
     @Description("Get image after each iteration - Upload, Cost, Publish")
-    public void uploadCostPublishGetImage() {
+    public void testUploadCostPublishGetImage() {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
@@ -89,6 +91,41 @@ public class WorkorderAPITests {
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
         getAndValidateImage(publishResultOutputs.getScenarioIterationKey());
+    }
+
+    @Test
+    @Category(CidAPITest.class)
+    @TestRail(testCaseId = {"7710"})
+    @Description("Upload a part, load CAD Metadata, and generate assembly images")
+    public void testLoadCadMetadataAndGenerateAssemblyImages() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+                "bracket_basic.prt",
+                ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+        );
+
+        LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
+
+        GenerateImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartOrAssemblyImages(
+                WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
+                fileResponse,
+                loadCadMetadataOutputs
+        );
+
+        String webImage = fileUploadResources
+                .getImageById(generatePartImagesOutputs.getWebImageIdentity())
+                .toString();
+        String desktopImage = fileUploadResources
+                .getImageById(generatePartImagesOutputs.getDesktopImageIdentity())
+                .toString();
+        String thumbnailImage =
+                fileUploadResources.getImageById(
+                generatePartImagesOutputs.getThumbnailImageIdentity())
+                        .toString();
+
+        fileUploadResources.imageValidation(webImage);
+        fileUploadResources.imageValidation(desktopImage);
+        fileUploadResources.imageValidation(thumbnailImage);
     }
 
     private void getAndValidateImage(ScenarioIterationKey scenarioIterationKey) {
