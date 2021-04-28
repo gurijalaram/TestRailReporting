@@ -804,7 +804,14 @@ public class PageUtils {
         waitForElementAndClick(dropdownSelector);
         dropdownInput.clear();
         dropdownInput.sendKeys(value);
-        waitFor(1000);
+        dropdownInput.sendKeys(Keys.ENTER);
+    }
+
+    public void typeAheadInput(WebElement dropdownSelector, WebElement dropdownInput, String value, Integer time) {
+        waitForElementAndClick(dropdownSelector);
+        dropdownInput.clear();
+        dropdownInput.sendKeys(value);
+        waitFor(time);
         dropdownInput.sendKeys(Keys.ENTER);
     }
 
