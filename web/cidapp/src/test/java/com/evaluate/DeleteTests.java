@@ -60,4 +60,40 @@ public class DeleteTests extends TestBase {
 
         assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
     }
+
+    @Test
+    @TestRail(testCaseId = {"7709"})
+    @Description("Test a public scenario can be deleted from the component table")
+    public void testDeletePublicScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String filterName = new GenerateStringUtil().generateFilterName();
+
+        loginPage = new CidAppLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .inputProcessGroup(processGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
+            .costScenario()
+            .publishScenario()
+            .publish(EvaluatePage.class)
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteriaWithOption("Scenario Name", "Contains", testScenarioName)
+            .submit(ExplorePage.class)
+            .highlightScenario("CASTING", testScenarioName)
+            .delete()
+            .submit(ExplorePage.class);
+
+        assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
+    }
 }
