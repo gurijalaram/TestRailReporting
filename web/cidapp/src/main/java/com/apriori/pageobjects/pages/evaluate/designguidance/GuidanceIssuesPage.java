@@ -21,7 +21,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(GuidanceIssuesPage.class);
 
-    @FindBy(xpath = "//div[normalize-space(@class)='apriori-table']")
+    @FindBy(css = ".design-guidance-detail-card .apriori-table")
     private WebElement chartTable;
 
     private WebDriver driver;
