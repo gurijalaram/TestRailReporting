@@ -11,7 +11,7 @@ public class LoadCadMetadataInputs {
     public LoadCadMetadataInputs() {
         keepFreeBodies = false;
         freeBodiesPreserveCad = false;
-        freeBodiesIgnoreMissingComponents = false;
+        freeBodiesIgnoreMissingComponents = true;
     }
 
     public String getFileMetadataIdentity() {

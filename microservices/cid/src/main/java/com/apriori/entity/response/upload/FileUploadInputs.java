@@ -4,6 +4,15 @@ public class FileUploadInputs {
     private String scenarioName;
     private String fileKey;
     private String fileName;
+    private boolean keepFreeBodies;
+    private boolean freeBodiesPreserveCad;
+    private boolean freeBodiesIgnoreMissingComponents;
+
+    public FileUploadInputs() {
+        keepFreeBodies = false;
+        freeBodiesPreserveCad = false;
+        freeBodiesIgnoreMissingComponents = true;
+    }
 
     public String getScenarioName() {
         return scenarioName;
@@ -30,5 +39,29 @@ public class FileUploadInputs {
     public FileUploadInputs setFileName(String fileName) {
         this.fileName = fileName;
         return this;
+    }
+
+    public boolean isKeepFreeBodies() {
+        return keepFreeBodies;
+    }
+
+    public void setKeepFreeBodies(boolean keepFreeBodies) {
+        this.keepFreeBodies = keepFreeBodies;
+    }
+
+    public boolean isFreeBodiesPreserveCad() {
+        return freeBodiesPreserveCad;
+    }
+
+    public void setFreeBodiesPreserveCad(boolean freeBodiesPreserveCad) {
+        this.freeBodiesPreserveCad = freeBodiesPreserveCad;
+    }
+
+    public boolean isFreeBodiesIgnoreMissingComponents() {
+        return freeBodiesIgnoreMissingComponents;
+    }
+
+    public void setFreeBodiesIgnoreMissingComponents(boolean freeBodiesIgnoreMissingComponents) {
+        this.freeBodiesIgnoreMissingComponents = freeBodiesIgnoreMissingComponents;
     }
 }
