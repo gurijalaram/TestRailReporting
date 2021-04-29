@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
+public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(DesignGuidancePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(GuidanceIssuesPage.class);
 
     @FindBy(xpath = "//div[normalize-space(@class)='apriori-table']")
     private WebElement chartTable;
@@ -28,7 +28,7 @@ public class DesignGuidancePage extends LoadableComponent<DesignGuidancePage> {
     private PageUtils pageUtils;
     private PanelController panelController;
 
-    public DesignGuidancePage(WebDriver driver) {
+    public GuidanceIssuesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
