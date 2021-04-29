@@ -46,6 +46,9 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "[id='qa-scenario-list-filter-selector'] input")
     private WebElement filterInput;
 
+    @FindBy(css = "div.no-content.medium-no-content")
+    private WebElement noScenariosMessage;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -197,5 +200,14 @@ public class ExplorePage extends ExploreToolbar {
     public PreviewPage previewPanel() {
         pageUtils.waitForElementAndClick(previewButton);
         return new PreviewPage(driver);
+    }
+
+    /**
+     * Gets no scenarios message
+     *
+     * @return string
+     */
+    public String getScenarioMessage() {
+        return pageUtils.waitForElementAppear(noScenariosMessage).getText();
     }
 }
