@@ -100,8 +100,8 @@ public class WorkorderAPITests {
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
-                "bracket_basic.prt",
-                ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+                "Hinge Assembly.stp",
+                ProcessGroupEnum.ASSEMBLY.getProcessGroup()
         );
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
