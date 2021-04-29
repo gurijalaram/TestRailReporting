@@ -56,6 +56,14 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         pageUtils.waitForElementAppear(chartTable);
     }
 
+    /**
+     * Selects issue type and gcd
+     *
+     * @param issueDropdown - the issue type dropdown
+     * @param issueType     - the issue type
+     * @param gcd           - the gcd
+     * @return current page object
+     */
     public GuidanceIssuesPage selectIssueTypeGcd(String issueDropdown, String issueType, String gcd) {
         String[] issues = issueDropdown.split(",");
 
@@ -70,8 +78,15 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         return this;
     }
 
-    public GuidanceIssuesPage selectIssueType(String issueType) {
-
+    /**
+     * Selects the issue type
+     *
+     * @param issueType - the issue type
+     * @return current page object
+     */
+    private GuidanceIssuesPage selectIssueType(String issueType) {
+        By byIssueType = By.cssSelector(String.format("[id*='Attribute-%s']", issueType.substring(0, 1).toLowerCase() + issueType.substring(1).replace(" ", "").trim()));
+        pageUtils.waitForElementAndClick(byIssueType);
         return this;
     }
 
@@ -81,9 +96,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @param gcd - the gcd
      * @return current page object
      */
-    public GuidanceIssuesPage selectGcd(String gcd) {
-        WebElement byGcd = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd)))
-            .findElement(By.cssSelector(".checkbox-cell")));
+    private GuidanceIssuesPage selectGcd(String gcd) {
+        WebElement byGcd = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd))).findElement(By.cssSelector("[role='cell']")));
         pageUtils.waitForElementAndClick(byGcd);
         return this;
     }
