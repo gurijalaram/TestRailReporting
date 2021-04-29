@@ -59,8 +59,9 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     public GuidanceIssuesPage selectIssueTypeGcd(String issueDropdown, String issueType, String gcd) {
         String[] issues = issueDropdown.split(",");
 
-        Stream.of(issues).forEach(x -> {
-            WebElement byChevron = driver.findElement(By.xpath(String.format("//div[.='%s']/..", x.trim()))).findElement(By.cssSelector("svg[data-icon='chevron-down']"));
+        Stream.of(issues).forEach(issue -> {
+            WebElement byChevron = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", issue.trim())))
+                .findElement(By.cssSelector("svg[data-icon='chevron-down']")));
             pageUtils.waitForElementAndClick(byChevron);
         });
 
@@ -74,9 +75,16 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         return this;
     }
 
+    /**
+     * Selects the gcd
+     *
+     * @param gcd - the gcd
+     * @return current page object
+     */
     public GuidanceIssuesPage selectGcd(String gcd) {
-//        WebElement byGcd = driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd))).findElement(By.cssSelector(".checkbox-cell"));
-//        pageUtils.waitForElementAndClick(byGcd);
+        WebElement byGcd = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd)))
+            .findElement(By.cssSelector(".checkbox-cell")));
+        pageUtils.waitForElementAndClick(byGcd);
         return this;
     }
 
