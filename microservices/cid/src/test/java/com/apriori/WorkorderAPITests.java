@@ -51,7 +51,7 @@ public class WorkorderAPITests {
                 fileObject,
                 "Casting.prt",
                 testScenarioName,
-                ProcessGroupEnum.CASTING.getProcessGroup()
+                ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
     }
 }

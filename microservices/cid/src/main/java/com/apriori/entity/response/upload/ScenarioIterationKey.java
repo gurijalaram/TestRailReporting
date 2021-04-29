@@ -1,8 +1,6 @@
-package com.apriori.entity.response.publish.publishworkorderresult;
+package com.apriori.entity.response.upload;
 
-import com.apriori.entity.response.upload.ScenarioKey;
-
-public class PublishOutputsScenarioIteration {
+public class ScenarioIterationKey {
     private ScenarioKey scenarioKey;
     private Integer iteration;
 
@@ -10,7 +8,7 @@ public class PublishOutputsScenarioIteration {
         return scenarioKey;
     }
 
-    public PublishOutputsScenarioIteration setScenarioKey(ScenarioKey scenarioKey) {
+    public ScenarioIterationKey setScenarioKey(ScenarioKey scenarioKey) {
         this.scenarioKey = scenarioKey;
         return this;
     }
@@ -19,7 +17,7 @@ public class PublishOutputsScenarioIteration {
         return iteration;
     }
 
-    public PublishOutputsScenarioIteration setIteration(Integer iteration) {
+    public ScenarioIterationKey setIteration(Integer iteration) {
         this.iteration = iteration;
         return this;
     }

@@ -2,13 +2,13 @@ package com.apriori.entity.response.upload;
 
 public class FileUploadOutputs {
 
-    private FileUploadScenarioIterationKey scenarioIterationKey;
+    private ScenarioIterationKey scenarioIterationKey;
 
-    public FileUploadScenarioIterationKey getScenarioIterationKey() {
+    public ScenarioIterationKey getScenarioIterationKey() {
         return scenarioIterationKey;
     }
 
-    public FileUploadOutputs FileUploadOutputs(FileUploadScenarioIterationKey scenarioIterationKey) {
+    public FileUploadOutputs FileUploadOutputs(ScenarioIterationKey scenarioIterationKey) {
         this.scenarioIterationKey = scenarioIterationKey;
         return this;
     }

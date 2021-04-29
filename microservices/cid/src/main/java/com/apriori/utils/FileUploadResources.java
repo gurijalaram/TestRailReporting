@@ -155,8 +155,8 @@ public class FileUploadResources {
                 FileUploadOutputs.class
         );
 
-        String webImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
-        String desktopImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
+        String webImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), Constants.WEB_IMAGE).toString();
+        String desktopImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), Constants.DESKTOP_IMAGE).toString();
 
         imageValidation(webImageResponse, desktopImageResponse);
 
@@ -185,8 +185,8 @@ public class FileUploadResources {
                 CostOrderStatusOutputs.class
         );
 
-        String webCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
-        String desktopCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
+        String webCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), Constants.WEB_IMAGE).toString();
+        String desktopCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), Constants.DESKTOP_IMAGE).toString();
 
         imageValidation(webCostedImageResponse, desktopCostedImageResponse);
 
@@ -208,22 +208,10 @@ public class FileUploadResources {
                 PublishResultOutputs.class
         );
 
-        String webPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), "web").toString();
-        String desktopPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), "desktop").toString();
+        String webPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), Constants.WEB_IMAGE).toString();
+        String desktopPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), Constants.DESKTOP_IMAGE).toString();
 
         imageValidation(webPublishedImageResponse, desktopPublishedImageResponse);
-    }
-
-    /**
-     * @param webImageResponse - response of web image
-     * @param desktopImageResponse - response of desktop image
-     */
-    private void imageValidation(String webImageResponse, String desktopImageResponse) {
-        assertThat(webImageResponse, is(notNullValue()));
-        assertThat(desktopImageResponse, is(notNullValue()));
-
-        assertThat(Base64.isBase64(webImageResponse), is(equalTo(true)));
-        assertThat(Base64.isBase64(desktopImageResponse), is(equalTo(true)));
     }
 
     /**
@@ -288,6 +276,18 @@ public class FileUploadResources {
                 checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
+    }
+
+    /**
+     * @param webImageResponse - response of web image
+     * @param desktopImageResponse - response of desktop image
+     */
+    private void imageValidation(String webImageResponse, String desktopImageResponse) {
+        assertThat(webImageResponse, is(notNullValue()));
+        assertThat(desktopImageResponse, is(notNullValue()));
+
+        assertThat(Base64.isBase64(webImageResponse), is(equalTo(true)));
+        assertThat(Base64.isBase64(desktopImageResponse), is(equalTo(true)));
     }
 
     /**
