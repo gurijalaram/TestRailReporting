@@ -20,6 +20,7 @@ public class Constants {
     private static final Properties PROPERTIES = new Properties();
     public static String WEB_IMAGE = "web";
     public static String DESKTOP_IMAGE = "desktop";
+    public static String THUMBNAIL_IMAGE = "thumbnail";
     public static String environment;
     private static String baseUrl;
 
