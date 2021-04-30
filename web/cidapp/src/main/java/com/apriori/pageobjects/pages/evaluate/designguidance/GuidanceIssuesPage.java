@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -65,6 +66,31 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     public GuidanceIssuesPage selectIssueTypeGcd(String issueDropdown, String issueType, String gcd) {
+        selectIssue(issueDropdown);
+        selectIssueType(issueType);
+        selectGcd(gcd.trim());
+        return this;
+    }
+
+    /**
+     * Selects issue type
+     *
+     * @param issueDropdown - the issue dropdown
+     * @param issueType     - the issue type
+     * @return current page object
+     */
+    public GuidanceIssuesPage selectIssueType(String issueDropdown, String issueType) {
+        selectIssue(issueDropdown);
+        selectIssueType(issueType);
+        return this;
+    }
+
+    /**
+     * Selects issue
+     *
+     * @param issueDropdown - the issue dropdown
+     */
+    private void selectIssue(String issueDropdown) {
         String[] issues = issueDropdown.split(",");
 
         Stream.of(issues).forEach(issue -> {
@@ -72,10 +98,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
                 .findElement(By.cssSelector("svg[data-icon='chevron-down']")));
             pageUtils.waitForElementAndClick(byChevron);
         });
-
-        selectIssueType(issueType);
-        selectGcd(gcd);
-        return this;
     }
 
     /**
@@ -100,6 +122,58 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         WebElement byGcd = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd))).findElement(By.cssSelector("[role='cell']")));
         pageUtils.waitForElementAndClick(byGcd);
         return this;
+    }
+
+    /**
+     * Gets severity column
+     *
+     * @param gcd - the gcd
+     * @return string
+     */
+    public String getSeverity(String gcd) {
+        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", gcd.trim())));
+        return cells.get(1).findElement(By.cssSelector("svg")).getAttribute("data-icon");
+    }
+
+    /**
+     * Gets count column
+     *
+     * @param gcd - the gcd
+     * @return string
+     */
+    public String getGcdCount(String gcd) {
+        return getColumn(gcd);
+    }
+
+    /**
+     * Gets current column
+     *
+     * @param gcd - the gcd
+     * @return string
+     */
+    public String getGcdCurrent(String gcd) {
+        return getColumn(gcd);
+    }
+
+    /**
+     * Gets suggested column
+     *
+     * @param gcd - the gcd
+     * @return string
+     */
+    public String getGcdSuggested(String gcd) {
+        return getColumn(gcd);
+    }
+
+    /**
+     * Gets column
+     *
+     * @param gcd - the gcd
+     * @return string
+     */
+    private String getColumn(String gcd) {
+        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", gcd.trim())));
+        return cells.get(2).findElement(By.cssSelector(".cell-text")).getAttribute("textContent");
     }
 
     /**
