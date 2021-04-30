@@ -37,6 +37,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
+    private String issueType;
+    private String gcd;
 
     public GuidanceIssuesPage(WebDriver driver) {
         this.driver = driver;
@@ -66,6 +68,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     public GuidanceIssuesPage selectIssueTypeGcd(String issueDropdown, String issueType, String gcd) {
+        this.gcd = gcd;
         selectIssue(issueDropdown);
         selectIssueType(issueType);
         selectGcd(gcd.trim());
@@ -80,6 +83,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     public GuidanceIssuesPage selectIssueType(String issueDropdown, String issueType) {
+        this.issueType = issueType;
         selectIssue(issueDropdown);
         selectIssueType(issueType);
         return this;
@@ -127,42 +131,38 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     /**
      * Gets severity column
      *
-     * @param gcd - the gcd
      * @return string
      */
-    public String getSeverity(String gcd) {
-        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", gcd.trim())));
+    public String getSeverity() {
+        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", issueType.trim())));
         return cells.get(1).findElement(By.cssSelector("svg")).getAttribute("data-icon");
     }
 
     /**
      * Gets count column
      *
-     * @param gcd - the gcd
      * @return string
      */
-    public String getGcdCount(String gcd) {
-        return getColumn(gcd);
+    public String getGcdCount() {
+        return getColumn(issueType, 2);
     }
 
     /**
      * Gets current column
      *
-     * @param gcd - the gcd
      * @return string
      */
-    public String getGcdCurrent(String gcd) {
-        return getColumn(gcd);
+    public String getGcdCurrent() {
+        return getColumn(gcd, 1);
     }
 
     /**
      * Gets suggested column
      *
-     * @param gcd - the gcd
      * @return string
      */
-    public String getGcdSuggested(String gcd) {
-        return getColumn(gcd);
+    public String getGcdSuggested() {
+        return getColumn(gcd, 2);
     }
 
     /**
@@ -171,9 +171,9 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @param gcd - the gcd
      * @return string
      */
-    private String getColumn(String gcd) {
+    private String getColumn(String gcd, int column) {
         List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", gcd.trim())));
-        return cells.get(2).findElement(By.cssSelector(".cell-text")).getAttribute("textContent");
+        return cells.get(column).findElement(By.cssSelector(".cell-text")).getAttribute("textContent");
     }
 
     /**
