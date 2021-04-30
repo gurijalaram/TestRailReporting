@@ -110,6 +110,8 @@ public class WorkorderAPITests {
                 WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
                 fileResponse,
                 loadCadMetadataOutputs
+                testScenarioName,
+                ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
 
         String webImage = fileUploadResources

@@ -1,5 +1,7 @@
 package com.apriori.entity.response.cost.costworkorderstatus;
 
+import com.apriori.entity.response.upload.ScenarioIterationKey;
+
 public class CostOrderStatusOutputs {
     private ScenarioIterationKey scenarioIterationKey;
     private String costStatus;

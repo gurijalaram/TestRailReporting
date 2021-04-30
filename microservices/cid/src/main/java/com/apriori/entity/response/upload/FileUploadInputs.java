@@ -10,6 +10,7 @@ public class FileUploadInputs {
 
     public FileUploadInputs() {
         keepFreeBodies = false;
+        keepFreeBodies = true;
         freeBodiesPreserveCad = false;
         freeBodiesIgnoreMissingComponents = true;
     }

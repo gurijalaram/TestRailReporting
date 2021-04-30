@@ -211,6 +211,7 @@ public class FileUploadResources {
                 checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
+
     }
 
     /**
@@ -286,6 +287,18 @@ public class FileUploadResources {
                 checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
+    }
+
+    /**
+     * @param webImageResponse - response of web image
+     * @param desktopImageResponse - response of desktop image
+     */
+    private void imageValidation(String webImageResponse, String desktopImageResponse) {
+        assertThat(webImageResponse, is(notNullValue()));
+        assertThat(desktopImageResponse, is(notNullValue()));
+
+        assertThat(Base64.isBase64(webImageResponse), is(equalTo(true)));
+        assertThat(Base64.isBase64(desktopImageResponse), is(equalTo(true)));
     }
 
     /**
