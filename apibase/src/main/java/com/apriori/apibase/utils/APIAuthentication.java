@@ -72,6 +72,15 @@ public class APIAuthentication {
                 .connect()
                 .post();
 
+            // TODO z: structural changes example
+            //            RequestEntity requestEntity = RequestEntityUtil.init(baseUrl + "ws/auth/token", AuthenticateJSON.class)
+            //                .autoLogin(false)
+            //                .userAuthenticationEntity(new UserAuthenticationEntity(username, password))
+            //                .addXwwwwFormUrlEncoded(AuthorizationFormUtil.getDefaultAuthorizationForm(username, password));
+            //
+            //            ResponseWrapper<AuthenticateJSON> tokenDetails1 = HTTP2Request.build(requestEntity).post();
+
+
             timeToLive = tokenDetails.getResponseEntity().getExpiresIn();
             accessToken = tokenDetails.getResponseEntity().getAccessToken();
         }
