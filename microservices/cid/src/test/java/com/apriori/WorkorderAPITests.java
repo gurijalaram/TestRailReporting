@@ -6,7 +6,7 @@ import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutpu
 import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileUploadOutputs;
-import com.apriori.entity.response.upload.GenerateImagesOutputs;
+import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
 import com.apriori.entity.response.upload.WorkorderCommands;
 import com.apriori.utils.Constants;
@@ -44,8 +44,7 @@ public class WorkorderAPITests {
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
 
-        GenerateImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartOrAssemblyImages(
-                WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
+        GeneratePartImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartImages(
                 fileResponse,
                 loadCadMetadataOutputs
         );
@@ -99,20 +98,20 @@ public class WorkorderAPITests {
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
         FileUploadResources fileUploadResources = new FileUploadResources();
-        // upload component one - pin
+        // upload component one - 3574727
         FileResponse fileResponseComponentOne = fileUploadResources.initialisePartUpload(
                 "3574727.prt",
-                ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()
+                ProcessGroupEnum.ASSEMBLY.getProcessGroup()
         );
         FileUploadOutputs fileUploadOutputsComponentOne = fileUploadResources.uploadPart(
                 fileResponseComponentOne,
                 "Initial"
         );
 
-        // upload component two - small ring
+        // upload component two - 3574875
         FileResponse fileResponseComponentTwo = fileUploadResources.initialisePartUpload(
                 "3574875.prt",
-                ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()
+                ProcessGroupEnum.ASSEMBLY.getProcessGroup()
         );
         FileUploadOutputs fileUploadOutputsComponentTwo = fileUploadResources.uploadPart(
                 fileResponseComponentTwo,
@@ -130,21 +129,28 @@ public class WorkorderAPITests {
         );
 
         // load cad metadata for component one - pin
+        LoadCadMetadataOutputs loadCadMetadataOutputsComponentOne = fileUploadResources.loadCadMetadata(
+                fileResponseComponentOne);
 
         // load cad metadata for component two - small ring
-
-        // load cad metadata for component three - big ring
+        LoadCadMetadataOutputs loadCadMetadataOutputsComponentTwo = fileUploadResources.loadCadMetadata(
+                fileResponseComponentTwo);
 
         // load cad metadata for assembly
+        LoadCadMetadataOutputs loadCadMetadataOutputsAssembly = fileUploadResources.loadCadMetadata(
+                fileResponseAssembly);
 
-        /*LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
-
-        GenerateImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartOrAssemblyImages(
-                WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
-                fileResponse,
-                loadCadMetadataOutputs
+        // generate assembly images call
+        fileUploadResources.generateAssemblyImages(
+                fileResponseAssembly,
+                loadCadMetadataOutputsAssembly,
+                loadCadMetadataOutputsComponentOne,
+                loadCadMetadataOutputsComponentTwo
         );
 
+        // assertions
+
+        /*
         String webImage = fileUploadResources
                 .getImageById(generatePartImagesOutputs.getWebImageIdentity())
                 .toString();

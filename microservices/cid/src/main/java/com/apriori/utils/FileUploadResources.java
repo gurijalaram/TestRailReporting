@@ -28,8 +28,10 @@ import com.apriori.entity.response.publish.publishworkorderresult.PublishResultO
 import com.apriori.entity.response.upload.FileUploadInputs;
 import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.entity.response.upload.FileWorkOrder;
-import com.apriori.entity.response.upload.GenerateImagesInputs;
-import com.apriori.entity.response.upload.GenerateImagesOutputs;
+import com.apriori.entity.response.upload.GenerateAssemblyImagesInputs;
+import com.apriori.entity.response.upload.GenerateAssemblyImagesOutputs;
+import com.apriori.entity.response.upload.GeneratePartImagesInputs;
+import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataInputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
 import com.apriori.entity.response.upload.ScenarioKey;
@@ -48,14 +50,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.UrlEscapers;
+import lombok.val;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class FileUploadResources {
@@ -86,8 +92,7 @@ public class FileUploadResources {
      * @return FileResponse - response to use in next call
      */
     public FileResponse initialisePartUpload(String fileName, String processGroup) {
-        FileResponse fileResponse = initializeFileUpload(fileName, processGroup);
-        return fileResponse;
+        return initializeFileUpload(fileName, processGroup);
     }
 
     /**
@@ -130,18 +135,17 @@ public class FileUploadResources {
     }
 
     /**
-     * Generates assembly or part images
+     * Generates part images
      *
-     * @param workorderCommand - workorder command to use
      * @param fileResponse - response from file upload
      * @param loadCadMetadataOutputs - output from load cad metadata
      * @return GeneratePartImagesOutputs - response to use in next call
      */
-    public GenerateImagesOutputs generatePartOrAssemblyImages(String workorderCommand, FileResponse fileResponse,
-                                                              LoadCadMetadataOutputs loadCadMetadataOutputs) {
+    public GeneratePartImagesOutputs generatePartImages(FileResponse fileResponse,
+                                                        LoadCadMetadataOutputs loadCadMetadataOutputs) {
         String generatePartImagesWorkorderId = createWorkorder(
-                workorderCommand,
-                new GenerateImagesInputs()
+                WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
+                new GeneratePartImagesInputs()
                         .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
                         .setRequestedBy(fileResponse.getResponse().getUserIdentity())
         );
@@ -149,7 +153,47 @@ public class FileUploadResources {
 
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(generatePartImagesWorkorderId),
-                GenerateImagesOutputs.class
+                GeneratePartImagesOutputs.class
+        );
+    }
+
+    /**
+     * Generates assembly images
+     *
+     * @param fileResponse - response from file upload
+     * @param loadCadMetadataOutputs - assembly load cad metadata response
+     * @param loadCadMetadataOutputs2 - component 1 load cad metadata response
+     * @param loadCadMetadataOutputs3 - component 2 load cad metadata response
+     * @return GenerateAssemblyImagesOutputs
+     */
+    public GenerateAssemblyImagesOutputs generateAssemblyImages(FileResponse fileResponse,
+                                                            LoadCadMetadataOutputs loadCadMetadataOutputs,
+                                                            LoadCadMetadataOutputs loadCadMetadataOutputs2,
+                                                            LoadCadMetadataOutputs loadCadMetadataOutputs3) {
+        List<GenerateAssemblyImagesInputs> subComponentsList = new ArrayList<>();
+        subComponentsList.add(new GenerateAssemblyImagesInputs()
+                .setComponentIdentity(getRandomString())
+                .setScenarioIdentity(getRandomString())
+                .setCadMetadataIdentity(loadCadMetadataOutputs2.getCadMetadataIdentity())
+        );
+        subComponentsList.add(new GenerateAssemblyImagesInputs()
+                .setComponentIdentity(getRandomString())
+                .setScenarioIdentity(getRandomString())
+                .setCadMetadataIdentity(loadCadMetadataOutputs3.getCadMetadataIdentity())
+        );
+        String generateAssemblyImagesWorkorderId = createWorkorder(
+                WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
+                new GenerateAssemblyImagesInputs()
+                        .setComponentIdentity(getRandomString())
+                        .setScenarioIdentity(getRandomString())
+                        .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
+                        .setSubComponents(subComponentsList)
+                        .setRequestedBy(fileResponse.getResponse().getUserIdentity())
+        );
+        submitWorkorder(generateAssemblyImagesWorkorderId);
+        return objectMapper.convertValue(
+                checkGetWorkorderDetails(generateAssemblyImagesWorkorderId),
+                GenerateAssemblyImagesOutputs.class
         );
     }
 
@@ -554,5 +598,21 @@ public class FileUploadResources {
             throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();
+    }
+
+    /**
+     * Generates a 12 character alpanumeric string
+     *
+     * @return string
+     */
+    private String getRandomString() {
+        String random_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder randomString = new StringBuilder();
+        Random rnd = new Random();
+        while (randomString.length() < 12) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * random_chars.length());
+            randomString.append(random_chars.charAt(index));
+        }
+        return randomString.toString();
     }
 }
