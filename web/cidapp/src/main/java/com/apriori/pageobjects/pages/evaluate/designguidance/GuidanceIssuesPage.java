@@ -37,8 +37,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
-    private String issueType;
-    private String gcd;
 
     public GuidanceIssuesPage(WebDriver driver) {
         this.driver = driver;
@@ -68,7 +66,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     public GuidanceIssuesPage selectIssueTypeGcd(String issueDropdown, String issueType, String gcd) {
-        this.gcd = gcd;
         selectIssue(issueDropdown);
         selectIssueType(issueType);
         selectGcd(gcd.trim());
@@ -83,7 +80,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     public GuidanceIssuesPage selectIssueType(String issueDropdown, String issueType) {
-        this.issueType = issueType;
         selectIssue(issueDropdown);
         selectIssueType(issueType);
         return this;
@@ -133,7 +129,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return string
      */
-    public String getSeverity() {
+    public String getSeverity(String issueType) {
         List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", issueType.trim())));
         return cells.get(1).findElement(By.cssSelector("svg")).getAttribute("data-icon");
     }
@@ -143,7 +139,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return string
      */
-    public String getGcdCount() {
+    public String getGcdCount(String issueType) {
         return getColumn(issueType, 2);
     }
 
@@ -152,7 +148,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return string
      */
-    public String getGcdCurrent() {
+    public String getGcdCurrent(String gcd) {
         return getColumn(gcd, 1);
     }
 
@@ -161,7 +157,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return string
      */
-    public String getGcdSuggested() {
+    public String getGcdSuggested(String gcd) {
         return getColumn(gcd, 2);
     }
 
