@@ -1,6 +1,6 @@
 package com.apriori.entity.response.upload;
 
-import com.apriori.entity.response.cost.costworkorderstatus.ScenarioIterationKey;
+import com.apriori.entity.response.upload.ScenarioIterationKey;
 
 public class FileUploadOutputs {
 

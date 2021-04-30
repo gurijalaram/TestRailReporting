@@ -123,11 +123,10 @@ public class FileUploadResources {
                         .setRequestedBy(fileResponse.getResponse().getUserIdentity())
         );
         submitWorkorder(loadCadMetadataWorkorderId);
-        LoadCadMetadataOutputs loadCadMetadataOutputs = objectMapper.convertValue(
+        return objectMapper.convertValue(
                 checkGetWorkorderDetails(loadCadMetadataWorkorderId),
                 LoadCadMetadataOutputs.class
         );
-        return loadCadMetadataOutputs;
     }
 
     /**
@@ -223,82 +222,6 @@ public class FileUploadResources {
         assertThat(imageResponse, is(notNullValue()));
 
         assertThat(Base64.isBase64(imageResponse), is(equalTo(true)));
-    }
-
-    /**
-     * Method to upload, cost and publish a scenario
-     *
-     * @param fileObject   - the file object
-     * @param fileName     - the file name
-     * @param scenarioName - the scenario name
-     * @param processGroup - the process group
-     */
-    public void uploadCostPublishApi(Object fileObject, String fileName, String scenarioName, String processGroup) {
-        checkValidProcessGroup(processGroup);
-
-        FileResponse fileResponse = initializeFileUpload(fileName, processGroup);
-        String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
-                new FileUploadInputs()
-                        .setScenarioName(scenarioName)
-                        .setFileKey(fileResponse.getResponse().getIdentity())
-                        .setFileName(fileName));
-        submitWorkorder(fileUploadWorkorderId);
-        FileUploadOutputs fileUploadOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(fileUploadWorkorderId),
-                FileUploadOutputs.class
-        );
-
-        int inputSetId = initializeCostScenario(
-                fileObject,
-                fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
-                processGroup
-        );
-        String costWorkorderId = createWorkorder(WorkorderCommands.COSTING.getWorkorderCommand(),
-                new CostOrderInputs()
-                        .setInputSetId(inputSetId)
-                        .setScenarioIterationKey(new CostOrderScenarioIteration()
-                        .setIteration(iteration)
-                        .setScenarioKey(new CostOrderScenario()
-                                .setMasterName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
-                                .setStateName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
-                                .setTypeName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
-                                .setWorkspaceId(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
-                        ))
-        );
-        submitWorkorder(costWorkorderId);
-        CostOrderStatusOutputs costOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(fileUploadWorkorderId),
-                CostOrderStatusOutputs.class
-        );
-
-        String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
-                new PublishInputs()
-                        .setScenarioIterationKey(new PublishScenarioIterationKey()
-                        .setIteration(iteration)
-                        .setScenarioKey(new PublishScenarioKey()
-                                        .setMasterName(costOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
-                                        .setStateName(costOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
-                                        .setTypeName(costOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
-                                        .setWorkspaceId(costOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
-                                ))
-        );
-        submitWorkorder(createPublishWorkorderId);
-        PublishResultOutputs publishOutputs = objectMapper.convertValue(
-                checkGetWorkorderDetails(createPublishWorkorderId),
-                PublishResultOutputs.class
-        );
-    }
-
-    /**
-     * @param webImageResponse - response of web image
-     * @param desktopImageResponse - response of desktop image
-     */
-    private void imageValidation(String webImageResponse, String desktopImageResponse) {
-        assertThat(webImageResponse, is(notNullValue()));
-        assertThat(desktopImageResponse, is(notNullValue()));
-
-        assertThat(Base64.isBase64(webImageResponse), is(equalTo(true)));
-        assertThat(Base64.isBase64(desktopImageResponse), is(equalTo(true)));
     }
 
     /**
