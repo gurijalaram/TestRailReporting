@@ -50,9 +50,9 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
     private static Part batchPart;
 
     @Test
-    @TestRail(testCaseId = {"4278", "4284", "4280", "4177"})
-    @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
-            "process to complete. Then retrieve costing results.")
+    @TestRail(testCaseId = {"7696"})
+    @Description("Test costing scenarion, includes creating a new batch, with multiple parts and waiting for the " +
+            "costing process to complete for all parts. Then retrieve costing results.")
     public void costMultipleParts() throws InterruptedException {
         // create batch
         Batch batch = BatchResources.createNewBatch();
