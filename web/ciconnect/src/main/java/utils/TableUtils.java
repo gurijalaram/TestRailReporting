@@ -20,6 +20,23 @@ public class TableUtils {
     }
 
     /**
+     * Determine if the actual list contains all of the items in the expected list
+     *
+     * @param expectedList The list of expected values
+     * @param actualList The list of actual values
+     * @return True if the actual list contains all items in the expected list
+     */
+    public boolean actualListContainsAllItems(List<String> expectedList, List<String> actualList) {
+        for (String expected : expectedList) {
+            if (!actualList.contains(expected)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Find an item in a table by name
      *
      * @param table The table to search
