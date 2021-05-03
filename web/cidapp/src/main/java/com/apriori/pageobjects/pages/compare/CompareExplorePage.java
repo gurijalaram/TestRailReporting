@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.compare;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
@@ -51,12 +52,14 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
     private ComponentTableActions componentTableActions;
+    private ModalDialogController modalDialogController;
 
     public CompareExplorePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -167,5 +170,23 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
      */
     public FilterPage filter() {
         return componentTableActions.filter(filterButton);
+    }
+
+    /**
+     * Selects the submit button
+     *
+     * @return generic page object
+     */
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public <T> T cancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
     }
 }
