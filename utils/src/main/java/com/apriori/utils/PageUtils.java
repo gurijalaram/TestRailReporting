@@ -460,6 +460,21 @@ public class PageUtils {
     }
 
     /**
+     *
+     * @param element The element to check is clickable
+     * @return True if the element is clickable
+     */
+    public boolean isElementClickable(WebElement element) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    /**
      * Finds element in a table by scrolling.
      *
      * @param scenario - the locator for the scenario
