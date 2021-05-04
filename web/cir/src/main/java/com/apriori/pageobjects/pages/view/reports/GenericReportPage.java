@@ -298,6 +298,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='sortOrder']//a")
     private WebElement sortOrderDropdown;
 
+    @FindBy(xpath = "//div[@id='sortOrder']//input")
+    private WebElement sortOrderDropdownInput;
+
     @FindBy(xpath = "//div[@id='costMetric']//a")
     private WebElement costMetricDropdown;
 
@@ -849,10 +852,15 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectSortOrder(String sortOrder) {
+        pageUtils.waitFor(1000);
         pageUtils.scrollWithJavaScript(sortOrderDropdown, true);
         if (!sortOrderDropdown.getAttribute("title").equals(sortOrder)) {
-            sortOrderDropdown.click();
-            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", sortOrder))).click();
+            pageUtils.waitForElementAndClick(sortOrderDropdown);
+            pageUtils.waitForElementAndClick(sortOrderDropdownInput);
+            sortOrderDropdownInput.sendKeys(sortOrder);
+            By locator = By.xpath(String.format("//li[@title='%s']/div/a", sortOrder));
+            pageUtils.waitForElementToAppear(locator);
+            pageUtils.waitForElementAndClick(locator);
         }
         return this;
     }
@@ -2245,6 +2253,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String
      */
     public String getTableElementNameDtcComparison(String tableIndex, String rowIndex) {
+        pageUtils.waitFor(1000);
         By locator = By.xpath(String.format(
                 "((//*[@class='highcharts-axis-labels highcharts-xaxis-labels '])[%s]//*[local-name()='text'])[%s]",
                 tableIndex,
