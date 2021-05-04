@@ -3,12 +3,12 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import com.cic.tests.NavBarTests;
 import com.cic.tests.NewWorkflowDetailsTests;
 import com.cic.tests.NotificationTests;
 import com.cic.tests.QueryDefinitionTests;
 import com.cic.tests.UsersTests;
 import com.cic.tests.WorkflowTests;
-import com.navbar.NavBarTests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

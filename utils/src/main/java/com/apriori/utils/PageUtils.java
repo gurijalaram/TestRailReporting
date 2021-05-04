@@ -822,6 +822,14 @@ public class PageUtils {
         dropdownInput.sendKeys(Keys.ENTER);
     }
 
+    public void typeAheadInput(WebElement dropdownSelector, WebElement dropdownInput, String value, Integer time) {
+        waitForElementAndClick(dropdownSelector);
+        dropdownInput.clear();
+        dropdownInput.sendKeys(value);
+        waitFor(time);
+        dropdownInput.sendKeys(Keys.ENTER);
+    }
+
     /**
      * Click on an element that is off screen. The element in this case would be marked as un-clickable.
      * This method brings the element into focus without having to scroll

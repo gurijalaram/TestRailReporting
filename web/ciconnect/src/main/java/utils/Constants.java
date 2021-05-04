@@ -71,6 +71,8 @@ public class Constants {
     public static final String DEFAULT_NAME_WITH_NUMBER = "0   0   0   1 Worflow Automation";
     public static final String DEFAULT_NAME_UPPER_CASE = "0   0   0   A Upper Workflow Automation";
     public static final String DEFAULT_NAME_LOWER_CASE = "0   0   0   a Lower Workflow Automation";
+    public static final String ERROR_NAME_WITH_UNSUPPORTED_SPECIAL_CHARS =
+            "Name should only contain spaces and the following characters: a-zA-Z0-9-_";
 
     public static final String DEFAULT_WORKFLOW_DESCRIPTION = "This workflow was created by automation";
 
