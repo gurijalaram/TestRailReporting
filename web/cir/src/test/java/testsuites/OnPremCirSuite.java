@@ -37,7 +37,6 @@ import testsuites.suiteinterface.OnPremTest;
         CastingDtcReportTests.class,
         CastingDtcComparisonReportTests.class,
         ComponentCostReportTests.class,
-        CostOutlierIdentificationReportTests.class,
         CostOutlierIdentificationDetailsReportTests.class,
         CycleTimeValueTrackingReportTests.class,
         CycleTimeValueTrackingDetailsReportTests.class,
@@ -48,12 +47,9 @@ import testsuites.suiteinterface.OnPremTest;
         MachiningDtcReportTests.class,
         ReportsNavigationTests.class,
         SheetMetalDtcReportTests.class,
-        SheetMetalDtcDetailsReportTests.class,
-        SheetMetalDtcComparisonReportTests.class,
         ScenarioComparisonReportTests.class,
         TargetAndQuotedCostTrendReportTests.class,
-        TargetAndQuotedCostValueTrackingReportTests.class,
-        TargetAndQuotedCostValueTrackingDetailsReportTests.class
+        TargetAndQuotedCostValueTrackingReportTests.class
 })
 
 public class OnPremCirSuite {
