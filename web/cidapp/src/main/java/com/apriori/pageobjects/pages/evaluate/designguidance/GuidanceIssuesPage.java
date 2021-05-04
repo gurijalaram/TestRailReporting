@@ -107,7 +107,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     private GuidanceIssuesPage selectIssueType(String issueType) {
-        By byIssueType = By.cssSelector(String.format("[id*='Attribute-%s']", issueType.substring(0, 1).toLowerCase() + issueType.substring(1).replace(" ", "").trim()));
+        By byIssueType = By.cssSelector(String.format("[id*='-%s']", issueType.substring(0, 1).toLowerCase() + issueType.substring(1).replace(" ", "").trim()));
         pageUtils.waitForElementAndClick(byIssueType);
         return this;
     }
@@ -129,9 +129,29 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return string
      */
-    public String getSeverity(String issueType) {
+    public boolean isSeverity(String issueType, Severity severity) {
         List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", issueType.trim())));
-        return cells.get(1).findElement(By.cssSelector("svg")).getAttribute("data-icon");
+        return cells.get(1).findElement(By.cssSelector("svg")).getAttribute("data-icon").equals(severity.severityValue);
+    }
+
+    /**
+     * Enum to get severity value
+     */
+    public enum Severity {
+        WARNING("exclamation-circle"),
+        FAILED("ban");
+
+        private final String severityValue;
+
+        Severity(String severityValue) {
+
+            this.severityValue = severityValue;
+        }
+
+        public String getSeverityValue() {
+
+            return severityValue;
+        }
     }
 
     /**
