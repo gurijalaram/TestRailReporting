@@ -1,9 +1,8 @@
 package tests;
 
+import com.apriori.apibase.services.ats.objects.AuthorizationResponse;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.entity.response.AuthorizationResponse;
-import com.apriori.ats.service.SecurityManager;
 import com.apriori.ats.utils.Constants;
 import com.apriori.utils.TestRail;
 
@@ -39,7 +38,7 @@ public class AtsAuthorization extends TestUtil {
             Constants.getAtsTokenSubject());
 
 
-        AuthorizationResponse response = SecurityManager.authorizeUser(Constants.getSecretKey(),
+        AuthorizationResponse response = JwtTokenUtil.authorizeUser(Constants.getSecretKey(),
             Constants.getAtsServiceHost(),
             Constants.getAtsAuthTargetCloudContext(),
                 token,
