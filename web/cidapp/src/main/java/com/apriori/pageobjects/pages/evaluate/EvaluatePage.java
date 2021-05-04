@@ -6,7 +6,7 @@ import com.apriori.pageobjects.common.SecondaryInputsController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -283,9 +283,9 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public DesignGuidancePage openDesignGuidance() {
+    public GuidanceIssuesPage openDesignGuidance() {
         pageUtils.waitForElementAndClick(designGuidanceDetailsButton);
-        return new DesignGuidancePage(driver);
+        return new GuidanceIssuesPage(driver);
     }
 
     /**
