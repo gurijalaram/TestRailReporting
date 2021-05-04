@@ -121,4 +121,22 @@ public class TableUtils {
                 .forEach(column -> headers.add(column.getText()));
         return headers;
     }
+
+    /**
+     * Returns the specified column header element
+     *
+     * @param tableHeaders Header row to search through
+     * @param columnHeader The column header element to return
+     * @return Column Header element
+     */
+    public WebElement getColumnHeader(WebElement tableHeaders, String columnHeader) {
+        pageUtils.waitForElementToBeClickable(tableHeaders);
+        List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
+        for (WebElement column : columns) {
+            if (column.getText().equalsIgnoreCase(columnHeader)) {
+                return column;
+            }
+        }
+        return null;
+    }
 }

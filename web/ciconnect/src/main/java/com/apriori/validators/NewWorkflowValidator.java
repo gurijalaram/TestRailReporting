@@ -45,8 +45,8 @@ public class NewWorkflowValidator {
         Assert.assertTrue("Fail to create workflow with the minimum length name", values.get("minimum-name"));
         Assert.assertTrue("Fail to create workflow with a name containing supported special characters", values.get(
                 "maximum-special-name"));
-        Assert.assertFalse("Successfully created workflow with a name containing unsupported characters", values.get(
-                "maximum-unspecial-name"));
+        Assert.assertTrue("No error displayed when trying to create a workflow with a name containing unsupported " +
+                        "characters", values.get("unsupported-character-error"));
         Assert.assertTrue("Fail to create workflow with the maximum length description", values.get("maximum" +
                 "-description"));
     }
