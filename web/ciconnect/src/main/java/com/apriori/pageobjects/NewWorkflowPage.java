@@ -187,7 +187,10 @@ public class NewWorkflowPage {
     private WebElement saveButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-186 > button")
     private WebElement notificationCancelButton;
-
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_label-220 > span")
+    private WebElement errorNameWithUnsupportedCharacters;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-183 > button")
+    private WebElement detailCancelButton;
 
     private String ciConnectFieldCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-3";
     private String valueDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-20";
@@ -245,6 +248,17 @@ public class NewWorkflowPage {
         PageFactory.initElements(driver, this);
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+    }
+
+    /**
+     * Checks to see for name with unsupported character error
+     *
+     * @return True, if the error exists
+     */
+    public boolean checkForUnsupportedCharacterErrors() {
+        pageUtils.waitForElementAppear(errorNameWithUnsupportedCharacters);
+        return errorNameWithUnsupportedCharacters.getText()
+                .equalsIgnoreCase(Constants.ERROR_NAME_WITH_UNSUPPORTED_SPECIAL_CHARS);
     }
 
     /**
@@ -312,6 +326,9 @@ public class NewWorkflowPage {
     public void cancelNewWorkflow(Tab tab) {
         WebElement cancelButton;
         switch (tab) {
+            case DETAILS:
+                cancelButton = detailCancelButton;
+                break;
             case NOTIFICATION:
                 cancelButton = notificationCancelButton;
                 break;

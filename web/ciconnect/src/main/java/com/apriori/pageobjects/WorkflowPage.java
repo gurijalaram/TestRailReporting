@@ -129,6 +129,17 @@ public class WorkflowPage {
     }
 
     /**
+     * Sort the workflow schedule list
+     *
+     * @param columnHeader The column to sort by
+     * @return WorkflowPage Object
+     */
+    public WorkflowPage sortBy(String columnHeader) {
+        tableUtils.getColumnHeader(workflowHeaders, columnHeader).click();
+        return this;
+    }
+
+    /**
      * Return the worfkflow list's headers
      */
     public List<String> getWorkflowListHeaders() {
@@ -360,6 +371,7 @@ public class WorkflowPage {
     public Boolean workflowExists(String name) {
         pageUtils.waitForElementToBeClickable(workflowList);
         refreshPage();
+        sortBy("Last Modified By");
         return tableUtils.itemExistsInTable(workflowList, name);
     }
 
