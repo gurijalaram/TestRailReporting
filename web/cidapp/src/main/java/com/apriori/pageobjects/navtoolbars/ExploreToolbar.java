@@ -68,7 +68,7 @@ public class ExploreToolbar extends MainNavBar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(newButton);
-        pageUtils.waitForElementAppear(publishButton);
+        pageUtils.waitForElementAppear(deleteButton);
     }
 
     /**
