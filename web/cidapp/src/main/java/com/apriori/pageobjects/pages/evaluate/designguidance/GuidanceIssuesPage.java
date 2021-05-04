@@ -66,9 +66,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     public GuidanceIssuesPage selectIssueTypeGcd(String issueDropdown, String issueType, String gcd) {
-        selectIssue(issueDropdown);
-        selectIssueType(issueType);
-        selectGcd(gcd.trim());
+        selectIssueType(issueDropdown, issueType)
+            .selectGcd(gcd.trim());
         return this;
     }
 
@@ -135,32 +134,12 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     }
 
     /**
-     * Enum to get severity value
-     */
-    public enum Severity {
-        WARNING("exclamation-circle"),
-        FAILED("ban");
-
-        private final String severityValue;
-
-        Severity(String severityValue) {
-
-            this.severityValue = severityValue;
-        }
-
-        public String getSeverityValue() {
-
-            return severityValue;
-        }
-    }
-
-    /**
      * Gets count column
      *
      * @return string
      */
-    public String getGcdCount(String issueType) {
-        return getColumn(issueType, 2);
+    public int getGcdCount(String issueType) {
+        return Integer.parseInt(getColumn(issueType, 2));
     }
 
     /**
@@ -184,11 +163,10 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     /**
      * Gets column
      *
-     * @param gcd - the gcd
      * @return string
      */
-    private String getColumn(String gcd, int column) {
-        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", gcd.trim())));
+    private String getColumn(String issue, int column) {
+        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", issue.trim())));
         return cells.get(column).findElement(By.cssSelector(".cell-text")).getAttribute("textContent");
     }
 
@@ -250,5 +228,25 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     public HelpDocPage openHelp() {
         return panelController.openHelp();
+    }
+
+    /**
+     * Enum to get severity value
+     */
+    public enum Severity {
+        WARNING("exclamation-circle"),
+        FAILED("ban");
+
+        private final String severityValue;
+
+        Severity(String severityValue) {
+
+            this.severityValue = severityValue;
+        }
+
+        public String getSeverityValue() {
+
+            return severityValue;
+        }
     }
 }
