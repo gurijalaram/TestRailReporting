@@ -217,7 +217,7 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return current page object
      */
-    public ExplorePage setPaginator() {
+    public ExplorePage setPagination() {
         pageUtils.waitForElementAndClick(paginatorDropdown);
         pageUtils.javaScriptClick(driver.findElement(By.xpath("//div[.='100']")));
         return this;
