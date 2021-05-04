@@ -262,7 +262,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7388"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
@@ -275,7 +275,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7454"})
     @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
     public void testProcessGroupDieCastingOnly() {
@@ -288,7 +288,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7453"})
     @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
     public void testProcessGroupSandCastingOnly() {
@@ -347,7 +347,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7511"})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
@@ -360,7 +360,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7514"})
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Report")
     public void testDtcScoreHigh() {
@@ -385,7 +385,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1700"})
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Report")
     public void testMinimumAnnualSpend() {

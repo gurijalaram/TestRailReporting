@@ -29,6 +29,10 @@ public class Constants {
     public static final String SOLUTIONS_FOLDER = "Solutions";
     public static final String CYCLE_TIME_FOLDER = "Cycle Time";
     public static final String DTC_METRICS_FOLDER = "DTC Metrics";
+    public static final String CASTING_FOLDER = "Casting";
+    public static final String MACHINING_FOLDER = "Machining";
+    public static final String PLASTIC_FOLDER = "Plastic";
+    public static final String SHEET_METAL_FOLDER = "Sheet Metal";
     public static final String DESIGN_TO_COST_FOLDER = "Design To Cost";
     public static final String TARGET_AND_QUOTED_COST_FOLDER = "Target And Quoted Cost";
     public static final String PUBLIC_WORKSPACE = "Public";

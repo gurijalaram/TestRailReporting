@@ -26,7 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -335,7 +334,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7680"})
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Sheet Metal DTC Details Report")
     public void testSortOrderDtcRank() {

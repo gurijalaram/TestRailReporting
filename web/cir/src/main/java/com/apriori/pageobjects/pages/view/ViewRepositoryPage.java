@@ -107,33 +107,56 @@ public class ViewRepositoryPage extends ReportsPageHeader {
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
 
         navigationMap.put(
-                ReportNamesEnum.CASTING_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.CASTING_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.CASTING_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.CASTING_FOLDER }
+        );
 
         navigationMap.put(
-                ReportNamesEnum.MACHINING_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.MACHINING_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.MACHINING_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.MACHINING_FOLDER }
+        );
 
         navigationMap.put(
-                ReportNamesEnum.PLASTIC_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.PLASTIC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.PLASTIC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.PLASTIC_FOLDER }
+        );
 
         navigationMap.put(
-                ReportNamesEnum.SHEET_METAL_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.SHEET_METAL_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.SHEET_METAL_FOLDER }
+        );
         navigationMap.put(
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
-                new String[]{ Constants.DTC_METRICS_FOLDER });
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.SHEET_METAL_FOLDER }
+        );
 
         navigationMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
             new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,

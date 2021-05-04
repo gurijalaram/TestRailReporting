@@ -208,7 +208,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7025"})
     @Description("Percent difference threshold filter - main report - no data available")
     public void testPercentDifferenceThresholdNoDataAvailable() {
