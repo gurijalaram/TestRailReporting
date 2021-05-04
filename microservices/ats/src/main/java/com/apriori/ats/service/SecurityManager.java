@@ -33,7 +33,6 @@ public class SecurityManager {
 
     public static AuthorizationResponse authorizeUser(String secretKey, String url, String targetCloudContext,
                                                       String token, int statusCode) {
-        url = "https://" + url;
         url = url.concat(String.format("/authorize?key=%s", secretKey));
         AuthorizeRequest request = new AuthorizeRequest();
 
