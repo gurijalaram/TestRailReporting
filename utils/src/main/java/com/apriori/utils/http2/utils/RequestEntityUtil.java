@@ -7,22 +7,31 @@ import com.apriori.utils.users.UserCredentials;
 
 public class RequestEntityUtil {
 
-    public static RequestEntity demoInit(EndpointEnum endpoint, Class<?> returnType) {
-        return new RequestEntity()
+    private static String token;
+
+    public static String useTokenForRequests(final String tokenForRequests) {
+        return token = tokenForRequests;
+    }
+
+    public static RequestEntity.RequestEntityBuilder initBuilder(EndpointEnum endpoint, Class<?> returnType) {
+        return RequestEntity.builder()
             .endpoint(endpoint)
-            .returnType(returnType);
+            .returnType(returnType)
+            .token(token);
     }
 
     public static RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity()
             .endpoint(endpoint)
-            .returnType(returnType);
+            .returnType(returnType)
+            .token(token);
     }
 
     public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity()
             .userAuthenticationEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()))
             .returnType(returnType)
-            .endpoint(endpoint);
+            .endpoint(endpoint)
+            .token(token);
     }
 }

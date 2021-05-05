@@ -42,9 +42,6 @@ public class RequestEntity {
 
     private String customBody;
 
-    // TODO z: remove
-    private com.apriori.utils.http.enums.EndpointEnum endpointOld;
-
     private EndpointEnum endpoint;
     private String customEndpoint;
     private Integer[] statusCode;
@@ -55,7 +52,7 @@ public class RequestEntity {
     private boolean followRedirection = false;
     @Singular private Map<String, String> headers = new HashMap<>();
     @Singular private List<Map<String, ?>> urlParams = new ArrayList<>();
-    private List<Map<String, ?>> xwwwwFormUrlEncoded = new ArrayList<>();
+    @Singular private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
     private Object[] inlineVariables;
     private MultiPartFiles multiPartFiles;
     private FormParams formParams;
@@ -64,13 +61,6 @@ public class RequestEntity {
     private int connectionTimeout = 60000;
     private int socketTimeout = 60000;
     private boolean urlEncodingEnabled = true;
-
-    public RequestEntity addXwwwwFormUrlEncoded(Map<String, ?> xwwwwFormUrlEncoded) {
-        if (xwwwwFormUrlEncoded != null) {
-            this.xwwwwFormUrlEncoded.add(xwwwwFormUrlEncoded);
-        }
-        return this;
-    }
 
     public RequestEntity body(String node, Object body) {
         this.body = new HashMap<String, Object>() {

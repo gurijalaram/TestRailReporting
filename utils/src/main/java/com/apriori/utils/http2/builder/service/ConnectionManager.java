@@ -185,9 +185,13 @@ class ConnectionManager<T> {
             builder.addHeaders(requestEntity.headers());
         }
 
-        if (requestEntity.xwwwwFormUrlEncoded() != null && !requestEntity.xwwwwFormUrlEncoded().isEmpty()) {
+        if (requestEntity.token() != null) {
+            builder.addHeader("Authorization", "Bearer " + requestEntity.token());
+        }
+
+        if (requestEntity.xwwwwFormUrlEncodeds() != null && !requestEntity.xwwwwFormUrlEncodeds().isEmpty()) {
             builder.setContentType(ContentType.URLENC);
-            requestEntity.xwwwwFormUrlEncoded().forEach(builder::addFormParams);
+            requestEntity.xwwwwFormUrlEncodeds().forEach(builder::addFormParams);
         }
 
         if (requestEntity.customBody() != null) {
@@ -255,13 +259,22 @@ class ConnectionManager<T> {
 
         if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
             logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
-            RequestEntity authEntity = RequestEntityUtil.init(AuthEndpointEnum.POST_AUTH, AuthenticateJSON.class)
-                .addXwwwwFormUrlEncoded(
+            RequestEntity authEntity = RequestEntityUtil.initBuilder(AuthEndpointEnum.POST_AUTH, AuthenticateJSON.class)
+                .xwwwwFormUrlEncoded(
                     AuthorizationFormUtil.getDefaultAuthorizationForm(requestEntity.userAuthenticationEntity().getEmailAddress(),
                         requestEntity.userAuthenticationEntity().getPassword()
                 ))
                 .autoLogin(false)
-                .followRedirection(false);
+                .followRedirection(false)
+                .build();
+
+            //                //RequestEntityUtil.init(AuthEndpointEnum.POST_AUTH, AuthenticateJSON.class)
+            //                .addXwwwwFormUrlEncoded(
+            //                    AuthorizationFormUtil.getDefaultAuthorizationForm(requestEntity.userAuthenticationEntity().getEmailAddress(),
+            //                        requestEntity.userAuthenticationEntity().getPassword()
+            //                ))
+            //                .autoLogin(false)
+            //                .followRedirection(false);
 
             String authToken =
                 ((AuthenticateJSON) HTTP2Request.build(authEntity).post()
