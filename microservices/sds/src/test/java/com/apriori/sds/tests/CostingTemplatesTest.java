@@ -11,7 +11,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
-import util.SDSTestUtil;
+import com.apriori.sds.tests.util.SDSTestUtil;
 
 // TODO z: issue with requests
 public class CostingTemplatesTest extends SDSTestUtil {
