@@ -1,6 +1,6 @@
 package com.apriori.entity.response.upload;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class GenerateAssemblyImagesOutputs {
 
@@ -10,7 +10,7 @@ public class GenerateAssemblyImagesOutputs {
     private String productStructureIdentity;
     private String thumbnailImageIdentity;
     private String desktopImageIdentity;
-    private List<String> generatedWebImages;
+    private ArrayList<String> generatedWebImages;
 
     public String getCadMetadataIdentity() {
         return cadMetadataIdentity;
@@ -66,11 +66,11 @@ public class GenerateAssemblyImagesOutputs {
         return this;
     }
 
-    public List<String> getGeneratedWebImages() {
+    public ArrayList<String> getGeneratedWebImages() {
         return generatedWebImages;
     }
 
-    public GenerateAssemblyImagesOutputs setGeneratedWebImages(List<String> generatedWebImages) {
+    public GenerateAssemblyImagesOutputs setGeneratedWebImages(ArrayList<String> generatedWebImages) {
         this.generatedWebImages = generatedWebImages;
         return this;
     }

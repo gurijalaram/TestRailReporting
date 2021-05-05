@@ -1,14 +1,19 @@
 package com.apriori;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.entity.response.upload.GenerateAssemblyImagesOutputs;
 import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
-import com.apriori.entity.response.upload.WorkorderCommands;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
@@ -23,6 +28,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.CidAPITest;
+
+import java.util.ArrayList;
 
 public class WorkorderAPITests {
 
@@ -141,14 +148,21 @@ public class WorkorderAPITests {
                 fileResponseAssembly);
 
         // generate assembly images call
-        fileUploadResources.generateAssemblyImages(
+        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = fileUploadResources.generateAssemblyImages(
                 fileResponseAssembly,
                 loadCadMetadataOutputsAssembly,
                 loadCadMetadataOutputsComponentOne,
                 loadCadMetadataOutputsComponentTwo
         );
 
+        ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
+
+        fileUploadResources.imageValidation(images.get(0));
+        fileUploadResources.imageValidation(images.get(1));
+        fileUploadResources.imageValidation(images.get(2));
+
         // assertions
+        assertThat(generateAssemblyImagesOutputs, is(notNullValue()));
 
         /*
         String webImage = fileUploadResources
