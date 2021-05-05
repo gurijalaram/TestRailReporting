@@ -7,18 +7,6 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 
 public class RequestAreaApi implements RequestArea {
 
-    // TODO z: retargeted endpoint call
-    //    @Override
-    //    public <T> ResponseWrapper<T> get(RequestEntity requestEntity) {
-    //        RequestInitService.build(requestEntity)
-    //            .customizeRequest()
-    //            .setFollowRedirection(true)
-    //            .commitChanges();
-    //
-    //        return HTTP2Request.build(requestEntity).get();
-    //    }
-
-
     @Override
     public <T> ResponseWrapper<T> get(RequestEntity requestEntity) {
         return RequestInitService.build(requestEntity)
