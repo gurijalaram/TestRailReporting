@@ -97,7 +97,8 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         pageUtils.waitForElementToAppear(filteredLocator);
 
         GenericReportPage genericReportPage = new GenericReportPage(driver);
-        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1,247");
+        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(),
+                "Available: ", "1,247");
     }
 
     /**

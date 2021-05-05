@@ -77,6 +77,17 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
+     * Gets capital investments grand total from table
+     *
+     * @return BigDecimal
+     */
+    public BigDecimal getCapitalInvestmentsGrandTotalFromTable() {
+        By locator = By.cssSelector("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table ".concat(
+                "tr:nth-child(20) td:nth-child(34) span"));
+        return new BigDecimal(driver.findElement(locator).getText());
+    }
+
+    /**
      * Generic method to get specific value from an Assembly Details Report table
      *
      * @param assemblyType String
@@ -713,9 +724,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         putItemIntoTopLevelRowMap("11 Top Level", "33");
         putItemIntoTopLevelRowMap("12 Top Level", "35");
         putItemIntoTopLevelRowMap("13 Top Level", "38");
-        putItemIntoTopLevelRowMap("Component Subtotal Top Level", "38");
-        putItemIntoTopLevelRowMap("Assembly Processes Top Level", "41");
-        putItemIntoTopLevelRowMap("Grand Total Top Level", "43");
+        putItemIntoTopLevelRowMap("Component Subtotal Top Level", "24");
+        putItemIntoTopLevelRowMap("Assembly Processes Top Level", "27");
+        putItemIntoTopLevelRowMap("Grand Total Top Level", "29");
     }
 
     private void putItemIntoColumnMap(String key, String value) {

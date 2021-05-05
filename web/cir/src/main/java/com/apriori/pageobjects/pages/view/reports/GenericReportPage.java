@@ -94,6 +94,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(4)")
     private WebElement designOutlierChartSpotTwo;
 
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(5)")
+    private WebElement designOutlierChartSpotThree;
+
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[30]")
     private WebElement costOutlierChartSpotOne;
 
@@ -136,7 +139,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
-    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    @FindBy(xpath = "(//div[@id='reportContainer']//table/tbody/tr[7])[1]/td/span")
     private WebElement currentAssembly;
 
     @FindBy(css = "a[id='logo']")
@@ -821,9 +824,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectCostMetric(String costMetric) {
+        pageUtils.waitFor(1000);
         if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
-            costMetricDropdown.click();
-            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric))).click();
+            pageUtils.waitForElementAndClick(costMetricDropdown);
+            pageUtils.waitForElementAndClick(
+                    driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric)))
+            );
         }
         return this;
     }
@@ -1124,6 +1130,7 @@ public class GenericReportPage extends ReportsPageHeader {
 
         setDayValuePicker(newDt.getDayOfMonth());
         setMonthValuePicker(getMonthDropdownIndex(newDt));
+        pageUtils.waitFor(1000);
         setYearValuePicker(String.format("%d", newDt.getYear()));
         pickerTrigger.click();
 
@@ -1812,6 +1819,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Deselects any selected export sets
      */
     public GenericReportPage deselectAllDtcScores() {
+        pageUtils.waitFor(1000);
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
         return this;
     }
@@ -2026,11 +2034,11 @@ public class GenericReportPage extends ReportsPageHeader {
         String dtcScoreToUse = dtcScoreOption.equals("Medium Casting")
                 ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScoreOption;
         if (!dtcScoreToUse.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
+            pageUtils.waitFor(1000);
             pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
             By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreToUse));
-            pageUtils.waitForElementToAppear(locator);
-            pageUtils.waitForElementAndClick(driver.findElement(locator));
+            pageUtils.waitForElementAndClick(locator);
         }
         return this;
     }
@@ -2637,6 +2645,8 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(), designOutlierChartSpotOne);
         bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"),
                 designOutlierChartSpotTwo);
+        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 3"),
+                designOutlierChartSpotThree);
         bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), costOutlierChartSpotOne);
         bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"),
                 costOutlierChartSpotTwo);

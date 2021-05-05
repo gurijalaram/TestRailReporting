@@ -96,7 +96,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
                         CycleTimeValueTrackingPage.class
                 ).selectCycleTimeRollup();
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("4")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("1")));
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("1")));
 
         cycleTimeValueTrackingPage.clickOk();

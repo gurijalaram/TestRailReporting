@@ -82,7 +82,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingPicker(true)
             .setExportDateUsingPicker(false)
-            .waitForCorrectExportSetListCount("Export set selection.", "0");
+            .waitForCorrectExportSetListCount("Single export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));

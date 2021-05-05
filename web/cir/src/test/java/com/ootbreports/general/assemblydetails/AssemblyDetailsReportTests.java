@@ -103,22 +103,14 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
-        usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
-                assemblyType,
-                "Grand Total",
-                "Capital Investments"
-        );
+        usdGrandTotal = assemblyDetailsReportPage.getCapitalInvestmentsGrandTotalFromTable();
 
         assemblyDetailsReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
             .clickOk()
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
-        gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
-                assemblyType,
-                "Grand Total",
-                "Capital Investments"
-        );
+        gbpGrandTotal = assemblyDetailsReportPage.getCapitalInvestmentsGrandTotalFromTable();
 
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));

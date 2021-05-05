@@ -185,14 +185,14 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                        GenericReportPage.class);
-
-        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .navigateToReport(
+                        ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                        GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
                 .clickOk();
 
         genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 3")
         );
         for (int i = 0; i < 3; i++) {
             genericReportPage.hoverPartNameBubbleDtcReports();
@@ -201,6 +201,6 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 "FBC Value"
         );
 
-        assertThat(fbcValue.compareTo(new BigDecimal("9883.65")), is(equalTo(0)));
+        assertThat(fbcValue.compareTo(new BigDecimal("10429.19")), is(equalTo(0)));
     }
 }
