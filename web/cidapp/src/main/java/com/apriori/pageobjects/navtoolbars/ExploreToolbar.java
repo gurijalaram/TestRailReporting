@@ -149,11 +149,11 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Add scenario info
+     * Opens scenario info
      *
      * @return new page object
      */
-    public InfoPage addScenarioNotes() {
+    public InfoPage info() {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(infoButton);
         return new InfoPage(driver);

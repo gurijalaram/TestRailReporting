@@ -139,7 +139,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .addScenarioNotes()
+            .info()
             .inputStatus("Analysis")
             .inputCostMaturity("High")
             .inputDescription("Test Description")
@@ -193,7 +193,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .addScenarioNotes()
+            .info()
             .inputStatus("Complete")
             .inputCostMaturity("High")
             .inputDescription("Test Description")
