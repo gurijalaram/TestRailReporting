@@ -1,4 +1,4 @@
-package com.navbar;
+package com.cic.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.connectors.ConnectorList;
 import com.apriori.header.CostingServiceSettings;
 import com.apriori.header.PageHeader;
-import com.apriori.login.LoginPage;
+import com.apriori.pageobjects.LoginPage;
 import com.apriori.users.UserList;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserCredentials;
@@ -17,6 +17,7 @@ import com.apriori.workflows.Schedule;
 
 import cicuserguide.CicUserGuide;
 import org.junit.Test;
+import utils.Constants;
 
 public class NavBarTests extends TestBase {
 
@@ -65,16 +66,11 @@ public class NavBarTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3659"})
     public void testUserDropDownInfo() {
-        UserCredentials userCredentials;
-        userCredentials = UserUtil.getUser();
-        String userName = userCredentials.getUsername();
-        String password = userCredentials.getPassword();
-
         pageHeader = new LoginPage(driver)
-            .login(userName, password)
+            .login()
             .expandUserInfoDropdown();
 
-        assertThat(pageHeader.getLoginID(), equalTo(userName));
+        assertThat(pageHeader.getLoginID(), equalTo(Constants.USER_EMAIL));
         assertThat(pageHeader.getCurrentCompany(), equalTo("aPriori Internal"));
     }
 

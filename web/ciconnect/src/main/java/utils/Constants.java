@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,20 @@ public class Constants {
     public static final String SECOND_USER_EMAIL = "";
     public static final String SECOND_USER_PASSWORD = "";
 
+    //Notification Email
+    public static final String EMAIL_RECIPIENTS = USER_EMAIL.concat(",scrowe@apriori.com");
+    public static final String EMAIL_RECIPIENTS_WITH_SPACE = USER_EMAIL.concat(",  scrowe@apriori.com");
+    public static final String EMAIL_SPACE_ERROR = "Recipient field should not contain spaces.";
+    public static final String EMAIL_TEMPLATE_DFC = "DFM Part Summary";
+    public static final String EMAIL_APRIORICOST_FULLY = "Fully Burdened Cost";
+    public static final String EMAIL_APRIORICOST_MATERIAL = "Material Cost";
+    public static final String EMAIL_APRIORICOST_PART = "Piece Part Cost";
+    public static final String COST_ROUNDING_LABEL = "Cost Rounding";
+    public static final String APRIORI_COST_LABEL = "aPriori Cost";
+    public static final String EMAIL_RECIPIENT_FIELD = "Field";
+    public static final String EMAIL_RECIPIENT_CONSTANT = "Constant";
+
+
     //New Workflow Connector - need to be connected to PLM
     public static final String NWF_CONNECTOR = "automation - aP Internal - WC";
 
@@ -55,6 +71,8 @@ public class Constants {
     public static final String DEFAULT_NAME_WITH_NUMBER = "0   0   0   1 Worflow Automation";
     public static final String DEFAULT_NAME_UPPER_CASE = "0   0   0   A Upper Workflow Automation";
     public static final String DEFAULT_NAME_LOWER_CASE = "0   0   0   a Lower Workflow Automation";
+    public static final String ERROR_NAME_WITH_UNSUPPORTED_SPECIAL_CHARS =
+            "Name should only contain spaces and the following characters: a-zA-Z0-9-_";
 
     public static final String DEFAULT_WORKFLOW_DESCRIPTION = "This workflow was created by automation";
 

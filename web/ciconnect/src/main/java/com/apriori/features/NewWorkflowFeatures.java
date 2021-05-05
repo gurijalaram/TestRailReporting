@@ -66,23 +66,28 @@ public class NewWorkflowFeatures {
     }
 
     public Map<String, Object> doFieldInputInspectionOverload(String field) {
-        return doFieldInputInspection(field, false, true, true);
+        return doFieldInputInspection(field, false, false, false,
+                " Name Overload");
     }
 
     public Map<String, Object> doFieldInputInspectionUnsupportedSpecial(String field) {
-        return doFieldInputInspection(field, false, true, true);
+        return doFieldInputInspection(field, false, false, true,
+                "Name with unsupported special characters");
     }
 
     public Map<String, Object> doFieldInputInspectionSpecial(String field) {
-        return doFieldInputInspection(field, false, true, false);
+        return doFieldInputInspection(field, false, true, false,
+                "Name with supported special characters");
     }
 
     public Map<String, Object> doFieldInputInspectionMin(String field) {
-        return doFieldInputInspection(field, true, false, false);
+        return doFieldInputInspection(field, true, false, false,
+                "Name with minimum supported character length");
     }
 
     public Map<String, Object> doFieldInputInspection(String field) {
-        return doFieldInputInspection(field, false, false, false);
+        return doFieldInputInspection(field, false, false, false,
+                "Name maximum length");
     }
 
     /**
@@ -94,14 +99,15 @@ public class NewWorkflowFeatures {
      * @return
      */
     public Map<String, Object> doFieldInputInspection(String field, boolean useMinimum,
-                                                       boolean useSpecialCharacters, boolean useUnsuportedSpecial) {
+                                                       boolean useSpecialCharacters, boolean useUnsuportedSpecial,
+                                                      String testDescription) {
         values = new HashMap<>();
         String name = "";
         String description = "";
         switch (field.toUpperCase()) {
             case "NAME":
                 name = generateWorflowName(useMinimum, useSpecialCharacters, useUnsuportedSpecial);
-                description = Constants.DEFAULT_WORKFLOW_DESCRIPTION;
+                description = Constants.DEFAULT_WORKFLOW_DESCRIPTION.concat(testDescription);
                 break;
             case "DESCRIPTION":
                 name = UIUtils.saltString(Constants.DEFAULT_WORKFLOW_NAME);
@@ -112,7 +118,18 @@ public class NewWorkflowFeatures {
                 return null;
         }
 
+        if (useUnsuportedSpecial) {
+            newWorkflowPage.fillDetails(name, "", true, false, null);
+            boolean error = newWorkflowPage.checkForUnsupportedCharacterErrors();
+            values.put("unsupported-character-error", error);
+            newWorkflowPage.cancelNewWorkflow(NewWorkflowPage.Tab.DETAILS);
+            newWorkflowIteration++;
+            return values;
+        }
+
         newWorkflowPage.createNewWorkflow(name, description, newWorkflowIteration);
+        newWorkflowIteration++;
+
         workflowPage.refreshPage();
         Boolean workflowExisits = workflowPage.workflowExists(name);
         values.put("workflowExists", workflowExisits);
