@@ -5,6 +5,7 @@ import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -140,6 +141,17 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      */
     public boolean isIconDisplayed(StatusIconEnum icon) {
         return statusIcon.isIconDisplayed(icon);
+    }
+
+    /**
+     * Gets scenario info
+     *
+     * @param label - the label
+     * @return string
+     */
+    public String getScenarioInfo(String label) {
+        By byLabel = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
+        return pageUtils.waitForElementToAppear(byLabel).getAttribute("textContent");
     }
 
     /**
