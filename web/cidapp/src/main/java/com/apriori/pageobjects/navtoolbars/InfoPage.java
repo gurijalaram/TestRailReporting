@@ -43,6 +43,12 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     @FindBy(css = "textarea[name='notes']")
     private WebElement notesInput;
 
+    @FindBy(css = "[id='qa-scenario-info-form-status-select'] [id]")
+    private WebElement statusText;
+
+    @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] [id]")
+    private WebElement costMaturityText;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -152,6 +158,24 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     public String getScenarioInfo(String label) {
         By byLabel = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
         return pageUtils.waitForElementToAppear(byLabel).getAttribute("textContent");
+    }
+
+    /**
+     * Gets status
+     *
+     * @return string
+     */
+    public String getStatus() {
+        return pageUtils.waitForElementToAppear(statusText).getAttribute("textContent");
+    }
+
+    /**
+     * Gets cost maturity
+     *
+     * @return string
+     */
+    public String getCostMaturity() {
+        return pageUtils.waitForElementToAppear(costMaturityText).getAttribute("textContent");
     }
 
     /**
