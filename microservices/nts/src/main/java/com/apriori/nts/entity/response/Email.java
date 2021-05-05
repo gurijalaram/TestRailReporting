@@ -36,9 +36,19 @@ public class Email {
     private Boolean sendAsBatch;
     private Object[] attachments;
     private String status;
+    private String errorMessage;
 
     public Email getResponse() {
         return response;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public Email setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+        return this;
     }
 
     public Email setResponse(Email response) {
