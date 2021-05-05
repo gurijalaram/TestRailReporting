@@ -1,7 +1,9 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,11 +45,13 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private StatusIcon statusIcon;
 
     public InfoPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
+        this.statusIcon = new StatusIcon(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -126,6 +130,16 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      */
     public String getNotes() {
         return notesInput.getAttribute("textContent");
+    }
+
+    /**
+     * Checks icon is displayed
+     *
+     * @param icon - the icon
+     * @return true/false
+     */
+    public boolean isIconDisplayed(StatusIconEnum icon) {
+        return statusIcon.isIconDisplayed(icon);
     }
 
     /**
