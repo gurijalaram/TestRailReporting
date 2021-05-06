@@ -63,7 +63,7 @@ public class Constants {
     public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa-21-1";
 
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;

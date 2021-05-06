@@ -328,7 +328,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement processGroupCurrentValueDtcPartSummary;
 
-    @FindBy(xpath = "//label[@title='Component Select']//a")
+    @FindBy(xpath = "//label[@title='Component Select']//a/span[2]")
     private WebElement componentSelectDropdown;
 
     @FindBy(xpath = "//label[@title='Component Select']//input")
@@ -763,6 +763,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setAssembly(String assemblyName) {
         pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
+        pageUtils.waitFor(1000);
         if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
             currentAssemblyElement.click();
             By locator = By.xpath(String.format(genericAssemblySetLocator, assemblyName));
@@ -1712,11 +1713,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param componentName String
      */
     public GenericReportPage selectComponent(String componentName) {
-        pageUtils.waitForElementAndClick(componentSelectDropdown);
-        pageUtils.waitForElementAndClick(componentSelectSearchInput);
+        pageUtils.waitFor(1000);
+        componentSelectDropdown.click();
+        componentSelectSearchInput.click();
         componentSelectSearchInput.sendKeys(componentName);
         By componentToSelectLocator = By.xpath(String.format("//a[contains(text(), '%s')]", componentName));
-        pageUtils.waitForElementToAppear(componentToSelectLocator);
         pageUtils.waitForElementAndClick(componentToSelectLocator);
         return this;
     }
