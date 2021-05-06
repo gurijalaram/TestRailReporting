@@ -972,25 +972,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
-     *
-     * @param assemblyToCheck String - assembly name to wait on
-     * @return Generic - instance of specified class
-     */
-    public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitForElementToAppear(currentAssembly);
-        // if not top level, add -
-        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) ||
-                assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
-            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
-            By locator = By.xpath(String.format("//span[contains(text(), '%s')]", newVal));
-            pageUtils.waitForElementToAppear(locator);
-        }
-        return this;
-    }
-
-    /**
      * Wait for correct assembly selected in dropdown
      *
      * @return current page object
