@@ -29,6 +29,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = ".apriori-table.scenario-iteration-table .spinner-border")
     private List<WebElement> componentTableSpinner;
 
+    @FindBy(css = ".apriori-table .table-head")
+    private WebElement tableHeaders;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -91,8 +94,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     /**
      * Gets the info in the row
+     *
      * @param componentName - name of the part
-     * @param scenarioName - scenario name
+     * @param scenarioName  - scenario name
      * @return list of string
      */
     public List<String> getRowDetails(String componentName, String scenarioName) {
@@ -254,5 +258,14 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return Stream.of(tableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 }

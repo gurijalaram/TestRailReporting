@@ -210,4 +210,13 @@ public class ExplorePage extends ExploreToolbar {
     public String getScenarioMessage() {
         return pageUtils.waitForElementAppear(noScenariosMessage).getText();
     }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return scenarioTableController.getTableHeaders();
+    }
 }

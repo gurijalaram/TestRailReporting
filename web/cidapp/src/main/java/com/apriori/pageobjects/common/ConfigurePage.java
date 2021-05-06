@@ -49,8 +49,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      */
     public ConfigurePage setStickyColumn(String value) {
         pageUtils.waitForElementAndClick(stickyDropdown);
-        By columnNo = By.cssSelector(String.format("button[value='%s']", value));
-        pageUtils.waitForElementAndClick(columnNo);
+        pageUtils.javaScriptClick(driver.findElement(By.xpath(String.format("button[value='%s']", value))));
         return this;
     }
 
