@@ -8,6 +8,7 @@ import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,7 +26,7 @@ public class ExplorePage extends ExploreToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
-    @FindBy(css = "button[class='dropdown-toggle btn btn-primary']")
+    @FindBy(css = ".paginator .left")
     private WebElement paginatorDropdown;
 
     @FindBy(css = "div[class='card-header'] .left")
@@ -209,5 +210,16 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getScenarioMessage() {
         return pageUtils.waitForElementAppear(noScenariosMessage).getText();
+    }
+
+    /**
+     * Sets pagination to by default
+     *
+     * @return current page object
+     */
+    public ExplorePage setPagination() {
+        pageUtils.waitForElementAndClick(paginatorDropdown);
+        pageUtils.javaScriptClick(driver.findElement(By.xpath("//div[.='100']")));
+        return this;
     }
 }
