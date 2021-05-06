@@ -184,7 +184,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("FBC"),
+            assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Fully Burdened Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
