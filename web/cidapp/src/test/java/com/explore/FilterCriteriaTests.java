@@ -231,7 +231,7 @@ public class FilterCriteriaTests extends TestBase {
             .inputName(filterName)
             .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
             .submit(ExplorePage.class)
-            .lock()
+            .lock(ExplorePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
