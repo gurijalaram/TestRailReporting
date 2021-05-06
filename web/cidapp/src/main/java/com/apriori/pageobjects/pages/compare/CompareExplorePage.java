@@ -1,33 +1,31 @@
-package com.apriori.pageobjects.pages.explore;
+package com.apriori.pageobjects.pages.compare;
 
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
-import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * @author cfrith
  */
 
-public class ExplorePage extends ExploreToolbar {
+public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(CompareExplorePage.class);
 
-    @FindBy(css = ".paginator .left")
-    private WebElement paginatorDropdown;
+    @FindBy(css = "div h5")
+    private WebElement componentHeader;
 
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
@@ -54,25 +52,26 @@ public class ExplorePage extends ExploreToolbar {
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
     private ComponentTableActions componentTableActions;
+    private ModalDialogController modalDialogController;
 
-    public ExplorePage(WebDriver driver) {
-        super(driver);
+    public CompareExplorePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementAppear(scenarioCount);
     }
 
-    /**
-     * Checks scenario count is displayed
-     *
-     * @return visibility of button
-     */
-    public boolean isScenarioCountPresent() {
-        return scenarioCount.isDisplayed();
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(componentHeader);
     }
 
     /**
@@ -81,18 +80,9 @@ public class ExplorePage extends ExploreToolbar {
      * @param filter - the filter
      * @return current page object
      */
-    public ExplorePage inputFilter(String filter) {
+    public CompareExplorePage inputFilter(String filter) {
         pageUtils.typeAheadInput(filterDropdown, filterInput, filter);
         return this;
-    }
-
-    /**
-     * Gets the count of scenarios found
-     *
-     * @return string
-     */
-    public String getComponentsFound() {
-        return pageUtils.waitForElementAppear(scenarioCount).getText();
     }
 
     /**
@@ -114,7 +104,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage highlightScenario(String componentName, String scenarioName) {
+    public CompareExplorePage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
@@ -145,7 +135,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ExplorePage multiHighlightScenarios(String... componentScenarioName) {
+    public CompareExplorePage multiHighlightScenarios(String... componentScenarioName) {
         scenarioTableController.multiHighlightScenario(componentScenarioName);
         return this;
     }
@@ -156,7 +146,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ExplorePage multiSelectScenarios(String... componentScenarioName) {
+    public CompareExplorePage multiSelectScenarios(String... componentScenarioName) {
         scenarioTableController.multiSelectScenario(componentScenarioName);
         return this;
     }
@@ -168,20 +158,9 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage controlHighlightScenario(String componentName, String scenarioName) {
+    public CompareExplorePage controlHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.controlHighlightScenario(componentName, scenarioName);
         return this;
-    }
-
-    /**
-     * Gets the icon in the row
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return list of string
-     */
-    public List<String> getRowDetails(String componentName, String scenarioName) {
-        return scenarioTableController.getRowDetails(componentName, scenarioName);
     }
 
     /**
@@ -194,32 +173,20 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Opens the preview panel
+     * Selects the submit button
      *
-     * @return new page object
+     * @return generic page object
      */
-    public PreviewPage previewPanel() {
-        pageUtils.waitForElementAndClick(previewButton);
-        return new PreviewPage(driver);
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
     }
 
     /**
-     * Gets no scenarios message
+     * Select the cancel button
      *
-     * @return string
+     * @return generic page object
      */
-    public String getScenarioMessage() {
-        return pageUtils.waitForElementAppear(noScenariosMessage).getText();
-    }
-
-    /**
-     * Sets pagination to by default
-     *
-     * @return current page object
-     */
-    public ExplorePage setPagination() {
-        pageUtils.waitForElementAndClick(paginatorDropdown);
-        pageUtils.javaScriptClick(driver.findElement(By.xpath("//div[.='100']")));
-        return this;
+    public <T> T cancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
     }
 }
