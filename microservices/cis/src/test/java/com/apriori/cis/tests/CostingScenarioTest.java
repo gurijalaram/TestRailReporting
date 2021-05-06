@@ -30,7 +30,7 @@ public class CostingScenarioTest extends TestUtil {
     private static Boolean exitTest = false;
 
     @Test
-    @TestRail(testCaseId = {"4278", "4284", "4280", "4177"})
+    @TestRail(testCaseId = {"4278", "4177"})
     @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
             "process to complete. Then retrieve costing results.")
     public void costPart() {

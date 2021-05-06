@@ -20,6 +20,23 @@ public class TableUtils {
     }
 
     /**
+     * Determine if the actual list contains all of the items in the expected list
+     *
+     * @param expectedList The list of expected values
+     * @param actualList The list of actual values
+     * @return True if the actual list contains all items in the expected list
+     */
+    public boolean actualListContainsAllItems(List<String> expectedList, List<String> actualList) {
+        for (String expected : expectedList) {
+            if (!actualList.contains(expected)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Find an item in a table by name
      *
      * @param table The table to search
@@ -103,5 +120,23 @@ public class TableUtils {
         tableHeaders.findElements(By.tagName("td"))
                 .forEach(column -> headers.add(column.getText()));
         return headers;
+    }
+
+    /**
+     * Returns the specified column header element
+     *
+     * @param tableHeaders Header row to search through
+     * @param columnHeader The column header element to return
+     * @return Column Header element
+     */
+    public WebElement getColumnHeader(WebElement tableHeaders, String columnHeader) {
+        pageUtils.waitForElementToBeClickable(tableHeaders);
+        List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
+        for (WebElement column : columns) {
+            if (column.getText().equalsIgnoreCase(columnHeader)) {
+                return column;
+            }
+        }
+        return null;
     }
 }

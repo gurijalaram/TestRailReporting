@@ -60,6 +60,8 @@ public class NewWorkflowPage {
     private WebElement queryPagePreviousButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-43 > button")
     private WebElement notificationNextButton;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-109 > button")
+    private WebElement notificationPreviousButton;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_crontabBuilderWidget-115")
     private WebElement scheduleTabs;
     @FindBy(id = "Minute")
@@ -183,7 +185,12 @@ public class NewWorkflowPage {
     private WebElement emailTemplateSelection;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-288 > button")
     private WebElement saveButton;
-
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-186 > button")
+    private WebElement notificationCancelButton;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_label-220 > span")
+    private WebElement errorNameWithUnsupportedCharacters;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-183 > button")
+    private WebElement detailCancelButton;
 
     private String ciConnectFieldCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-3";
     private String valueDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-20";
@@ -244,6 +251,43 @@ public class NewWorkflowPage {
     }
 
     /**
+     * Checks to see for name with unsupported character error
+     *
+     * @return True, if the error exists
+     */
+    public boolean checkForUnsupportedCharacterErrors() {
+        pageUtils.waitForElementAppear(errorNameWithUnsupportedCharacters);
+        return errorNameWithUnsupportedCharacters.getText()
+                .equalsIgnoreCase(Constants.ERROR_NAME_WITH_UNSUPPORTED_SPECIAL_CHARS);
+    }
+
+    /**
+     * Checks if the next button is clickable
+     *
+     * @param tab Current tab
+     * @return True if the next button is clickable
+     */
+    public Boolean isNextButtonClickable(Tab tab) {
+        WebElement nextButton;
+        switch (tab) {
+            case DETAILS:
+                nextButton = newWorkflowNextButton;
+                break;
+            case QUERY:
+                nextButton = queryPageNextButton;
+                break;
+            case NOTIFICATION:
+                nextButton = notificationNextButton;
+                break;
+            default:
+                logger.debug("Invalid tab provided");
+                return null;
+        }
+
+        return pageUtils.isElementClickable(nextButton);
+    }
+
+    /**
      *  Determine if the rules list is scrollable
      *
      * @return True if rules list is scrollable
@@ -272,6 +316,27 @@ public class NewWorkflowPage {
     public boolean groupsButtonExists() {
         addGroupButton = ruleButtons.findElement(By.cssSelector("button[data-add='group']"));
         return pageUtils.isElementDisplayed(addGroupButton);
+    }
+
+    /**
+     * Cancel the new workflow
+     *
+     * @param tab The current tab
+     */
+    public void cancelNewWorkflow(Tab tab) {
+        WebElement cancelButton;
+        switch (tab) {
+            case DETAILS:
+                cancelButton = detailCancelButton;
+                break;
+            case NOTIFICATION:
+                cancelButton = notificationCancelButton;
+                break;
+            default:
+                return;
+        }
+
+        pageUtils.waitForElementAndClick(cancelButton);
     }
 
     /**
@@ -335,6 +400,10 @@ public class NewWorkflowPage {
             case QUERY:
                 previousButton = queryPagePreviousButton;
                 nextButton = queryPageNextButton;
+                break;
+            case NOTIFICATION:
+                previousButton = notificationPreviousButton;
+                nextButton = notificationNextButton;
                 break;
             default:
                 logger.debug("Invalid tab");
@@ -613,6 +682,26 @@ public class NewWorkflowPage {
     public NewWorkflowPage gotoQueryDefinitions(String name) {
         fillDetails(name, null, true, false, null);
         pageUtils.waitForElementAndClick(newWorkflowNextButton);
+        return this;
+    }
+
+    /**
+     * Fill in Query definition information
+     *
+     * @return NewWorkflowPage object
+     */
+    public NewWorkflowPage gotoCosting() {
+        fillQueryDefinitions(true);
+        return this;
+    }
+
+    /**
+     * Fill in Costing information
+     *
+     * @return NewWorkflowPage object
+     */
+    public NewWorkflowPage gotoNotifications() {
+        pageUtils.waitForElementAndClick(queryPageNextButton);
         return this;
     }
 

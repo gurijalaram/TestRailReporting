@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "cis/CisReportsSchema.json")
+@Schema(location = "nts/NtsGetNotificationsSchema.json")
 public class Notifications extends Pagination {
 
     private Notifications response;
