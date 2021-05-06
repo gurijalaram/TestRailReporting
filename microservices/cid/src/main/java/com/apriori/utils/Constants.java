@@ -15,9 +15,12 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-qa-api";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cid-int-preview-api";
     private static final File INPUT_STREAM;
     private static final Properties PROPERTIES = new Properties();
+    public static String WEB_IMAGE = "web";
+    public static String DESKTOP_IMAGE = "desktop";
+    public static String THUMBNAIL_IMAGE = "thumbnail";
     public static String environment;
     private static String baseUrl;
 

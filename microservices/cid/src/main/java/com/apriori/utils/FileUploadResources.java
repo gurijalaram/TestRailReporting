@@ -27,12 +27,12 @@ import com.apriori.entity.response.cost.iterations.CostIteration;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileUploadInputs;
 import com.apriori.entity.response.upload.FileUploadOutputs;
-import com.apriori.entity.response.upload.FileUploadScenarioKey;
 import com.apriori.entity.response.upload.FileWorkOrder;
 import com.apriori.entity.response.upload.GeneratePartImagesInputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataInputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
+import com.apriori.entity.response.upload.ScenarioKey;
 import com.apriori.entity.response.upload.WorkorderCommand;
 import com.apriori.entity.response.upload.WorkorderCommands;
 import com.apriori.entity.response.upload.WorkorderDetailsResponse;
@@ -135,6 +135,86 @@ public class FileUploadResources {
     }
 
     /**
+     * * Method to get images after upload, cost and publish a scenario
+     *
+     * @param fileObject - the file object
+     * @param fileName - file to upload
+     * @param scenarioName - the name of scenario
+     * @param processGroup - process group
+     */
+    public void uploadCostPublishGetImageByScenarioIterationKey(Object fileObject, String fileName, String scenarioName, String processGroup) {
+        FileResponse fileResponse = initializeFileUpload(fileName, processGroup);
+        String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+                new FileUploadInputs()
+                        .setScenarioName(scenarioName)
+                        .setFileKey(fileResponse.getResponse().getIdentity())
+                        .setFileName(fileName));
+        submitWorkorder(fileUploadWorkorderId);
+        FileUploadOutputs fileUploadOutputs = objectMapper.convertValue(
+                checkGetWorkorderDetails(fileUploadWorkorderId),
+                FileUploadOutputs.class
+        );
+
+        String webImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), Constants.WEB_IMAGE).toString();
+        String desktopImageResponse = getImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey().getScenarioKey(), Constants.DESKTOP_IMAGE).toString();
+
+        imageValidation(webImageResponse, desktopImageResponse);
+
+        int inputSetId = initializeCostScenario(
+                fileObject,
+                fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
+                processGroup
+        );
+
+        String costWorkorderId = createWorkorder(WorkorderCommands.COSTING.getWorkorderCommand(),
+                new CostOrderInputs()
+                        .setInputSetId(inputSetId)
+                        .setScenarioIterationKey(new CostOrderScenarioIteration()
+                                .setIteration(iteration)
+                                .setScenarioKey(new CostOrderScenario()
+                                        .setMasterName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
+                                        .setStateName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
+                                        .setTypeName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
+                                        .setWorkspaceId(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
+                                ))
+        );
+
+        submitWorkorder(costWorkorderId);
+        CostOrderStatusOutputs costOutputs = objectMapper.convertValue(
+                checkGetWorkorderDetails(fileUploadWorkorderId),
+                CostOrderStatusOutputs.class
+        );
+
+        String webCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), Constants.WEB_IMAGE).toString();
+        String desktopCostedImageResponse = getImageByScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey(), Constants.DESKTOP_IMAGE).toString();
+
+        imageValidation(webCostedImageResponse, desktopCostedImageResponse);
+
+        String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
+                new PublishInputs()
+                        .setScenarioIterationKey(new PublishScenarioIterationKey()
+                                .setIteration(iteration)
+                                .setScenarioKey(new PublishScenarioKey()
+                                        .setMasterName(costOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
+                                        .setStateName(costOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
+                                        .setTypeName(costOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
+                                        .setWorkspaceId(costOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
+                                ))
+        );
+
+        submitWorkorder(createPublishWorkorderId);
+        PublishResultOutputs publishOutputs = objectMapper.convertValue(
+                checkGetWorkorderDetails(createPublishWorkorderId),
+                PublishResultOutputs.class
+        );
+
+        String webPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), Constants.WEB_IMAGE).toString();
+        String desktopPublishedImageResponse = getImageByScenarioIterationKey(publishOutputs.getScenarioIterationKey().getScenarioKey(), Constants.DESKTOP_IMAGE).toString();
+
+        imageValidation(webPublishedImageResponse, desktopPublishedImageResponse);
+    }
+
+    /**
      * Method to upload, cost and publish a scenario
      *
      * @param fileObject   - the file object
@@ -196,6 +276,18 @@ public class FileUploadResources {
                 checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
+    }
+
+    /**
+     * @param webImageResponse - response of web image
+     * @param desktopImageResponse - response of desktop image
+     */
+    private void imageValidation(String webImageResponse, String desktopImageResponse) {
+        assertThat(webImageResponse, is(notNullValue()));
+        assertThat(desktopImageResponse, is(notNullValue()));
+
+        assertThat(Base64.isBase64(webImageResponse), is(equalTo(true)));
+        assertThat(Base64.isBase64(desktopImageResponse), is(equalTo(true)));
     }
 
     /**
@@ -275,6 +367,36 @@ public class FileUploadResources {
         return GenericRequestUtil.get(orderRequestEntity, new RequestAreaApi()).getBody();
     }
 
+    /**
+     * Get images by scenario iteration key
+     *
+     * @param scenarioKey - scenario iteration
+     * @param imageType - web or desktop image
+     * @return Object - response
+     */
+    private Object getImageByScenarioIterationKey(ScenarioKey scenarioKey, String imageType) {
+        iteration = getLatestIteration(
+                token,
+                scenarioKey.getTypeName(),
+                scenarioKey.getMasterName(),
+                scenarioKey.getStateName(),
+                scenarioKey.getWorkspaceId()
+        );
+        String getImageUrl = baseUrl.concat(
+                String.format("ws/viz/%s/scenarios/%s/%s/%s/iterations/%s/images/%s",
+                        scenarioKey.getWorkspaceId(),
+                        scenarioKey.getTypeName(),
+                        scenarioKey.getMasterName(),
+                        scenarioKey.getStateName(),
+                        iteration,
+                        imageType));
+
+        RequestEntity requestEntity = RequestEntity.init(getImageUrl, null)
+                .setHeaders(token);
+
+        return GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getBody();
+    }
+
     private Object checkGetWorkorderDetails(String workorderId) {
         String status = checkWorkorderStatus(workorderId);
         if (status.equals("SUCCESS")) {
@@ -290,7 +412,7 @@ public class FileUploadResources {
      * @param scenarioKey scenario iteration
      * @param processGroup process group
      */
-    private Integer initializeCostScenario(Object fileObject, FileUploadScenarioKey scenarioKey, String processGroup) {
+    private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
         iteration = getLatestIteration(
                 token,
                 scenarioKey.getTypeName(),
@@ -403,7 +525,7 @@ public class FileUploadResources {
      * @param processGroup - the process group
      * @return production info
      */
-    private ProductionInfo productionInfo(Object fileObject, FileUploadScenarioKey scenarioKey, String processGroup) {
+    private ProductionInfo productionInfo(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
         NewPartRequest newPartRequest = (NewPartRequest) fileObject;
         int workspaceId = scenarioKey.getWorkspaceId();
         String typeName = scenarioKey.getTypeName();

@@ -70,7 +70,7 @@ public class UIUtils {
     public static String generateString(int max, char[] specialCharacters) {
         String str = generateString(max);
         for (char c : specialCharacters) {
-            str.concat(Character.toString(c));
+            str = str.concat(Character.toString(c));
         }
 
         return str;
