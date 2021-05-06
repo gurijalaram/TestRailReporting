@@ -15,20 +15,20 @@ public class Pagination {
     private Boolean hasNextPage;
     private Boolean hasPreviousPage;
 
-    public Boolean getFirstPage() {
+    public Boolean getIsFirstPage() {
         return isFirstPage;
     }
 
-    public Pagination setFirstPage(Boolean firstPage) {
+    public Pagination setIsFirstPage(Boolean firstPage) {
         isFirstPage = firstPage;
         return this;
     }
 
-    public Boolean getLastPage() {
+    public Boolean getIsLastPage() {
         return isLastPage;
     }
 
-    public Pagination setLastPage(Boolean lastPage) {
+    public Pagination setIsLastPage(Boolean lastPage) {
         isLastPage = lastPage;
         return this;
     }
