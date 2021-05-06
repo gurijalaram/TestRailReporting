@@ -59,9 +59,9 @@ public class SheetMetalDTCTests extends TestBase {
         guidanceIssuesPage = loginPage.login(currentUser)
             /*.openSettings()
             .openTolerancesTab()
-            .selectUseCADModel();*/
+            .selectUseCADModel();
 
-/*        settingsPage = new SettingsPage(driver);
+        settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
@@ -191,7 +191,7 @@ public class SheetMetalDTCTests extends TestBase {
         //assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("22"));
     }
 
-  /*   @Test
+    /*@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"1834", "1835", "1836", "1837"})
     @Description("Testing DTC Sheet Metal")
@@ -231,7 +231,6 @@ public class SheetMetalDTCTests extends TestBase {
         investigationPage.selectInvestigationTopic("Machining Setups");
 
         assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("14")));
-    }
     }*/
 
     @Test
