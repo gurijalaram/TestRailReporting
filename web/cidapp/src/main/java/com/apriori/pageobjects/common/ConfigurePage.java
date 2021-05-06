@@ -10,6 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ColumnsEnum;
+import utils.DirectionEnum;
 
 public class ConfigurePage extends LoadableComponent<ConfigurePage> {
 
@@ -59,8 +61,8 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @param direction - the direction
      * @return current page object
      */
-    public ConfigurePage moveColumn(String direction) {
-        By arrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction));
+    public ConfigurePage moveColumn(DirectionEnum direction) {
+        By arrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction.getDirection()));
         pageUtils.waitForElementAndClick(arrow);
         return this;
     }
@@ -71,8 +73,8 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @param columnName - the column
      * @return current page object
      */
-    public ConfigurePage selectColumn(String columnName) {
-        By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+    public ConfigurePage selectColumn(ColumnsEnum columnName) {
+        By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName.getColumns()));
         pageUtils.waitForElementAndClick(column);
         return this;
     }
