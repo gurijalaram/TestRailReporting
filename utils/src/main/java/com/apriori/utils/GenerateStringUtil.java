@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class GenerateStringUtil {
 
@@ -108,7 +109,7 @@ public class GenerateStringUtil {
      */
     @Attachment
     public String generateSiteID() {
-        return "AutoSiteID" + RandomStringUtils.randomNumeric(26);
+        return "AutoSiteID" + UUID.randomUUID();
     }
 
     /**
