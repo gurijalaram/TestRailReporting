@@ -58,6 +58,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(id = "qa-sub-header-new-comparison")
     private WebElement comparisonButton;
 
+    @FindBy(id = "qa-action-bar-action-assign")
+    private WebElement assignButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -118,7 +121,7 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Publish the scenario
+     * Opens the scenario
      *
      * @return new page object
      */
@@ -138,7 +141,7 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Create new scenario
+     * Opens the scenario page
      *
      * @return new page object
      */
@@ -149,7 +152,7 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Opens scenario info
+     * Opens scenario info page
      *
      * @return new page object
      */
@@ -182,7 +185,7 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Deletes a scenario
+     * Opens the scenario page
      *
      * @return new page object
      */
@@ -192,7 +195,18 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Creates a comparison
+     * Opens the assignee page
+     *
+     * @return new page object
+     */
+    public AssignPage assign() {
+        pageUtils.waitForElementAndClick(actionsButton);
+        pageUtils.waitForElementAndClick(assignButton);
+        return new AssignPage(driver);
+    }
+
+    /**
+     * Opens the comparison page
      *
      * @return new page object
      */
