@@ -1007,6 +1007,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage waitForCorrectExportSetListCount(String listName, String expectedCount) {
+        pageUtils.waitFor(1000);
         waitForCorrectAvailableSelectedCount(listName, "Available: ", expectedCount);
         waitForCorrectAvailableSelectedCount(listName, "Selected: ", expectedCount);
         return this;
