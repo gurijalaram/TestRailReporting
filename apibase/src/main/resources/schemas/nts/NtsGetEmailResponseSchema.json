@@ -18,7 +18,8 @@
         "content",
         "sendAsBatch",
         "attachments",
-        "status"
+        "status",
+        "errorMessage"
       ],
       "optional": [
         "errorMessage"
@@ -67,6 +68,9 @@
           "type": "array"
         },
         "status": {
+          "type": "string"
+        },
+        "errorMessage": {
           "type": "string"
         }
       }
