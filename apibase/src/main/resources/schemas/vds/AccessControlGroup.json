@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "required": [
+    "attributes",
+    "createdAt",
+    "createdBy",
+    "customerIdentity",
+    "deletedAt",
+    "deletedBy",
+    "description",
+    "groupId",
+    "identity",
+    "members",
+    "name",
+    "parentGroupIdentity",
+    "permissions",
+    "systemGroup",
+    "type",
+    "updatedAt",
+    "updatedBy"
+  ],
+  "properties": {
+    "attributes": {
+      "type": "object",
+      "required": []
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "deletedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "groupId": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "name": {
+      "type": "string"
+    },
+    "parentGroupIdentity": {
+      "type": "string"
+    },
+    "permissions": {
+      "$ref": "AccessControlPermission.json"
+    },
+    "systemGroup": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    }
+  }
+}

@@ -9,8 +9,18 @@ public enum VDSAPIEnum implements EdcQaAPI {
     GET_GROUPS("groups"),
     GET_PERMISSIONS("permissions"),
 
-    POST_SYNCHRONIZE("synchronize");
+    POST_SYNCHRONIZE("synchronize"),
 
+
+    //Configurations
+    GET_CONFIGURATIONS("configurations"),
+    GET_CONFIGURATIONS_BY_IDENTITY("configurations/%s"),
+
+    PUT_CONFIGURATIONS("configurations"),
+
+
+    // Site Variables
+    GET_SITE_VARIABLES("site-variables");
 
     private final String endpoint;
 
@@ -26,7 +36,7 @@ public enum VDSAPIEnum implements EdcQaAPI {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return Constants.getApiUrl() + String.format(getEndpointString(), variables);
+        return Constants.getApiUrl() + String.format(getEndpointString(), variables) + "?key=" + Constants.getSecretKey();
     }
 
 }
