@@ -1,7 +1,6 @@
 package com.apriori.vds.tests;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
@@ -9,6 +8,7 @@ import com.apriori.vds.entity.response.access.control.AccessControlGroupItems;
 import com.apriori.vds.entity.response.access.control.AccessControlPermissionItems;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
 import com.apriori.vds.tests.util.VDSTestUtil;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;

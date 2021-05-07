@@ -6,13 +6,13 @@ import com.apriori.entity.response.PostComponentResponse;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Component;
 import com.apriori.sds.entity.response.ComponentsItemsResponse;
+import com.apriori.sds.tests.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
-import com.apriori.sds.tests.util.SDSTestUtil;
 
 public class ComponentsTest extends SDSTestUtil {
 

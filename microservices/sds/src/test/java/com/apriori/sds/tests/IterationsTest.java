@@ -5,13 +5,13 @@ import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.ScenarioIteration;
 import com.apriori.sds.entity.response.ScenarioIterationItemsResponse;
+import com.apriori.sds.tests.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
-import com.apriori.sds.tests.util.SDSTestUtil;
 
 public class IterationsTest extends SDSTestUtil {
 
