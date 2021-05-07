@@ -15,6 +15,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class CycleTimeValueTrackingReportTests extends TestBase {
@@ -57,7 +58,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"2331"})
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Report")
     public void testProjectRollupDropdownList() {

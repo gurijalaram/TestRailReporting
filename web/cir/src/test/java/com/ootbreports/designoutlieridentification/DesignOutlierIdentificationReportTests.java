@@ -17,6 +17,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 
 import java.math.BigDecimal;
@@ -78,7 +79,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7385"})
     @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
     public void testMassMetricRoughMass() {
@@ -91,7 +92,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1988"})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateCalendar() {
@@ -102,7 +103,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1988"})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateInputField() {
@@ -129,7 +130,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1998"})
     @Description("Min and max cost filter works")
     public void testMinAndMaxCostFilter() {
@@ -141,7 +142,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "6260")
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValues() {
@@ -153,7 +154,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1998"})
     @Description("Min and max mass filter works")
     public void testMinAndMaxMassFilter() {
@@ -165,7 +166,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = "6265")
     @Description("Min and max mass filter - junk value test")
     public void testMinAndMaxMassFilterJunkValue() {
@@ -177,7 +178,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"2006"})
     @Description("Validate the reports correct with user overrides")
     public void testReportFunctionsWithUserCostOverride() {
@@ -193,7 +194,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
         genericReportPage.setReportName(
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
         );
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             genericReportPage.hoverPartNameBubbleDtcReports();
         }
         BigDecimal fbcValue = genericReportPage.getFBCValueFromBubbleTooltip(
