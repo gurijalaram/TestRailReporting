@@ -8,6 +8,8 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
@@ -23,8 +25,6 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -860,7 +860,7 @@ public class InputControlsTests extends TestBase {
 
         targetQuotedCostTrendReportPage.openNewCidTabAndFocus(2);
 
-        EvaluatePage evaluatePage = new ExplorePage(driver)
+        /*EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .setWorkspace(Constants.PUBLIC_WORKSPACE)
                 .setScenarioType(Constants.PART_SCENARIO_TYPE)
@@ -881,7 +881,7 @@ public class InputControlsTests extends TestBase {
         assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
-        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
+        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));*/
     }
 
     /**

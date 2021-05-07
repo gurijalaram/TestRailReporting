@@ -104,6 +104,6 @@ public class Constants {
      * @return String
      */
     public static String getCidUrl() {
-        return PROPERTIES.getProperty("url.default").concat(PROPERTIES.getProperty("url.additional.cid"));
+        return PROPERTIES.getProperty("url.additional.cid");
     }
 }

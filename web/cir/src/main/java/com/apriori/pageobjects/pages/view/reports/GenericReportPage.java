@@ -133,7 +133,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
     private WebElement currentAssembly;
 
-    @FindBy(css = "a[id='logo']")
+    @FindBy(css = "a[class='navbar-brand']")
     private WebElement cidLogo;
 
     @FindBy(xpath = "//span[contains(text(), 'Casting DTC Comparison')]")

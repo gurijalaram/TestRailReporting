@@ -1,4 +1,4 @@
 dependencies {
     implementation project(':utils')
-    implementation project(':web:cid')
+    implementation project(':web:cidapp')
 }

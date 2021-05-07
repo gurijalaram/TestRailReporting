@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class ReportsLogoutPage extends ReportsPageHeader {
 
-    private static final Logger logger = LoggerFactory.getLogger(com.pageobjects.pages.logout.LogoutPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReportsLogoutPage.class);
 
     @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
     private WebElement loginPageTitle;

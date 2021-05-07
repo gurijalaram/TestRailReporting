@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
@@ -19,8 +20,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -172,7 +171,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
         genericReportPage.openNewCidTabAndFocus(1);
 
-        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
+        /*DesignGuidancePage designGuidancePage = new ExplorePage(driver)
             .filter()
             .setScenarioType(Constants.PART_SCENARIO_TYPE)
             .setWorkspace(Constants.PUBLIC_WORKSPACE)
@@ -184,7 +183,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
         String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
 
-        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
+        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));*/
     }
 
     @Test

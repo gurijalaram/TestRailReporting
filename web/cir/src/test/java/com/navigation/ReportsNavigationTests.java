@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.create.CreateDataSourcePage;
 import com.apriori.pageobjects.pages.create.CreateDomainPage;
 import com.apriori.pageobjects.pages.create.CreateReportPage;
 import com.apriori.pageobjects.pages.library.LibraryPage;
+import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.logout.ReportsLogoutPage;
 import com.apriori.pageobjects.pages.manage.ManageRolesPage;
@@ -25,7 +26,6 @@ import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.pageobjects.pages.login.PrivacyPolicyPage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
