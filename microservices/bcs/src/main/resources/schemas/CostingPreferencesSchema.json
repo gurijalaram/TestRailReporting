@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "batchMode",
+        "cadTolerances",
+        "cadToleranceReplacement",
+        "minCadToleranceThreshold",
+        "multiBodyKeepFreeBodies",
+        "multiBodyIgnoreMissingComponents",
+        "multiBodyPreserveCad",
+        "processGroup",
+        "scenarioName",
+        "tolerances",
+        "useCadToleranceThreshold",
+        "useVpeForAllProcesses",
+        "vpeName"
+      ],
+      "properties": {
+        "batchMode": {
+          "type": "string"
+        },
+        "cadTolerances": {
+          "type": "boolean"
+        },
+        "cadToleranceReplacement": {
+          "type": "number"
+        },
+        "minCadToleranceThreshold": {
+          "type": "number"
+        },
+        "multiBodyKeepFreeBodies": {
+          "type": "boolean"
+        },
+        "multiBodyIgnoreMissingComponents": {
+          "type": "boolean"
+        },
+        "multiBodyPreserveCad": {
+          "type": "boolean"
+        },
+        "processGroup": {
+          "type": "string"
+        },
+        "scenarioName": {
+          "type": "string"
+        },
+        "tolerances": {
+          "$ref": "ToleranceSchema.json"
+        },
+        "useCadToleranceThreshold": {
+          "type": "boolean"
+        },
+        "useVpeForAllProcesses": {
+          "type": "boolean"
+        },
+        "vpeName": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,9 @@
-package com.apriori.apibase.services;
+package com.apriori.bcs.utils;
 
 import com.apriori.apibase.services.bcs.objects.CisCustomer;
 import com.apriori.apibase.utils.TestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerBase extends TestUtil {
@@ -13,10 +14,41 @@ public class CustomerBase extends TestUtil {
     private String description;
     private List<String> emailRegexPatterns;
     private Boolean active;
+    private Integer maxCadFileRetentionDays;
     private String customerType;
     private CisCustomer response;
     private String salesforceId;
     private String updatedBy;
+    private Boolean useExternalIdentityProvider;
+    private Boolean mfaRequired;
+    private ArrayList oneTimePasswordApplications;
+
+    public Boolean getUseExternalIdentityProvider() {
+        return useExternalIdentityProvider;
+    }
+
+    public CustomerBase setUseExternalIdentityProvider(Boolean useExternalIdentityProvider) {
+        this.useExternalIdentityProvider = useExternalIdentityProvider;
+        return this;
+    }
+
+    public Boolean getMfaRequired() {
+        return mfaRequired;
+    }
+
+    public CustomerBase setMfaRequired(Boolean mfaRequired) {
+        this.mfaRequired = mfaRequired;
+        return this;
+    }
+
+    public ArrayList getOneTimePasswordApplications() {
+        return oneTimePasswordApplications;
+    }
+
+    public CustomerBase setOneTimePasswordApplications(ArrayList oneTimePasswordApplications) {
+        this.oneTimePasswordApplications = oneTimePasswordApplications;
+        return this;
+    }
 
     public String getIdentity() {
         return this.identity;
@@ -78,6 +110,15 @@ public class CustomerBase extends TestUtil {
 
     public CustomerBase setActive(Boolean active) {
         this.active = active;
+        return this;
+    }
+
+    public Integer getMaxCadFileRetentionDays() {
+        return this.maxCadFileRetentionDays;
+    }
+
+    public CustomerBase setMaxCadFileRetentionDays(Integer maxCadFileRetentionDays) {
+        this.maxCadFileRetentionDays = maxCadFileRetentionDays;
         return this;
     }
 
