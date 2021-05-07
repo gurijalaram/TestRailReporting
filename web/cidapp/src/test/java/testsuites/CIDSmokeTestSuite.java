@@ -19,7 +19,6 @@ import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.SheetMetalDTCTests;
 import com.evaluate.materialutilization.ChangeMaterialSelectionTests;
 import com.evaluate.materialutilization.MaterialStockTests;
-import com.explore.ActionsTests;
 import com.explore.PreviewPanelTests;
 import com.explore.UploadComponentTests;
 import com.explore.UploadTests;
@@ -54,6 +53,8 @@ import org.junit.runners.Suite;
     DeleteTests.class,
     DFMRiskTests.class,
     PublishTests.class,
+    SheetMetalDTCTests.class,
+    DTCPlasticMouldingTests.class,
     SheetMetalDTCTests.class,
     ActionsTests.class
 })
