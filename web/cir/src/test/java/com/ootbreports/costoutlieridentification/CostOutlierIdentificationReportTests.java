@@ -278,6 +278,9 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 .clickOk();
 
         genericReportPage.waitForReportToLoad();
+        genericReportPage.clickInputControlsButton()
+                .clickApply()
+                .waitForReportToLoad();
 
         assertThat(
                 genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(

@@ -37,7 +37,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3323"})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -91,7 +91,7 @@ public class ComponentCostReportTests extends TestBase {
 
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3325"})
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
@@ -122,7 +122,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3326"})
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {

@@ -1055,7 +1055,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                .inputAnnualisedOrPercentValue(valueToTest, "10.00")
+                .inputAnnualisedOrPercentValue(valueToTest, "600000.00")
                 .clickOk();
 
         genericReportPage.waitForReportToLoad();
