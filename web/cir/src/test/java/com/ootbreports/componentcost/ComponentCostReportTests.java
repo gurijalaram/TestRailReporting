@@ -19,6 +19,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -36,7 +37,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3323"})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -90,7 +91,7 @@ public class ComponentCostReportTests extends TestBase {
 
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3325"})
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
@@ -102,8 +103,13 @@ public class ComponentCostReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForComponentFilter();
 
-        assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
 
+        componentCostReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(),
+                "Available: ",
+                "1"
+        );
+        assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
         assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
         assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
@@ -116,7 +122,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3326"})
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {
@@ -128,6 +134,11 @@ public class ComponentCostReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForComponentFilter();
 
+        componentCostReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(),
+                "Available: ",
+                "1"
+        );
         componentSelectAsserts(true);
         componentSelectAsserts(false);
 
@@ -138,7 +149,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3327"})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -151,6 +162,11 @@ public class ComponentCostReportTests extends TestBase {
                 .waitForComponentFilter()
                 .selectDefaultScenarioName(ComponentCostReportPage.class);
 
+        componentCostReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(),
+                "Available: ",
+                "1"
+        );
         assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
         ArrayList<String> partComponentNames = componentCostReportPage.getComponentSelectNames();
         for (String componentName : partComponentNames) {

@@ -105,6 +105,9 @@ public class ViewRepositoryPage extends ReportsPageHeader {
                 ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
         navigationMap.put(
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.COMPONENT_COST.getReportName(), new String[]{ Constants.GENERAL_FOLDER }
+        );
 
         navigationMap.put(
                 ReportNamesEnum.CASTING_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });

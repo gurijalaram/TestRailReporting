@@ -52,7 +52,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), '* DTC Score')]")
     private WebElement dtcScoreControlTitle;
 
-    @FindBy(xpath= "//div[@class='header']//div[@class='title']")
+    @FindBy(xpath = "//div[@class='header']//div[@class='title']")
     private WebElement upperTitle;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name() = 'path']")
