@@ -49,7 +49,7 @@ public class ActionsTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"545", "731", "738", "1610", "742"})
+    @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -80,7 +80,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"554", "555"})
+    @TestRail(testCaseId = {"7197", "7198"})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -120,7 +120,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category({CustomerSmokeTests.class})
-    @TestRail(testCaseId = {"1610", "592", "593"})
+    @TestRail(testCaseId = {"7902"})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -152,7 +152,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"733", "739", "743", "746"})
+    @TestRail(testCaseId = {"7259", "7265", "7269", "7272"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -180,7 +180,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"732", "737", "741", "744"})
+    @TestRail(testCaseId = {"7258", "7263", "7267", "7270"})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -209,7 +209,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"526", "529"})
+    @TestRail(testCaseId = {"7172", "7175"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -236,7 +236,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"528", "527"})
+    @TestRail(testCaseId = {"7174", "7173"})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -262,7 +262,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"532", "736", "734"})
+    @TestRail(testCaseId = {"7178", "7262", "7910"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -291,7 +291,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"543"})
+    @TestRail(testCaseId = {"7187"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -324,7 +324,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"544"})
+    @TestRail(testCaseId = {"7188"})
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -358,7 +358,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"542", "546"})
+    @TestRail(testCaseId = {"7186", "7191"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -391,7 +391,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"574"})
+    @TestRail(testCaseId = {"7911"})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -425,7 +425,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"556", "594"})
+    @TestRail(testCaseId = {"7199", "7912"})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
@@ -462,7 +462,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"740", "595"})
+    @TestRail(testCaseId = {"7266", "7913"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -496,7 +496,7 @@ public class ActionsTests extends TestBase {
 
     @Ignore
     @Test
-    @TestRail(testCaseId = {"2317"})
+    @TestRail(testCaseId = {"6727"})
     @Description("Ensure scripts cannot be entered into text input fields")
     public void cannotUseScript() {
 
