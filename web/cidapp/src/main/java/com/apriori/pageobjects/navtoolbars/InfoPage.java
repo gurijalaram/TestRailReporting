@@ -6,6 +6,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -109,6 +110,19 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     }
 
     /**
+     * Edits the scenario notes
+     *
+     * @param description - the description notes
+     * @return current page object
+     */
+    public InfoPage editDescription(String description) {
+        descriptionInput.sendKeys(Keys.CONTROL + "a");
+        descriptionInput.sendKeys(Keys.DELETE);
+        descriptionInput.sendKeys(description);
+        return this;
+    }
+
+    /**
      * Input notes
      *
      * @param notes - the notes
@@ -117,6 +131,19 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     public InfoPage inputNotes(String notes) {
         pageUtils.waitForElementAndClick(notesInput);
         notesInput.clear();
+        notesInput.sendKeys(notes);
+        return this;
+    }
+
+    /**
+     * Edits the scenario notes
+     *
+     * @param notes - the scenario notes
+     * @return current page object
+     */
+    public InfoPage editNotes(String notes) {
+        notesInput.sendKeys(Keys.CONTROL + "a");
+        notesInput.sendKeys(Keys.DELETE);
         notesInput.sendKeys(notes);
         return this;
     }
