@@ -3,6 +3,7 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,6 +53,17 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     public AssignPage inputAssignee(String assignee) {
         pageUtils.typeAheadInput(assigneeDropdown, assigneeInput, assignee);
         return this;
+    }
+
+    /**
+     * Checks the assignee is displayed
+     *
+     * @return true/false
+     */
+    public boolean isAssigneeDisplayed(String assignee) {
+        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", assignee));
+        pageUtils.invisibilityOfElements(driver.findElements(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']")));
+        return pageUtils.waitForElementToAppear(byAssignee).isDisplayed();
     }
 
     /**
