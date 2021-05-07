@@ -1278,6 +1278,12 @@ public class GenericReportPage extends ReportsPageHeader {
         return this;
     }
 
+    public GenericReportPage waitForCorrectRollup(String rollupName) {
+        By locator = By.xpath(String.format("//div[@id='rollup']//a[contains(@title, '%s (Base)')]", rollupName));
+        pageUtils.waitForElementToAppear(locator);
+        return this;
+    }
+
     /**
      * Expand rollup drop-down
      *
