@@ -8,8 +8,8 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
@@ -23,7 +23,6 @@ import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
@@ -440,7 +439,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1919"})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
@@ -449,7 +448,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3244"})
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
@@ -479,15 +478,15 @@ public class AssemblyDetailsReportTests extends TestBase {
             ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName()
         );
 
-        /*ComponentsPage componentsPage = new ExplorePage(driver)
-            .filter()
-            .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setRowOne("Part Name", "Contains", Constants.PISTON_ASSEMBLY_CID_NAME)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario()
-            .openComponentsTable()
+        ComponentsListPage componentsListPage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", Constants.PISTON_ASSEMBLY_CID_NAME)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario().openComponents();
+        /*  .openComponentsTable()
             .openColumnsTable()
             .checkColumnSettings(columnsToAdd)
             .selectSaveButton();*/
@@ -804,7 +803,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .addCriteriaWithOption("Component Name", "Equals", reportsValues.get("Part Name"))
                 .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
-                .openScenario(reportsValues.get("Part Name"), Constants.DEFAULT_SCENARIO_NAME);
+                .openFirstScenario();
 
         Map<String, String> cidValues = new HashMap<>();
         cidValues.put("Cycle Time", String.valueOf(evaluatePage.getProcessesResult("Total Cycle Time")));
@@ -896,19 +895,17 @@ public class AssemblyDetailsReportTests extends TestBase {
         ArrayList<String> reportsVpeValues = genericReportPage.getAllVpeValuesAssemblyDetailsReport();
 
         genericReportPage.openNewCidTabAndFocus(1);
-
-        /*ComponentsPage componentsPage = new ExplorePage(driver)
+        ComponentsListPage componentsListPage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains",
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals",
                         AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
-                .setRowTwo("Scenario Name", "Contains", "Multi VPE")
-                .apply(ExplorePage.class)
-                .openFirstScenario()
-                .openComponentsTable();
+                .addCriteriaWithOption("Scenario Name", "Contains", "Multi VPE")
+                .submit(ExplorePage.class)
+                .openFirstScenario().openComponents();
 
-        ArrayList<String> cidVpeValues = componentsPage.getVpeValues();
+        /*ArrayList<String> cidVpeValues = componentsListPage.getVpeValues();
 
         assertThat(reportsVpeValues.equals(cidVpeValues), is(equalTo(true)));*/
     }

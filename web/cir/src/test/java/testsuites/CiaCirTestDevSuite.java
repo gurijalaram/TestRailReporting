@@ -2,12 +2,8 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import com.ootbreports.componentcost.ComponentCostReportTests;
-import com.ootbreports.costoutlieridentification.CostOutlierIdentificationReportTests;
-import com.ootbreports.cycletimevaluetracking.CycleTimeValueTrackingReportTests;
-import com.ootbreports.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
-import com.ootbreports.designoutlieridentification.DesignOutlierIdentificationReportTests;
-import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
+import com.ootbreports.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
+import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -16,10 +12,8 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        CostOutlierIdentificationReportTests.class,
-        CycleTimeValueTrackingReportTests.class,
-        DesignOutlierIdentificationReportTests.class,
-        DesignOutlierIdentificationDetailsReportTests.class
+        CastingDtcComparisonReportTests.class,
+        TargetAndQuotedCostValueTrackingReportTests.class
 })
 
 public class CiaCirTestDevSuite {

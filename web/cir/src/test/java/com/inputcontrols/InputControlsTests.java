@@ -14,6 +14,7 @@ import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.VPEEnum;
@@ -61,7 +62,7 @@ public class InputControlsTests extends TestBase {
 
         genericReportPage.setExportDateUsingInput(true, "")
             .setExportDateUsingInput(false, "")
-            .waitForCorrectExportSetListCount("Export set selection.", "0");
+            .waitForCorrectExportSetListCount("Single export set selection.", "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(equalTo(0)));
@@ -859,29 +860,28 @@ public class InputControlsTests extends TestBase {
         String reportsCurrentCost = targetQuotedCostTrendReportPage.getValueFromReport("24");
 
         targetQuotedCostTrendReportPage.openNewCidTabAndFocus(2);
-
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("VPE", "is", VPEEnum.APRIORI_USA.getVpe())
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteriaWithOption("VPE", "In", VPEEnum.APRIORI_USA.getVpe())
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        String cidScenarioName = evaluatePage.getScenarioName();
-        String cidVPE = evaluatePage.getVpe();
-        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
-        String cidMaterialComposition = evaluatePage.getMaterialInfo();
+        String cidScenarioName = evaluatePage.getCurrentScenarioName();
+        String cidVPE = evaluatePage.getSelectedVPE();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroup();
+        String cidMaterialComposition = evaluatePage.openMaterialUtilization().getMaterialName();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
-        String cidFbc = evaluatePage.getFullyBurdenedCostValueRoundedUp();
+        String cidFbc = String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost"));
 
         assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
         assertThat(reportsVpe, is(equalTo(cidVPE)));
         assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
-        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));*/
+        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
     }
 
     /**

@@ -4,9 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -169,21 +171,21 @@ public class CastingDtcDetailsReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
+
         genericReportPage.openNewCidTabAndFocus(1);
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
 
-        /*DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-            .filter()
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setRowOne("Part Name", "Contains", partName)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario()
-            .openDesignGuidance();
+        String holeIssueCidValue = guidanceIssuesPage.getDtcIssueCount("Hole");
 
-        String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
-
-        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));*/
+        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 
     @Test

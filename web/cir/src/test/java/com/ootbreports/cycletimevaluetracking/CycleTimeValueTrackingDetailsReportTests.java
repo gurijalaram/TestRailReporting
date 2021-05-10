@@ -8,6 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -18,7 +19,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
@@ -128,23 +128,22 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                 .replace(",", "");
 
         cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
-
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains", reportsPartNumber)
-                .setRowTwo("VPE", "is", VPEEnum.APRIORI_USA.getVpe())
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", reportsPartNumber)
+                .addCriteriaWithOption("VPE", "In", VPEEnum.APRIORI_USA.getVpe())
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
         String cidPartNumber = evaluatePage.getPartName();
-        String cidScenarioName = evaluatePage.getScenarioName();
+        String cidScenarioName = evaluatePage.getCurrentScenarioName();
         String cidFinishMass = String.valueOf(evaluatePage.getFinishMass());
-        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
-        String cidMaterialComposition = evaluatePage.getMaterialInfo();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroup();
+        String cidMaterialComposition = evaluatePage.openMaterialUtilization().getMaterialName();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
-        String cidFinalCycleTime = String.valueOf(evaluatePage.getCycleTimeCount());
+        String cidFinalCycleTime = String.valueOf(evaluatePage.getProcessesResult("Total Cycle Time"));
 
         assertThat(reportsPartNumber, is(equalTo(cidPartNumber)));
         assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
@@ -152,6 +151,6 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
         assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
-        assertThat(reportsFinalCycleTime, is(equalTo(cidFinalCycleTime)));*/
+        assertThat(reportsFinalCycleTime, is(equalTo(cidFinalCycleTime)));
     }
 }

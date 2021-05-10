@@ -8,6 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -107,17 +108,17 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         BigDecimal reportsFbc = genericReportPage.getFirstFbcCostOutlierDetailsReport();
 
         genericReportPage.openNewCidTabAndFocus(1);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setRowOne("Part Name", "Contains", partName)
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        BigDecimal cidFbc = evaluatePage.getBurdenedCostValue();
+        BigDecimal cidFbc = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost")));
 
-        assertThat(reportsFbc.compareTo(cidFbc), is(equalTo(0)));*/
+        assertThat(reportsFbc.compareTo(cidFbc), is(equalTo(0)));
     }
 
     @Test

@@ -4,9 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -24,6 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -39,7 +42,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7242"})
     @Description("validate report is available by navigation - Casting DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
@@ -172,21 +175,21 @@ public class CastingDtcComparisonReportTests extends TestBase {
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
         String partName = genericReportPage.getPartNameDtcReports();
         String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
+
         genericReportPage.openNewCidTabAndFocus(2);
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Contains", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
 
-        /*DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-            .filter()
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setRowOne("Part Name", "Contains", partName)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario()
-            .openDesignGuidance();
+        String holeIssueCidValue = guidanceIssuesPage.getDtcIssueCount("Hole");
 
-        String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
-
-        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));*/
+        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 
     @Test

@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -22,7 +23,9 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
+import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
@@ -35,7 +38,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7325"})
     @Description("Validate report is available by navigation - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityByNavigation() {
@@ -201,28 +204,28 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
         String reportsCurrentCost = targetAndQuotedCostValueTrackingPage.getValueFromReport("24");
 
         targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Part")
-                .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", "Initial")
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        String cidScenarioName = evaluatePage.getScenarioName();
-        String cidVPE = evaluatePage.getVpe();
-        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
-        String cidMaterialComposition = evaluatePage.getMaterialInfo();
+        String cidScenarioName = evaluatePage.getCurrentScenarioName();
+        String cidVPE = evaluatePage.getSelectedVPE();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroup();
+        String cidMaterialComposition = evaluatePage.openMaterialUtilization().getMaterialName();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
-        String cidFbc = evaluatePage.getFullyBurdenedCostValueRoundedUp();
+        String cidFbc = String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost"));
 
         assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
         assertThat(reportsVpe, is(equalTo(cidVPE)));
         assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
-        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));*/
+        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
     }
 
     /**

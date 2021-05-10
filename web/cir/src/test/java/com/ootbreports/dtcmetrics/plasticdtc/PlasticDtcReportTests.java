@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.PlasticDtcReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -182,20 +183,20 @@ public class PlasticDtcReportTests extends TestBase {
         genericReportPage.hoverPartNameBubbleDtcReports();
         String partName = genericReportPage.getPartNameDtcReports();
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
+
         genericReportPage.openNewCidTabAndFocus(1);
+        EvaluatePage evaluatePage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Contains", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario();
 
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
-            .filter()
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setRowOne("Part Name", "Contains", partName)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario();
+        BigDecimal cidFbcValue = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost")));
 
-        BigDecimal cidFbcValue = evaluatePage.getBurdenedCostValue();
-
-        assertThat(reportFbcValue, is(equalTo(cidFbcValue)));*/
+        assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
 
     @Test

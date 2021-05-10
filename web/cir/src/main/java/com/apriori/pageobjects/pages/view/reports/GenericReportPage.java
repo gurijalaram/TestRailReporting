@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.view.reports;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
@@ -601,10 +600,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectExportSet(String exportSet) {
-        exportSetSearchInput.sendKeys(exportSet);
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        pageUtils.waitForElementToAppear(locator);
-        pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
@@ -827,9 +823,12 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage selectSortOrder(String sortOrder) {
         pageUtils.scrollWithJavaScript(sortOrderDropdown, true);
+        pageUtils.waitForElementToAppear(sortOrderDropdown);
         if (!sortOrderDropdown.getAttribute("title").equals(sortOrder)) {
             sortOrderDropdown.click();
-            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", sortOrder))).click();
+            By locator = By.xpath(String.format("//li[@title='%s']/div/a", sortOrder));
+            pageUtils.waitForElementToAppear(locator);
+            driver.findElement(locator).click();
         }
         return this;
     }
@@ -1005,6 +1004,8 @@ public class GenericReportPage extends ReportsPageHeader {
 
         dateInputToUse.clear();
         dateInputToUse.click();
+        By locator = By.xpath("//input[contains(@class, 'date') and @value='']");
+        pageUtils.waitForElementToAppear(locator);
         dateInputToUse.sendKeys(valueToInput);
 
         return this;

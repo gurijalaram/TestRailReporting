@@ -28,6 +28,9 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockPanel;
 
+    @FindBy(xpath = "(//span[contains(text(), 'Name')])[1]/following-sibling::span")
+    private WebElement materialName;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private PanelController panelController;
@@ -60,6 +63,16 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     public String getUtilizationInfo(String label) {
         By info = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
         return pageUtils.waitForElementToAppear(info).getAttribute("textContent");
+    }
+
+    /**
+     * Gets the material name
+     *
+     * @return material name as String
+     */
+    public String getMaterialName() {
+        pageUtils.waitForElementToAppear(materialName);
+        return materialName.getText();
     }
 
     /**

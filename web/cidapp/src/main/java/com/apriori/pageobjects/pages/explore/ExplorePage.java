@@ -108,6 +108,16 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Opens the first scenario
+     *
+     * @return a new page object
+     */
+    public EvaluatePage openFirstScenario() {
+        scenarioTableController.openFirstScenario();
+        return new EvaluatePage(driver);
+    }
+
+    /**
      * Highlights the scenario in the table
      *
      * @param componentName - name of the part

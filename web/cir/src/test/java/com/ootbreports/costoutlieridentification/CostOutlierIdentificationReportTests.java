@@ -8,6 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -104,7 +105,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6253"})
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValues() {
@@ -136,21 +137,21 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 "aPriori Cost Value (Cost Outlier) Bottom");
 
         genericReportPage.openNewCidTabAndFocus(1);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setRowOne("Part Name", "Contains", partScenarioName[0])
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partScenarioName[0])
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        BigDecimal cidFbc = evaluatePage.getBurdenedCostValue();
+        BigDecimal cidFbc = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost")));
 
-        assertThat(reportsCostValue.compareTo(cidFbc), is(equalTo(0)));*/
+        assertThat(reportsCostValue.compareTo(cidFbc), is(equalTo(0)));
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1947"})
     @Description("Export date range presents correctly filtered export sets")
     public void testExportSetFilterByDateCalendarWidget() {
@@ -161,7 +162,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6986"})
     @Description("Percent difference threshold filter - main report - junk value")
     public void testPercentDifferenceFilterJunkValue() {
@@ -185,7 +186,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6987"})
     @Description("Percent difference threshold filter - main report - decimal places")
     public void testPercentDifferenceFilterDecimalPlaces() {
@@ -209,7 +210,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7025"})
     @Description("Percent difference threshold filter - main report - no data available")
     public void testPercentDifferenceThresholdNoDataAvailable() {
@@ -221,7 +222,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1958"})
     @Description("Percent difference threshold filter works - main report")
     public void testPercentDifferenceThresholdFilter() {

@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.library.LibraryPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -15,6 +16,7 @@ import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -238,23 +240,23 @@ public class CommonReportTests extends TestBase {
             reportsDraftValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, draftString);
             reportsRadiusValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, radiusString);
         }
+
         genericReportPage.openNewCidTabAndFocus(1);
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
 
-        /*DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-            .filter()
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setRowOne("Part Name", "Contains", partName)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario()
-            .openDesignGuidance();
-
-        String cidDraftValue = designGuidancePage.getDtcIssueValue(draftString);
-        String cidRadiusValue = designGuidancePage.getDtcIssueValue(radiusString);
+        String cidDraftValue = guidanceIssuesPage.getDtcIssueCount(draftString);
+        String cidRadiusValue = guidanceIssuesPage.getDtcIssueCount(radiusString);
 
         assertThat(reportsDraftValue, is(equalTo(cidDraftValue)));
-        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));*/
+        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
     }
 
     /**
@@ -289,24 +291,24 @@ public class CommonReportTests extends TestBase {
             reportsMaterialValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, materialString);
             reportsRadiusValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, radiusString);
         }
-        genericReportPage.openNewCidTabAndFocus(1);
 
-        /*DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-            .filter()
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setRowOne("Part Name", "Contains", partName)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario()
-            .openDesignGuidance();
+        genericReportPage.openNewCidTabAndFocus(1);
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
 
         radiusString = "Radii";
-        String cidMaterialValue = designGuidancePage.getDtcIssueValue(materialString);
-        String cidRadiusValue = designGuidancePage.getDtcIssueValue(radiusString);
+        String cidMaterialValue = guidanceIssuesPage.getDtcIssueCount(materialString);
+        String cidRadiusValue = guidanceIssuesPage.getDtcIssueCount(radiusString);
 
         assertThat(reportsMaterialValue, is(equalTo(cidMaterialValue)));
-        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));*/
+        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
     }
 
     /**
@@ -423,23 +425,22 @@ public class CommonReportTests extends TestBase {
         String reportsCiCost = assemblyCostReportPage.getGeneralCostInfoValue("Capital", false);
 
         assemblyCostReportPage.openNewCidTabAndFocus(1);
-
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains", AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
-                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Contains",
+                        AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        evaluatePage.waitForCostsToLoad();
-        CostDetailsPage costDetailsPage = evaluatePage.openAssemblyCostDetails();
+        CostDetailsPage costDetailsPage = evaluatePage.openCostDetails();
 
         assertThat(reportsPartName, is(equalTo(evaluatePage.getPartName())));
-        assertThat(reportsScenarioName, is(equalTo(evaluatePage.getScenarioName())));
+        assertThat(reportsScenarioName, is(equalTo(evaluatePage.getCurrentScenarioName())));
 
-        assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getPiecePartCostString())));
-        assertThat(reportsCiCost, is(equalTo(costDetailsPage.getTotalCapitalInvestments())));*/
+        assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getCostSumValue("Piece Part Cost"))));
+        assertThat(reportsCiCost, is(equalTo(String.valueOf(evaluatePage.getCostResults("Total Capital Investment")))));
     }
 }
