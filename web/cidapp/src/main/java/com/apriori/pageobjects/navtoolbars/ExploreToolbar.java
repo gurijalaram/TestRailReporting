@@ -46,7 +46,7 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-new-scenario']")
     private WebElement scenarioButton;
 
-    @FindBy(css = "[role='menuitem'] svg[data-icon='info-circle']")
+    @FindBy(id = "qa-action-bar-action-info")
     private WebElement infoButton;
 
     @FindBy(id = "qa-sub-header-action-lock")
