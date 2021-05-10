@@ -335,7 +335,6 @@ public class ActionsTests extends TestBase {
         String testComponentName = "BasicScenario_Forging";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
@@ -345,15 +344,18 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
+            .inputFilter("Recent")
             .enterKeySearch(testComponentName.toUpperCase())
-            .highlightScenario(testScenarioName, "BasicScenario_Forging")
+            .highlightScenario(testComponentName, testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .openScenario(testScenarioName, "BasicScenario_Forging")
+            .inputFilter("Recent")
+            .enterKeySearch(testComponentName.toUpperCase())
+            .openScenario(testComponentName, testScenarioName)
             .info()
             .editNotes("Validating the ability to edit notes")
             .cancel(EvaluatePage.class)
@@ -369,7 +371,8 @@ public class ActionsTests extends TestBase {
     public void deleteNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
+        String testComponentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -380,14 +383,18 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("Push Pin", testScenarioName)
+            .inputFilter("Recent")
+            .enterKeySearch(testComponentName.toUpperCase())
+            .highlightScenario(testComponentName, testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .openScenario("Push Pin", testScenarioName)
+            .inputFilter("Recent")
+            .enterKeySearch(testComponentName.toUpperCase())
+            .openScenario(testComponentName, testScenarioName)
             .info()
             .editNotes("")
             .submit(EvaluatePage.class)
@@ -402,7 +409,8 @@ public class ActionsTests extends TestBase {
     public void readUsersNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
+        String testComponentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
@@ -415,7 +423,9 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("Push Pin", testScenarioName)
+            .inputFilter("Recent")
+            .enterKeySearch(testComponentName.toUpperCase())
+            .highlightScenario(testComponentName, testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -424,7 +434,9 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .logout()
             .login(testUser2)
-            .openScenario(testScenarioName, "Push Pin")
+            .inputFilter("Recent")
+            .enterKeySearch(testComponentName.toUpperCase())
+            .openScenario(testComponentName, testScenarioName)
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes"));
