@@ -61,8 +61,8 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage moveColumn(String direction) {
-        By arrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction));
-        pageUtils.waitForElementAndClick(arrow);
+        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction));
+        pageUtils.waitForElementAndClick(byArrow);
         return this;
     }
 
@@ -73,19 +73,35 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage selectColumn(String columnName) {
-        By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
-        pageUtils.waitForElementAndClick(column);
+        By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+        pageUtils.waitForElementAndClick(byColumn);
         return this;
     }
 
     public ConfigurePage moveToTop(String columnName) {
-        By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+        By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+        pageUtils.waitForElementAndClick(byColumn);
+
+        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", DirectionEnum.UP.getDirection()));
+        do {
+            pageUtils.waitForElementAndClick(byArrow);
+        } while (!driver.findElement(byArrow).isEnabled());
         return this;
     }
 
     public ConfigurePage moveToBottom(String columnName) {
-        By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+        By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+        pageUtils.waitForElementAndClick(byColumn);
+
+        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", DirectionEnum.DOWN.getDirection()));
+        do {
+            pageUtils.waitForElementAndClick(byArrow);
+        } while (!driver.findElement(byArrow).isEnabled());
         return this;
+    }
+
+    public ConfigurePage sortColumn() {
+        By byColumn = driver.findElement(By.xpath("//div[.='Process Group']")).findElement(By.cssSelector("svg[data-icon='sort-up']"));
     }
 
     /**
