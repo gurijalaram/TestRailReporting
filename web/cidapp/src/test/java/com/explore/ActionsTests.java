@@ -492,7 +492,7 @@ public class ActionsTests extends TestBase {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
+        infoPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
