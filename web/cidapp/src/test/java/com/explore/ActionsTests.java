@@ -285,11 +285,12 @@ public class ActionsTests extends TestBase {
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()
+            .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Assignee", "is", "Ciene Frith")
+            .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "Push Pin"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("Push Pin", testScenarioName), equalTo(1));
     }
 
     @Test
