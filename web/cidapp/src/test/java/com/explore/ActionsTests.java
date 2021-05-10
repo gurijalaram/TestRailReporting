@@ -41,7 +41,7 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
 
     private File resourceFile;
-    private GenerateStringUtil generateStringUtil;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public ActionsTests() {
         super();
