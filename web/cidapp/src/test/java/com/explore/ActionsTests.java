@@ -465,11 +465,12 @@ public class ActionsTests extends TestBase {
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()
+            .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Status", "In", "Complete")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "RAPID PROTOTYPING"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", testScenarioName), equalTo(1));
 
         explorePage.filter()
             .inputName(filterName2)
