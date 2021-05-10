@@ -466,14 +466,14 @@ public class ActionsTests extends TestBase {
             .clickExplore()
             .filter()
             .inputName(filterName)
-            .addCriteriaWithOption("Status", "is", "Complete")
+            .addCriteriaWithOption("Status", "In", "Complete")
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(testScenarioName, "RAPID PROTOTYPING"), equalTo(1));
 
         explorePage.filter()
             .inputName(filterName2)
-            .addCriteriaWithOption("Cost Maturity", "is", "Medium")
+            .addCriteriaWithOption("Cost Maturity", "In", "Medium")
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Rapid Prototyping", testScenarioName), equalTo(1));
