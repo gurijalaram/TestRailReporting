@@ -78,6 +78,16 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
         return this;
     }
 
+    public ConfigurePage moveToTop(String columnName) {
+        By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+        return this;
+    }
+
+    public ConfigurePage moveToBottom(String columnName) {
+        By column = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName));
+        return this;
+    }
+
     /**
      * Selects the submit button
      *

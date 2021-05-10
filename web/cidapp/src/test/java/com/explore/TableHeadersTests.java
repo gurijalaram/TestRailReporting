@@ -19,7 +19,6 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
-// TODO: 10/05/2021 import correct columns enum
 
 public class TableHeadersTests extends TestBase {
 
