@@ -19,6 +19,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
+// TODO: 10/05/2021 import correct columns enum
+
 public class TableHeadersTests extends TestBase {
 
     private final String ascending = "sort-asc";
@@ -98,7 +100,7 @@ public class TableHeadersTests extends TestBase {
     @Description("Test remove thumbnails")
     public void testRemoveThumbnails() {
         loginPage = new CidAppLoginPage(driver);
-        tableColumnsPage = loginPage.login(UserUtil.getUser())
+        configurePage = loginPage.login(UserUtil.getUser())
             .configure()
             .selectColumn(ColumnsEnum.THUMBNAIL.getColumns())
             .moveColumn(DirectionEnum.LEFT)
@@ -112,7 +114,8 @@ public class TableHeadersTests extends TestBase {
 
             // TODO: 10/05/2021 implement below
             .moveColumnToTop(ColumnsEnum.THUMBNAIL.getColumns())
-            .selectSaveButton(ExplorePage.class).openColumnsTable();
+            .selectSaveButton(ExplorePage.class)
+            .configure();
 
         assertThat(tableColumnsPage.getIncludedList(), containsString(ColumnsEnum.THUMBNAIL.getColumns()));
     }
