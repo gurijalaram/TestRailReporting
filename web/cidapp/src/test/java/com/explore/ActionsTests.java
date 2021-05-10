@@ -60,7 +60,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -91,7 +91,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -131,7 +131,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -163,7 +163,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .info()
             .inputStatus("Complete")
             .inputCostMaturity("Medium")
@@ -191,7 +191,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .info()
             .inputStatus("New")
             .inputCostMaturity("High")
@@ -220,7 +220,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -247,7 +247,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         assignPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
@@ -274,7 +274,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .inputStatus("New")
@@ -302,7 +302,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -335,7 +335,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
@@ -369,7 +369,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -404,7 +404,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(testUser1)
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -438,7 +438,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .inputStatus("Complete")
@@ -473,7 +473,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -508,7 +508,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
