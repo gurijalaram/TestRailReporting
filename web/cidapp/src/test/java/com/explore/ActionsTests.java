@@ -72,6 +72,7 @@ public class ActionsTests extends TestBase {
             .inputDescription("Qa Description")
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
+            .highlightScenario("M3CapScrew", testScenarioName)
             .info();
 
         assertThat(infoPage.getStatus(), is(equalTo("New")));
@@ -138,6 +139,7 @@ public class ActionsTests extends TestBase {
             .clickExplore()
             .highlightScenario("bracket_basic", testScenarioName)
             .lock(ExplorePage.class)
+            .highlightScenario("bracket_basic", testScenarioName)
             .previewPanel();
 
         assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
@@ -250,7 +252,7 @@ public class ActionsTests extends TestBase {
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(EvaluatePage.class)
             .clickExplore()
             .openScenario("PowderMetalShaft", testScenarioName)
             .assign()
@@ -314,7 +316,7 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .openScenario(testScenarioName, "BasicScenario_Forging")
+            .openScenario("BasicScenario_Forging", testScenarioName)
             .info()
             .editNotes("Testing QA notes validating the ability to edit notes")
             .submit(EvaluatePage.class)
@@ -347,7 +349,7 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .openScenario(testScenarioName, "BasicScenario_Forging")
+            .openScenario("BasicScenario_Forging", testScenarioName)
             .info()
             .editNotes("Validating the ability to edit notes")
             .cancel(EvaluatePage.class)
@@ -381,7 +383,7 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .openScenario(testScenarioName, "Push Pin")
+            .openScenario("Push Pin", testScenarioName)
             .info()
             .editNotes("")
             .submit(EvaluatePage.class)
@@ -485,7 +487,7 @@ public class ActionsTests extends TestBase {
             .inputDescription("QAutomation Test Remove Description")
             .inputNotes("")
             .submit(ExplorePage.class)
-            .openScenario(testScenarioName, "Push Pin")
+            .openScenario("Push Pin", testScenarioName)
             .info()
             .editDescription("")
             .submit(EvaluatePage.class)
