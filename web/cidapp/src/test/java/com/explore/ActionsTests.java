@@ -474,6 +474,7 @@ public class ActionsTests extends TestBase {
 
         explorePage.filter()
             .inputName(filterName2)
+            .saveAs()
             .addCriteriaWithOption("Cost Maturity", "In", "Medium")
             .submit(ExplorePage.class);
 
@@ -486,7 +487,8 @@ public class ActionsTests extends TestBase {
     public void deleteDescription() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
+        String testComponentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -497,14 +499,18 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("Push Pin", testScenarioName)
+            .inputFilter("Recent")
+            .enterKeySearch(testComponentName.toUpperCase())
+            .highlightScenario(testComponentName, testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QAutomation Test Remove Description")
             .inputNotes("")
             .submit(ExplorePage.class)
-            .openScenario("Push Pin", testScenarioName)
+            .inputFilter("Recent")
+            .enterKeySearch(testComponentName.toUpperCase())
+            .openScenario(testComponentName, testScenarioName)
             .info()
             .editDescription("")
             .submit(EvaluatePage.class)
@@ -521,7 +527,8 @@ public class ActionsTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
+        String testComponentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -532,7 +539,9 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("Push Pin", testScenarioName)
+            .inputFilter("Recent")
+            .enterKeySearch(testComponentName.toUpperCase())
+            .highlightScenario(testComponentName, testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
