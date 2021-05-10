@@ -65,7 +65,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "M3CapScrew")
+            .highlightScenario("M3CapScrew", testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -96,7 +96,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "M3CapScrew")
+            .highlightScenario("M3CapScrew", testScenarioName)
             .info()
             .inputStatus("Analysis")
             .inputCostMaturity("Medium")
@@ -136,7 +136,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "bracket_basic")
+            .highlightScenario("bracket_basic", testScenarioName)
             .lock(ExplorePage.class)
             .previewPanel();
 
@@ -225,7 +225,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "PowderMetalShaft")
+            .highlightScenario("PowderMetalShaft", testScenarioName)
             .assign()
             .inputAssignee("Moya Parker")
             .submit(ExplorePage.class)
@@ -252,7 +252,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class)
             .clickExplore()
-            .openScenario(testScenarioName, "PowderMetalShaft")
+            .openScenario("PowderMetalShaft", testScenarioName)
             .assign()
             .inputAssignee("Sinead Plunkett")
             .submit(EvaluatePage.class)
@@ -307,7 +307,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "BasicScenario_Forging")
+            .highlightScenario("BasicScenario_Forging", testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -340,7 +340,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "BasicScenario_Forging")
+            .highlightScenario("BasicScenario_Forging", testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -374,7 +374,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "Push Pin")
+            .highlightScenario("Push Pin", testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -409,7 +409,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "Push Pin")
+            .highlightScenario("Push Pin", testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -458,7 +458,7 @@ public class ActionsTests extends TestBase {
             .addCriteriaWithOption("Cost Maturity", "is", "Medium")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(testScenarioName, "Rapid Prototyping"), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("Rapid Prototyping", testScenarioName), equalTo(1));
     }
 
     @Test
@@ -478,7 +478,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "Push Pin")
+            .highlightScenario("Push Pin", testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -513,7 +513,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario(testScenarioName, "Push Pin")
+            .highlightScenario("Push Pin", testScenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
