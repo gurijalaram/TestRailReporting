@@ -341,7 +341,7 @@ public class ActionsTests extends TestBase {
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(EvaluatePage.class)
             .clickExplore()
             .highlightScenario("BasicScenario_Forging", testScenarioName)
             .info()
