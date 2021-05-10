@@ -231,4 +231,26 @@ public class ExplorePage extends ExploreToolbar {
         pageUtils.javaScriptClick(driver.findElement(By.xpath("//div[.='100']")));
         return this;
     }
+
+    /**
+     * Search for component
+     *
+     * @param componentName - the component name
+     * @return new page object
+     */
+    public ExplorePage enterKeySearch(String componentName) {
+        componentTableActions.enterKeySearch(componentName);
+        return this;
+    }
+
+    /**
+     * Search for component
+     *
+     * @param componentName - the component name
+     * @return new page object
+     */
+    public ExplorePage clickSearch(String componentName) {
+        componentTableActions.clickSearch(componentName);
+        return this;
+    }
 }

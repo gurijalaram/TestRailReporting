@@ -332,8 +332,10 @@ public class ActionsTests extends TestBase {
     public void cancelEditNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "BasicScenario_Forging.stp");
+        String testComponentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(UserUtil.getUser())
@@ -343,6 +345,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
+            .enterKeySearch(testComponentName.toUpperCase())
             .highlightScenario(testScenarioName, "BasicScenario_Forging")
             .info()
             .inputStatus("New")
