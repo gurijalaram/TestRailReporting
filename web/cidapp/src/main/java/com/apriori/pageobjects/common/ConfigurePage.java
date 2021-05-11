@@ -13,12 +13,19 @@ import org.slf4j.LoggerFactory;
 import utils.ColumnsEnum;
 import utils.DirectionEnum;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class ConfigurePage extends LoadableComponent<ConfigurePage> {
 
     private static final Logger logger = LoggerFactory.getLogger(ConfigurePage.class);
 
     @FindBy(xpath = "//label[.='Number of sticky columns']/ancestor::div//div[contains(@class,'apriori-select')]")
     private WebElement stickyDropdown;
+
+    @FindBy(css = "div[class='apriori-card medium-card shuttle-box-list card']")
+    private List<WebElement> columnList;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -79,6 +86,12 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
         return this;
     }
 
+    /**
+     * Moves column to top
+     *
+     * @param columnName - the column name
+     * @return current page object
+     */
     public ConfigurePage moveToTop(ColumnsEnum columnName) {
         By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName.getColumns()));
         pageUtils.waitForElementAndClick(byColumn);
@@ -91,6 +104,12 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
         return this;
     }
 
+    /**
+     * Moves column to bottom
+     *
+     * @param columnName - the column name
+     * @return current page object
+     */
     public ConfigurePage moveToBottom(ColumnsEnum columnName) {
         By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName.getColumns()));
         pageUtils.waitForElementAndClick(byColumn);
@@ -100,6 +119,24 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
         while (!driver.findElement(byArrow).isEnabled()) {
         }
         return this;
+    }
+
+    /**
+     * Gets choices list
+     *
+     * @return list string
+     */
+    public List<String> getChoicesList() {
+        return Stream.of(columnList.get(0).getAttribute("innerText").split("\n")).filter(x -> x.contains("Choices".toUpperCase())).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets chosen list
+     *
+     * @return list string
+     */
+    public List<String> getChosenList() {
+        return Stream.of(columnList.get(1).getAttribute("innerText").split("\n")).filter(x -> x.contains("Chosen".toUpperCase())).collect(Collectors.toList());
     }
 
     /**

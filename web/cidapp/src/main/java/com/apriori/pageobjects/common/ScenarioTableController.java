@@ -273,8 +273,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     /**
      * Sorts the column in order
+     *
      * @param column - the column
-     * @param order - the order
+     * @param order  - the order
      * @return current page object
      */
     public ScenarioTableController sortColumn(ColumnsEnum column, SortOrderEnum order) {
@@ -286,6 +287,12 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return this;
     }
 
+    /**
+     * Gets sort order
+     *
+     * @param column - the column
+     * @return string
+     */
     public String getSortOrder(ColumnsEnum column) {
         By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
 

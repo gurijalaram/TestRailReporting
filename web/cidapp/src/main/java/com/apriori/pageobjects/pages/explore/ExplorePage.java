@@ -256,11 +256,24 @@ public class ExplorePage extends ExploreToolbar {
         return this;
     }
 
-    public  ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
+    /**
+     * Sorts the column
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
         scenarioTableController.sortColumn(column, order);
         return this;
     }
 
+    /**
+     * Gets sort order
+     *
+     * @param column - the column
+     * @return string
+     */
     public String getSortOrder(ColumnsEnum column) {
         return scenarioTableController.getSortOrder(column);
     }

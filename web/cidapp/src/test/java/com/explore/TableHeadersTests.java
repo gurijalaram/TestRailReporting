@@ -2,7 +2,6 @@ package com.explore;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
@@ -27,8 +26,6 @@ import utils.SortOrderEnum;
 
 public class TableHeadersTests extends TestBase {
 
-    private final String ascending = "sort-down";
-    private final String descending = "sort-up";
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
@@ -111,7 +108,7 @@ public class TableHeadersTests extends TestBase {
             .submit(ExplorePage.class)
             .configure();
 
-        assertThat(configurePage.getIncludedList(), not(containsString(ColumnsEnum.THUMBNAIL.getColumns())));
+        assertThat(configurePage.getChosenList(), not(hasItem(ColumnsEnum.THUMBNAIL.getColumns())));
 
         configurePage.selectColumn(ColumnsEnum.THUMBNAIL)
             .moveColumn(DirectionEnum.RIGHT)
@@ -119,7 +116,7 @@ public class TableHeadersTests extends TestBase {
             .submit(ExplorePage.class)
             .configure();
 
-        assertThat(configurePage.getIncludedList(), containsString(ColumnsEnum.THUMBNAIL.getColumns()));
+        assertThat(configurePage.getChosenList(), hasItem(ColumnsEnum.THUMBNAIL.getColumns()));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
