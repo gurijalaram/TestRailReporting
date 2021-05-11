@@ -93,14 +93,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage moveToTop(ColumnsEnum columnName) {
-        By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName.getColumns()));
-        pageUtils.waitForElementAndClick(byColumn);
-
-        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", DirectionEnum.UP.getDirection()));
-
-        while (!driver.findElement(byArrow).isEnabled()) {
-            pageUtils.waitForElementAndClick(byArrow);
-        }
+        moveColumn(columnName, DirectionEnum.UP);
         return this;
     }
 
@@ -111,14 +104,23 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage moveToBottom(ColumnsEnum columnName) {
-        By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName.getColumns()));
-        pageUtils.waitForElementAndClick(byColumn);
+        moveColumn(columnName, DirectionEnum.DOWN);
+        return this;
+    }
 
-        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", DirectionEnum.DOWN.getDirection()));
+    /**
+     * Moves the column
+     *
+     * @param columnName - the column name
+     * @param direction  - the direction
+     */
+    private void moveColumn(ColumnsEnum columnName, DirectionEnum direction) {
+        selectColumn(columnName);
+        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction.getDirection()));
 
         while (!driver.findElement(byArrow).isEnabled()) {
+            pageUtils.waitForElementAndClick(byArrow);
         }
-        return this;
     }
 
     /**
