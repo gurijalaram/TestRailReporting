@@ -37,7 +37,7 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-delete-button']")
     private WebElement deleteButton;
 
-    @FindBy(css = "[id='qa-sub-header-actions-dropdown']")
+    @FindBy(css = "[id='qa-action-bar-actions-dropdown']")
     private WebElement actionsButton;
 
     @FindBy(css = "[id='qa-sub-header-edit-button']")
@@ -46,7 +46,7 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-new-scenario']")
     private WebElement scenarioButton;
 
-    @FindBy(css = "[role='menuitem'] svg[data-icon='info-circle']")
+    @FindBy(id = "qa-action-bar-action-info")
     private WebElement infoButton;
 
     @FindBy(id = "qa-sub-header-action-lock")
@@ -58,6 +58,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(id = "qa-sub-header-new-comparison")
     private WebElement comparisonButton;
 
+    @FindBy(id = "qa-action-bar-action-assign")
+    private WebElement assignButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -68,7 +71,7 @@ public class ExploreToolbar extends MainNavBar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(newButton);
-        pageUtils.waitForElementAppear(publishButton);
+        pageUtils.waitForElementAppear(deleteButton);
     }
 
     /**
@@ -118,7 +121,7 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Publish the scenario
+     * Opens the scenario
      *
      * @return new page object
      */
@@ -138,7 +141,7 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Create new scenario
+     * Opens the scenario page
      *
      * @return new page object
      */
@@ -149,11 +152,11 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Add scenario info
+     * Opens scenario info page
      *
      * @return new page object
      */
-    public InfoPage addScenarioNotes() {
+    public InfoPage info() {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(infoButton);
         return new InfoPage(driver);
@@ -162,27 +165,27 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Lock the scenario
      *
-     * @return current page object
+     * @return generic page object
      */
-    public ExploreToolbar lock() {
+    public <T> T lock(Class<T> klass) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(lockButton);
-        return this;
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
      * Unlock the scenario
      *
-     * @return current page object
+     * @return generic page object
      */
-    public ExploreToolbar unlock() {
+    public <T> T unlock(Class<T> klass) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(unlockButton);
-        return this;
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
-     * Deletes a scenario
+     * Opens the scenario page
      *
      * @return new page object
      */
@@ -192,7 +195,18 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Creates a comparison
+     * Opens the assignee page
+     *
+     * @return new page object
+     */
+    public AssignPage assign() {
+        pageUtils.waitForElementAndClick(actionsButton);
+        pageUtils.waitForElementAndClick(assignButton);
+        return new AssignPage(driver);
+    }
+
+    /**
+     * Opens the comparison page
      *
      * @return new page object
      */

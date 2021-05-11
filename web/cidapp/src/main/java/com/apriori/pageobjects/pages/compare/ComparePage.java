@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * @author cfrith
+ */
+
 public class ComparePage extends CompareToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(ComparePage.class);
@@ -32,6 +36,9 @@ public class ComparePage extends CompareToolbar {
 
     @FindBy(css = "[data-rbd-droppable-id='basis-column']")
     private WebElement basisColumn;
+
+    @FindBy(css = "[data-rbd-droppable-id='basis-column'] .close-button")
+    private WebElement deleteBasis;
 
     @FindBy(xpath = "//p[.='Preparing Comparison']")
     private List<WebElement> comparisonLoader;
@@ -172,26 +179,26 @@ public class ComparePage extends CompareToolbar {
         return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
     }
 
-    public ComparePage getCardInfo(String card, String componentName, String scenarioName) {
-        List<WebElement> byCard = driver.findElements(By.cssSelector("[data-rbd-droppable-id='header-sections'] .comparison-row"));
-        List<WebElement> byValue = driver.findElement(By.xpath(String.format("//div[.='%s / %s']/parent::div", componentName, scenarioName))).findElements(By.cssSelector(".comparison-row"));
+    /**
+     * Deletes basis
+     *
+     * @return current page object
+     */
+    public ComparePage deleteBasis() {
+        pageUtils.waitForElementAndClick(deleteBasis);
+        return this;
+    }
 
-        int cardIndex = IntStream.range(0, byCard.size()).filter(x -> byCard.get(x).getText().equals(card)).findFirst().getAsInt();
-
-        String valueText = byValue.get(cardIndex).getAttribute("textContent");
-
-        List<WebElement> byIndex = driver.findElements(By.xpath(String.format("//div[.='%s / %s']/parent::div//div[.='%s']/parent::div//div[@class='comparison-row']", componentName, scenarioName, valueText)));
-
-        int positionIndex = IntStream.range(0, byIndex.size()).filter(x -> byIndex.get(x).getText().equals(valueText)).findFirst().getAsInt();
-
-        positionIndex = positionIndex > 0 ? positionIndex + 1 : positionIndex;
-
-        String arrowColour = driver.findElements(By.xpath(String.format("//div[.='%s / %s']/parent::div//div[.='%s']/parent::div//div[@class='comparison-row']/parent::div/..//div[@class='right']//div", componentName, scenarioName, valueText))).get(positionIndex).findElement(By.cssSelector("svg")).getAttribute("color");
-        String funnyColumnText = null;
-
-        if (positionIndex > 0) {
-            funnyColumnText = driver.findElements(By.xpath(String.format("//div[.='%s / %s']/parent::div//div[.='%s']/parent::div//div[@class='comparison-row']/parent::div/..//div[@class='right']//div", componentName, scenarioName, valueText))).get(positionIndex).findElement(By.cssSelector(".property-value")).getText();
-        }
+    /**
+     * Deletes a comparison
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public ComparePage deleteComparison(String componentName, String scenarioName) {
+        By byComparison = By.xpath(String.format("//div[.='%s / %s']/parent::div//div[@class='close-button close-button-dark']", componentName.trim().toUpperCase(), scenarioName.trim()));
+        pageUtils.waitForElementAndClick(byComparison);
         return this;
     }
 }
