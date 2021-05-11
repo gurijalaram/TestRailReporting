@@ -36,61 +36,30 @@ public class TableHeadersTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"1096"})
-    @Description("Test default list of column headers in the private workspace")
-    public void testPrivateDefaultColumnHeaders() {
+    @Description("Test default list of column headers in the workspace")
+    public void testDefaultColumnHeaders() {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
-        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.SCENARIO_NAME.getColumns(), ColumnsEnum.STATE.getColumns(),
-            ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns(), ColumnsEnum.LAST_UPDATED_BY.getColumns()));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"1096"})
-    @Description("Test default list of column headers in the public workspace")
-    public void testPublicDefaultColumnHeaders() {
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
-
-        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.SCENARIO_NAME.getColumns(), ColumnsEnum.STATE.getColumns(),
-            ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns(), ColumnsEnum.LAST_UPDATED_BY.getColumns()));
+        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.THUMBNAIL.getColumns(), ColumnsEnum.COMPONENT_NAME.getColumns(), ColumnsEnum.SCENARIO_NAME.getColumns(),
+            ColumnsEnum.STATE.getColumns(),            ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns()));
     }
 
     @Test
     @TestRail(testCaseId = {"1095"})
-    @Description("Test added columns are displayed in the public workspace")
-    public void testPublicAddColumnHeaders() {
+    @Description("Test added columns are displayed in the workspace")
+    public void testAddColumnHeaders() {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .configure()
-            .selectColumn(ColumnsEnum.COMPONENT_TYPE)
+            .selectColumn(ColumnsEnum.DESCRIPTION)
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.COMPONENT_TYPE.getColumns()));
+        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.DESCRIPTION.getColumns()));
 
         explorePage.configure()
-            .selectColumn(ColumnsEnum.COMPONENT_TYPE)
-            .moveColumn(DirectionEnum.LEFT)
-            .submit(ExplorePage.class);
-    }
-
-    @Test
-    @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1095", "531"})
-    @Description("Test added columns are displayed in the private workspace")
-    public void testPrivateAddColumnHeaders() {
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .configure()
-            .selectColumn(ColumnsEnum.ASSIGNEE)
-            .moveColumn(DirectionEnum.RIGHT)
-            .submit(ExplorePage.class);
-
-        assertThat(explorePage.getTableHeaders(), hasItem(ColumnsEnum.ASSIGNEE.getColumns()));
-
-        explorePage.configure()
-            .selectColumn(ColumnsEnum.ASSIGNEE)
+            .selectColumn(ColumnsEnum.DESCRIPTION)
             .moveColumn(DirectionEnum.LEFT)
             .submit(ExplorePage.class);
     }
@@ -136,7 +105,7 @@ public class TableHeadersTests extends TestBase {
         explorePage.sortColumn(ColumnsEnum.VPE, SortOrderEnum.ASCENDING);
         assertThat(explorePage.getSortOrder(ColumnsEnum.VPE), is(equalTo(SortOrderEnum.ASCENDING.getOrder())));
 
-        explorePage.sortColumn(ColumnsEnum.LAST_UPDATED_AT, SortOrderEnum.DESCENDING);
-        assertThat(explorePage.getSortOrder(ColumnsEnum.LAST_UPDATED_AT), is(equalTo(SortOrderEnum.DESCENDING.getOrder())));
+        explorePage.sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+        assertThat(explorePage.getSortOrder(ColumnsEnum.CREATED_AT), is(equalTo(SortOrderEnum.DESCENDING.getOrder())));
     }
 }
