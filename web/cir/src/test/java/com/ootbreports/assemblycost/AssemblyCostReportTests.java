@@ -10,7 +10,6 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -24,7 +23,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"2995"})
     @Description("Validate report is available by navigation - Assembly Cost (A4) Report")
     public void testReportAvailabilityByNavigationAssemblyCostA4() {
@@ -35,7 +34,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"7132"})
     @Description("Validate report is available by navigation - Assembly Cost (Letter) Report")
     public void testReportAvailabilityByNavigationAssemblyCostLetter() {

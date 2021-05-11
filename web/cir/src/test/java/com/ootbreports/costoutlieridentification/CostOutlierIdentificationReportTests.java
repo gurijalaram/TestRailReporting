@@ -116,7 +116,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"1959"})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Main Report")
     public void testDataIntegrityAgainstCID() {

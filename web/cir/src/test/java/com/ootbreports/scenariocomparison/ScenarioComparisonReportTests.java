@@ -40,7 +40,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"3245"})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {

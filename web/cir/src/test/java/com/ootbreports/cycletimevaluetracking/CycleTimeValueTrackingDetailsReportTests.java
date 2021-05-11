@@ -104,7 +104,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"2334"})
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {

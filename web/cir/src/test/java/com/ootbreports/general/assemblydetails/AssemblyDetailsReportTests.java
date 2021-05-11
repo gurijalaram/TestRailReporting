@@ -56,7 +56,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1915"})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigationAssemblyDetails() {
@@ -457,7 +457,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"1930"})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
@@ -772,7 +772,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"1924"})
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
@@ -874,7 +874,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"1927"})
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {

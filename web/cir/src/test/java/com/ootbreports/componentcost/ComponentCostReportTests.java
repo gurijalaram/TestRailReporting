@@ -37,7 +37,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3323"})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -149,7 +149,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3327"})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
