@@ -52,7 +52,8 @@ public class CommonReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToViewRepositoryPage()
-            .navigateToReportFolder(reportName);
+            .navigateToReportFolder(reportName)
+            .waitForReportToAppear(reportName);
 
         assertThat(reportName, is(equalTo(genericReportPage.getReportName(reportName))));
     }

@@ -1380,6 +1380,16 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Waits for report to appear
+     *
+     * @param reportName - String report name to wait on
+     */
+    public GenericReportPage waitForReportToAppear(String reportName) {
+        pageUtils.waitForElementToAppear(By.xpath(String.format("//a[text() = '%s']", reportName)));
+        return this;
+    }
+
+    /**
      * Sets day value in date picker
      */
     private void setDayValuePicker(int dayValue) {
