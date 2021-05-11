@@ -45,7 +45,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     @FindBy(xpath = "//button[.='About']")
     private WebElement aboutButton;
 
-    @FindBy(css = ".user-dropdown.dropdown.show")
+    @FindBy(css = ".user-dropdown.dropdown")
     private WebElement userDropdown;
 
     @FindBy(css = "[data-icon='sign-out-alt']")

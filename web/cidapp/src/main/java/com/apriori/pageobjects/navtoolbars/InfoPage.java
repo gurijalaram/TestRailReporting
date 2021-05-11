@@ -1,8 +1,12 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.StatusIconEnum;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,14 +44,22 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     @FindBy(css = "textarea[name='notes']")
     private WebElement notesInput;
 
+    @FindBy(css = "[id='qa-scenario-info-form-status-select'] [id]")
+    private WebElement statusText;
+
+    @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] [id]")
+    private WebElement costMaturityText;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private StatusIcon statusIcon;
 
     public InfoPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
+        this.statusIcon = new StatusIcon(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -98,6 +110,19 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     }
 
     /**
+     * Edits the scenario notes
+     *
+     * @param description - the description notes
+     * @return current page object
+     */
+    public InfoPage editDescription(String description) {
+        descriptionInput.sendKeys(Keys.CONTROL + "a");
+        descriptionInput.sendKeys(Keys.DELETE);
+        descriptionInput.sendKeys(description);
+        return this;
+    }
+
+    /**
      * Input notes
      *
      * @param notes - the notes
@@ -106,6 +131,19 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     public InfoPage inputNotes(String notes) {
         pageUtils.waitForElementAndClick(notesInput);
         notesInput.clear();
+        notesInput.sendKeys(notes);
+        return this;
+    }
+
+    /**
+     * Edits the scenario notes
+     *
+     * @param notes - the scenario notes
+     * @return current page object
+     */
+    public InfoPage editNotes(String notes) {
+        notesInput.sendKeys(Keys.CONTROL + "a");
+        notesInput.sendKeys(Keys.DELETE);
         notesInput.sendKeys(notes);
         return this;
     }
@@ -126,6 +164,45 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      */
     public String getNotes() {
         return notesInput.getAttribute("textContent");
+    }
+
+    /**
+     * Checks icon is displayed
+     *
+     * @param icon - the icon
+     * @return true/false
+     */
+    public boolean isIconDisplayed(StatusIconEnum icon) {
+        return statusIcon.isIconDisplayed(icon);
+    }
+
+    /**
+     * Gets scenario info
+     *
+     * @param label - the label
+     * @return string
+     */
+    public String getScenarioInfo(String label) {
+        By byLabel = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
+        return pageUtils.waitForElementToAppear(byLabel).getAttribute("textContent");
+    }
+
+    /**
+     * Gets status
+     *
+     * @return string
+     */
+    public String getStatus() {
+        return pageUtils.waitForElementToAppear(statusText).getAttribute("textContent");
+    }
+
+    /**
+     * Gets cost maturity
+     *
+     * @return string
+     */
+    public String getCostMaturity() {
+        return pageUtils.waitForElementToAppear(costMaturityText).getAttribute("textContent");
     }
 
     /**
