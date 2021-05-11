@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "configurationType",
+    "createdAt",
+    "createdBy",
+    "customerIdentity",
+    "deletedAt",
+    "deletedBy",
+    "identity",
+    "serializationType",
+    "updatedAt",
+    "updatedBy"
+  ],
+  "properties": {
+    "configurationType": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "deletedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "serializationType": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    }
+  }
+}
