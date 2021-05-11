@@ -95,7 +95,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3365"})
     @Description("Validate Currency Code Input Control Functionality")
     public void testCurrencyCodeInputControl() {

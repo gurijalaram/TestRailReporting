@@ -3,6 +3,7 @@ package com.apriori.pageobjects.header;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,7 +40,7 @@ public class ReportsPageHeader extends PageHeader {
     private WebElement undoAllButton;
 
     @FindBy(id = "ICDialog")
-    private WebElement optionsButton;
+    private WebElement inputControlsButton;
 
     @FindBy(id = "zoom_out")
     private WebElement zoomOutButton;
@@ -96,8 +97,16 @@ public class ReportsPageHeader extends PageHeader {
      * @return Input Controls page object
      */
     public GenericReportPage clickInputControlsButton() {
-        pageUtils.waitForElementToAppear(optionsButton);
-        optionsButton.click();
+        pageUtils.waitForElementToAppear(inputControlsButton);
+        pageUtils.waitForElementToAppear(By.id("schedule"));
+        pageUtils.waitForElementToAppear(By.id("embed"));
+        pageUtils.waitForElementToAppear(By.id("export"));
+        pageUtils.waitForElementToAppear(By.id("back"));
+        pageUtils.waitForElementToAppear(By.id("search_report"));
+        pageUtils.waitForElementToAppear(By.id("search_report_button"));
+        pageUtils.waitForElementToAppear(By.id("search_options"));
+        pageUtils.waitForElementToAppear(By.id("dataRefreshButton"));
+        inputControlsButton.click();
         return new GenericReportPage(driver);
     }
 

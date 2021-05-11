@@ -81,7 +81,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
-        return pageUtils.getReportElement(reportName).getText();
+        return driver.findElement(By.xpath(String.format("//a[text() = '%s']", reportName))).getText();
     }
 
     /**

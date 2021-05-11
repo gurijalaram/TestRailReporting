@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.library;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -50,18 +51,19 @@ public class LibraryPage extends ReportsPageHeader {
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
-        return pageUtils.getReportElement(reportName).getText();
+        return driver.findElement(By.xpath(String.format("//a[text() = '%s']", reportName))).getText();
     }
 
     /**
      * Navigate to a particular report
      *
-     * @param reportName
+     * @param reportName String
      * @return new page object
      */
     public <T> T navigateToReport(String reportName, Class<T> className) {
-        WebElement reportLinkElement = pageUtils.getReportElement(reportName);
-        pageUtils.waitForElementToAppear(reportLinkElement);
+        WebElement reportLinkElement = driver.findElement(
+                By.xpath(String.format("//a[text() = '%s']", reportName)));
+        pageUtils.waitForElementAndClick(reportLinkElement);
         reportLinkElement.click();
         waitForInputControlsLoad();
         return PageFactory.initElements(driver, className);

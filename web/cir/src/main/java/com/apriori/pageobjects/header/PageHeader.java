@@ -16,6 +16,7 @@ import com.apriori.pageobjects.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -153,7 +154,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Library Page page object
      */
     public LibraryPage navigateToLibraryPage() {
-        return navigateToPage(libraryMenuOption, LibraryPage.class);
+        LibraryPage libraryPage = navigateToPage(libraryMenuOption, LibraryPage.class);
+        pageUtils.waitForElementToAppear(By.xpath("//a[text() = 'Assembly Cost (A4)']"));
+        return libraryPage;
     }
 
     /**
