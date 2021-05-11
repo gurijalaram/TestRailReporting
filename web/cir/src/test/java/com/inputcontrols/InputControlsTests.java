@@ -1133,7 +1133,7 @@ public class InputControlsTests extends TestBase {
 
         String expectedCostMetric = costMetric;
         if (reportName.contains("Details") && costMetric.contains("Fully")) {
-            expectedCostMetric = "Fully Burdened";
+            expectedCostMetric = "Fully Burdened Cost";
         }
         assertThat(targetQuotedCostTrendReportPage.getCostMetricValueFromAboveChart(),
                 is(equalTo(expectedCostMetric)));
