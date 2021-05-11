@@ -49,8 +49,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      */
     public ConfigurePage setStickyColumn(String value) {
         pageUtils.waitForElementAndClick(stickyDropdown);
-        By columnNo = By.cssSelector(String.format("button[value='%s']", value));
-        pageUtils.waitForElementAndClick(columnNo);
+        pageUtils.javaScriptClick(driver.findElement(By.xpath(String.format("button[value='%s']", value))));
         return this;
     }
 
@@ -60,9 +59,9 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @param direction - the direction
      * @return current page object
      */
-    public ConfigurePage moveColumn(String direction) {
-        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction));
-        pageUtils.waitForElementAndClick(byArrow);
+    public ConfigurePage moveColumn(DirectionEnum direction) {
+        By arrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction.getDirection()));
+        pageUtils.waitForElementAndClick(arrow);
         return this;
     }
 

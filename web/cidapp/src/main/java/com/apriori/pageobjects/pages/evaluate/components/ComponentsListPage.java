@@ -91,8 +91,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return new page object
      */
-    public ScenarioTableController enterSearch(String componentName) {
-        return componentTableActions.enterSearch(componentName);
+    public ComponentsListPage enterSearch(String componentName) {
+        componentTableActions.enterKeySearch(componentName);
+        return this;
     }
 
     /**
@@ -101,8 +102,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return new page object
      */
-    public ScenarioTableController clickSearch(String componentName) {
-        return componentTableActions.clickSearch(componentName);
+    public ComponentsListPage clickSearch(String componentName) {
+        componentTableActions.clickSearch(componentName);
+        return this;
     }
 
     /**

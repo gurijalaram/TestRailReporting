@@ -139,7 +139,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .addScenarioNotes()
+            .info()
             .inputStatus("Analysis")
             .inputCostMaturity("High")
             .inputDescription("Test Description")
@@ -193,7 +193,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .addScenarioNotes()
+            .info()
             .inputStatus("Complete")
             .inputCostMaturity("High")
             .inputDescription("Test Description")
@@ -231,7 +231,7 @@ public class FilterCriteriaTests extends TestBase {
             .inputName(filterName)
             .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
             .submit(ExplorePage.class)
-            .lock()
+            .lock(ExplorePage.class)
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
