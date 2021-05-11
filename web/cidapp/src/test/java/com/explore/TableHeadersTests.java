@@ -1,6 +1,9 @@
 package com.explore;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.not;
@@ -9,7 +12,6 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -18,12 +20,15 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
+import utils.ColumnsEnum;
+import utils.DirectionEnum;
+import utils.SortOrderEnum;
 
 
 public class TableHeadersTests extends TestBase {
 
-    private final String ascending = "sort-asc";
-    private final String descending = "sort-desc";
+    private final String ascending = "sort-down";
+    private final String descending = "sort-up";
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
@@ -39,8 +44,8 @@ public class TableHeadersTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
-        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.STATE.getColumns(),
-            ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns(), ColumnsEnum.LAST_SAVED.getColumns()));
+        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.SCENARIO_NAME.getColumns(), ColumnsEnum.STATE.getColumns(),
+            ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns(), ColumnsEnum.LAST_UPDATED_BY.getColumns()));
     }
 
     @Test
@@ -50,8 +55,8 @@ public class TableHeadersTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
-        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.NAME_SCENARIO.getColumns(), ColumnsEnum.STATE.getColumns(),
-            ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns(), ColumnsEnum.LAST_SAVED.getColumns()));
+        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.SCENARIO_NAME.getColumns(), ColumnsEnum.STATE.getColumns(),
+            ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns(), ColumnsEnum.LAST_UPDATED_BY.getColumns()));
     }
 
     @Test
@@ -61,16 +66,16 @@ public class TableHeadersTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .configure()
-            .selectColumn(ColumnsEnum.TYPE.getColumns())
+            .selectColumn(ColumnsEnum.COMPONENT_TYPE)
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getColumnHeaderNames(), hasItems(ColumnsEnum.TYPE.getColumns()));
+        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.COMPONENT_TYPE.getColumns()));
 
         explorePage.configure()
-            .selectColumn(ColumnsEnum.TYPE.getColumns())
+            .selectColumn(ColumnsEnum.COMPONENT_TYPE)
             .moveColumn(DirectionEnum.LEFT)
-            .selectSaveButton(ExplorePage.class);
+            .submit(ExplorePage.class);
     }
 
     @Test
@@ -81,14 +86,14 @@ public class TableHeadersTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .configure()
-            .selectColumn(ColumnsEnum.ASSIGNEE.getColumns())
+            .selectColumn(ColumnsEnum.ASSIGNEE)
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getColumnHeaderNames(), hasItem(ColumnsEnum.ASSIGNEE.getColumns()));
+        assertThat(explorePage.getTableHeaders(), hasItem(ColumnsEnum.ASSIGNEE.getColumns()));
 
         explorePage.configure()
-            .selectColumn(ColumnsEnum.ASSIGNEE.getColumns())
+            .selectColumn(ColumnsEnum.ASSIGNEE)
             .moveColumn(DirectionEnum.LEFT)
             .submit(ExplorePage.class);
     }
@@ -101,22 +106,20 @@ public class TableHeadersTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         configurePage = loginPage.login(UserUtil.getUser())
             .configure()
-            .selectColumn(ColumnsEnum.THUMBNAIL.getColumns())
+            .selectColumn(ColumnsEnum.THUMBNAIL)
             .moveColumn(DirectionEnum.LEFT)
             .submit(ExplorePage.class)
             .configure();
 
         assertThat(configurePage.getIncludedList(), not(containsString(ColumnsEnum.THUMBNAIL.getColumns())));
 
-        configurePage.selectColumn(ColumnsEnum.THUMBNAIL.getColumns())
+        configurePage.selectColumn(ColumnsEnum.THUMBNAIL)
             .moveColumn(DirectionEnum.RIGHT)
-
-            // TODO: 10/05/2021 implement below
-            .moveColumnToTop(ColumnsEnum.THUMBNAIL.getColumns())
-            .selectSaveButton(ExplorePage.class)
+            .moveToTop(ColumnsEnum.THUMBNAIL)
+            .submit(ExplorePage.class)
             .configure();
 
-        assertThat(tableColumnsPage.getIncludedList(), containsString(ColumnsEnum.THUMBNAIL.getColumns()));
+        assertThat(configurePage.getIncludedList(), containsString(ColumnsEnum.THUMBNAIL.getColumns()));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -126,18 +129,17 @@ public class TableHeadersTests extends TestBase {
     public void testSortColumns() {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
+            .sortColumn(ColumnsEnum.SCENARIO_NAME, SortOrderEnum.DESCENDING);
 
-            // TODO: 10/05/2021 implement below
-            .sortColumnDescending(ColumnsEnum.NAME_SCENARIO.getColumns());
-        assertThat(explorePage.getColumnOrder(ColumnsEnum.NAME_SCENARIO.getColumns()), containsString(descending));
+        assertThat(explorePage.getSortOrder(ColumnsEnum.SCENARIO_NAME), is(equalTo(SortOrderEnum.DESCENDING.getOrder())));
 
-        explorePage.sortColumnAscending(ColumnsEnum.PROCESS_GROUP.getColumns());
-        assertThat(explorePage.getColumnOrder(ColumnsEnum.PROCESS_GROUP.getColumns()), containsString(ascending));
+        explorePage.sortColumn(ColumnsEnum.PROCESS_GROUP, SortOrderEnum.ASCENDING);
+        assertThat(explorePage.getSortOrder(ColumnsEnum.PROCESS_GROUP), is(equalTo(SortOrderEnum.ASCENDING.getOrder())));
 
-        explorePage.sortColumnAscending(ColumnsEnum.VPE.getColumns());
-        assertThat(explorePage.getColumnOrder(ColumnsEnum.VPE.getColumns()), containsString(ascending));
+        explorePage.sortColumn(ColumnsEnum.VPE, SortOrderEnum.ASCENDING);
+        assertThat(explorePage.getSortOrder(ColumnsEnum.VPE), is(equalTo(SortOrderEnum.ASCENDING.getOrder())));
 
-        explorePage.sortColumnDescending(ColumnsEnum.LAST_SAVED.getColumns());
-        assertThat(explorePage.getColumnOrder(ColumnsEnum.LAST_SAVED.getColumns()), containsString(descending));
+        explorePage.sortColumn(ColumnsEnum.LAST_UPDATED_AT, SortOrderEnum.DESCENDING);
+        assertThat(explorePage.getSortOrder(ColumnsEnum.LAST_UPDATED_AT), is(equalTo(SortOrderEnum.DESCENDING.getOrder())));
     }
 }
