@@ -118,7 +118,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
         selectColumn(columnName);
         By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction.getDirection()));
 
-        while (!driver.findElement(byArrow).isEnabled()) {
+        while (!driver.findElement(By.xpath(String.format("//*[name()='svg' and @data-icon='angle-%s']/..", direction.getDirection()))).getAttribute("class").contains("disabled")) {
             pageUtils.waitForElementAndClick(byArrow);
         }
     }
