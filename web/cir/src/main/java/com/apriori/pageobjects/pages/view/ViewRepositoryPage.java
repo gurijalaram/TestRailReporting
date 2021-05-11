@@ -57,7 +57,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         int folderArrayLength = foldersToGoTo.length;
         if (folderArrayLength == 2) {
             navigateToFolder(foldersToGoTo[1]);
-        } else {
+        } else if (folderArrayLength == 3) {
             navigateToFolder(foldersToGoTo[1]);
             navigateToFolder(foldersToGoTo[2]);
         }
