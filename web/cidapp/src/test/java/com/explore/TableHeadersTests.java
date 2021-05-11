@@ -42,7 +42,7 @@ public class TableHeadersTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser());
 
         assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.THUMBNAIL.getColumns(), ColumnsEnum.COMPONENT_NAME.getColumns(), ColumnsEnum.SCENARIO_NAME.getColumns(),
-            ColumnsEnum.STATE.getColumns(),            ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns()));
+            ColumnsEnum.STATE.getColumns(), ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns()));
     }
 
     @Test
