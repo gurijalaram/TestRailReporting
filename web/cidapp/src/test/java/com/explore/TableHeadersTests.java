@@ -35,7 +35,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1096"})
+    @TestRail(testCaseId = {"7928"})
     @Description("Test default list of column headers in the workspace")
     public void testDefaultColumnHeaders() {
         loginPage = new CidAppLoginPage(driver);
@@ -46,7 +46,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1095"})
+    @TestRail(testCaseId = {"6347"})
     @Description("Test added columns are displayed in the workspace")
     public void testAddColumnHeaders() {
         loginPage = new CidAppLoginPage(driver);
@@ -66,7 +66,7 @@ public class TableHeadersTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1611", "1094"})
+    @TestRail(testCaseId = {"6346"})
     @Description("Test remove thumbnails")
     public void testRemoveThumbnails() {
         loginPage = new CidAppLoginPage(driver);
@@ -90,7 +90,7 @@ public class TableHeadersTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1611", "1086"})
+    @TestRail(testCaseId = {"6340"})
     @Description("Test sort all columns")
     public void testSortColumns() {
         loginPage = new CidAppLoginPage(driver);
