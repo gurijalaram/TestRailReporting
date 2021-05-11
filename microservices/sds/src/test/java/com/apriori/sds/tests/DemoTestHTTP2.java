@@ -12,6 +12,8 @@ import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class DemoTestHTTP2 {
 
     @Test
@@ -19,7 +21,7 @@ public class DemoTestHTTP2 {
         RequestEntityUtil.useTokenForRequests(initToken());
 
         RequestEntity requestEntity = RequestEntityUtil.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
-            .inlineVariables(new String[] {"6MIGDH2M0N93", "5HN1KFMALLM1"});
+            .inlineVariables(Arrays.asList("6MIGDH2M0N93", "5HN1KFMALLM1"));
 
         Assert.assertEquals(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
     }
