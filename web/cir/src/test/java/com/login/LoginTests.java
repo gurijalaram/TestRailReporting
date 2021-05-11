@@ -13,6 +13,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -49,7 +50,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"2697"})
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
@@ -57,31 +58,29 @@ public class LoginTests extends TestBase {
             .clickForgotPassword()
             .submitEmail("fakeEmail@apriori.com");
 
-        String forgotPwdMsg = Constants.environment.equals("cir-qa")
-                ? Constants.FORGOT_PWD_MSG_QA_ENV : Constants.FORGOT_PWD_MSG_STAGING_ENV;
-
-        assertThat(loginPage.getLoginMessage(), is(equalTo(forgotPwdMsg)));
+        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FORGOT_PWD_MSG.toUpperCase())));
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"2698"})
     @Description("Empty email/password field message displayed")
     public void testEmptyFieldsMessage() {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin("", "");
 
-        assertThat(loginPage.getInputErrorMsg(), is(equalTo(Constants.EMPTY_FIELDS_MESSAGE)));
+        assertThat(loginPage.getEmailOrPwdInputErrorMsg(true), is(equalTo(Constants.EMAIL_EMPTY_FIELDS_MESSAGE)));
+        assertThat(loginPage.getEmailOrPwdInputErrorMsg(false), is(equalTo(Constants.PASSWORD_EMPTY_FIELDS_MESSAGE)));
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"2699"})
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getInputErrorMsg(), is(equalTo(Constants.INVALID_ERROR_MESSAGE)));
+        assertThat(loginPage.getEmailOrPwdInputErrorMsg(true), is(equalTo(Constants.INVALID_EMAIL_ERROR_MESSAGE)));
     }
 }
