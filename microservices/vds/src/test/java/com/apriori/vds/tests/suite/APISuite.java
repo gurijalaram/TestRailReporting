@@ -5,6 +5,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import com.apriori.vds.tests.AccessControlsTest;
 
 import com.apriori.vds.tests.ConfigurationTest;
+import com.apriori.vds.tests.CustomAttributesTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -12,7 +13,8 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     AccessControlsTest.class,
-    ConfigurationTest.class
+    ConfigurationTest.class,
+    CustomAttributesTest.class
 })
 public class APISuite {
 }
