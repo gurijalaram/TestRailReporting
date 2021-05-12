@@ -63,7 +63,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @param componentName - the component name
      * @return new page object
      */
-    public ScenarioTableController enterSearch(String componentName) {
+    public ScenarioTableController enterKeySearch(String componentName) {
         search(componentName);
         searchInput.sendKeys(Keys.ENTER);
         return new ScenarioTableController(driver);
