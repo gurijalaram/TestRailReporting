@@ -1,19 +1,14 @@
 package com.apriori;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.fms.objects.FileResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
-import com.apriori.entity.response.upload.GenerateAssemblyImagesOutputs;
-import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileUploadOutputs;
+import com.apriori.entity.response.upload.GenerateAssemblyImagesOutputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
+import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
@@ -157,28 +152,12 @@ public class WorkorderAPITests {
 
         ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
 
-        fileUploadResources.imageValidation(images.get(0));
-        fileUploadResources.imageValidation(images.get(1));
-        fileUploadResources.imageValidation(images.get(2));
-
         // assertions
-        assertThat(generateAssemblyImagesOutputs, is(notNullValue()));
-
-        /*
-        String webImage = fileUploadResources
-                .getImageById(generatePartImagesOutputs.getWebImageIdentity())
-                .toString();
-        String desktopImage = fileUploadResources
-                .getImageById(generatePartImagesOutputs.getDesktopImageIdentity())
-                .toString();
-        String thumbnailImage =
-                fileUploadResources.getImageById(
-                generatePartImagesOutputs.getThumbnailImageIdentity())
-                        .toString();
-
-        fileUploadResources.imageValidation(webImage);
-        fileUploadResources.imageValidation(desktopImage);
-        fileUploadResources.imageValidation(thumbnailImage);*/
+        for (int i = 0; i < images.size(); i++) {
+            fileUploadResources.imageValidation(images.get(i));
+        }
+        fileUploadResources.imageValidation(generateAssemblyImagesOutputs.getDesktopImageIdentity());
+        fileUploadResources.imageValidation(generateAssemblyImagesOutputs.getThumbnailImageIdentity());
     }
 
     private void getAndValidateImage(ScenarioIterationKey scenarioIterationKey) {
