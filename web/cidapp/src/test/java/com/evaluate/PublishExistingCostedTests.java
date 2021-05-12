@@ -100,7 +100,7 @@ public class PublishExistingCostedTests extends TestBase {
             .override()
             .continues(PublishPage.class)
             .publish(EvaluatePage.class)
-            .lock()
+            .lock(EvaluatePage.class)
             .publishScenario()
             .publish(ExplorePage.class);
 
@@ -156,7 +156,7 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
-            .lock()
+            .lock(ExplorePage.class)
             .uploadComponentAndSubmit(testScenarioName, FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp"), EvaluatePage.class)
             .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()

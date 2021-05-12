@@ -109,7 +109,7 @@ public class GenerateStringUtil {
      */
     @Attachment
     public String generateSiteID() {
-        return "AutoSiteID" + UUID.randomUUID();
+        return "Auto" + UUID.randomUUID().toString().replace("-", "");
     }
 
     /**

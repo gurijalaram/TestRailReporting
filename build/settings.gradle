@@ -13,7 +13,7 @@ include(':apibase')
 project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 
-final String[] microservicesModules = ["ats", "cas", "cds", "cid", "cidapp", "cis", "edc", "fms", "nts", "vds", "sds"]
+final String[] microservicesModules = ["ats", "cas", "cds", "cid", "cidapp", "bcs", "edc", "fms", "nts", "vds", "sds"]
 final String[] webModules = ["cas", "cia", "ciconnect", "cid", "cidapp", "cir"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
@@ -44,7 +44,7 @@ if (configuration != null) {
     include(':microservices:cds')
     include(':microservices:cid')
     include(':microservices:cidapp')
-    include(':microservices:cis')
+    include(':microservices:bcs')
     include(':microservices:edc')
     include(':microservices:fms')
     include(':microservices:nts')
@@ -56,7 +56,7 @@ if (configuration != null) {
     project(':microservices:cid').projectDir = file('../microservices/cid')
     project(':microservices:cidapp').projectDir = file('../microservices/cidapp')
     project(':microservices:cds').projectDir = file('../microservices/cds')
-    project(':microservices:cis').projectDir = file('../microservices/cis')
+    project(':microservices:bcs').projectDir = file('../microservices/bcs')
     project(':microservices:edc').projectDir = file('../microservices/edc')
     project(':microservices:fms').projectDir = file('../microservices/fms')
     project(':microservices:nts').projectDir = file('../microservices/nts')
