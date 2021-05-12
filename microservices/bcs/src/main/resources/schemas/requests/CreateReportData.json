@@ -1,0 +1,11 @@
+{
+  "externalId": "Auto-Report-%s",
+  "reportFormat": "pdf",
+  "reportType": "DTC Part Summary",
+  "reportTemplateIdentity": "46CE5E404128",
+  "scopedIdentity": "",
+  "reportParameters": {
+    "roundToDollar": true,
+    "currencyCode": "USD"
+  }
+}

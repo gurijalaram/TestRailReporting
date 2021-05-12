@@ -13,10 +13,8 @@ public class ApiUtils {
     public static String getPropertyValue(Object obj, Class klass, String method) throws IllegalAccessException,
             NoSuchMethodException, InvocationTargetException {
         Class [] emptyParameterSet = {};
-        Method getResponse = klass.getDeclaredMethod("getResponse",emptyParameterSet);
-        Object response = getResponse.invoke(obj);
         Method getId = klass.getDeclaredMethod(method, emptyParameterSet);
-        Object value = getId.invoke(response);
+        Object value = getId.invoke(obj);
         return (String)value;
     }
 }

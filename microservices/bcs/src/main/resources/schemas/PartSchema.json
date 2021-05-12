@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "customerIdentity",
+        "state",
+        "externalId",
+        "requireWatchpointReport"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "requireWatchpointReport": {
+          "type": "boolean"
+        },
+        "errors": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

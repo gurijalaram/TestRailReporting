@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "required": [
+    "identity",
+    "createdBy",
+    "createdAt",
+    "customerIdentity",
+    "reportTemplate",
+    "externalId",
+    "state",
+    "reportFormat",
+    "reportParameters",
+    "batchIdentity"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "reportTemplate": {
+      "type": "string"
+    },
+    "externalId": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "fileName": {
+      "type": "string"
+    },
+    "contentType": {
+      "type": "string"
+    },
+    "reportFormat": {
+      "type": "string"
+    },
+    "reportParameters": {
+      "type": "object",
+      "required": [
+        "roundToDollar",
+        "currencyCode",
+        "partNumber",
+        "exportSetName",
+        "scenarioName"
+      ],
+      "properties": {
+        "roundToDollar": {
+          "type": "boolean"
+        },
+        "currencyCode": {
+          "type": "string"
+        },
+        "partNumber": {
+          "type": "string"
+        },
+        "exportSetName": {
+          "type": "string"
+        },
+        "scenarioName": {
+          "type": "string"
+        }
+      }
+    },
+    "batchIdentity": {
+      "type": "string"
+    }
+  }
+}
