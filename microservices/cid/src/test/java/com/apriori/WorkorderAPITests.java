@@ -100,6 +100,8 @@ public class WorkorderAPITests {
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
         FileUploadResources fileUploadResources = new FileUploadResources();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
         // upload component one - 3574727
         FileResponse fileResponseComponentOne = fileUploadResources.initialisePartUpload(
                 "3574727.prt",
@@ -107,7 +109,7 @@ public class WorkorderAPITests {
         );
         FileUploadOutputs fileUploadOutputsComponentOne = fileUploadResources.uploadPart(
                 fileResponseComponentOne,
-                "Initial"
+                scenarioName
         );
 
         // upload component two - 3574875
@@ -117,7 +119,7 @@ public class WorkorderAPITests {
         );
         FileUploadOutputs fileUploadOutputsComponentTwo = fileUploadResources.uploadPart(
                 fileResponseComponentTwo,
-                "Initial"
+                scenarioName
         );
 
         // upload assembly
@@ -127,7 +129,7 @@ public class WorkorderAPITests {
         );
         FileUploadOutputs fileUploadOutputsAssembly = fileUploadResources.uploadPart(
                 fileResponseAssembly,
-                "Initial"
+                scenarioName
         );
 
         // load cad metadata for component one - pin
@@ -153,8 +155,8 @@ public class WorkorderAPITests {
         ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
 
         // assertions
-        for (int i = 0; i < images.size(); i++) {
-            fileUploadResources.imageValidation(images.get(i));
+        for (String image : images) {
+            fileUploadResources.imageValidation(image);
         }
         fileUploadResources.imageValidation(generateAssemblyImagesOutputs.getDesktopImageIdentity());
         fileUploadResources.imageValidation(generateAssemblyImagesOutputs.getThumbnailImageIdentity());

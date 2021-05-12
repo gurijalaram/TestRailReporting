@@ -170,22 +170,23 @@ public class FileUploadResources {
                                                             LoadCadMetadataOutputs loadCadMetadataOutputs,
                                                             LoadCadMetadataOutputs loadCadMetadataOutputs2,
                                                             LoadCadMetadataOutputs loadCadMetadataOutputs3) {
+        GenerateStringUtil generateStringUtil = new GenerateStringUtil();
         List<GenerateAssemblyImagesInputs> subComponentsList = new ArrayList<>();
         subComponentsList.add(new GenerateAssemblyImagesInputs()
-                .setComponentIdentity(getRandomString())
-                .setScenarioIdentity(getRandomString())
+                .setComponentIdentity(generateStringUtil.getRandomString())
+                .setScenarioIdentity(generateStringUtil.getRandomString())
                 .setCadMetadataIdentity(loadCadMetadataOutputs2.getCadMetadataIdentity())
         );
         subComponentsList.add(new GenerateAssemblyImagesInputs()
-                .setComponentIdentity(getRandomString())
-                .setScenarioIdentity(getRandomString())
+                .setComponentIdentity(generateStringUtil.getRandomString())
+                .setScenarioIdentity(generateStringUtil.getRandomString())
                 .setCadMetadataIdentity(loadCadMetadataOutputs3.getCadMetadataIdentity())
         );
         String generateAssemblyImagesWorkorderId = createWorkorder(
                 WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
                 new GenerateAssemblyImagesInputs()
-                        .setComponentIdentity(getRandomString())
-                        .setScenarioIdentity(getRandomString())
+                        .setComponentIdentity(generateStringUtil.getRandomString())
+                        .setScenarioIdentity(generateStringUtil.getRandomString())
                         .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
                         .setSubComponents(subComponentsList)
                         .setRequestedBy(fileResponse.getResponse().getUserIdentity())
@@ -598,21 +599,5 @@ public class FileUploadResources {
             throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();
-    }
-
-    /**
-     * Generates a 12 character alpanumeric string
-     *
-     * @return string
-     */
-    private String getRandomString() {
-        String random_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder randomString = new StringBuilder();
-        Random rnd = new Random();
-        while (randomString.length() < 12) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * random_chars.length());
-            randomString.append(random_chars.charAt(index));
-        }
-        return randomString.toString();
     }
 }
