@@ -12,10 +12,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ComparisonCardEnum;
+import utils.ComparisonDeltaEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @author cfrith
@@ -200,5 +201,69 @@ public class ComparePage extends CompareToolbar {
         By byComparison = By.xpath(String.format("//div[.='%s / %s']/parent::div//div[@class='close-button close-button-dark']", componentName.trim().toUpperCase(), scenarioName.trim()));
         pageUtils.waitForElementAndClick(byComparison);
         return this;
+    }
+
+    /**
+     * Gets output
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param card          - the card
+     * @return string
+     */
+    public String getOutput(String componentName, String scenarioName, ComparisonCardEnum card) {
+        return driver.findElement(By.xpath(String.format("//span[.='%s ']/following-sibling::span[.='/ %s']/../../../../..", componentName, scenarioName)))
+            .findElements(By.cssSelector(String.format("[id|='qa-%s'] .left .comparison-row", card.getCardParent()))).get(card.getCardPosition()).getAttribute("textContent");
+    }
+
+    /**
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param card          - the card
+     * @param value         - the value
+     * @return string
+     */
+    public boolean isArrowColour(String componentName, String scenarioName, ComparisonCardEnum card, ComparisonDeltaEnum value) {
+        return pageUtils.scrollWithJavaScript(getDeltaInfo(componentName, scenarioName, card)
+            .findElement(By.cssSelector("svg")), true).getAttribute("color").equals(value.getDelta());
+    }
+
+    /**
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param card          - the card
+     * @param value         - the value
+     * @return string
+     */
+    public boolean isDeltaIcon(String componentName, String scenarioName, ComparisonCardEnum card, ComparisonDeltaEnum value) {
+        return pageUtils.scrollWithJavaScript(getDeltaInfo(componentName, scenarioName, card)
+            .findElement(By.cssSelector("svg")), true).getAttribute("data-icon").equals(value.getDelta());
+    }
+
+    /**
+     * Gets delta percentage
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param card          - the card
+     * @return string
+     */
+    public String getDeltaPercentage(String componentName, String scenarioName, ComparisonCardEnum card) {
+        return pageUtils.scrollWithJavaScript(getDeltaInfo(componentName, scenarioName, card), true)
+            .getAttribute("textContent");
+    }
+
+    /**
+     * Gets delta info
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param card          - the card
+     * @return webelement
+     */
+    private WebElement getDeltaInfo(String componentName, String scenarioName, ComparisonCardEnum card) {
+        // TODO: 13/05/2021 cf - the xpath below is the only way i can get back to the parent element. the previous locator was much simpler so i sent a message to Jacob asking for it to be reverted
+        return driver.findElements(By.xpath(String.format("//span[.='%s ']/following-sibling::span[.='/ %s']/../../../../..//div[contains(@id,'qa-%s')]//div[@class='content']//div[@class='right']/div",
+            componentName, scenarioName, card.getCardParent()))).get(card.getCardPosition());
     }
 }
