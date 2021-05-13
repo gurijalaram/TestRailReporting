@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Schema(location = "vds/AccessControlPermission.json")
 @Data
 @JsonRootName(value = "response")
@@ -33,13 +35,13 @@ public class AccessControlPermission {
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private String deletedAt;
+    private LocalDateTime deletedAt;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 }

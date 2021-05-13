@@ -3,9 +3,9 @@ package com.apriori.vds.tests.suite;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import com.apriori.vds.tests.AccessControlsTest;
-
 import com.apriori.vds.tests.ConfigurationTest;
 import com.apriori.vds.tests.CustomAttributesTest;
+import com.apriori.vds.tests.CustomizationsTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -15,7 +15,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     AccessControlsTest.class,
     ConfigurationTest.class,
-    CustomAttributesTest.class
+    CustomAttributesTest.class,
+    CustomizationsTest.class
 })
 public class APISuite {
 }

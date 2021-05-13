@@ -1,28 +1,23 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
-    "actions",
+    "active",
     "createdAt",
     "createdBy",
-    "cslRule",
+    "currencyCode",
     "customerIdentity",
     "deletedAt",
     "deletedBy",
     "description",
-    "expression",
     "identity",
-    "name",
-    "normalDeny",
-    "normalGrant",
-    "permissionId",
-    "resourceType",
-    "ruleType",
+    "rate",
     "updatedAt",
     "updatedBy"
   ],
   "properties": {
-    "actions": {
-      "type": "string"
+    "active": {
+      "type": "boolean"
     },
     "createdAt": {
       "type": "string"
@@ -30,7 +25,7 @@
     "createdBy": {
       "type": "string"
     },
-    "cslRule": {
+    "currencyCode": {
       "type": "string"
     },
     "customerIdentity": {
@@ -45,29 +40,11 @@
     "description": {
       "type": "string"
     },
-    "expression": {
-      "type": "string"
-    },
     "identity": {
       "type": "string"
     },
-    "name": {
-      "type": "string"
-    },
-    "normalDeny": {
-      "type": "boolean"
-    },
-    "normalGrant": {
-      "type": "boolean"
-    },
-    "permissionId": {
-      "type": "string"
-    },
-    "resourceType": {
-      "type": "string"
-    },
-    "ruleType": {
-      "type": "string"
+    "rate": {
+      "type": "integer"
     },
     "updatedAt": {
       "type": "string"
