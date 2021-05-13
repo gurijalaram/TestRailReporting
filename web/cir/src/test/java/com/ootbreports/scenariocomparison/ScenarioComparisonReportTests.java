@@ -286,7 +286,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3247"})
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
@@ -296,6 +296,12 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
+
+        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(),
+                "Selected: ",
+                "1"
+        );
 
         scenarioComparisonReportPage.selectAllScenariosToCompare();
         assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(),
