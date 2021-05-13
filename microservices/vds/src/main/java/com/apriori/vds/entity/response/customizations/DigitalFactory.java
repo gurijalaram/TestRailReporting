@@ -1,5 +1,6 @@
-package com.apriori.vds.entity.response.access.control;
+package com.apriori.vds.entity.response.customizations;
 
+import com.apriori.bcs.entity.response.ProcessGroupAssociations;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
@@ -13,25 +14,36 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "vds/AccessControlGroup.json")
+@Schema(location = "vds/DigitalFactory.json")
 @Data
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AccessControlGroup {
-    private String attributes;
+public class DigitalFactory {
+    private Boolean active;
+    private Integer annualVolume;
+    private String baseVpeIdentity;
+    private Integer batchesPerYear;
     private String createdBy;
+    private String currencyCode;
     private String customerIdentity;
     private String deletedBy;
     private String description;
-    private String groupId;
     private String identity;
-    private List<String> members;
+    private String location;
+    private String machinesVpeIdentity;
+    private String materialCatalogVpeIdentity;
     private String name;
-    private String parentGroupIdentity;
-    private List<AccessControlPermission> permissions;
-    private Boolean systemGroup;
-    private String type;
+    private String ownerType;
+    private List<String> permissions;
+    private ProcessGroupAssociations processGroupAssociations;
+    private String productVersion;
+    private Integer productionLife;
+    private String revision;
+    private String subjectIdentity;
+    private String toolShopVpeIdentity;
     private String updatedBy;
+    private String useType;
+    private String vpeType;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)

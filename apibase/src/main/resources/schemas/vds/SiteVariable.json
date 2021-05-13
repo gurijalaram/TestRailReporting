@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "active",
+    "createdAt",
+    "createdBy",
+    "currencyCode",
+    "customerIdentity",
+    "deletedAt",
+    "deletedBy",
+    "description",
+    "identity",
+    "rate",
+    "updatedAt",
+    "updatedBy"
+  ],
+  "properties": {
+    "active": {
+      "type": "boolean"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "currencyCode": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "deletedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "rate": {
+      "type": "integer"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    }
+  }
+}

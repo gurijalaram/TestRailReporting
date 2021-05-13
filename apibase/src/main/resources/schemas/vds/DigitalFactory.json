@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "active",
+    "annualVolume",
+    "baseVpeIdentity",
+    "batchesPerYear",
+    "createdAt",
+    "createdBy",
+    "currencyCode",
+    "customerIdentity",
+    "deletedAt",
+    "deletedBy",
+    "description",
+    "identity",
+    "location",
+    "machinesVpeIdentity",
+    "materialCatalogVpeIdentity",
+    "name",
+    "ownerType",
+    "permissions",
+    "processGroupAssociations",
+    "productVersion",
+    "productionLife",
+    "revision",
+    "subjectIdentity",
+    "toolShopVpeIdentity",
+    "updatedAt",
+    "updatedBy",
+    "useType",
+    "vpeType"
+  ],
+  "properties": {
+    "active": {
+      "type": "boolean"
+    },
+    "annualVolume": {
+      "type": "integer"
+    },
+    "baseVpeIdentity": {
+      "type": "string"
+    },
+    "batchesPerYear": {
+      "type": "integer"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "currencyCode": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "deletedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "machinesVpeIdentity": {
+      "type": "string"
+    },
+    "materialCatalogVpeIdentity": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "ownerType": {
+      "type": "string"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "processGroupAssociations": {
+      "type": "object"
+    },
+    "productVersion": {
+      "type": "string"
+    },
+    "productionLife": {
+      "type": "integer"
+    },
+    "revision": {
+      "type": "string"
+    },
+    "subjectIdentity": {
+      "type": "string"
+    },
+    "toolShopVpeIdentity": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "useType": {
+      "type": "string"
+    },
+    "vpeType": {
+      "type": "string"
+    }
+  }
+}
