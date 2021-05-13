@@ -16,8 +16,10 @@ public enum VDSAPIEnum implements EdcQaAPI {
     GET_CONFIGURATIONS("configurations"),
     GET_CONFIGURATIONS_BY_IDENTITY("configurations/%s"),
 
-    PUT_CONFIGURATIONS("configurations"),
+    PUT_CONFIGURATION("configurations"),
 
+    //Custom Attributes
+    GET_CUSTOM_ATTRIBUTES("custom-attributes"),
 
     // Site Variables
     GET_SITE_VARIABLES("site-variables");
