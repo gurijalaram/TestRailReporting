@@ -213,7 +213,7 @@ public class ComparePage extends CompareToolbar {
      */
     public String getOutput(String componentName, String scenarioName, ComparisonCardEnum card) {
         return driver.findElement(By.xpath(String.format("//span[.='%s ']/following-sibling::span[.='/ %s']/../../../../..", componentName, scenarioName)))
-            .findElements(By.cssSelector(String.format("[id|='qa-%s'] .left .comparison-row", card.getCardParent()))).get(card.getCardPosition()).getAttribute("textContent");
+            .findElements(By.cssSelector(String.format("[id|='qa-%s'] .left .comparison-row", card.getCardHeader()))).get(card.getCardPosition()).getAttribute("textContent");
     }
 
     /**
@@ -264,6 +264,6 @@ public class ComparePage extends CompareToolbar {
     private WebElement getDeltaInfo(String componentName, String scenarioName, ComparisonCardEnum card) {
         // TODO: 13/05/2021 cf - the xpath below is the only way i can get back to the parent element. the previous locator was much simpler so i sent a message to Jacob asking for it to be reverted
         return driver.findElements(By.xpath(String.format("//span[.='%s ']/following-sibling::span[.='/ %s']/../../../../..//div[contains(@id,'qa-%s')]//div[@class='content']//div[@class='right']/div",
-            componentName, scenarioName, card.getCardParent()))).get(card.getCardPosition());
+            componentName, scenarioName, card.getCardHeader()))).get(card.getCardPosition());
     }
 }

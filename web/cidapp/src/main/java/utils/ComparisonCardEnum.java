@@ -30,11 +30,11 @@ public enum ComparisonCardEnum {
     COST_TOTAL_CAPITAL_INVESTMENT(9, Constants.COST_RESULT);
 
     private final int position;
-    private final String cardParent;
+    private final String cardHeader;
 
-    ComparisonCardEnum(int position, String cardParent) {
+    ComparisonCardEnum(int position, String cardHeader) {
         this.position = position;
-        this.cardParent = cardParent;
+        this.cardHeader = cardHeader;
 
     }
 
@@ -42,8 +42,8 @@ public enum ComparisonCardEnum {
         return this.position - 1;
     }
 
-    public String getCardParent() {
-        return this.cardParent;
+    public String getCardHeader() {
+        return this.cardHeader;
     }
 
     private static class Constants {
