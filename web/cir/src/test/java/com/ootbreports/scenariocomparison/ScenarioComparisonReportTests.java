@@ -138,7 +138,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3249"})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {

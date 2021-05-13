@@ -42,7 +42,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"7242"})
     @Description("validate report is available by navigation - Casting DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
