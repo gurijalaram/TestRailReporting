@@ -48,9 +48,10 @@ public class ConfigurationTest extends VDSTestUtil {
     @Ignore
     public void putConfiguration() {
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PUT_CONFIGURATION, null)
-            .headers(new HashMap<String, String>(){{
-                put("Content-Type", "application/json");
-            }})
+            .headers(new HashMap<String, String>() {{
+                    put("Content-Type", "application/json");
+                }
+            })
             .customBody(
                 "{ 'customerConfiguration': { 'configurationType': 'ACCESS_CONTROL', 'serializationType': 'COMPRESSED_BINARY', 'customerIdentity' : '8GFDIG229629' }}"
             );
