@@ -59,7 +59,7 @@
     
     - #### All microservices (old approach) 
         - Open Terminal to root `build` directory
-        - Run `gradle --continue :microservices:ats:build :microservices:cds:build :microservices:cis:build :microservices:edc:build :microservices:fms:build`
+        - Run `gradle --continue :microservices:ats:build :microservices:cds:build :microservices:bcs:build :microservices:edc:build :microservices:fms:build`
      
 
 ## Run Gradle tests with JVM args

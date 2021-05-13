@@ -15,6 +15,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ColumnsEnum;
+import utils.SortOrderEnum;
 
 import java.util.List;
 
@@ -213,6 +215,15 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return scenarioTableController.getTableHeaders();
+    }
+
+    /**
      * Sets pagination to by default
      *
      * @return current page object
@@ -221,5 +232,49 @@ public class ExplorePage extends ExploreToolbar {
         pageUtils.waitForElementAndClick(paginatorDropdown);
         pageUtils.javaScriptClick(driver.findElement(By.xpath("//div[.='100']")));
         return this;
+    }
+
+    /**
+     * Search for component
+     *
+     * @param componentName - the component name
+     * @return new page object
+     */
+    public ExplorePage enterKeySearch(String componentName) {
+        componentTableActions.enterKeySearch(componentName);
+        return this;
+    }
+
+    /**
+     * Search for component
+     *
+     * @param componentName - the component name
+     * @return new page object
+     */
+    public ExplorePage clickSearch(String componentName) {
+        componentTableActions.clickSearch(componentName);
+        return this;
+    }
+
+    /**
+     * Sorts the column
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
+        scenarioTableController.sortColumn(column, order);
+        return this;
+    }
+
+    /**
+     * Gets sort order
+     *
+     * @param column - the column
+     * @return string
+     */
+    public String getSortOrder(ColumnsEnum column) {
+        return scenarioTableController.getSortOrder(column);
     }
 }

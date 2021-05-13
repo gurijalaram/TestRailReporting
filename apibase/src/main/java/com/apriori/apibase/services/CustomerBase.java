@@ -1,6 +1,6 @@
 package com.apriori.apibase.services;
 
-import com.apriori.apibase.services.cis.objects.CisCustomer;
+import com.apriori.apibase.services.bcs.objects.CisCustomer;
 import com.apriori.apibase.utils.TestUtil;
 
 import java.util.List;

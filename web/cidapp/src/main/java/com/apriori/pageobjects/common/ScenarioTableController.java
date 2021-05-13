@@ -12,6 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ColumnsEnum;
+import utils.SortOrderEnum;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,6 +30,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     @FindBy(css = ".apriori-table.scenario-iteration-table .spinner-border")
     private List<WebElement> componentTableSpinner;
+
+    @FindBy(css = ".apriori-table .table-head")
+    private WebElement tableHeaders;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -91,8 +96,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     /**
      * Gets the info in the row
+     *
      * @param componentName - name of the part
-     * @param scenarioName - scenario name
+     * @param scenarioName  - scenario name
      * @return list of string
      */
     public List<String> getRowDetails(String componentName, String scenarioName) {
@@ -254,5 +260,42 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return Stream.of(tableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Sorts the column in order
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public ScenarioTableController sortColumn(ColumnsEnum column, SortOrderEnum order) {
+        By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
+
+        while (!driver.findElement(byColumn).findElement(By.cssSelector("svg")).getAttribute("data-icon").equals(order.getOrder())) {
+            pageUtils.waitForElementAndClick(byColumn);
+        }
+        return this;
+    }
+
+    /**
+     * Gets sort order
+     *
+     * @param column - the column
+     * @return string
+     */
+    public String getSortOrder(ColumnsEnum column) {
+        By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
+
+        return pageUtils.waitForElementToAppear(driver.findElement(byColumn).findElement(By.cssSelector("svg"))).getAttribute("data-icon");
     }
 }
