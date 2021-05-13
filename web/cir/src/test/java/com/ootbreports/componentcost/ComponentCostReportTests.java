@@ -164,7 +164,7 @@ public class ComponentCostReportTests extends TestBase {
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
-                "Available: ",
+                "Selected: ",
                 "1"
         );
         assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
