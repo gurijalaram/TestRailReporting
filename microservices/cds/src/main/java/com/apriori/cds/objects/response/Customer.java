@@ -29,12 +29,22 @@ public class Customer {
     private List<String> emailRegexPatterns;
     private Boolean active;
     private Integer maxCadFileRetentionDays;
+    private Integer maxCadFileSize;
     private Boolean useExternalIdentityProvider;
     private Boolean mfaRequired;
     private List<Object> oneTimePasswordApplications;
     private String customerType;
     private String cloudReference;
     private String salesforceId;
+
+    public Integer getMaxCadFileSize() {
+        return maxCadFileSize;
+    }
+
+    public Customer setMaxCadFileSize(Integer maxCadFileSize) {
+        this.maxCadFileSize = maxCadFileSize;
+        return this;
+    }
 
     public Customer getResponse() {
         return response;
