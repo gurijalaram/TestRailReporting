@@ -20,7 +20,9 @@ import com.evaluate.dtc.DTCPlasticMouldingTests;
 import com.evaluate.dtc.SheetMetalDTCTests;
 import com.evaluate.materialutilization.ChangeMaterialSelectionTests;
 import com.evaluate.materialutilization.MaterialStockTests;
+import com.explore.ActionsTests;
 import com.explore.PreviewPanelTests;
+import com.explore.TableHeadersTests;
 import com.explore.UploadComponentTests;
 import com.explore.UploadTests;
 import com.help.HelpTests;
@@ -55,7 +57,10 @@ import org.junit.runners.Suite;
     DFMRiskTests.class,
     PublishTests.class,
     SheetMetalDTCTests.class,
-    DTCPlasticMouldingTests.class
+    DTCPlasticMouldingTests.class,
+    SheetMetalDTCTests.class,
+    ActionsTests.class,
+    TableHeadersTests.class
 })
 public class CIDSmokeTestSuite {
 }
