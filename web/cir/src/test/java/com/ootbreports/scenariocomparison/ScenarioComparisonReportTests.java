@@ -372,7 +372,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3306"})
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
@@ -388,10 +388,10 @@ public class ScenarioComparisonReportTests extends TestBase {
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("2")));
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
-                is(equalTo("000002736 (Initial) [part]")));
+                is(equalTo("0200613 (Initial) [part]")));
     }
 }

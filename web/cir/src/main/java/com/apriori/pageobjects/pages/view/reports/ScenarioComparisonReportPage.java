@@ -93,11 +93,16 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
             pageUtils.waitForElementToAppear(locator);
         }
 
-        By filteredLocator = By.xpath("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')])[1]");
+        By filteredLocator = By.xpath(
+                "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')])[1]");
         pageUtils.waitForElementToAppear(filteredLocator);
 
         GenericReportPage genericReportPage = new GenericReportPage(driver);
-        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "133");
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(),
+                "Available: ",
+                "134"
+        );
     }
 
     /**
@@ -105,6 +110,8 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
      */
     public void selectAllScenariosToCompare() {
         pageUtils.waitForElementAndClick(selectAllScenariosToCompare);
+        pageUtils.waitForElementToAppear(By.xpath(
+                "(//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@class, 'jr-isSelected')][1]"));
         String expectedCount = getCountOfAvailableScenariosToCompare();
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Selected: ", expectedCount);
@@ -192,7 +199,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
     public String getNameOfFirstScenarioToCompare(boolean substringName) {
         pageUtils.waitForElementToAppear(firstScenarioToCompare);
         String scenarioName = firstScenarioToCompare.getAttribute("title");
-        return substringName ? scenarioName.substring(0, 9) : scenarioName;
+        return substringName ? scenarioName.substring(0, 7) : scenarioName;
     }
 
     /**
@@ -206,7 +213,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         partNumberSearchCriteriaInput.sendKeys(Keys.ENTER);
         By scenarioNameLocator = By.xpath("(//div[@title='Scenario Name']//ul)[1]/li[@title='Initial']");
         By scenariosToCompareLocator =
-                By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='000002736 (Initial) [part]']");
+                By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0200613 (Initial) [part]']");
         pageUtils.waitForElementToAppear(scenarioNameLocator);
         pageUtils.waitForElementToAppear(scenariosToCompareLocator);
         waitForCorrectAvailableSelectedCount(
