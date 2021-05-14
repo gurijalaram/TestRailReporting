@@ -167,7 +167,7 @@ public class ComponentCostReportTests extends TestBase {
                 "Selected: ",
                 "1"
         );
-        assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
+        assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("100")));
         ArrayList<String> partComponentNames = componentCostReportPage.getComponentSelectNames();
         for (String componentName : partComponentNames) {
             assertThat(componentName.contains(Constants.DEFAULT_SCENARIO_NAME), is(true));
