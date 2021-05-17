@@ -50,7 +50,7 @@ public class CidAppTestUtil {
      * @param partName     - the part name
      * @return responsewrapper
      */
-    public ResponseWrapper<PostComponentResponse> postComponents(String scenarioName, String processGroup, String partName) {
+    public ResponseWrapper<CssComponentResponse> postComponents(String scenarioName, String processGroup, String partName) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), partName)))
@@ -58,7 +58,9 @@ public class CidAppTestUtil {
                     .use("override", "false")
                     .use("scenarioName", scenarioName));
 
-        return HTTP2Request.build(requestEntity).post();
+        HTTP2Request.build(requestEntity).post();
+
+        return getUncostedCssComponent(scenarioName, partName);
     }
 
     /**
@@ -211,7 +213,7 @@ public class CidAppTestUtil {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public ResponseWrapper<CssComponentResponse> getUnCostedCssComponents(String componentName, String scenarioName) {
+    public ResponseWrapper<CssComponentResponse> getUncostedCssComponent(String componentName, String scenarioName) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(Arrays.asList(componentName, scenarioName));
 
