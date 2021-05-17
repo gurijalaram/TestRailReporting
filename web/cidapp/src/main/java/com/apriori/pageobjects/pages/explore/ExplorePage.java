@@ -15,6 +15,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ColumnsEnum;
+import utils.SortOrderEnum;
 
 import java.util.List;
 
@@ -262,5 +264,27 @@ public class ExplorePage extends ExploreToolbar {
     public ExplorePage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
         return this;
+    }
+
+    /**
+     * Sorts the column
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
+        scenarioTableController.sortColumn(column, order);
+        return this;
+    }
+
+    /**
+     * Gets sort order
+     *
+     * @param column - the column
+     * @return string
+     */
+    public String getSortOrder(ColumnsEnum column) {
+        return scenarioTableController.getSortOrder(column);
     }
 }

@@ -64,6 +64,7 @@
                   "emailRegexPatterns",
                   "active",
                   "maxCadFileRetentionDays",
+                  "maxCadFileSize",
                   "useExternalIdentityProvider",
                   "mfaRequired",
                   "oneTimePasswordApplications",
@@ -105,6 +106,9 @@
                     "type": "boolean"
                   },
                   "maxCadFileRetentionDays": {
+                    "type": "integer"
+                  },
+                  "maxCadFileSize": {
                     "type": "integer"
                   },
                   "useExternalIdentityProvider": {

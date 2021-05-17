@@ -12,6 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ColumnsEnum;
+import utils.SortOrderEnum;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -278,5 +280,33 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public List<String> getTableHeaders() {
         return Stream.of(tableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Sorts the column in order
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public ScenarioTableController sortColumn(ColumnsEnum column, SortOrderEnum order) {
+        By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
+
+        while (!driver.findElement(byColumn).findElement(By.cssSelector("svg")).getAttribute("data-icon").equals(order.getOrder())) {
+            pageUtils.waitForElementAndClick(byColumn);
+        }
+        return this;
+    }
+
+    /**
+     * Gets sort order
+     *
+     * @param column - the column
+     * @return string
+     */
+    public String getSortOrder(ColumnsEnum column) {
+        By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
+
+        return pageUtils.waitForElementToAppear(driver.findElement(byColumn).findElement(By.cssSelector("svg"))).getAttribute("data-icon");
     }
 }
