@@ -9,8 +9,7 @@
     "createdByName",
     "customerIdentity",
     "componentName",
-    "componentType",
-    "originalFilename"
+    "componentType"
   ],
   "properties": {
     "identity": {
@@ -35,9 +34,6 @@
       "type": "string"
     },
     "componentType": {
-      "type": "string"
-    },
-    "originalFilename": {
       "type": "string"
     }
   }

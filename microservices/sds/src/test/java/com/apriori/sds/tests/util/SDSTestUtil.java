@@ -22,19 +22,26 @@ public class SDSTestUtil extends TestUtil {
     private static final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     protected static String token;
-    private static PostComponentResponse partPostComponentResponse;
+    private static PostComponentResponse partPostComponentResponse = PostComponentResponse.builder()
+        .componentIdentity("6L5J136E3GDG")
+        .scenarioIdentity("80F3138B63F2")
+        .iterationIdentity("80F64BJ8FCL3")
+        .build();
 
     @BeforeClass
     public static void initTestingComponentInfo() {
         initToken();
-        partPostComponentResponse = postTestingComponent().getResponseEntity();
+
+        //TODO z: temporary removed.
+        // partPostComponentResponse = postTestingComponent().getResponseEntity();
     }
 
     @AfterClass
     public static void clearTestingData() {
-        if (partPostComponentResponse != null) {
-            removeTestingComponent(getComponentId(), getScenarioId());
-        }
+        //TODO z: temporary removed.
+        //        if (partPostComponentResponse != null) {
+        //            removeTestingComponent(getComponentId(), getScenarioId());
+        //        }
     }
 
     protected static String getComponentId() {

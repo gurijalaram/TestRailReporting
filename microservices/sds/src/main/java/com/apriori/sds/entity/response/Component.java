@@ -22,7 +22,6 @@ public class Component {
     private String createdBy;
     private String identity;
     private String componentName;
-    private String originalFilename;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)

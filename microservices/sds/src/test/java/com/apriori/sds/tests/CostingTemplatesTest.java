@@ -4,7 +4,7 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.CostingTemplate;
-import com.apriori.sds.entity.response.CostingTemplatesResponse;
+import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.tests.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -13,19 +13,13 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
-// TODO z: issue with requests
 public class CostingTemplatesTest extends SDSTestUtil {
 
     @Test
     @TestRail(testCaseId = {"6934"})
     @Description("Find costing templates for a customer matching a specified query.")
     public void getCostingTemplates() {
-        ResponseWrapper<CostingTemplatesResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesResponse.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token)
-            );
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, this.getCostingTemplatesResponseWrapper().getStatusCode());
     }
 
     @Test
@@ -34,10 +28,17 @@ public class CostingTemplatesTest extends SDSTestUtil {
     public void getCostingTemplateByIdentity() {
         ResponseWrapper<CostingTemplate> response =
             new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), ""
+                new APIAuthentication().initAuthorizationHeaderContent(token),
+                this.getCostingTemplatesResponseWrapper().getResponseEntity().getItems().get(0).getIdentity()
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+    }
+
+    private ResponseWrapper<CostingTemplatesItems> getCostingTemplatesResponseWrapper() {
+        return new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class,
+            new APIAuthentication().initAuthorizationHeaderContent(token)
+        );
     }
 
 }
