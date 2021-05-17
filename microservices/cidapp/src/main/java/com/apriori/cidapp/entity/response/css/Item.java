@@ -17,7 +17,7 @@ import java.util.List;
 public class Item {
     private Item response;
     private String subjectIdentity;
-    private List<String> permissions = null;
+    private List<String> permissions;
     private String customerIdentity;
     private String componentIdentity;
     private String componentName;
@@ -52,13 +52,13 @@ public class Item {
     private String iterationCreatedByName;
     private String iterationUpdatedAt;
     private CostingInput costingInput;
-    private List<Object> scenarioCustomAttributes = null;
-    private List<Object> scenarioDesignInvestigations = null;
-    private List<Object> scenarioDesignIssues = null;
-    private List<Object> scenarioDesignNotices = null;
+    private List<Object> scenarioCustomAttributes;
+    private List<Object> scenarioDesignInvestigations;
+    private List<Object> scenarioDesignIssues;
+    private List<Object> scenarioDesignNotices;
     private ScenarioGcd scenarioGcd;
     private ScenarioMetadata scenarioMetadata;
-    private List<Object> scenarioProcesses = null;
+    private List<Object> scenarioProcesses;
     private AnalysisOfChildren analysisOfChildren;
     private AnalysisOfScenario analysisOfScenario;
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
