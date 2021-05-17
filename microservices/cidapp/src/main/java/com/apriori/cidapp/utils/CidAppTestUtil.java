@@ -43,9 +43,6 @@ public class CidAppTestUtil {
         RequestEntityUtil.useTokenForRequests(token);
     }
 
-    private String url;
-    private String serviceUrl = Constants.getApiUrl();
-
     /**
      * Adds a new component
      *
@@ -54,21 +51,12 @@ public class CidAppTestUtil {
      * @return responsewrapper
      */
     public ResponseWrapper<PostComponentResponse> postComponents(String scenarioName, String processGroup, String partName) {
-        //        url = String.format(serviceUrl, "components");
-        //        RequestEntity requestEntity = RequestEntity.init(url, PostComponentResponse.class)
-        //            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
-        //            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), partName)))
-        //            .setFormParams(new FormParams().use("filename", partName)
-        //                .use("override", "false")
-        //                .use("scenarioName", scenarioName));
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), partName)))
                 .formParams(new FormParams().use("filename", partName)
                     .use("override", "false")
                     .use("scenarioName", scenarioName));
-
 
         return HTTP2Request.build(requestEntity).post();
     }
@@ -79,10 +67,6 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<GetComponentResponse> getComponents() {
-        //        url = String.format(serviceUrl, "components");
-        //        RequestEntity requestEntity = RequestEntity.init(url, GetComponentResponse.class)
-        //            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENTS, GetComponentResponse.class);
 
@@ -96,10 +80,6 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(String componentIdentity) {
-        //        url = String.format(serviceUrl, String.format("components/%s", identity));
-        //        RequestEntity requestEntity = RequestEntity.init(url, ComponentIdentityResponse.class)
-        //            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(Collections.singletonList(componentIdentity));
@@ -115,10 +95,6 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(String componentIdentity, String scenarioIdentity) {
-        //        url = String.format(serviceUrl, String.format("components/%s/scenarios/%s/iterations/latest", componentIdentity, scenarioIdentity));
-        //        RequestEntity requestEntity = RequestEntity.init(url, ComponentIteration.class)
-        //            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
                 .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity));
@@ -148,6 +124,7 @@ public class CidAppTestUtil {
                 logger.error(e.getMessage());
             }
         } while ((axesEntries == 0) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
         return axesEntriesResponse;
     }
 
@@ -160,14 +137,9 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<CostResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
-        //        url = String.format(serviceUrl, String.format("components/%s/scenarios/%s", componentIdentity, scenarioIdentity));
-        //        RequestEntity requestEntity = RequestEntity.init(url, CostResponse.class)
-        //            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
                 .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity));
-
 
         long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 5L;
@@ -191,6 +163,7 @@ public class CidAppTestUtil {
                 Thread.currentThread().interrupt();
             }
         } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
         return scenarioRepresentation;
     }
 
@@ -202,18 +175,6 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<CostResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
-        //        url = String.format(serviceUrl, String.format("components/%s/scenarios/%s/cost", componentIdentity, scenarioIdentity));
-        //
-        //        RequestEntity requestEntity = RequestEntity.init(url, CostResponse.class)
-        //            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
-        //            .setBody("costingInputs",
-        //                new CostRequest().setAnnualVolume(5500)
-        //                    .setBatchSize(458)
-        //                    .setMaterialName("Aluminum, Stock, ANSI 1050A")
-        //                    .setProcessGroupName("Sheet Metal")
-        //                    .setProductionLife(5.0)
-        //                    .setVpeName("aPriori USA"));
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
                 .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity))
@@ -236,8 +197,6 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<ImageResponse> getHoopsImage(String componentIdentity, String scenarioIdentity) {
-        //        url = String.format(serviceUrl, String.format("components/%s/scenarios/%s/hoops-image", componentIdentity, scenarioIdentity));
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
                 .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity));
@@ -245,8 +204,14 @@ public class CidAppTestUtil {
         return HTTP2Request.build(requestEntity).get();
     }
 
+    /**
+     * Gets the uncosted component from Css
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return response object
+     */
     public ResponseWrapper<CssComponentResponse> getUnCostedCssComponents(String componentName, String scenarioName) {
-
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(Arrays.asList(componentName, scenarioName));
 
@@ -278,6 +243,7 @@ public class CidAppTestUtil {
                 Thread.currentThread().interrupt();
             }
         } while (!scenarioState.equals(verifiedState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
         return scenarioRepresentation;
     }
 }
