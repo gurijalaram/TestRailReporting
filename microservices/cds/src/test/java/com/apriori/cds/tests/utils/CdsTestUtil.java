@@ -81,6 +81,7 @@ public class CdsTestUtil extends TestUtil {
                     .setMfaRequired(false)
                     .setUseExternalIdentityProvider(false)
                     .setMaxCadFileRetentionDays(1095)
+                    .setMaxCadFileSize(51)
                     .setEmailRegexPatterns(Arrays.asList(email + ".com", email + ".co.uk")));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
