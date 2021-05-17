@@ -13,8 +13,7 @@
     "previousScenarioState",
     "lastAction",
     "locked",
-    "published",
-    "createdByName"
+    "published"
   ],
   "properties": {
     "identity": {
@@ -66,9 +65,6 @@
       "type": "string"
     },
     "publishedByName": {
-      "type": "string"
-    },
-    "createdByName": {
       "type": "string"
     }
   }
