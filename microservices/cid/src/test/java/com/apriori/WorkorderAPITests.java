@@ -34,7 +34,7 @@ public class WorkorderAPITests {
     }
 
     @Test
-    //@Category(CidAPITest.class)
+    @Category(CidAPITest.class)
     @TestRail(testCaseId = {"6933"})
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void testLoadCadMetadataAndGeneratePartImages() {
@@ -64,7 +64,7 @@ public class WorkorderAPITests {
     }
 
     @Test
-    //@Category(CidAPITest.class)
+    @Category(CidAPITest.class)
     @TestRail(testCaseId = {"7697"})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
