@@ -298,7 +298,7 @@ public class FileUploadResources {
      * @return String
      */
     private String createWorkorder(String commandType, Object inputs) {
-        String fileURL = baseUrl.concat("apriori/cost/session/ws/workorder/orders");
+        String fileURL = baseUrl.concat("ws/workorder/orders");
 
         headers.put(contentType, applicationJson);
 
@@ -311,14 +311,7 @@ public class FileUploadResources {
                     inputs))
                 );
 
-        String workorderId;
-        try {
-            workorderId = jsonNode(GenericRequestUtil.post(workorderRequestEntity, new RequestAreaApi()).getBody(), "id");
-        } catch (Exception e) {
-            workorderId = jsonNode(GenericRequestUtil.post(workorderRequestEntity, new RequestAreaApi()).getBody(), "id");
-            e.printStackTrace();
-        }
-        return workorderId;
+        return jsonNode(GenericRequestUtil.post(workorderRequestEntity, new RequestAreaApi()).getBody(), "id");
     }
 
     /**
