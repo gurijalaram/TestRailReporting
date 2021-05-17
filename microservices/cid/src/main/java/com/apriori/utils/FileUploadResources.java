@@ -50,7 +50,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.UrlEscapers;
-import lombok.val;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -204,6 +203,7 @@ public class FileUploadResources {
      * @param productionInfoInputs - production info inputs
      * @param fileUploadOutputs - output from file upload
      * @param processGroup - process group
+     * @return CostOrderStatusOutputs
      */
     public CostOrderStatusOutputs costPart(Object productionInfoInputs, FileUploadOutputs fileUploadOutputs, String processGroup) {
         int inputSetId = initializeCostScenario(
@@ -273,6 +273,8 @@ public class FileUploadResources {
      * Initializes file upload
      *
      * @param fileName - the filename
+     * @param processGroup - the process group
+     * @return FileResponse
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
         String url = baseUrl.concat("apriori/cost/session/ws/files");
@@ -289,7 +291,11 @@ public class FileUploadResources {
     }
 
     /**
-     * Creates file upload
+     * Creates workorder
+     *
+     * @param commandType String
+     * @param inputs Object
+     * @return String
      */
     private String createWorkorder(String commandType, Object inputs) {
         String fileURL = baseUrl.concat("apriori/cost/session/ws/workorder/orders");
@@ -305,7 +311,14 @@ public class FileUploadResources {
                     inputs))
                 );
 
-        return jsonNode(GenericRequestUtil.post(workorderRequestEntity, new RequestAreaApi()).getBody(), "id");
+        String workorderId;
+        try {
+            workorderId = jsonNode(GenericRequestUtil.post(workorderRequestEntity, new RequestAreaApi()).getBody(), "id");
+        } catch (Exception e) {
+            workorderId = jsonNode(GenericRequestUtil.post(workorderRequestEntity, new RequestAreaApi()).getBody(), "id");
+            e.printStackTrace();
+        }
+        return workorderId;
     }
 
     /**
@@ -394,6 +407,12 @@ public class FileUploadResources {
         }
     }
 
+    /**
+     * Checks get workorder details
+     *
+     * @param workorderId - String
+     * @return Object
+     */
     private Object checkGetWorkorderDetails(String workorderId) {
         String status = checkWorkorderStatus(workorderId);
         if (status.equals("SUCCESS")) {
@@ -408,6 +427,7 @@ public class FileUploadResources {
      *
      * @param scenarioKey scenario iteration
      * @param processGroup process group
+     * @return Integer
      */
     private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
         iteration = getLatestIteration(
@@ -440,6 +460,10 @@ public class FileUploadResources {
      * Gets costing iteration
      *
      * @param token - the user token
+     * @param typeName - the type name
+     * @param masterName - the master name
+     * @param stateName - the state name
+     * @param workspaceId - the workspace id
      * @return int
      */
     private int getLatestIteration(HashMap<String, String> token, String typeName, String masterName, String stateName, Integer workspaceId) {
@@ -462,6 +486,7 @@ public class FileUploadResources {
      * Checks the order status is successful
      *
      * @param workorderId - workorder id to send
+     * @return String
      */
     private String checkWorkorderStatus(String workorderId) {
         long initialTime = System.currentTimeMillis() / 1000;
@@ -519,8 +544,10 @@ public class FileUploadResources {
     /**
      * Sets the production info
      *
+     * @param fileObject - the file object
+     * @param scenarioKey - the scenario key
      * @param processGroup - the process group
-     * @return production info
+     * @return ProductionInfo
      */
     private ProductionInfo productionInfo(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
         NewPartRequest newPartRequest = (NewPartRequest) fileObject;
