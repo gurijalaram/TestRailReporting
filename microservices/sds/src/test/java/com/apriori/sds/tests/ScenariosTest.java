@@ -15,6 +15,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.Ignore;
 import org.junit.Test;
 import util.SDSTestUtil;
 
@@ -96,6 +97,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Test
     @TestRail(testCaseId = "7246")
     @Description("Delete an existing scenario.")
+    @Ignore
     public void deleteScenario() {
         final ResponseWrapper<PostComponentResponse> postComponentResponseWrapper = postTestingComponent();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postComponentResponseWrapper.getStatusCode());
