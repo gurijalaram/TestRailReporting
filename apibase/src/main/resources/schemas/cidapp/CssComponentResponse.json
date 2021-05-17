@@ -1,0 +1,237 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "isFirstPage": {
+          "type": "boolean"
+        },
+        "isLastPage": {
+          "type": "boolean"
+        },
+        "pageNumber": {
+          "type": "integer"
+        },
+        "pageSize": {
+          "type": "integer"
+        },
+        "pageItemCount": {
+          "type": "integer"
+        },
+        "totalItemCount": {
+          "type": "integer"
+        },
+        "totalPageCount": {
+          "type": "integer"
+        },
+        "hasNextPage": {
+          "type": "boolean"
+        },
+        "hasPreviousPage": {
+          "type": "boolean"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "subjectIdentity": {
+                    "type": "string"
+                  },
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "customerIdentity": {
+                    "type": "string"
+                  },
+                  "componentIdentity": {
+                    "type": "string"
+                  },
+                  "componentName": {
+                    "type": "string"
+                  },
+                  "componentType": {
+                    "type": "string"
+                  },
+                  "componentFilename": {
+                    "type": "string"
+                  },
+                  "componentCreatedAt": {
+                    "type": "string"
+                  },
+                  "componentCreatedBy": {
+                    "type": "string"
+                  },
+                  "componentCreatedByName": {
+                    "type": "string"
+                  },
+                  "componentUpdatedAt": {
+                    "type": "string"
+                  },
+                  "scenarioIdentity": {
+                    "type": "string"
+                  },
+                  "scenarioName": {
+                    "type": "string"
+                  },
+                  "scenarioType": {
+                    "type": "string"
+                  },
+                  "scenarioState": {
+                    "type": "string"
+                  },
+                  "previousScenarioState": {
+                    "type": "string"
+                  },
+                  "lastAction": {
+                    "type": "string"
+                  },
+                  "scenarioOwnedBy": {
+                    "type": "string"
+                  },
+                  "scenarioOwnedByName": {
+                    "type": "string"
+                  },
+                  "scenarioLocked": {
+                    "type": "boolean"
+                  },
+                  "scenarioPublished": {
+                    "type": "boolean"
+                  },
+                  "scenarioCreatedAt": {
+                    "type": "string"
+                  },
+                  "scenarioCreatedBy": {
+                    "type": "string"
+                  },
+                  "scenarioCreatedByName": {
+                    "type": "string"
+                  },
+                  "scenarioUpdatedAt": {
+                    "type": "string"
+                  },
+                  "iterationIdentity": {
+                    "type": "string"
+                  },
+                  "iteration": {
+                    "type": "integer"
+                  },
+                  "latest": {
+                    "type": "boolean"
+                  },
+                  "scenarioIterationKey": {
+                    "type": "string"
+                  },
+                  "iterationHasWebImage": {
+                    "type": "boolean"
+                  },
+                  "iterationIsCadConnected": {
+                    "type": "boolean"
+                  },
+                  "iterationCreatedAt": {
+                    "type": "string"
+                  },
+                  "iterationCreatedBy": {
+                    "type": "string"
+                  },
+                  "iterationCreatedByName": {
+                    "type": "string"
+                  },
+                  "iterationUpdatedAt": {
+                    "type": "string"
+                  },
+                  "costingInput": {
+                    "type": "object",
+                    "properties": {
+                      "customAttributes": {
+                        "type": "object"
+                      },
+                      "processSetupOptions": {
+                        "type": "object"
+                      },
+                      "secondaryProcesses": {
+                        "type": "object"
+                      },
+                      "secondaryVpes": {
+                        "type": "object"
+                      },
+                      "threads": {
+                        "type": "object"
+                      },
+                      "tolerances": {
+                        "type": "object"
+                      }
+                    }
+                  },
+                  "scenarioCustomAttributes": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "scenarioDesignInvestigations": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "scenarioDesignIssues": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "scenarioDesignNotices": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "scenarioGcd": {
+                    "type": "object"
+                  },
+                  "scenarioMetadata": {
+                    "type": "object"
+                  },
+                  "scenarioProcesses": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "analysisOfChildren": {
+                    "type": "object"
+                  },
+                  "analysisOfScenario": {
+                    "type": "object"
+                  },
+                  "analysisOfScenarioAndChildren": {
+                    "type": "object"
+                  },
+                  "partNestingDiagram": {
+                    "type": "object"
+                  },
+                  "thumbnail": {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "type": "string"
+                      },
+                      "image": {
+                        "type": "string"
+                      },
+                      "imageType": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

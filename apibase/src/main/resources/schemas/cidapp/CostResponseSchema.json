@@ -11,6 +11,7 @@
         "identity",
         "createdAt",
         "createdBy",
+        "permissions",
         "customerIdentity",
         "scenarioName",
         "scenarioType",
@@ -18,13 +19,13 @@
         "lastAction",
         "ownedBy",
         "locked",
-        "published",
-        "ownedByName",
-        "createdByName"
+        "published"
       ],
       "optional": [
         "previousScenarioState",
-        "updatedAt"
+        "updatedAt",
+        "ownedByName",
+        "createdByName"
       ],
       "properties": {
         "identity": {
@@ -35,6 +36,11 @@
         },
         "createdBy": {
           "type": "string"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+          }
         },
         "updatedAt": {
           "type": "string"

@@ -7,6 +7,7 @@ import com.apriori.entity.response.ComponentIdentityResponse;
 import com.apriori.entity.response.GetComponentResponse;
 import com.apriori.entity.response.PostComponentResponse;
 import com.apriori.entity.response.componentiteration.ComponentIteration;
+import com.apriori.entity.response.css.CssComponentResponse;
 import com.apriori.entity.response.scenarios.CostResponse;
 import com.apriori.entity.response.scenarios.ImageResponse;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -36,6 +37,7 @@ public class CidAppTestUtil {
 
     private String url;
     private String serviceUrl = Constants.getApiUrl();
+    private String cssServiceUrl = Constants.getCssApiUrl();
 
     /**
      * Adds a new component
@@ -203,5 +205,42 @@ public class CidAppTestUtil {
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
         return GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+    }
+
+    public ResponseWrapper<CssComponentResponse> getUnCostedCssComponents(String componentName, String scenarioName) {
+        url = String.format(cssServiceUrl, String.format("scenario-iterations?componentName[EQ]=%s&scenarioName[EQ]=%s", componentName, scenarioName));
+
+        RequestEntity requestEntity = RequestEntity.init(url, CssComponentResponse.class)
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+
+        long START_TIME = System.currentTimeMillis() / 1000;
+        final long POLLING_INTERVAL = 5L;
+        final long MAX_WAIT_TIME = 180L;
+        String verifiedState = "NOT_COSTED";
+        String scenarioState;
+        ResponseWrapper<CssComponentResponse> scenarioRepresentation;
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        do {
+            scenarioRepresentation = GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+
+            while (scenarioRepresentation.getResponseEntity().getResponse().getItems().isEmpty() && scenarioRepresentation.getResponseEntity().getResponse().getItems() == null) {
+                scenarioRepresentation = GenericRequestUtil.get(requestEntity, new RequestAreaApi());
+            }
+
+            scenarioState = scenarioRepresentation.getResponseEntity().getResponse().getItems().get(0).getScenarioState();
+            try {
+                TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
+            } catch (InterruptedException e) {
+                logger.error(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        } while (!scenarioState.equals(verifiedState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+        return scenarioRepresentation;
     }
 }
