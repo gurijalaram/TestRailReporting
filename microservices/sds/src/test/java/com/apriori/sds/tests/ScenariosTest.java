@@ -2,7 +2,7 @@ package com.apriori.sds.tests;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.entity.response.PostComponentResponse;
+import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;

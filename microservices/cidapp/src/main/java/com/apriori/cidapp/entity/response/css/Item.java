@@ -1,0 +1,85 @@
+
+package com.apriori.cidapp.entity.response.css;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Item {
+    private Item response;
+    private String subjectIdentity;
+    private List<String> permissions = null;
+    private String customerIdentity;
+    private String componentIdentity;
+    private String componentName;
+    private String componentType;
+    private String componentFilename;
+    private String componentCreatedAt;
+    private String componentCreatedBy;
+    private String componentCreatedByName;
+    private String componentUpdatedAt;
+    private String scenarioIdentity;
+    private String scenarioName;
+    private String scenarioType;
+    private String scenarioState;
+    private String previousScenarioState;
+    private String lastAction;
+    private String scenarioOwnedBy;
+    private String scenarioOwnedByName;
+    private Boolean scenarioLocked;
+    private Boolean scenarioPublished;
+    private String scenarioCreatedAt;
+    private String scenarioCreatedBy;
+    private String scenarioCreatedByName;
+    private String scenarioUpdatedAt;
+    private String iterationIdentity;
+    private Integer iteration;
+    private Boolean latest;
+    private String scenarioIterationKey;
+    private Boolean iterationHasWebImage;
+    private Boolean iterationIsCadConnected;
+    private String iterationCreatedAt;
+    private String iterationCreatedBy;
+    private String iterationCreatedByName;
+    private String iterationUpdatedAt;
+    private CostingInput costingInput;
+    private List<Object> scenarioCustomAttributes = null;
+    private List<Object> scenarioDesignInvestigations = null;
+    private List<Object> scenarioDesignIssues = null;
+    private List<Object> scenarioDesignNotices = null;
+    private ScenarioGcd scenarioGcd;
+    private ScenarioMetadata scenarioMetadata;
+    private List<Object> scenarioProcesses = null;
+    private AnalysisOfChildren analysisOfChildren;
+    private AnalysisOfScenario analysisOfScenario;
+    private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
+    private PartNestingDiagram partNestingDiagram;
+    private Thumbnail thumbnail;
+}
+
+class AnalysisOfChildren {
+}
+
+class AnalysisOfScenario {
+}
+
+class AnalysisOfScenarioAndChildren {
+}
+
+class PartNestingDiagram {
+}
+
+class ScenarioGcd {
+}
+
+class ScenarioMetadata {
+}

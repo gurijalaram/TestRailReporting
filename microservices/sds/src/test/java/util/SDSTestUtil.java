@@ -6,10 +6,10 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.entity.response.PostComponentResponse;
+import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.utils.Constants;
-import com.apriori.utils.CidAppTestUtil;
+import com.apriori.cidapp.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
