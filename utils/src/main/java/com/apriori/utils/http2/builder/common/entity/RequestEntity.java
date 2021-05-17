@@ -53,7 +53,7 @@ public class RequestEntity {
     @Singular private Map<String, String> headers = new HashMap<>();
     @Singular private List<Map<String, ?>> urlParams = new ArrayList<>();
     @Singular private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
-    private Object[] inlineVariables;
+    private List<String> inlineVariables;
     private MultiPartFiles multiPartFiles;
     private FormParams formParams;
     private Object body;
@@ -77,6 +77,6 @@ public class RequestEntity {
             return this.customEndpoint;
         }
 
-        return this.inlineVariables != null ? endpoint.getEndpoint(inlineVariables) : endpoint.getEndpoint();
+        return this.inlineVariables != null ? endpoint.getEndpoint(inlineVariables.toArray()) : endpoint.getEndpoint();
     }
 }
