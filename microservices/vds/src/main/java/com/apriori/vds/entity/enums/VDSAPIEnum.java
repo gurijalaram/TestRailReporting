@@ -25,6 +25,15 @@ public enum VDSAPIEnum implements EdcQaAPI {
     GET_CUSTOMIZATIONS("customizations"),
 
 
+    // Digital Factories
+    GET_DIGITAL_FACTORIES("digital-factories"),
+    GET_DIGITAL_FACTORIES_BY_IDENTITY("digital-factories/%s"),
+    GET_VPES("vpes"),
+    GET_VPES_BY_IDENTITY("vpes/%s"),
+
+    POST_DIGITAL_FACTORIES("digital-factories"),
+    POST_VPES("vpes"),
+
     // Site Variables
     GET_SITE_VARIABLES("site-variables");
 
