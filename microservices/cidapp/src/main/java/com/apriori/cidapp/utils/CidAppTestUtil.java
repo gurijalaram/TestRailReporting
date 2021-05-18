@@ -2,11 +2,14 @@ package com.apriori.cidapp.utils;
 
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.cidapp.entity.enums.CidAppAPIEnum;
+import com.apriori.cidapp.entity.enums.CssAPIEnum;
 import com.apriori.cidapp.entity.request.CostRequest;
 import com.apriori.cidapp.entity.response.ComponentIdentityResponse;
 import com.apriori.cidapp.entity.response.GetComponentResponse;
 import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidapp.entity.response.css.CssComponentResponse;
+import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.cidapp.entity.response.scenarios.CostResponse;
 import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
 import com.apriori.utils.FileResourceUtil;
@@ -238,7 +241,6 @@ public class CidAppTestUtil {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, with scenario name: %s", componentName, scenarioName),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-
                 if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()
                     && scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
                     return scenarioRepresentation;
@@ -249,7 +251,6 @@ public class CidAppTestUtil {
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
             Thread.currentThread().interrupt();
-
         }
 
         throw new IllegalArgumentException(

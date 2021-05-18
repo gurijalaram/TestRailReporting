@@ -1,5 +1,5 @@
 
-package com.apriori.css.entity.response;
+package com.apriori.cidapp.entity.response.css;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

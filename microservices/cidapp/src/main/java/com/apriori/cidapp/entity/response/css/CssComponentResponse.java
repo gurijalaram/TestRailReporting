@@ -1,4 +1,4 @@
-package com.apriori.css.entity.response;
+package com.apriori.cidapp.entity.response.css;
 
 import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;

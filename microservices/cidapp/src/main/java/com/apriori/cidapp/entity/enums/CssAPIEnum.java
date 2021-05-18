@@ -1,6 +1,6 @@
-package com.apriori.css.enums;
+package com.apriori.cidapp.entity.enums;
 
-import com.apriori.css.utils.Constants;
+import com.apriori.cidapp.utils.Constants;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 
 public enum CssAPIEnum implements ExternalEndpointEnum {
