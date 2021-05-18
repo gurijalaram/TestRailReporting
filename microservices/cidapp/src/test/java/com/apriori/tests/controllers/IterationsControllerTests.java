@@ -6,6 +6,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidapp.entity.response.css.CssComponentResponse;
+import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.cidapp.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -23,12 +25,10 @@ public class IterationsControllerTests {
     public void getComponentsIterationsLatest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
+        Item postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
 
-        assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
-        String componentIdentity = postComponentResponse.getResponseEntity().getComponentIdentity();
-        String scenarioIdentity = postComponentResponse.getResponseEntity().getScenarioIdentity();
+        String componentIdentity = postComponentResponse.getComponentIdentity();
+        String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
         ResponseWrapper<ComponentIteration> getComponentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
 

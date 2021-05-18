@@ -9,6 +9,7 @@ import com.apriori.cidapp.entity.response.GetComponentResponse;
 import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidapp.entity.response.css.CssComponentResponse;
+import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.cidapp.entity.response.scenarios.CostResponse;
 import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
 import com.apriori.utils.FileResourceUtil;
@@ -21,6 +22,7 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import org.apache.http.HttpStatus;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +52,7 @@ public class CidAppTestUtil {
      * @param partName     - the part name
      * @return responsewrapper
      */
-    public ResponseWrapper<PostComponentResponse> postComponents(String scenarioName, String processGroup, String partName) {
+    public Item postComponents(String scenarioName, String processGroup, String partName) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), partName)))
@@ -58,7 +60,15 @@ public class CidAppTestUtil {
                     .use("override", "false")
                     .use("scenarioName", scenarioName));
 
-        return HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+
+        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", partName, scenarioName),
+            HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+
+        ResponseWrapper<CssComponentResponse> itemResponse = getUnCostedCssComponents(partName, scenarioName);
+
+        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
+        return itemResponse.getResponseEntity().getItems().get(0);
     }
 
     /**
@@ -213,37 +223,70 @@ public class CidAppTestUtil {
      */
     public ResponseWrapper<CssComponentResponse> getUnCostedCssComponents(String componentName, String scenarioName) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
-            .inlineVariables(Arrays.asList(componentName, scenarioName));
+            .inlineVariables(Arrays.asList(componentName.split("\\.")[0].toUpperCase(), scenarioName));
 
-        long START_TIME = System.currentTimeMillis() / 1000;
-        final long POLLING_INTERVAL = 5L;
-        final long MAX_WAIT_TIME = 180L;
-        String verifiedState = "NOT_COSTED";
-        String scenarioState;
-        ResponseWrapper<CssComponentResponse> scenarioRepresentation;
+//        long START_TIME = System.currentTimeMillis() / 1000;
+//        final long POLLING_INTERVAL = 5L;
+//        final long MAX_WAIT_TIME = 180L;
+//        String scenarioState;
+//        ResponseWrapper<CssComponentResponse> scenarioRepresentation;
+
+//        try {
+//            TimeUnit.SECONDS.sleep(2);
+//        } catch (InterruptedException e) {
+//            logger.error(e.getMessage());
+//            Thread.currentThread().interrupt();
+//        }
+//        do {
+//            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+//
+//            while (scenarioRepresentation.getResponseEntity().getResponse().getItems().isEmpty() && scenarioRepresentation.getResponseEntity().getResponse().getItems() == null) {
+//                scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+//            }
+//
+//            scenarioState = scenarioRepresentation.getResponseEntity().getResponse().getItems().get(0).getScenarioState();
+//            try {
+//                TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
+//            } catch (InterruptedException e) {
+//                logger.error(e.getMessage());
+//                Thread.currentThread().interrupt();
+//            }
+//        } while (!scenarioState.equals(verifiedState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
+
+        int currentCount = 0;
+        int attemptsCount = 10;
+        int secondsToWait = 5;
+
+        final String verifiedState = "NOT_COSTED";
 
         try {
-            TimeUnit.SECONDS.sleep(2);
+
+            do {
+                TimeUnit.SECONDS.sleep(secondsToWait);
+
+                ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+
+                Assert.assertEquals(String.format("Failed to receive data about component name: %s, with scenario name: %s", componentName, scenarioName),
+                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
+
+                if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()
+                    && scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
+                    return scenarioRepresentation;
+                }
+
+            } while (currentCount++ <= attemptsCount);
+
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
             Thread.currentThread().interrupt();
+
         }
-        do {
-            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
 
-            while (scenarioRepresentation.getResponseEntity().getResponse().getItems().isEmpty() && scenarioRepresentation.getResponseEntity().getResponse().getItems() == null) {
-                scenarioRepresentation = HTTP2Request.build(requestEntity).get();
-            }
-
-            scenarioState = scenarioRepresentation.getResponseEntity().getResponse().getItems().get(0).getScenarioState();
-            try {
-                TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage());
-                Thread.currentThread().interrupt();
-            }
-        } while (!scenarioState.equals(verifiedState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
-
-        return scenarioRepresentation;
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d attempts with period in %d seconds.",
+                componentName, scenarioName, attemptsCount, secondsToWait)
+        );
     }
 }
