@@ -2,7 +2,7 @@ package com.apriori;
 
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
-import com.apriori.apibase.services.fms.objects.FileResponse;
+import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.upload.FileUploadOutputs;

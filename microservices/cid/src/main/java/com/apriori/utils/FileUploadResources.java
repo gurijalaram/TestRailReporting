@@ -6,7 +6,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
-import com.apriori.apibase.services.fms.objects.FileResponse;
+import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -157,36 +157,34 @@ public class FileUploadResources {
     }
 
     /**
-     * Generates assembly images
+     * Generates assembly images for an assembly of any size
      *
-     * @param fileResponse - response from file upload
-     * @param loadCadMetadataOutputs - assembly load cad metadata response
-     * @param loadCadMetadataOutputs2 - component 1 load cad metadata response
-     * @param loadCadMetadataOutputs3 - component 2 load cad metadata response
+     * @param fileResponse - response from assembly file upload
+     * @param loadCadMetadataOutputs - array list of assembly load cad metadata responses (assembly must be last item)
      * @return GenerateAssemblyImagesOutputs
      */
     public GenerateAssemblyImagesOutputs generateAssemblyImages(FileResponse fileResponse,
-                                                            LoadCadMetadataOutputs loadCadMetadataOutputs,
-                                                            LoadCadMetadataOutputs loadCadMetadataOutputs2,
-                                                            LoadCadMetadataOutputs loadCadMetadataOutputs3) {
+                                                                ArrayList<LoadCadMetadataOutputs>
+                                                                        loadCadMetadataOutputs) {
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+
         List<GenerateAssemblyImagesInputs> subComponentsList = new ArrayList<>();
-        subComponentsList.add(new GenerateAssemblyImagesInputs()
-                .setComponentIdentity(generateStringUtil.getRandomString())
-                .setScenarioIdentity(generateStringUtil.getRandomString())
-                .setCadMetadataIdentity(loadCadMetadataOutputs2.getCadMetadataIdentity())
-        );
-        subComponentsList.add(new GenerateAssemblyImagesInputs()
-                .setComponentIdentity(generateStringUtil.getRandomString())
-                .setScenarioIdentity(generateStringUtil.getRandomString())
-                .setCadMetadataIdentity(loadCadMetadataOutputs3.getCadMetadataIdentity())
-        );
+
+        for (LoadCadMetadataOutputs loadCadMetadataOutput : loadCadMetadataOutputs) {
+            subComponentsList.add(new GenerateAssemblyImagesInputs()
+                    .setComponentIdentity(generateStringUtil.getRandomString())
+                    .setScenarioIdentity(generateStringUtil.getRandomString())
+                    .setCadMetadataIdentity(loadCadMetadataOutput.getCadMetadataIdentity())
+            );
+        }
+
         String generateAssemblyImagesWorkorderId = createWorkorder(
                 WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
                 new GenerateAssemblyImagesInputs()
                         .setComponentIdentity(generateStringUtil.getRandomString())
                         .setScenarioIdentity(generateStringUtil.getRandomString())
-                        .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
+                        .setCadMetadataIdentity(
+                                loadCadMetadataOutputs.get(loadCadMetadataOutputs.size() - 1).getCadMetadataIdentity())
                         .setSubComponents(subComponentsList)
                         .setRequestedBy(fileResponse.getResponse().getUserIdentity())
         );
