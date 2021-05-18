@@ -60,7 +60,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7322"})
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
@@ -138,7 +138,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3249"})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -286,7 +286,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3247"})
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
@@ -372,7 +372,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3306"})
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {

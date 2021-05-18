@@ -349,6 +349,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         searchInput.sendKeys(textToType);
         pageUtils.waitForElementAndClick(searchButton);
         pageUtils.isPageLoaded(homePageTitle);
+        pageUtils.waitForElementToAppear(By.xpath(String.format("//a[text() = '%s']", textToType)));
         return new ViewSearchResultsPage(driver);
     }
 }
