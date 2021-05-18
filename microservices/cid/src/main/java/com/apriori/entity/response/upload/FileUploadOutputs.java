@@ -10,7 +10,7 @@ public class FileUploadOutputs {
         return scenarioIterationKey;
     }
 
-    public FileUploadOutputs FileUploadOutputs(ScenarioIterationKey scenarioIterationKey) {
+    public FileUploadOutputs setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
         this.scenarioIterationKey = scenarioIterationKey;
         return this;
     }

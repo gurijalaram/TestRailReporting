@@ -53,12 +53,12 @@ public class WorkorderAPITests {
                 loadCadMetadataOutputs
         );
 
-        String webImage = fileUploadResources.getImageById(
-                generatePartImagesOutputs.getWebImageIdentity()).toString();
-        String desktopImage = fileUploadResources.getImageById(
-                generatePartImagesOutputs.getDesktopImageIdentity()).toString();
-        String thumbnailImage = fileUploadResources.getImageById(
-                generatePartImagesOutputs.getThumbnailImageIdentity()).toString();
+        String webImage = fileUploadResources
+                .getImageById(generatePartImagesOutputs.getWebImageIdentity()).toString();
+        String desktopImage = fileUploadResources
+                .getImageById(generatePartImagesOutputs.getDesktopImageIdentity()).toString();
+        String thumbnailImage = fileUploadResources
+                .getImageById(generatePartImagesOutputs.getThumbnailImageIdentity()).toString();
 
         fileUploadResources.imageValidation(webImage);
         fileUploadResources.imageValidation(desktopImage);
@@ -88,7 +88,11 @@ public class WorkorderAPITests {
 
         getAndValidateImage(fileUploadOutputs.getScenarioIterationKey());
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(productionInfoInputs, fileUploadOutputs, processGroup);
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+                productionInfoInputs,
+                fileUploadOutputs,
+                processGroup
+        );
 
         getAndValidateImage(costOutputs.getScenarioIterationKey());
 
@@ -133,14 +137,14 @@ public class WorkorderAPITests {
                 scenarioName
         );
 
-        LoadCadMetadataOutputs loadCadMetadataOutputsComponentOne = fileUploadResources.loadCadMetadata(
-                fileResponseComponentOne);
+        LoadCadMetadataOutputs loadCadMetadataOutputsComponentOne = fileUploadResources
+                .loadCadMetadata(fileResponseComponentOne);
 
-        LoadCadMetadataOutputs loadCadMetadataOutputsComponentTwo = fileUploadResources.loadCadMetadata(
-                fileResponseComponentTwo);
+        LoadCadMetadataOutputs loadCadMetadataOutputsComponentTwo = fileUploadResources
+                .loadCadMetadata(fileResponseComponentTwo);
 
-        LoadCadMetadataOutputs loadCadMetadataOutputsAssembly = fileUploadResources.loadCadMetadata(
-                fileResponseAssembly);
+        LoadCadMetadataOutputs loadCadMetadataOutputsAssembly = fileUploadResources
+                .loadCadMetadata(fileResponseAssembly);
 
         GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = fileUploadResources.generateAssemblyImages(
                 fileResponseAssembly,
@@ -160,10 +164,14 @@ public class WorkorderAPITests {
 
     private void getAndValidateImage(ScenarioIterationKey scenarioIterationKey) {
         FileUploadResources fileUploadResources = new FileUploadResources();
-        String webImageResponse = fileUploadResources.getImageByScenarioIterationKey(
+
+        String webImageResponse = fileUploadResources
+                .getImageByScenarioIterationKey(
                 scenarioIterationKey.getScenarioKey(), "web").toString();
-        String desktopImageResponse = fileUploadResources.getImageByScenarioIterationKey(
+        String desktopImageResponse = fileUploadResources
+                .getImageByScenarioIterationKey(
                 scenarioIterationKey.getScenarioKey(), "desktop").toString();
+
         fileUploadResources.imageValidation(webImageResponse);
         fileUploadResources.imageValidation(desktopImageResponse);
     }
