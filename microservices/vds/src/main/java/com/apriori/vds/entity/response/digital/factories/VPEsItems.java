@@ -10,11 +10,11 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(location = "vds/DigitalFactoriesItems.json")
+@Schema(location = "vds/VPEsItems.json")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DigitalFactoriesItems extends Pagination {
-    private List<DigitalFactory> items;
+public class VPEsItems extends Pagination {
+    private List<VPE> items;
 }

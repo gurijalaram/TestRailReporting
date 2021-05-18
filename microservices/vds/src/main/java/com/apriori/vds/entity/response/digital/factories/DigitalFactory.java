@@ -13,15 +13,15 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "vds/DigitalFactoriesResponse.json")
+@Schema(location = "vds/DigitalFactoryResponse.json")
 @Data
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DigitalFactories {
+public class DigitalFactory {
     private Boolean active;
     private Integer annualVolume;
     private String baseVpeIdentity;
-    private Integer batchesPerYear;
+    private Double batchesPerYear;
     private String createdBy;
     private String currencyCode;
     private String customerIdentity;
@@ -36,7 +36,7 @@ public class DigitalFactories {
     private String[] permissions;
     private ProcessGroupAssociations processGroupAssociations;
     private String productVersion;
-    private Integer productionLife;
+    private Double productionLife;
     private String revision;
     private String subjectIdentity;
     private String toolShopVpeIdentity;
