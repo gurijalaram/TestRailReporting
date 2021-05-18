@@ -23,7 +23,6 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -60,7 +59,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7329"})
     @Description("Validate report is available by search - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityBySearch() {
