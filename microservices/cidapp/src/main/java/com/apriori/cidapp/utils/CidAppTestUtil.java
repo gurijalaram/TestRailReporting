@@ -2,14 +2,11 @@ package com.apriori.cidapp.utils;
 
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.cidapp.entity.enums.CidAppAPIEnum;
-import com.apriori.cidapp.entity.enums.CssAPIEnum;
 import com.apriori.cidapp.entity.request.CostRequest;
 import com.apriori.cidapp.entity.response.ComponentIdentityResponse;
 import com.apriori.cidapp.entity.response.GetComponentResponse;
 import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidapp.entity.response.css.CssComponentResponse;
-import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.cidapp.entity.response.scenarios.CostResponse;
 import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
 import com.apriori.utils.FileResourceUtil;
@@ -224,35 +221,6 @@ public class CidAppTestUtil {
     public ResponseWrapper<CssComponentResponse> getUnCostedCssComponents(String componentName, String scenarioName) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(Arrays.asList(componentName.split("\\.")[0].toUpperCase(), scenarioName));
-
-//        long START_TIME = System.currentTimeMillis() / 1000;
-//        final long POLLING_INTERVAL = 5L;
-//        final long MAX_WAIT_TIME = 180L;
-//        String scenarioState;
-//        ResponseWrapper<CssComponentResponse> scenarioRepresentation;
-
-//        try {
-//            TimeUnit.SECONDS.sleep(2);
-//        } catch (InterruptedException e) {
-//            logger.error(e.getMessage());
-//            Thread.currentThread().interrupt();
-//        }
-//        do {
-//            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
-//
-//            while (scenarioRepresentation.getResponseEntity().getResponse().getItems().isEmpty() && scenarioRepresentation.getResponseEntity().getResponse().getItems() == null) {
-//                scenarioRepresentation = HTTP2Request.build(requestEntity).get();
-//            }
-//
-//            scenarioState = scenarioRepresentation.getResponseEntity().getResponse().getItems().get(0).getScenarioState();
-//            try {
-//                TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
-//            } catch (InterruptedException e) {
-//                logger.error(e.getMessage());
-//                Thread.currentThread().interrupt();
-//            }
-//        } while (!scenarioState.equals(verifiedState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
-
 
         int currentCount = 0;
         int attemptsCount = 10;
