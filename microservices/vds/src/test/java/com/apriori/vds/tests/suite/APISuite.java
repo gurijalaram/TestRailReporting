@@ -6,8 +6,8 @@ import com.apriori.vds.tests.AccessControlsTest;
 import com.apriori.vds.tests.ConfigurationTest;
 import com.apriori.vds.tests.CustomAttributesTest;
 import com.apriori.vds.tests.CustomizationsTest;
-
 import com.apriori.vds.tests.DigitalFactoriesTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
