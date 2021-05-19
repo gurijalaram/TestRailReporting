@@ -102,10 +102,13 @@ public class FileUploadResources {
      */
     public FileUploadOutputs uploadPart(FileResponse fileResponse, String scenarioName) {
         String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
-                new FileUploadInputs()
-                        .setScenarioName(scenarioName)
-                        .setFileKey(fileResponse.getResponse().getIdentity())
-                        .setFileName(fileResponse.getResponse().getFilename()));
+                FileUploadInputs.builder()
+                        .keepFreeBodies(false)
+                        .freeBodiesPreserveCad(false)
+                        .freeBodiesIgnoreMissingComponents(true)
+                        .scenarioName(scenarioName)
+                        .fileKey(fileResponse.getResponse().getIdentity())
+                        .fileName(fileResponse.getResponse().getFilename()));
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(fileUploadWorkorderId),
@@ -121,9 +124,12 @@ public class FileUploadResources {
      */
     public LoadCadMetadataOutputs loadCadMetadata(FileResponse fileResponse) {
         String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
-                new LoadCadMetadataInputs()
-                        .setFileMetadataIdentity(fileResponse.getResponse().getIdentity())
-                        .setRequestedBy(fileResponse.getResponse().getUserIdentity())
+                LoadCadMetadataInputs.builder()
+                        .keepFreeBodies(false)
+                        .freeBodiesPreserveCad(false)
+                        .freeBodiesIgnoreMissingComponents(true)
+                        .fileMetadataIdentity(fileResponse.getResponse().getIdentity())
+                        .requestedBy(fileResponse.getResponse().getUserIdentity())
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         return objectMapper.convertValue(
@@ -170,22 +176,23 @@ public class FileUploadResources {
         List<GenerateAssemblyImagesInputs> subComponentsList = new ArrayList<>();
 
         for (LoadCadMetadataOutputs loadCadMetadataOutput : loadCadMetadataOutputs) {
-            subComponentsList.add(new GenerateAssemblyImagesInputs()
-                    .setComponentIdentity(generateStringUtil.getRandomString())
-                    .setScenarioIdentity(generateStringUtil.getRandomString())
-                    .setCadMetadataIdentity(loadCadMetadataOutput.getCadMetadataIdentity())
+            subComponentsList.add(
+                    GenerateAssemblyImagesInputs.builder()
+                            .componentIdentity(generateStringUtil.getRandomString())
+                            .scenarioIdentity(generateStringUtil.getRandomString())
+                            .cadMetadataIdentity(loadCadMetadataOutput.getCadMetadataIdentity())
+                            .build()
             );
         }
 
         String generateAssemblyImagesWorkorderId = createWorkorder(
                 WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
-                new GenerateAssemblyImagesInputs()
-                        .setComponentIdentity(generateStringUtil.getRandomString())
-                        .setScenarioIdentity(generateStringUtil.getRandomString())
-                        .setCadMetadataIdentity(
-                                loadCadMetadataOutputs.get(loadCadMetadataOutputs.size() - 1).getCadMetadataIdentity())
-                        .setSubComponents(subComponentsList)
-                        .setRequestedBy(fileResponse.getResponse().getUserIdentity())
+                GenerateAssemblyImagesInputs.builder()
+                        .componentIdentity(generateStringUtil.getRandomString())
+                        .scenarioIdentity(generateStringUtil.getRandomString())
+                        .cadMetadataIdentity(loadCadMetadataOutputs.get(loadCadMetadataOutputs.size() - 1).getCadMetadataIdentity())
+                        .subComponents(subComponentsList)
+                        .requestedBy(fileResponse.getResponse().getUserIdentity())
         );
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
@@ -209,18 +216,22 @@ public class FileUploadResources {
                 processGroup
         );
 
-        String costWorkorderId = createWorkorder(WorkorderCommands.COSTING.getWorkorderCommand(),
-                new CostOrderInputs()
-                        .setInputSetId(inputSetId)
-                        .setScenarioIterationKey(new CostOrderScenarioIteration()
-                                .setIteration(iteration)
-                                .setScenarioKey(new CostOrderScenario()
-                                        .setMasterName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
-                                        .setStateName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
-                                        .setTypeName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
-                                        .setWorkspaceId(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
-                                ))
-        );
+        String costWorkorderId = createWorkorder(
+                WorkorderCommands.COSTING.getWorkorderCommand(),
+                CostOrderInputs.builder()
+                        .keepFreeBodies(false)
+                        .freeBodiesPreserveCad(false)
+                        .freeBodiesIgnoreMissingComponents(true)
+                        .inputSetId(inputSetId)
+                        .scenarioIterationKey(CostOrderScenarioIteration.builder()
+                                .iteration(iteration)
+                                .scenarioKey(CostOrderScenario.builder()
+                                        .masterName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
+                                        .stateName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
+                                        .typeName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
+                                        .workspaceId(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
+                                        .build()
+        ).build()));
         submitWorkorder(costWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(costWorkorderId),

@@ -1,15 +1,10 @@
 package com.apriori.entity.response.upload;
 
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 public class FileUploadOutputs {
-
     private ScenarioIterationKey scenarioIterationKey;
-
-    public ScenarioIterationKey getScenarioIterationKey() {
-        return scenarioIterationKey;
-    }
-
-    public FileUploadOutputs setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
-        this.scenarioIterationKey = scenarioIterationKey;
-        return this;
-    }
 }

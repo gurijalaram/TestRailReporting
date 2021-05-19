@@ -50,7 +50,8 @@ public class CidWorkorderAPITests extends TestUtil {
         );
         FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, scenarioName);
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(productionInfoInputs, fileUploadOutputs, processGroup);
+        CostOrderStatusOutputs costOutputs = fileUploadResources
+                .costPart(productionInfoInputs, fileUploadOutputs, processGroup);
 
         fileUploadResources.publishPart(costOutputs);
     }
