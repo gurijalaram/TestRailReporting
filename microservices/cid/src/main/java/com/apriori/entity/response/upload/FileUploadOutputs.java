@@ -1,10 +1,10 @@
 package com.apriori.entity.response.upload;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class FileUploadOutputs {
     private ScenarioIterationKey scenarioIterationKey;
 }

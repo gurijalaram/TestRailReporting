@@ -108,7 +108,8 @@ public class FileUploadResources {
                         .freeBodiesIgnoreMissingComponents(true)
                         .scenarioName(scenarioName)
                         .fileKey(fileResponse.getIdentity())
-                        .fileName(fileResponse.getFilename()));
+                        .fileName(fileResponse.getFilename())
+                        .build());
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(fileUploadWorkorderId),
@@ -130,7 +131,7 @@ public class FileUploadResources {
                         .freeBodiesIgnoreMissingComponents(true)
                         .fileMetadataIdentity(fileResponse.getIdentity())
                         .requestedBy(fileResponse.getUserIdentity())
-                .build()
+                        .build()
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         return objectMapper.convertValue(
@@ -195,6 +196,7 @@ public class FileUploadResources {
                         .cadMetadataIdentity(loadCadMetadataOutputs.get(loadCadMetadataOutputs.size() - 1).getCadMetadataIdentity())
                         .subComponents(subComponentsList)
                         .requestedBy(fileResponse.getUserIdentity())
+                        .build()
         );
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
@@ -233,7 +235,7 @@ public class FileUploadResources {
                                         .typeName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
                                         .workspaceId(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
                                         .build()
-        ).build()));
+        ).build()).build());
         submitWorkorder(costWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(costWorkorderId),
