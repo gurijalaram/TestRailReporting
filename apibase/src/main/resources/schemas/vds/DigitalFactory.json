@@ -4,30 +4,20 @@
   "required": [
     "active",
     "annualVolume",
-    "baseVpeIdentity",
     "batchesPerYear",
     "createdAt",
     "createdBy",
-    "currencyCode",
     "customerIdentity",
-    "deletedAt",
-    "deletedBy",
     "description",
     "identity",
     "location",
-    "machinesVpeIdentity",
-    "materialCatalogVpeIdentity",
     "name",
     "ownerType",
     "permissions",
     "processGroupAssociations",
-    "productVersion",
     "productionLife",
     "revision",
     "subjectIdentity",
-    "toolShopVpeIdentity",
-    "updatedAt",
-    "updatedBy",
     "useType",
     "vpeType"
   ],
@@ -42,7 +32,7 @@
       "type": "string"
     },
     "batchesPerYear": {
-      "type": "integer"
+      "type": "number"
     },
     "createdAt": {
       "type": "string"
@@ -100,7 +90,7 @@
       "type": "string"
     },
     "productionLife": {
-      "type": "integer"
+      "type": "number"
     },
     "revision": {
       "type": "string"

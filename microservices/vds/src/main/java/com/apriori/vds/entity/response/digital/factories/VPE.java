@@ -1,4 +1,4 @@
-package com.apriori.vds.entity.response.customizations;
+package com.apriori.vds.entity.response.digital.factories;
 
 import com.apriori.bcs.entity.response.ProcessGroupAssociations;
 import com.apriori.utils.http.enums.Schema;
@@ -12,13 +12,12 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Schema(location = "vds/DigitalFactory.json")
+@Schema(location = "vds/VPEResponse.json")
 @Data
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DigitalFactory {
+public class VPE {
     private Boolean active;
     private Integer annualVolume;
     private String baseVpeIdentity;
@@ -34,7 +33,7 @@ public class DigitalFactory {
     private String materialCatalogVpeIdentity;
     private String name;
     private String ownerType;
-    private List<String> permissions;
+    private String[] permissions;
     private ProcessGroupAssociations processGroupAssociations;
     private String productVersion;
     private Integer productionLife;
