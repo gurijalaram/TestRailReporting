@@ -2,9 +2,9 @@ package com.apriori;
 
 import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
-import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
@@ -26,12 +26,10 @@ import java.util.List;
 @RunWith(JUnitParamsRunner.class)
 public class CidWorkorderAPITests extends TestUtil {
 
-    private static PropertyStore propertyStore;
-
     @BeforeClass
     public static void testSetup() {
         Constants.getDefaultUrl();
-        propertyStore = (PropertyStore) JsonManager.deserializeJsonFromFile(
+        JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile("property-store.json").getPath(), PropertyStore.class);
     }
 

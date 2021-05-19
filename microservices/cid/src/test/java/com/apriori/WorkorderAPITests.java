@@ -1,10 +1,10 @@
 package com.apriori;
 
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
-import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.entity.request.assemblycomponentobject.AssemblyComponent;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
+import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.entity.response.upload.GenerateAssemblyImagesOutputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
