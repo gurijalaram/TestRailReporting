@@ -1,6 +1,8 @@
 package utils;
 
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,7 @@ public class Constants {
     private static String cidTokenSubject;
     private static String cidApiUrl;
     private static String cssApiUrl;
+    static UserCredentials userCredentials = UserUtil.getUser();
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -101,7 +104,7 @@ public class Constants {
      * @return string
      */
     public static String getCidTokenUsername() {
-        return cidTokenUsername = System.getProperty("cidTokenUsername") == null ? PROPERTIES.getProperty("cid.token.username") : System.getProperty("cidTokenUsername");
+        return cidTokenUsername = System.getProperty("cidTokenUsername") == null ? userCredentials.getUsername().split("@")[0] : System.getProperty("cidTokenUsername");
     }
 
     /**
@@ -110,9 +113,37 @@ public class Constants {
      * @return string
      */
     public static String getCidTokenEmail() {
-        return cidTokenEmail = System.getProperty("cidTokenEmail") == null ? PROPERTIES.getProperty("cid.token.email") : System.getProperty("cidTokenEmail");
+        return cidTokenEmail = System.getProperty("cidTokenEmail") == null ? userCredentials.getUsername() : System.getProperty("cidTokenEmail");
     }
 
+    /**
+     * Gets user
+     *
+     * @return string
+     */
+    public static UserCredentials getUserCredentials() {
+        return userCredentials;
+    }
+
+
+   /* *//**
+     * Get token username
+     *
+     * @return string
+     *//*
+    public static String getCidTokenUsername() {
+        return cidTokenUsername = System.getProperty("cidTokenUsername") == null ? PROPERTIES.getProperty("cid.token.username") : System.getProperty("cidTokenUsername");
+    }
+
+    *//**
+     * Get token email
+     *
+     * @return string
+     *//*
+    public static String getCidTokenEmail() {
+        return cidTokenEmail = System.getProperty("cidTokenEmail") == null ? PROPERTIES.getProperty("cid.token.email") : System.getProperty("cidTokenEmail");
+    }
+*/
     /**
      * Get token issuer
      *

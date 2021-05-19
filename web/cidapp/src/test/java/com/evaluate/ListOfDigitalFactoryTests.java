@@ -7,12 +7,9 @@ import com.apriori.entity.response.css.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -20,6 +17,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 import utils.CidAppTestUtil;
+import utils.Constants;
 
 import java.io.File;
 
@@ -29,7 +27,6 @@ public class ListOfDigitalFactoryTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
-    private UserCredentials currentUser;
 
     public ListOfDigitalFactoryTests() {
         super();
@@ -42,7 +39,6 @@ public class ListOfDigitalFactoryTests extends TestBase {
     public void getDigitalFactoryList() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        currentUser = UserUtil.getUser();
         String componentName = "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,componentName + ".CATPart");
@@ -52,7 +48,7 @@ public class ListOfDigitalFactoryTests extends TestBase {
         String scenarioId = component.getScenarioIdentity();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(Constants.getUserCredentials())
             .navigateToScenario(componentId, scenarioId);
 
         assertThat(evaluatePage.getListOfDigitalFactory(), hasItems(DigitalFactoryEnum.getNames()));
