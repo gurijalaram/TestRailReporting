@@ -18,8 +18,7 @@
         "content",
         "sendAsBatch",
         "attachments",
-        "status",
-        "errorMessage"
+        "status"
       ],
       "optional": [
         "errorMessage"
