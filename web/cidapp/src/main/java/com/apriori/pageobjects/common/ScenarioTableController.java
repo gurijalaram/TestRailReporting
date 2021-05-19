@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.ColumnsEnum;
+import utils.Constants;
 import utils.SortOrderEnum;
 
 import java.util.Arrays;
@@ -67,6 +68,18 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/..//div[@class='scenario-thumbnail small']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
+        return this;
+    }
+
+    /**
+     * Navigates to the scenario via url
+     *
+     * @param componentId - component id
+     * @param scenarioId  - scenario id
+     * @return a new page object
+     */
+    public ScenarioTableController navigateToScenario(String componentId, String scenarioId) {
+        driver.navigate().to(Constants.getDefaultUrl().concat(String.format("components/%s/scenarios/%s", componentId, scenarioId)));
         return this;
     }
 

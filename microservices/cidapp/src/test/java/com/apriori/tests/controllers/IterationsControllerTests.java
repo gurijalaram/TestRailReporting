@@ -4,9 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidapp.entity.response.css.CssComponentResponse;
 import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.cidapp.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
