@@ -64,9 +64,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return a new page object
      */
+    // TODO: 19/05/2021 cf - this method needs to be reworked to click the invisible element open button
     public ScenarioTableController openScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/..//div[@class='scenario-thumbnail small']", componentName.toUpperCase().trim(), scenarioName.trim()));
-        pageUtils.waitForElementToAppear(scenario);
+        By scenario = By.xpath(String.format("//span[.='%s']/ancestor::div//div[.='%s']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
         return this;
     }
