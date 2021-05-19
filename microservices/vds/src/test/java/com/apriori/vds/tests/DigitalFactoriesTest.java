@@ -67,70 +67,8 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @Test
     @TestRail(testCaseId = {"8035"})
     @Description("POST create or updates a VPEs for a customer.")
+    @Ignore
     public void postVPEs() {
-
-        RequestEntity requestEntity = VDSRequestEntityUtil.init(VDSAPIEnum.POST_VPES, null)
-//            .headers(new HashMap<String, String>() {{
-//                put("Content-Type", "multipart/form-data");
-//            }})
-            .formParams(new FormParams())
-            .customBody("{\n" +
-                "   \"subjectIdentity\":\"8GFDIG229629\",\n" +
-                "   \"permissions\":[\n" +
-                "      \"READ\",\n" +
-                "      \"COST_USING\",\n" +
-                "      \"DELETE\",\n" +
-                "      \"UPDATE\"\n" +
-                "   ],\n" +
-                "   \"active\":true,\n" +
-                "   \"annualVolume\":5500,\n" +
-                "   \"batchesPerYear\":12.0,\n" +
-                "   \"description\":\"Data Release: 20201201\\nSubversion Revision: 98969\",\n" +
-                "   \"location\":\"Brazil\",\n" +
-                "   \"name\":\"aPriori Brazil\",\n" +
-                "   \"ownerType\":\"PRIVATE\",\n" +
-                "   \"productionLife\":5.0,\n" +
-                "   \"revision\":\"aP2021R1_SP00_F00_(2021-04)\",\n" +
-                "   \"useType\":\"COSTING\",\n" +
-                "   \"vpeType\":\"aPriori - Regional Data Libraries - Standard\",\n" +
-                "   \"processGroupAssociations\":{\n" +
-                "      \"Composites\":{\n" +
-                "         \"processGroupIdentity\":\"E3DC2E44D494\"\n" +
-                "      }\n" +
-                "   }\n" +
-                "}");
-
-        HTTP2Request.build(requestEntity).post();
-
-        //{
-        //   "identity":"9H3L9AILDG11",
-        //   "createdBy":"#ETL00000000",
-        //   "createdAt":"2021-05-17T18:26Z",
-        //   "subjectIdentity":"8GFDIG229629",
-        //   "permissions":[
-        //      "READ",
-        //      "COST_USING",
-        //      "DELETE",
-        //      "UPDATE"
-        //   ],
-        //   "customerIdentity":"H337GKD0LA0M",
-        //   "active":true,
-        //   "annualVolume":5500,
-        //   "batchesPerYear":12.0,
-        //   "description":"Data Release: 20201201\nSubversion Revision: 98969",
-        //   "location":"Brazil",
-        //   "name":"aPriori Brazil",
-        //   "ownerType":"PRIVATE",
-        //   "productionLife":5.0,
-        //   "revision":"aP2021R1_SP00_F00_(2021-04)",
-        //   "useType":"COSTING",
-        //   "vpeType":"aPriori - Regional Data Libraries - Standard",
-        //   "processGroupAssociations":{
-        //      "Composites":{
-        //         "processGroupIdentity":"E3DC2E44D494"
-        //      }
-        //   }
-        //}
     }
 
     @Test
