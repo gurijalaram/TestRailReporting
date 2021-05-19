@@ -107,8 +107,8 @@ public class FileUploadResources {
                         .freeBodiesPreserveCad(false)
                         .freeBodiesIgnoreMissingComponents(true)
                         .scenarioName(scenarioName)
-                        .fileKey(fileResponse.getResponse().getIdentity())
-                        .fileName(fileResponse.getResponse().getFilename()));
+                        .fileKey(fileResponse.getIdentity())
+                        .fileName(fileResponse.getFilename()));
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(fileUploadWorkorderId),
@@ -128,8 +128,9 @@ public class FileUploadResources {
                         .keepFreeBodies(false)
                         .freeBodiesPreserveCad(false)
                         .freeBodiesIgnoreMissingComponents(true)
-                        .fileMetadataIdentity(fileResponse.getResponse().getIdentity())
-                        .requestedBy(fileResponse.getResponse().getUserIdentity())
+                        .fileMetadataIdentity(fileResponse.getIdentity())
+                        .requestedBy(fileResponse.getUserIdentity())
+                .build()
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         return objectMapper.convertValue(
@@ -151,7 +152,7 @@ public class FileUploadResources {
                 WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
                 new GeneratePartImagesInputs()
                         .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
-                        .setRequestedBy(fileResponse.getResponse().getUserIdentity())
+                        .setRequestedBy(fileResponse.getUserIdentity())
         );
         submitWorkorder(generatePartImagesWorkorderId);
 
@@ -192,7 +193,7 @@ public class FileUploadResources {
                         .scenarioIdentity(generateStringUtil.getRandomString())
                         .cadMetadataIdentity(loadCadMetadataOutputs.get(loadCadMetadataOutputs.size() - 1).getCadMetadataIdentity())
                         .subComponents(subComponentsList)
-                        .requestedBy(fileResponse.getResponse().getUserIdentity())
+                        .requestedBy(fileResponse.getUserIdentity())
         );
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
