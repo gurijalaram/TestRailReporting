@@ -1,12 +1,10 @@
 package com.apriori.entity.request.cost.createcostworkorder;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Builder
-@Getter
-@Setter
+@Data
 public class CostOrderInputs {
     private Integer inputSetId;
     private CostOrderScenarioIteration scenarioIterationKey;

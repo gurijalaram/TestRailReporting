@@ -150,9 +150,10 @@ public class FileUploadResources {
                                                         LoadCadMetadataOutputs loadCadMetadataOutputs) {
         String generatePartImagesWorkorderId = createWorkorder(
                 WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
-                new GeneratePartImagesInputs()
-                        .setCadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
-                        .setRequestedBy(fileResponse.getUserIdentity())
+                GeneratePartImagesInputs.builder()
+                        .cadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
+                        .requestedBy(fileResponse.getUserIdentity())
+                        .build()
         );
         submitWorkorder(generatePartImagesWorkorderId);
 
