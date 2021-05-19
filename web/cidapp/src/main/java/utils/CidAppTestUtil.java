@@ -10,6 +10,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.users.UserCredentials;
 
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -44,8 +45,35 @@ public class CidAppTestUtil {
     /**
      * Adds a new component
      *
-     * @param scenarioName - the scenario name
-     * @param componentName     - the part name
+     * @param scenarioName    - the scenario name
+     * @param processGroup    - the process group
+     * @param partName        - the part name
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public Item postComponents(String scenarioName, String processGroup, File partName, UserCredentials userCredentials) {
+
+        if (userCredentials.getToken() != null) {
+            token = userCredentials.getToken();
+        } else {
+            token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
+                Constants.getCidServiceHost(),
+                HttpStatus.SC_CREATED,
+                userCredentials.getUsername().split("@")[0],
+                userCredentials.getUsername(),
+                Constants.getCidTokenIssuer(),
+                Constants.getCidTokenSubject());
+        }
+
+        RequestEntityUtil.useTokenForRequests(token);
+        return postComponents(scenarioName, processGroup, partName);
+    }
+
+    /**
+     * Adds a new component
+     *
+     * @param scenarioName  - the scenario name
+     * @param componentName - the part name
      * @return responsewrapper
      */
     public Item postComponents(String componentName, String scenarioName, File processGroup) {

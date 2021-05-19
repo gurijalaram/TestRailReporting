@@ -10,13 +10,14 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
-import utils.Constants;
 
 import java.io.File;
 
@@ -26,6 +27,7 @@ public class ListOfDigitalFactoryTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
+    UserCredentials currentUser;
 
     public ListOfDigitalFactoryTests() {
         super();
@@ -40,10 +42,11 @@ public class ListOfDigitalFactoryTests extends TestBase {
 
         String componentName = "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(Constants.getUserCredentials())
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
 
         assertThat(evaluatePage.getListOfDigitalFactory(), hasItems(DigitalFactoryEnum.getNames()));
     }

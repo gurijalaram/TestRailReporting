@@ -6,6 +6,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -105,8 +106,8 @@ public class ExploreToolbar extends MainNavBar {
      * @param resourceFile - the file
      * @return new page object
      */
-    public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile) {
-        Item component = new CidAppTestUtil().postComponents(componentName, scenarioName, resourceFile);
+    public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+        Item component = new CidAppTestUtil().postComponents(componentName, scenarioName, resourceFile, userCredentials);
         return new ExplorePage(driver).navigateToScenario(component.getComponentIdentity(), component.getScenarioIdentity());
     }
 

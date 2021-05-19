@@ -14,16 +14,14 @@ import com.apriori.cidapp.entity.response.scenarios.CostResponse;
 import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
-
 import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -48,7 +46,15 @@ public class CidAppTestUtil {
         RequestEntityUtil.useTokenForRequests(token);
     }
 
-
+    /**
+     * Adds a new component
+     *
+     * @param scenarioName    - the scenario name
+     * @param processGroup    - the process group
+     * @param partName        - the part name
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
     public Item postComponents(String scenarioName, String processGroup, String partName, UserCredentials userCredentials) {
 
         if (userCredentials.getToken() != null) {
@@ -63,9 +69,8 @@ public class CidAppTestUtil {
                 Constants.getCidTokenSubject());
         }
 
-
         RequestEntityUtil.useTokenForRequests(token);
-        postComponents(scenarioName, processGroup, partName);
+        return postComponents(scenarioName, processGroup, partName);
     }
 
     /**

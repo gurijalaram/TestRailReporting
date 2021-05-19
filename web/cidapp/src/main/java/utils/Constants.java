@@ -98,52 +98,24 @@ public class Constants {
         return cidServiceHost = System.getProperty("cidServiceHost") == null ? PROPERTIES.getProperty("cid.service.host") : System.getProperty("cidServiceHost");
     }
 
-    /**
+   /**
      * Get token username
      *
      * @return string
      */
-    public static String getCidTokenUsername() {
-        return cidTokenUsername = System.getProperty("cidTokenUsername") == null ? userCredentials.getUsername().split("@")[0] : System.getProperty("cidTokenUsername");
-    }
-
-    /**
-     * Get token email
-     *
-     * @return string
-     */
-    public static String getCidTokenEmail() {
-        return cidTokenEmail = System.getProperty("cidTokenEmail") == null ? userCredentials.getUsername() : System.getProperty("cidTokenEmail");
-    }
-
-    /**
-     * Gets user
-     *
-     * @return string
-     */
-    public static UserCredentials getUserCredentials() {
-        return userCredentials;
-    }
-
-
-   /* *//**
-     * Get token username
-     *
-     * @return string
-     *//*
     public static String getCidTokenUsername() {
         return cidTokenUsername = System.getProperty("cidTokenUsername") == null ? PROPERTIES.getProperty("cid.token.username") : System.getProperty("cidTokenUsername");
     }
 
-    *//**
+    /**
      * Get token email
      *
      * @return string
-     *//*
+     */
     public static String getCidTokenEmail() {
         return cidTokenEmail = System.getProperty("cidTokenEmail") == null ? PROPERTIES.getProperty("cid.token.email") : System.getProperty("cidTokenEmail");
     }
-*/
+
     /**
      * Get token issuer
      *
