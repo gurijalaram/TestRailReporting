@@ -9,8 +9,8 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -55,6 +55,6 @@ public class ListOfDigitalFactoryTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentId, scenarioId);
 
-        assertThat(evaluatePage.getListOfDigitalFactory(), hasItems(VPEEnum.getNames()));
+        assertThat(evaluatePage.getListOfDigitalFactory(), hasItems(DigitalFactoryEnum.getNames()));
     }
 }

@@ -7,8 +7,8 @@ import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -58,8 +58,8 @@ public class MaterialPMITests extends TestBase {
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterialCatalog(VPEEnum.APRIORI_BRAZIL.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
             .selectMaterial("Aluminum, Stock, ANSI 6061");
         new SettingsPage(driver).save(ExplorePage.class);
 

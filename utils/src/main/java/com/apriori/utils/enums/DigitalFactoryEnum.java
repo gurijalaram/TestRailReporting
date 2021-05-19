@@ -2,7 +2,7 @@ package com.apriori.utils.enums;
 
 import java.util.stream.Stream;
 
-public enum VPEEnum {
+public enum DigitalFactoryEnum {
 
     APRIORI_BRAZIL("aPriori Brazil"),
     APRIORI_CHINA("aPriori China"),
@@ -16,7 +16,7 @@ public enum VPEEnum {
 
     private final String vpe;
 
-    VPEEnum(String vpe) {
+    DigitalFactoryEnum(String vpe) {
         this.vpe = vpe;
     }
 
@@ -25,6 +25,6 @@ public enum VPEEnum {
     }
 
     public static String[] getNames() {
-        return Stream.of(VPEEnum.values()).map(VPEEnum::getVpe).toArray(String[]::new);
+        return Stream.of(DigitalFactoryEnum.values()).map(DigitalFactoryEnum::getVpe).toArray(String[]::new);
     }
 }

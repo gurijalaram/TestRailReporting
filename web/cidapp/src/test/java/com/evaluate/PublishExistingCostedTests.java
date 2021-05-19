@@ -12,8 +12,8 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -61,7 +61,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publish(ExplorePage.class)
             .openScenario(testScenarioName, partName)
             .editScenario()
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
@@ -95,7 +95,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publish(EvaluatePage.class)
             .editScenario()
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .publishScenario()
             .override()
             .continues(PublishPage.class)
