@@ -50,19 +50,6 @@ public class DigitalFactoriesTest extends VDSTestUtil {
         );
     }
 
-    private DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
-
-        ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponse = HTTP2Request.build(requestEntity).get();
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            digitalFactoriesItemsResponse.getStatusCode()
-        );
-
-        return digitalFactoriesItemsResponse.getResponseEntity().getItems().get(0);
-    }
-
-
 
     @Test
     @TestRail(testCaseId = {"8035"})
