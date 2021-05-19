@@ -3,10 +3,10 @@ package com.evaluate;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.entity.response.css.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -16,7 +16,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
-import utils.CidAppTestUtil;
 import utils.Constants;
 
 import java.io.File;
@@ -40,16 +39,11 @@ public class ListOfDigitalFactoryTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
         String componentName = "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,componentName + ".CATPart");
-
-        Item component = new CidAppTestUtil().postComponents(componentName, scenarioName, resourceFile);
-        String componentId = component.getComponentIdentity();
-        String scenarioId = component.getScenarioIdentity();
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(Constants.getUserCredentials())
-            .navigateToScenario(componentId, scenarioId);
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile);
 
         assertThat(evaluatePage.getListOfDigitalFactory(), hasItems(DigitalFactoryEnum.getNames()));
     }

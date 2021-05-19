@@ -46,9 +46,16 @@ public class CidAppTestUtil {
     }
 
 
+    /**
+     * Adds a new component
+     *
+     * @param scenarioName - the scenario name
+     * @param partName     - the part name
+     * @return responsewrapper
+     */
     public Item postComponents(String scenarioName, String processGroup, String partName, String token) {
         RequestEntityUtil.useTokenForRequests(token);
-        postComponents(scenarioName, processGroup, partName);
+        return postComponents(scenarioName, processGroup, partName);
     }
 
     /**

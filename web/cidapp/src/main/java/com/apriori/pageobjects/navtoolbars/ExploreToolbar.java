@@ -1,7 +1,9 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.entity.response.css.Item;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
 
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CidAppTestUtil;
 
 import java.io.File;
 
@@ -93,6 +96,18 @@ public class ExploreToolbar extends MainNavBar {
      */
     public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
         return uploadComponent(scenarioName, filePath).submit(klass);
+    }
+
+    /**
+     * Uploads a component through the API and opens it via url
+     * @param componentName - the component name
+     * @param scenarioName - the scenario name
+     * @param resourceFile - the file
+     * @return new page object
+     */
+    public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile) {
+        Item component = new CidAppTestUtil().postComponents(componentName, scenarioName, resourceFile);
+        return new ExplorePage(driver).navigateToScenario(component.getComponentIdentity(), component.getScenarioIdentity());
     }
 
     /**
