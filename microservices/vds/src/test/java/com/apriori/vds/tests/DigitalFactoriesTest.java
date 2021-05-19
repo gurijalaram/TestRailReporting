@@ -1,6 +1,7 @@
 package com.apriori.vds.tests;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
@@ -19,6 +20,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 public class DigitalFactoriesTest extends VDSTestUtil {
 
@@ -65,10 +67,13 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @Test
     @TestRail(testCaseId = {"8035"})
     @Description("POST create or updates a VPEs for a customer.")
-    @Ignore
     public void postVPEs() {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.POST_VPES, null)
+        RequestEntity requestEntity = VDSRequestEntityUtil.init(VDSAPIEnum.POST_VPES, null)
+//            .headers(new HashMap<String, String>() {{
+//                put("Content-Type", "multipart/form-data");
+//            }})
+            .formParams(new FormParams())
             .customBody("{\n" +
                 "   \"subjectIdentity\":\"8GFDIG229629\",\n" +
                 "   \"permissions\":[\n" +
