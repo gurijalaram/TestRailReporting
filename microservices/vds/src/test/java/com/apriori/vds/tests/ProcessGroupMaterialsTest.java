@@ -21,15 +21,15 @@ import java.util.List;
 
 public class ProcessGroupMaterialsTest extends VDSTestUtil {
 
-    private final DigitalFactory digitalFactory = this.getDigitalFactoriesResponse();
-    private final String digitalFactoryIdentity = digitalFactory.getIdentity();
-    private final String processGroupIdentity = digitalFactory.getProcessGroupAssociations().getBarTubeFab().getProcessGroupIdentity();
+    protected final DigitalFactory digitalFactory = this.getDigitalFactoriesResponse();
+    protected final String digitalFactoryIdentity = digitalFactory.getIdentity();
+    protected final String processGroupIdentity = digitalFactory.getProcessGroupAssociations().getBarTubeFab().getProcessGroupIdentity();
 
     @Test
     @TestRail(testCaseId = {"8129"})
     @Description("Get a list of Materials for a specific customer process group.")
     public void getMaterials() {
-        this.getProcessGroupMaterials();
+        this.getProcessGroupMaterial();
     }
 
     @Test
@@ -38,12 +38,12 @@ public class ProcessGroupMaterialsTest extends VDSTestUtil {
     public void getMaterialByIdentity() {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterial.class)
-                .inlineVariables(Arrays.asList(digitalFactoryIdentity, processGroupIdentity, this.getProcessGroupMaterials().getIdentity()));
+                .inlineVariables(Arrays.asList(digitalFactoryIdentity, processGroupIdentity, this.getProcessGroupMaterial().getIdentity()));
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
     }
 
-    private ProcessGroupMaterial getProcessGroupMaterials() {
+    protected ProcessGroupMaterial getProcessGroupMaterial() {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
                 .inlineVariables(Arrays.asList(digitalFactoryIdentity, processGroupIdentity));
@@ -56,7 +56,7 @@ public class ProcessGroupMaterialsTest extends VDSTestUtil {
 
         List<ProcessGroupMaterial> processGroupMaterials = processGroupMaterialsItems.getResponseEntity().getItems();
 
-        Assert.assertNotEquals(0, processGroupMaterials.size());
+        Assert.assertNotEquals("To get Material, response should contain it.", 0, processGroupMaterials.size());
 
         return processGroupMaterials.get(0);
     }

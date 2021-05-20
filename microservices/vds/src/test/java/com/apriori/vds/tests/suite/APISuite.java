@@ -7,6 +7,7 @@ import com.apriori.vds.tests.ConfigurationTest;
 import com.apriori.vds.tests.CustomAttributesTest;
 import com.apriori.vds.tests.CustomizationsTest;
 import com.apriori.vds.tests.DigitalFactoriesTest;
+import com.apriori.vds.tests.ProcessGroupMaterialStocksTest;
 import com.apriori.vds.tests.ProcessGroupMaterialsTest;
 
 import org.junit.runner.RunWith;
@@ -20,7 +21,8 @@ import org.junit.runners.Suite;
     CustomAttributesTest.class,
     CustomizationsTest.class,
     DigitalFactoriesTest.class,
-    ProcessGroupMaterialsTest.class
+    ProcessGroupMaterialsTest.class,
+    ProcessGroupMaterialStocksTest.class
 })
 public class APISuite {
 }

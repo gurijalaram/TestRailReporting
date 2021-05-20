@@ -50,8 +50,8 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "ProcessGroupMaterial.json"
-          }
+          "$ref": "ProcessGroupMaterialStock.json"
+        }
         }
       }
     }
