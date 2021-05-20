@@ -686,25 +686,25 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private void initialiseSubAssemblyRowMap() {
         putItemIntoSubAssemblyRowMap("1 Sub Assembly", "5");
-        putItemIntoSubAssemblyRowMap("2 Sub Assembly", "7");
-        putItemIntoSubAssemblyRowMap("3 Sub Assembly", "11");
-        putItemIntoSubAssemblyRowMap("4 Sub Assembly", "15");
-        putItemIntoSubAssemblyRowMap("5 Sub Assembly", "17");
-        putItemIntoSubAssemblyRowMap("6 Sub Assembly", "19");
-        putItemIntoSubAssemblyRowMap("Component Subtotal Sub Assembly", "22");
-        putItemIntoSubAssemblyRowMap("Assembly Processes Sub Assembly", "25");
-        putItemIntoSubAssemblyRowMap("Grand Total Sub Assembly", "27");
+        putItemIntoSubAssemblyRowMap("2 Sub Assembly", "6");
+        putItemIntoSubAssemblyRowMap("3 Sub Assembly", "7");
+        putItemIntoSubAssemblyRowMap("4 Sub Assembly", "8");
+        putItemIntoSubAssemblyRowMap("5 Sub Assembly", "9");
+        putItemIntoSubAssemblyRowMap("6 Sub Assembly", "12");
+        putItemIntoSubAssemblyRowMap("Component Subtotal Sub Assembly", "15");
+        putItemIntoSubAssemblyRowMap("Assembly Processes Sub Assembly", "18");
+        putItemIntoSubAssemblyRowMap("Grand Total Sub Assembly", "20");
     }
 
     /**
      * Hash Map initialisation for columns in Sub-Sub-ASM export set report table
      */
     private void initialiseSubSubAsmRowMap() {
-        putItemIntoSubSubAsmRowMap("1 Sub Sub ASM", "4");
+        putItemIntoSubSubAsmRowMap("1 Sub Sub ASM", "5");
         putItemIntoSubSubAsmRowMap("2 Sub Sub ASM", "6");
-        putItemIntoSubSubAsmRowMap("Component Subtotal Sub Sub ASM", "10");
-        putItemIntoSubSubAsmRowMap("Assembly Processes Sub Sub ASM", "13");
-        putItemIntoSubSubAsmRowMap("Grand Total Sub Sub ASM", "15");
+        putItemIntoSubSubAsmRowMap("Component Subtotal Sub Sub ASM", "8");
+        putItemIntoSubSubAsmRowMap("Assembly Processes Sub Sub ASM", "11");
+        putItemIntoSubSubAsmRowMap("Grand Total Sub Sub ASM", "13");
     }
 
     /**
@@ -712,18 +712,18 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private void initialiseTopLevelRowMap() {
         putItemIntoTopLevelRowMap("1 Top Level", "5");
-        putItemIntoTopLevelRowMap("2 Top Level", "8");
-        putItemIntoTopLevelRowMap("3 Top Level", "11");
-        putItemIntoTopLevelRowMap("4 Top Level", "14");
-        putItemIntoTopLevelRowMap("5 Top Level", "17");
-        putItemIntoTopLevelRowMap("6 Top Level", "19");
-        putItemIntoTopLevelRowMap("7 Top Level", "21");
-        putItemIntoTopLevelRowMap("8 Top Level", "23");
-        putItemIntoTopLevelRowMap("9 Top Level", "27");
-        putItemIntoTopLevelRowMap("10 Top Level", "31");
-        putItemIntoTopLevelRowMap("11 Top Level", "33");
-        putItemIntoTopLevelRowMap("12 Top Level", "35");
-        putItemIntoTopLevelRowMap("13 Top Level", "38");
+        putItemIntoTopLevelRowMap("2 Top Level", "6");
+        putItemIntoTopLevelRowMap("3 Top Level", "7");
+        putItemIntoTopLevelRowMap("4 Top Level", "8");
+        putItemIntoTopLevelRowMap("5 Top Level", "9");
+        putItemIntoTopLevelRowMap("6 Top Level", "10");
+        putItemIntoTopLevelRowMap("7 Top Level", "13");
+        putItemIntoTopLevelRowMap("8 Top Level", "14");
+        putItemIntoTopLevelRowMap("9 Top Level", "15");
+        putItemIntoTopLevelRowMap("10 Top Level", "16");
+        putItemIntoTopLevelRowMap("11 Top Level", "17");
+        putItemIntoTopLevelRowMap("12 Top Level", "20");
+        putItemIntoTopLevelRowMap("13 Top Level", "21");
         putItemIntoTopLevelRowMap("Component Subtotal Top Level", "24");
         putItemIntoTopLevelRowMap("Assembly Processes Top Level", "27");
         putItemIntoTopLevelRowMap("Grand Total Top Level", "29");

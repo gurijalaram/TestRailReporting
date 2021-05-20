@@ -30,6 +30,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
@@ -84,7 +85,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-66932")
     @Category({ReportsTest.class, OnPremTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = {"1922"})
     @Description("Verifies that the currency code works properly")
@@ -209,8 +209,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Issue("AP-66932")
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3068", "1929"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -314,7 +313,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-66932")
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3231", "1929"})
     @Description("Verify sub total calculations for Sub Assembly")
@@ -462,8 +460,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-66932")
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1919"})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
@@ -597,8 +594,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-66932")
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1920"})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
@@ -607,7 +603,6 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-66932")
     @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"1931"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
@@ -785,7 +780,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7689", "1921"})
     @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {
