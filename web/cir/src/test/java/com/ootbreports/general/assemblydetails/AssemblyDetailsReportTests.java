@@ -209,7 +209,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3068", "1929"})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -594,7 +594,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"1920"})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
@@ -780,7 +780,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7689", "1921"})
     @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {

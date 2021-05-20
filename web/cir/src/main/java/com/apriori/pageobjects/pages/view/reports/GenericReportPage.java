@@ -1070,6 +1070,7 @@ public class GenericReportPage extends ReportsPageHeader {
         By emptyLatestInput = By.xpath("//label[contains(@title, 'Latest Export Date')]/input[@value='']");
         By emptyLocatorToUse = isEarliestAndToday ? emptyEarliestInput : emptyLatestInput;
         clickUseLatestExportDropdownTwice();
+        clickUseLatestExportDropdownTwice();
         pageUtils.waitForElementToAppear(emptyLocatorToUse);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         dateInputToUse.click();
