@@ -34,6 +34,11 @@ public enum VDSAPIEnum implements EdcQaAPI {
     POST_DIGITAL_FACTORIES("digital-factories"),
     POST_VPES("vpes"),
 
+
+    //Process Group Materials
+    GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs("digital-factories/%s/process-groups/%s/materials"),
+    GET_SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_IDs("digital-factories/%s/process-groups/%s/materials/%s"),
+
     // Site Variables
     GET_SITE_VARIABLES("site-variables");
 

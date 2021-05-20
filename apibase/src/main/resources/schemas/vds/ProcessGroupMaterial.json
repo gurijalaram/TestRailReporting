@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "identity",
+    "createdBy",
+    "createdAt",
+    "customerIdentity",
+    "altName1",
+    "altName2",
+    "altName3",
+    "altName4",
+    "altName5",
+    "angleBarCostUnits",
+    "channelBarCostUnits",
+    "costUnits",
+    "dataSource",
+    "density",
+    "description",
+    "hardness",
+    "hardnessSystem",
+    "hexBarCostUnits",
+    "iBeamCostUnits",
+    "manufacturer",
+    "materialCutCodeName",
+    "materialForm",
+    "materialTypeName",
+    "maxExtrusionExitSpeed",
+    "millingSpeed",
+    "minExtrusionExitSpeed",
+    "morphology",
+    "name",
+    "plateCostUnits",
+    "process",
+    "rectangularBarCostUnits",
+    "rectangularTubeCostUnits",
+    "roundBarCostUnits",
+    "roundTubeCostUnits",
+    "scrapCostPercent",
+    "shearStrength",
+    "sheetCostUnits",
+    "specificHeatRT",
+    "squareBarCostUnits",
+    "squareTubeCostUnits",
+    "tBeamCostUnits",
+    "tensileYieldStrength",
+    "thermalConductivity",
+    "turningSpeed",
+    "ultimateTensileStrength"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "altName1": {
+      "type": "string"
+    },
+    "altName2": {
+      "type": "string"
+    },
+    "altName3": {
+      "type": "string"
+    },
+    "altName4": {
+      "type": "string"
+    },
+    "altName5": {
+      "type": "string"
+    },
+    "angleBarCostUnits": {
+      "type": "string"
+    },
+    "channelBarCostUnits": {
+      "type": "string"
+    },
+    "costUnits": {
+      "type": "string"
+    },
+    "dataSource": {
+      "type": "string"
+    },
+    "density": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "hardness": {
+      "type": "number"
+    },
+    "hardnessSystem": {
+      "type": "string"
+    },
+    "hexBarCostUnits": {
+      "type": "string"
+    },
+    "iBeamCostUnits": {
+      "type": "string"
+    },
+    "manufacturer": {
+      "type": "string"
+    },
+    "materialCutCodeName": {
+      "type": "number"
+    },
+    "materialForm": {
+      "type": "string"
+    },
+    "materialTypeName": {
+      "type": "string"
+    },
+    "maxExtrusionExitSpeed": {
+      "type": "number"
+    },
+    "millingSpeed": {
+      "type": "number"
+    },
+    "minExtrusionExitSpeed": {
+      "type": "number"
+    },
+    "morphology": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "plateCostUnits": {
+      "type": "string"
+    },
+    "process": {
+      "type": "string"
+    },
+    "rectangularBarCostUnits": {
+      "type": "string"
+    },
+    "rectangularTubeCostUnits": {
+      "type": "string"
+    },
+    "roundBarCostUnits": {
+      "type": "string"
+    },
+    "roundTubeCostUnits": {
+      "type": "string"
+    },
+    "scrapCostPercent": {
+      "type": "number"
+    },
+    "shearStrength": {
+      "type": "number"
+    },
+    "sheetCostUnits": {
+      "type": "string"
+    },
+    "specificHeatRT": {
+      "type": "number"
+    },
+    "squareBarCostUnits": {
+      "type": "string"
+    },
+    "squareTubeCostUnits": {
+      "type": "string"
+    },
+    "tBeamCostUnits": {
+      "type": "string"
+    },
+    "tensileYieldStrength": {
+      "type": "number"
+    },
+    "thermalConductivity": {
+      "type": "number"
+    },
+    "turningSpeed": {
+      "type": "number"
+    },
+    "ultimateTensileStrength": {
+      "type": "number"
+    }
+  }
+}
