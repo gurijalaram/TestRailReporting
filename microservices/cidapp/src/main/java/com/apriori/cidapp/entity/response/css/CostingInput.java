@@ -1,4 +1,3 @@
-
 package com.apriori.cidapp.entity.response.css;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -19,23 +18,23 @@ public class CostingInput {
     private SecondaryVpes secondaryVpes;
     private Threads threads;
     private Tolerances tolerances;
-}
 
-class CustomAttributes {
-}
+    static class CustomAttributes {
+    }
 
-class ProcessSetupOptions {
-}
+    static class ProcessSetupOptions {
+    }
 
-class SecondaryProcesses {
-}
+    static class SecondaryProcesses {
+    }
 
-class SecondaryVpes {
-}
+    static class SecondaryVpes {
+    }
 
-class Threads {
-}
+    static class Threads {
+    }
 
-class Tolerances {
+    static class Tolerances {
+    }
 }
 
