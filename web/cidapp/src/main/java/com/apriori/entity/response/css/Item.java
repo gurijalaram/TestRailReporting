@@ -1,4 +1,3 @@
-
 package com.apriori.entity.response.css;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -64,22 +63,22 @@ public class Item {
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
     private PartNestingDiagram partNestingDiagram;
     private Thumbnail thumbnail;
-}
 
-class AnalysisOfChildren {
-}
+    static class AnalysisOfChildren {
+    }
 
-class AnalysisOfScenario {
-}
+    static class AnalysisOfScenario {
+    }
 
-class AnalysisOfScenarioAndChildren {
-}
+    static class AnalysisOfScenarioAndChildren {
+    }
 
-class PartNestingDiagram {
-}
+    static class PartNestingDiagram {
+    }
 
-class ScenarioGcd {
-}
+    static class ScenarioGcd {
+    }
 
-class ScenarioMetadata {
+    static class ScenarioMetadata {
+    }
 }
