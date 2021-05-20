@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
 
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
-@Suite.SuiteClasses ({
+@Suite.SuiteClasses({
 //    CostAllCadTests.class,
 //    CostScenarioTests.class,
     ListOfDigitalFactoryTests.class,
