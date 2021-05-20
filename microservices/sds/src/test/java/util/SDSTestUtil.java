@@ -7,9 +7,9 @@ import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.cidapp.utils.CidAppTestUtil;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.utils.Constants;
-import com.apriori.cidapp.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -28,14 +28,14 @@ public class SDSTestUtil extends TestUtil {
     public static void initTestingComponentInfo() {
         initToken();
 
-         partPostComponentResponse = postTestingComponent();
+        partPostComponentResponse = postTestingComponent();
     }
 
     @AfterClass
     public static void clearTestingData() {
-                if (partPostComponentResponse != null) {
-                    removeTestingComponent(getComponentId(), getScenarioId());
-                }
+        if (partPostComponentResponse != null) {
+            removeTestingComponent(getComponentId(), getScenarioId());
+        }
     }
 
     protected static String getComponentId() {
