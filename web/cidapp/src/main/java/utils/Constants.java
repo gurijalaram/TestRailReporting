@@ -40,7 +40,6 @@ public class Constants {
     private static String cidTokenSubject;
     private static String cidApiUrl;
     private static String cssApiUrl;
-    static UserCredentials userCredentials = UserUtil.getUser();
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -98,7 +97,7 @@ public class Constants {
         return cidServiceHost = System.getProperty("cidServiceHost") == null ? PROPERTIES.getProperty("cid.service.host") : System.getProperty("cidServiceHost");
     }
 
-   /**
+    /**
      * Get token username
      *
      * @return string
