@@ -19,22 +19,22 @@ public class CostingInput {
     private Threads threads;
     private Tolerances tolerances;
 
-    static class CustomAttributes {
+    public static class CustomAttributes {
     }
 
-    static class ProcessSetupOptions {
+    public static class ProcessSetupOptions {
     }
 
-    static class SecondaryProcesses {
+    public static class SecondaryProcesses {
     }
 
-    static class SecondaryVpes {
+    public static class SecondaryVpes {
     }
 
-    static class Threads {
+    public static class Threads {
     }
 
-    static class Tolerances {
+    public static class Tolerances {
     }
 }
 

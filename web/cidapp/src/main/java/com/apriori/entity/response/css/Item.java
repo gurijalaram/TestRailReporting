@@ -64,21 +64,21 @@ public class Item {
     private PartNestingDiagram partNestingDiagram;
     private Thumbnail thumbnail;
 
-    static class AnalysisOfChildren {
+    public static class AnalysisOfChildren {
     }
 
-    static class AnalysisOfScenario {
+    public static class AnalysisOfScenario {
     }
 
-    static class AnalysisOfScenarioAndChildren {
+    public static class AnalysisOfScenarioAndChildren {
     }
 
-    static class PartNestingDiagram {
+    public static class PartNestingDiagram {
     }
 
-    static class ScenarioGcd {
+    public static class ScenarioGcd {
     }
 
-    static class ScenarioMetadata {
+    public static class ScenarioMetadata {
     }
 }

@@ -24,5 +24,5 @@ public class Response {
     private Integer totalPageCount;
     private Boolean hasNextPage;
     private Boolean hasPreviousPage;
-    private List<Item> items = null;
+    private List<Item> items;
 }
