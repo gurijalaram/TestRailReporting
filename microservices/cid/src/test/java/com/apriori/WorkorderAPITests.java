@@ -1,7 +1,8 @@
 package com.apriori;
 
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
-import com.apriori.entity.request.assemblycomponentobject.AssemblyComponent;
+import com.apriori.entity.request.assemblyobjects.Assembly;
+import com.apriori.entity.request.assemblyobjects.AssemblyComponent;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileResponse;
@@ -111,14 +112,30 @@ public class WorkorderAPITests {
         FileUploadResources fileUploadResources = new FileUploadResources();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
-
         ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
-        assemblyComponents.add(new AssemblyComponent("3574727.prt", scenarioName, processGroup));
-        assemblyComponents.add(new AssemblyComponent("3574875.prt", scenarioName, processGroup));
-        assemblyComponents.add(new AssemblyComponent(
-                "PatternThreadHoles.asm", scenarioName, processGroup));
 
-        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = generateAssemblyImages(assemblyComponents);
+        assemblyComponents.add(
+                AssemblyComponent.builder()
+                .componentName("3574727.prt")
+                .scenarioName(scenarioName)
+                .processGroup(processGroup)
+                .build()
+        );
+        assemblyComponents.add(
+                AssemblyComponent.builder()
+                .componentName("3574875.prt")
+                .scenarioName(scenarioName)
+                .processGroup(processGroup)
+                .build()
+        );
+
+        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = generateAssemblyImages(
+                Assembly.builder()
+                .assemblyName("PatternThreadHoles.asm")
+                .scenarioName(scenarioName)
+                .processGroup(processGroup)
+                .components(assemblyComponents)
+                .build());
 
         ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
 
@@ -129,12 +146,12 @@ public class WorkorderAPITests {
         fileUploadResources.imageValidation(generateAssemblyImagesOutputs.getThumbnailImageIdentity());
     }
 
-    private GenerateAssemblyImagesOutputs generateAssemblyImages(ArrayList<AssemblyComponent> assemblyPartsToUpload) {
+    private GenerateAssemblyImagesOutputs generateAssemblyImages(Assembly assemblyToUse) {
         FileUploadResources fileUploadResources = new FileUploadResources();
         ArrayList<LoadCadMetadataOutputs> metadataOutputs = new ArrayList<>();
         ArrayList<FileResponse> fileResponses = new ArrayList<>();
 
-        for (AssemblyComponent component : assemblyPartsToUpload) {
+        for (AssemblyComponent component : assemblyToUse.getComponents()) {
             FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                     component.getComponentName(),
                     component.getProcessGroup()

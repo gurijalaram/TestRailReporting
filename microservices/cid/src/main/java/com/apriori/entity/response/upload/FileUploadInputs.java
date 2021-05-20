@@ -3,8 +3,8 @@ package com.apriori.entity.response.upload;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
+@Builder
 public class FileUploadInputs {
     private String scenarioName;
     private String fileKey;

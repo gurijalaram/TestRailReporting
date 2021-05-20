@@ -67,7 +67,6 @@ public class FileUploadResources {
     private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
     private static final long WAIT_TIME = 180;
 
-    private static int iteration;
     private static final HashMap<String, String> token = new APIAuthentication()
             .initAuthorizationHeaderNoContent("aPrioriCIGenerateUser@apriori.com");
 
@@ -227,15 +226,11 @@ public class FileUploadResources {
                         .freeBodiesPreserveCad(false)
                         .freeBodiesIgnoreMissingComponents(true)
                         .inputSetId(inputSetId)
-                        .scenarioIterationKey(CostOrderScenarioIteration.builder()
-                                .iteration(iteration)
-                                .scenarioKey(CostOrderScenario.builder()
-                                        .masterName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
-                                        .stateName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
-                                        .typeName(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
-                                        .workspaceId(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
-                                        .build()
-        ).build()).build());
+                        .scenarioIterationKey(
+                                setCostOrderScenarioIteration(
+                                        fileUploadOutputs.getScenarioIterationKey().getScenarioKey()))
+                        .build()
+        );
         submitWorkorder(costWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(costWorkorderId),
@@ -251,15 +246,10 @@ public class FileUploadResources {
      */
     public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs) {
         String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
-                new PublishInputs()
-                        .setScenarioIterationKey(new PublishScenarioIterationKey()
-                                .setIteration(iteration)
-                                .setScenarioKey(new PublishScenarioKey()
-                                        .setMasterName(costOutputs.getScenarioIterationKey().getScenarioKey().getMasterName())
-                                        .setStateName(costOutputs.getScenarioIterationKey().getScenarioKey().getStateName())
-                                        .setTypeName(costOutputs.getScenarioIterationKey().getScenarioKey().getTypeName())
-                                        .setWorkspaceId(costOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId())
-                                ))
+                PublishInputs.builder()
+                        .scenarioIterationKey(
+                                setPublishScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
+                        .build()
         );
 
         submitWorkorder(createPublishWorkorderId);
@@ -372,20 +362,13 @@ public class FileUploadResources {
      * @return Object - response
      */
     public Object getImageByScenarioIterationKey(ScenarioKey scenarioKey, String imageType) {
-        iteration = getLatestIteration(
-                token,
-                scenarioKey.getTypeName(),
-                scenarioKey.getMasterName(),
-                scenarioKey.getStateName(),
-                scenarioKey.getWorkspaceId()
-        );
         String getImageUrl = baseUrl.concat(
                 String.format("ws/viz/%s/scenarios/%s/%s/%s/iterations/%s/images/%s",
                         scenarioKey.getWorkspaceId(),
                         scenarioKey.getTypeName(),
                         scenarioKey.getMasterName(),
                         scenarioKey.getStateName(),
-                        iteration,
+                        getLatestIteration(token, scenarioKey),
                         imageType));
 
         RequestEntity requestEntity = RequestEntity.init(getImageUrl, null)
@@ -413,6 +396,42 @@ public class FileUploadResources {
     }
 
     /**
+     * Sets Publish Scenario Iteration Key
+     *
+     * @param scenarioKey - scenario key
+     * @return PublishScenarioIterationKey
+     */
+    private PublishScenarioIterationKey setPublishScenarioIterationKey(ScenarioKey scenarioKey) {
+        return PublishScenarioIterationKey.builder()
+                .iteration(getLatestIteration(token, scenarioKey))
+                .scenarioKey(PublishScenarioKey.builder()
+                        .masterName(scenarioKey.getMasterName())
+                        .stateName(scenarioKey.getStateName())
+                        .typeName(scenarioKey.getTypeName())
+                        .workspaceId(scenarioKey.getWorkspaceId())
+                        .build())
+                .build();
+    }
+
+    /**
+     * Sets Cost Order Scenario Iteration
+     *
+     * @param scenarioKey - scenario key
+     * @return CostOrderScenarioIteration
+     */
+    private CostOrderScenarioIteration setCostOrderScenarioIteration(ScenarioKey scenarioKey) {
+        return CostOrderScenarioIteration.builder()
+                .iteration(getLatestIteration(token, scenarioKey))
+                .scenarioKey(CostOrderScenario.builder()
+                        .masterName(scenarioKey.getMasterName())
+                        .stateName(scenarioKey.getStateName())
+                        .typeName(scenarioKey.getTypeName())
+                        .workspaceId(scenarioKey.getWorkspaceId())
+                        .build())
+                .build();
+    }
+
+    /**
      * Checks get workorder details
      *
      * @param workorderId - String
@@ -435,20 +454,14 @@ public class FileUploadResources {
      * @return Integer
      */
     private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
-        iteration = getLatestIteration(
-                token,
-                scenarioKey.getTypeName(),
-                scenarioKey.getMasterName(),
-                scenarioKey.getStateName(),
-                scenarioKey.getWorkspaceId()
-        );
         String orderURL = baseUrl.concat(
                 String.format("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info",
                 scenarioKey.getWorkspaceId(),
                 scenarioKey.getTypeName(),
                 UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
                 scenarioKey.getStateName(),
-                iteration));
+                getLatestIteration(token, scenarioKey))
+        );
 
         headers.put(contentType, applicationJson);
 
@@ -465,19 +478,16 @@ public class FileUploadResources {
      * Gets costing iteration
      *
      * @param token - the user token
-     * @param typeName - the type name
-     * @param masterName - the master name
-     * @param stateName - the state name
-     * @param workspaceId - the workspace id
+     * @param scenarioKey - the scenario key
      * @return int
      */
-    private int getLatestIteration(HashMap<String, String> token, String typeName, String masterName, String stateName, Integer workspaceId) {
+    private int getLatestIteration(HashMap<String, String> token, ScenarioKey scenarioKey) {
         String orderURL = baseUrl.concat(
                 String.format("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s",
-                        workspaceId,
-                        typeName,
-                        UrlEscapers.urlFragmentEscaper().escape(masterName),
-                        stateName)
+                        scenarioKey.getWorkspaceId(),
+                        scenarioKey.getTypeName(),
+                        UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
+                        scenarioKey.getStateName())
         );
 
         RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, CostIteration.class)
