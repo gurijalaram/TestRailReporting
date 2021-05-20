@@ -43,12 +43,10 @@ public class PublishTests extends TestBase {
     @TestRail(testCaseId = {"6729", "6731"})
     public void testPublishNewCostedScenario() {
 
-        final String file = "testpart-4.prt";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "testpart-4";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -71,7 +69,6 @@ public class PublishTests extends TestBase {
 
         final String file = "testpart-4.prt";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "testpart-4";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
@@ -79,7 +76,7 @@ public class PublishTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
