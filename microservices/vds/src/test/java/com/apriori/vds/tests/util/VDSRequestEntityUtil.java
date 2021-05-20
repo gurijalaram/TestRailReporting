@@ -7,6 +7,7 @@ import com.apriori.vds.utils.Constants;
 
 public class VDSRequestEntityUtil extends RequestEntityUtil {
 
+    // TODO z: move to util
     public static RequestEntity initWithSharedSecret(EndpointEnum endpoint, Class<?> returnType) {
         return initBuilder(endpoint, returnType)
             .header("ap-user-context", Constants.getApUserContext())

@@ -1,10 +1,8 @@
-package com.apriori.vds.entity.response.customizations;
+package com.apriori.vds.entity.response.digital.factories;
 
-import com.apriori.bcs.entity.response.ProcessGroup;
+import com.apriori.bcs.entity.response.ProcessGroupAssociations;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
-import com.apriori.vds.entity.response.custom.attributes.CustomAttribute;
-import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -14,20 +12,37 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Schema(location = "vds/Customization.json")
+@Schema(location = "vds/DigitalFactoryResponse.json")
 @Data
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Customization {
-    private List<CustomAttribute> customAttributes;
+public class DigitalFactory {
+    private Boolean active;
+    private Integer annualVolume;
+    private String baseVpeIdentity;
+    private Double batchesPerYear;
+    private String createdBy;
+    private String currencyCode;
     private String customerIdentity;
-    private List<DigitalFactory> digitalFactories;
-    private List<ExchangeRate> exchangeRates;
+    private String deletedBy;
+    private String description;
     private String identity;
-    private List<ProcessGroup> processGroups;
-    private List<SiteVariable> siteVariables;
+    private String location;
+    private String machinesVpeIdentity;
+    private String materialCatalogVpeIdentity;
+    private String name;
+    private String ownerType;
+    private String[] permissions;
+    private ProcessGroupAssociations processGroupAssociations;
+    private String productVersion;
+    private Double productionLife;
+    private String revision;
+    private String subjectIdentity;
+    private String toolShopVpeIdentity;
+    private String updatedBy;
+    private String useType;
+    private String vpeType;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
