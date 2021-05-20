@@ -107,8 +107,8 @@ public class CidAppTestUtil {
             .inlineVariables(Arrays.asList(componentName.split("\\.")[0].toUpperCase(), scenarioName));
 
         int currentCount = 0;
-        int attemptsCount = 10;
-        int secondsToWait = 5;
+        int attemptsCount = 60;
+        int secondsToWait = 2;
 
         final String verifiedState = "NOT_COSTED";
 
