@@ -1,6 +1,7 @@
 package com.apriori.vds.tests;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
@@ -11,6 +12,7 @@ import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -23,19 +25,20 @@ public class ConfigurationTest extends VDSTestUtil {
     @TestRail(testCaseId = {"7929"})
     @Description("Returns a list of CustomerConfigurations for a customer.")
     public void getConfigurations() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class);
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTP2Request.build(requestEntity).get().getStatusCode()
-        );
+        this.getConfigurationsItems();
     }
 
     @Test
     @TestRail(testCaseId = {"7930"})
     @Description("Get a specific CustomerConfiguration.")
     public void getConfigurationsByIdentity() {
+
+        ConfigurationsItems configurationsItems = this.getConfigurationsItems();
+
+        Assert.assertNotEquals("To get the configuration, response should contain it.", 0, configurationsItems.getItems().size());
+
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_CONFIGURATIONS_BY_IDENTITY, Configuration.class)
-            .inlineVariables(Collections.singletonList(""));
+            .inlineVariables(Collections.singletonList(configurationsItems.getItems().get(0).getIdentity()));
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             HTTP2Request.build(requestEntity).get().getStatusCode()
@@ -59,6 +62,18 @@ public class ConfigurationTest extends VDSTestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED,
             HTTP2Request.build(requestEntity).put().getStatusCode()
         );
+    }
+
+    private ConfigurationsItems getConfigurationsItems() {
+        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class);
+
+        ResponseWrapper<ConfigurationsItems> configurationsItemsResponse = HTTP2Request.build(requestEntity).get();
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+            configurationsItemsResponse.getStatusCode()
+        );
+
+        return configurationsItemsResponse.getResponseEntity();
     }
 }
 
