@@ -8,6 +8,7 @@ import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialStock;
 import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialsStocksItems;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
+import com.apriori.vds.tests.util.VDSTestUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -17,7 +18,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProcessGroupMaterialStocksTest extends ProcessGroupMaterialsTest {
+public class ProcessGroupMaterialStocksTest extends VDSTestUtil {
 
     private final String materialIdentity = this.getProcessGroupMaterial().getIdentity();
 
@@ -47,7 +48,7 @@ public class ProcessGroupMaterialStocksTest extends ProcessGroupMaterialsTest {
 
     private ProcessGroupMaterialStock getMaterialsStock() {
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, null)
+            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
                 .inlineVariables(Arrays.asList(digitalFactoryIdentity, processGroupIdentity, materialIdentity));
 
         ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTP2Request.build(requestEntity).get();
