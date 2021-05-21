@@ -98,7 +98,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
         GenericReportPage genericReportPage = new GenericReportPage(driver);
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(),
-                "Available: ", "1,247");
+                "Available: ", "149");
     }
 
     /**
@@ -195,7 +195,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         pageUtils.waitForElementToAppear(firstScenarioToCompare);
         String scenarioName = "";
         while (scenarioName.isEmpty()) {
-            if (firstScenarioToCompare.getAttribute("title").contains("0200613")) {
+            if (firstScenarioToCompare.getAttribute("title").contains("0001-2140")) {
                 scenarioName = firstScenarioToCompare.getAttribute("title");
             }
             pageUtils.waitForElementToAppear(locator);
