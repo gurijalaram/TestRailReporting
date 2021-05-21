@@ -25,14 +25,14 @@ import org.junit.runners.Suite;
 @ProjectRunID("641")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    /*ApVersionsTests.class,
+    ApVersionsTests.class,
     CdsAccessControlsTests.class,
     CdsApplicationsTests.class,
     CdsAssociationUserTests.class,
     CdsConfigurationsTests.class,
-    CdsCustomerAssociationTests.class,*/
+    CdsCustomerAssociationTests.class,
     CdsCustomersTests.class,
-    /*CdsCustomerUsersTests.class,
+    CdsCustomerUsersTests.class,
     CdsDeploymentsTests.class,
     CdsInstallationsTests.class,
     CdsLicenseTests.class,
@@ -40,7 +40,7 @@ import org.junit.runners.Suite;
     CdsSitesTests.class,
     CdsUsersTests.class,
     CdsIdentityProvidersTests.class,
-    CdsSitesApplicationsTests.class*/
+    CdsSitesApplicationsTests.class
 })
 public class CdsAPISuite {
 

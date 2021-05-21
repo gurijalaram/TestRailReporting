@@ -62,7 +62,7 @@ public class CdsCustomersTests {
         assertThat(response.getResponseEntity().getResponse().getItems().get(0).getMaxCadFileRetentionDays(), is(not(nullValue())));
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"3298"})
     @Description("Add API customers")
     public void addCustomerTest() {
@@ -142,5 +142,5 @@ public class CdsCustomersTests {
         ResponseWrapper<Customer> updatedEmail = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
 
         assertThat(updatedEmail.getResponseEntity().getResponse().getEmailRegexPatterns(), hasItem(updatedEmailPattern + ".com"));
-    }*/
+    }
 }
