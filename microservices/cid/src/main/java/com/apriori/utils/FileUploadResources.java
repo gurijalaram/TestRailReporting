@@ -168,11 +168,14 @@ public class FileUploadResources {
      *
      * @param fileResponse - response from assembly file upload
      * @param loadCadMetadataOutputs - array list of assembly load cad metadata responses (assembly must be last item)
+     * @param assemblyMetadataOutput - output from loading cad metadata for assembly
      * @return GenerateAssemblyImagesOutputs
      */
-    public GenerateAssemblyImagesOutputs generateAssemblyImages(FileResponse fileResponse,
-                                                                ArrayList<LoadCadMetadataOutputs>
-                                                                        loadCadMetadataOutputs) {
+    public GenerateAssemblyImagesOutputs generateAssemblyImages(
+            FileResponse fileResponse,
+            ArrayList<LoadCadMetadataOutputs> loadCadMetadataOutputs,
+            LoadCadMetadataOutputs assemblyMetadataOutput) {
+
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
         List<GenerateAssemblyImagesInputs> subComponentsList = new ArrayList<>();
@@ -192,7 +195,7 @@ public class FileUploadResources {
                 GenerateAssemblyImagesInputs.builder()
                         .componentIdentity(generateStringUtil.getRandomString())
                         .scenarioIdentity(generateStringUtil.getRandomString())
-                        .cadMetadataIdentity(loadCadMetadataOutputs.get(loadCadMetadataOutputs.size() - 1).getCadMetadataIdentity())
+                        .cadMetadataIdentity(assemblyMetadataOutput.getCadMetadataIdentity())
                         .subComponents(subComponentsList)
                         .requestedBy(fileResponse.getUserIdentity())
                         .build()

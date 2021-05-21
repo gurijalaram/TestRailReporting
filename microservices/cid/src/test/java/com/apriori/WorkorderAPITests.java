@@ -129,7 +129,7 @@ public class WorkorderAPITests {
                 .build()
         );
 
-        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = generateAssemblyImages(
+        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = prepareForGenerateAssemblyImages(
                 Assembly.builder()
                 .assemblyName("PatternThreadHoles.asm")
                 .scenarioName(scenarioName)
@@ -138,37 +138,48 @@ public class WorkorderAPITests {
                 .build());
 
         ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
+        images.add(generateAssemblyImagesOutputs.getDesktopImageIdentity());
+        images.add(generateAssemblyImagesOutputs.getThumbnailImageIdentity());
 
         for (String image : images) {
             fileUploadResources.imageValidation(image);
         }
-        fileUploadResources.imageValidation(generateAssemblyImagesOutputs.getDesktopImageIdentity());
-        fileUploadResources.imageValidation(generateAssemblyImagesOutputs.getThumbnailImageIdentity());
     }
 
-    private GenerateAssemblyImagesOutputs generateAssemblyImages(Assembly assemblyToUse) {
+    private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {
         FileUploadResources fileUploadResources = new FileUploadResources();
-        ArrayList<LoadCadMetadataOutputs> metadataOutputs = new ArrayList<>();
-        ArrayList<FileResponse> fileResponses = new ArrayList<>();
+        ArrayList<LoadCadMetadataOutputs> componentMetadataOutputs = new ArrayList<>();
 
         for (AssemblyComponent component : assemblyToUse.getComponents()) {
             FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                     component.getComponentName(),
                     component.getProcessGroup()
             );
-            fileResponses.add(fileResponse);
 
             fileUploadResources.uploadPart(
                     fileResponse,
                     component.getScenarioName()
             );
 
-            metadataOutputs.add(fileUploadResources.loadCadMetadata(fileResponse));
+            componentMetadataOutputs.add(fileUploadResources.loadCadMetadata(fileResponse));
         }
 
+        FileResponse assemblyFileResponse = fileUploadResources.initialisePartUpload(
+                assemblyToUse.getAssemblyName(),
+                assemblyToUse.getProcessGroup()
+        );
+
+        fileUploadResources.uploadPart(
+                assemblyFileResponse,
+                assemblyToUse.getScenarioName()
+        );
+
+        LoadCadMetadataOutputs assemblyMetadataOutput = fileUploadResources.loadCadMetadata(assemblyFileResponse);
+
         return fileUploadResources.generateAssemblyImages(
-                fileResponses.get(fileResponses.size() - 1),
-                metadataOutputs
+                assemblyFileResponse,
+                componentMetadataOutputs,
+                assemblyMetadataOutput
         );
     }
 
