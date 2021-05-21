@@ -3,11 +3,14 @@ package com.apriori.bcs.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.response.Batch;
+import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.utils.CisUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -47,6 +50,30 @@ public class BatchResourcesTest extends TestUtil {
     @Description("API returns a representation of a single Batch in the CIS DB")
     public void getBatch() {
         BatchResources.getBatchRepresentation(Constants.getCisBatchIdentity());
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7906"})
+    @Description("Cancel batch processing")
+    public void cancelBatchProcessing() {
+        ResponseWrapper<Cancel> responseWrapper = BatchResources.cancelBatchProccessing();
+        String identity = responseWrapper.getResponseEntity().getIdentity();
+
+
+        /*
+         *  Give the batch process time to move to a cancelled state
+         */
+        try {
+            Thread.sleep(10000);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error(Arrays.toString(e.getStackTrace()));
+        }
+
+        ResponseWrapper<Batch> batchResponseWrapper = BatchResources.getBatchRepresentation(identity);
+        Assert.assertEquals("CANCELLED", batchResponseWrapper.getResponseEntity()
+                .getState().toUpperCase());
+
     }
 
 

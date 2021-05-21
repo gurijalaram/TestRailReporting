@@ -2,25 +2,12 @@ package com.apriori.entity.response.cost.costworkorderstatus;
 
 import com.apriori.entity.response.upload.ScenarioIterationKey;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class CostOrderStatusOutputs {
     private ScenarioIterationKey scenarioIterationKey;
     private String costStatus;
-
-    public ScenarioIterationKey getScenarioIterationKey() {
-        return scenarioIterationKey;
-    }
-
-    public CostOrderStatusOutputs setScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
-        this.scenarioIterationKey = scenarioIterationKey;
-        return this;
-    }
-
-    public String getCostStatus() {
-        return costStatus;
-    }
-
-    public CostOrderStatusOutputs setCostStatus(String costStatus) {
-        this.costStatus = costStatus;
-        return this;
-    }
 }
