@@ -137,8 +137,8 @@
                     "required": [
                       "Composites",
                       "Multi-Spindle Machining",
-                      "Machining",
                       "Casting - Die",
+                      "Machining",
                       "Additive Manufacturing",
                       "Powder Metal",
                       "Forging",
@@ -153,8 +153,8 @@
                       "Assembly Plastic Molding",
                       "Sheet Metal",
                       "PCB",
-                      "Casting - Sand",
                       "Assembly Molding",
+                      "Casting - Sand",
                       "Rapid Prototyping",
                       "Casting",
                       "Plastic Molding",
@@ -163,8 +163,8 @@
                       "Surface Treatment",
                       "Roto & Blow Molding",
                       "Other Secondary Processes",
-                      "2-Model Machining",
-                      "Sheet Metal - Stretch Forming"
+                      "Sheet Metal - Stretch Forming",
+                      "2-Model Machining"
                     ],
                     "properties": {
                       "Composites": {
@@ -189,7 +189,7 @@
                           }
                         }
                       },
-                      "Machining": {
+                      "Casting - Die": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
@@ -200,7 +200,7 @@
                           }
                         }
                       },
-                      "Casting - Die": {
+                      "Machining": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
@@ -365,7 +365,7 @@
                           }
                         }
                       },
-                      "Casting - Sand": {
+                      "Assembly Molding": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
@@ -376,7 +376,7 @@
                           }
                         }
                       },
-                      "Assembly Molding": {
+                      "Casting - Sand": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
@@ -475,7 +475,7 @@
                           }
                         }
                       },
-                      "2-Model Machining": {
+                      "Sheet Metal - Stretch Forming": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
@@ -486,7 +486,7 @@
                           }
                         }
                       },
-                      "Sheet Metal - Stretch Forming": {
+                      "2-Model Machining": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"

@@ -1,10 +1,9 @@
 package com.apriori.bcs.entity.response;
 
-import com.apriori.bcs.utils.CustomerBase;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,34 +13,35 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Data
 @JsonRootName("response")
-@Schema(location = "CustomerSchema.json")
-public class Customer {
+@Schema(location = "ReportTemplateSchema.json")
+public class ReportTemplate {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
 
+    private String createdBy;
+    private String customerIdentity;
+
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime updatedAt;
+    private String deletedAt;
 
-    private Customer response;
-    private String identity;
-    private String createdBy;
-    private String updatedBy;
-    private String name;
+    private String deletedBy;
     private String description;
-    private List<String> emailRegexPatterns;
-    private Boolean active;
-    private Integer maxCadFileRetentionDays;
-    private Boolean useExternalIdentityProvider;
-    private Boolean mfaRequired;
-    private List<Object> oneTimePasswordApplications;
-    private String customerType;
-    private String cloudReference;
-    private String salesforceId;
-    private String maxCadFileSize;
+    private String identity;
+    private String name;
 
+    @JsonProperty("public")
+    private Boolean isPublic;
+
+    private List<ReportTemplateParameter> reportTemplateParameters;
+    private String type;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private String updatedAt;
+
+    private String updatedBy;
 }

@@ -25,6 +25,7 @@ public class BatchPartResourcesTest extends TestUtil {
         NewPartRequest newPartRequest =
             (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
                     FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+        newPartRequest.setFilename("bracket_form.prt");
 
         part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
 
@@ -37,6 +38,7 @@ public class BatchPartResourcesTest extends TestUtil {
         NewPartRequest newPartRequest =
             (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+        newPartRequest.setFilename("bracket_new.prt");
 
         BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
     }
@@ -54,5 +56,19 @@ public class BatchPartResourcesTest extends TestUtil {
     public void getBatchPart() {
         BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
             part.getIdentity());
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7954"})
+    @Description("Return the costing results for a part")
+    public void getResults() {
+        BatchPartResources.getResults(batch.getIdentity(), part.getIdentity());
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7958"})
+    @Description("Return the costing results for a part")
+    public void getPartReport() {
+        BatchPartResources.getPartReport(batch.getIdentity(), part.getIdentity());
     }
 }

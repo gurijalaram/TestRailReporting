@@ -61,6 +61,22 @@ public class ProcessGroupAssociations {
     private TwoModelMachining twoModelMachining;
     @JsonProperty("Sheet Metal - Stretch Forming")
     private SheetMetalStretchForming sheetMetalStretchForming;
+    @JsonProperty("User Guided")
+    private UserGuided userGuided;
+    @JsonProperty("Stock Machining")
+    private StockMachining stockMachining;
+    @JsonProperty("Surface Treatment")
+    private StockMachining surfaceTreatment;
+
+    @Data
+    static class SurfaceTreatment {
+        private String processGroupIdentity;
+    }
+
+    @Data
+    static class StockMachining {
+        private String processGroupIdentity;
+    }
 
     @Data
     static class Composites {
@@ -242,5 +258,10 @@ public class ProcessGroupAssociations {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
+    }
+
+    @Data
+    static class UserGuided {
+        private String processGroupIdentity;
     }
 }

@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "required": [
+    "allowedValues",
+    "decimalPlaces",
+    "defaultValue",
+    "displayName",
+    "multiselect",
+    "name",
+    "required",
+    "type"
+  ],
+  "properties": {
+    "allowedValues": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "decimalPlaces": {
+      "type": "integer"
+    },
+    "defaultValue": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "multiselect": {
+      "type": "boolean"
+    },
+    "name": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    }
+  }
+}
