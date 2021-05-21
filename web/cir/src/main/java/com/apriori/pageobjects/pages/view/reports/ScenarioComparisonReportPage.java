@@ -98,7 +98,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
         GenericReportPage genericReportPage = new GenericReportPage(driver);
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(),
-                "Available: ", "149");
+                "Available: ", "150");
     }
 
     /**
@@ -191,7 +191,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
      * Gets name of first scenario to compare
      */
     public String getNameOfFirstScenarioToCompare(boolean substringName) {
-        By locator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0200613 (Initial) [part]']");
+        By locator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0001-2140 (Initial) [part]']");
         pageUtils.waitForElementToAppear(firstScenarioToCompare);
         String scenarioName = "";
         while (scenarioName.isEmpty()) {
@@ -200,7 +200,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
             }
             pageUtils.waitForElementToAppear(locator);
         }
-        return substringName ? scenarioName.substring(0, 7) : scenarioName;
+        return substringName ? scenarioName.substring(0, 9) : scenarioName;
     }
 
     /**
@@ -221,6 +221,6 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         partNumberSearchCriteriaInput.sendKeys(partNumberToInput);
         partNumberSearchCriteriaInput.sendKeys(Keys.ENTER);
         waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "2");
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1");
     }
 }
