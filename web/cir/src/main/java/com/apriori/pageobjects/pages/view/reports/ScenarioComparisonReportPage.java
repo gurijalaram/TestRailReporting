@@ -95,11 +95,6 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
         By filteredLocator = By.xpath("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')])[1]");
         pageUtils.waitForElementToAppear(filteredLocator);
-
-        /*GenericReportPage genericReportPage = new GenericReportPage(driver);
-        String expectedCount = driver.getCurrentUrl().contains("01") ? "149" : "150";
-        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(),
-                "Available: ", expectedCount);*/
     }
 
     /**
