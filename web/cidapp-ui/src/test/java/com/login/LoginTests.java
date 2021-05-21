@@ -53,7 +53,7 @@ public class LoginTests extends TestBase {
         assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
 
-    @Test
+    /*@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6646"})
     @Description("Test unsuccessful login with correct email, incorrect password")
@@ -151,5 +151,5 @@ public class LoginTests extends TestBase {
             .openScenario("225_gasket-1-solid1", scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
-    }
+    }*/
 }
