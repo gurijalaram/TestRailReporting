@@ -64,6 +64,11 @@ public class CisUtils extends ApiUtils {
         try {
             state = CisUtils.getState(obj, klass);
 
+            if (state.toUpperCase().equals("ERRORED")) {
+                logger.debug("Part process has errored");
+                return false;
+            }
+
             if (state.toUpperCase().equals("COMPLETED")) {
                 return true;
             } else {
