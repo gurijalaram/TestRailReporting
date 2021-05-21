@@ -1066,11 +1066,6 @@ public class GenericReportPage extends ReportsPageHeader {
         String valueToInput = invalidValue.isEmpty() ? dateToUse : invalidValue;
 
         dateInputToUse.clear();
-        By emptyEarliestInput = By.xpath("//label[contains(@title, 'Earliest Export Date')]/input[@value='']");
-        By emptyLatestInput = By.xpath("//label[contains(@title, 'Latest Export Date')]/input[@value='']");
-        By emptyLocatorToUse = isEarliestAndToday ? emptyEarliestInput : emptyLatestInput;
-        clickUseLatestExportDropdownTwice();
-        pageUtils.waitForElementToAppear(emptyLocatorToUse);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         dateInputToUse.click();
         dateInputToUse.sendKeys(valueToInput);
