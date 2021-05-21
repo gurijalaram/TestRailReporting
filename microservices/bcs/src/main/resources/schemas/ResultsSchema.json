@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "updatedBy",
+        "createdAt",
+        "updatedAt",
+        "customerIdentity",
+        "state",
+        "externalId",
+        "requireWatchpointReport"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "requireWatchpointReport": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

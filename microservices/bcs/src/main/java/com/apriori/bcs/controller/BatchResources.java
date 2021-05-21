@@ -2,15 +2,21 @@ package com.apriori.bcs.controller;
 
 import com.apriori.bcs.entity.request.NewBatchProperties;
 import com.apriori.bcs.entity.request.NewBatchRequest;
+import com.apriori.bcs.entity.request.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Batches;
+import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.entity.response.StartCosting;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 
 import org.apache.http.HttpStatus;
+
+import java.util.UUID;
 
 public class BatchResources extends CisBase {
     private static final String endpointBatches = String.format(getBatchUrl(), "");
@@ -62,5 +68,42 @@ public class BatchResources extends CisBase {
                         .setStatusCode(HttpStatus.SC_ACCEPTED),
                 new RequestAreaApi()
         ).getResponseEntity();
+    }
+
+    /**
+     * Cancel the start-costing process
+     *
+     * @param <T> Object type
+     * @return Cancel response
+     */
+    public static <T> ResponseWrapper<T> cancelBatchProccessing() {
+        // create batch
+        Batch batch = BatchResources.createNewBatch();
+        String batchIdentity = batch.getIdentity();
+
+        // create batch part
+        NewPartRequest newPartRequest =
+                (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
+                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+
+
+        newPartRequest.setExternalId(UUID.randomUUID().toString());
+        newPartRequest.setFilename("tab_forms.prt");
+        BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
+
+        // start costing
+        try {
+            startCosting(batchIdentity);
+        } catch (Exception ignored) {
+
+        }
+
+        String url = String.format(getBatchUrlWithIdentity(batchIdentity), "/cancel");
+        return GenericRequestUtil.post(
+                RequestEntity.init(url, Cancel.class)
+                        .setBody("{}")
+                        .setStatusCode(HttpStatus.SC_ACCEPTED),
+                new RequestAreaApi()
+        );
     }
 }

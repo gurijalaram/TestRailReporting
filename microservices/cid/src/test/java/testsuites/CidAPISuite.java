@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.CidWorkorderAPITests;
+import com.apriori.WorkorderAPITests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import org.junit.experimental.categories.Categories;
@@ -11,7 +11,7 @@ import testsuites.categories.CidAPITest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CidAPITest.class)
 @Suite.SuiteClasses({
-        CidWorkorderAPITests.class
+        WorkorderAPITests.class
 })
 
 public class CidAPISuite {

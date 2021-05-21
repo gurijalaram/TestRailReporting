@@ -174,5 +174,17 @@ public class Constants {
     public static void setCisReportIdentity(String identity) {
         cisReportIdentity = System.setProperty("cisReportIdentity", identity);
     }
+
+    /**
+     * Get the maximum number of parts to upload  to BCS
+     *
+     * @return Integer
+     */
+    public static Integer getMaximumPartsUpload() {
+        String max = System.getProperty("maximumPartsUpload") == null
+                ? PROPERTIES.getProperty("maximum.parts.upload") : System.getProperty("maximumPartsUpload");
+        return Integer.parseInt(max);
+    }
+
 }
 

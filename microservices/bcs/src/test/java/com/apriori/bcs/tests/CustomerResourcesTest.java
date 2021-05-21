@@ -56,4 +56,18 @@ public class CustomerResourcesTest extends CustomerBase {
         cp.setMinCadToleranceThreshold(value);
         CustomerResources.patchCostingPreferences(cp);
     }
+
+    @Test
+    @TestRail(testCaseId = {"7955"})
+    @Description("Return a list of digital factories")
+    public void getDigitalFactories() {
+        CustomerResources.getDigitalFactories();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7956"})
+    @Description("Return a customer's custom attributes")
+    public void getCustomAttributes() {
+        CustomerResources.getCustomAttributes();
+    }
 }

@@ -98,7 +98,7 @@ public class CostingScenarioTest extends TestUtil {
         }
         Assert.assertEquals(true, isBatchComplete);
 
-        BatchPartResources.getBatchPartCosting(batchIdentity, partIdentity);
+        BatchPartResources.getResults(batchIdentity, partIdentity);
 
         PropertyStore propertyStore = new PropertyStore();
         propertyStore.setBatchIdentity(batchIdentity);
