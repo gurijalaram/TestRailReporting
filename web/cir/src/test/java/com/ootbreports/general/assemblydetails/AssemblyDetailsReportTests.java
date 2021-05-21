@@ -460,7 +460,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"1919"})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
