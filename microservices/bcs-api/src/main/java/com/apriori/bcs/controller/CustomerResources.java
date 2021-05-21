@@ -2,7 +2,9 @@ package com.apriori.bcs.controller;
 
 import com.apriori.bcs.entity.request.PatchCostingPreferenceRequest;
 import com.apriori.bcs.entity.response.CostingPreferences;
+import com.apriori.bcs.entity.response.CustomAttributes;
 import com.apriori.bcs.entity.response.Customers;
+import com.apriori.bcs.entity.response.DigitalFactories;
 import com.apriori.bcs.entity.response.ProcessGroups;
 import com.apriori.bcs.entity.response.UserDefinedAttributes;
 import com.apriori.bcs.entity.response.VPE;
@@ -19,6 +21,8 @@ public class CustomerResources extends CisBase {
     private static final String endpointProcessGroups = "process-groups";
     private static final String endpointUserDefinedAttributes = "user-defined-attributes";
     private static final String endpointVPE = "virtual-production-environments";
+    private static final String endpointDigitalFactories = "digital-factories";
+    private static final String endpointCustomAttributes = "custom-attributes";
 
     public static <T>  ResponseWrapper<T> getCustomers() {
         String url = String.format(getBaseCisUrl(), "");
@@ -67,6 +71,22 @@ public class CustomerResources extends CisBase {
         String url = String.format(getCisUrl(), endpointVPE);
         return GenericRequestUtil.get(
                 RequestEntity.init(url, VPE.class),
+                new RequestAreaApi()
+        );
+    }
+
+    public static <T>  ResponseWrapper<T> getDigitalFactories() {
+        String url = String.format(getCisUrl(), endpointDigitalFactories);
+        return GenericRequestUtil.get(
+                RequestEntity.init(url, DigitalFactories.class),
+                new RequestAreaApi()
+        );
+    }
+
+    public static <T>  ResponseWrapper<T> getCustomAttributes() {
+        String url = String.format(getCisUrl(), endpointCustomAttributes);
+        return GenericRequestUtil.get(
+                RequestEntity.init(url, CustomAttributes.class),
                 new RequestAreaApi()
         );
     }

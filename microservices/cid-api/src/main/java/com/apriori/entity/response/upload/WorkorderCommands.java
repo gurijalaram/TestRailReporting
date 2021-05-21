@@ -3,6 +3,7 @@ package com.apriori.entity.response.upload;
 public enum WorkorderCommands {
 
     COSTING("COSTING"),
+    GENERATE_ASSEMBLY_IMAGES("GENERATE_ASSEMBLY_IMAGES"),
     GENERATE_PART_IMAGES("GENERATE_PART_IMAGES"),
     LOAD_CAD_FILE("LOADCADFILE"),
     LOAD_CAD_METADATA("LOAD_CAD_METADATA"),
