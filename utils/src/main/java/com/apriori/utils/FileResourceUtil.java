@@ -5,8 +5,10 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.iterable.S3Objects;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileResourceUtil {
 
@@ -75,6 +79,22 @@ public class FileResourceUtil {
      */
     public static File getCloudFile(final ProcessGroupEnum processGroup, final String fileName) {
         return copyFileFromCloudToTempFolder("common", processGroup, fileName);
+    }
+
+    /**
+     * Get a list of files from S3
+     *
+     * @return List of files
+     */
+    public static List<String> getCloudFileList() {
+        List<String> cloudFileList = new ArrayList<>();
+        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(S3_REGION_NAME).build();
+
+        S3Objects.inBucket(s3Client, S3_BUCKET_NAME).forEach((S3ObjectSummary s3ObjectSummary) -> {
+            cloudFileList.add(s3ObjectSummary.getKey());
+        });
+
+        return cloudFileList;
     }
 
     private static File copyFileFromCloudToTempFolder(final String workspaceName, final ProcessGroupEnum processGroup, final String fileName) {

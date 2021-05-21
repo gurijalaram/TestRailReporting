@@ -3,6 +3,7 @@ package com.apriori.bcs.controller;
 import com.apriori.bcs.entity.request.NewReportRequest;
 import com.apriori.bcs.entity.response.Report;
 import com.apriori.bcs.entity.response.ReportExport;
+import com.apriori.bcs.entity.response.ReportTemplates;
 import com.apriori.bcs.entity.response.ReportType;
 import com.apriori.bcs.entity.response.ReportTypes;
 import com.apriori.bcs.entity.response.Reports;
@@ -21,6 +22,7 @@ public class ReportResources extends CisBase {
     private static final String endpointReports = "reports";
     private static final String endpointReportRepresentation = "reports/%s";
     private static final String endpointExportReport = "reports/%s/export";
+    private static final String endpointReportTemplate = "report-templates";
 
     public static <T> ResponseWrapper<T> getReports() {
         String url = String.format(getCisUrl(), endpointReports);
@@ -98,5 +100,13 @@ public class ReportResources extends CisBase {
                         .setStatusCode(HttpStatus.SC_CREATED),
                 new RequestAreaApi()
         ).getResponseEntity();
+    }
+
+    public static <T> ResponseWrapper<T> getReportTemplates() {
+        String url = String.format(getCisUrl(), endpointReportTemplate);
+        return GenericRequestUtil.get(
+                RequestEntity.init(url, ReportTemplates.class),
+                new RequestAreaApi()
+        );
     }
 }

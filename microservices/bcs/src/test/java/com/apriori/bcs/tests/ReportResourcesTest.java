@@ -96,4 +96,11 @@ public class ReportResourcesTest extends TestUtil {
         }
         ReportResources.exportReport(reportIdentity);
     }
+
+    @Test
+    @TestRail(testCaseId = {"7957"})
+    @Description("Get a list of report templates")
+    public void getReportTemplates() {
+        ReportResources.getReportTemplates();
+    }
 }
