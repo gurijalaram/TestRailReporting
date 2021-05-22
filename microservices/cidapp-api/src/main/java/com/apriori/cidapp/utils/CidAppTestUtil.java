@@ -111,13 +111,13 @@ public class CidAppTestUtil {
      */
     public Item postComponents(String componentName, String scenarioName, File resourceFile) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, com.apriori.entity.response.PostComponentResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
                 .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
                     .use("scenarioName", scenarioName));
 
-        ResponseWrapper<com.apriori.entity.response.PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
