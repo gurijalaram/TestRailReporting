@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.entity.response.css.Item;
+import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.cidapp.utils.CidAppTestUtil;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -14,7 +15,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.CidAppTestUtil;
 
 import java.io.File;
 

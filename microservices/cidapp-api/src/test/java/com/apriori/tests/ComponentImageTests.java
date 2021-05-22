@@ -32,7 +32,7 @@ public class ComponentImageTests {
     public void boundingBoxValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item postComponentResponse = cidAppTestUtil.postComponents(scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), "700-33770-01_A0.stp");
+        Item postComponentResponse = cidAppTestUtil.postComponents("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
@@ -60,7 +60,7 @@ public class ComponentImageTests {
     public void axesEntriesValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item postComponentResponse = cidAppTestUtil.postComponents(scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), "700-33770-01_A0.stp");
+        Item postComponentResponse = cidAppTestUtil.postComponents("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
@@ -85,7 +85,7 @@ public class ComponentImageTests {
     public void activeAxesValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item postComponentResponse = cidAppTestUtil.postComponents(scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), "700-33770-01_A0.stp");
+        Item postComponentResponse = cidAppTestUtil.postComponents("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();

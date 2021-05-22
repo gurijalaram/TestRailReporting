@@ -28,6 +28,7 @@ import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
@@ -50,13 +51,13 @@ public class CidAppTestUtil {
     /**
      * Adds a new component
      *
+     * @param componentName   - the part name
      * @param scenarioName    - the scenario name
-     * @param processGroup    - the process group
-     * @param partName        - the part name
+     * @param resourceFile    - the process group
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public Item postComponents(String scenarioName, String processGroup, String partName, UserCredentials userCredentials) {
+    public Item postComponents(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
 
         if (userCredentials.getToken() != null) {
             token = userCredentials.getToken();
@@ -71,30 +72,57 @@ public class CidAppTestUtil {
         }
 
         RequestEntityUtil.useTokenForRequests(token);
-        return postComponents(scenarioName, processGroup, partName);
+        return postComponents(componentName, scenarioName, resourceFile);
     }
+
 
     /**
      * Adds a new component
      *
-     * @param scenarioName - the scenario name
-     * @param partName     - the part name
+     * @param componentName - the part name
+     * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    public Item postComponents(String scenarioName, String processGroup, String partName) {
+    public Item postComponents(String componentName, String scenarioName, String resourceFile) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), partName)))
-                .formParams(new FormParams().use("filename", partName)
+                .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
+                .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
                     .use("scenarioName", scenarioName));
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
-        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", partName, scenarioName),
+        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        ResponseWrapper<CssComponentResponse> itemResponse = getUnCostedCssComponents(partName, scenarioName);
+        ResponseWrapper<CssComponentResponse> itemResponse = getUnCostedCssComponents(componentName, scenarioName);
+
+        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
+        return itemResponse.getResponseEntity().getItems().get(0);
+    }
+
+    /**
+     * Adds a new component
+     *
+     * @param scenarioName  - the scenario name
+     * @param componentName - the part name
+     * @return responsewrapper
+     */
+    public Item postComponents(String componentName, String scenarioName, File resourceFile) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, com.apriori.entity.response.PostComponentResponse.class)
+                .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
+                .formParams(new FormParams().use("filename", componentName)
+                    .use("override", "false")
+                    .use("scenarioName", scenarioName));
+
+        ResponseWrapper<com.apriori.entity.response.PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+
+        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
+            HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+
+        ResponseWrapper<CssComponentResponse> itemResponse = getUnCostedCssComponents(componentName, scenarioName);
 
         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
         return itemResponse.getResponseEntity().getItems().get(0);
@@ -244,6 +272,7 @@ public class CidAppTestUtil {
     }
 
     // TODO: 18/05/2021 cf - a duplicate will be created in web:cidapp for now but a ticket needs to be created to refactor to its own class.
+
     /**
      * Gets the uncosted component from Css
      *

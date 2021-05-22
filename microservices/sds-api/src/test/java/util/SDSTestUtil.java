@@ -56,9 +56,9 @@ public class SDSTestUtil extends TestUtil {
         String processGroup = "Casting - Die";
 
         Item response =
-            cidAppTestUtil.postComponents(scenarioName,
-                processGroup,
-                partName);
+            cidAppTestUtil.postComponents(partName, scenarioName,
+                processGroup
+            );
 
         return response;
     }
