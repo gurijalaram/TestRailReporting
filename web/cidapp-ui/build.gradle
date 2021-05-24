@@ -1,0 +1,9 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation project(':utils')
+    implementation project(':apibase')
+    implementation project(':microservices:cidapp-api')
+}
