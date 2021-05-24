@@ -1,11 +1,11 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.cidapp.entity.response.css.Item;
-import com.apriori.utils.CidAppTestUtil;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
+import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
 
@@ -101,9 +101,10 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Uploads a component through the API and opens it via url
+     *
      * @param componentName - the component name
-     * @param scenarioName - the scenario name
-     * @param resourceFile - the file
+     * @param scenarioName  - the scenario name
+     * @param resourceFile  - the file
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
