@@ -6,7 +6,7 @@
   ],
   "properties": {
     "costPerUnit": {
-      "type": "integer"
+      "type": "number"
     },
     "costUnits": {
       "type": "string"
@@ -27,40 +27,40 @@
       "type": "string"
     },
     "flangeThickness": {
-      "type": "integer"
+      "type": "number"
     },
     "formName": {
       "type": "string"
     },
     "hardness": {
-      "type": "integer"
+      "type": "number"
     },
     "hardnessSystem": {
       "type": "string"
     },
     "height": {
-      "type": "integer"
+      "type": "number"
     },
     "identity": {
       "type": "string"
     },
     "insideDiameter": {
-      "type": "integer"
+      "type": "number"
     },
     "isStructural": {
       "type": "boolean"
     },
     "length": {
-      "type": "integer"
+      "type": "number"
     },
     "massPerMeter": {
-      "type": "integer"
+      "type": "number"
     },
     "name": {
       "type": "string"
     },
     "outsideDiameter": {
-      "type": "integer"
+      "type": "number"
     },
     "stockForm": {
       "type": "string"
@@ -72,7 +72,7 @@
       "type": "string"
     },
     "thickness": {
-      "type": "integer"
+      "type": "number"
     },
     "updatedAt": {
       "type": "string"
@@ -84,13 +84,13 @@
       "type": "boolean"
     },
     "wallThickness": {
-      "type": "integer"
+      "type": "number"
     },
     "webThickness": {
-      "type": "integer"
+      "type": "number"
     },
     "width": {
-      "type": "integer"
+      "type": "number"
     }
   }
 }

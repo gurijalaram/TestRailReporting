@@ -12,27 +12,22 @@ import com.apriori.vds.tests.util.VDSTestUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ProcessGroupMaterialStocksTest extends VDSTestUtil {
-
-    private final String materialIdentity = this.getProcessGroupMaterial().getIdentity();
-
     @Test
     @TestRail(testCaseId = {"8191"})
     @Description("Get a list of MaterialStocks for a specific material.")
     public void getMaterialStocks() {
-        this.getMaterialsStock();
+        this.getMaterialStock();
     }
 
     @Test
     @TestRail(testCaseId = {"8192"})
     @Description("Get a specific MaterialStock for a material identified by its identity.")
-    @Ignore
     public void getMaterialStocksByIdentity() {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, null)
@@ -40,13 +35,13 @@ public class ProcessGroupMaterialStocksTest extends VDSTestUtil {
                     digitalFactoryIdentity,
                     processGroupIdentity,
                     materialIdentity,
-                    this.getMaterialsStock().getIdentity()
+                    this.getMaterialStock().getIdentity()
                 ));
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
     }
 
-    private ProcessGroupMaterialStock getMaterialsStock() {
+    private ProcessGroupMaterialStock getMaterialStock() {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
                 .inlineVariables(Arrays.asList(digitalFactoryIdentity, processGroupIdentity, materialIdentity));

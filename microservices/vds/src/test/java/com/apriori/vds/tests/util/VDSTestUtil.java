@@ -19,8 +19,20 @@ import java.util.List;
 public class VDSTestUtil extends TestUtil {
     protected final DigitalFactory digitalFactory = this.getDigitalFactoriesResponse();
     protected final String digitalFactoryIdentity = digitalFactory.getIdentity();
-    protected final String processGroupIdentity = digitalFactory.getProcessGroupAssociations().getBarTubeFab().getProcessGroupIdentity();
+    protected final String processGroupIdentity = digitalFactory.getProcessGroupAssociations().getSheetMetal().getProcessGroupIdentity();
+    protected final String materialIdentity = this.getProcessGroupMaterial().getIdentity();
 
+    protected DigitalFactory getDigitalFactoriesResponse() {
+        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
+
+        ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponse = HTTP2Request.build(requestEntity).get();
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+            digitalFactoriesItemsResponse.getStatusCode()
+        );
+
+        return this.findDigitalFactoryByLocation(digitalFactoriesItemsResponse.getResponseEntity().getItems(), "Germany");
+    }
 
     protected ProcessGroupMaterial getProcessGroupMaterial() {
         RequestEntity requestEntity =
@@ -37,19 +49,24 @@ public class VDSTestUtil extends TestUtil {
 
         Assert.assertNotEquals("To get Material, response should contain it.", 0, processGroupMaterials.size());
 
-        return processGroupMaterials.get(0);
+        return this.findMaterialByAltName1(processGroupMaterials, "Galv. Steel, Hot Worked, AISI 1020");
     }
 
-    protected DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
-
-        ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponse = HTTP2Request.build(requestEntity).get();
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            digitalFactoriesItemsResponse.getStatusCode()
-        );
-
-        return digitalFactoriesItemsResponse.getResponseEntity().getItems().get(0);
+    private DigitalFactory findDigitalFactoryByLocation(List<DigitalFactory> digitalFactories, final String location) {
+        return digitalFactories.stream()
+            .filter(digitalFactory -> location.equals(digitalFactory.getLocation()))
+            .findFirst()
+            .orElseThrow(
+                () -> new IllegalArgumentException(String.format("Digital Factory with location: %s, was not found.", location))
+            );
     }
 
+    private ProcessGroupMaterial findMaterialByAltName1 (List<ProcessGroupMaterial> processGroupMaterials, final String materialAltName1) {
+        return processGroupMaterials.stream()
+            .filter(material -> materialAltName1.equals(material.getAltName1()))
+            .findFirst()
+            .orElseThrow(
+                () -> new IllegalArgumentException(String.format("Material with altName1: %s, was not found.", materialAltName1))
+            );
+    }
 }
