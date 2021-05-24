@@ -9,8 +9,8 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DecimalPlaceEnum;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -62,7 +62,7 @@ public class DecimalPlaceTests extends TestBase {
             .save(ExplorePage.class)
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.getFinishMass(), closeTo(5.309458, 1));
@@ -152,7 +152,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost(), closeTo(21.05658, 1));
         assertThat(evaluatePage.getCapitalInvestment(), closeTo(0.00000, 1));
 
-        evaluatePage.selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.selectVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isFinishMass("5.30946"), is(true));

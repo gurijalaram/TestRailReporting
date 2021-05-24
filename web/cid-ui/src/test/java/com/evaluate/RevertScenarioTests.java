@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -43,7 +43,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario(3)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
@@ -70,7 +70,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(VPEEnum.APRIORI_BRAZIL.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario(3)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())

@@ -6,7 +6,7 @@ import com.apriori.utils.runner.CategorySuiteRunner;
 import com.evaluate.CostAllCadTests;
 import com.evaluate.CostScenarioTests;
 import com.evaluate.DeleteTests;
-import com.evaluate.ListOfVPETests;
+import com.evaluate.ListOfDigitalFactoryTests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
@@ -33,10 +33,10 @@ import org.junit.runners.Suite;
 
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
-@Suite.SuiteClasses ({
+@Suite.SuiteClasses({
     CostAllCadTests.class,
     CostScenarioTests.class,
-    ListOfVPETests.class,
+    ListOfDigitalFactoryTests.class,
     ListProcessGroupTests.class,
     NewScenarioNameTests.class,
     ProcessGroupsTests.class,

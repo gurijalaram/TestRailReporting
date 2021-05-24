@@ -11,11 +11,15 @@
         "identity",
         "createdAt",
         "createdBy",
-        "updatedAt",
         "createdByName",
         "customerIdentity",
         "componentName",
-        "componentType"
+        "componentType",
+        "filename"
+      ],
+      "optional": [
+        "updatedAt",
+        "updatedBy"
       ],
       "properties": {
         "identity": {
@@ -25,9 +29,6 @@
           "type": "string"
         },
         "createdBy": {
-          "type": "string"
-        },
-        "updatedAt": {
           "type": "string"
         },
         "createdByName": {
@@ -40,6 +41,15 @@
           "type": "string"
         },
         "componentType": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updateBy": {
           "type": "string"
         }
       }

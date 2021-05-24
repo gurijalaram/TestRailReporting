@@ -12,8 +12,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnsEnum;
 import com.apriori.utils.enums.CostingLabelEnum;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -183,12 +183,12 @@ public class AssemblyUploadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .enterAnnualVolume("3126")
             .enterAnnualYears("9")
             .costScenario();
 
-        assertThat(evaluatePage.getSelectedVPE(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
+        assertThat(evaluatePage.getSelectedVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
         assertThat(evaluatePage.getAnnualVolume(), is("3,126"));
         assertThat(evaluatePage.getProductionLife(), is("9.00"));
 

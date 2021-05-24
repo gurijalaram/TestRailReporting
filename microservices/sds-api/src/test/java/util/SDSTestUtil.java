@@ -6,7 +6,7 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.entity.response.PostComponentResponse;
+import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.utils.Constants;
 import com.apriori.utils.CidAppTestUtil;
@@ -22,26 +22,20 @@ public class SDSTestUtil extends TestUtil {
     private static final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     protected static String token;
-    private static PostComponentResponse partPostComponentResponse = PostComponentResponse.builder()
-        .componentIdentity("6L5J136E3GDG")
-        .scenarioIdentity("80F3138B63F2")
-        .iterationIdentity("80F64BJ8FCL3")
-        .build();
+    private static Item partPostComponentResponse;
 
     @BeforeClass
     public static void initTestingComponentInfo() {
         initToken();
 
-        //TODO z: temporary removed.
-        // partPostComponentResponse = postTestingComponent().getResponseEntity();
+        partPostComponentResponse = postTestingComponent();
     }
 
     @AfterClass
     public static void clearTestingData() {
-        //TODO z: temporary removed.
-        //        if (partPostComponentResponse != null) {
-        //            removeTestingComponent(getComponentId(), getScenarioId());
-        //        }
+        if (partPostComponentResponse != null) {
+            removeTestingComponent(getComponentId(), getScenarioId());
+        }
     }
 
     protected static String getComponentId() {
@@ -56,23 +50,15 @@ public class SDSTestUtil extends TestUtil {
         return partPostComponentResponse.getIterationIdentity();
     }
 
-    protected static ResponseWrapper<PostComponentResponse> postTestingComponent() {
+    protected static Item postTestingComponent() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String partName = "Casting.prt";
         String processGroup = "Casting - Die";
 
-        ResponseWrapper<PostComponentResponse> response =
-            cidAppTestUtil.postComponents(scenarioName,
-                processGroup,
-                partName);
-
-        assertEquals(String.format("The component with a part name %s, was not uploaded.", partName),
-            HttpStatus.SC_CREATED, response.getStatusCode());
-
-        cidAppTestUtil.getScenarioRepresentation("processing",
-            response.getResponseEntity().getComponentIdentity(),
-            response.getResponseEntity().getScenarioIdentity()
-        );
+        Item response =
+            cidAppTestUtil.postComponents(partName, scenarioName,
+                processGroup
+            );
 
         return response;
     }

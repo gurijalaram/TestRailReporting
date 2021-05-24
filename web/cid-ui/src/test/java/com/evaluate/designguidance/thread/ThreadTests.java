@@ -9,11 +9,11 @@ import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.LengthEnum;
 import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -174,7 +174,7 @@ public class ThreadTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario(3);
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
@@ -375,7 +375,7 @@ public class ThreadTests extends TestBase {
         designGuidancePage = new DesignGuidancePage(driver);
         threadingPage = designGuidancePage.closePanel()
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getVpe())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
             .apply()

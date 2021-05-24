@@ -13,8 +13,8 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -865,7 +865,7 @@ public class InputControlsTests extends TestBase {
                 .setWorkspace(Constants.PUBLIC_WORKSPACE)
                 .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("VPE", "is", VPEEnum.APRIORI_USA.getVpe())
+                .setRowTwo("VPE", "is", DigitalFactoryEnum.APRIORI_USA.getVpe())
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 

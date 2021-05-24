@@ -6,8 +6,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -61,7 +61,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
             .openScenario(testScenarioName, partName)
             .editScenario(EvaluatePage.class)
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -105,7 +105,7 @@ public class PublishExistingCostedTests extends TestBase {
         explorePage = explorePage.openScenario(testScenarioName, partName)
             .editScenario(EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario()
             .publishScenario(PublishWarningPage.class)
             .enterNewScenarioName(scenarioNameB)
