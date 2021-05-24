@@ -126,6 +126,6 @@ public class Constants {
      * @return string
      */
     public static String getCssApiUrl() {
-        return cssApiUrl = System.getProperty("cccApiUrl") == null ? PROPERTIES.getProperty("css.api.url") : System.getProperty("cssApiUrl");
+        return cssApiUrl = System.getProperty("cssApiUrl") == null ? PROPERTIES.getProperty("css.api.url").concat("%s") : System.getProperty("cssApiUrl");
     }
 }
