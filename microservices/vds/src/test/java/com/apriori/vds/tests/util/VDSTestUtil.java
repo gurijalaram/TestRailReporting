@@ -10,6 +10,7 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
+
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 
@@ -61,7 +62,7 @@ public class VDSTestUtil extends TestUtil {
             );
     }
 
-    private ProcessGroupMaterial findMaterialByAltName1 (List<ProcessGroupMaterial> processGroupMaterials, final String materialAltName1) {
+    private ProcessGroupMaterial findMaterialByAltName1(List<ProcessGroupMaterial> processGroupMaterials, final String materialAltName1) {
         return processGroupMaterials.stream()
             .filter(material -> materialAltName1.equals(material.getAltName1()))
             .findFirst()
