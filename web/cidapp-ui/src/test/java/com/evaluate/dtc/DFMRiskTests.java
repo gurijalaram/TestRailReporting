@@ -201,8 +201,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
 
         evaluatePage.inputProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .costScenario();
@@ -233,7 +233,7 @@ public class DFMRiskTests extends TestBase {
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
-            .costScenario();
+            .costScenario(5);
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
@@ -310,7 +310,7 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), cadResourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -435,9 +435,9 @@ public class DFMRiskTests extends TestBase {
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
-            .costScenario();
+            .costScenario(5);
 
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(744, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(604, 1));
 
         // TODO uncomment this section when update cad file is implemented
         /*evaluatePage.updateCadFile(cadResourceFile);
