@@ -11,6 +11,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -24,9 +25,9 @@ import java.io.File;
 
 public class ProcessGroupsTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-
     private File resourceFile;
 
     public ProcessGroupsTests() {
@@ -40,11 +41,13 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupForging() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_001_006-8613190_2.prt.2");
+        String componentName = "case_001_006-8613190_2";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.2");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -59,11 +62,13 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupStockMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "42x1021_ref.prt.1");
+        String componentName = "42x1021_ref";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -78,12 +83,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupBarTube() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "350611.prt.1");
+        String componentName = "350611";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -98,12 +105,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupDieCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_012_009-0020647_hinge_2.prt.1");
+        String componentName = "case_012_009-0020647_hinge_2";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -118,12 +127,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupExtrusion() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "700-33770-01_A0.stp");
+        String componentName = "700-33770-01_A0";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -138,12 +149,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupFilleting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_005_flat end mill contouring.SLDPRT");
+        String componentName = "case_005_flat end mill contouring";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -158,12 +171,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupGearMaking() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Case_001_-_Rockwell_2075-0243G.stp");
+        String componentName = "Case_001_-_Rockwell_2075-0243G";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -178,12 +193,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachiningContouring() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_002_00400016-003M10_A.STP");
+        String componentName = "case_002_00400016-003M10_A";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STP");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -199,12 +216,14 @@ public class ProcessGroupsTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "GagePart_Case_011_gundrillgagepart-01.prt.1");
+        String componentName = "GagePart_Case_011_gundrillgagepart-01";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -219,12 +238,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachining4AxisMill() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "prt0001.prt.1");
+        String componentName = "prt0001";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -239,12 +260,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachining5AxisMill() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "7021021-2_rib.prt.1");
+        String componentName = "7021021-2_rib";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario(5);
 
@@ -259,12 +282,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupMachiningMillTurn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "ms16555-627_1.prt.1");
+        String componentName = "ms16555-627_1";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -279,12 +304,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPartiallyAutomatedMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "14100640.stp");
+        String componentName = "14100640";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -299,12 +326,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPerimeterMilling() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "14100640.stp");
+        String componentName = "14100640";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -319,12 +348,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPocketRecognitionSharedWalls() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_066_SpaceX_00128711-001_A.stp");
+        String componentName = "case_066_SpaceX_00128711-001_A";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -339,12 +370,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupRoughMilling() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "16-340053-00-04.prt.1");
+        String componentName = "16-340053-00-04";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -359,12 +392,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupSlotExamples() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_007_SpaceX_00088481-001_C.stp");
+        String componentName = "case_007_SpaceX_00088481-001_C";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -379,12 +414,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupTurning() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_002_006-8611543_prt.stp");
+        String componentName = "case_002_006-8611543_prt";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -399,12 +436,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupBlowMolding() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "225_gasket-1-solid1.prt.1");
+        String componentName = "225_gasket-1-solid1";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -419,12 +458,14 @@ public class ProcessGroupsTests extends TestBase {
     public void testProcessGroupPowderMetal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_31_test_part_6_small.prt.2");
+        String componentName = "case_31_test_part_6_small";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.2");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -440,12 +481,14 @@ public class ProcessGroupsTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Machined Box AMERICAS.SLDPRT");
+        String componentName = "Machined Box AMERICAS";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
@@ -462,12 +505,15 @@ public class ProcessGroupsTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_011_CENA-009-A1-LH-Rear-Body-Mount.prt");
+
+        String componentName = "case_011_CENA-009-A1-LH-Rear-Body-Mount";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
