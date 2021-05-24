@@ -1068,7 +1068,10 @@ public class GenericReportPage extends ReportsPageHeader {
         dateInputToUse.clear();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         dateInputToUse.click();
+        // wait for input class to contain superfocus subfocus
+        pageUtils.waitForElementToAppear(By.xpath("//label[contains(@title, 'Export Date')]/input[contains(@class, 'superfocus subfocus')]"));
         dateInputToUse.sendKeys(valueToInput);
+        pageUtils.waitForElementToAppear(By.xpath(String.format("//label[contains(@title, 'Export Date')]/input[@value='%s']", valueToInput)));
 
         clickUseLatestExportDropdownTwice();
 
@@ -1077,7 +1080,14 @@ public class GenericReportPage extends ReportsPageHeader {
             invalidValue = invalidValue.contains("25") ? invalidValue.replace("25", "23") : invalidValue;
             By latestLocator = By.xpath(
                     String.format("//label[contains(@title, 'Latest Export Date')]/input[@value='%s']", invalidValue));
-            pageUtils.waitForElementToAppear(latestLocator);
+            //pageUtils.waitForElementToAppear(latestLocator);
+        }
+
+        if (invalidValue.isEmpty()) {
+            waitForCorrectAvailableSelectedCount(
+                    "Single export set selection.", "Available: ", "0");
+            waitForCorrectAvailableSelectedCount(
+                    "Single export set selection.", "Selected: ", "0");
         }
 
         return this;
@@ -2376,17 +2386,20 @@ public class GenericReportPage extends ReportsPageHeader {
     public ScenarioComparisonReportPage selectComponentType(String componentType) {
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Component Type")));
 
-        By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']", componentType));
+        By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']//a", componentType));
         //pageUtils.waitForElementToAppear(locator);
         //driver.findElement(locator).click();
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
+        pageUtils.waitForElementToAppear(By.xpath(String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", componentType)));
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
 
         By firstElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, "1"));
-        By laterElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, "7"));
+        //By laterElementLocator = By.xpath(String.format("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]", componentType, "7"));
         pageUtils.waitForElementToAppear(firstElementLocator);
-        pageUtils.waitForElementToAppear(laterElementLocator);
+        //pageUtils.waitForElementToAppear(laterElementLocator);
 
         return new ScenarioComparisonReportPage(driver);
     }

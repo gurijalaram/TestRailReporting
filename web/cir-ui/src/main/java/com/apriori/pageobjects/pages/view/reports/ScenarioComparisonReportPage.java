@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 import java.math.BigDecimal;
 
@@ -201,9 +202,17 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
     /**
      * Gets first scenario name (generic)
+     *
+     * @param componentType - component type to wait for
      * @return String
      */
-    public String getFirstScenarioName() {
+    public String getFirstScenarioName(String componentType) {
+        String expectedScenariosCount = componentType.equals(Constants.PART_COMPONENT_TYPE) ? "9" : "1";
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", expectedScenariosCount);
         return firstScenarioToCompare.getAttribute("title");
     }
 

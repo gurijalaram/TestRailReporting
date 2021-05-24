@@ -418,7 +418,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3577"})
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
     public void testInvalidDayValueExportSetFilter() {

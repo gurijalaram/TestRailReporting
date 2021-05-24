@@ -21,6 +21,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
@@ -316,7 +317,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3248"})
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
@@ -326,18 +327,18 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-                .selectComponentType("assembly");
+                .selectComponentType(Constants.ASSEMBLY_COMPONENT_TYPE);
 
-        assertThat(scenarioComparisonReportPage.getFirstScenarioName(),
-                containsString("[assembly]"));
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(Constants.ASSEMBLY_COMPONENT_TYPE),
+                containsString(String.format("[%s]", Constants.ASSEMBLY_COMPONENT_TYPE)));
 
-        scenarioComparisonReportPage.selectComponentType("part");
-        assertThat(scenarioComparisonReportPage.getFirstScenarioName(),
-                containsString("[part]"));
+        scenarioComparisonReportPage.selectComponentType(Constants.PART_COMPONENT_TYPE);
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(Constants.PART_COMPONENT_TYPE),
+                containsString(String.format("[%s]", Constants.PART_COMPONENT_TYPE)));
 
-        scenarioComparisonReportPage.selectComponentType("rollup");
-        assertThat(scenarioComparisonReportPage.getFirstScenarioName(),
-                containsString("[rollup]"));
+        scenarioComparisonReportPage.selectComponentType(Constants.ROLLUP_COMPONENT_TYPE);
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(Constants.ROLLUP_COMPONENT_TYPE),
+                containsString(String.format("[%s]", Constants.ROLLUP_COMPONENT_TYPE)));
     }
 
     @Test
