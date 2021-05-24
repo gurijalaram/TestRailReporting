@@ -1,7 +1,10 @@
 
 package com.apriori.cidapp.entity.response.css;
 
+import com.apriori.apibase.services.common.objects.Pagination;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,18 +14,10 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
+@JsonRootName("response")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Response {
-    private Boolean isFirstPage;
-    private Boolean isLastPage;
-    private Integer pageNumber;
-    private Integer pageSize;
-    private Integer pageItemCount;
-    private Integer totalItemCount;
-    private Integer totalPageCount;
-    private Boolean hasNextPage;
-    private Boolean hasPreviousPage;
+public class Response extends Pagination {
     private List<Item> items;
 }
