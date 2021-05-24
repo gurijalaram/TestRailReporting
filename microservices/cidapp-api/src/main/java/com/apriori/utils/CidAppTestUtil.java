@@ -220,7 +220,7 @@ public class CidAppTestUtil {
         }
         do {
             scenarioRepresentation = HTTP2Request.build(requestEntity).get();
-            scenarioState = scenarioRepresentation.getResponseEntity().getResponse().getScenarioState();
+            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
             try {
                 TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {

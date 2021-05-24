@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Item {
-    private Item response;
     private String subjectIdentity;
     private List<String> permissions;
     private String customerIdentity;
