@@ -2,7 +2,7 @@ package com.apriori.sds.tests;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.entity.response.PostComponentResponse;
+import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
@@ -99,13 +99,11 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Delete an existing scenario.")
     @Ignore
     public void deleteScenario() {
-        final ResponseWrapper<PostComponentResponse> postComponentResponseWrapper = postTestingComponent();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postComponentResponseWrapper.getStatusCode());
-
-        final PostComponentResponse postComponentResponse = postComponentResponseWrapper.getResponseEntity();
+        final Item postComponentResponse = postTestingComponent();
 
         final ResponseWrapper removeComponentResponseWrapper = removeTestingComponent(postComponentResponse.getComponentIdentity(),
             postComponentResponse.getScenarioIdentity());
+
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, removeComponentResponseWrapper.getStatusCode());
     }
 }

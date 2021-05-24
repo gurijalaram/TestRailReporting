@@ -11,8 +11,8 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -48,7 +48,7 @@ public class MaterialStockTests extends TestBase {
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
+            .inputVpe(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization();
 
@@ -122,7 +122,7 @@ public class MaterialStockTests extends TestBase {
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
+            .inputVpe(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();

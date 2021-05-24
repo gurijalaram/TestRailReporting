@@ -114,8 +114,8 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
 
-    @FindBy(css = "[id='qa-vpe-select-field']")
-    private WebElement vpeList;
+    @FindBy(css = "[id='qa-digital-factory-select-field']")
+    private WebElement digitalFactoryList;
 
     @FindBy(css = "[id='qa-process-group-select-field']")
     private WebElement processGroupList;
@@ -475,13 +475,13 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets list of vpe's
+     * Gets list of digital factory
      *
      * @return list as string
      */
-    public List<String> getListOfVPEs() {
-        pageUtils.waitForElementAndClick(vpeList);
-        return Arrays.stream(vpeList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("VPE")).collect(Collectors.toList());
+    public List<String> getListOfDigitalFactory() {
+        pageUtils.waitForElementAndClick(digitalFactoryList);
+        return Arrays.stream(digitalFactoryList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("Digital Factory")).collect(Collectors.toList());
     }
 
     /**

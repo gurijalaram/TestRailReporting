@@ -15,8 +15,8 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DecimalPlaceEnum;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -61,7 +61,7 @@ public class DecimalPlaceTests extends TestBase {
             .submit(ExplorePage.class)
             .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
+            .inputVpe(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -144,7 +144,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(21.05727, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
 
-        evaluatePage.inputVpe(VPEEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.inputVpe(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));

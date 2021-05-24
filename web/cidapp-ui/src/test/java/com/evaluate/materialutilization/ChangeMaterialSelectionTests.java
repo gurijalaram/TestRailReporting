@@ -11,8 +11,8 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -166,7 +166,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
             .inputProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));

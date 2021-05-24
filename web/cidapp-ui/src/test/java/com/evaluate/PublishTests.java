@@ -11,6 +11,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -30,6 +31,7 @@ public class PublishTests extends TestBase {
 
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    UserCredentials currentUser;
 
     public PublishTests() {
         super();
@@ -41,23 +43,22 @@ public class PublishTests extends TestBase {
     @TestRail(testCaseId = {"6729", "6731"})
     public void testPublishNewCostedScenario() {
 
-        final String file = "testpart-4.prt";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String partName = "testpart-4";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
+        String componentName = "testpart-4";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore();
 
-        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(greaterThan(0)));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -68,15 +69,15 @@ public class PublishTests extends TestBase {
 
         final String file = "testpart-4.prt";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String partName = "testpart-4";
+        String componentName = "testpart-4";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         String filterName = new GenerateStringUtil().generateFilterName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -95,6 +96,6 @@ public class PublishTests extends TestBase {
             .addCriteriaWithOption("Scenario Name", "Contains", testScenarioName)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(greaterThan(0)));
     }
 }
