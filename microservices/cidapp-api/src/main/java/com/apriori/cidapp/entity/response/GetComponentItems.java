@@ -1,4 +1,4 @@
-package com.apriori.entity.response;
+package com.apriori.cidapp.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
@@ -11,23 +11,24 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cidapp/ComponentsIdentitySchema.json")
-public class ComponentIdentityResponse {
-    private ComponentIdentityResponse response;
+@Schema(location = "cidapp/GetComponentResponse.json")
+public class GetComponentItems {
+    private GetComponentItems response;
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
-    private LocalDateTime updatedAt;
     private String createdByName;
     private String customerIdentity;
     private String componentName;
     private String componentType;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
+    private String originalFilename;
 
-    public ComponentIdentityResponse getResponse() {
+    public GetComponentItems getResponse() {
         return response;
     }
 
@@ -41,10 +42,6 @@ public class ComponentIdentityResponse {
 
     public String getCreatedBy() {
         return createdBy;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
     }
 
     public String getCreatedByName() {
@@ -61,5 +58,13 @@ public class ComponentIdentityResponse {
 
     public String getComponentType() {
         return componentType;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getOriginalFilename() {
+        return originalFilename;
     }
 }

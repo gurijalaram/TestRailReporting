@@ -1,13 +1,13 @@
-package com.apriori.entity.response.componentiteration;
+package com.apriori.cidapp.entity.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CostingInput {
+public class CostRequest {
     private String identity;
     private Integer annualVolume;
     private Integer batchSize;
-    private CustomAttributes customAttributes;
+    private Object customAttributes;
     private String materialName;
     private String processGroupName;
     private Double productionLife;
@@ -17,7 +17,7 @@ public class CostingInput {
         return identity;
     }
 
-    public CostingInput setIdentity(String identity) {
+    public CostRequest setIdentity(String identity) {
         this.identity = identity;
         return this;
     }
@@ -26,7 +26,7 @@ public class CostingInput {
         return annualVolume;
     }
 
-    public CostingInput setAnnualVolume(Integer annualVolume) {
+    public CostRequest setAnnualVolume(Integer annualVolume) {
         this.annualVolume = annualVolume;
         return this;
     }
@@ -35,16 +35,16 @@ public class CostingInput {
         return batchSize;
     }
 
-    public CostingInput setBatchSize(Integer batchSize) {
+    public CostRequest setBatchSize(Integer batchSize) {
         this.batchSize = batchSize;
         return this;
     }
 
-    public CustomAttributes getCustomAttributes() {
+    public Object getCustomAttributes() {
         return customAttributes;
     }
 
-    public CostingInput setCustomAttributes(CustomAttributes customAttributes) {
+    public CostRequest setCustomAttributes(Object customAttributes) {
         this.customAttributes = customAttributes;
         return this;
     }
@@ -53,7 +53,7 @@ public class CostingInput {
         return materialName;
     }
 
-    public CostingInput setMaterialName(String materialName) {
+    public CostRequest setMaterialName(String materialName) {
         this.materialName = materialName;
         return this;
     }
@@ -62,7 +62,7 @@ public class CostingInput {
         return processGroupName;
     }
 
-    public CostingInput setProcessGroupName(String processGroupName) {
+    public CostRequest setProcessGroupName(String processGroupName) {
         this.processGroupName = processGroupName;
         return this;
     }
@@ -71,7 +71,7 @@ public class CostingInput {
         return productionLife;
     }
 
-    public CostingInput setProductionLife(Double productionLife) {
+    public CostRequest setProductionLife(Double productionLife) {
         this.productionLife = productionLife;
         return this;
     }
@@ -80,12 +80,8 @@ public class CostingInput {
         return vpeName;
     }
 
-    public CostingInput setVpeName(String vpeName) {
+    public CostRequest setVpeName(String vpeName) {
         this.vpeName = vpeName;
         return this;
-    }
-
-    static class CustomAttributes {
-
     }
 }

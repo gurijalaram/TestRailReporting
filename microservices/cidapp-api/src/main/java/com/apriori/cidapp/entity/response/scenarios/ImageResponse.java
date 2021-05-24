@@ -1,4 +1,4 @@
-package com.apriori.entity.response.scenarios;
+package com.apriori.cidapp.entity.response.scenarios;
 
 import com.apriori.utils.http.enums.Schema;
 

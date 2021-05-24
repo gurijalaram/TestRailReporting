@@ -1,4 +1,4 @@
-package com.apriori.entity.response.componentiteration;
+package com.apriori.cidapp.entity.response.componentiteration;
 
 import com.apriori.utils.http.enums.Schema;
 

@@ -1,9 +1,9 @@
-package com.apriori.entity.response.componentiteration;
+package com.apriori.cidapp.entity.response.componentiteration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Thumbnail {
+public class PartNestingDiagram {
     private String identity;
     private String image;
     private String imageType;
@@ -12,7 +12,7 @@ public class Thumbnail {
         return identity;
     }
 
-    public Thumbnail setIdentity(String identity) {
+    public PartNestingDiagram setIdentity(String identity) {
         this.identity = identity;
         return this;
     }
@@ -21,7 +21,7 @@ public class Thumbnail {
         return image;
     }
 
-    public Thumbnail setImage(String image) {
+    public PartNestingDiagram setImage(String image) {
         this.image = image;
         return this;
     }
@@ -30,7 +30,7 @@ public class Thumbnail {
         return imageType;
     }
 
-    public Thumbnail setImageType(String imageType) {
+    public PartNestingDiagram setImageType(String imageType) {
         this.imageType = imageType;
         return this;
     }

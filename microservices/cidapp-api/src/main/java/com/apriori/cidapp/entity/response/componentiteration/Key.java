@@ -1,5 +1,5 @@
 
-package com.apriori.entity.response.componentiteration;
+package com.apriori.cidapp.entity.response.componentiteration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
