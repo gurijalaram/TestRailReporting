@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 import com.apriori.cidapp.entity.response.css.Item;
-import com.apriori.cidapp.utils.CidAppTestUtil;
+import com.apriori.utils.CidAppTestUtil;
 import com.apriori.entity.response.ComponentIdentityResponse;
 import com.apriori.entity.response.GetComponentResponse;
 import com.apriori.utils.GenerateStringUtil;
