@@ -44,7 +44,6 @@ public class ComponentsTest extends SDSTestUtil {
     @Test
     @TestRail(testCaseId = "7248")
     @Description("Add a new component.")
-    @Ignore
     public void postComponents() {
         final Item postComponentResponse = postTestingComponent();
 
