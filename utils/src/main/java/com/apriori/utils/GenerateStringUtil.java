@@ -131,4 +131,13 @@ public class GenerateStringUtil {
     public String generateFilterName() {
         return "AutoFilter" + RandomStringUtils.randomAlphabetic(6);
     }
+
+    /**
+     * Generates a 12 character alpanumeric string
+     *
+     * @return string
+     */
+    public String getRandomString() {
+        return RandomStringUtils.randomAlphanumeric(12);
+    }
 }
