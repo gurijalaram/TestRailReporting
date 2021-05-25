@@ -14,10 +14,12 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -30,6 +32,7 @@ public class CostAllCadTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
+    UserCredentials currentUser;
     private CostDetailsPage costDetailsPage;
     private FileUploadPage fileUploadPage;
 
@@ -44,11 +47,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatSLDPRT() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Machined Box AMERICAS.SLDPRT");
+        String componentName = "Machined Box AMERICAS";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        costDetailsPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        costDetailsPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -69,11 +74,13 @@ public class CostAllCadTests extends TestBase {
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
     public void costIncreaseDecrease() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("powderMetal.stp");
+        String componentName = "powderMetal";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        referenceComparePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        referenceComparePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectVPE(VPEEnum.APRIORI_USA.getVpe())
             .costScenario()
@@ -96,11 +103,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatPar() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"26136.par");
+        String componentName = "26136";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".par");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -118,11 +127,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatCATPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Plastic moulded cap DFM.CATPart");
+        String componentName = "Plastic moulded cap DFM";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
@@ -139,11 +150,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatPRT4() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"turning.prt.4");
+        String componentName = "turning";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.4");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -161,11 +174,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatCreo() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"turning.prt.4");
+        String componentName = "turning";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.4");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -183,11 +198,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatNX() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Locker_bottom_panel.prt");
+        String componentName = "Locker_bottom_panel";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -205,11 +222,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatInventor() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"VERTICAL PLATE.ipt");
+        String componentName = "VERTICAL PLATE";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -227,11 +246,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatSTEP() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"partbody_2.stp");
+        String componentName = "partbody_2";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -249,11 +270,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatParaSolid() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"bracket_basic_steel_PMI.x_t");
+        String componentName = "bracket_basic_steel_PMI";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".x_t");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -271,11 +294,13 @@ public class CostAllCadTests extends TestBase {
     public void testCADFormatParaACIS() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Plastic moulded cap thinPart.SAT");
+        String componentName = "Plastic moulded cap thinPart";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SAT");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
@@ -291,16 +316,19 @@ public class CostAllCadTests extends TestBase {
     public void translationTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"LargePart.prt.1");
+        String componentName = "LargePart";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), (is(true)));
     }
 
     @Test
+    @Ignore("awaiting a response if this is allowed or not for new CID")
     @TestRail(testCaseId = {"5447", "2317"})
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {

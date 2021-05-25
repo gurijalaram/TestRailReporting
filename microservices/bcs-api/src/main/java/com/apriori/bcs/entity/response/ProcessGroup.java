@@ -1,5 +1,6 @@
 package com.apriori.bcs.entity.response;
 
+import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Schema(location = "ProcessGroupResponse.json")
 public class ProcessGroup {
     private String identity;
     private String name;
@@ -20,6 +22,8 @@ public class ProcessGroup {
     private Boolean cidSupported;
     private Boolean assemblySupported;
     private List<String> vpeNames;
+    private String defaultVpeName;
+    private String defaultVpeIdentity;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)

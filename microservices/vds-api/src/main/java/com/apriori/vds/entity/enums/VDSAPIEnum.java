@@ -44,6 +44,10 @@ public enum VDSAPIEnum implements EdcQaAPI {
     GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs("digital-factories/%s/process-groups/%s/materials/%s/material-stocks"),
     GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s"),
 
+    // Process Groups
+    GET_PROCESS_GROUPS("process-groups"),
+    GET_PROCESS_GROUP_BY_IDENTITY("process-groups/%s"),
+
 
     // Site Variables
     GET_SITE_VARIABLES("site-variables");

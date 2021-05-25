@@ -64,6 +64,9 @@
                   "componentType": {
                     "type": "string"
                   },
+                  "componentConfigurationName": {
+                    "type": "string"
+                  },
                   "componentFilename": {
                     "type": "string"
                   },
