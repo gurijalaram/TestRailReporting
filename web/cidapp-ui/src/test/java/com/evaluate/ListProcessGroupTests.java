@@ -15,6 +15,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -49,6 +50,7 @@ public class ListProcessGroupTests extends TestBase {
         assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
     }
 
+    @Ignore("Assemblies cannot be upload")
     @Test
     @TestRail(testCaseId = {"6198"})
     @Description("Get List of Assembly Process Groups")
