@@ -1522,6 +1522,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage clickReset() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementAndClick(resetButton);
+        resetButton.click();
         return this;
     }
 
