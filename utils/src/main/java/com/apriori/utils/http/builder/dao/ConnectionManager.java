@@ -18,17 +18,10 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.HttpClientConfig;
-import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
@@ -39,6 +32,7 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -54,9 +48,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +66,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * GET ({@link #get()}), POST ({@link #post()}), PUT ({@link #put()}), PATCH ({@link #patch()}) and DELETE ({@link #delete()}) methods
  * - Converts response JSON into the desired POJO object
  */
+@Slf4j
 public class ConnectionManager<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
@@ -220,16 +217,20 @@ public class ConnectionManager<T> {
          *                          period inactivity between two consecutive data packets arriving at client side
          *                          after connection is established.
          */
-        builder
-            .setConfig(RestAssuredConfig.config()
-                .httpClient(
-                    HttpClientConfig.httpClientConfig()
-                        .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
-                        .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
+        try {
+            builder
+                .setConfig(RestAssuredConfig.config()
+                    .httpClient(
+                        HttpClientConfig.httpClientConfig()
+                            .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
+                            .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
+                    )
+                    .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
                 )
-                .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
-            )
-            .setBaseUri(requestEntity.buildEndpoint());
+                .setBaseUri(URLEncoder.encode(requestEntity.buildEndpoint(), StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            log.error("Error with URI" + e.getMessage());
+        }
 
 
         if (requestEntity.getStatusCode() != null) {
