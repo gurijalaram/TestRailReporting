@@ -1071,11 +1071,11 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         dateInputToUse.sendKeys(valueToInput);
         String locatorTitleToUse = isEarliestAndToday ? "Earliest " : "Latest ";
-        if (!driver.findElement(
-                By.xpath(String.format("//label[contains(@title, '%sExport Date')]//input", locatorTitleToUse)))
-                .getAttribute("value").equals(valueToInput)) {
+        do {
             dateInputToUse.sendKeys(valueToInput);
-        }
+        } while (!driver.findElement(
+                By.xpath(String.format("//label[contains(@title, '%sExport Date')]//input", locatorTitleToUse)))
+                .getAttribute("value").equals(valueToInput));
 
         clickUseLatestExportDropdownTwice();
 
