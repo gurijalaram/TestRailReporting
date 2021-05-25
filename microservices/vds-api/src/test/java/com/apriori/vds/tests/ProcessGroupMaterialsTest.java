@@ -1,25 +1,20 @@
 package com.apriori.vds.tests;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
-import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
+import com.apriori.vds.tests.util.DigitalAndPGMUtil;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
-import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
-public class ProcessGroupMaterialsTest extends VDSTestUtil {
+public class ProcessGroupMaterialsTest extends DigitalAndPGMUtil {
 
     @Test
     @TestRail(testCaseId = {"8129"})
