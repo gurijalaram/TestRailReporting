@@ -35,8 +35,8 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     @FindBy(css = ".inputs-container div[id='qa-process-group-select-field'] input")
     private WebElement processGroupInput;
 
-    @FindBy(css = ".inputs-container div[id='qa-vpe-select-field'] [data-icon='chevron-down']")
-    private WebElement vpeDropdown;
+    @FindBy(css = ".inputs-container div[id='qa-digital-factory-select-field'] [data-icon='chevron-down']")
+    private WebElement digitalFactoryDropdown;
 
     @FindBy(css = ".inputs-container div[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
@@ -126,11 +126,11 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     /**
      * Selects the vpe dropdown
      *
-     * @param vpe - the vpe
+     * @param digitalFactory - the vpe
      * @return current page object
      */
-    public PrimaryInputsPage selectVPE(String vpe) {
-        primaryInputsController.selectVpe(vpeDropdown, vpe);
+    public PrimaryInputsPage selectDigitalFactory(String digitalFactory) {
+        primaryInputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
         return this;
     }
 

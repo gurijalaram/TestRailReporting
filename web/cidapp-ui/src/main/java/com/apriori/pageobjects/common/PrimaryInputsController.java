@@ -21,8 +21,8 @@ public class PrimaryInputsController {
     @FindBy(css = "div[id='qa-process-group-select-field'] .apriori-select")
     private WebElement pgDropdown;
 
-    @FindBy(css = "div[id='qa-vpe-select-field'] .apriori-select")
-    private WebElement vpeDropdown;
+    @FindBy(css = "div[id='qa-digital-factory-select-field'] .apriori-select")
+    private WebElement digitalFactoryDropdown;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -77,26 +77,26 @@ public class PrimaryInputsController {
     /**
      * Selects the vpe dropdown
      *
-     * @param vpeDropdown - the vpe dropdown
-     * @param vpe         - the vpe
+     * @param digitalFactoryDropdown - the vpe dropdown
+     * @param digitalFactory         - the vpe
      * @return current page object
      */
-    public PrimaryInputsController selectVpe(WebElement vpeDropdown, String vpe) {
-        pageUtils.waitForElementAndClick(vpeDropdown);
-        By vp = By.cssSelector(String.format("button[value='%s']", vpe));
-        pageUtils.scrollWithJavaScript(driver.findElement(vp), true).click();
+    public PrimaryInputsController selectDigitalFactory(WebElement digitalFactoryDropdown, String digitalFactory) {
+        pageUtils.waitForElementAndClick(digitalFactoryDropdown);
+        By df = By.cssSelector(String.format("button[value='%s']", digitalFactory));
+        pageUtils.scrollWithJavaScript(driver.findElement(df), true).click();
         return this;
     }
 
     /**
      * Uses type ahead to input the vpe dropdown
      *
-     * @param vpeInput - the vpe input
-     * @param vpe      - the vpe
+     * @param digitalFactoryInput - the vpe input
+     * @param digitalFactory      - the vpe
      * @return current page object
      */
-    public PrimaryInputsController typeAheadVpe(WebElement vpeInput, String vpe) {
-        pageUtils.typeAheadInput(vpeDropdown, vpeInput, vpe);
+    public PrimaryInputsController typeAheadDigitalFactory(WebElement digitalFactoryInput, String digitalFactory) {
+        pageUtils.typeAheadInput(digitalFactoryDropdown, digitalFactoryInput, digitalFactory);
         return this;
     }
 

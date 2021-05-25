@@ -178,7 +178,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));
