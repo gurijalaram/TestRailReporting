@@ -62,12 +62,27 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      *
      * @param componentName - component name
      * @param scenarioName  - scenario name
-     * @return a new page object
+     * @return current page object
      */
-    // TODO: 19/05/2021 cf - this method needs to be reworked to click the invisible element open button
     public ScenarioTableController openScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//span[.='%s']/ancestor::div//div[.='%s']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
+        moveToScenario(componentName, scenarioName);
+        By scenario = By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
+        pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
+        return this;
+    }
+
+    /**
+     * Hovers over the scenario
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    private ScenarioTableController moveToScenario(String componentName, String scenarioName) {
+        By scenario = getByScenario(componentName, scenarioName);
+        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        pageUtils.mouseMove(driver.findElement(scenario));
         return this;
     }
 
@@ -91,7 +106,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
-        findScenario(componentName, scenarioName).click();
+        moveToScenario(componentName, scenarioName);
+        driver.findElement(getByScenario(componentName, scenarioName)).click();
         return this;
     }
 
@@ -174,7 +190,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return by
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        return By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
     }
 
     /**
@@ -189,18 +205,6 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
-     * Selects the scenario checkbox in the table
-     *
-     * @param componentName - component name
-     * @param scenarioName  - scenario name
-     * @return current page object
-     */
-    public ScenarioTableController selectScenario(String componentName, String scenarioName) {
-        findScenario(componentName, scenarioName).click();
-        return this;
-    }
-
-    /**
      * Highlights the scenario in the table using the keyboard control key
      *
      * @param componentName - component name
@@ -210,7 +214,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController controlHighlightScenario(String componentName, String scenarioName) {
         Actions controlHighlight = new Actions(driver);
         controlHighlight.keyDown(Keys.CONTROL)
-            .click(findScenario(componentName, scenarioName))
+            .click(driver.findElement(getByScenario(componentName, scenarioName)))
             .build()
             .perform();
         return this;
@@ -228,7 +232,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
         Arrays.stream(componentAndScenarioName).map(csn -> csn.split(",")).collect(Collectors.toList())
             .forEach(componentScenario -> multiHighlight.keyDown(Keys.CONTROL)
-                .click(findScenario(componentScenario[0], componentScenario[1]))
+                .click(driver.findElement(getByScenario(componentScenario[0], componentScenario[1])))
                 .build()
                 .perform());
         return this;
@@ -257,20 +261,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase().trim(), scenarioName.trim()));
-        pageUtils.waitForElementToAppear(scenario);
-        return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
-    }
-
-    /**
-     * Private method to find the scenario
-     *
-     * @param componentName - component name
-     * @param scenarioName  - scenario name
-     * @return webelement
-     */
-    private WebElement findScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        By scenario = By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
     }
