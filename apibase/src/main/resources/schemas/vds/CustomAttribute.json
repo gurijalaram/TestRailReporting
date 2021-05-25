@@ -2,23 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
-    "createdAt",
-    "createdBy",
-    "customerIdentity",
-    "defaultValue",
-    "deletedAt",
-    "deletedBy",
-    "displayName",
-    "identity",
-    "multiSelect",
-    "name",
-    "options",
-    "ordinal",
-    "precision",
-    "requiredAttributeType",
-    "type",
-    "updatedAt",
-    "updatedBy"
+    "identity"
   ],
   "properties": {
     "createdAt": {

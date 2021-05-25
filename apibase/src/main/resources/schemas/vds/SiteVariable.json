@@ -2,18 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
-    "active",
-    "createdAt",
-    "createdBy",
-    "currencyCode",
-    "customerIdentity",
-    "deletedAt",
-    "deletedBy",
-    "description",
-    "identity",
-    "rate",
-    "updatedAt",
-    "updatedBy"
+    "identity"
   ],
   "properties": {
     "active": {
