@@ -9,6 +9,7 @@ import com.apriori.vds.tests.CustomizationsTest;
 import com.apriori.vds.tests.DigitalFactoriesTest;
 import com.apriori.vds.tests.ProcessGroupMaterialStocksTest;
 import com.apriori.vds.tests.ProcessGroupMaterialsTest;
+import com.apriori.vds.tests.ProcessGroupsTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -22,7 +23,8 @@ import org.junit.runners.Suite;
     CustomizationsTest.class,
     DigitalFactoriesTest.class,
     ProcessGroupMaterialsTest.class,
-    ProcessGroupMaterialStocksTest.class
+    ProcessGroupMaterialStocksTest.class,
+    ProcessGroupsTest.class
 })
 public class APISuite {
 }
