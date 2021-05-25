@@ -46,9 +46,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -215,16 +217,20 @@ class ConnectionManager<T> {
          *                          period inactivity between two consecutive data packets arriving at client side
          *                          after connection is established.
          */
-        builder
-            .setConfig(RestAssuredConfig.config()
-                .httpClient(
-                    HttpClientConfig.httpClientConfig()
-                        .setParam("http.connection.timeout", requestEntity.connectionTimeout())
-                        .setParam("http.socket.timeout", requestEntity.socketTimeout())
+        try {
+            builder
+                .setConfig(RestAssuredConfig.config()
+                    .httpClient(
+                        HttpClientConfig.httpClientConfig()
+                            .setParam("http.connection.timeout", requestEntity.connectionTimeout())
+                            .setParam("http.socket.timeout", requestEntity.socketTimeout())
+                    )
+                    .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
                 )
-                .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
-            )
-            .setBaseUri(requestEntity.buildEndpoint());
+                .setBaseUri(URLEncoder.encode(requestEntity.buildEndpoint(), StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
 
         if (requestEntity.statusCode() != null) {
