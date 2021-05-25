@@ -1632,6 +1632,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage waitForCorrectPartListCount(String expected) {
         waitForCorrectAvailableSelectedCount(ListNameEnum.PARTS.getListName(), "Available: ", expected);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
     }
 
