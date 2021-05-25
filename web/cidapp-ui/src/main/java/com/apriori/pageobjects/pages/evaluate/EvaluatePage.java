@@ -75,11 +75,11 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-process-group-select-field'] input")
     private WebElement processGroupInput;
 
-    @FindBy(css = "div[id='qa-vpe-select-field'] [data-icon='chevron-down']")
-    private WebElement vpeDropdown;
+    @FindBy(css = "div[id='qa-digital-factory-select-field'] [data-icon='chevron-down']")
+    private WebElement digitalFactoryDropdown;
 
-    @FindBy(css = "div[id='qa-vpe-select-field'] input")
-    private WebElement vpeInput;
+    @FindBy(css = "div[id='qa-digital-factory-select-field'] input")
+    private WebElement digitalFactoryInput;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
@@ -187,22 +187,22 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Selects the vpe dropdown
      *
-     * @param vpe - the vpe
+     * @param digitalFactory - the vpe
      * @return current page object
      */
-    public EvaluatePage selectVPE(String vpe) {
-        primaryInputsController.selectVpe(vpeDropdown, vpe);
+    public EvaluatePage selectDigitalFactory(String digitalFactory) {
+        primaryInputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
         return this;
     }
 
     /**
      * Inputs the vpe dropdown
      *
-     * @param vpe - the vpe
+     * @param digitalFactory - the vpe
      * @return current page object
      */
-    public EvaluatePage inputVpe(String vpe) {
-        primaryInputsController.typeAheadVpe(vpeInput, vpe);
+    public EvaluatePage inputDigitalFactory(String digitalFactory) {
+        primaryInputsController.typeAheadDigitalFactory(digitalFactoryInput, digitalFactory);
         return this;
     }
 
@@ -492,7 +492,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public String getColour(String element) {
         WebElement elementColour = element.equalsIgnoreCase("Process Group") ? processGroupDropdown
-            : element.equalsIgnoreCase("VPE") ? vpeDropdown
+            : element.equalsIgnoreCase("VPE") ? digitalFactoryDropdown
             : element.equalsIgnoreCase("Secondary Processes") ? secondaryProcessBox
             : element.equalsIgnoreCase("Annual Volume") ? annualVolumeInput
             : element.equalsIgnoreCase("Years") ? productionLifeInput
