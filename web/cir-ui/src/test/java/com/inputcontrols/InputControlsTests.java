@@ -163,6 +163,7 @@ public class InputControlsTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName)
             .clickReset()
+            .clickReset()
             .waitForExpectedExportCount("0")
             .waitForCorrectPartListCount("0");
 
