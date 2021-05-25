@@ -50,7 +50,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
 
-        evaluatePage.inputVpe(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -72,7 +72,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
 
-        evaluatePage.inputVpe(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -94,7 +94,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
 
-        evaluatePage.inputVpe(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -116,7 +116,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
 
-        evaluatePage.inputVpe(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -138,7 +138,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
 
-        evaluatePage.inputVpe(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -160,7 +160,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
 
-        evaluatePage.inputVpe(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
