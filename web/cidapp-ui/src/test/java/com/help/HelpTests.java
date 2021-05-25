@@ -49,7 +49,7 @@ public class HelpTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -70,7 +70,7 @@ public class HelpTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -91,7 +91,7 @@ public class HelpTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -112,7 +112,7 @@ public class HelpTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -133,7 +133,7 @@ public class HelpTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
