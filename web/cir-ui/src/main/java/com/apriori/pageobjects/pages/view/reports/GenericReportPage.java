@@ -1065,22 +1065,26 @@ public class GenericReportPage extends ReportsPageHeader {
         WebElement dateInputToUse = isEarliestAndToday ? earliestExportDateInput : latestExportDateInput;
         String valueToInput = invalidValue.isEmpty() ? dateToUse : invalidValue;
 
+        dateInputToUse.click();
+        pageUtils.waitForElementToAppear(By.xpath("//label[contains(@title, 'Export Date')]/input[contains(@class, 'superfocus subfocus')]"));
         dateInputToUse.clear();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        dateInputToUse.click();
-        // wait for input class to contain superfocus subfocus
-        pageUtils.waitForElementToAppear(By.xpath("//label[contains(@title, 'Export Date')]/input[contains(@class, 'superfocus subfocus')]"));
         dateInputToUse.sendKeys(valueToInput);
-        pageUtils.waitForElementToAppear(By.xpath(String.format("//label[contains(@title, 'Export Date')]/input[@value='%s']", valueToInput)));
+        String locatorTitleToUse = isEarliestAndToday ? "Earliest " : "Latest ";
+        if (!driver.findElement(
+                By.xpath(String.format("//label[contains(@title, '%sExport Date')]//input", locatorTitleToUse)))
+                .getAttribute("value").equals(valueToInput)) {
+            dateInputToUse.sendKeys(valueToInput);
+        }
 
         clickUseLatestExportDropdownTwice();
 
         if (!isEarliestAndToday && !invalidValue.isEmpty()) {
             invalidValue = invalidValue.contains("65") ? invalidValue.replace("65", "59") : invalidValue;
             invalidValue = invalidValue.contains("25") ? invalidValue.replace("25", "23") : invalidValue;
-            By latestLocator = By.xpath(
+            /*By latestLocator = By.xpath(
                     String.format("//label[contains(@title, 'Latest Export Date')]/input[@value='%s']", invalidValue));
-            //pageUtils.waitForElementToAppear(latestLocator);
+            pageUtils.waitForElementToAppear(latestLocator);*/
         }
 
         if (invalidValue.isEmpty()) {
