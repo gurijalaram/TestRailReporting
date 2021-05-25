@@ -1520,9 +1520,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage clickReset() {
-        pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='reset']/span/span"));
-        resetButton.click();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitForElementAndClick(resetButton);
         return this;
     }
 
@@ -1616,9 +1615,23 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Wait for expected export count
+     *
+     * @param expected - String of count expected
+     * @return GenericReportPage instance
      */
     public GenericReportPage waitForExpectedExportCount(String expected) {
         waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", expected);
+        return this;
+    }
+
+    /**
+     * Waits for part list to have expected count
+     *
+     * @param expected - String of expected count
+     * @return GenericReportPage instance
+     */
+    public GenericReportPage waitForCorrectPartListCount(String expected) {
+        waitForCorrectAvailableSelectedCount(ListNameEnum.PARTS.getListName(), "Available: ", expected);
         return this;
     }
 

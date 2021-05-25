@@ -163,7 +163,8 @@ public class InputControlsTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName)
             .clickReset()
-            .waitForExpectedExportCount("0");
+            .waitForExpectedExportCount("0")
+            .waitForCorrectPartListCount("0");
 
         assertThat(genericReportPage.getSelectedExportSetCount(), is(equalTo(0)));
     }
