@@ -95,7 +95,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publish(EvaluatePage.class)
             .editScenario()
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .publishScenario()
             .override()
             .continues(PublishPage.class)

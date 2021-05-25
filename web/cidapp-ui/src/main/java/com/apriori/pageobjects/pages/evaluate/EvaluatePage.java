@@ -198,11 +198,11 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Inputs the vpe dropdown
      *
-     * @param vpe - the vpe
+     * @param digitalFactory - the vpe
      * @return current page object
      */
-    public EvaluatePage inputVpe(String vpe) {
-        primaryInputsController.typeAheadDigitalFactory(digitalFactoryInput, vpe);
+    public EvaluatePage inputDigitalFactory(String digitalFactory) {
+        primaryInputsController.typeAheadDigitalFactory(digitalFactoryInput, digitalFactory);
         return this;
     }
 
