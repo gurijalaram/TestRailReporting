@@ -83,7 +83,7 @@ public class PrimaryInputsController {
      */
     public PrimaryInputsController selectDigitalFactory(WebElement digitalFactoryDropdown, String digitalFactory) {
         pageUtils.waitForElementAndClick(digitalFactoryDropdown);
-        By df = By.cssSelector(String.format("button[value='%s']", digitalFactory));
+        By df = By.xpath(String.format("//div[.='%s']//div[@id]", digitalFactory));
         pageUtils.scrollWithJavaScript(driver.findElement(df), true).click();
         return this;
     }
