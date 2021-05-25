@@ -31,6 +31,7 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -63,6 +64,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * GET ({@link #get()}), POST ({@link #post()}), PUT ({@link #put()}), PATCH ({@link #patch()}) and DELETE ({@link #delete()}) methods
  * - Converts response JSON into the desired POJO object
  */
+@Slf4j
 class ConnectionManager<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
@@ -229,7 +231,7 @@ class ConnectionManager<T> {
                 )
                 .setBaseUri(URLEncoder.encode(requestEntity.buildEndpoint(), StandardCharsets.UTF_8.toString()));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.error("Error with URI" + e.getMessage());
         }
 
 
