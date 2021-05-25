@@ -122,7 +122,7 @@ public class MaterialStockTests extends TestBase {
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputVpe(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();
