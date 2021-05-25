@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Item {
+    private String componentConfigurationName;
     private String subjectIdentity;
     private List<String> permissions;
     private String customerIdentity;

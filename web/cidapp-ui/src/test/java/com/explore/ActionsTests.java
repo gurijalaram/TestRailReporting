@@ -41,6 +41,7 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
 
     private File resourceFile;
+    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public ActionsTests() {
@@ -54,25 +55,30 @@ public class ActionsTests extends TestBase {
     public void addScenarioNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "M3CapScrew.CATPart");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "M3CapScrew";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        infoPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("M3CapScrew", testScenarioName)
+            .highlightScenario("M3CapScrew", scenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("Qa Description")
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
-            .highlightScenario("M3CapScrew", testScenarioName)
+            .highlightScenario("M3CapScrew", scenarioName)
             .info();
 
         assertThat(infoPage.getStatus(), is(equalTo("New")));
@@ -86,18 +92,23 @@ public class ActionsTests extends TestBase {
     public void addStatusColumn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "M3CapScrew.CATPart");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "M3CapScrew";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("M3CapScrew", testScenarioName)
+            .highlightScenario("M3CapScrew", scenarioName)
             .info()
             .inputStatus("Analysis")
             .inputCostMaturity("Medium")
@@ -126,20 +137,26 @@ public class ActionsTests extends TestBase {
     public void lockUnlockScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        previewPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("bracket_basic", testScenarioName)
+            .highlightScenario("bracket_basic", scenarioName)
             .lock(ExplorePage.class)
-            .highlightScenario("bracket_basic", testScenarioName)
+            .highlightScenario("bracket_basic", scenarioName)
             .previewPanel();
 
         assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
@@ -159,13 +176,18 @@ public class ActionsTests extends TestBase {
     public void actionsEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "case_002_006-8611543_prt.stp");
+        String componentName = "case_002_006-8611543_prt";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
+        infoPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .info()
             .inputStatus("Complete")
             .inputCostMaturity("Medium")
@@ -187,12 +209,14 @@ public class ActionsTests extends TestBase {
     public void infoNotesPanel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "BasicScenario_Forging.stp");
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(scenarioName, resourceFile, EvaluatePage.class)
+        infoPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .info()
             .inputStatus("New")
@@ -200,6 +224,10 @@ public class ActionsTests extends TestBase {
             .inputDescription("infoNotesPanel")
             .inputNotes("Panel Test")
             .submit(EvaluatePage.class)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .submit()
             .costScenario()
             .info();
 
@@ -216,22 +244,27 @@ public class ActionsTests extends TestBase {
     public void actionsAssign() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        infoPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("PowderMetalShaft", testScenarioName)
+            .highlightScenario("PowderMetalShaft", scenarioName)
             .assign()
             .inputAssignee("Moya Parker")
             .submit(ExplorePage.class)
-            .openScenario(testScenarioName, "PowderMetalShaft")
+            .openScenario(scenarioName, "PowderMetalShaft")
             .info();
 
         assertThat(infoPage.getScenarioInfo("Assignee"), is("Moya Parker"));
@@ -243,18 +276,23 @@ public class ActionsTests extends TestBase {
     public void actionsAssignEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        assignPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        assignPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .openScenario("PowderMetalShaft", testScenarioName)
+            .openScenario("PowderMetalShaft", scenarioName)
             .assign()
             .inputAssignee("Sinead Plunkett")
             .submit(EvaluatePage.class)
@@ -269,14 +307,19 @@ public class ActionsTests extends TestBase {
     public void filterAssignee() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario()
             .publishScenario()
             .inputStatus("New")
@@ -290,7 +333,7 @@ public class ActionsTests extends TestBase {
             .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Push Pin", testScenarioName), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), equalTo(1));
     }
 
     @Test
@@ -299,25 +342,31 @@ public class ActionsTests extends TestBase {
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "BasicScenario_Forging.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        infoPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("BasicScenario_Forging", testScenarioName)
+            .highlightScenario("BasicScenario_Forging", scenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .openScenario("BasicScenario_Forging", testScenarioName)
+            .openScenario("BasicScenario_Forging", scenarioName)
             .info()
             .editNotes("Testing QA notes validating the ability to edit notes")
             .submit(EvaluatePage.class)
@@ -332,21 +381,26 @@ public class ActionsTests extends TestBase {
     public void cancelEditNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
-        String testComponentName = "BasicScenario_Forging";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        infoPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .highlightScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .highlightScenario(componentName, scenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -354,8 +408,8 @@ public class ActionsTests extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .openScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .openScenario(componentName, scenarioName)
             .info()
             .editNotes("Validating the ability to edit notes")
             .cancel(EvaluatePage.class)
@@ -371,21 +425,25 @@ public class ActionsTests extends TestBase {
     public void deleteNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        String testComponentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        infoPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .highlightScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .highlightScenario(componentName, scenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -393,8 +451,8 @@ public class ActionsTests extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .openScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .openScenario(componentName, scenarioName)
             .info()
             .editNotes("")
             .submit(EvaluatePage.class)
@@ -409,23 +467,26 @@ public class ActionsTests extends TestBase {
     public void readUsersNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        String testComponentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(testUser1)
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, testUser1)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .highlightScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .highlightScenario(componentName, scenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -435,8 +496,8 @@ public class ActionsTests extends TestBase {
             .logout()
             .login(testUser2)
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .openScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .openScenario(componentName, scenarioName)
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes"));
@@ -448,15 +509,21 @@ public class ActionsTests extends TestBase {
     public void filterStatusCost() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Rapid Prototyping.stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "Rapid Prototyping";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
+        currentUser = UserUtil.getUser();
+
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("Default")
+            .submit()
             .costScenario()
             .publishScenario()
             .inputStatus("Complete")
@@ -470,7 +537,7 @@ public class ActionsTests extends TestBase {
             .addCriteriaWithOption("Status", "In", "Complete")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", testScenarioName), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName), equalTo(1));
 
         explorePage.filter()
             .inputName(filterName2)
@@ -478,7 +545,7 @@ public class ActionsTests extends TestBase {
             .addCriteriaWithOption("Cost Maturity", "In", "Medium")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Rapid Prototyping", testScenarioName), equalTo(1));
+        assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName), equalTo(1));
     }
 
     @Test
@@ -487,21 +554,25 @@ public class ActionsTests extends TestBase {
     public void deleteDescription() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        String testComponentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        infoPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .highlightScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .highlightScenario(componentName, scenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
@@ -509,8 +580,8 @@ public class ActionsTests extends TestBase {
             .inputNotes("")
             .submit(ExplorePage.class)
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .openScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .openScenario(componentName, scenarioName)
             .info()
             .editDescription("")
             .submit(EvaluatePage.class)
@@ -519,7 +590,7 @@ public class ActionsTests extends TestBase {
         assertThat(infoPage.getDescription(), is(""));
     }
 
-    @Ignore
+    @Ignore("Not sure if this is allowed or not yet")
     @Test
     @TestRail(testCaseId = {"6727"})
     @Description("Ensure scripts cannot be entered into text input fields")
@@ -527,21 +598,25 @@ public class ActionsTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        String testComponentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testComponentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
             .inputFilter("Recent")
-            .enterKeySearch(testComponentName.toUpperCase())
-            .highlightScenario(testComponentName, testScenarioName)
+            .enterKeySearch(componentName.toUpperCase())
+            .highlightScenario(componentName, scenarioName)
             .info()
             .inputStatus("New")
             .inputCostMaturity("Low")
