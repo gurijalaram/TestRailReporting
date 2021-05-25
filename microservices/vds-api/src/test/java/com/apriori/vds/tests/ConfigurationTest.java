@@ -35,7 +35,7 @@ public class ConfigurationTest extends VDSTestUtil {
 
         ConfigurationsItems configurationsItems = this.getConfigurationsItems();
 
-        Assert.assertNotEquals("To get the configuration, response should contain it.", 0, configurationsItems.getItems().size());
+        Assert.assertNotEquals("To get Configuration, response should contain it.", 0, configurationsItems.getItems().size());
 
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_CONFIGURATIONS_BY_IDENTITY, Configuration.class)
             .inlineVariables(Collections.singletonList(configurationsItems.getItems().get(0).getIdentity()));

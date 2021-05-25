@@ -1,4 +1,5 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
     "response"
@@ -7,10 +8,45 @@
     "response": {
       "type": "object",
       "required": [
+        "isLastPage",
+        "isFirstPage",
+        "pageNumber",
+        "pageSize",
+        "pageItemCount",
+        "totalItemCount",
+        "totalPageCount",
+        "hasNextPage",
+        "hasPreviousPage",
         "items"
       ],
-      "$ref": "../PaginationSchema.json",
       "properties": {
+        "isLastPage": {
+          "type": "boolean"
+        },
+        "isFirstPage": {
+          "type": "boolean"
+        },
+        "pageNumber": {
+          "type": "integer"
+        },
+        "pageSize": {
+          "type": "integer"
+        },
+        "pageItemCount": {
+          "type": "integer"
+        },
+        "totalItemCount": {
+          "type": "integer"
+        },
+        "totalPageCount": {
+          "type": "integer"
+        },
+        "hasNextPage": {
+          "type": "boolean"
+        },
+        "hasPreviousPage": {
+          "type": "boolean"
+        },
         "items": {
           "type": "array",
           "items": {
