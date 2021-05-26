@@ -41,20 +41,20 @@ public class DeleteTests extends TestBase {
 
         String componentName = "Casting";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String filterName = new GenerateStringUtil().generateFilterName();
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Scenario Name", "Contains", testScenarioName)
+            .addCriteriaWithOption("Scenario Name", "Contains", scenarioName)
             .submit(ExplorePage.class)
-            .highlightScenario("CASTING", testScenarioName)
+            .highlightScenario("CASTING", scenarioName)
             .delete()
             .submit(ExplorePage.class);
 
@@ -69,13 +69,13 @@ public class DeleteTests extends TestBase {
 
         String componentName = "Casting";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String filterName = new GenerateStringUtil().generateFilterName();
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -88,9 +88,9 @@ public class DeleteTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Scenario Name", "Contains", testScenarioName)
+            .addCriteriaWithOption("Scenario Name", "Contains", scenarioName)
             .submit(ExplorePage.class)
-            .highlightScenario("CASTING", testScenarioName)
+            .highlightScenario("CASTING", scenarioName)
             .delete()
             .submit(ExplorePage.class);
 
