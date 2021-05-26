@@ -36,6 +36,10 @@ public class DecimalPlaceTests extends TestBase {
     private ProcessesPage processesPage;
     private CostDetailsPage costDetailsPage;
 
+    public DecimalPlaceTests() {
+        super();
+    }
+
     //@After
     public void resetAllSettings() {
         if (currentUser != null) {
@@ -50,8 +54,9 @@ public class DecimalPlaceTests extends TestBase {
     public void changeDecimalPlaceDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"bracket_basic.prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -59,7 +64,7 @@ public class DecimalPlaceTests extends TestBase {
             .openSettings()
             .typeAheadInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExplorePage.class)
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
