@@ -80,9 +80,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     private ScenarioTableController moveToScenario(String componentName, String scenarioName) {
-        By scenario = getByScenario(componentName, scenarioName);
-        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
-        pageUtils.mouseMove(driver.findElement(scenario));
+        pageUtils.scrollWithJavaScript(getWebElementScenario(componentName, scenarioName), true);
+        pageUtils.mouseMove(getWebElementScenario(componentName, scenarioName));
         return this;
     }
 
@@ -107,7 +106,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
-        driver.findElement(getByScenario(componentName, scenarioName)).click();
+        getWebElementScenario(componentName, scenarioName).click();
         return this;
     }
 
@@ -119,6 +118,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return size of the element as int
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
+        pageUtils.waitForElementToAppear(getByScenario(componentName, scenarioName));
         return driver.findElements(getByScenario(componentName, scenarioName)).size();
     }
 
@@ -183,6 +183,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Gets the scenario 'webelement' locator
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return webelement
+     */
+    private WebElement getWebElementScenario(String componentName, String scenarioName) {
+        return pageUtils.waitForElementToAppear(getByScenario(componentName, scenarioName));
+    }
+
+    /**
      * Gets the scenario 'by' locator
      *
      * @param componentName - name of the part
@@ -190,7 +201,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return by
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        return By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s'][@class='cell-text']", componentName.toUpperCase().trim(), scenarioName.trim()));
     }
 
     /**
@@ -214,7 +225,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController controlHighlightScenario(String componentName, String scenarioName) {
         Actions controlHighlight = new Actions(driver);
         controlHighlight.keyDown(Keys.CONTROL)
-            .click(driver.findElement(getByScenario(componentName, scenarioName)))
+            .click(getWebElementScenario(componentName, scenarioName))
             .build()
             .perform();
         return this;
@@ -232,7 +243,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
         Arrays.stream(componentAndScenarioName).map(csn -> csn.split(",")).collect(Collectors.toList())
             .forEach(componentScenario -> multiHighlight.keyDown(Keys.CONTROL)
-                .click(driver.findElement(getByScenario(componentScenario[0], componentScenario[1])))
+                .click(getWebElementScenario(componentScenario[0], componentScenario[1]))
                 .build()
                 .perform());
         return this;
