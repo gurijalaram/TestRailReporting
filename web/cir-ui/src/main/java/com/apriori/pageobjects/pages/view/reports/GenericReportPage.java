@@ -568,7 +568,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='reportContainer']//tr[16]//td[34]/span")
     private WebElement costOutlierPercentDifferenceValueInChartPercentSet;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//tr[19]//td[14]/span")
+    @FindBy(xpath = "//div[@id='reportContainer']//tr[18]//td[14]/span")
     private WebElement costOutlierTotalAnnualisedValuePercentSet;
 
     @FindBy(xpath = "//div[@id='reportContainer']//tr[16]//td[33]/span")
@@ -650,9 +650,17 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage inputAnnualisedOrPercentValue(String annualisedOrPercent, String inputValue) {
         By locator = By.xpath(String.format("//label[contains(@title, '%s')]/input", annualisedOrPercent));
         pageUtils.waitForElementAndClick(locator);
+        pageUtils.waitForElementToAppear(By.xpath(
+                String.format(
+                        "//label[contains(@title, '%s')]/input[contains(@class, 'superfocus subfocus')]",
+                        annualisedOrPercent)
+        ));
         WebElement inputField = driver.findElement(locator);
         pageUtils.clearInput(inputField);
         inputField.sendKeys(inputValue);
+        do {
+            inputField.sendKeys(inputValue);
+        } while (!inputField.getAttribute("value").equals(inputValue));
         return this;
     }
 
@@ -664,6 +672,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCostOutlierAnnualisedOrPercentValueFromAboveChart(boolean isPercentSet, String annualisedOrPercent) {
         String valueIndex = isPercentSet && annualisedOrPercent.equals("Percent") ? "2" : "1";
+        //String valueIndex = "1";
         By locator = By.xpath(
                 String.format(
                         "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span",
@@ -1069,6 +1078,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(By.xpath("//label[contains(@title, 'Export Date')]/input[contains(@class, 'superfocus subfocus')]"));
         dateInputToUse.clear();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+
         dateInputToUse.sendKeys(valueToInput);
         String locatorTitleToUse = isEarliestAndToday ? "Earliest " : "Latest ";
         do {
@@ -1082,9 +1092,6 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!isEarliestAndToday && !invalidValue.isEmpty()) {
             invalidValue = invalidValue.contains("65") ? invalidValue.replace("65", "59") : invalidValue;
             invalidValue = invalidValue.contains("25") ? invalidValue.replace("25", "23") : invalidValue;
-            /*By latestLocator = By.xpath(
-                    String.format("//label[contains(@title, 'Latest Export Date')]/input[@value='%s']", invalidValue));
-            pageUtils.waitForElementToAppear(latestLocator);*/
         }
 
         if (invalidValue.isEmpty()) {
@@ -1152,16 +1159,6 @@ public class GenericReportPage extends ReportsPageHeader {
         }
 
         return this;
-    }
-
-    /**
-     * Ensures filtering worked correctly
-     *
-     * @return int size of element list
-     */
-    public int getAmountOfTopLevelExportSets() {
-        List<WebElement> list = driver.findElements(By.xpath("//div[contains(@title, 'Single export')]//ul[@class='jr-mSelectlist jr']/li[@title='top-level']/div/a"));
-        return list.size();
     }
 
     /**
@@ -1327,10 +1324,8 @@ public class GenericReportPage extends ReportsPageHeader {
 
     /**
      * Deselect export set
-     *
-     * @return current page object
      */
-    public GenericReportPage deselectExportSet() {
+    public void deselectExportSet() {
         String expectedCount = String.valueOf(getSelectedExportSetCount() - 1);
         pageUtils.waitForElementAndClick(exportSetToSelect);
         waitForCorrectAvailableSelectedCount(
@@ -1338,35 +1333,31 @@ public class GenericReportPage extends ReportsPageHeader {
                 "Selected: ",
                 expectedCount
         );
-        return this;
     }
 
     /**
      * Invert export set selection
-     *
-     * @return current page object
      */
-    public GenericReportPage invertExportSetSelection() {
+    public void invertExportSetSelection() {
         String expectedCount = String.valueOf(getAvailableExportSetCount() - getSelectedExportSetCount());
         pageUtils.waitForElementAndClick(exportSetInvert);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.EXPORT_SET.getListName(),
                 "Selected: ",
                 expectedCount
         );
-        return this;
     }
 
     /**
      * Deselect all export sets
-     *
-     * @return current page object
      */
-    public GenericReportPage exportSetDeselectAll() {
+    public void exportSetDeselectAll() {
         pageUtils.waitForElementAndClick(exportSetDeselect);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         clickUseLatestExportDropdownTwice();
+        pageUtils.waitForElementToAppear(By.xpath("(//div[@title='Single export set selection.']//ul)[1]/li[@class = 'jr-mSelectlist-item   jr'][1]"));
         waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "0");
-        return this;
     }
 
     /**
@@ -2633,6 +2624,14 @@ public class GenericReportPage extends ReportsPageHeader {
     private void clickCurrencyTwice() {
         pageUtils.waitForElementAndClick(currentCurrencyElement);
         currentCurrencyElement.click();
+    }
+
+    /**
+     * Clicks sort order dropdown twice to change focus
+     */
+    private void clickSortOrderTwice() {
+        pageUtils.waitForElementAndClick(sortOrderDropdown);
+        sortOrderDropdown.click();
     }
 
     /**
