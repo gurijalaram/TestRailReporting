@@ -39,15 +39,15 @@ public class DeleteTests extends TestBase {
     public void testDeletePrivateScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String filterName = new GenerateStringUtil().generateFilterName();
-
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .clickExplore()
             .filter()
             .saveAs()
@@ -67,15 +67,15 @@ public class DeleteTests extends TestBase {
     public void testDeletePublicScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String filterName = new GenerateStringUtil().generateFilterName();
-
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")

@@ -52,7 +52,7 @@ public class DecimalPlaceTests extends TestBase {
 
         String componentName = "bracket_basic";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -60,7 +60,7 @@ public class DecimalPlaceTests extends TestBase {
             .openSettings()
             .typeAheadInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
