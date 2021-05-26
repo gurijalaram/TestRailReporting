@@ -9,7 +9,6 @@ import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.navigation.CommonReportTests;
@@ -17,7 +16,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
@@ -84,7 +82,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"2332"})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
     public void testExportDateFilterFunctionality() {

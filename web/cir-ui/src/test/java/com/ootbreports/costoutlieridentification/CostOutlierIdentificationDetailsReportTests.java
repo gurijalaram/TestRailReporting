@@ -18,7 +18,6 @@ import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -263,7 +262,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"6985"})
     @Description("Percent difference threshold filter works - details report")
     public void testPercentDifferenceThresholdFilter() {

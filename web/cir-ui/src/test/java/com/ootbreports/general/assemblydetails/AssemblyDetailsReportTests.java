@@ -30,7 +30,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
@@ -469,7 +468,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3244"})
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
@@ -598,7 +597,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"1920"})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {

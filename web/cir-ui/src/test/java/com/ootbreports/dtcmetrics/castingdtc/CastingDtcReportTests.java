@@ -26,7 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
@@ -118,7 +117,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7346"})
     @Description("Verify reset button functionality - Casting DTC Report")
     public void testResetButton() {
