@@ -50,7 +50,8 @@ public class DecimalPlaceTests extends TestBase {
     public void changeDecimalPlaceDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"bracket_basic.prt");
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
@@ -59,7 +60,7 @@ public class DecimalPlaceTests extends TestBase {
             .openSettings()
             .typeAheadInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExplorePage.class)
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
