@@ -82,7 +82,7 @@ public class MaterialStockTests extends TestBase {
 
         String componentName = "bracket_basic_matPMI";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-		String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
