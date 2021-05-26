@@ -14,6 +14,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -32,6 +33,7 @@ public class PublishExistingCostedTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
+    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public PublishExistingCostedTests() {
@@ -44,34 +46,39 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String partName = "testpart-4";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "testpart-4";
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
         String filterName = generateStringUtil.generateFilterName();
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
-            .openScenario(testScenarioName, partName)
+            .openScenario(scenarioName, componentName)
             .editScenario()
-            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Component Name", "Contains", partName)
+            .addCriteriaWithOption("Component Name", "Contains", componentName)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(partName, testScenarioName), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
     }
 
     @Test
@@ -80,22 +87,26 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioNameB = new GenerateStringUtil().generateScenarioName();
-        String partName = "PowderMetalShaft";
+        String componentName = "PowderMetalShaft";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .editScenario()
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .publishScenario()
             .override()
             .continues(PublishPage.class)
@@ -104,7 +115,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(partName, scenarioNameB), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB), is(greaterThan(0)));
     }
 
     @Test
@@ -112,20 +123,24 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String partName = "PowderMetalShaft";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "PowderMetalShaft";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
-            .uploadComponentAndSubmit(testScenarioName, FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp"), EvaluatePage.class)
+            .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
             .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario()
@@ -142,28 +157,32 @@ public class PublishExistingCostedTests extends TestBase {
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String testScenarioName2 = new GenerateStringUtil().generateScenarioName();
-        String partName = "PowderMetalShaft";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String componentName = "PowderMetalShaft";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(ExplorePage.class)
             .lock(ExplorePage.class)
-            .uploadComponentAndSubmit(testScenarioName, FileResourceUtil.getCloudFile(processGroupEnum, partName + ".stp"), EvaluatePage.class)
+            .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
             .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario()
-            .changeName(testScenarioName2)
+            .changeName(scenarioName2)
             .publish(EvaluatePage.class);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(testScenarioName2)));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName2)));
     }
 }

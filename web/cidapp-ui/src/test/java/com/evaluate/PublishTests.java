@@ -44,21 +44,25 @@ public class PublishTests extends TestBase {
     public void testPublishNewCostedScenario() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "testpart-4";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore();
 
-        assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
     }
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
@@ -69,7 +73,7 @@ public class PublishTests extends TestBase {
 
         final String file = "testpart-4.prt";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "testpart-4";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         String filterName = new GenerateStringUtil().generateFilterName();
@@ -77,7 +81,7 @@ public class PublishTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -93,9 +97,9 @@ public class PublishTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Scenario Name", "Contains", testScenarioName)
+            .addCriteriaWithOption("Scenario Name", "Contains", scenarioName)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
     }
 }

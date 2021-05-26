@@ -36,6 +36,10 @@ public class DecimalPlaceTests extends TestBase {
     private ProcessesPage processesPage;
     private CostDetailsPage costDetailsPage;
 
+    public DecimalPlaceTests() {
+        super();
+    }
+
     //@After
     public void resetAllSettings() {
         if (currentUser != null) {
@@ -50,8 +54,9 @@ public class DecimalPlaceTests extends TestBase {
     public void changeDecimalPlaceDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"bracket_basic.prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -59,9 +64,9 @@ public class DecimalPlaceTests extends TestBase {
             .openSettings()
             .typeAheadInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExplorePage.class)
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputVpe(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -144,7 +149,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(21.05727, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
 
-        evaluatePage.inputVpe(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
