@@ -241,7 +241,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController multiHighlightScenario(String... componentAndScenarioName) {
         Actions multiHighlight = new Actions(driver);
 
-        Arrays.stream(componentAndScenarioName).map(csn -> csn.split(",")).collect(Collectors.toList())
+        Arrays.stream(componentAndScenarioName).map(x -> x.split(",")).collect(Collectors.toList())
             .forEach(componentScenario -> multiHighlight.keyDown(Keys.CONTROL)
                 .click(getWebElementScenario(componentScenario[0], componentScenario[1]))
                 .build()
