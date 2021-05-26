@@ -12,6 +12,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -29,6 +30,7 @@ public class NewScenarioNameTests extends TestBase {
     private EvaluatePage evaluatePage;
 
     private File resourceFile;
+    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public NewScenarioNameTests() {
@@ -40,13 +42,16 @@ public class NewScenarioNameTests extends TestBase {
     @TestRail(testCaseId = {"5424"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, "partbody_2.stp");
+        String componentName = "partbody_2";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
         String testScenarioName = generateStringUtil.generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .createScenario()
             .enterScenarioName(testScenarioName)
             .submit(EvaluatePage.class);
