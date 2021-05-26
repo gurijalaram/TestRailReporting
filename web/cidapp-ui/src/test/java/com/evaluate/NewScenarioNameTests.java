@@ -67,10 +67,10 @@ public class NewScenarioNameTests extends TestBase {
     public void testPublishEnterNewScenarioName() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, "partbody_2.stp");
+        String componentName = "partbody_2";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, componentName + ".stp");
         String testScenarioName = generateStringUtil.generateScenarioName();
         String testNewScenarioName = generateStringUtil.generateScenarioName();
-        String componentName = "partbody_2";
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -103,13 +103,14 @@ public class NewScenarioNameTests extends TestBase {
     public void multipleUpload() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp");
+        String componentName = "MultiUpload";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String scenarioA = generateStringUtil.generateScenarioName();
         String scenarioB = generateStringUtil.generateScenarioName();
         String scenarioC = generateStringUtil.generateScenarioName();
         String filterName = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
-        String componentName = "MultiUpload";
+
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
