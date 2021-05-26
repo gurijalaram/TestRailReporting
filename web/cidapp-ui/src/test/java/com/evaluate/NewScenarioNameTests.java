@@ -48,15 +48,16 @@ public class NewScenarioNameTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
         String testScenarioName = generateStringUtil.generateScenarioName();
+        String testScenarioName2 = generateStringUtil.generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .createScenario()
-            .enterScenarioName(testScenarioName)
+            .enterScenarioName(testScenarioName2)
             .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(testScenarioName));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(testScenarioName2));
     }
 
     @Category(SmokeTests.class)
@@ -64,20 +65,29 @@ public class NewScenarioNameTests extends TestBase {
     @TestRail(testCaseId = {"5950", "5951", "5952"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, "partbody_2.stp");
         String testScenarioName = generateStringUtil.generateScenarioName();
         String testNewScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "partbody_2";
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
-        evaluatePage.costScenario()
+        evaluatePage.inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit()
+            .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(EvaluatePage.class)
+            .clickExplore()
+            .inputFilter("Recent")
             .highlightScenario("partbody_2", testScenarioName)
             .createScenario()
             .enterScenarioName(testNewScenarioName)
@@ -98,24 +108,38 @@ public class NewScenarioNameTests extends TestBase {
         String scenarioB = generateStringUtil.generateScenarioName();
         String scenarioC = generateStringUtil.generateScenarioName();
         String filterName = generateStringUtil.generateFilterName();
+        currentUser = UserUtil.getUser();
+        String componentName = "MultiUpload";
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(scenarioA, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioA, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
-            .uploadComponentAndSubmit(scenarioB, FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp"), EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioB, resourceFile, currentUser)
             .inputProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
-            .uploadComponentAndSubmit(scenarioC, FileResourceUtil.getCloudFile(processGroupEnum, "MultiUpload.stp"), EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioC, resourceFile, currentUser)
             .inputProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(EvaluatePage.class)
+            .clickExplore()
             .filter()
             .inputName(filterName)
             .saveAs()
