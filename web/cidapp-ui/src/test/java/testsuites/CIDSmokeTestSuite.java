@@ -34,8 +34,8 @@ import org.junit.runners.Suite;
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
 @Suite.SuiteClasses({
-    /*CostAllCadTests.class,
-    CostScenarioTests.class,*/
+    CostAllCadTests.class,
+    CostScenarioTests.class,
     ListOfDigitalFactoryTests.class,
     /*ListProcessGroupTests.class,
     NewScenarioNameTests.class,
