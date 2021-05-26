@@ -73,7 +73,7 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
