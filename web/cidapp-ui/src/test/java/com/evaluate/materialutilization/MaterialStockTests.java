@@ -49,6 +49,9 @@ public class MaterialStockTests extends TestBase {
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit()
             .costScenario()
             .openMaterialUtilization();
 
