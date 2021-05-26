@@ -4,13 +4,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -25,6 +25,7 @@ public class PreviewPanelTests extends TestBase {
     private PreviewPage previewPage;
 
     private File resourceFile;
+    UserCredentials currentUser;
 
     public PreviewPanelTests() {
         super();
@@ -34,16 +35,16 @@ public class PreviewPanelTests extends TestBase {
     @Description("Test preview panel data is displayed")
     @TestRail(testCaseId = {"6350"})
     public void testPreviewPanelDisplay() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         String partName = "Casting";
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".prt");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        previewPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS,10")
@@ -66,23 +67,26 @@ public class PreviewPanelTests extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "225_gasket-1-solid1.prt.1");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "225_gasket-1-solid1";
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+        previewPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .inputProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
-            .search("ABS,10")
+            .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
             .submit()
             .costScenario()
             .clickExplore()
+            .inputFilter("Recent")
             .highlightScenario("225_gasket-1-solid1", testScenarioName)
             .previewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));
         assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.50, 1));
         assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(0.88, 1));
-        assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10591.57, 1));
+        assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10528.20, 1));
     }
 }
