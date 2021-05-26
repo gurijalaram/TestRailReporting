@@ -2627,14 +2627,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Clicks sort order dropdown twice to change focus
-     */
-    private void clickSortOrderTwice() {
-        pageUtils.waitForElementAndClick(sortOrderDropdown);
-        sortOrderDropdown.click();
-    }
-
-    /**
      * Initialises export set hash map
      */
     private void initialiseCurrencyMap() {
