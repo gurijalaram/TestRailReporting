@@ -2,16 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
-    "configurationType",
-    "createdAt",
-    "createdBy",
-    "customerIdentity",
-    "deletedAt",
-    "deletedBy",
-    "identity",
-    "serializationType",
-    "updatedAt",
-    "updatedBy"
+    "identity"
   ],
   "properties": {
     "configurationType": {
