@@ -25,6 +25,11 @@ public class CostScenarioTests extends TestBase {
     private File resourceFile;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
+
+    public CostScenarioTests() {
+        super();
+    }
+
     private UserCredentials currentUser;
 
     @Test

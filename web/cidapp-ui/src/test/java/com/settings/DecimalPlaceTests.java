@@ -36,6 +36,10 @@ public class DecimalPlaceTests extends TestBase {
     private ProcessesPage processesPage;
     private CostDetailsPage costDetailsPage;
 
+    public DecimalPlaceTests() {
+        super();
+    }
+
     //@After
     public void resetAllSettings() {
         if (currentUser != null) {
