@@ -2,6 +2,7 @@ package com.explore;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -13,7 +14,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -41,6 +41,6 @@ public class UploadComponentTests extends TestBase {
             .uploadComponentAndSubmit(scenarioName, resourceFile, ExplorePage.class)
             .inputFilter("Recent");
 
-        assertThat(explorePage.getListOfScenarios("CASTING", scenarioName), Matchers.is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("CASTING", scenarioName), is(equalTo(1)));
     }
 }
