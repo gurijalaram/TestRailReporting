@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(location = "vds/CustomAttributesItems.json")
+@Schema(location = "CustomAttributesItems.json")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonRootName("response")
