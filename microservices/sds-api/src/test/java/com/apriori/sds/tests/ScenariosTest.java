@@ -97,7 +97,6 @@ public class ScenariosTest extends SDSTestUtil {
     @Test
     @TestRail(testCaseId = "7246")
     @Description("Delete an existing scenario.")
-    @Ignore
     public void deleteScenario() {
         final Item postComponentResponse = postTestingComponent();
 
