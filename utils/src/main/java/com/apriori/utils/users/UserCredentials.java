@@ -6,6 +6,8 @@ public class UserCredentials {
 
     private String password;
 
+    private String token;
+
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
     }
@@ -52,6 +54,15 @@ public class UserCredentials {
 
     public UserCredentials setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public UserCredentials setToken(String token) {
+        this.token = token;
         return this;
     }
 }

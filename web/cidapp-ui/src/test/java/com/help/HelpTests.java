@@ -3,7 +3,6 @@ package com.help;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -11,6 +10,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -23,10 +23,10 @@ import java.io.File;
 
 public class HelpTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private HelpPage helpPage;
     private HelpDocPage helpDocPage;
-
     private File resourceFile;
 
     @Test
@@ -48,11 +48,13 @@ public class HelpTests extends TestBase {
     public void moreInputsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        helpDocPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openInputDetails()
@@ -67,11 +69,13 @@ public class HelpTests extends TestBase {
     public void materialUtilHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        helpDocPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openMaterialUtilization()
@@ -86,11 +90,13 @@ public class HelpTests extends TestBase {
     public void designGuidanceHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        helpDocPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -105,11 +111,13 @@ public class HelpTests extends TestBase {
     public void processDetailsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openProcesses()
@@ -124,11 +132,13 @@ public class HelpTests extends TestBase {
     public void costResultsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openCostDetails()

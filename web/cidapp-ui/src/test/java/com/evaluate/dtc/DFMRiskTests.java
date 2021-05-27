@@ -41,13 +41,17 @@ public class DFMRiskTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "gs515625_gt077_high.prt.2");
+        currentUser = UserUtil.getUser();
+        String componentName = "gs515625_gt077_high";
 
         loginPage = new CidAppLoginPage(driver);
-        currentUser = UserUtil.getUser();
-
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
@@ -60,13 +64,19 @@ public class DFMRiskTests extends TestBase {
     public void stockMachiningMediumDFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "9856874Medium.prt.1");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "9856874Medium";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, componentName + ".prt.1");
         currentUser = UserUtil.getUser();
 
+
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
@@ -79,13 +89,18 @@ public class DFMRiskTests extends TestBase {
     public void sheetMetalCriticalDFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "1271576_CRITICAL.prt.1");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "1271576_CRITICAL";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".prt.1");
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("Critical"), is(true));
@@ -99,13 +114,18 @@ public class DFMRiskTests extends TestBase {
     public void sheetMetalHighDFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "3571050_cad.prt.1");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "3571050_cad";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".prt.1");
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
@@ -118,13 +138,17 @@ public class DFMRiskTests extends TestBase {
     public void plasticMouldedMediumDFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "PlasticMoulded-Special Tooling Sliders Lifters.CATPart");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "PlasticMoulded-Special Tooling Sliders Lifters";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, componentName +  ".CATPart");
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
@@ -138,13 +162,18 @@ public class DFMRiskTests extends TestBase {
     public void sandCastLowDFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_SAND, "casting_q5_thinvalve.prt");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "casting_q5_thinvalve";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_SAND, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("Low"), is(true));
@@ -158,17 +187,22 @@ public class DFMRiskTests extends TestBase {
     public void noRiskTransferDie() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
 
         evaluatePage.inputProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .costScenario();
@@ -186,16 +220,20 @@ public class DFMRiskTests extends TestBase {
         final String fileName = "1379344.stp";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
+        String componentName = "1379344";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, fileName);
         cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, fileName);
-
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario();
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
+            .costScenario(5);
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
         assertThat(evaluatePage.isDfmRisk("High"), is(true));
@@ -224,14 +262,18 @@ public class DFMRiskTests extends TestBase {
         final String file = "DTCPlasticIssues.SLDPRT";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
+        String componentName = "DTCPlasticIssues";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
@@ -261,14 +303,19 @@ public class DFMRiskTests extends TestBase {
         final String file = "bracketdfm.SLDPRT";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
+        String componentName = "bracketdfm";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), cadResourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
@@ -296,14 +343,19 @@ public class DFMRiskTests extends TestBase {
         final String file = "manifold.prt.1";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
+        String componentName = "manifold";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
@@ -331,14 +383,19 @@ public class DFMRiskTests extends TestBase {
         final String file = "SandCastBox.SLDPRT";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
+        String componentName = "SandCastBox";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit()
             .costScenario();
 
         assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
@@ -365,17 +422,22 @@ public class DFMRiskTests extends TestBase {
         final String file = "1379344.stp";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
+        String componentName = "1379344";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario();
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
+            .costScenario(5);
 
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(744, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(604, 1));
 
         // TODO uncomment this section when update cad file is implemented
         /*evaluatePage.updateCadFile(cadResourceFile);

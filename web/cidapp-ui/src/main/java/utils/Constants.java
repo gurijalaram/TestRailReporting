@@ -1,6 +1,8 @@
 package utils;
 
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-int";
     public static final List<String> INPUT_VALUES = Arrays.asList("annual volume", "batch size", "material", "production life", "component name", "description", "notes",
         "scenario name", "tolerance count", "fully burdened cost", "material cost", "piece part cost", "total capital investment",
         "cycle time", "finish mass", "process routing", "utilization");
@@ -37,6 +39,7 @@ public class Constants {
     private static String cidTokenIssuer;
     private static String cidTokenSubject;
     private static String cidApiUrl;
+    private static String cssApiUrl;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -128,5 +131,14 @@ public class Constants {
      */
     public static String getCidTokenSubject() {
         return cidTokenSubject = System.getProperty("cidTokenSubject") == null ? PROPERTIES.getProperty("cid.token.subject") : System.getProperty("cidTokenSubject");
+    }
+
+    /**
+     * Get css url
+     *
+     * @return string
+     */
+    public static String getCssApiUrl() {
+        return cssApiUrl = System.getProperty("cssApiUrl") == null ? PROPERTIES.getProperty("css.api.url").concat("%s") : System.getProperty("cssApiUrl");
     }
 }

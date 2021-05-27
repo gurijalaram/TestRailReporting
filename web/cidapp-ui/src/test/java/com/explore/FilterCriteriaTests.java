@@ -11,10 +11,12 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -25,6 +27,7 @@ public class FilterCriteriaTests extends TestBase {
     private ExplorePage explorePage;
 
     private File resourceFile;
+    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public FilterCriteriaTests() {
@@ -37,13 +40,15 @@ public class FilterCriteriaTests extends TestBase {
     public void testPrivateCriteriaPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "SheetMetal.prt");
-        String testScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "SheetMetal";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .clickExplore()
             .filter()
             .saveAs()
@@ -51,7 +56,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Component Name", "Contains", "SheetMetal")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("SheetMetal", testScenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("SheetMetal", scenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -61,13 +66,15 @@ public class FilterCriteriaTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
-        String testScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .clickExplore()
@@ -77,7 +84,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Process Group", "is", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Casting", testScenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Casting", scenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -86,13 +93,15 @@ public class FilterCriteriaTests extends TestBase {
     public void testPrivateCriteriaContains() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
-        String testScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "CurvedWall";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .clickExplore()
             .filter()
             .saveAs()
@@ -100,22 +109,25 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Part Name", "Contains", "Wall")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("CurvedWall", testScenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("CurvedWall", scenarioName), is(equalTo(1)));
     }
 
     @Test
+    @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6216"})
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
-        String testScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "Piston_assembly";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .clickExplore()
             .filter()
             .saveAs()
@@ -123,22 +135,25 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Component Name", "Contains", "Piston_assembly")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Piston_assembly", testScenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Piston_assembly", scenarioName), is(equalTo(1)));
     }
 
     @Test
+    @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6217"})
     @Description("Test private criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
-        String testScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "Piston_assembly";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .info()
             .inputStatus("Analysis")
             .inputCostMaturity("High")
@@ -153,7 +168,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Status", "is", "Analysis")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Piston_assembly", testScenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Piston_assembly", scenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -162,13 +177,15 @@ public class FilterCriteriaTests extends TestBase {
     public void testPublicCriteriaPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Push Pin.stp");
-        String testScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .publishScenario()
             .publish(ExplorePage.class)
             .filter()
@@ -177,22 +194,25 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Component Name", "Contains", "Push Pin")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Push Pin", testScenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), is(equalTo(1)));
     }
 
     @Test
+    @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6219"})
     @Description("Test public criteria assembly description")
     public void testPublicCriteriaAssemblyDesc() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Piston_assembly.stp");
-        String testScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "Piston_assembly";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .info()
             .inputStatus("Complete")
             .inputCostMaturity("High")
@@ -205,7 +225,7 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Description", "Contains", "Test Description")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Piston_assembly", testScenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("Piston_assembly", scenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -214,14 +234,16 @@ public class FilterCriteriaTests extends TestBase {
     public void testFilterAttributes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
-        String testScenarioName = generateStringUtil.generateScenarioName();
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(testScenarioName, resourceFile, EvaluatePage.class)
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .publishScenario()
             .inputStatus("Analysis")
             .inputCostMaturity("Initial")
@@ -242,6 +264,6 @@ public class FilterCriteriaTests extends TestBase {
             .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("PowderMetalShaft", testScenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios("PowderMetalShaft", scenarioName), is(equalTo(1)));
     }
 }

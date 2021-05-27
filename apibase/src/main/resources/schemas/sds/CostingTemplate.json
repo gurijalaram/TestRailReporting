@@ -1,22 +1,7 @@
 {
   "type": "object",
   "required": [
-    "identity",
-    "createdAt",
-    "createdBy",
-    "customerIdentity",
-    "locked",
-    "published",
-    "customAttributes",
-    "materialName",
-    "pinnedRouting",
-    "processGroupName",
-    "processSetupOptions",
-    "secondaryProcesses",
-    "secondaryVpes",
-    "threads",
-    "tolerances",
-    "vpeName"
+    "identity"
   ],
   "properties": {
     "identity": {

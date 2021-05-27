@@ -5,9 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
-import com.apriori.entity.response.ComponentIdentityResponse;
-import com.apriori.entity.response.GetComponentResponse;
-import com.apriori.entity.response.PostComponentResponse;
+import com.apriori.cidapp.entity.response.ComponentIdentityResponse;
+import com.apriori.cidapp.entity.response.GetComponentResponse;
+import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -25,9 +25,7 @@ public class ComponentsControllerTests {
     public void postComponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
-
-        assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        Item postComponentResponse = cidAppTestUtil.postComponents("Casting.prt", scenarioName, "Casting - Die");
     }
 
     @Test
@@ -35,9 +33,7 @@ public class ComponentsControllerTests {
     public void getComponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
-
-        assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        Item postComponentResponse = cidAppTestUtil.postComponents("Casting.prt", scenarioName, "Casting - Die");
 
         ResponseWrapper<GetComponentResponse> getComponentResponse = cidAppTestUtil.getComponents();
 
@@ -50,11 +46,9 @@ public class ComponentsControllerTests {
     public void getComponentIdentity() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, "Casting - Die", "Casting.prt");
+        Item postComponentResponse = cidAppTestUtil.postComponents("Casting.prt", scenarioName, "Casting - Die");
 
-        assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
-        String componentIdentity = postComponentResponse.getResponseEntity().getComponentIdentity();
+        String componentIdentity = postComponentResponse.getComponentIdentity();
 
         ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = cidAppTestUtil.getComponentIdentity(componentIdentity);
 

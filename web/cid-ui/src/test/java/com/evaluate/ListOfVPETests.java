@@ -5,8 +5,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -37,6 +37,6 @@ public class ListOfVPETests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class);
 
-        assertThat(evaluatePage.getListOfVPEs(), hasItems(VPEEnum.getNames()));
+        assertThat(evaluatePage.getListOfVPEs(), hasItems(DigitalFactoryEnum.getNames()));
     }
 }

@@ -8,7 +8,7 @@ import static org.hamcrest.number.OrderingComparison.greaterThan;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -140,7 +140,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                 .setWorkspace(Constants.PUBLIC_WORKSPACE)
                 .setScenarioType(Constants.PART_SCENARIO_TYPE)
                 .setRowOne("Part Name", "Contains", reportsPartNumber)
-                .setRowTwo("VPE", "is", VPEEnum.APRIORI_USA.getVpe())
+                .setRowTwo("VPE", "is", DigitalFactoryEnum.APRIORI_USA.getVpe())
                 .apply(ExplorePage.class)
                 .openFirstScenario();
 
