@@ -12,7 +12,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "vds/ExchangeRate.json")
+@Schema(location = "ExchangeRate.json")
 @Data
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)

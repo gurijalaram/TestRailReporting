@@ -6,19 +6,13 @@
     "createdBy",
     "cslRule",
     "customerIdentity",
-    "deletedAt",
-    "deletedBy",
-    "description",
-    "expression",
     "identity",
     "name",
     "normalDeny",
     "normalGrant",
     "permissionId",
     "resourceType",
-    "ruleType",
-    "updatedAt",
-    "updatedBy"
+    "ruleType"
   ],
   "properties": {
     "actions": {

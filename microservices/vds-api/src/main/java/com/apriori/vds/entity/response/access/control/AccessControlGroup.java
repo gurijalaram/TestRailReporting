@@ -13,12 +13,12 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "vds/AccessControlGroup.json")
+@Schema(location = "AccessControlGroup.json")
 @Data
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccessControlGroup {
-    private String attributes;
+    private Object attributes;
     private String createdBy;
     private String customerIdentity;
     private String deletedBy;
