@@ -6,18 +6,25 @@
   "properties": {
     "response": {
       "type": "object",
-      "required": [
-        "items"
-      ],
-      "$ref": "../PaginationSchema.json",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "ScenarioIteration.json"
+
+      "allOf": [
+        {
+          "$ref": "PaginationSchema.json"
+        },
+        {
+          "required": [
+            "items"
+          ],
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "ScenarioIteration.json"
+              }
+            }
           }
         }
-      }
+      ]
     }
   }
 }
