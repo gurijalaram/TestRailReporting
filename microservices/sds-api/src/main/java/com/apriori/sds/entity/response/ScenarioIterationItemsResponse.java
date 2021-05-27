@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(location = "sds/ScenarioIterationItemsResponse.json")
+@Schema(location = "ScenarioIterationItemsResponse.json")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonRootName("response")

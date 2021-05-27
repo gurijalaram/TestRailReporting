@@ -9,7 +9,7 @@ import lombok.Data;
 
 import java.util.List;
 
-@Schema(location = "sds/ComponentsForUser.json")
+@Schema(location = "ComponentsForUser.json")
 @Data
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
