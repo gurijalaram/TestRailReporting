@@ -7,8 +7,8 @@ import static org.hamcrest.Matchers.closeTo;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
 import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -43,17 +43,17 @@ public class ReferencePanelTests extends TestBase {
         referenceComparePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario()
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_GERMANY.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_GERMANY.getVpe())
             .enterAnnualVolume("2600")
             .enterAnnualYears("3")
             .costScenario(2)
             .expandReferencePanel();
 
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.POWDER_METAL.getProcessGroup()));
-        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(DigitalFactoryEnum.APRIORI_USA.getVpe()));
         assertThat(referenceComparePage.getReferenceAnnualVolume(), is("5,500"));
         assertThat(referenceComparePage.getReferenceProductionLife(), is("5.00"));
     }
@@ -71,7 +71,7 @@ public class ReferencePanelTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario()
             .publishScenario(PublishPage.class)
             .selectPublishButton()
@@ -81,14 +81,14 @@ public class ReferencePanelTests extends TestBase {
 
         referenceComparePage = evaluatePage
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getVpe())
             .costScenario(2)
             .expandReferencePanel()
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PUBLIC.name(), scenarioName);
 
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()));
-        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_USA.getVpe()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(DigitalFactoryEnum.APRIORI_USA.getVpe()));
         assertThat(referenceComparePage.getReferenceMaterial(), is("ABS"));
         assertThat(referenceComparePage.getReferenceUtilization(), is(closeTo(38.09, 1)));
     }
@@ -107,7 +107,7 @@ public class ReferencePanelTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario()
             .expandReferencePanel()
             .collapseReferencePanel();
@@ -130,7 +130,7 @@ public class ReferencePanelTests extends TestBase {
         referenceComparePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario()
             .createNewScenario()
             .enterScenarioName(scenarioName2)
@@ -142,7 +142,7 @@ public class ReferencePanelTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.RECENT.getWorkspace())
             .openScenario(scenarioName2, componentName)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_MEXICO.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getVpe())
             .costScenario(2)
             .createNewScenario()
             .enterScenarioName(scenarioName3)
@@ -154,13 +154,13 @@ public class ReferencePanelTests extends TestBase {
             .selectWorkSpace(WorkspaceEnum.PRIVATE.getWorkspace())
             .openScenario(scenarioName3, componentName)
             .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .expandReferencePanel()
             .selectDropdown()
             .selectDropdownScenario(WorkspaceEnum.PRIVATE.name(), scenarioName);
 
         assertThat(referenceComparePage.getReferenceProcessGroup(), is(ProcessGroupEnum.CASTING_DIE.getProcessGroup()));
-        assertThat(referenceComparePage.getReferenceVPE(), is(VPEEnum.APRIORI_MEXICO.getVpe()));
+        assertThat(referenceComparePage.getReferenceVPE(), is(DigitalFactoryEnum.APRIORI_MEXICO.getVpe()));
     }
 }

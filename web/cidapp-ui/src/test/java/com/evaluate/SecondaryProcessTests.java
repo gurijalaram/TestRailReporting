@@ -78,13 +78,14 @@ public class SecondaryProcessTests extends TestBase {
     public void secondaryProcessXray() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PlasticMoulding.CATPart");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "PlasticMoulding";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS, 10% Glass")
@@ -231,15 +232,17 @@ public class SecondaryProcessTests extends TestBase {
     public void secondaryProcessStressRelief() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
+            .search("7075")
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit()
             .openSecondaryProcesses()
@@ -255,16 +258,18 @@ public class SecondaryProcessTests extends TestBase {
     public void secondaryProcessAnodize() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial("s")
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
@@ -279,13 +284,14 @@ public class SecondaryProcessTests extends TestBase {
     public void secondaryProcessCertification() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"SheetMetal.prt");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "SheetMetal";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
@@ -407,13 +413,14 @@ public class SecondaryProcessTests extends TestBase {
     public void secondaryProcessPassivation() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"SheetMetal.prt");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "SheetMetal";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
@@ -467,13 +474,14 @@ public class SecondaryProcessTests extends TestBase {
     public void multiSecondaryProcessAfterCost() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
@@ -766,13 +774,14 @@ public class SecondaryProcessTests extends TestBase {
     public void selectionsCleared() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PlasticMoulding.CATPart");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "PlasticMoulding";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openSecondaryProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
@@ -789,13 +798,14 @@ public class SecondaryProcessTests extends TestBase {
     public void secondaryProcessCostFailed() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment", "Passivation")

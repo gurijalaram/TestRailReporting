@@ -4,15 +4,15 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.evaluate.materialutilization.StockPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -30,6 +30,7 @@ public class MaterialStockTests extends TestBase {
     private MaterialUtilizationPage materialUtilizationPage;
 
     private File resourceFile;
+    UserCredentials currentUser;
 
     public MaterialStockTests() {
         super();
@@ -42,13 +43,19 @@ public class MaterialStockTests extends TestBase {
     public void materialSelectionTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Powder Metal.stp");
+        String componentName = "Powder Metal";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialUtilizationPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        materialUtilizationPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
+            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit()
             .costScenario()
             .openMaterialUtilization();
 
@@ -73,11 +80,14 @@ public class MaterialStockTests extends TestBase {
     public void materialPMIStock() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic_matPMI.prt.1");
+        String componentName = "bracket_basic_matPMI";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .inputVpe(VPEEnum.APRIORI_USA.getVpe())
             .costScenario();
@@ -116,13 +126,20 @@ public class MaterialStockTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Square circle.CATPart");
+        String componentName = "Square circle";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        stockPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+        stockPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputVpe(VPEEnum.APRIORI_USA.getVpe())
+            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit()
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();
@@ -132,6 +149,10 @@ public class MaterialStockTests extends TestBase {
 
         stockPage.closePanel()
             .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .submit()
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();

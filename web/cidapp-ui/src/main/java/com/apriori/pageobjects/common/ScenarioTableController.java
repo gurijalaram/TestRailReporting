@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.ColumnsEnum;
+import utils.Constants;
 import utils.SortOrderEnum;
 
 import java.util.Arrays;
@@ -61,10 +62,11 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      *
      * @param componentName - component name
      * @param scenarioName  - scenario name
-     * @return a new page object
+     * @return current page object
      */
     public ScenarioTableController openScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/..//div[@class='scenario-thumbnail small']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        moveToScenario(componentName, scenarioName);
+        By scenario = By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
         return this;
@@ -82,6 +84,31 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Hovers over the scenario
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    private ScenarioTableController moveToScenario(String componentName, String scenarioName) {
+        pageUtils.scrollWithJavaScript(getWebElementScenario(componentName, scenarioName), true);
+        pageUtils.mouseMove(getWebElementScenario(componentName, scenarioName));
+        return this;
+    }
+
+    /**
+     * Navigates to the scenario via url
+     *
+     * @param componentId - component id
+     * @param scenarioId  - scenario id
+     * @return a new page object
+     */
+    public ScenarioTableController navigateToScenario(String componentId, String scenarioId) {
+        driver.navigate().to(Constants.getDefaultUrl().concat(String.format("components/%s/scenarios/%s", componentId, scenarioId)));
+        return this;
+    }
+
+    /**
      * Highlights the scenario in the table
      *
      * @param componentName - component name
@@ -89,7 +116,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
-        findScenario(componentName, scenarioName).click();
+        moveToScenario(componentName, scenarioName);
+        getWebElementScenario(componentName, scenarioName).click();
         return this;
     }
 
@@ -101,6 +129,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return size of the element as int
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
+        pageUtils.waitForElementToAppear(getByScenario(componentName, scenarioName));
         return driver.findElements(getByScenario(componentName, scenarioName)).size();
     }
 
@@ -165,6 +194,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Gets the scenario 'webelement' locator
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return webelement
+     */
+    private WebElement getWebElementScenario(String componentName, String scenarioName) {
+        return pageUtils.waitForElementToAppear(getByScenario(componentName, scenarioName));
+    }
+
+    /**
      * Gets the scenario 'by' locator
      *
      * @param componentName - name of the part
@@ -172,7 +212,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return by
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        return By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s'][@class='cell-text']", componentName.toUpperCase().trim(), scenarioName.trim()));
     }
 
     /**
@@ -187,18 +227,6 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
-     * Selects the scenario checkbox in the table
-     *
-     * @param componentName - component name
-     * @param scenarioName  - scenario name
-     * @return current page object
-     */
-    public ScenarioTableController selectScenario(String componentName, String scenarioName) {
-        findScenario(componentName, scenarioName).click();
-        return this;
-    }
-
-    /**
      * Highlights the scenario in the table using the keyboard control key
      *
      * @param componentName - component name
@@ -208,7 +236,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController controlHighlightScenario(String componentName, String scenarioName) {
         Actions controlHighlight = new Actions(driver);
         controlHighlight.keyDown(Keys.CONTROL)
-            .click(findScenario(componentName, scenarioName))
+            .click(getWebElementScenario(componentName, scenarioName))
             .build()
             .perform();
         return this;
@@ -224,9 +252,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController multiHighlightScenario(String... componentAndScenarioName) {
         Actions multiHighlight = new Actions(driver);
 
-        Arrays.stream(componentAndScenarioName).map(csn -> csn.split(",")).collect(Collectors.toList())
+        Arrays.stream(componentAndScenarioName).map(x -> x.split(",")).collect(Collectors.toList())
             .forEach(componentScenario -> multiHighlight.keyDown(Keys.CONTROL)
-                .click(findScenario(componentScenario[0], componentScenario[1]))
+                .click(getWebElementScenario(componentScenario[0], componentScenario[1]))
                 .build()
                 .perform());
         return this;
@@ -255,20 +283,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase().trim(), scenarioName.trim()));
-        pageUtils.waitForElementToAppear(scenario);
-        return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
-    }
-
-    /**
-     * Private method to find the scenario
-     *
-     * @param componentName - component name
-     * @param scenarioName  - scenario name
-     * @return webelement
-     */
-    private WebElement findScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        By scenario = By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s']/parent::div//div[@class='checkbox-icon']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
     }

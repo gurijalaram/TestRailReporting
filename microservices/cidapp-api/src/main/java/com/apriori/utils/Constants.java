@@ -15,7 +15,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-int-api";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-int";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
@@ -27,6 +27,7 @@ public class Constants {
     private static String cidTokenIssuer;
     private static String cidTokenSubject;
     private static String cidApiUrl;
+    private static String cssApiUrl;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -64,7 +65,6 @@ public class Constants {
     public static String getApiUrl() {
         return cidApiUrl = System.getProperty("cidApiUrl") == null ? PROPERTIES.getProperty("cid.api.url").concat("%s") : System.getProperty("cidApiUrl");
     }
-
 
     /**
      * Get secret key
@@ -118,5 +118,14 @@ public class Constants {
      */
     public static String getCidTokenSubject() {
         return cidTokenSubject = System.getProperty("cidTokenSubject") == null ? PROPERTIES.getProperty("cid.token.subject") : System.getProperty("cidTokenSubject");
+    }
+
+    /**
+     * Get css url
+     *
+     * @return string
+     */
+    public static String getCssApiUrl() {
+        return cssApiUrl = System.getProperty("cssApiUrl") == null ? PROPERTIES.getProperty("css.api.url").concat("%s") : System.getProperty("cssApiUrl");
     }
 }

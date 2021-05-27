@@ -10,7 +10,7 @@ import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.VPEEnum;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 

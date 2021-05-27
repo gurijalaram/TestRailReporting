@@ -20,6 +20,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -37,6 +38,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
+    @Ignore("Upload assemblies will be blocked")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5612"})
     @Description("Upload Assembly file with no missing sub-components")

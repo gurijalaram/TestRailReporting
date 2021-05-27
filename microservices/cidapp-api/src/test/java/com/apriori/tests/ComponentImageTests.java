@@ -5,11 +5,11 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.entity.response.PostComponentResponse;
-import com.apriori.entity.response.componentiteration.ActiveAxes;
-import com.apriori.entity.response.componentiteration.ComponentIteration;
-import com.apriori.entity.response.scenarios.CostResponse;
-import com.apriori.entity.response.scenarios.ImageResponse;
+import com.apriori.cidapp.entity.response.componentiteration.ActiveAxes;
+import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.cidapp.entity.response.scenarios.CostResponse;
+import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
 import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -32,12 +32,10 @@ public class ComponentImageTests {
     public void boundingBoxValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), "700-33770-01_A0.stp");
+        Item postComponentResponse = cidAppTestUtil.postComponents("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
-        assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
-        String componentIdentity = postComponentResponse.getResponseEntity().getComponentIdentity();
-        String scenarioIdentity = postComponentResponse.getResponseEntity().getScenarioIdentity();
+        String componentIdentity = postComponentResponse.getComponentIdentity();
+        String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
         ResponseWrapper<CostResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -62,12 +60,10 @@ public class ComponentImageTests {
     public void axesEntriesValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), "700-33770-01_A0.stp");
+        Item postComponentResponse = cidAppTestUtil.postComponents("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
-        assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
-        String componentIdentity = postComponentResponse.getResponseEntity().getComponentIdentity();
-        String scenarioIdentity = postComponentResponse.getResponseEntity().getScenarioIdentity();
+        String componentIdentity = postComponentResponse.getComponentIdentity();
+        String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
         ResponseWrapper<CostResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -89,12 +85,10 @@ public class ComponentImageTests {
     public void activeAxesValuesTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = cidAppTestUtil.postComponents(scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), "700-33770-01_A0.stp");
+        Item postComponentResponse = cidAppTestUtil.postComponents("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
-        assertThat(postComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
-        String componentIdentity = postComponentResponse.getResponseEntity().getComponentIdentity();
-        String scenarioIdentity = postComponentResponse.getResponseEntity().getScenarioIdentity();
+        String componentIdentity = postComponentResponse.getComponentIdentity();
+        String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
         ResponseWrapper<CostResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));

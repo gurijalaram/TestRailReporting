@@ -13,7 +13,7 @@ pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         choice(name: 'TARGET_ENV', choices: ['cic-qa-21.1', 'cic-qa'], description: 'What is the target environment for testing?')
-        choice(name: 'TEST_TYPE', choices: ['ciconnect'], description: 'What type of test is running?')
+        choice(name: 'TEST_TYPE', choices: ['ciconnect-ui'], description: 'What type of test is running?')
         choice(name: 'TEST_SUITE', choices: ['CICTestSuite'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')

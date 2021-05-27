@@ -120,6 +120,18 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Navigates to the scenario using url
+     *
+     * @param componentId - component id
+     * @param scenarioId  - scenario id
+     * @return a new page object
+     */
+    public EvaluatePage navigateToScenario(String componentId, String scenarioId) {
+        scenarioTableController.navigateToScenario(componentId, scenarioId);
+        return new EvaluatePage(driver);
+    }
+
+    /**
      * Highlights the scenario in the table
      *
      * @param componentName - name of the part
