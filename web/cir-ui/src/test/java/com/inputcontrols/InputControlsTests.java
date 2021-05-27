@@ -16,6 +16,7 @@ import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
@@ -864,7 +865,7 @@ public class InputControlsTests extends TestBase {
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
                 .addCriteriaWithOption("Component Name", "Equals", partName)
-                .addCriteriaWithOption("VPE", "In", VPEEnum.APRIORI_USA.getVpe())
+                .addCriteriaWithOption("VPE", "In", DigitalFactoryEnum.APRIORI_USA.getVpe())
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 

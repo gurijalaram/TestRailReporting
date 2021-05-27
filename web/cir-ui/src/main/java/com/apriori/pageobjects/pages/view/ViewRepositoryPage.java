@@ -183,25 +183,25 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         navigationMap.put(
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                 new String[]{
-                        Constants.SOLUTIONS_FOLDER,
-                        Constants.DESIGN_TO_COST_FOLDER,
-                        Constants.TARGET_AND_QUOTED_COST_FOLDER
+                    Constants.SOLUTIONS_FOLDER,
+                    Constants.DESIGN_TO_COST_FOLDER,
+                    Constants.TARGET_AND_QUOTED_COST_FOLDER
                 }
         );
         navigationMap.put(
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                 new String[]{
-                        Constants.SOLUTIONS_FOLDER,
-                        Constants.DESIGN_TO_COST_FOLDER,
-                        Constants.TARGET_AND_QUOTED_COST_FOLDER
+                    Constants.SOLUTIONS_FOLDER,
+                    Constants.DESIGN_TO_COST_FOLDER,
+                    Constants.TARGET_AND_QUOTED_COST_FOLDER
                 }
         );
         navigationMap.put(
                 ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName(),
                 new String[]{
-                        Constants.SOLUTIONS_FOLDER,
-                        Constants.DESIGN_TO_COST_FOLDER,
-                        Constants.TARGET_AND_QUOTED_COST_FOLDER
+                    Constants.SOLUTIONS_FOLDER,
+                    Constants.DESIGN_TO_COST_FOLDER,
+                    Constants.TARGET_AND_QUOTED_COST_FOLDER
                 }
         );
 
