@@ -256,10 +256,10 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 is(equalTo(1))
         );
 
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.ANNUALISED_VALUE),
+        assertThat(genericReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.ANNUALISED_VALUE),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.PERCENT_VALUE),
+        assertThat(genericReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.PERCENT_VALUE),
                 is(equalTo(true))
         );
     }
@@ -302,10 +302,10 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 is(equalTo(2))
         );
 
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.ANNUALISED_VALUE),
+        assertThat(genericReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.ANNUALISED_VALUE),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.PERCENT_VALUE),
+        assertThat(genericReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.PERCENT_VALUE),
                 is(equalTo(true))
         );
     }

@@ -142,7 +142,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .clickCancel(GenericReportPage.class);
+            .clickCancel();
 
         assertThat(genericReportPage.getInputControlsDivClassName(), containsString("hidden"));
         assertThat(genericReportPage.inputControlsIsDisplayed(), is(equalTo(false)));
