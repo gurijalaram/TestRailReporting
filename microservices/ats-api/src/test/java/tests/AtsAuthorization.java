@@ -1,6 +1,6 @@
 package tests;
 
-import com.apriori.apibase.utils.JwtTokenUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.entity.response.AuthorizationResponse;
 import com.apriori.ats.utils.AuthorizeUserUtil;

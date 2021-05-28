@@ -1,6 +1,6 @@
 package com.apriori.fms.tests;
 
-import com.apriori.apibase.utils.JwtTokenUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;

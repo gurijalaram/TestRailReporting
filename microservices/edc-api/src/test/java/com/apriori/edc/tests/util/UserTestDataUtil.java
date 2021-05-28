@@ -5,7 +5,7 @@ import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
 import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper;
 import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
-import com.apriori.apibase.utils.JwtTokenUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edc.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;

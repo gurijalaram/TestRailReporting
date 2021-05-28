@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.utils.Constants;

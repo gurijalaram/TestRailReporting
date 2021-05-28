@@ -1,6 +1,6 @@
 package com.apriori.utils;
 
-import com.apriori.apibase.utils.JwtTokenUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidapp.entity.enums.CidAppAPIEnum;
 import com.apriori.cidapp.entity.enums.CssAPIEnum;
 import com.apriori.cidapp.entity.request.CostRequest;
