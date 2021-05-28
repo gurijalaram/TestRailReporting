@@ -1,28 +1,19 @@
 {
   "type": "object",
   "required": [
-    "attributes",
     "createdAt",
     "createdBy",
     "customerIdentity",
-    "deletedAt",
-    "deletedBy",
-    "description",
     "groupId",
     "identity",
     "members",
     "name",
-    "parentGroupIdentity",
-    "permissions",
     "systemGroup",
-    "type",
-    "updatedAt",
-    "updatedBy"
+    "type"
   ],
   "properties": {
     "attributes": {
-      "type": "object",
-      "required": []
+      "type": "object"
     },
     "createdAt": {
       "type": "string"
@@ -65,7 +56,11 @@
       "type": "string"
     },
     "permissions": {
-      "$ref": "AccessControlPermission.json"
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "AccessControlPermission.json"
+    },
     },
     "systemGroup": {
       "type": "boolean"

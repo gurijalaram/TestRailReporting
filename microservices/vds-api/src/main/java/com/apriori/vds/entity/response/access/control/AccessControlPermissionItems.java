@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(location = "vds/AccessControlPermissionItems.json")
+@Schema(location = "AccessControlPermissionItems.json")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonRootName("response")
