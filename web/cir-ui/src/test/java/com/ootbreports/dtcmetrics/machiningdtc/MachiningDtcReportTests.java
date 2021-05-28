@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.pages.view.reports.MachiningDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -32,6 +33,7 @@ import utils.Constants;
 
 public class MachiningDtcReportTests extends TestBase {
 
+    private MachiningDtcReportPage machiningDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -340,31 +342,31 @@ public class MachiningDtcReportTests extends TestBase {
     @TestRail(testCaseId = {"2039"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
-        genericReportPage = new ReportsLoginPage(driver)
+        machiningDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
-            .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+            .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), MachiningDtcReportPage.class)
+            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
+            .clickOk(MachiningDtcReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
-        genericReportPage.hoverMachiningBubbleTwice();
-        genericReportPage.waitForCorrectPartNameMachiningDtc(false);
-        genericReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
-        String partName = genericReportPage.getPartNameDtcReports();
+        machiningDtcReportPage.hoverMachiningBubbleTwice();
+        machiningDtcReportPage.waitForCorrectPartNameMachiningDtc(false);
+        machiningDtcReportPage.setReportName(ReportNamesEnum.MACHINING_DTC.getReportName());
+        String partName = machiningDtcReportPage.getPartNameDtcReports();
 
         assertThat(
-            genericReportPage.getPartNameDtcReports(),
+                machiningDtcReportPage.getPartNameDtcReports(),
             is(equalTo(Constants.PART_NAME_EXPECTED_MACHINING_DTC))
         );
 
-        genericReportPage.clickMachiningBubbleAndSwitchTab();
+        machiningDtcReportPage.clickMachiningBubbleAndSwitchTab();
 
         assertThat(
-            genericReportPage.getUpperTitleText(),
+                machiningDtcReportPage.getUpperTitleText(),
             is(equalTo(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()))
         );
-        assertThat(partName, is(startsWith(genericReportPage.getDtcPartSummaryPartNameValue())));
+        assertThat(partName, is(startsWith(machiningDtcReportPage.getDtcPartSummaryPartNameValue())));
     }
 
     @Test
@@ -481,7 +483,7 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
@@ -499,7 +501,7 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName());
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "0");
@@ -517,7 +519,7 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName());
+            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class);
 
         assertThat(genericReportPage.getSelectedRollup(RollupEnum.DTC_MACHINING_DATASET.getRollupName()),
             is(equalTo(RollupEnum.DTC_MACHINING_DATASET.getRollupName())));
@@ -542,7 +544,7 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName())
+            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .setProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
@@ -561,7 +563,7 @@ public class MachiningDtcReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName());
+            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.PARTS.getListName(), "Available: ", "43");

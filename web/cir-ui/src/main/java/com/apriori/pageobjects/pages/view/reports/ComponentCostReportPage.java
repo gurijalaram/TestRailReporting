@@ -61,6 +61,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets count of available Components in the dropdown
+     *
      * @return String
      */
     public String getComponentListCount() {
@@ -69,6 +70,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets count of Component Type elements
+     *
      * @param componentType types to find
      * @return int
      */
@@ -81,20 +83,20 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Selects Component Type dropdown
+     *
      * @param type - type to set
-     * @return Instance of Component Cost Report Page
      */
-    public ComponentCostReportPage setComponentType(String type) {
+    public void setComponentType(String type) {
         pageUtils.waitForElementAndClick(componentTypeDropdown);
         By locator = By.xpath(String.format("//li[@title='%s']", type));
         pageUtils.waitForElementAndClick(locator);
         By typeSelectedDropdown = By.xpath(String.format("//a[@title='%s']", type));
         pageUtils.waitForElementToAppear(typeSelectedDropdown);
-        return this;
     }
 
     /**
      * Gets values from Component Select dropdown
+     *
      * @return ArrayList - String
      */
     public ArrayList<String> getComponentSelectNames() {
@@ -109,6 +111,8 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Waits for Component Select filter to take effect
+     *
+     * @param isAssembly - boolean to determine which locator to use
      */
     public void waitForComponentFilter(boolean isAssembly) {
         String dropdownTitle = isAssembly ? "SUB-ASSEMBLY (Initial)  [assembly]" : "3538968 (Initial)  [part]";
@@ -118,6 +122,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets lifetime cost
+     *
      * @return BigDecimal
      */
     public BigDecimal getLifetimeCost() {
@@ -127,6 +132,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets current currency
+     *
      * @return String
      */
     public String getCurrentCurrency() {
@@ -136,6 +142,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Clicks dropdown twice to remove focus from date element to effect filter
+     *
      * @return instance of Component Cost Report Page
      */
     public ComponentCostReportPage clickComponentTypeDropdownTwice() {
@@ -146,6 +153,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Sets latest export date to today two years ago
+     *
      * @return instance of Component cost Report Page
      */
     public ComponentCostReportPage setLatestExportDateToTodayMinusTwoYears() {
@@ -160,6 +168,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets Component Select dropdown text
+     *
      * @return String
      */
     public String getComponentSelectDropdownText() {
@@ -169,6 +178,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets warning message text
+     *
      * @return String
      */
     public String getWarningMessageText() {
@@ -178,6 +188,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Checks if warning is displayed and enabled
+     *
      * @return boolean
      */
     public boolean isWarningDisplayedAndEnabled() {
@@ -186,6 +197,7 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets Component Cost report title
+     *
      * @return String
      */
     public String getComponentCostReportTitle() {
@@ -195,10 +207,22 @@ public class ComponentCostReportPage extends GenericReportPage {
 
     /**
      * Gets Part Number from report
+     *
      * @return String
      */
     public String getPartNumber() {
         pageUtils.waitForElementToAppear(componentCostReportPartNumber);
         return componentCostReportPartNumber.getText();
+    }
+
+    /**
+     * Waits for Component dropdown filter to take effect
+     *
+     * @return ComponentCostReportPage instance
+     */
+    public ComponentCostReportPage waitForComponentFilter() {
+        By locator = By.xpath("//a[@title='3538968 (Initial)  [part]']");
+        pageUtils.waitForElementToAppear(locator);
+        return new ComponentCostReportPage(driver);
     }
 }

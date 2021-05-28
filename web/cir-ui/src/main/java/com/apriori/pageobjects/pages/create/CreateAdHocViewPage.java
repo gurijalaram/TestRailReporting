@@ -20,8 +20,8 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[contains(@class, 'sourceDialogNew ')]")
     private WebElement adHocViewDiaolog;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public CreateAdHocViewPage(WebDriver driver) {
         super(driver);
@@ -52,7 +52,6 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     }
 
     /**
-     * ]
      * Gets dialog isDisplayed value
      *
      * @return boolean - isDisplayed

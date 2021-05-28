@@ -3,15 +3,11 @@ package com.apriori.pageobjects.pages.view.reports;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -36,14 +32,13 @@ import java.util.Map;
 public class GenericReportPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
-    private Map<String, WebElement> costOutlierValueElementMap = new HashMap<>();
-    private Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
-    private Map<String, WebElement> costDesignOutlierMap = new HashMap<>();
-    private Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
-    private Map<String, WebElement> tooltipElementMap = new HashMap<>();
-    private Map<String, WebElement> currencyMap = new HashMap<>();
-    private Map<String, WebElement> partNameMap = new HashMap<>();
-    private Map<String, WebElement> bubbleMap = new HashMap<>();
+    private final Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
+    private final Map<String, WebElement> costDesignOutlierMap = new HashMap<>();
+    private final Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
+    private final Map<String, WebElement> tooltipElementMap = new HashMap<>();
+    private final Map<String, WebElement> currencyMap = new HashMap<>();
+    private final Map<String, WebElement> partNameMap = new HashMap<>();
+    private final Map<String, WebElement> bubbleMap = new HashMap<>();
     private String reportName = "";
 
     @FindBy(xpath = "//span[contains(text(), 'Select Parts')]")
@@ -53,7 +48,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement dtcScoreControlTitle;
 
     @FindBy(xpath = "(//div[@id='reportViewFrame']//div[@class='title'])[1]")
-    private WebElement upperTitle;
+    protected WebElement upperTitle;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name() = 'path']")
     private WebElement castingDtcBubble;
@@ -111,12 +106,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "(//*[text()='VERY LONG NAME'])[position()=1]/../..//*[local-name() = 'text' and position()=2]")
     private WebElement partNameCastingDtcComparisonReport;
-
-    @FindBy(xpath = "//*[local-name() = 'rect' and @y='180.5']")
-    private WebElement partOfCastingChartComparisonReport;
-
-    @FindBy(xpath = "//*[contains(text(), 'Hole Issues')]/following-sibling::*[1]")
-    private WebElement holeIssuesChartOneComparisonReport;
 
     @FindBy(xpath = "//span[contains(text(), 'Comparison')]")
     private WebElement comparisonTitle;
@@ -350,12 +339,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//*[local-name() = 'g' and @data-z-index='8']")
     private WebElement dtcTooltipElement;
 
-    @FindBy(xpath = "//span[contains(text(), '3570824')]")
-    private WebElement componentLinkAssemblyDetails;
-
-    @FindBy(xpath = "//span[contains(text(), 'SUB-SUB-ASM')]")
-    private WebElement assemblyLinkAssemblyDetails;
-
     @FindBy(xpath = "//span[contains(text(), 'Component Cost')]")
     private WebElement componentCostReportTitle;
 
@@ -442,9 +425,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//*[@class='highcharts-root'])[1]//*[contains(@class, 'highcharts-xaxis-labels')]")
     private WebElement chartCountElement;
 
-    @FindBy(xpath = "//label[@title='Outlier Distance']/input")
-    private WebElement outlierDistanceElement;
-
     @FindBy(xpath = "//table/tbody/tr[13]/td[28]/span")
     private WebElement machiningDtcDetailsRowOneSharpCornerIssues;
 
@@ -499,9 +479,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//table/tbody/tr[17]/td[40]/span")
     private WebElement machiningDtcDetailsRowTwoHole;
 
-    @FindBy(xpath = "//span[@class='_jrHyperLink ReportExecution']/span")
-    private WebElement plasticDtcDetailsRowOnePartName;
-
     @FindBy(xpath = "//span[contains(text(), 'details')]")
     private WebElement costOutlierDetailsLink;
 
@@ -526,12 +503,6 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "(//div[@title='Scenario Name']//ul)[1]/li[1]")
     private WebElement firstScenarioName;
 
-    @FindBy(xpath = "//span[contains(text(), 'Steel')]")
-    private WebElement cycleTimeValueTrackingDetailsMaterialComposition;
-
-    @FindBy(xpath = "//div[@id='exportDate']//div[@class='jr-mSingleselect jr']")
-    private WebElement exportDateList;
-
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[16]/td[27]")
     private WebElement costOutlierApCostOne;
 
@@ -550,26 +521,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[36]/td[21]")
     private WebElement designOutlierMassTwo;
 
-    @FindBy(xpath = "(//span[contains(text(), 'Annualized Potential Savings')])[2]")
-    private WebElement costOutlierAnnualisedPotentialSavings;
-
-    @FindBy(xpath = "(//span[contains(text(), 'Percent Difference')])[2]")
-    private WebElement costOutlierPercentDifference;
-
-    @FindBy(xpath = "//div[@id='reportContainer']//tr[16]//td[34]/span")
-    private WebElement costOutlierPercentDifferenceValueInChartPercentSet;
-
-    @FindBy(xpath = "//div[@id='reportContainer']//tr[19]//td[14]/span")
-    private WebElement costOutlierTotalAnnualisedValuePercentSet;
-
-    @FindBy(xpath = "//div[@id='reportContainer']//tr[16]//td[33]/span")
-    private WebElement costOutlierPercentValueInChartAnnualisedSet;
-
-    @FindBy(xpath = "//div[@id='reportContainer']//tr[21]//td[14]/span")
-    private WebElement costOutlierTotalAnnualisedValueAnnualisedSet;
-
-    private final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
-    private final String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
+    protected final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
 
     private final WebDriver driver;
     private final PageUtils pageUtils;
@@ -580,7 +532,6 @@ public class GenericReportPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        initialiseCostOutlierValueElementMap();
         initialiseDtcComparisonDtcIssueMap();
         initialiseCostDesignOutlierMap();
         initialiseTooltipElementMap();
@@ -607,14 +558,14 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param exportSet - String of export set name for locator
      * @return current page object
      */
-    public GenericReportPage selectExportSet(String exportSet) {
+    public <T> T selectExportSet(String exportSet, Class<T> className) {
         exportSetSearchInput.sendKeys(exportSet);
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return this;
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -665,19 +616,6 @@ public class GenericReportPage extends ReportsPageHeader {
         );
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
-    }
-
-    /**
-     * Clicks Distance Outlier input and scrolls down
-     *
-     * @return current page object
-     */
-    public GenericReportPage clickDistanceOutlierInputAndScrollDown() {
-        outlierDistanceElement.click();
-        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("(//div[@title='Select Parts ']//ul)[1]")),
-                true);
-        waitForCorrectAvailableSelectedCount(ListNameEnum.PARTS.getListName(), "Available: ", "0");
-        return this;
     }
 
     /**
@@ -769,7 +707,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets current Process Group value
      *
      * @param reportName - String of report name to use
-     * @return String - process gorup value
+     * @return String - process group value
      */
     public String getProcessGroupValueDtc(String reportName) {
         WebElement elementToUse = reportName.equals(ReportNamesEnum.DTC_PART_SUMMARY.getReportName())
@@ -780,44 +718,19 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Sets specified assembly
-     *
-     * @param assemblyName - String of assembly name to use
-     * @return current page object
-     */
-    public GenericReportPage setAssembly(String assemblyName) {
-        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
-        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
-            currentAssemblyElement.click();
-            By locator = By.xpath(String.format(genericAssemblySetLocator, assemblyName));
-            pageUtils.waitForElementAndClick(locator);
-        }
-        return this;
-    }
-
-    /**
-     * Gets assembly name from set assembly dropdown
-     *
-     * @param assemblyName - String of assembly name to use
-     * @return String - assembly from dropdown
-     */
-    public String getAssemblyNameFromSetAssemblyDropdown(String assemblyName) {
-        return driver.findElement(By.xpath(String.format(genericAssemblySetLocator, assemblyName)))
-                .getAttribute("textContent");
-    }
-
-    /**
      * Checks current currency selection, fixes if necessary
      *
      * @param currency - String
-     * @return current page object
+     * @param <T> - generic
+     * @param className - class to return instance of
+     * @return instance of class passed in
      */
-    public GenericReportPage checkCurrencySelected(String currency) {
+    public <T> T checkCurrencySelected(String currency, Class<T> className) {
         if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
             pageUtils.waitForElementAndClick(currentCurrencyElement);
             pageUtils.waitForElementAndClick(currencyMap.get(currency));
         }
-        return this;
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -950,12 +863,14 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Clicks ok
      *
-     * @return Instance of Generic Report Page object
+     * @param <T> - generic
+     * @param className - className
+     * @return Instance of class passed in
      */
-    public GenericReportPage clickOk() {
+    public <T> T clickOk(Class<T> className) {
         pageUtils.waitForElementAndClick(okButton);
         pageUtils.waitForElementToAppear(upperTitle);
-        return this;
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -1006,7 +921,7 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Click comparison link
+     * Click comparison link on Casting DTC Report
      *
      * @return instance of current page object
      */
@@ -1014,35 +929,6 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(castingDtcBubble);
         pageUtils.waitForElementAndClick(comparisonTitle);
         return this;
-    }
-
-    /**
-     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
-     *
-     * @param assemblyToCheck String - assembly name to wait on
-     * @return Generic - instance of GenericReportPage
-     */
-    public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitForElementToAppear(currentAssembly);
-        // if not top level, add -
-        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) ||
-                assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
-            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
-            By locator = By.xpath(String.format("//span[contains(text(), '%s')]", newVal));
-            pageUtils.waitForElementToAppear(locator);
-        }
-        return this;
-    }
-
-    /**
-     * Wait for correct assembly selected in dropdown
-     *
-     * @param assemblyName - String of assembly name to use in locator
-     */
-    public void waitForCorrectAssemblyInDropdown(String assemblyName) {
-        By locator = By.xpath(String.format("//a[contains(@title, '%s')]", assemblyName));
-        pageUtils.waitForElementToAppear(locator);
     }
 
     /**
@@ -1124,7 +1010,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(pickerTrigger);
 
         setDayValuePicker(newDt.getDayOfMonth());
-        setMonthValuePicker(getMonthDropdownIndex(newDt));
+        setMonthValuePicker((newDt.getMonthValue() - 1));
         setYearValuePicker(String.format("%d", newDt.getYear()));
         pickerTrigger.click();
 
@@ -1208,7 +1094,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * Gets specified component name
      *
      * @param index - String of index to use
-     * @return String
+     * @return String of component name
      */
     public String getComponentName(String index) {
         By locator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[%s]", index));
@@ -1667,60 +1553,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Clicks bubble to get to DTC Part Summary and Switches tab
-     */
-    public void clickMachiningBubbleAndSwitchTab() {
-        pageUtils.actionClick(machiningDtcBubbleTwo);
-
-        switchTab(1);
-        pageUtils.waitForElementToAppear(upperTitle);
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
-    }
-
-    /**
-     * Clicks bar in Machining DTC Comparison Report and switches tab
-     *
-     * @return String of part name
-     */
-    public String clickMachiningDtcComparisonBar() {
-        pageUtils.waitForElementToAppear(machiningDtcComparisonPartName);
-        pageUtils.waitForElementToAppear(machiningDtcComparisonBar);
-        setReportName(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName());
-        String partName = getPartNameDtcReports();
-
-        for (int i = 0; i < 2; i++) {
-            Actions builder = new Actions(driver).moveToElement(machiningDtcComparisonBar).click();
-            builder.build().perform();
-        }
-
-        switchTab(1);
-        pageUtils.waitForElementToAppear(upperTitle);
-        pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
-        return partName;
-    }
-
-    /**
-     * Clicks part name link in Machining DTC Details report and switches tab
-     *
-     * @return String of part name
-     */
-    public String clickMachiningDtcDetailsPartName() {
-        pageUtils.waitForElementToAppear(machiningDtcDetailsPartNameLink);
-
-        setReportName(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
-        String partName = getPartNameDtcReports();
-
-        pageUtils.waitForElementAndClick(machiningDtcDetailsPartNameLink);
-
-        switchTab(1);
-        pageUtils.waitForElementToAppear(upperTitle);
-        pageUtils.waitForElementToAppear(dtcPartSummaryPartName);
-
-        return partName;
-    }
-
-    /**
      * Hovers bubble one for process group test
      *
      * @param useBubbleOne - boolean to determine which bubble to use
@@ -1780,55 +1612,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets Hole Issue number from DTC Casting Details Report
-     *
-     * @return String - value of hole issues
-     */
-    public String getHoleIssuesFromDetailsReport() {
-        pageUtils.waitForElementAndClick(holeIssuesCastingDtcDetailsTitle);
-        return holeIssuesCastingDtcDetailsValue.getText();
-    }
-
-    /**
-     * Gets Hole Issue number from DTC Casting Comparison Report
-     *
-     * @return String - value of hole issues
-     */
-    public String getHoleIssuesFromComparisonReport() {
-        pageUtils.waitForElementToAppear(partOfCastingChartComparisonReport);
-        Actions builder = new Actions(driver).moveToElement(partOfCastingChartComparisonReport);
-        builder.perform();
-
-        pageUtils.waitForElementToAppear(holeIssuesChartOneComparisonReport);
-
-        return holeIssuesChartOneComparisonReport.getText();
-    }
-
-    /**
-     * Generic method to get numeric values in a given row
-     *
-     * @param row - String of row to get values from
-     * @return ArrayList of BigDecimal values
-     */
-    public ArrayList<BigDecimal> getValuesByRow(String row) {
-        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
-        Document reportsPartPage = Jsoup.parse(driver.getPageSource());
-
-        String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table " +
-                "tr:nth-child(%s) td span";
-        baseCssSelector = String.format(baseCssSelector, row);
-
-        List<Element> valueElements = reportsPartPage.select(baseCssSelector);
-
-        for (Element valueCell : valueElements) {
-            if (!valueCell.text().isEmpty() && valueCell.text().matches("[0-9]*[.][0-9]{2}")) {
-                valsToReturn.add(new BigDecimal(valueCell.text()));
-            }
-        }
-        return valsToReturn;
-    }
-
-    /**
      * Gets Input Controls Div Class Name
      *
      * @return String of input controls div class names
@@ -1838,22 +1621,23 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets input controls div isEnabled value
-     *
-     * @return boolean of is input controls enabled
-     */
-    public boolean inputControlsIsEnabled() {
-        return pageUtils.isElementEnabled(inputControlsDiv);
-    }
-
-    /**
      * Gets input controls div isDisplayed value
      *
      * @return boolean of is input controls displayed
      */
-    public boolean inputControlsIsDisplayed() {
+    public boolean isInputControlsDisplayed() {
         return pageUtils.isElementDisplayed(inputControlsDiv);
     }
+
+    /**
+     * Gets input controls div isEnabled value
+     *
+     * @return boolean of is input controls enabled
+     */
+    public boolean isInputControlsEnabled() {
+        return pageUtils.isElementEnabled(inputControlsDiv);
+    }
+
 
     /**
      * Get roll-up displayed in header
@@ -1901,66 +1685,12 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Clicks Component Link in Assembly Details Report
-     */
-    public void clickComponentLinkAssemblyDetails() {
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitForElementAndClick(componentLinkAssemblyDetails);
-        switchTab(1);
-        pageUtils.waitForElementToAppear(componentCostReportTitle);
-    }
-
-    /**
-     * Clicks Assembly Link in Assembly Details Report
-     */
-    public void clickAssemblyLinkAssemblyDetails() {
-        pageUtils.waitForElementAndClick(assemblyLinkAssemblyDetails);
-        pageUtils.windowHandler(1);
-        pageUtils.waitForElementToAppear(componentCostReportTitle);
-    }
-
-    /**
-     * Gets component link part number
-     *
-     * @return String of part number
-     */
-    public String getComponentLinkPartNumber() {
-        return componentLinkAssemblyDetails.getText();
-    }
-
-    /**
-     * Gets assembly link part number
-     *
-     * @return String of part number
-     */
-    public String getAssemblyLinkPartNumber() {
-        return assemblyLinkAssemblyDetails.getText();
-    }
-
-    /**
-     * Gets report title
-     *
-     * @return String of report title
-     */
-    public String getReportTitle() {
-        return upperTitle.getText();
-    }
-
-    /**
      * Gets component cost report part number text
      *
      * @return String of part number
      */
     public String getComponentCostPartNumber() {
         return componentCostReportPartNumber.getText();
-    }
-
-    /**
-     * Closes current tab and switches back to main tab
-     */
-    public void closeTab() {
-        driver.close();
-        pageUtils.windowHandler(0);
     }
 
     /**
@@ -1978,26 +1708,6 @@ public class GenericReportPage extends ReportsPageHeader {
 
         By topLevelOptionLocator = By.xpath("//li[@title='---01-top-level-multi-vpe']/div/a");
         pageUtils.waitForElementToAppear(topLevelOptionLocator);
-    }
-
-    /**
-     * Checks if export set option is visible
-     *
-     * @param exportSet - String of export set to check visibility of
-     * @return boolean of is export set visible
-     */
-    public boolean isExportSetVisible(String exportSet) {
-        WebElement exportSetElement = driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
-        return exportSetElement.isDisplayed() && exportSetElement.isEnabled();
-    }
-
-    /**
-     * Gets count of export sets visible
-     *
-     * @return String of export set option count
-     */
-    public String getExportSetOptionCount() {
-        return exportSetList.getAttribute("childElementCount");
     }
 
     /**
@@ -2214,24 +1924,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets Part Name value from DTC Part Summary report
-     *
-     * @return String of dtc part summary part name
-     */
-    public String getDtcPartSummaryPartNameValue() {
-        return dtcPartSummaryPartName.getText();
-    }
-
-    /**
-     * Gets upper title text from any report
-     *
-     * @return String of report title
-     */
-    public String getUpperTitleText() {
-        return upperTitle.getText();
-    }
-
-    /**
      * Gets Annual Spend value from Details reports
      *
      * @return BigDecimal of annaul spend value
@@ -2270,26 +1962,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets part name from row one of Plastic Dtc Details
-     *
-     * @return String of row one part name
-     */
-    public String getPlasticDtcDetailsRowOnePartName() {
-        pageUtils.waitForElementToAppear(plasticDtcDetailsRowOnePartName);
-        return plasticDtcDetailsRowOnePartName.getAttribute("textContent");
-    }
-
-    /**
-     * Gets Annualised or Percent value from chart on Cost Outlier Identification Details Report
-     *
-     * @param index String of index get element
-     * @return String of total of annualised or percent value
-     */
-    public String getTotalAnnualisedOrPercentValue(String index) {
-        return costOutlierValueElementMap.get(index).getText();
-    }
-
-    /**
      * Gets part name from Casting DTC Details Report
      *
      * @param getRowOnePartName boolean - to determine what row index to use
@@ -2298,31 +1970,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getPartNameCastingSheetMetalDtcDetails(boolean getRowOnePartName) {
         String rowIndex = getRowOnePartName ? "1" : "2";
         By locator = By.xpath(String.format("(//span[@class='_jrHyperLink ReportExecution']/span)[%s]", rowIndex));
-        pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(locator).getAttribute("textContent");
-    }
-
-    /**
-     * Gets first FBC on Cost Outlier Details report
-     *
-     * @return BigDecimal of first fully burdened cost
-     */
-    public BigDecimal getFirstFbcCostOutlierDetailsReport() {
-        By locator = By.xpath("//div[@id='reportContainer']//table//tr[16]/td[27]/span");
-        pageUtils.waitForElementToAppear(locator);
-        return new BigDecimal(driver.findElement(locator).getText());
-    }
-
-    /**
-     * Gets Scenario Name from Casting Dtc Details report
-     *
-     * @param getRowOneScenarioName boolean to determine which row index to use
-     * @return String of scenario name
-     */
-    public String getScenarioNameCastingDtcDetails(boolean getRowOneScenarioName) {
-        String rowIndex = getRowOneScenarioName ? "1" : "2";
-        By locator = By.xpath(String.format(
-                "(//span[@class='_jrHyperLink ReportExecution'])[%s]/../following-sibling::td[2]/span", rowIndex));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getAttribute("textContent");
     }
@@ -2357,66 +2004,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets value from Component Cost Report
-     *
-     * @param valueToGet String of value to retrieve
-     * @return String of component cost value
-     */
-    public BigDecimal getComponentCostReportValue(String valueToGet) {
-        By locator = By.xpath(String.format(
-                "//span[contains(text(), '%s')]/../following-sibling::td[1]/span", valueToGet));
-        pageUtils.waitForElementToAppear(locator);
-        return new BigDecimal(driver.findElement(locator).getText().replace(",", ""));
-    }
-
-    /**
-     * Waits for Component dropdown filter to take effect
-     *
-     * @return ComponentCostReportPage instance
-     */
-    public ComponentCostReportPage waitForComponentFilter() {
-        By locator = By.xpath("//a[@title='3538968 (Initial)  [part]']");
-        pageUtils.waitForElementToAppear(locator);
-        return new ComponentCostReportPage(driver);
-    }
-
-    /**
-     * Selects Component Type
-     *
-     * @param componentType - String of component type for locator
-     * @return instance of Scenario Comparison Report Page
-     */
-    public ScenarioComparisonReportPage selectComponentType(String componentType) {
-        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Component Type")));
-
-        By scenarioTypeLocator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']",
-                componentType));
-        pageUtils.waitForElementAndClick(scenarioTypeLocator);
-        waitForCorrectAvailableSelectedCount(
-                ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
-
-        for (int i = 1; i < 6; i++) {
-            pageUtils.waitForElementToAppear(By.xpath(String.format(
-                    "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]",
-                    componentType, i)
-            ));
-        }
-        return new ScenarioComparisonReportPage(driver);
-    }
-
-    /**
-     * Waits for rollup change to take effect
-     *
-     * @param rollup String of rollup to use in locator
-     * @return instance of Sheet Metal Dtc Report page
-     */
-    public SheetMetalDtcReportPage waitForCorrectRollupInDropdown(String rollup) {
-        By locator = By.xpath(String.format("//label[@title='Rollup']//a[@title='%s']", rollup));
-        pageUtils.waitForElementToAppear(locator);
-        return new SheetMetalDtcReportPage(driver);
-    }
-
-    /**
      * Switches tab, if second tab is open
      *
      * @param index of tab to swtich to
@@ -2427,43 +2014,6 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.windowHandler(index);
         }
         return this;
-    }
-
-    /**
-     * Waits for tab switch to occur from Cycle Time Value Tracking to Details or Component Cost Reports
-     */
-    public void waitForNewTabSwitchCycleTimeToDetailsOrComponentCost() {
-        pageUtils.waitForElementToAppear(cycleTimeValueTrackingDetailsMaterialComposition);
-    }
-
-    /**
-     * Gets all VPE Values from Assembly Details Report
-     *
-     * @return ArrayList of type String
-     */
-    public ArrayList<String> getAllVpeValuesAssemblyDetailsReport() {
-        ArrayList<String> vpeValues = new ArrayList<>();
-
-        String[] partNames = { "3570823", "3570824", "3574255", "SUB-SUB-ASM", "3571050", "3575132", "3575133",
-            "3575134", "0200613", "0362752", "3538968", "SUB-ASSEMBLY", "3575135" };
-
-        String locator = "//span[contains(text(), '%s')]/ancestor::tr[@style='height:15px']/td[16]/span";
-
-        for (String partName : partNames) {
-            vpeValues.add(driver.findElement(By.xpath(String.format(locator, partName))).getText());
-        }
-
-        return vpeValues;
-    }
-
-    /**
-     * Gets export date count
-     *
-     * @return String - count of export date count
-     */
-    public String getExportDateCount() {
-        pageUtils.waitForElementToAppear(exportDateList);
-        return exportDateList.getAttribute("childElementCount");
     }
 
     /**
@@ -2514,30 +2064,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Checks if Cost Outlier Identification report SVG is displayed and enabled
-     *
-     * @param index - String of index to use
-     * @return boolean of is svg displayed
-     */
-    public boolean isCostOutlierSvgDisplayedAndEnabled(String index) {
-        By locator = By.xpath(String.format("(//div[@id='reportContainer']//*[local-name()='svg'])[%s]", index));
-        WebElement element = driver.findElement(locator);
-        return element.isDisplayed() && element.isEnabled();
-    }
-
-    /**
-     * Checks if Cost Outlier Identification Report Title is displayed
-     *
-     * @param useAnnualisedPotentialSavings - boolean to determine which WebElement to use
-     * @return boolean of is title displayed
-     */
-    public boolean isCostOutlierTableTitleDisplayed(boolean useAnnualisedPotentialSavings) {
-        WebElement elementToUse =
-                useAnnualisedPotentialSavings ? costOutlierAnnualisedPotentialSavings : costOutlierPercentDifference;
-        return elementToUse.isDisplayed() && elementToUse.isEnabled();
-    }
-
-    /**
      * Clicks details link on Cost Outlier Identification Report to go to Details report
      */
     public void clickDetailsLink() {
@@ -2549,21 +2075,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Checks if Cost Outlier Identification Details table is displayed
-     *
-     * @param name String of name to use in locator
-     * @return boolean of is element displayed and enabled
-     */
-    public boolean isCostOutlierDetailsTableTitleDisplayed(String name) {
-        By titleLocator = By.xpath("//span[contains(text(), 'Cost Outlier Identification Details')]");
-        pageUtils.waitForElementToAppear(titleLocator);
-
-        By tableTitleLocator = By.xpath((String.format("(//span[contains(text(), '%s ')])[2]", name)));
-        WebElement element = driver.findElement(tableTitleLocator);
-        return pageUtils.isElementDisplayed(tableTitleLocator) && element.isEnabled();
-    }
-
-    /**
      * Gets value from Design or Cost Outlier Details report table
      *
      * @param valueIndex - String of cost or mass max or min value
@@ -2571,48 +2082,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCostOrMassMaxOrMinCostOrDesignOutlierDetailsReports(String valueIndex) {
         return costDesignOutlierMap.get(valueIndex).getText();
-    }
-
-    /**
-     * Gets count of bar charts on specified chart
-     *
-     * @param chartName - String of
-     * @return int of bar chart bar count
-     */
-    public int getCostOutlierBarChartBarCount(String chartName) {
-        String chartIndex = chartName.equals("Annualized") ? "1" : "7";
-        return driver.findElements(By.xpath(
-                String.format(
-                        "(//*[@class='highcharts-series-group']//*[local-name() = 'g'])[%s]//*[local-name()='rect']",
-                        chartIndex
-                )
-        )).size();
-    }
-
-    /**
-     * Checks if cost outlier report bar is enabled and displayed
-     *
-     * @param chartName String of chart name
-     * @return boolean of is bar displayed and enabled
-     */
-    public boolean isCostOutlierBarDisplayedAndEnabled(String chartName) {
-        String chartIndex = chartName.equals("Annualized") ? "1" : "7";
-        WebElement elementToUse = driver.findElement(
-                By.xpath(String.format(
-                        "(//*[@class='highcharts-series-group']//*[local-name() = 'g'])[%s]//*[local-name()='rect']",
-                        chartIndex))
-        );
-        return pageUtils.isElementDisplayed(elementToUse) && pageUtils.isElementEnabled(elementToUse);
-    }
-
-    /**
-     * Gets dropdown index from date
-     *
-     * @param date - date to use
-     * @return int - index value
-     */
-    private int getMonthDropdownIndex(LocalDateTime date) {
-        return date.getMonthValue() - 1;
     }
 
     /**
@@ -2767,15 +2236,5 @@ public class GenericReportPage extends ReportsPageHeader {
         costDesignOutlierMap.put("Design Outlier Identification Details Cost 2", designOutlierApCostTwo);
         costDesignOutlierMap.put("Design Outlier Identification Details Mass", designOutlierMassOne);
         costDesignOutlierMap.put("Design Outlier Identification Details Mass 2", designOutlierMassTwo);
-    }
-
-    /**
-     * Initialise cost outlier value element map
-     */
-    private void initialiseCostOutlierValueElementMap() {
-        costOutlierValueElementMap.put("Percent Value Percent Set", costOutlierPercentDifferenceValueInChartPercentSet);
-        costOutlierValueElementMap.put("Annualised Value Percent Set", costOutlierTotalAnnualisedValuePercentSet);
-        costOutlierValueElementMap.put("Percent Value Annualised Set", costOutlierPercentValueInChartAnnualisedSet);
-        costOutlierValueElementMap.put("Annualised Value Annualised Set", costOutlierTotalAnnualisedValueAnnualisedSet);
     }
 }
