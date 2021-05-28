@@ -1,4 +1,4 @@
-package com.apriori.vds.entity.response.customizations;
+package com.apriori.vds.entity.response.process.group.site.variables;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
