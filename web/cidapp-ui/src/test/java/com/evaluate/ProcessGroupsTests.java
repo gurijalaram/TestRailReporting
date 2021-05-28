@@ -515,9 +515,9 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .inputProcessGroup(processGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial("Polyethylene, High Density (HDPE)")
             .submit()
             .costScenario();
 
@@ -552,9 +552,9 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Description("Testing process group Roll Bending")
+    @Description("Testing process group Plasma Cut")
     @TestRail(testCaseId = {"6141", "6144"})
-    public void testProcessGroupRollBending() {
+    public void testProcessGroupPlasmaCut() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
