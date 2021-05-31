@@ -1,4 +1,4 @@
-package com.apriori.vds.entity.response.process.group.site.variables;
+package com.apriori.vds.entity.response.process.group.site.variable;
 
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(location = "SiteVariablesItems.json")
+@Schema(location = "site_variable/ProcessGroupSiteVariablesItems.json")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonRootName("response")

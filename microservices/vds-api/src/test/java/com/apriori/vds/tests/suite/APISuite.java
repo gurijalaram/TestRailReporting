@@ -9,6 +9,7 @@ import com.apriori.vds.tests.CustomizationsTest;
 import com.apriori.vds.tests.DigitalFactoriesTest;
 import com.apriori.vds.tests.ProcessGroupMaterialStocksTest;
 import com.apriori.vds.tests.ProcessGroupMaterialsTest;
+import com.apriori.vds.tests.ProcessGroupSiteVariablesTest;
 import com.apriori.vds.tests.ProcessGroupsTest;
 
 import org.junit.runner.RunWith;
@@ -17,14 +18,15 @@ import org.junit.runners.Suite;
 @ProjectRunID("704")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    AccessControlsTest.class,
-    ConfigurationTest.class,
-    CustomAttributesTest.class,
-    CustomizationsTest.class,
-    DigitalFactoriesTest.class,
-    ProcessGroupMaterialsTest.class,
-    ProcessGroupMaterialStocksTest.class,
-    ProcessGroupsTest.class
+//    AccessControlsTest.class,
+//    ConfigurationTest.class,
+//    CustomAttributesTest.class,
+//    CustomizationsTest.class,
+//    DigitalFactoriesTest.class,
+//    ProcessGroupMaterialsTest.class,
+//    ProcessGroupMaterialStocksTest.class,
+//    ProcessGroupsTest.class,
+    ProcessGroupSiteVariablesTest.class
 })
 public class APISuite {
 }

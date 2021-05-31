@@ -74,7 +74,7 @@
     "siteVariables": {
       "type": "array",
       "items": {
-        "$ref": "SiteVariable.json"
+        "$ref": "site_variable/ProcessGroupSiteVariable.json"
       }
     }
   }

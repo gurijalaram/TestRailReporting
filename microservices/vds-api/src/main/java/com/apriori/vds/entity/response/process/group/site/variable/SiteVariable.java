@@ -1,34 +1,40 @@
-package com.apriori.vds.entity.response.customizations;
+package com.apriori.vds.entity.response.process.group.site.variable;
 
-import com.apriori.bcs.entity.response.ProcessGroup;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
-import com.apriori.vds.entity.response.custom.attributes.CustomAttribute;
-import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 
-import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Schema(location = "Customization.json")
+@Schema(location = "site_variable/ProcessGroupSiteVariableResponse.json")
+
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+// Deserialize
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Customization {
-    private List<CustomAttribute> customAttributes;
+public class SiteVariable {
+    private String createdBy;
     private String customerIdentity;
-    private List<DigitalFactory> digitalFactories;
-    private List<ExchangeRate> exchangeRates;
+    private String deletedBy;
     private String identity;
-    private List<ProcessGroup> processGroups;
-    private List<SiteVariable> siteVariables;
+    private String name;
+    private String notes;
+    private String type;
+    private String updatedBy;
+    private String value;
+    private String valueType;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)

@@ -5,16 +5,16 @@ import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
-import com.apriori.vds.tests.util.DigitalAndPGMUtil;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
 
+import com.apriori.vds.tests.util.VDSTestUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-public class ProcessGroupMaterialsTest extends DigitalAndPGMUtil {
+public class ProcessGroupMaterialsTest extends VDSTestUtil {
 
     @Test
     @TestRail(testCaseId = {"8129"})
@@ -29,7 +29,7 @@ public class ProcessGroupMaterialsTest extends DigitalAndPGMUtil {
     public void getMaterialByIdentity() {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterial.class)
-                .inlineVariables(Arrays.asList(digitalFactoryIdentity, processGroupIdentity, this.getProcessGroupMaterial().getIdentity()));
+                .inlineVariables(Arrays.asList(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity(), getMaterialIdentity()));
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
     }
