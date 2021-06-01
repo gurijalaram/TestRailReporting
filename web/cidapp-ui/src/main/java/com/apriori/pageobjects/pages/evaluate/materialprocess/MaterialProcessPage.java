@@ -92,7 +92,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * Opens material utilization tab
      * @return new page object
      */
-    public MaterialUtilizationPage openMaterialUtilization() {
+    public MaterialUtilizationPage openMaterialUtilizationTab() {
         pageUtils.waitForElementAndClick(materialUtilizationTab);
         return new MaterialUtilizationPage(driver);
     }

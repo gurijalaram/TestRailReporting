@@ -57,7 +57,7 @@ public class MaterialStockTests extends TestBase {
             .submit()
             .costScenario()
             .openMaterialProcess()
-            .openMaterialUtilization();
+            .openMaterialUtilizationTab();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("F-0005")));
         assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("1.1")));
@@ -68,7 +68,7 @@ public class MaterialStockTests extends TestBase {
             .submit()
             .costScenario()
             .openMaterialProcess()
-            .openMaterialUtilization();
+            .openMaterialUtilizationTab();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("FN-0205")));
         assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("2.1")));
