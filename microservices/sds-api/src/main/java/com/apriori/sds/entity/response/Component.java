@@ -12,7 +12,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "sds/ComponentResponse.json")
+@Schema(location = "ComponentResponse.json")
 @Data
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
