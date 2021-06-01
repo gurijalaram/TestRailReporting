@@ -111,7 +111,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     private WebElement searchButton;
 
     @FindBy(id = "toolbar_logo_link")
-    private WebElement pageTitle;
+    protected WebElement pageTitle;
 
     @FindBy(xpath = "//h1[contains(text(), '404')]")
     private WebElement errorTitle;

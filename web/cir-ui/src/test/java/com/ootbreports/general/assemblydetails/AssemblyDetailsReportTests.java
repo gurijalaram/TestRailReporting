@@ -7,13 +7,10 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
@@ -27,6 +24,9 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
+import com.pageobjects.pages.evaluate.ComponentsPage;
+import com.pageobjects.pages.evaluate.EvaluatePage;
+import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -102,14 +102,22 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
-        usdGrandTotal = assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Capital Investments Short");
+        usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
+                assemblyType,
+                "Grand Total",
+                "Capital Investments"
+        );
 
         assemblyDetailsReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
-        gbpGrandTotal = assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Capital Investments Long");
+        gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
+                assemblyType,
+                "Grand Total",
+                "Capital Investments"
+        );
 
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
@@ -139,7 +147,11 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
-        gbpGrandTotal = assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Capital Investments Long");
+        gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
+                assemblyType,
+                "Grand Total",
+                "Capital Investments"
+        );
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
 
         assemblyDetailsReportPage.clickInputControlsButton()
@@ -147,7 +159,11 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
-        usdGrandTotal = assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Capital Investments Long");
+        usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
+                assemblyType,
+                "Grand Total",
+                "Capital Investments"
+        );
 
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.USD.getCurrency())));
         assertThat(usdGrandTotal, is(not(equalTo(gbpGrandTotal))));
@@ -174,22 +190,25 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Cycle Time"),
+            assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
             assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Piece Part Cost"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Piece Part Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Fully Burdened Cost"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Fully Burdened Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubAssembly("Capital Investments Long"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Capital Investments"),
             assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -224,22 +243,25 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubSubAsm("Cycle Time"),
+            assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
             assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubSubAsm("Piece Part Cost"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Piece Part Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubSubAsm("Fully Burdened Cost"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Fully Burdened Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableSubSubAsm("Capital Investments"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Capital Investments"),
             assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -274,22 +296,25 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableTopLevel("Cycle Time"),
+            assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
             assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableTopLevel("Piece Part Cost"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Piece Part Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableTopLevel("Fully Burdened Cost"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Fully Burdened Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
-            assemblyDetailsReportPage.getTotalValueFromTableTopLevel("Capital Investments"),
+            assemblyDetailsReportPage.getValueFromTable(
+                    assemblyType, "Grand Total", "Capital Investments"),
             assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -482,7 +507,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName()
         );
 
-        ComponentsListPage componentsListPage = new ExplorePage(driver)
+        /*ComponentsPage componentsPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -490,7 +515,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
                 .openFirstScenario().openComponents();
-        /*  .openComponentsTable()
+          .openComponentsTable()
             .openColumnsTable()
             .checkColumnSettings(columnsToAdd)
             .selectSaveButton();*/
@@ -798,7 +823,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             assemblyDetailsReportPage.getFiguresFromTable("Capital Investments"));
 
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
-        EvaluatePage evaluatePage = new ExplorePage(driver)
+        /*EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -816,7 +841,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(reportsValues.get("Cycle Time"), is(equalTo(cidValues.get("Cycle Time"))));
         assertThat(reportsValues.get("Piece Part Cost"), is(cidValues.get("Piece Part Cost")));
         assertThat(reportsValues.get("Fully Burdened Cost"), is(cidValues.get("Fully Burdened Cost")));
-        assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));
+        assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));*/
     }
 
     @Test
@@ -901,7 +926,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
 
-        ComponentsPage componentsPage = new ExplorePage(driver)
+        /*ComponentsPage componentsPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -911,7 +936,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .submit(ExplorePage.class)
                 .openFirstScenario().openComponents();
 
-        /*ArrayList<String> cidVpeValues = componentsListPage.getVpeValues();
+        ArrayList<String> cidVpeValues = componentsListPage.getVpeValues();
 
         assertThat(reportsVpeValues.equals(cidVpeValues), is(equalTo(true)));*/
     }

@@ -66,7 +66,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private WebElement partNameRowFive;
 
     List<BigDecimal> refinedQuantities = new ArrayList<>();
-
     private final Map<String, String> genericColumnMap = new HashMap<>();
     private final Map<String, String> topLevelRowMap = new HashMap<>();
     private final Map<String, String> subSubAsmRowMap = new HashMap<>();
@@ -89,49 +88,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         initialiseSubAssemblyRowMap();
         initialiseGenericColumnMap();
         initialiseSubSubAsmRowMap();
-        initialiseTopLevelSubAssemblyRowMap();
-        initialiseTopLevelSubSubAsmRowMap();
         initialiseTopLevelRowMap();
-        intialiseTopLevelAssemblyRowMap();
-    }
-
-    /**
-     * Gets grand total value from table (sub assembly assembly selected)
-     *
-     * @param valueToGet - String
-     * @return BigDecimal
-     */
-    public BigDecimal getTotalValueFromTableSubAssembly(String valueToGet) {
-        return new BigDecimal(
-                driver.findElement(totalLocatorSubAssemblyMap.get(valueToGet))
-                        .getText().replace(",", "")
-        );
-    }
-
-    /**
-     * Gets grand total value from table (sub sub asm assembly selected)
-     *
-     * @param valueToGet - String
-     * @return BigDecimal
-     */
-    public BigDecimal getTotalValueFromTableSubSubAsm(String valueToGet) {
-        return new BigDecimal(
-                driver.findElement(totalLocatorSubSubAsmMap.get(valueToGet))
-                        .getText().replace(",", "")
-        );
-    }
-
-    /**
-     * Gets grand total value from table (top level assembly selected)
-     *
-     * @param valueToGet - String
-     * @return BigDecimal
-     */
-    public BigDecimal getTotalValueFromTableTopLevel(String valueToGet) {
-        return new BigDecimal(
-                driver.findElement(totalLocatorTopLevelMap.get(valueToGet))
-                        .getText().replace(",", "")
-        );
     }
 
     /**
@@ -944,30 +901,5 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     private void putItemIntoTopLevelRowMap(String key, String value) {
         topLevelRowMap.put(key, String.format(genericTrSelector, value));
-    }
-
-    private void initialiseTopLevelSubAssemblyRowMap() {
-        String genericLocator = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr:nth-child(%s) td:nth-child(%s) span";
-        totalLocatorSubAssemblyMap.put("Cycle Time", By.cssSelector(String.format(genericLocator, "20", "25")));
-        totalLocatorSubAssemblyMap.put("Piece Part Cost", By.cssSelector(String.format(genericLocator, "20", "28")));
-        totalLocatorSubAssemblyMap.put("Fully Burdened Cost", By.cssSelector(String.format(genericLocator, "20", "31")));
-        totalLocatorSubAssemblyMap.put("Capital Investments Short", By.cssSelector(String.format(genericLocator, "15", "34")));
-        totalLocatorSubAssemblyMap.put("Capital Investments Long", By.cssSelector(String.format(genericLocator, "20", "34")));
-    }
-
-    private void initialiseTopLevelSubSubAsmRowMap() {
-        String genericLocator = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr:nth-child(%s) td:nth-child(%s) span";
-        totalLocatorSubSubAsmMap.put("Cycle Time", By.cssSelector(String.format(genericLocator, "13", "25")));
-        totalLocatorSubSubAsmMap.put("Piece Part Cost", By.cssSelector(String.format(genericLocator, "13", "28")));
-        totalLocatorSubSubAsmMap.put("Fully Burdened Cost", By.cssSelector(String.format(genericLocator, "13", "31")));
-        totalLocatorSubSubAsmMap.put("Capital Investments", By.cssSelector(String.format(genericLocator, "13", "34")));
-    }
-
-    private void intialiseTopLevelAssemblyRowMap() {
-        String genericLocator = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table tr:nth-child(%s) td:nth-child(%s) span";
-        totalLocatorTopLevelMap.put("Cycle Time", By.cssSelector(String.format(genericLocator, "29", "25")));
-        totalLocatorTopLevelMap.put("Piece Part Cost", By.cssSelector(String.format(genericLocator, "29", "28")));
-        totalLocatorTopLevelMap.put("Fully Burdened Cost", By.cssSelector(String.format(genericLocator, "29", "31")));
-        totalLocatorTopLevelMap.put("Capital Investments", By.cssSelector(String.format(genericLocator, "29", "34")));
     }
 }
