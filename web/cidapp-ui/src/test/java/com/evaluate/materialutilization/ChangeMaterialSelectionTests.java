@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -28,12 +28,11 @@ import java.io.File;
 
 public class ChangeMaterialSelectionTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-
     private File resourceFile;
     private MaterialUtilizationPage materialUtilizationPage;
-    UserCredentials currentUser;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -250,6 +249,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectMaterial("Inconel 625")
             .submit()
             .costScenario()
+            .openMaterialProcess()
             .openMaterialUtilization();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("Inconel 625")));
