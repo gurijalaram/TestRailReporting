@@ -331,8 +331,8 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         pageUtils.waitForSteadinessOfElement(locator);
         return driver.findElement(locator).getText();
     }
-	
-	/**
+
+    /**
      * Sets specified assembly
      *
      * @param assemblyName - String of assembly name to use

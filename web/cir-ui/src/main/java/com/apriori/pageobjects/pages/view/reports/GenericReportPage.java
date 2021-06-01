@@ -50,7 +50,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement dtcScoreControlTitle;
 
     @FindBy(css = "div[class='header'] div.title")
-    private WebElement upperTitle;
+    protected WebElement upperTitle;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[55][local-name() = 'path']")
     private WebElement castingDtcBubble;
@@ -536,7 +536,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement designOutlierMassTwo;
 
     protected final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
-	
+
     private final WebDriver driver;
     private final PageUtils pageUtils;
 

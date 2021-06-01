@@ -578,15 +578,15 @@ public class AssemblyDetailsReportTests extends TestBase {
             containsString(Constants.ASSEMBLY_STRING)
         );
 
-        genericReportPage.setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName());
-        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName());
+        assemblyDetailsReportPage.setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName());
+        assemblyDetailsReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName());
         assertThat(
             assemblyDetailsReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName()),
             containsString(Constants.ASSEMBLY_STRING)
         );
 
-        genericReportPage.setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName());
-        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.TOP_LEVEL.getAssemblySetName());
+        assemblyDetailsReportPage.setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName());
+        assemblyDetailsReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.TOP_LEVEL.getAssemblySetName());
         assertThat(
             assemblyDetailsReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.TOP_LEVEL.getAssemblySetName()),
             containsString(Constants.ASSEMBLY_STRING)
