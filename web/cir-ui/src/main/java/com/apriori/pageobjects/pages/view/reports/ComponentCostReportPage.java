@@ -110,17 +110,6 @@ public class ComponentCostReportPage extends GenericReportPage {
     }
 
     /**
-     * Waits for Component Select filter to take effect
-     *
-     * @param isAssembly - boolean to determine which locator to use
-     */
-    public void waitForComponentFilter(boolean isAssembly) {
-        String dropdownTitle = isAssembly ? "SUB-ASSEMBLY (Initial)  [assembly]" : "3538968 (Initial)  [part]";
-        By locator = By.xpath(String.format("//a[@title='%s']", dropdownTitle));
-        pageUtils.waitForElementToAppear(locator);
-    }
-
-    /**
      * Gets lifetime cost
      *
      * @return BigDecimal
@@ -224,5 +213,16 @@ public class ComponentCostReportPage extends GenericReportPage {
         By locator = By.xpath("//a[@title='3538968 (Initial)  [part]']");
         pageUtils.waitForElementToAppear(locator);
         return new ComponentCostReportPage(driver);
+    }
+
+    /**
+     * Waits for Component Select filter to take effect
+     *
+     * @param isAssembly - boolean to determine which locator to use
+     */
+    public void waitForComponentFilter(boolean isAssembly) {
+        String dropdownTitle = isAssembly ? "SUB-ASSEMBLY (Initial)  [assembly]" : "3538968 (Initial)  [part]";
+        By locator = By.xpath(String.format("//a[@title='%s']", dropdownTitle));
+        pageUtils.waitForElementToAppear(locator);
     }
 }
