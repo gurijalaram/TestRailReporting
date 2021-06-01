@@ -10,6 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
@@ -96,9 +97,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
@@ -108,8 +109,8 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk()
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
@@ -136,14 +137,14 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk()
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
@@ -154,8 +155,8 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
 
         assemblyDetailsReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
@@ -182,9 +183,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY_LOWERCASE.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -226,7 +227,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -235,9 +236,9 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-                .clickOk()
+                .clickOk(AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -279,7 +280,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -288,9 +289,9 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-            .clickOk()
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -330,9 +331,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -373,7 +374,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -382,9 +383,9 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-            .clickOk()
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -425,7 +426,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -434,9 +435,9 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-            .clickOk()
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -488,15 +489,16 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1930"})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
-        genericReportPage = new ReportsLoginPage(driver)
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName())
-            .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .openNewCidTabAndFocus(1);
+            .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        assemblyDetailsReportPage.openNewCidTabAndFocus(1);
 
         List<String> columnsToAdd = Arrays.asList(
             ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
@@ -536,20 +538,16 @@ public class AssemblyDetailsReportTests extends TestBase {
             );
 
         componentsPage.switchBackToTabOne();
-        ArrayList<BigDecimal> reportsPartOneValues = genericReportPage
-            .getValuesByRow(
+        ArrayList<BigDecimal> reportsPartOneValues = assemblyDetailsReportPage.getValuesByRow(
                 ColumnIndexEnum.CIR_PART_ONE.getColumnIndex()
             );
-        ArrayList<BigDecimal> reportsPartTwoValues = genericReportPage
-            .getValuesByRow(
+        ArrayList<BigDecimal> reportsPartTwoValues = assemblyDetailsReportPage.getValuesByRow(
                 ColumnIndexEnum.CIR_PART_TWO.getColumnIndex()
             );
-        ArrayList<BigDecimal> reportsPartThreeValues = genericReportPage
-            .getValuesByRow(
+        ArrayList<BigDecimal> reportsPartThreeValues = assemblyDetailsReportPage.getValuesByRow(
                 ColumnIndexEnum.CIR_PART_THREE.getColumnIndex()
             );
-        ArrayList<BigDecimal> reportsPartFourValues = genericReportPage
-            .getValuesByRow(
+        ArrayList<BigDecimal> reportsPartFourValues = assemblyDetailsReportPage.getValuesByRow(
                 ColumnIndexEnum.CIR_PART_FOUR.getColumnIndex()
             );
 
@@ -576,25 +574,25 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1918"})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
-        genericReportPage = new ReportsLoginPage(driver)
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class);
 
         assertThat(
-            genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName()),
+            assemblyDetailsReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName()),
             containsString(Constants.ASSEMBLY_STRING)
         );
 
         assertThat(
-            genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName()),
+            assemblyDetailsReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName()),
             containsString(Constants.ASSEMBLY_STRING)
         );
 
         assertThat(
-            genericReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.TOP_LEVEL.getAssemblySetName()),
+            assemblyDetailsReportPage.getAssemblyNameFromSetAssemblyDropdown(AssemblySetEnum.TOP_LEVEL.getAssemblySetName()),
             containsString(Constants.ASSEMBLY_STRING)
         );
     }
@@ -613,28 +611,28 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1931"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
-        genericReportPage = new ReportsLoginPage(driver)
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
-        String partNumberComponent = genericReportPage.getComponentLinkPartNumber();
-        genericReportPage.clickComponentLinkAssemblyDetails();
+        String partNumberComponent = assemblyDetailsReportPage.getComponentLinkPartNumber();
+        assemblyDetailsReportPage.clickComponentLinkAssemblyDetails();
 
-        assertThat(genericReportPage.getReportTitle(),
+        assertThat(assemblyDetailsReportPage.getReportTitle(),
                 is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
-        assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberComponent)));
-        genericReportPage.closeTab();
+        assertThat(assemblyDetailsReportPage.getComponentCostPartNumber(), is(equalTo(partNumberComponent)));
+        assemblyDetailsReportPage.closeTab();
 
-        String partNumberAssembly = genericReportPage.getAssemblyLinkPartNumber();
-        genericReportPage.clickAssemblyLinkAssemblyDetails();
-        assertThat(genericReportPage.getReportTitle(),
+        String partNumberAssembly = assemblyDetailsReportPage.getAssemblyLinkPartNumber();
+        assemblyDetailsReportPage.clickAssemblyLinkAssemblyDetails();
+        assertThat(assemblyDetailsReportPage.getReportTitle(),
                 is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
-        assertThat(genericReportPage.getComponentCostPartNumber(), is(equalTo(partNumberAssembly)));
+        assertThat(assemblyDetailsReportPage.getComponentCostPartNumber(), is(equalTo(partNumberAssembly)));
     }
 
     @Test
@@ -642,17 +640,17 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1921"})
     @Description("Export Set search function works - Assembly Details Report")
     public void testExportSetSearch() {
-        genericReportPage = new ReportsLoginPage(driver)
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
-            .waitForInputControlsLoad();
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
-        genericReportPage.searchForExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+        assemblyDetailsReportPage.waitForInputControlsLoad()
+                .searchForExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
-        assertThat(genericReportPage.getExportSetOptionCount(), is(equalTo("2")));
-        assertThat(genericReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL.getExportSetName()), is(true));
-        assertThat(genericReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName()), is(true));
+        assertThat(assemblyDetailsReportPage.getExportSetOptionCount(), is(equalTo("2")));
+        assertThat(assemblyDetailsReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL.getExportSetName()), is(true));
+        assertThat(assemblyDetailsReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName()), is(true));
     }
 
     @Test
@@ -672,33 +670,37 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"7684"})
     @Description("Verify Created By Filter Operation")
     public void testCreatedByFilterOperation() {
-        genericReportPage = new ReportsLoginPage(driver)
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class);
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
-        String lastModifiedByAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
+        String lastModifiedByAvailableCountPreSelection = assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
-        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
+        String scenarioNameAvailableCountPreSelection = assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
-        genericReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), Constants.NAME_TO_SELECT);
+        assemblyDetailsReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), Constants.NAME_TO_SELECT);
 
-        genericReportPage.waitForCorrectAvailableSelectedCount(
+        assemblyDetailsReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.CREATED_BY.getListName(),
                 "Selected: ",
                 "1"
         );
-        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
+        assertThat(assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.CREATED_BY.getListName(),
                 "Selected"
         ), is(equalTo("1")));
 
-        genericReportPage.waitForCorrectAvailableSelectedCount(
+        assemblyDetailsReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", "2");
-        String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
+
+        String lastModifiedByAvailableCountPostSelection = assemblyDetailsReportPage
+                .getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
-        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
+
+        String scenarioNameAvailableCountPostSelection = assemblyDetailsReportPage
+                .getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         assertThat(lastModifiedByAvailableCountPreSelection,
@@ -706,8 +708,8 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(scenarioNameAvailableCountPreSelection,
                 is(not(equalTo(scenarioNameAvailableCountPostSelection))));
 
-        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
-        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+        assemblyDetailsReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
+        assertThat(assemblyDetailsReportPage.getCurrentlySelectedAssembly(),
                 is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
     }
 
@@ -741,34 +743,34 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"7687"})
     @Description("Verify Last Modified By Filter Operation")
     public void testLastModifiedFilterOperation() {
-        genericReportPage = new ReportsLoginPage(driver)
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class);
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
-        String scenarioNameAvailableCountPreSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
+        String scenarioNameAvailableCountPreSelection = assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
-        genericReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), Constants.NAME_TO_SELECT);
+        assemblyDetailsReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), Constants.NAME_TO_SELECT);
 
-        genericReportPage.waitForCorrectAvailableSelectedCount(
+        assemblyDetailsReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(),
                 "Selected: ",
                 "1"
         );
-        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
+        assertThat(assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(),
                 "Selected"
         ), is(equalTo("1")));
 
-        String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
+        String scenarioNameAvailableCountPostSelection = assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         assertThat(scenarioNameAvailableCountPreSelection,
                 is(equalTo(scenarioNameAvailableCountPostSelection)));
 
-        genericReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
-        assertThat(genericReportPage.getCurrentlySelectedAssembly(),
+        assemblyDetailsReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
+        assertThat(assemblyDetailsReportPage.getCurrentlySelectedAssembly(),
                 is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
     }
 
@@ -807,8 +809,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .clickOk()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         Map<String, String> reportsValues = new HashMap<>();
@@ -852,8 +854,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .clickOk()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+                .clickOk(AssemblyDetailsReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> levelValues =
@@ -874,21 +876,21 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1933"})
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
-        genericReportPage = new ReportsLoginPage(driver)
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
+            .selectExportSet(ExportSetEnum.SUB_SUB_ASM.getExportSetName(), GenericReportPage.class)
             .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-            .clickOk()
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
-        BigDecimal actualVariance = genericReportPage.getComponentCostReportValue("Variance");
-        BigDecimal actualLifetimeCost = genericReportPage.getComponentCostReportValue("Lifetime Cost");
-        BigDecimal actualPercentageOfTarget = genericReportPage.getComponentCostReportValue("% of Target");
+        BigDecimal actualVariance = assemblyDetailsReportPage.getComponentCostReportValue("Variance");
+        BigDecimal actualLifetimeCost = assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Cost");
+        BigDecimal actualPercentageOfTarget = assemblyDetailsReportPage.getComponentCostReportValue("% of Target");
         BigDecimal actualLifetimeProjectedCostDifference =
-            genericReportPage.getComponentCostReportValue("Lifetime Projected Cost");
+                assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Projected Cost");
 
         assertThat(actualVariance.compareTo(new BigDecimal("79.80")), is(equalTo(0)));
         assertThat(actualPercentageOfTarget.compareTo(new BigDecimal("1596.06")), is(equalTo(0)));
@@ -902,23 +904,27 @@ public class AssemblyDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1927"})
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
-        genericReportPage = new ReportsLoginPage(driver)
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
+                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName());
+                .selectExportSet(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName(), AssemblyDetailsReportPage.class);
 
-        genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", "1");
+        assemblyDetailsReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(),
+                "Available: ",
+                "1"
+        );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
                 .setAssembly(AssemblySetEnum.TOP_LEVEL_MULTI_VPE.getAssemblySetName())
-                .clickOk()
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
-        ArrayList<String> reportsVpeValues = genericReportPage.getAllVpeValuesAssemblyDetailsReport();
+        ArrayList<String> reportsVpeValues = assemblyDetailsReportPage.getAllVpeValuesAssemblyDetailsReport();
 
-        genericReportPage.openNewCidTabAndFocus(1);
+        assemblyDetailsReportPage.openNewCidTabAndFocus(1);
 
         ComponentsPage componentsPage = new ExplorePage(driver)
                 .filter()

@@ -17,8 +17,8 @@ public class ViewSchedulesPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[contains(@class, 'listOfJobs')]/div/div[1]/div")
     private WebElement schedulesPageTitle;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public ViewSchedulesPage(WebDriver driver) {
         super(driver);

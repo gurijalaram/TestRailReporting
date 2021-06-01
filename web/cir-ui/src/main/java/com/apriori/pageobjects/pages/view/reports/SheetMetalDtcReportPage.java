@@ -20,8 +20,8 @@ public class SheetMetalDtcReportPage extends GenericReportPage {
     @FindBy(xpath = "(//div[@title='Single export set selection.']//input)[1]")
     private WebElement exportSetSearchInput;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public SheetMetalDtcReportPage(WebDriver driver) {
         super(driver);
@@ -33,6 +33,7 @@ public class SheetMetalDtcReportPage extends GenericReportPage {
 
     /**
      * Gets displayed Export Set
+     *
      * @return String
      */
     public String getDisplayedExportSet() {
@@ -42,6 +43,7 @@ public class SheetMetalDtcReportPage extends GenericReportPage {
 
     /**
      * Searches Export Set List
+     *
      * @param exportSetName String
      */
     public void searchForExportSet(String exportSetName) {
@@ -59,11 +61,24 @@ public class SheetMetalDtcReportPage extends GenericReportPage {
 
     /**
      * Gets first Export Set List name
+     *
      * @return String
      */
     public String getFirstExportSetName() {
         By locator = By.xpath("(//div[@title='Single export set selection.']//ul)[1]/li[1]");
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Waits for rollup change to take effect
+     *
+     * @param rollup String of rollup to use in locator
+     * @return instance of Sheet Metal Dtc Report page
+     */
+    public SheetMetalDtcReportPage waitForCorrectRollupInDropdown(String rollup) {
+        By locator = By.xpath(String.format("//label[@title='Rollup']//a[@title='%s']", rollup));
+        pageUtils.waitForElementToAppear(locator);
+        return new SheetMetalDtcReportPage(driver);
     }
 }

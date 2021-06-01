@@ -29,11 +29,11 @@ public class AssemblyCostReportPage extends GenericReportPage {
     @FindBy(xpath = "//li[@title='Initial']/..")
     private WebElement scenarioNameItemList;
 
-    private String generalCostInfoValueLocator = "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span";
-    private String dropdownOptionLocator = "li[title='%s'] > div > a";
+    private final String generalCostInfoValueLocator = "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span";
+    private final String dropdownOptionLocator = "li[title='%s'] > div > a";
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public AssemblyCostReportPage(WebDriver driver) {
         super(driver);
@@ -45,6 +45,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Selects Export Set from Dropdown
+     *
      * @param exportSet String
      * @return instance of class
      */
@@ -59,6 +60,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Selects Assembly from Dropdown
+     *
      * @param assemblyName String
      * @return instance of class
      */
@@ -73,6 +75,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Selects Assembly from Dropdown
+     *
      * @param scenarioName String
      * @return instance of class
      */
@@ -87,6 +90,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Waits for Assembly Part Number filter to occur
+     *
      * @return instance of current page object
      */
     public AssemblyCostReportPage waitForAssemblyPartNumberFilter(String assemblyName) {
@@ -97,6 +101,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Gets count of Assembly Part Numbers available
+     *
      * @return String
      */
     public String getAssemblyPartNumberFilterItemCount() {
@@ -105,6 +110,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Gets count of Scenario Names available
+     *
      * @return String
      */
     public String getScenarioNameCount() {
@@ -113,6 +119,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Checks if a particular Assembly Part Number option is enabled
+     *
      * @param itemName String - item to check
      * @return boolean
      */
@@ -122,6 +129,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Gets currently selected Assembly Part Number
+     *
      * @return String
      */
     public String getCurrentAssemblyPartNumber() {
@@ -131,6 +139,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Checks if a particular Scenario Name is enabled
+     *
      * @param scenarioName String - Scenario Name to check
      * @return boolean
      */
@@ -140,6 +149,7 @@ public class AssemblyCostReportPage extends GenericReportPage {
 
     /**
      * Gets General Cost Info value
+     *
      * @param valueName String - value to get
      * @return String
      */

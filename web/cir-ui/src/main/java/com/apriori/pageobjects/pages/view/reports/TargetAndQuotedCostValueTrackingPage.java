@@ -29,8 +29,8 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "(//*[contains(text(), 'IROBOT_18874')])[2]")
     private WebElement partNumberDetailsReport;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public TargetAndQuotedCostValueTrackingPage(WebDriver driver) {
         super(driver);
@@ -42,6 +42,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets final cost
+     *
      * @return String
      */
     public String getFinalCost() {
@@ -52,6 +53,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
     /**
      * Clicks project name link
+     *
      * @param index - index of link to click
      * @return current page object instance
      */
@@ -69,6 +71,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
     /**
      * Waits for correct project name to appear
+     *
      * @param index project name index
      * @return current page object instance
      */
@@ -81,6 +84,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
     /**
      * Expand rollup drop-down
      *
+     * @param rollupName String
      * @return current page object
      */
     public TargetAndQuotedCostValueTrackingPage selectProjectRollup(String rollupName) {
@@ -94,6 +98,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets milestone name
+     *
      * @return String
      */
     public String getProjectName() {
@@ -104,6 +109,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets export date option count
+     *
      * @return String
      */
     public String getExportDateOptionCount() {
@@ -113,6 +119,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets currently selected export date
+     *
      * @return String
      */
     public String getSelectedExportDate() {
@@ -122,6 +129,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets export date from report
+     *
      * @return String
      */
     public String getExportDateOnReport() {
@@ -130,6 +138,7 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets part number from details report
+     *
      * @return String
      */
     public String getPartNumberFromDetailsReport() {
