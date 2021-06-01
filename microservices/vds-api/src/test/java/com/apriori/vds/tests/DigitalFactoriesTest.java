@@ -9,8 +9,8 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.digital.factories.VPE;
 import com.apriori.vds.entity.response.digital.factories.VPEsItems;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
-
 import com.apriori.vds.tests.util.VDSTestUtil;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Ignore;

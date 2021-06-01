@@ -66,7 +66,7 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
     @TestRail(testCaseId = {"8288"})
     @Description("DELETEs a site variable. ")
     public void deleteSiteVariablesByIdentity() {
-       deleteSiteVariableById(this.postSiteVariables().getIdentity());
+        deleteSiteVariableById(this.postSiteVariables().getIdentity());
     }
 
     @Test
@@ -80,18 +80,17 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
         SiteVariable siteVariableBeforeUpdate = this.postSiteVariables();
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
-//        SiteVariable
         RequestEntity requestEntity =
-        VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PATCH_PROCESS_GROUP_SITE_VARIABLES_BY_PG_SITE_IDs, SiteVariable.class)
-            .inlineVariables(Arrays.asList(getProcessGroupIdentity(), siteVariableBeforeUpdate.getIdentity()))
-            .body(SiteVariableRequest.builder()
-                .name(updatedName)
-                .value(updatedValue)
-                .notes(updatedNotes)
-                .updatedBy(siteVariableBeforeUpdate.getCreatedBy())
-                .createdBy(siteVariableBeforeUpdate.getCreatedBy())
-                .build()
-            );
+            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PATCH_PROCESS_GROUP_SITE_VARIABLES_BY_PG_SITE_IDs, SiteVariable.class)
+                .inlineVariables(Arrays.asList(getProcessGroupIdentity(), siteVariableBeforeUpdate.getIdentity()))
+                .body(SiteVariableRequest.builder()
+                    .name(updatedName)
+                    .value(updatedValue)
+                    .notes(updatedNotes)
+                    .updatedBy(siteVariableBeforeUpdate.getCreatedBy())
+                    .createdBy(siteVariableBeforeUpdate.getCreatedBy())
+                    .build()
+                );
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
         final SiteVariable updatedSiteVariable = updatedSiteVariableResponse.getResponseEntity();
@@ -115,18 +114,16 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
         SiteVariable siteVariableBeforeUpdate = this.postSiteVariables();
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
-//        SiteVariable
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
                 .inlineVariables(Arrays.asList(getProcessGroupIdentity()))
                 .body(SiteVariableRequest.builder()
-                    .name(updatedName)
-                    .value(updatedValue)
-                    .notes(updatedNotes)
-                    .customerIdentity(siteVariableBeforeUpdate.getCustomerIdentity())
-//                    .updatedBy(siteVariableBeforeUpdate.getCreatedBy())
-                    .createdBy(siteVariableBeforeUpdate.getCreatedBy())
-                    .build()
+                        .name(updatedName)
+                        .value(updatedValue)
+                        .notes(updatedNotes)
+                        .customerIdentity(siteVariableBeforeUpdate.getCustomerIdentity())
+                        .createdBy(siteVariableBeforeUpdate.getCreatedBy())
+                        .build()
                 );
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).put();

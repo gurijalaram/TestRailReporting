@@ -11,7 +11,7 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
-import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
+
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 
@@ -51,7 +51,6 @@ public abstract class VDSTestUtil extends TestUtil {
         );
 
         List<ProcessGroupMaterial> processGroupMaterials = processGroupMaterialsItems.getResponseEntity().getItems();
-
         Assert.assertNotEquals("To get Material, response should contain it.", 0, processGroupMaterials.size());
 
         return findMaterialByAltName1(processGroupMaterials, "Galv. Steel, Hot Worked, AISI 1020");
@@ -61,7 +60,6 @@ public abstract class VDSTestUtil extends TestUtil {
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
 
         ResponseWrapper<ProcessGroups> processGroupsResponse = HTTP2Request.build(requestEntity).get();
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupsResponse.getStatusCode());
 
         return processGroupsResponse.getResponseEntity().getItems();
@@ -86,21 +84,21 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     public static DigitalFactory getDigitalFactory() {
-        if(digitalFactory == null) {
+        if (digitalFactory == null) {
             digitalFactory = getDigitalFactoriesResponse();
         }
         return digitalFactory;
     }
 
     public static String getDigitalFactoryIdentity() {
-        if(digitalFactoryIdentity == null) {
+        if (digitalFactoryIdentity == null) {
             digitalFactoryIdentity = getDigitalFactory().getIdentity();
         }
         return digitalFactoryIdentity;
     }
 
     public static String getAssociatedProcessGroupIdentity() {
-        if(associatedProcessGroupIdentity == null) {
+        if (associatedProcessGroupIdentity == null) {
             associatedProcessGroupIdentity = getDigitalFactory().getProcessGroupAssociations().getSheetMetal().getProcessGroupIdentity();
         }
         return associatedProcessGroupIdentity;
@@ -108,14 +106,14 @@ public abstract class VDSTestUtil extends TestUtil {
 
 
     public static String getProcessGroupIdentity() {
-        if(processGroupIdentity == null) {
+        if (processGroupIdentity == null) {
             processGroupIdentity = getProcessGroupsResponse().get(0).getIdentity();
         }
         return processGroupIdentity;
     }
 
     public static String getMaterialIdentity() {
-        if(materialIdentity == null) {
+        if (materialIdentity == null) {
             materialIdentity = getProcessGroupMaterial().getIdentity();
         }
         return materialIdentity;

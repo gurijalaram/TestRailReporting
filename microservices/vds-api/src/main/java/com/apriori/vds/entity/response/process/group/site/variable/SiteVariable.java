@@ -15,13 +15,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "site_variable/ProcessGroupSiteVariableResponse.json")
+@Schema(location = "ProcessGroupSiteVariableResponse.json")
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-// Deserialize
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SiteVariable {

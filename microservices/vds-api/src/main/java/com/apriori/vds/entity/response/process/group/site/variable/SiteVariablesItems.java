@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(location = "site_variable/ProcessGroupSiteVariablesItems.json")
+@Schema(location = "ProcessGroupSiteVariablesItems.json")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonRootName("response")
