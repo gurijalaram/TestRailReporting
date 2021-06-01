@@ -17,8 +17,8 @@ public class CreateDataSourcePage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='display']/div/div/div/div[contains(@class, 'header')]/div")
     private WebElement dataSourcePageTitle;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public CreateDataSourcePage(WebDriver driver) {
         super(driver);

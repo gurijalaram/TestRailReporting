@@ -29,8 +29,8 @@ public class CirUserGuidePage extends ReportsPageHeader {
     @FindBy(css = "body")
     private WebElement pageBody;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public CirUserGuidePage(WebDriver driver) {
         super(driver);

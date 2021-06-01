@@ -73,7 +73,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
         String expectedProjectRollup = "AC CYCLE TIME VT 1";
         assertThat(cycleTimeValueTrackingPage.getFirstRollupName(), is(equalTo(expectedProjectRollup)));
 
-        cycleTimeValueTrackingPage.clickOk();
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
 
         assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo(expectedProjectRollup)));
         assertThat(cycleTimeValueTrackingPage.getRollupInUseInChart(), is(equalTo(expectedProjectRollup)));
@@ -95,7 +95,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("1")));
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("1")));
 
-        cycleTimeValueTrackingPage.clickOk();
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo("AC CYCLE TIME VT 1")));
     }
 
@@ -112,7 +112,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
                         CycleTimeValueTrackingPage.class
                 );
 
-        cycleTimeValueTrackingPage.clickOk();
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         cycleTimeValueTrackingPage.clickHyperlink("PROJECT 2", CycleTimeValueTrackingPage.class);
         cycleTimeValueTrackingPage.switchTab(1);
         cycleTimeValueTrackingPage.waitForNewTabSwitchCycleTimeToDetailsOrComponentCost();
@@ -122,11 +122,16 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
 
         String partNumber = "IROBOT_18874";
         componentCostReportPage = cycleTimeValueTrackingPage.clickHyperlink(partNumber, ComponentCostReportPage.class);
-        componentCostReportPage.switchTab(2)
-                .waitForNewTabSwitchCycleTimeToDetailsOrComponentCost();
+        componentCostReportPage.switchTab(2);
+        cycleTimeValueTrackingPage.waitForNewTabSwitchCycleTimeToDetailsOrComponentCost();
 
-        assertThat(componentCostReportPage.getComponentCostReportTitle(),
-                is(equalTo(ReportNamesEnum.COMPONENT_COST.getReportName())));
-        assertThat(componentCostReportPage.getPartNumber(), is(equalTo(partNumber)));
+        assertThat(
+                componentCostReportPage.getComponentCostReportTitle(),
+                is(equalTo(ReportNamesEnum.COMPONENT_COST.getReportName()))
+        );
+        assertThat(
+                componentCostReportPage.getPartNumber(),
+                is(equalTo(partNumber))
+        );
     }
 }

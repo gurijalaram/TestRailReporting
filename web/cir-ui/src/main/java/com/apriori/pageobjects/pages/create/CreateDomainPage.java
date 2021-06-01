@@ -17,8 +17,8 @@ public class CreateDomainPage extends ReportsPageHeader {
     @FindBy(css = "div[data-name='repositoryResourceChooserDialog']")
     private WebElement domainDialog;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public CreateDomainPage(WebDriver driver) {
         super(driver);

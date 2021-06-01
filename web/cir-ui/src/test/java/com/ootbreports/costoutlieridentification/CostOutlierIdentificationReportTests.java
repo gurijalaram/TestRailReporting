@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.CostOutlierIdentificationReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -26,6 +27,7 @@ import java.math.BigDecimal;
 
 public class CostOutlierIdentificationReportTests extends TestBase {
 
+    private CostOutlierIdentificationReportPage costOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -123,8 +125,8 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                .clickOk();
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+                .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(reportName);
         String[] partScenarioName = genericReportPage.getPartNameDtcReports().split(" ");
@@ -223,18 +225,18 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     @TestRail(testCaseId = {"1958"})
     @Description("Percent difference threshold filter works - main report")
     public void testPercentDifferenceThresholdFilter() {
-        genericReportPage = new ReportsLoginPage(driver)
+        costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
+                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
+                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.PERCENT_VALUE, "100")
-                .clickOk();
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
-        genericReportPage.waitForReportToLoad();
+        costOutlierIdentificationReportPage.waitForReportToLoad();
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
                         true,
                         Constants.ANNUALISED_VALUE
                 ),
@@ -242,24 +244,24 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         );
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
                         true,
                         Constants.PERCENT_VALUE
                 ),
                 is(equalTo("100.0%"))
         );
 
-        assertThat(genericReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
+        assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
                 is(equalTo(1))
         );
-        assertThat(genericReportPage.getCostOutlierBarChartBarCount(Constants.PERCENT_VALUE),
+        assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.PERCENT_VALUE),
                 is(equalTo(1))
         );
 
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.ANNUALISED_VALUE),
+        assertThat(costOutlierIdentificationReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.ANNUALISED_VALUE),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.PERCENT_VALUE),
+        assertThat(costOutlierIdentificationReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.PERCENT_VALUE),
                 is(equalTo(true))
         );
     }
@@ -269,18 +271,18 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     @TestRail(testCaseId = {"1957"})
     @Description("Annualised potential savings threshold filter - main report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
-        genericReportPage = new ReportsLoginPage(driver)
+        costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
+                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
+                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.ANNUALISED_VALUE, "10000")
-                .clickOk();
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
-        genericReportPage.waitForReportToLoad();
+        costOutlierIdentificationReportPage.waitForReportToLoad();
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
                         false,
                         Constants.ANNUALISED_VALUE
                 ),
@@ -288,24 +290,24 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         );
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
                         false,
                         Constants.PERCENT_VALUE
                 ),
                 is(equalTo("n/a"))
         );
 
-        assertThat(genericReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
+        assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
                 is(equalTo(2))
         );
-        assertThat(genericReportPage.getCostOutlierBarChartBarCount(Constants.PERCENT_VALUE),
+        assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.PERCENT_VALUE),
                 is(equalTo(2))
         );
 
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.ANNUALISED_VALUE),
+        assertThat(costOutlierIdentificationReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.ANNUALISED_VALUE),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierBarEnabledAndDisplayed(Constants.PERCENT_VALUE),
+        assertThat(costOutlierIdentificationReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.PERCENT_VALUE),
                 is(equalTo(true))
         );
     }
