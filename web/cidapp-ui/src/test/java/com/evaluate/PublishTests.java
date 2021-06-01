@@ -60,7 +60,8 @@ public class PublishTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
-            .clickExplore();
+            .clickExplore()
+            .inputFilter("Recent");
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
     }

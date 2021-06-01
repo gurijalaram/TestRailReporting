@@ -28,7 +28,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
+import utils.ColumnsEnum;
 import utils.DirectionEnum;
+import utils.SortOrderEnum;
 
 import java.io.File;
 
@@ -292,6 +294,8 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
+            .inputFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
             .assign()
             .inputAssignee("Sinead Plunkett")
@@ -442,6 +446,7 @@ public class ActionsTests extends TestBase {
             .publish(EvaluatePage.class)
             .clickExplore()
             .inputFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
@@ -485,6 +490,7 @@ public class ActionsTests extends TestBase {
             .publish(EvaluatePage.class)
             .clickExplore()
             .inputFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
@@ -496,6 +502,7 @@ public class ActionsTests extends TestBase {
             .logout()
             .login(testUser2)
             .inputFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info();

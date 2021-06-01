@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 
-@Schema(location = "sds/ScenarioMaterialBean.json")
+@Schema(location = "ScenarioMaterialBean.json")
 @Data
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
