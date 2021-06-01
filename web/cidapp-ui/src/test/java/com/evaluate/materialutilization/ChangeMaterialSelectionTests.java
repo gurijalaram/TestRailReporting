@@ -21,6 +21,8 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
+import utils.ColumnsEnum;
+import utils.SortOrderEnum;
 
 import java.io.File;
 
@@ -271,6 +273,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .clickExplore()
+            .inputFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(scenarioName, "MACHINED BOX AMERICAS");
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1095"), is(true));
