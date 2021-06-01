@@ -1,4 +1,4 @@
-package com.apriori.sds.entity.response;
+package com.apriori.vds.entity.response.process.group.site.variable;
 
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
@@ -10,11 +10,11 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(location = "ScenarioItemsResponse.json")
+@Schema(location = "ProcessGroupSiteVariablesItems.json")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ScenarioItemsResponse extends Pagination {
-    private List<Scenario> items;
+public class SiteVariablesItems extends Pagination {
+    private List<SiteVariable> items;
 }

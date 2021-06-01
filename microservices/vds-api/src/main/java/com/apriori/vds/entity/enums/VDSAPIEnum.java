@@ -50,7 +50,12 @@ public enum VDSAPIEnum implements EdcQaAPI {
 
 
     // Site Variables
-    GET_SITE_VARIABLES("site-variables");
+    GET_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID("process-groups/%s/site-variables"),
+    GET_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs("process-groups/%s/site-variables/%s"),
+    PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID("process-groups/%s/site-variables"),
+    DELETE_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs("process-groups/%s/site-variables/%s"),
+    POST_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID("process-groups/%s/site-variables"),
+    PATCH_PROCESS_GROUP_SITE_VARIABLES_BY_PG_SITE_IDs("process-groups/%s/site-variables/%s");
 
     private final String endpoint;
 

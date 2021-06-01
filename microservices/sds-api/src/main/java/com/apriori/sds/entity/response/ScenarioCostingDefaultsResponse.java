@@ -8,7 +8,7 @@ import lombok.Data;
 
 import java.util.List;
 
-@Schema(location = "sds/ScenarioCostingDefaultsResponse.json")
+@Schema(location = "ScenarioCostingDefaultsResponse.json")
 @Data
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)

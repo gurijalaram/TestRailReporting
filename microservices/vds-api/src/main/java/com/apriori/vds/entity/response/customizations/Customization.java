@@ -5,6 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 import com.apriori.vds.entity.response.custom.attributes.CustomAttribute;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
+import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;

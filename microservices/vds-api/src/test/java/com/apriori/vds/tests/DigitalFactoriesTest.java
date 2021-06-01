@@ -8,8 +8,8 @@ import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.digital.factories.VPE;
 import com.apriori.vds.entity.response.digital.factories.VPEsItems;
-import com.apriori.vds.tests.util.DigitalAndPGMUtil;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
+import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -18,7 +18,7 @@ import org.junit.Test;
 
 import java.util.Collections;
 
-public class DigitalFactoriesTest extends DigitalAndPGMUtil {
+public class DigitalFactoriesTest extends VDSTestUtil {
 
     @Test
     @TestRail(testCaseId = {"8034"})

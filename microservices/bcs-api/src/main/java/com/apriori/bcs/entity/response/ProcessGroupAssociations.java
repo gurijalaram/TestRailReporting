@@ -71,12 +71,12 @@ public class ProcessGroupAssociations {
     private StockMachining surfaceTreatment;
 
     @Data
-    static class SurfaceTreatment {
+    public static class SurfaceTreatment {
         private String processGroupIdentity;
     }
 
     @Data
-    static class StockMachining {
+    public static class StockMachining {
         private String processGroupIdentity;
     }
 

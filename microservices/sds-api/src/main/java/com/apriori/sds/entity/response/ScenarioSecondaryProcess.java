@@ -8,7 +8,7 @@ import lombok.Data;
 
 import java.util.List;
 
-@Schema(location = "sds/ScenarioSecondaryProcesses.json")
+@Schema(location = "ScenarioSecondaryProcesses.json")
 @Data
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
