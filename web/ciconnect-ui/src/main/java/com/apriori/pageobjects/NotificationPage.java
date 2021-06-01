@@ -252,7 +252,8 @@ public class NotificationPage {
         }
 
         String selected = selectOption(Field.RECIPIENTSELECTFIELD, type);
-        //pageUtils.waitForElementAndClick(emailRecipientgArrow);
+        pageUtils.waitFor(5000);
+        pageUtils.waitForElementAndClick(emailRecipientgArrow);
         return selected;
     }
 
@@ -300,6 +301,7 @@ public class NotificationPage {
                 roundingOption = "No";
         }
 
+        pageUtils.waitForElementAndClick(costRoundingArrow);
         String selected = selectOption(Field.COSTROUNDINGSELECTFIELD, roundingOption);
         //pageUtils.waitForElementAndClick(costRoundingArrow);
         return selected;
