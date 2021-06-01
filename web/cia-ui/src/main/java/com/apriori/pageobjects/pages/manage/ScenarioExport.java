@@ -18,9 +18,6 @@ public class ScenarioExport extends AdminHeader {
     @FindBy(css = "h1")
     private WebElement manageScenarioExportTitle;
 
-    @FindBy(css = "[id='ToolTables_exportscheduleslist_0']")
-    private WebElement newExportButton;
-
     @FindBy(css = "[id='exportscheduleslist']")
     private WebElement exportTable;
 
@@ -43,13 +40,13 @@ public class ScenarioExport extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(newExportButton);
         pageUtils.waitForElementToAppear(exportTable);
     }
 
     /**
+     * Checks if header is displayed
      *
-     * @return
+     * @return boolean - is element displayed
      */
     public boolean isHeaderDisplayed() {
         pageUtils.waitForElementToAppear(manageScenarioExportTitle);
@@ -57,30 +54,12 @@ public class ScenarioExport extends AdminHeader {
     }
 
     /**
+     * Checks if header is enabled
      *
-     * @return
+     * @return boolean - is element enabled
      */
     public boolean isHeaderEnabled() {
         pageUtils.waitForElementToAppear(manageScenarioExportTitle);
         return pageUtils.isElementEnabled(manageScenarioExportTitle);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getHeaderText() {
-        pageUtils.waitForElementToAppear(manageScenarioExportTitle);
-        return manageScenarioExportTitle.getText();
-    }
-
-    /**
-     * Opens the new export set dialog
-     *
-     * @return new page object
-     */
-    public NewExportSet clickNew() {
-        pageUtils.waitForElementAndClick(newExportButton);
-        return new NewExportSet(driver);
     }
 }

@@ -25,7 +25,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class MachiningDtcDetailsReportTests extends TestBase {
@@ -50,7 +49,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7255"})
     @Description("Validate report is available by library - Machining DTC Details Report")
     public void testReportAvailabilityByLibrary() {
@@ -275,7 +274,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3031"})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
