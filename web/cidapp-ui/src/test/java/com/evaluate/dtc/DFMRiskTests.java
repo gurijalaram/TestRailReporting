@@ -437,7 +437,7 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario(5);
 
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(604, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(640, 1));
 
         // TODO uncomment this section when update cad file is implemented
         /*evaluatePage.updateCadFile(cadResourceFile);

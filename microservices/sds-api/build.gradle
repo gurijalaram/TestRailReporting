@@ -11,6 +11,16 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    project(':apibase').sourceSets.main.resources
+            ]
+        }
+    }
+}
+
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
