@@ -35,7 +35,7 @@ public class CommonReportTests extends TestBase {
     private ReportsPageHeader reportsPageHeader;
     private CirUserGuidePage cirUserGuide;
     private LibraryPage libraryPage;
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public CommonReportTests(WebDriver driver) {
         super();
@@ -90,15 +90,15 @@ public class CommonReportTests extends TestBase {
      *
      * @param reportName    - String
      * @param exportSetName - String
-     * @throws Exception
+     * @throws Exception - if page not found
      */
     public void testReportsUserGuideNavigation(String reportName, String exportSetName) throws Exception {
         cirUserGuide = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSet(exportSetName)
-            .clickOk()
+            .selectExportSet(exportSetName, GenericReportPage.class)
+            .clickOk(CirUserGuidePage.class)
             .navigateToReportUserGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -111,9 +111,9 @@ public class CommonReportTests extends TestBase {
     /**
      * Machining and Sheet Metal DTC Comparison Sort Order Test
      *
-     * @param reportName     String
-     * @param sortOrder      String
-     * @param partNames      String[]
+     * @param reportName - String
+     * @param sortOrder - String
+     * @param partNames - String[]
      */
     public void machiningSheetMetalDtcComparisonSortOrderTest(String reportName, String sortOrder, String[] partNames) {
         String exportSet = reportName.equals(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName())
@@ -123,9 +123,9 @@ public class CommonReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSet(exportSet)
+            .selectExportSet(exportSet, GenericReportPage.class)
             .selectSortOrder(sortOrder)
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
 
@@ -169,9 +169,9 @@ public class CommonReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(sortOrder)
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
         String[] elementNames = {elementNameOne, elementNameTwo};
@@ -218,9 +218,9 @@ public class CommonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         String partName = "";
@@ -269,9 +269,9 @@ public class CommonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         String partName = "";
@@ -312,6 +312,7 @@ public class CommonReportTests extends TestBase {
 
     /**
      * Generic test for Export Set Dropdown in Assembly Cost Reports
+     *
      * @param reportName String
      * @param exportSetName String
      */
@@ -337,6 +338,7 @@ public class CommonReportTests extends TestBase {
 
     /**
      * Generic test for Export Set Dropdown in Assembly Cost Reports
+     *
      * @param reportName String
      * @param assemblyName String
      */
@@ -357,6 +359,7 @@ public class CommonReportTests extends TestBase {
 
     /**
      * Generic test for Scenario Name Dropdown
+     *
      * @param reportName String
      * @param scenarioName String
      */
@@ -376,6 +379,7 @@ public class CommonReportTests extends TestBase {
 
     /**
      * Generic test to check that Sub Assembly selection works
+     *
      * @param reportName String
      */
     public void testSubAssemblySelectionAssemblyCost(String reportName) {
@@ -412,7 +416,7 @@ public class CommonReportTests extends TestBase {
                 .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
 
-        assemblyCostReportPage.clickOk()
+        assemblyCostReportPage.clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyCostReportPage.class);
 
         String reportsPartName =

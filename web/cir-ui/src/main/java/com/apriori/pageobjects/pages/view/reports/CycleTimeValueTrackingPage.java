@@ -41,11 +41,14 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[13]/td[3]/span/span")
     private WebElement firstRowPartNumber;
 
-    private String genericRollupListLocator = "//div[contains(@class, 'dropdownContainer')][1]//ul/li[%s]";
-    private Map<String, String> valueIndexes = new HashMap<String, String>();
+    @FindBy(xpath = "//span[contains(text(), 'Steel')]")
+    private WebElement cycleTimeValueTrackingDetailsMaterialComposition;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final String genericRollupListLocator = "//div[contains(@class, 'dropdownContainer')][1]//ul/li[%s]";
+    private final Map<String, String> valueIndexes = new HashMap<String, String>();
+
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public CycleTimeValueTrackingPage(WebDriver driver) {
         super(driver);
@@ -58,6 +61,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets count of items in a dropdown on either report
+     *
      * @return String
      */
     public String getCountOfDropdownItems(String index) {
@@ -67,6 +71,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets name of first rollup
+     *
      * @return String
      */
     public String getFirstRollupName() {
@@ -76,6 +81,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets rollup in use as displayed above chart
+     *
      * @return String
      */
     public String getRollupInUseAboveChart() {
@@ -85,6 +91,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets rollup in use as displayed in bottom chart
+     *
      * @return String
      */
     public String getRollupInUseInChart() {
@@ -93,6 +100,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Selects project rollup
+     *
      * @return instance of current page object
      */
     public CycleTimeValueTrackingPage selectProjectRollup() {
@@ -106,6 +114,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets project name
+     *
      * @return String
      */
     public String getProjectName() {
@@ -115,6 +124,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets Cycle Time Value Tracking or Details report title
+     *
      * @return String
      */
     public String getCycleTimeReportTitle() {
@@ -123,6 +133,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Clicks specified project name
+     *
      * @param name - String
      */
     public <T> T clickHyperlink(String name, Class<T> className) {
@@ -144,6 +155,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
 
     /**
      * Gets specified value from the Report
+     *
      * @param valueToGet - String
      * @return String
      */
@@ -155,6 +167,13 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
         );
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getAttribute("textContent");
+    }
+
+    /**
+     * Waits for tab switch to occur from Cycle Time Value Tracking to Details or Component Cost Reports
+     */
+    public void waitForNewTabSwitchCycleTimeToDetailsOrComponentCost() {
+        pageUtils.waitForElementToAppear(cycleTimeValueTrackingDetailsMaterialComposition);
     }
 
     private void intialiseValueIndexesMap() {

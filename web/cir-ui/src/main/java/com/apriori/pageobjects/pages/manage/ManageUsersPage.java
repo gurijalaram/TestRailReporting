@@ -17,8 +17,8 @@ public class ManageUsersPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='users']/div/div[1]/div[contains(@class, 'title')]")
     private WebElement usersPageTitle;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public ManageUsersPage(WebDriver driver) {
         super(driver);
