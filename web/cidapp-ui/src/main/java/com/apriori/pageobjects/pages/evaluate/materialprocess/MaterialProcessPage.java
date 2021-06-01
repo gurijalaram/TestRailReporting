@@ -37,7 +37,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//button[.='Material Utilization']")
     private WebElement materialUtilizationTab;
 
-
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockTab;
 
