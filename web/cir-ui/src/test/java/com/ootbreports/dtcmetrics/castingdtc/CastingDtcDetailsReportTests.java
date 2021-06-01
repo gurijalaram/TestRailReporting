@@ -23,7 +23,6 @@ import com.navigation.CommonReportTests;
 import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
 import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
-import javassist.expr.Cast;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

@@ -24,7 +24,6 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
 
     private DesignOutlierIdentificationReportPage designOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
-    private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
 
     public DesignOutlierIdentificationDetailsReportTests() {

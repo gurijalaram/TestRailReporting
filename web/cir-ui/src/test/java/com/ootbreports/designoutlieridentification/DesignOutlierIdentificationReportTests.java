@@ -16,7 +16,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
-import net.bytebuddy.description.type.TypeList;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
