@@ -1,6 +1,5 @@
 package com.apriori.vds.tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.utils.GenerateStringUtil;
@@ -12,25 +11,18 @@ import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariablesItems;
+import com.apriori.vds.tests.util.SiteVariableUtil;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
-import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SiteVariablesTest extends VDSTestUtil {
-
-    private static final List<String> siteVariableIdsToDelete = new ArrayList<>();
-
-    private final String updatedName = new GenerateStringUtil().generateSiteName();
-    private final String updatedValue = "UpdatedValue";
-    private final String updatedNotes = "UpdatedNotes";
+public class SiteVariablesTest extends SiteVariableUtil {
 
     @AfterClass
     public static void deleteTestingData() {
@@ -80,12 +72,11 @@ public class SiteVariablesTest extends VDSTestUtil {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PATCH_SITE_VARIABLES_BY_ID, SiteVariable.class)
                 .inlineVariables(Collections.singletonList(siteVariableBeforeUpdate.getIdentity()))
-                .body(this.initUpdateRequestBody(siteVariableBeforeUpdate));
+                .body(initUpdateRequestBody(siteVariableBeforeUpdate));
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
-        this.validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
+        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
     }
 
     @Test
@@ -96,11 +87,11 @@ public class SiteVariablesTest extends VDSTestUtil {
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
-                .body(this.initUpdateRequestBody(siteVariable));
+                .body(initUpdateRequestBody(siteVariable));
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).put();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
-        this.validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
+        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
     }
 
     private static void deleteSiteVariableById(final String identity) {
@@ -108,22 +99,6 @@ public class SiteVariablesTest extends VDSTestUtil {
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
                 .inlineVariables(Collections.singletonList(identity));
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
-    }
-
-    private void validateUpdatedFields(SiteVariable updatedSiteVariable) {
-        assertNotEquals("The name should not be updated.", updatedName, updatedSiteVariable.getName());
-        assertEquals("The value should be updated.", updatedValue, updatedSiteVariable.getValue());
-        assertEquals("Notes should be updated.", updatedNotes, updatedSiteVariable.getNotes());
-    }
-
-    private SiteVariableRequest initUpdateRequestBody(final SiteVariable siteVariableInfo) {
-        return SiteVariableRequest.builder()
-            .name(updatedName)
-            .value(updatedValue)
-            .notes(updatedNotes)
-            .updatedBy(siteVariableInfo.getCreatedBy())
-            .createdBy(siteVariableInfo.getCreatedBy())
-            .build();
     }
 
     private SiteVariable getFirstSiteVariable() {
@@ -135,8 +110,8 @@ public class SiteVariablesTest extends VDSTestUtil {
 
     private List<SiteVariable> getSiteVariablesResponse() {
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class);
-        ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTP2Request.build(requestEntity).get();
 
+        ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, siteVariablesResponse.getStatusCode());
 
         return siteVariablesResponse.getResponseEntity().getItems();

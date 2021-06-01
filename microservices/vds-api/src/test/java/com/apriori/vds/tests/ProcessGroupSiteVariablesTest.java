@@ -1,6 +1,5 @@
 package com.apriori.vds.tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.utils.GenerateStringUtil;
@@ -12,26 +11,19 @@ import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariablesItems;
+import com.apriori.vds.tests.util.SiteVariableUtil;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
-import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
-
-    private static final List<String> siteVariableIdsToDelete = new ArrayList<>();
-
-    private final String updatedName = new GenerateStringUtil().generateSiteName();
-    private final String updatedValue = "UpdatedValue";
-    private final String updatedNotes = "UpdatedNotes";
+public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     @AfterClass
     public static void deleteTestingData() {
@@ -82,12 +74,12 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PATCH_PROCESS_GROUP_SITE_VARIABLES_BY_PG_SITE_IDs, SiteVariable.class)
                 .inlineVariables(Arrays.asList(getProcessGroupIdentity(), siteVariableBeforeUpdate.getIdentity()))
-                .body(this.initUpdateRequestBody(siteVariableBeforeUpdate));
+                .body(initUpdateRequestBody(siteVariableBeforeUpdate));
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
 
-        this.validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
+        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
     }
 
     @Test
@@ -99,13 +91,12 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
-                .inlineVariables(Arrays.asList(getProcessGroupIdentity()))
-                .body(this.initUpdateRequestBody(siteVariableBeforeUpdate));
+                .inlineVariables(Collections.singletonList(getProcessGroupIdentity()))
+                .body(initUpdateRequestBody(siteVariableBeforeUpdate));
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).put();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
-
-        this.validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
+        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
     }
 
     private static void deleteProcessGroupSiteVariableById(final String identity) {
@@ -150,21 +141,5 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, siteVariableResponse.getStatusCode());
 
         return siteVariableResponse.getResponseEntity();
-    }
-
-    private SiteVariableRequest initUpdateRequestBody(final SiteVariable siteVariableBeforeUpdate) {
-        return SiteVariableRequest.builder()
-            .name(updatedName)
-            .value(updatedValue)
-            .notes(updatedNotes)
-            .updatedBy(siteVariableBeforeUpdate.getCreatedBy())
-            .createdBy(siteVariableBeforeUpdate.getCreatedBy())
-            .build();
-    }
-
-    private void validateUpdatedFields(SiteVariable updatedSiteVariable) {
-        assertNotEquals("The name should not be updated.", updatedName, updatedSiteVariable.getName());
-        assertEquals("The value should be updated.", updatedValue, updatedSiteVariable.getValue());
-        assertEquals("Notes should be updated.", updatedNotes, updatedSiteVariable.getNotes());
     }
 }
