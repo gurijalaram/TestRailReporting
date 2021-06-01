@@ -148,7 +148,7 @@ public class PublishExistingCostedTests extends TestBase {
             .continues(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Compaction Pressing / Furnace Sintering"));
     }
 
     @Test
