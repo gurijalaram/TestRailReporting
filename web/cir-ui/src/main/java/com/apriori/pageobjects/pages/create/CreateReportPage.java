@@ -17,8 +17,8 @@ public class CreateReportPage extends ReportsPageHeader {
     @FindBy(id = "reportGeneratorProperties")
     private WebElement createReportDialog;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public CreateReportPage(WebDriver driver) {
         super(driver);

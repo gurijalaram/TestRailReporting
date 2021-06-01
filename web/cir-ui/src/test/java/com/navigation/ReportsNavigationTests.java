@@ -230,9 +230,18 @@ public class ReportsNavigationTests extends TestBase {
 
         String urlToCheck = domain.getUrlToCheck();
 
-        assertThat(domain.getCurrentUrl(), equalTo(String.format("%s%s", urlToCheck, Constants.DOMAIN_DESIGNER_URL_SUFFIX)));
-        assertThat(domain.isDialogDisplayed(), is(equalTo(true)));
-        assertThat(domain.isDialogEnabled(), is(equalTo(true)));
+        assertThat(
+                domain.getCurrentUrl(),
+                equalTo(String.format("%s%s", urlToCheck, Constants.DOMAIN_DESIGNER_URL_SUFFIX))
+        );
+        assertThat(
+                domain.isDialogDisplayed(),
+                is(equalTo(true))
+        );
+        assertThat(
+                domain.isDialogEnabled(),
+                is(equalTo(true))
+        );
     }
 
     @Test

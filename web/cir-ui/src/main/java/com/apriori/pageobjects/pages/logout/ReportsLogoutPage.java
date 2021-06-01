@@ -20,8 +20,8 @@ public class ReportsLogoutPage extends ReportsPageHeader {
     @FindBy(css = "button[type='submit']")
     private WebElement loginButton;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ReportsLogoutPage(WebDriver driver) {
         super(driver);

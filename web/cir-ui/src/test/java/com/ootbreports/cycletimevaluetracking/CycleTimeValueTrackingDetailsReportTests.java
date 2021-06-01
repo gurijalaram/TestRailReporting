@@ -80,7 +80,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
         cycleTimeValueTrackingPage.selectProjectRollup()
-                .clickOk();
+                .clickOk(CycleTimeValueTrackingPage.class);
 
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
     }
@@ -105,7 +105,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
         assertThat(Integer.parseInt(cycleTimeValueTrackingPage.getCountOfDropdownItems("3")),
                 is(greaterThan(0)));
 
-        cycleTimeValueTrackingPage.clickOk();
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
     }
 
@@ -121,7 +121,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                         CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 
-        cycleTimeValueTrackingPage.clickOk()
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class)
                 .waitForCorrectPartName("IROBOT_18874");
 
         String reportsPartNumber = cycleTimeValueTrackingPage.getPartNumber();

@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
@@ -26,6 +27,7 @@ import testsuites.suiteinterface.ReportsTest;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
 
+    private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -233,17 +235,17 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1369"})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
-        genericReportPage = new ReportsLoginPage(driver)
+        plasticDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), PlasticDtcReportPage.class)
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), PlasticDtcReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk();
+            .clickOk(PlasticDtcReportPage.class);
 
-        genericReportPage.waitForReportToLoad();
+        plasticDtcReportPage.waitForReportToLoad();
 
-        assertThat(genericReportPage.getPlasticDtcDetailsRowOnePartName(),
+        assertThat(plasticDtcReportPage.getPlasticDtcDetailsRowOnePartName(),
             is(equalTo("PLASTIC MOULDED CAP THICKPART")));
     }
 

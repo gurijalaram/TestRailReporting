@@ -17,8 +17,8 @@ public class LibraryPage extends ReportsPageHeader {
     @FindBy(css = "div[class='pageHeader-title-text'")
     private WebElement libraryPageTitle;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public LibraryPage(WebDriver driver) {
         super(driver);

@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -80,7 +81,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
         assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText(),
                 is(equalTo("AC CYCLE TIME VT 1")));
 
-        targetQuotedCostTrendReportPage.clickOk();
+        targetQuotedCostTrendReportPage.clickOk(TargetQuotedCostTrendReportPage.class);
         assertThat(targetQuotedCostTrendReportPage.isChartDisplayedAndEnabled(), is(equalTo(true)));
     }
 
@@ -105,7 +106,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
 
         String projectToSelect = "PROJECT 4";
         targetQuotedCostTrendReportPage.selectProject(projectToSelect);
-        targetQuotedCostTrendReportPage.clickOk();
+        targetQuotedCostTrendReportPage.clickOk(TargetQuotedCostTrendReportPage.class);
 
         assertThat(targetQuotedCostTrendReportPage.isChartDisplayedAndEnabled(), is(equalTo(true)));
         assertThat(targetQuotedCostTrendReportPage.getProjectNameAboveChart(), is(equalTo(projectToSelect)));
@@ -126,7 +127,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
         assertThat(targetQuotedCostTrendReportPage.isExportDateRecent(), is(equalTo(true)));
 
         String exportDateSelected = targetQuotedCostTrendReportPage.getCurrentExportDate().replace("T", " ");
-        targetQuotedCostTrendReportPage.clickOk();
+        targetQuotedCostTrendReportPage.clickOk(TargetQuotedCostTrendReportPage.class);
         assertThat(targetQuotedCostTrendReportPage.getExportDateFromAboveChart(), is(equalTo(exportDateSelected)));
     }
 
@@ -167,15 +168,15 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);
 
-        targetQuotedCostTrendReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-                .clickOk()
+        targetQuotedCostTrendReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+                .clickOk(TargetQuotedCostTrendReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
         targetQuotedCostTrendReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-                .clickOk()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .clickOk(TargetQuotedCostTrendReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();

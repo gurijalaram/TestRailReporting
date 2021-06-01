@@ -17,8 +17,8 @@ public class ViewSchedulesPage extends ReportsPageHeader {
     @FindBy(css = "div[class='pageHeader-title-text']")
     private WebElement schedulesPageTitle;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public ViewSchedulesPage(WebDriver driver) {
         super(driver);

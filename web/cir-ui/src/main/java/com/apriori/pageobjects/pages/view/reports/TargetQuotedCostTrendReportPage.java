@@ -67,8 +67,8 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[22]/td[26]/span")
     private WebElement annualizedCurrentAprioriCost;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public TargetQuotedCostTrendReportPage(WebDriver driver) {
         super(driver);
@@ -80,6 +80,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets project rollup dropdown first option text
+     *
      * @return String
      */
     public String getProjectRollupDropdownOptionText() {
@@ -88,6 +89,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets project name dropdown item count
+     *
      * @return String
      */
     public String getProjectNameDropdownItemCount() {
@@ -97,6 +99,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets project name dropdown option text
+     *
      * @param optionIndex index of item text to get
      * @return String
      */
@@ -108,6 +111,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Checks if chart is displayed and enabled
+     *
      * @return boolean
      */
     public boolean isChartDisplayedAndEnabled() {
@@ -117,6 +121,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Selects project from dropdown
+     *
      * @param projectToSelect String
      */
     public void selectProject(String projectToSelect) {
@@ -130,6 +135,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets project name from above chart
+     *
      * @return String
      */
     public String getProjectNameAboveChart() {
@@ -139,6 +145,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets count of export date dropdown options
+     *
      * @return String
      */
     public String getCountOfExportDateOptions() {
@@ -147,6 +154,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets currently selected export date
+     *
      * @return String
      */
     public String getCurrentExportDate() {
@@ -156,6 +164,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Checks if export date is this year or last year
+     *
      * @return boolean
      */
     public boolean isExportDateRecent() {
@@ -171,6 +180,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets export date from above chart
+     *
      * @return String
      */
     public String getExportDateFromAboveChart() {
@@ -194,6 +204,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets cost avoided final value as a string
+     *
      * @return String
      */
     public String getCostAvoidedFinal() {
@@ -203,6 +214,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets final apriori cost value as a string
+     *
      * @return String
      */
     public String getFinalAprioriCost() {
@@ -212,6 +224,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Clicks the specified milestone link
+     *
      * @param milestoneName String
      * @return instance of page object
      */
@@ -225,6 +238,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets milestone name
+     *
      * @return String
      */
     public String getMilestoneName() {
@@ -234,6 +248,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets part name
+     *
      * @param index - String index of value to get
      * @return String
      */
@@ -245,6 +260,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Gets first project name from Value Tracking Reports
+     *
      * @return String
      */
     public String getFirstProject() {
@@ -254,6 +270,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Get quoted cost difference from apriori cost in Value Tracking reports
+     *
      * @return String
      */
     public String getQuotedCostDifferenceFromApCost() {
@@ -263,6 +280,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Get current Apriori cost from Value Tracking Details Report
+     *
      * @return String
      */
     public String getCurrentAprioriCost() {
@@ -272,6 +290,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
 
     /**
      * Get annualized current Apriori cost from Value Tracking Details Report
+     *
      * @return String
      */
     public String getAnnualizedCost() {

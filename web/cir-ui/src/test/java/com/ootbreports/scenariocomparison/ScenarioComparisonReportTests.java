@@ -77,7 +77,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Available: ", "2");
@@ -115,17 +115,17 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
                 .selectFirstTwoComparisonScenarios()
-                .clickOk()
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
 
         usdFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
         usdSecondFbc = scenarioComparisonReportPage.getFbcValue(false);
 
         scenarioComparisonReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-                .clickOk()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ScenarioComparisonReportPage.class);
 
         gbpFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
@@ -322,10 +322,10 @@ public class ScenarioComparisonReportTests extends TestBase {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-                .selectComponentType(Constants.ASSEMBLY_COMPONENT_TYPE);
+                .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), ScenarioComparisonReportPage.class);
+
+        scenarioComparisonReportPage.waitForInputControlsLoad();
+        scenarioComparisonReportPage.selectComponentType("assembly");
 
         assertThat(scenarioComparisonReportPage.getFirstScenarioName(Constants.ASSEMBLY_COMPONENT_TYPE),
                 containsString(String.format("[%s]", Constants.ASSEMBLY_COMPONENT_TYPE)));

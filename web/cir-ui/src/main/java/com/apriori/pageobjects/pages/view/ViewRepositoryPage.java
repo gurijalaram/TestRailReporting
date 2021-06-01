@@ -20,7 +20,7 @@ import java.util.Map;
 public class ViewRepositoryPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewRepositoryPage.class);
-    private Map<String, String[]> navigationMap = new HashMap<>();
+    private final Map<String, String[]> navigationMap = new HashMap<>();
 
     @FindBy(xpath = "//div[contains(text(), 'Repository')]")
     private WebElement repositoryPageTitle;
@@ -28,8 +28,8 @@ public class ViewRepositoryPage extends ReportsPageHeader {
     @FindBy(css = "ul[id='resultsList']")
     private WebElement generalReportsList;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public ViewRepositoryPage(WebDriver driver) {
         super(driver);

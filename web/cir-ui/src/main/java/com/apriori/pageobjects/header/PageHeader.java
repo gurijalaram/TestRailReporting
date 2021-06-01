@@ -122,8 +122,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "body")
     private WebElement pageBody;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public PageHeader(WebDriver driver) {
         this.driver = driver;

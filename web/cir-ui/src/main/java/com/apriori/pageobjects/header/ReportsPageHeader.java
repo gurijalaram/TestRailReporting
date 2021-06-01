@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.Constants;
 
 public class ReportsPageHeader extends PageHeader {
 
@@ -66,8 +65,8 @@ public class ReportsPageHeader extends PageHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ReportsPageHeader(WebDriver driver) {
         super(driver);

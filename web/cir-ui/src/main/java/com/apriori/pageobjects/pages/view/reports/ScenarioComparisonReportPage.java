@@ -49,8 +49,8 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
     @FindBy(xpath = "//div[@id='partNumber']//input")
     private WebElement partNumberSearchCriteriaInput;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public ScenarioComparisonReportPage(WebDriver driver) {
         super(driver);
@@ -61,7 +61,8 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
     }
 
     /**
-     * Get first or second Fbc Value
+     * Get first or second fbc Value
+     *
      * @param getFirst boolean
      * @return BigDecimal
      */
@@ -73,6 +74,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
     /**
      * Gets Scenarios to Compare Name
+     *
      * @param index int
      * @return String
      */
@@ -131,6 +133,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
     /**
      * Checks if no items available text is displayed
+     *
      * @return boolean - displayed && enabled
      */
     public boolean isNoItemsAvailableTextDisplayed() {
@@ -140,6 +143,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
     /**
      * Gets available scenarios to compare count
+     *
      * @return String
      */
     public String getCountOfAvailableScenariosToCompare() {
@@ -148,6 +152,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
     /**
      * Gets selected scenarios to compare count
+     *
      * @return String
      */
     public String getCountOfSelectedScenariosToCompare() {
@@ -174,18 +179,9 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
     }
 
     /**
-     * Waits for Scenario to Compare filter to take effect
-     */
-    public void waitForScenarioToCompareFilter() {
-        for (int i = 1; i < 11; i++) {
-            By locator = By.xpath(String.format(
-                    "(//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')][%s]", i));
-            pageUtils.waitForElementToAppear(locator);
-        }
-    }
-
-    /**
      * Gets name of first scenario to compare
+     *
+     * @param substringName - boolean
      */
     public String getNameOfFirstScenarioToCompare(boolean substringName) {
         By locator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0001-2140 (Initial) [part]']");
@@ -218,6 +214,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
 
     /**
      * Inputs part number search criteria
+     *
      * @param partNumberToInput String
      */
     public void inputPartNumberSearchCriteria(String partNumberToInput) {
@@ -227,5 +224,28 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         partNumberSearchCriteriaInput.sendKeys(Keys.ENTER);
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1");
+    }
+
+    /**
+     * Selects Component Type
+     *
+     * @param componentType - String of component type for locator
+     */
+    public void selectComponentType(String componentType) {
+        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Component Type")));
+
+        By scenarioTypeLocator = By.xpath(String.format("(//div[@title='Scenario Type']//ul)[1]/li[@title='%s']",
+                componentType));
+        pageUtils.waitForElementAndClick(scenarioTypeLocator);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
+
+        for (int i = 1; i < 6; i++) {
+            pageUtils.waitForElementToAppear(By.xpath(String.format(
+                    "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '[%s]')])[%s]",
+                    componentType, i)
+            ));
+        }
+        new ScenarioComparisonReportPage(driver);
     }
 }

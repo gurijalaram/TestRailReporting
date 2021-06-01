@@ -20,8 +20,8 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
     @FindBy(id = "accessTypeFilter_item1")
     private WebElement allAvailableFilterButton;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public ViewSearchResultsPage(WebDriver driver) {
         super(driver);
