@@ -66,11 +66,8 @@ public class ReportsPageHeader extends PageHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
-    @FindBy(css = "div[class='pageHeader-title-text']")
-    private WebElement pageTitle;
-
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     public ReportsPageHeader(WebDriver driver) {
         super(driver);

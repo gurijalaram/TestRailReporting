@@ -251,9 +251,9 @@ public class PlasticDtcComparisonReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
         String elementName = "PLASTIC MOULDED CAP THICKPART";

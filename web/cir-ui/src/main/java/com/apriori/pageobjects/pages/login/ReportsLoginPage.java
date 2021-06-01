@@ -16,7 +16,7 @@ import utils.Constants;
 public class ReportsLoginPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
-    private static String loginPageURL = Constants.getDefaultUrl();
+    private static final String loginPageURL = Constants.getDefaultUrl();
 
     @FindBy(css = "input[name='email']")
     private WebElement email;

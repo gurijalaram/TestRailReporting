@@ -14,8 +14,8 @@ public class ViewSchedulesPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewSchedulesPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public ViewSchedulesPage(WebDriver driver) {
         super(driver);

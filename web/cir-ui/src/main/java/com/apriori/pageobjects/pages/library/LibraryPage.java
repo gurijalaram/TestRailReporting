@@ -15,8 +15,11 @@ public class LibraryPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(LibraryPage.class);
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
+    private WebElement libraryPageTitle;
+
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public LibraryPage(WebDriver driver) {
         super(driver);

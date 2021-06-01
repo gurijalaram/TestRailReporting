@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.CostOutlierIdentificationReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -26,6 +27,7 @@ import java.math.BigDecimal;
 
 public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
+    private CostOutlierIdentificationReportPage costOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -96,18 +98,22 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"6823"})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Details Report")
     public void testDataIntegrityAgainstCID() {
-        genericReportPage = new ReportsLoginPage(driver)
+        costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-                        GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                .clickOk();
+                .navigateToReport(
+                        ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                        CostOutlierIdentificationReportPage.class)
+                .selectExportSet(
+                        ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                        CostOutlierIdentificationReportPage.class)
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
-        String partName = genericReportPage.getPartNameCastingSheetMetalDtcDetails(true);
-        BigDecimal reportsFbc = genericReportPage.getFirstFbcCostOutlierDetailsReport();
+        String partName = costOutlierIdentificationReportPage.getPartNameCastingSheetMetalDtcDetails(
+                true);
+        BigDecimal reportsFbc = costOutlierIdentificationReportPage.getFirstFbcCostOutlierDetailsReport();
 
-        genericReportPage.openNewCidTabAndFocus(1);
+        costOutlierIdentificationReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
@@ -126,34 +132,37 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"1965"})
     @Description("Validate details report generates")
     public void testDetailsReportGenerates() {
-        genericReportPage = new ReportsLoginPage(driver)
+        costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                .clickOk();
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                        CostOutlierIdentificationReportPage.class)
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
-        genericReportPage.waitForReportToLoad();
+        costOutlierIdentificationReportPage.waitForReportToLoad();
 
-        assertThat(genericReportPage.isCostOutlierSvgDisplayedAndEnabled("1"),
+        assertThat(costOutlierIdentificationReportPage.isCostOutlierSvgDisplayedAndEnabled("1"),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierSvgDisplayedAndEnabled("2"),
+        assertThat(costOutlierIdentificationReportPage.isCostOutlierSvgDisplayedAndEnabled("2"),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierTableTitleDisplayed(true),
+        assertThat(costOutlierIdentificationReportPage.isCostOutlierTableTitleDisplayed(true),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierTableTitleDisplayed(false),
+        assertThat(costOutlierIdentificationReportPage.isCostOutlierTableTitleDisplayed(false),
                 is(equalTo(true))
         );
 
-        genericReportPage.clickDetailsLink();
-        assertThat(genericReportPage.isCostOutlierDetailsTableTitleDisplayed(Constants.PERCENT_VALUE),
+        costOutlierIdentificationReportPage.clickDetailsLink();
+        assertThat(
+                costOutlierIdentificationReportPage.isCostOutlierDetailsTableTitleDisplayed(Constants.PERCENT_VALUE),
                 is(equalTo(true))
         );
-        assertThat(genericReportPage.isCostOutlierDetailsTableTitleDisplayed(Constants.ANNUALISED_VALUE),
+        assertThat(
+                costOutlierIdentificationReportPage.isCostOutlierDetailsTableTitleDisplayed(Constants.ANNUALISED_VALUE),
                 is(equalTo(true))
         );
     }
@@ -224,20 +233,21 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"6990"})
     @Description("Annualised potential savings threshold filter - details report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
-        genericReportPage = new ReportsLoginPage(driver)
+        costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(
                         ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-                        GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
+                        CostOutlierIdentificationReportPage.class)
+                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(),
+                        CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.ANNUALISED_VALUE, "10000")
-                .clickOk();
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
-        genericReportPage.waitForReportToLoad();
+        costOutlierIdentificationReportPage.waitForReportToLoad();
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
                         false,
                         Constants.ANNUALISED_VALUE
                 ),
@@ -245,19 +255,24 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         );
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
                         false,
                         Constants.PERCENT_VALUE
                 ),
                 is(equalTo("n/a"))
         );
 
-        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+        assertThat(
+                costOutlierIdentificationReportPage.getPartNameCastingSheetMetalDtcDetails(true),
                 is(equalTo("SM_CLEVIS_2207240161")));
 
-        assertThat(genericReportPage.getTotalAnnualisedOrPercentValue("Percent Value Annualised Set"),
+        assertThat(
+                costOutlierIdentificationReportPage.getTotalAnnualisedOrPercentValue(
+                        "Percent Value Annualised Set"),
                 is(equalTo("33.9%")));
-        assertThat(genericReportPage.getTotalAnnualisedOrPercentValue("Annualised Value Annualised Set"),
+        assertThat(
+                costOutlierIdentificationReportPage.getTotalAnnualisedOrPercentValue(
+                        "Annualised Value Annualised Set"),
                 is(equalTo("266,056.86")));
     }
 
@@ -266,20 +281,20 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"6985"})
     @Description("Percent difference threshold filter works - details report")
     public void testPercentDifferenceThresholdFilter() {
-        genericReportPage = new ReportsLoginPage(driver)
+        costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(
                         ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-                        GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
+                        CostOutlierIdentificationReportPage.class)
+                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.PERCENT_VALUE, "100")
-                .clickOk();
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
-        genericReportPage.waitForReportToLoad();
+        costOutlierIdentificationReportPage.waitForReportToLoad();
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
                         true,
                         Constants.ANNUALISED_VALUE
                 ),
@@ -287,19 +302,23 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         );
 
         assertThat(
-                genericReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
                         true,
                         Constants.PERCENT_VALUE
                 ),
                 is(equalTo("100.0%"))
         );
 
-        assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+        assertThat(
+                costOutlierIdentificationReportPage.getPartNameCastingSheetMetalDtcDetails(true),
                 is(equalTo("-12")));
 
-        assertThat(genericReportPage.getTotalAnnualisedOrPercentValue("Percent Value Percent Set"),
+        assertThat(
+                costOutlierIdentificationReportPage.getTotalAnnualisedOrPercentValue("Percent Value Percent Set"),
                 is(equalTo("100.0%")));
-        assertThat(genericReportPage.getTotalAnnualisedOrPercentValue("Annualised Value Percent Set"),
+        assertThat(
+                costOutlierIdentificationReportPage.getTotalAnnualisedOrPercentValue(
+                        "Annualised Value Percent Set"),
                 is(equalTo("7,200.00")));
     }
 }

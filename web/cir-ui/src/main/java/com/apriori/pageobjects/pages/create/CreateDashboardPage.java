@@ -17,8 +17,8 @@ public class CreateDashboardPage extends ReportsPageHeader {
     @FindBy(css = "div[class='pageHeader-title-text']")
     private WebElement dashboardPageTitle;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public CreateDashboardPage(WebDriver driver) {
         super(driver);

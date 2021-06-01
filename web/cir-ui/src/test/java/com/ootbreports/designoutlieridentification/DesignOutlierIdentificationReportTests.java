@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.DesignOutlierIdentificationReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -23,6 +24,7 @@ import java.math.BigDecimal;
 
 public class DesignOutlierIdentificationReportTests extends TestBase {
 
+    private DesignOutlierIdentificationReportPage designOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
     private CommonReportTests commonReportTests;
@@ -117,15 +119,21 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     @TestRail(testCaseId = {"1995"})
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
-        genericReportPage = new ReportsLoginPage(driver)
+        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                    GenericReportPage.class);
+                    DesignOutlierIdentificationReportPage.class);
 
-        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+        designOutlierIdentificationReportPage.selectExportSet(
+                ExportSetEnum.ROLL_UP_A.getExportSetName(),
+                GenericReportPage.class
+        );
 
-        assertThat(genericReportPage.getExportDateCount(), is(equalTo("2")));
+        assertThat(
+                designOutlierIdentificationReportPage.getExportDateCount(),
+                is(equalTo("2"))
+        );
     }
 
     @Test
@@ -187,8 +195,8 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class);
 
-        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-                .clickOk();
+        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
+                .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")

@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
+import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -40,7 +41,7 @@ public class InputControlsTests extends TestBase {
     private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
     private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private GenericReportPage genericReportPage;
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public InputControlsTests(WebDriver driver) {
         super();
@@ -121,7 +122,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSetName);
+            .selectExportSet(exportSetName, GenericReportPage.class);
 
         assertThat(genericReportPage.getSelectedRollup(rollupName), is(rollupName));
 
@@ -143,11 +144,11 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .clickCancel(GenericReportPage.class);
+            .clickCancel();
 
         assertThat(genericReportPage.getInputControlsDivClassName(), containsString("hidden"));
-        assertThat(genericReportPage.inputControlsIsDisplayed(), is(equalTo(false)));
-        assertThat(genericReportPage.inputControlsIsEnabled(), is(equalTo(true)));
+        assertThat(genericReportPage.isInputControlsDisplayed(), is(equalTo(false)));
+        assertThat(genericReportPage.isInputControlsEnabled(), is(equalTo(true)));
     }
 
     /**
@@ -162,7 +163,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSetName)
+            .selectExportSet(exportSetName, GenericReportPage.class)
             .clickReset()
             .waitForExpectedExportCount("0");
 
@@ -181,7 +182,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSetName)
+            .selectExportSet(exportSetName, GenericReportPage.class)
             .clickSave()
             .enterSaveName(Constants.SAVED_CONFIG_NAME)
             .clickSaveAsButton()
@@ -208,7 +209,7 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectRollup(rollupName)
-            .clickOk()
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         assertThat(genericReportPage.getDisplayedRollup(),
@@ -260,9 +261,9 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSetName)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
+            .selectExportSet(exportSetName, GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         genericReportPage.setReportName(reportName);
@@ -270,8 +271,8 @@ public class InputControlsTests extends TestBase {
         usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         genericReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk()
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
 
         genericReportPage.setReportName(reportName);
@@ -284,6 +285,10 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for export set selection
+     *
+     * @param reportName - String
+     * @param exportSet - String
+     * @param rollupName - String
      */
     public void testExportSetAvailabilityAndSelection(String reportName, String exportSet, String rollupName) {
         genericReportPage = new ReportsLoginPage(driver)
@@ -291,8 +296,8 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSet)
-            .clickOk();
+            .selectExportSet(exportSet, GenericReportPage.class)
+            .clickOk(GenericReportPage.class);
 
         assertThat(genericReportPage.getDisplayedRollup(),
             is(equalTo(rollupName)));
@@ -300,6 +305,8 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test to ensure expected export set tests are present
+     *
+     * @param reportName String
      */
     public void testExportSetAvailability(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
@@ -346,6 +353,7 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for Cost Metric Input Control on Target and Quoted Cost Trend reports
+     *
      * @param reportName - String
      * @param rollupName - String
      * @param costMetric - String
@@ -359,7 +367,7 @@ public class InputControlsTests extends TestBase {
 
         targetQuotedCostTrendReportPage.selectProjectRollup(rollupName)
                 .selectCostMetric(costMetric)
-                .clickOk()
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         assertThat(targetQuotedCostTrendReportPage.getCostMetricValueFromAboveChart(),
@@ -370,6 +378,7 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for cost metric input control on Value Tracking report
+     *
      * @param reportName String
      * @param costMetric String
      */
@@ -387,6 +396,7 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for cost metric input control on Value Tracking Details report
+     *
      * @param reportName String
      * @param costMetric String
      */
@@ -412,9 +422,9 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSet(exportSet)
+            .selectExportSet(exportSet, GenericReportPage.class)
             .selectMassMetric(massMetric)
-            .clickOk()
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         assertThat(genericReportPage.getMassMetricValueFromAboveChart(), containsString(massMetric));
@@ -436,9 +446,9 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSet)
+            .selectExportSet(exportSet, GenericReportPage.class)
             .setProcessGroup(processGroupName)
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         assertThat(
             genericReportPage.getProcessGroupValueDtc(reportName),
@@ -498,15 +508,18 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test to ensure warning on Process Group input control works correctly
+     *
+     * @param reportName String
+     * @param exportSetName String
      */
     public void testProcessGroupInputControlNoSelection(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(exportSetName)
+                .selectExportSet(exportSetName, GenericReportPage.class)
                 .deselectAllProcessGroups()
-                .clickOk();
+                .clickOk(GenericReportPage.class);
 
         String listName = "processGroup";
         assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
@@ -515,16 +528,19 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test to ensure warning on Process Group input controls works correctly
+     *
+     * @param reportName String
+     * @param exportSetName String
      */
     public void testDtcScoreInputControlNoSelection(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(exportSetName)
+                .selectExportSet(exportSetName, GenericReportPage.class)
                 .deselectAllDtcScores()
-                .clickOk()
-                .clickOk();
+                .clickOk(GenericReportPage.class)
+                .clickOk(GenericReportPage.class);
 
         String listName = "dtcScore";
         assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
@@ -605,6 +621,8 @@ public class InputControlsTests extends TestBase {
      * Generic test for created by filter buttons
      *
      * @param reportName String
+     * @param exportSet String
+     * @param listName String
      */
     public void testListFilterButtons(String reportName, String exportSet, String listName) {
         genericReportPage = new ReportsLoginPage(driver)
@@ -614,7 +632,7 @@ public class InputControlsTests extends TestBase {
 
         if (listName.contains("Parts") && !exportSet.isEmpty()) {
             String expectedPartCount = reportName.contains("Sheet") ? "41" : "43";
-            genericReportPage.selectExportSet(exportSet);
+            genericReportPage.selectExportSet(exportSet, GenericReportPage.class);
             genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Available: ", expectedPartCount);
         }
 
@@ -646,8 +664,8 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for assembly number search criteria
      *
-     * @param reportName          String
-     * @param assemblySearchInput String
+     * @param reportName - String
+     * @param assemblySearchInput - String
      */
     public void testAssemblyNumberSearchCriteria(String reportName, String assemblySearchInput) {
         genericReportPage = new ReportsLoginPage(driver)
@@ -675,8 +693,8 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSet(exportSet)
-            .clickOk();
+            .selectExportSet(exportSet, GenericReportPage.class)
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
@@ -695,7 +713,7 @@ public class InputControlsTests extends TestBase {
     /**
      * Generic test for invalid export set filter inputs
      *
-     * @param reportName        - String
+     * @param reportName - String
      * @param valueToInvalidate - String
      */
     public void testInvalidExportSetFilterDateInputs(String reportName, String valueToInvalidate) {
@@ -726,6 +744,9 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for Minimum Annual Spend
+     *
+     * @param reportName String
+     * @param exportSet String
      */
     public void testMinimumAnnualSpend(String reportName, String exportSet) {
         testMinimumAnnualSpendCore(reportName, exportSet, true);
@@ -782,7 +803,7 @@ public class InputControlsTests extends TestBase {
         Integer initialChartCount = genericReportPage.getCountOfChartElements();
         genericReportPage.clickInputControlsButton()
             .inputMinimumAnnualSpend()
-            .clickOk()
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         if (reportName.equals(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName())) {
@@ -795,6 +816,7 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for export set search (Sheet Metal DTC)
+     *
      * @param reportName String
      * @param exportSetName String
      */
@@ -813,6 +835,7 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for Target Quoted Cost Trend Report Links
+     *
      * @param milestoneName String
      */
     public void testTargetQuotedCostTrendReportHyperlinks(String milestoneName) {
@@ -822,7 +845,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk()
+                .clickOk(TargetQuotedCostTrendReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class)
                 .clickMilestoneLink(milestoneName)
                 .switchTab(1)
@@ -834,6 +857,7 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for Target and Quoted Cost Trend data integrity
+     *
      * @param milestoneName String
      */
     public void testTargetQuotedCostTrendDataIntegrity(String milestoneName) {
@@ -843,7 +867,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk()
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class)
                 .clickMilestoneLink(milestoneName)
                 .switchTab(1)
@@ -897,7 +921,8 @@ public class InputControlsTests extends TestBase {
         genericReportPage = testMinAndMaxMassOrCostFilterCore(reportName, costOrMass, minValue, maxValToUse);
 
         genericReportPage.setReportName(reportName);
-        genericReportPage.scrollDown(driver.findElement(By.xpath("//span[contains(text(), 'aPriori Technologies')]")));
+        genericReportPage.scrollDown(driver.findElement(
+                By.xpath("//span[contains(text(), 'aPriori Technologies')]")));
         for (int i = 0; i < 3; i++) {
             genericReportPage.hoverPartNameBubbleDtcReports();
         }
@@ -935,7 +960,8 @@ public class InputControlsTests extends TestBase {
      * @param reportName - String
      * @param costOrMass - String
      */
-    public void testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(String reportName, String costOrMass) {
+    public void testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(String reportName,
+                                                                             String costOrMass) {
         String minValueToUse = costOrMass.equals("Mass") ? "1.000" : "1.00";
         String maxValueToUse = costOrMass.equals("Mass") ? "1,173.00" : "945.00";
 
@@ -961,16 +987,16 @@ public class InputControlsTests extends TestBase {
 
     /**
      * Generic test for decimal places on cost filter on Design and Cost Outlier Identification and Details reports
+     *
+     * @param reportName String
+     * @param costOrMass String
      */
     public void testMinAndMaxMassOrCostFilterJunkValues(String reportName, String costOrMass) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                .clickOk();
-        genericReportPage.waitForReportToLoad();
-        genericReportPage.clickInputControlsButton();
+				.selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class);
 
         boolean costReport = reportName.contains("Cost");
         genericReportPage.inputMaxOrMinCostOrMass(
@@ -986,7 +1012,7 @@ public class InputControlsTests extends TestBase {
                 "goodbye world"
         );
 
-        genericReportPage.clickOk();
+        genericReportPage.clickOk(GenericReportPage.class);
 
         assertThat(
                 genericReportPage.isCostOrMassMaxOrMinErrorEnabled("Minimum", costOrMass),
@@ -1009,9 +1035,9 @@ public class InputControlsTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .inputAnnualisedOrPercentValue(fieldToUse, "abcd")
-                .clickOk();
+                .clickOk(GenericReportPage.class);
 
         assertThat(genericReportPage.isAnnualisedOrPercentErrorEnabled(fieldToUse), is(equalTo(true)));
     }
@@ -1027,9 +1053,9 @@ public class InputControlsTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .inputAnnualisedOrPercentValue(fieldToUse, "10.000")
-                .clickOk();
+                .clickOk(GenericReportPage.class);
 
         boolean isPercentSet = fieldToUse.equals("Percent");
         assertThat(
@@ -1047,24 +1073,27 @@ public class InputControlsTests extends TestBase {
     }
 
     /**
-     * Generic test - Annualised or Percent filter (no data available) on Cost Outlier Identification Report (+ Details)
+     * Generic test - Annualised or Percent filter (no data available) on Cost Outlier Identification Report
+     * (+ Details)
      *
      * @param reportName String
      * @param valueToTest String
      */
-    public void testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(String reportName, String valueToTest) {
+    public void testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(String reportName,
+                                                                              String valueToTest) {
         genericReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                .inputAnnualisedOrPercentValue(valueToTest, "600000.00")
-                .clickOk();
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+                .inputAnnualisedOrPercentValue(valueToTest, "10.00")
+                .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
         assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("1"), is(equalTo(true)));
         if (!reportName.contains("Details")) {
-            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("2"), is(equalTo(true)));
+            assertThat(genericReportPage.isDataAvailableLabelDisplayedAndEnabled("2"),
+                    is(equalTo(true)));
         }
     }
 
@@ -1089,7 +1118,7 @@ public class InputControlsTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class);
 
         boolean costReport = reportName.contains("Cost");
         genericReportPage.inputMaxOrMinCostOrMass(
@@ -1104,7 +1133,7 @@ public class InputControlsTests extends TestBase {
                 "Max",
                 maxValue.replace(",", "")
         );
-        genericReportPage.clickOk();
+        genericReportPage.clickOk(GenericReportPage.class);
 
         assertThat(genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
                 reportName,
@@ -1128,7 +1157,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToReport(reportName, TargetQuotedCostTrendReportPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
                 .selectCostMetric(costMetric)
-                .clickOk()
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String expectedCostMetric = costMetric;
@@ -1144,13 +1173,13 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSet(exportSet);
+            .selectExportSet(exportSet, GenericReportPage.class);
 
         if (setMinimumAnnualSpend) {
             genericReportPage.inputMinimumAnnualSpend();
         }
 
-        genericReportPage.clickOk()
+        genericReportPage.clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
     }
 
@@ -1159,9 +1188,9 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSet(exportSet)
+            .selectExportSet(exportSet, GenericReportPage.class)
             .selectCostMetric(costMetric)
-            .clickOk()
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("%s", costMetric))));
@@ -1173,8 +1202,8 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSetName)
-            .clickOk();
+            .selectExportSet(exportSetName, GenericReportPage.class)
+            .clickOk(GenericReportPage.class);
 
         assertThat(
             genericReportPage.getProcessGroupValueDtc(reportName),
@@ -1187,7 +1216,7 @@ public class InputControlsTests extends TestBase {
         genericReportPage.navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
             .selectComponent(partName)
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         assertThat(
             genericReportPage.getProcessGroupValueDtc(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()),
@@ -1201,9 +1230,9 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSet)
+            .selectExportSet(exportSet, GenericReportPage.class)
             .setDtcScore(dtcScore)
-            .clickOk()
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
     }
 

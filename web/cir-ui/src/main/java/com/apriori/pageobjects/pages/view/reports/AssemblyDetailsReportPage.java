@@ -29,6 +29,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(css = "a[id='logo']")
     private WebElement cidLogo;
 
+    @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
+    private WebElement currentCurrencyElement;
+
+    @FindBy(xpath = "//label[@title='Assembly Select']//a")
+    private WebElement currentAssemblyElement;
+
     @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
     private WebElement currentAssembly;
 
@@ -44,23 +50,34 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
+    @FindBy(xpath = "//span[contains(text(), '3570824')]")
+    private WebElement componentLinkAssemblyDetails;
+
+    @FindBy(xpath = "//span[contains(text(), 'Component Cost')]")
+    private WebElement componentCostReportTitle;
+
+    @FindBy(xpath = "//span[contains(text(), 'SUB-SUB-ASM')]")
+    private WebElement assemblyLinkAssemblyDetails;
+
+    @FindBy(xpath = "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr']")
+    private WebElement exportSetList;
+
     @FindBy(xpath = "//span[contains(text(), '0200613')]")
     private WebElement partNameRowFive;
 
     List<BigDecimal> refinedQuantities = new ArrayList<>();
-    private Map<String, By> totalLocatorSubAssemblyMap = new HashMap<>();
-    private Map<String, By> totalLocatorSubSubAsmMap = new HashMap<>();
-    private Map<String, By> totalLocatorTopLevelMap = new HashMap<>();
-    private Map<String, String> subAssemblyRowMap = new HashMap<>();
-    private Map<String, String> genericColumnMap = new HashMap<>();
-    private Map<String, String> subSubAsmRowMap = new HashMap<>();
-    private Map<String, String> topLevelRowMap = new HashMap<>();
 
-    private String genericTrSelector = "tr:nth-child(%s)";
+    private final Map<String, String> genericColumnMap = new HashMap<>();
+    private final Map<String, String> topLevelRowMap = new HashMap<>();
+    private final Map<String, String> subSubAsmRowMap = new HashMap<>();
+    private final Map<String, String> subAssemblyRowMap = new HashMap<>();
+
+    private final String genericAssemblySetLocator = "//a[contains(text(), '%s [assembly]')]";
+    private final String genericTrSelector = "tr:nth-child(%s)";
     private String cssSelector;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public AssemblyDetailsReportPage(WebDriver driver) {
         super(driver);
@@ -318,6 +335,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets part name from row five
+     *
      * @return String
      */
     public String getRowFivePartName() {
@@ -327,6 +345,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
 
     /**
      * Gets one particular value from table row five
+     *
      * @param valueName String
      * @return String
      */
@@ -339,6 +358,193 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForSteadinessOfElement(locator);
         return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Sets specified assembly
+     *
+     * @param assemblyName - String of assembly name to use
+     * @return current page object
+     */
+    public GenericReportPage setAssembly(String assemblyName) {
+        pageUtils.scrollWithJavaScript(currentCurrencyElement, true);
+        if (!currentAssemblyElement.getAttribute("title").equals(assemblyName)) {
+            currentAssemblyElement.click();
+            By locator = By.xpath(String.format(genericAssemblySetLocator, assemblyName));
+            pageUtils.waitForElementAndClick(locator);
+        }
+        return this;
+    }
+
+    /**
+     * Gets assembly name from set assembly dropdown
+     *
+     * @param assemblyName - String of assembly name to use
+     * @return String - assembly from dropdown
+     */
+    public String getAssemblyNameFromSetAssemblyDropdown(String assemblyName) {
+        return driver.findElement(By.xpath(String.format(genericAssemblySetLocator, assemblyName)))
+                .getAttribute("textContent");
+    }
+
+    /**
+     * Waits for correct assembly to appear on screen (not on Input Controls - on report itself)
+     *
+     * @param assemblyToCheck String - assembly name to wait on
+     * @return Generic - instance of GenericReportPage
+     */
+    public GenericReportPage waitForCorrectAssembly(String assemblyToCheck) {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitForElementToAppear(currentAssembly);
+        // if not top level, add -
+        if (assemblyToCheck.equals(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType()) ||
+                assemblyToCheck.equals(AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType())) {
+            String newVal = assemblyToCheck.toUpperCase().replace(" ", "-");
+            By locator = By.xpath(String.format("//span[contains(text(), '%s')]", newVal));
+            pageUtils.waitForElementToAppear(locator);
+        }
+        return this;
+    }
+
+    /**
+     * Wait for correct assembly selected in dropdown
+     *
+     * @param assemblyName - String of assembly name to use in locator
+     */
+    public void waitForCorrectAssemblyInDropdown(String assemblyName) {
+        By locator = By.xpath(String.format("//a[contains(@title, '%s')]", assemblyName));
+        pageUtils.waitForElementToAppear(locator);
+    }
+
+    /**
+     * Generic method to get numeric values in a given row
+     *
+     * @param row - String of row to get values from
+     * @return ArrayList of BigDecimal values
+     */
+    public ArrayList<BigDecimal> getValuesByRow(String row) {
+        ArrayList<BigDecimal> valsToReturn = new ArrayList<>();
+        Document reportsPartPage = Jsoup.parse(driver.getPageSource());
+
+        String baseCssSelector = "table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table " +
+                "tr:nth-child(%s) td span";
+        baseCssSelector = String.format(baseCssSelector, row);
+
+        List<Element> valueElements = reportsPartPage.select(baseCssSelector);
+
+        for (Element valueCell : valueElements) {
+            if (!valueCell.text().isEmpty() && valueCell.text().matches("[0-9]*[.][0-9]{2}")) {
+                valsToReturn.add(new BigDecimal(valueCell.text()));
+            }
+        }
+        return valsToReturn;
+    }
+
+    /**
+     * Clicks Component Link in Assembly Details Report
+     */
+    public void clickComponentLinkAssemblyDetails() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitForElementAndClick(componentLinkAssemblyDetails);
+        switchTab(1);
+        pageUtils.waitForElementToAppear(componentCostReportTitle);
+    }
+
+    /**
+     * Clicks Assembly Link in Assembly Details Report
+     */
+    public void clickAssemblyLinkAssemblyDetails() {
+        pageUtils.waitForElementAndClick(assemblyLinkAssemblyDetails);
+        pageUtils.windowHandler(1);
+        pageUtils.waitForElementToAppear(componentCostReportTitle);
+    }
+
+    /**
+     * Gets component link part number
+     *
+     * @return String of part number
+     */
+    public String getComponentLinkPartNumber() {
+        return componentLinkAssemblyDetails.getText();
+    }
+
+    /**
+     * Gets assembly link part number
+     *
+     * @return String of part number
+     */
+    public String getAssemblyLinkPartNumber() {
+        return assemblyLinkAssemblyDetails.getText();
+    }
+
+    /**
+     * Gets report title
+     *
+     * @return String of report title
+     */
+    public String getReportTitle() {
+        return upperTitle.getText();
+    }
+
+    /**
+     * Closes current tab and switches back to main tab
+     */
+    public void closeTab() {
+        driver.close();
+        pageUtils.windowHandler(0);
+    }
+
+    /**
+     * Checks if export set option is visible
+     *
+     * @param exportSet - String of export set to check visibility of
+     * @return boolean of is export set visible
+     */
+    public boolean isExportSetVisible(String exportSet) {
+        WebElement exportSetElement = driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", exportSet)));
+        return exportSetElement.isDisplayed() && exportSetElement.isEnabled();
+    }
+
+    /**
+     * Gets count of export sets visible
+     *
+     * @return String of export set option count
+     */
+    public String getExportSetOptionCount() {
+        return exportSetList.getAttribute("childElementCount");
+    }
+
+    /**
+     * Gets value from Component Cost Report
+     *
+     * @param valueToGet String of value to retrieve
+     * @return String of component cost value
+     */
+    public BigDecimal getComponentCostReportValue(String valueToGet) {
+        By locator = By.xpath(String.format(
+                "//span[contains(text(), '%s')]/../following-sibling::td[1]/span", valueToGet));
+        pageUtils.waitForElementToAppear(locator);
+        return new BigDecimal(driver.findElement(locator).getText().replace(",", ""));
+    }
+
+    /**
+     * Gets all VPE Values from Assembly Details Report
+     *
+     * @return ArrayList of type String
+     */
+    public ArrayList<String> getAllVpeValuesAssemblyDetailsReport() {
+        ArrayList<String> vpeValues = new ArrayList<>();
+
+        String[] partNames = { "3570823", "3570824", "3574255", "SUB-SUB-ASM", "3571050", "3575132", "3575133",
+            "3575134", "0200613", "0362752", "3538968", "SUB-ASSEMBLY", "3575135" };
+
+        String locator = "//span[contains(text(), '%s')]/ancestor::tr[@style='height:15px']/td[16]/span";
+
+        for (String partName : partNames) {
+            vpeValues.add(driver.findElement(By.xpath(String.format(locator, partName))).getText());
+        }
+
+        return vpeValues;
     }
 
     /**

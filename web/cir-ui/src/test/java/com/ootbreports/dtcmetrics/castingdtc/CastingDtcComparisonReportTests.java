@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -33,6 +34,7 @@ import utils.Constants;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
+    private CastingDtcReportPage castingDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -160,21 +162,23 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @TestRail(testCaseId = {"7619"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Comparison Report")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
-        genericReportPage = new ReportsLoginPage(driver)
+        castingDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
+            .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), CastingDtcReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
-            .clickComparison()
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
+            .clickOk(CastingDtcReportPage.class);
+
+        castingDtcReportPage.clickComparison()
             .switchTab(1);
 
-        genericReportPage.waitForNewTabSwitchCastingDtcToComparison();
-        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
-        String partName = genericReportPage.getPartNameDtcReports();
-        String holeIssueNumReports = genericReportPage.getHoleIssuesFromComparisonReport();
+        castingDtcReportPage.waitForNewTabSwitchCastingDtcToComparison();
+        castingDtcReportPage.setReportName(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
+        String partName = castingDtcReportPage.getPartNameDtcReports();
+        String holeIssueNumReports = castingDtcReportPage.getHoleIssuesFromComparisonReport();
+        castingDtcReportPage.openNewCidTabAndFocus(2);
 
         genericReportPage.openNewCidTabAndFocus(2);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)

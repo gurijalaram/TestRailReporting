@@ -17,8 +17,8 @@ public class ManageRolesPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='roles']/div/div[1]/div[contains(@class, 'title')]")
     private WebElement rolesPageTitle;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public ManageRolesPage(WebDriver driver) {
         super(driver);

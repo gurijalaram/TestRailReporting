@@ -36,6 +36,7 @@ import java.math.BigDecimal;
 
 public class PlasticDtcReportTests extends TestBase {
 
+    private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -111,15 +112,15 @@ public class PlasticDtcReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), PlasticDtcReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName());
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class);
 
         assertThat(
             genericReportPage.getSelectedRollup(RollupEnum.ROLL_UP_A.getRollupName()),
             is(equalTo(RollupEnum.ROLL_UP_A.getRollupName()))
         );
 
-        genericReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk()
+        genericReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
@@ -127,8 +128,8 @@ public class PlasticDtcReportTests extends TestBase {
         usdAnnualSpend = genericReportPage.getAnnualSpendFromBubbleTooltip();
 
         genericReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-            .clickOk()
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), PlasticDtcReportPage.class);
 
         genericReportPage.hoverPartNameBubbleDtcReports();
@@ -175,9 +176,9 @@ public class PlasticDtcReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk();
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();
@@ -402,14 +403,20 @@ public class PlasticDtcReportTests extends TestBase {
     @TestRail(testCaseId = {"2320"})
     @Description("Verify minimum annual spend input control correctly filters list of available parts")
     public void testMinimumAnnualSpendFiltersPartList() {
-        genericReportPage = new ReportsLoginPage(driver)
+        plasticDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .inputMinimumAnnualSpend()
-            .clickDistanceOutlierInputAndScrollDown();
+            .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), PlasticDtcReportPage.class)
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), PlasticDtcReportPage.class);
 
-        assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.PARTS.getListName(), "Available"), is(equalTo("0")));
+        plasticDtcReportPage.inputMinimumAnnualSpend();
+        plasticDtcReportPage.clickDistanceOutlierInputAndScrollDown();
+
+        assertThat(
+                plasticDtcReportPage.getCountOfListAvailableOrSelectedItems(
+                        ListNameEnum.PARTS.getListName(),
+                        "Available"),
+                is(equalTo("0"))
+        );
     }
 }

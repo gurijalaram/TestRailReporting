@@ -72,9 +72,9 @@ public class ComponentCostReportTests extends TestBase {
         componentCostReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
                 .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
@@ -97,9 +97,9 @@ public class ComponentCostReportTests extends TestBase {
         componentCostReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
                 .waitForComponentFilter();
 
 
@@ -114,7 +114,7 @@ public class ComponentCostReportTests extends TestBase {
         assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
 
         componentCostReportPage.selectComponent("TOP-LEVEL")
-                .clickOk()
+                .clickOk(ComponentCostReportPage.class)
                 .waitForCorrectPartName("TOP-LEVEL");
 
         assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("TOP-LEVEL")));
@@ -128,9 +128,9 @@ public class ComponentCostReportTests extends TestBase {
         componentCostReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
                 .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
@@ -141,7 +141,7 @@ public class ComponentCostReportTests extends TestBase {
         componentSelectAsserts(true);
         componentSelectAsserts(false);
 
-        componentCostReportPage.clickOk()
+        componentCostReportPage.clickOk(ComponentCostReportPage.class)
                 .waitForCorrectPartName("3538968");
 
         assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("3538968")));
@@ -155,9 +155,9 @@ public class ComponentCostReportTests extends TestBase {
         componentCostReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
                 .waitForComponentFilter()
                 .selectDefaultScenarioName(ComponentCostReportPage.class);
 
@@ -183,16 +183,16 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-                .clickOk()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+                .clickOk(ComponentCostReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ComponentCostReportPage.class);
 
         BigDecimal lifetimeCostUSD = componentCostReportPage.getLifetimeCost();
 
         componentCostReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency())
-                .clickOk()
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .clickOk(ComponentCostReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ComponentCostReportPage.class);
 
         BigDecimal lifetimeCostGBP = componentCostReportPage.getLifetimeCost();

@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -32,6 +33,7 @@ import utils.Constants;
 
 public class CastingDtcDetailsReportTests extends TestBase {
 
+    private CastingDtcReportPage castingDtcReportPage;
     private CommonReportTests commonReportTests;
     private InputControlsTests inputControlsTests;
     private GenericReportPage genericReportPage;
@@ -159,18 +161,19 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"7620"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Details Report")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
-        genericReportPage = new ReportsLoginPage(driver)
+        castingDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
+            .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency())
-            .clickOk();
+            .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
+            .clickOk(CastingDtcReportPage.class);
 
-        genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
-        String partName = genericReportPage.getPartNameDtcReports();
-        String holeIssueNumReports = genericReportPage.getHoleIssuesFromDetailsReport();
+        castingDtcReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+        String partName = castingDtcReportPage.getPartNameDtcReports();
+        String holeIssueNumReports = castingDtcReportPage.getHoleIssuesFromDetailsReport();
+        castingDtcReportPage.openNewCidTabAndFocus(1);
 
         genericReportPage.openNewCidTabAndFocus(1);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
@@ -312,9 +315,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.CASTING_ISSUES.getSortOrderEnum())
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         assertThat(
                 genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -332,31 +335,31 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"7630"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingMachining() {
-        genericReportPage = new ReportsLoginPage(driver)
+        castingDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum())
-            .clickOk();
+            .clickOk(CastingDtcReportPage.class);
 
         assertThat(
-                genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
                 is(equalTo("DTCCASTINGISSUES"))
         );
 
         assertThat(
-                genericReportPage.getScenarioNameCastingDtcDetails(true),
+                castingDtcReportPage.getScenarioNameCastingDtcDetails(true),
                 is(equalTo("sand casting"))
         );
 
         assertThat(
-                genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
                 is(equalTo("DTCCASTINGISSUES"))
         );
 
         assertThat(
-                genericReportPage.getScenarioNameCastingDtcDetails(false),
+                castingDtcReportPage.getScenarioNameCastingDtcDetails(false),
                 is(equalTo("Initial"))
         );
     }
@@ -370,9 +373,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum())
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         assertThat(
                 genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -390,31 +393,31 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"7632"})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
     public void testSortOrderInputControlTolerances() {
-        genericReportPage = new ReportsLoginPage(driver)
+        castingDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
-            .clickOk();
+            .clickOk(CastingDtcReportPage.class);
 
         assertThat(
-                genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
                 is(equalTo("DTCCASTINGISSUES"))
         );
 
         assertThat(
-                genericReportPage.getScenarioNameCastingDtcDetails(true),
+                castingDtcReportPage.getScenarioNameCastingDtcDetails(true),
                 is(equalTo("Initial"))
         );
 
         assertThat(
-                genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
                 is(equalTo("DTCCASTINGISSUES"))
         );
 
         assertThat(
-                genericReportPage.getScenarioNameCastingDtcDetails(false),
+                castingDtcReportPage.getScenarioNameCastingDtcDetails(false),
                 is(equalTo("sand casting"))
         );
     }
@@ -424,31 +427,31 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"7633"})
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Details Report")
     public void testSortOrderInputControlSlowOperations() {
-        genericReportPage = new ReportsLoginPage(driver)
+        castingDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
-            .clickOk();
+            .clickOk(CastingDtcReportPage.class);
 
         assertThat(
-                genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
                 is(equalTo("DTCCASTINGISSUES"))
         );
 
         assertThat(
-                genericReportPage.getScenarioNameCastingDtcDetails(true),
+                castingDtcReportPage.getScenarioNameCastingDtcDetails(true),
                 is(equalTo("Initial"))
         );
 
         assertThat(
-                genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
                 is(equalTo("DTCCASTINGISSUES"))
         );
 
         assertThat(
-                genericReportPage.getScenarioNameCastingDtcDetails(false),
+                castingDtcReportPage.getScenarioNameCastingDtcDetails(false),
                 is(equalTo("sand casting"))
         );
     }
@@ -462,9 +465,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum())
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         assertThat(
                 genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -486,9 +489,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         assertThat(
                 genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -510,9 +513,9 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName())
+            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
-            .clickOk();
+            .clickOk(GenericReportPage.class);
 
         assertThat(
                 genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
