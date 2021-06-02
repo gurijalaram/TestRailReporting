@@ -16,6 +16,7 @@ import com.evaluate.ReCostScenarioTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
+import com.evaluate.dtc.DTCCastingTests;
 import com.evaluate.dtc.DTCMachiningTests;
 import com.evaluate.dtc.DTCPlasticMouldingTests;
 import com.evaluate.dtc.SheetMetalDTCTests;
@@ -62,7 +63,8 @@ import org.junit.runners.Suite;
     SheetMetalDTCTests.class,
     ActionsTests.class,
     TableHeadersTests.class,
-    DTCMachiningTests.class
+    DTCMachiningTests.class,
+    DTCCastingTests.class
 })
 public class CIDSmokeTestSuite {
 }
