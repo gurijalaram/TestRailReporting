@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.evaluate.materialutilization;
+package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -24,9 +24,6 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
     private WebElement panelDetails;
-
-    @FindBy(xpath = "//button[.='Stock']")
-    private WebElement stockPanel;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -60,15 +57,6 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     public String getUtilizationInfo(String label) {
         By info = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
         return pageUtils.waitForElementToAppear(info).getAttribute("textContent");
-    }
-
-    /**
-     * Go to stock tab
-     * @return new page object
-     */
-    public StockPage goToStockTab() {
-        pageUtils.waitForElementAndClick(stockPanel);
-        return new StockPage(driver);
     }
 
     /**

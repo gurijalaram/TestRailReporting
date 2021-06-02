@@ -78,7 +78,7 @@ public class HelpTests extends TestBase {
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
-            .openMaterialUtilization()
+            .openMaterialProcess()
             .openHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));
@@ -120,7 +120,7 @@ public class HelpTests extends TestBase {
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
-            .openProcesses()
+            .openMaterialProcess()
             .openHelp();
 
         assertThat(helpDocPage.getChildPageTitle(), containsString("Process Details"));

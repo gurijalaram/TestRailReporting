@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.evaluate.materialutilization;
+package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;

@@ -1,6 +1,7 @@
-package com.apriori.pageobjects.pages.evaluate;
+package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
 import com.apriori.pageobjects.common.PanelController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
@@ -17,9 +18,9 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class ProcessesPage extends LoadableComponent<ProcessesPage> {
+public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProcessesPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(MaterialProcessPage.class);
 
     @FindBy(css = "div[dir='ltr']")
     private WebElement chartContainer;
@@ -33,11 +34,17 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
     @FindBy(css = "[id='qa-process-options-section'] div.left")
     private WebElement optionsChevron;
 
+    @FindBy(xpath = "//button[.='Material Utilization']")
+    private WebElement materialUtilizationTab;
+
+    @FindBy(xpath = "//button[.='Stock']")
+    private WebElement stockTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
 
-    public ProcessesPage(WebDriver driver) {
+    public MaterialProcessPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
@@ -78,6 +85,24 @@ public class ProcessesPage extends LoadableComponent<ProcessesPage> {
         By costResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']", label, value));
         pageUtils.waitForElementToAppear(costResult);
         return driver.findElement(costResult).isDisplayed();
+    }
+
+    /**
+     * Opens material utilization tab
+     * @return new page object
+     */
+    public MaterialUtilizationPage openMaterialUtilizationTab() {
+        pageUtils.waitForElementAndClick(materialUtilizationTab);
+        return new MaterialUtilizationPage(driver);
+    }
+
+    /**
+     * Go to stock tab
+     * @return new page object
+     */
+    public StockPage goToStockTab() {
+        pageUtils.waitForElementAndClick(stockTab);
+        return new StockPage(driver);
     }
 
     /**
