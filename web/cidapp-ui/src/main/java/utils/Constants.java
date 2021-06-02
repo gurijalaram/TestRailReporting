@@ -1,8 +1,6 @@
 package utils;
 
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-int";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
     public static final List<String> INPUT_VALUES = Arrays.asList("annual volume", "batch size", "material", "production life", "component name", "description", "notes",
         "scenario name", "tolerance count", "fully burdened cost", "material cost", "piece part cost", "total capital investment",
         "cycle time", "finish mass", "process routing", "utilization");
