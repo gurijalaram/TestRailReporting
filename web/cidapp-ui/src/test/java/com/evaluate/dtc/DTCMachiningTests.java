@@ -92,7 +92,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1798"})
+    @TestRail(testCaseId = {"6439"})
     @Description("Testing DTC Machining Sharp Corner - Planar Face - Contouring")
     public void testDTCSharpCorner() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -112,7 +112,7 @@ public class DTCMachiningTests extends TestBase {
             .submit()
             .costScenario()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues", "Sharp Corner", "PlanarFace:5");
+            .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Planar Face", "PlanarFace:5");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Facing: Feature contains a sharp corner that would require a zero tool diameter. " +
             "If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
