@@ -87,10 +87,10 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .badge-pill")
     private List<WebElement> secondaryProcesses;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .input-group-append")
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
     private WebElement secondaryProcessesPencil;
 
-    @FindBy(css = "div[id='qa-material-modal-select-field'] .input-group-append")
+    @FindBy(css = "div[id='qa-material-modal-select-field'] button")
     private WebElement materialsPencil;
 
     @FindBy(css = ".material-summary-card.card input")
