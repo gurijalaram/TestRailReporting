@@ -34,10 +34,10 @@ import org.junit.runners.Suite;
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
 @Suite.SuiteClasses({
-    CostAllCadTests.class,
-    CostScenarioTests.class,
+    /*CostAllCadTests.class,
+    CostScenarioTests.class,*/
     ListOfDigitalFactoryTests.class,
-    ListProcessGroupTests.class,
+    /*ListProcessGroupTests.class,
     NewScenarioNameTests.class,
     ProcessGroupsTests.class,
     ReCostScenarioTests.class,
@@ -60,7 +60,7 @@ import org.junit.runners.Suite;
     DTCPlasticMouldingTests.class,
     SheetMetalDTCTests.class,
     ActionsTests.class,
-    TableHeadersTests.class
+    TableHeadersTests.class*/
 })
 public class CIDSmokeTestSuite {
 }
