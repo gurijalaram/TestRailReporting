@@ -1,6 +1,5 @@
 package com.apriori.vds.tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.utils.GenerateStringUtil;
@@ -12,45 +11,41 @@ import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariablesItems;
+import com.apriori.vds.tests.util.SiteVariableUtil;
 import com.apriori.vds.tests.util.VDSRequestEntityUtil;
-import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
-
-    private static List<String> siteVariableIdsToDelete = new ArrayList<>();
+public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     @AfterClass
-    public static void removeTestingData() {
-        siteVariableIdsToDelete.forEach(ProcessGroupSiteVariablesTest::deleteSiteVariableById);
+    public static void deleteTestingData() {
+        siteVariableIdsToDelete.forEach(ProcessGroupSiteVariablesTest::deleteProcessGroupSiteVariableById);
     }
 
     @Test
     @TestRail(testCaseId = {"8284"})
     @Description("GET a paged set of Site Variables for a specific customer. ")
     public void getSiteVariables() {
-        this.getSiteVariablesResponse();
+        this.getProcessGroupSiteVariablesResponse();
     }
 
     @Test
     @TestRail(testCaseId = {"8287"})
     @Description("GET a site variable for a customer. ")
     public void getSiteVariablesByIdentity() {
-
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, SiteVariable.class)
                 .inlineVariables(Arrays.asList(
                     getProcessGroupIdentity(),
-                    this.getFirstSiteVariable().getIdentity()
+                    this.getFirstProcessGroupSiteVariable().getIdentity()
                 ));
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
     }
@@ -59,99 +54,66 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
     @TestRail(testCaseId = {"8285"})
     @Description("POST a Site Variable for a customer. The site variable can't already exist. Better to use PUT to create or replace the site variable.")
     public void postSiteVariablesByIdentity() {
-        siteVariableIdsToDelete.add(this.postSiteVariables().getIdentity());
+        siteVariableIdsToDelete.add(this.postProcessGroupSiteVariables().getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"8288"})
     @Description("DELETEs a site variable. ")
     public void deleteSiteVariablesByIdentity() {
-        deleteSiteVariableById(this.postSiteVariables().getIdentity());
+        deleteProcessGroupSiteVariableById(this.postProcessGroupSiteVariables().getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"8289"})
     @Description("PATCH a Site Variable for a customer. User PUT to create or replace if the site variable does not exist.")
-    public void updateSiteVariablesByIdentity() {
-        final String updatedName = new GenerateStringUtil().generateSiteName();
-        final String updatedValue = "UpdatedValue";
-        final String updatedNotes = "UpdatedNotes";
-
-        SiteVariable siteVariableBeforeUpdate = this.postSiteVariables();
+    public void patchSiteVariablesByIdentity() {
+        SiteVariable siteVariableBeforeUpdate = this.postProcessGroupSiteVariables();
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PATCH_PROCESS_GROUP_SITE_VARIABLES_BY_PG_SITE_IDs, SiteVariable.class)
                 .inlineVariables(Arrays.asList(getProcessGroupIdentity(), siteVariableBeforeUpdate.getIdentity()))
-                .body(SiteVariableRequest.builder()
-                    .name(updatedName)
-                    .value(updatedValue)
-                    .notes(updatedNotes)
-                    .updatedBy(siteVariableBeforeUpdate.getCreatedBy())
-                    .createdBy(siteVariableBeforeUpdate.getCreatedBy())
-                    .build()
-                );
+                .body(initUpdateRequestBody(siteVariableBeforeUpdate));
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
-        final SiteVariable updatedSiteVariable = updatedSiteVariableResponse.getResponseEntity();
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
 
-        assertNotEquals("The name should not be updated.", updatedName, updatedSiteVariable.getName());
-
-        assertEquals("The value should be updated.", updatedValue, updatedSiteVariable.getValue());
-        assertEquals("Notes should be updated.", updatedNotes, updatedSiteVariable.getNotes());
+        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
     }
 
     @Test
     @TestRail(testCaseId = {"8286"})
     @Description("PUT Adds or Replaces a CustomAttribute for a user. ")
-    public void updateCustomAttributeByIdentity() {
-        final String updatedName = new GenerateStringUtil().generateSiteName();
-        final String updatedValue = "UpdatedValue";
-        final String updatedNotes = "UpdatedNotes";
-
-        SiteVariable siteVariableBeforeUpdate = this.postSiteVariables();
+    public void putCustomAttributeByIdentity() {
+        SiteVariable siteVariableBeforeUpdate = this.postProcessGroupSiteVariables();
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
-                .inlineVariables(Arrays.asList(getProcessGroupIdentity()))
-                .body(SiteVariableRequest.builder()
-                        .name(updatedName)
-                        .value(updatedValue)
-                        .notes(updatedNotes)
-                        .customerIdentity(siteVariableBeforeUpdate.getCustomerIdentity())
-                        .createdBy(siteVariableBeforeUpdate.getCreatedBy())
-                        .build()
-                );
+                .inlineVariables(Collections.singletonList(getProcessGroupIdentity()))
+                .body(initUpdateRequestBody(siteVariableBeforeUpdate));
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).put();
-        final SiteVariable updatedSiteVariable = updatedSiteVariableResponse.getResponseEntity();
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
-
-        assertNotEquals("The name should not be updated.", updatedName, updatedSiteVariable.getName());
-
-        assertEquals("The value should be updated.", updatedValue, updatedSiteVariable.getValue());
-        assertEquals("Notes should be updated.", updatedNotes, updatedSiteVariable.getNotes());
+        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
     }
 
-    private static void deleteSiteVariableById(final String identity) {
+    private static void deleteProcessGroupSiteVariableById(final String identity) {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.DELETE_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, null)
                 .inlineVariables(Arrays.asList(getProcessGroupIdentity(), identity));
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
     }
 
-    private SiteVariable getFirstSiteVariable() {
-        List<SiteVariable> siteVariables = this.getSiteVariablesResponse();
+    private SiteVariable getFirstProcessGroupSiteVariable() {
+        List<SiteVariable> siteVariables = this.getProcessGroupSiteVariablesResponse();
         assertNotEquals("To get Site Variable, response should contain it.", 0, siteVariables.size());
 
         return siteVariables.get(0);
     }
 
-    private List<SiteVariable> getSiteVariablesResponse() {
+    private List<SiteVariable> getProcessGroupSiteVariablesResponse() {
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID, SiteVariablesItems.class)
             .inlineVariables(Collections.singletonList(getProcessGroupIdentity()));
         ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTP2Request.build(requestEntity).get();
@@ -161,7 +123,7 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
         return siteVariablesResponse.getResponseEntity().getItems();
     }
 
-    private SiteVariable postSiteVariables() {
+    private SiteVariable postProcessGroupSiteVariables() {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.POST_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID, SiteVariable.class)
                 .inlineVariables(Collections.singletonList(getProcessGroupIdentity()))
@@ -171,7 +133,7 @@ public class ProcessGroupSiteVariablesTest extends VDSTestUtil {
                     .value("bar")
                     .valueType("STRING")
                     .notes("foo bar")
-                    .createdBy(this.getFirstSiteVariable().getCreatedBy())
+                    .createdBy(this.getFirstProcessGroupSiteVariable().getCreatedBy())
                     .build()
                 );
 
