@@ -7,7 +7,7 @@ import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
@@ -87,14 +87,11 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .badge-pill")
     private List<WebElement> secondaryProcesses;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .input-group-append")
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
     private WebElement secondaryProcessesPencil;
 
-    @FindBy(css = "div[id='qa-material-modal-select-field'] .input-group-append")
+    @FindBy(css = "div[id='qa-material-modal-select-field'] button")
     private WebElement materialsPencil;
-
-    @FindBy(css = ".material-summary-card.card .pill-text")
-    private WebElement materialsDetailsButton;
 
     @FindBy(css = ".material-summary-card.card input")
     private WebElement materialName;
@@ -269,16 +266,6 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens the material utilization panel
-     *
-     * @return new page object
-     */
-    public MaterialUtilizationPage openMaterialUtilization() {
-        pageUtils.waitForElementAndClick(materialsDetailsButton);
-        return new MaterialUtilizationPage(driver);
-    }
-
-    /**
      * Opens the design guidance panel
      *
      * @return new page object
@@ -293,9 +280,9 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public ProcessesPage openProcesses() {
+    public MaterialProcessPage openMaterialProcess() {
         pageUtils.waitForElementAndClick(processesDetailsButton);
-        return new ProcessesPage(driver);
+        return new MaterialProcessPage(driver);
     }
 
     /**

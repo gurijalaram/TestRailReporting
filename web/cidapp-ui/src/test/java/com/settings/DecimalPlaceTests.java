@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.closeTo;
 import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.ProcessesPage;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -33,7 +33,7 @@ public class DecimalPlaceTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
-    private ProcessesPage processesPage;
+    private MaterialProcessPage materialProcessPage;
     private CostDetailsPage costDetailsPage;
 
     public DecimalPlaceTests() {
@@ -92,12 +92,12 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$21.1"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$21.1"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Total Capital Investment", "$0.0"), is(true));
-        processesPage = evaluatePage.openProcesses();
+        materialProcessPage = evaluatePage.openMaterialProcess();
 
-        assertThat(processesPage.getTotalResult("Cycle Time"), closeTo(109.4, 1));
-        assertThat(processesPage.getTotalResult("Piece Part Cost"), closeTo(21.1, 1));
-        assertThat(processesPage.getTotalResult("Fully Burdened Cost"), closeTo(21.1, 1));
-        assertThat(processesPage.getTotalResult("Total Capital Investment"), closeTo(0.0, 1));
+        assertThat(materialProcessPage.getTotalResult("Cycle Time"), closeTo(109.4, 1));
+        assertThat(materialProcessPage.getTotalResult("Piece Part Cost"), closeTo(21.1, 1));
+        assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost"), closeTo(21.1, 1));
+        assertThat(materialProcessPage.getTotalResult("Total Capital Investment"), closeTo(0.0, 1));
 
         costDetailsPage = evaluatePage.openCostDetails()
             .expandDropDown("Piece Part Cost, Fully Burdened Cost");
@@ -120,12 +120,12 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(19.4785, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.0000, 1));
 
-        processesPage = evaluatePage.openProcesses();
+        materialProcessPage = evaluatePage.openMaterialProcess();
 
-        assertThat(processesPage.getTotalResult("Cycle Time"), closeTo(109.4000, 1));
-        assertThat(processesPage.getTotalResult("Piece Part Cost"), closeTo(19.4785, 1));
-        assertThat(processesPage.getTotalResult("Fully Burdened Cost"), closeTo(19.4785, 1));
-        assertThat(processesPage.getTotalResult("Total Capital Investment"), closeTo(0.0000, 1));
+        assertThat(materialProcessPage.getTotalResult("Cycle Time"), closeTo(109.4000, 1));
+        assertThat(materialProcessPage.getTotalResult("Piece Part Cost"), closeTo(19.4785, 1));
+        assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost"), closeTo(19.4785, 1));
+        assertThat(materialProcessPage.getTotalResult("Total Capital Investment"), closeTo(0.0000, 1));
 
         costDetailsPage = evaluatePage.openCostDetails()
             .expandDropDown("Piece Part Cost, Fully Burdened Cost");
