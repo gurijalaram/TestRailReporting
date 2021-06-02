@@ -32,7 +32,7 @@ public class DTCMachiningTests extends TestBase {
         super();
     }
 
-/*    @After
+    /*    @After
     public void resetSettings() {
         if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
@@ -119,7 +119,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1804"})
+    @TestRail(testCaseId = {"6445"})
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -139,13 +139,13 @@ public class DTCMachiningTests extends TestBase {
             .submit()
             .costScenario()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues", "Side Milling L/D", "CurvedWall:6");
+            .selectIssueTypeGcd("Machining Issues, Side Milling L/D", "Curved Wall", "CurvedWall:6");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Required tool exceeds the max L/D Ratio"));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Side Milling: Required tool exceeds the max L/D Ratio"));
     }
 
     @Test
-    @TestRail(testCaseId = {"1803"})
+    @TestRail(testCaseId = {"6444"})
     @Description("Testing DTC Machining Missing Setups")
     public void testDTCMissingSetup() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -165,13 +165,13 @@ public class DTCMachiningTests extends TestBase {
             .submit()
             .costScenario()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues", "Missing Setups", "PlanarFace:6");
+            .selectIssueTypeGcd("Machining Issues, Missing Setups", "Planar Face", "PlanarFace:6");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Setup Axis was not automatically assigned"));
     }
 
     @Test
-    @TestRail(testCaseId = {"1801"})
+    @TestRail(testCaseId = {"6442"})
     @Description("Verify obstructed surfaces on planar faces")
     public void obstructedSurfacePlanarFace() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -191,14 +191,14 @@ public class DTCMachiningTests extends TestBase {
             .submit()
             .costScenario()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Obstructed Surfaces", "Planar Faces", "PlanarFace:9");
+            .selectIssueTypeGcd("Machining Issues, Obstructed Surfaces", "Planar Face", "PlanarFace:9");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Feature is obstructed"));
     }
 
-/*    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    /*    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1799", "1802", "1806", "1593"})
+    @TestRail(testCaseId = {"6440", "6443", "6447"})
     @Description("Ensure that  'Guidance' includes: - Issue type count - DTC Messaging for each guidance instance")
     public void stockMachiningDTC() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -233,7 +233,7 @@ public class DTCMachiningTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"1797"})
+    @TestRail(testCaseId = {"6438"})
     @Description("Verify Sharp corners on curved walls are highlighted")
     public void sharpCornerCurvedWall() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -251,16 +251,16 @@ public class DTCMachiningTests extends TestBase {
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
-            .costScenario()
+            .costScenario(3)
             .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Walls", "CurvedWall:22");
+            .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Wall", "CurvedWall:22");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Side Milling: Feature contains a sharp corner that would require a zero tool diameter. " +
             "If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
 
-/*    @Test
-    @TestRail(testCaseId = {"1792", "1795", "1796"})
+    /*    @Test
+    @TestRail(testCaseId = {"6433", "6436", "6437"})
     @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
     public void stockMachineDTC() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -294,8 +294,8 @@ public class DTCMachiningTests extends TestBase {
         assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("39")));
     }*/
 
-/*    @Test
-    @TestRail(testCaseId = {"1808", "1809"})
+    /*    @Test
+    @TestRail(testCaseId = {"6449", "6450"})
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
