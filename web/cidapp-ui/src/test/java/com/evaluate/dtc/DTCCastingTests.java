@@ -42,7 +42,7 @@ public class DTCCastingTests extends TestBase {
         }
     }*/
 
-/*    @Test
+    /*    @Test
     @TestRail(testCaseId = {"6468", "6379", "6383", "6387", "6389", "6391", "6382", "6292"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
@@ -86,10 +86,10 @@ public class DTCCastingTests extends TestBase {
         guidanceIssuesPage.selectIssueTypeGcd("Machining Issues", "Obstructed Surfaces", "PlanarFace:4");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Facing: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry."));
     }
-/*
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+
+    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1596", "1261"})
+    @TestRail(testCaseId = {"1261"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void geometryTest() {
 
@@ -122,7 +122,7 @@ public class DTCCastingTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1042", "1046", "1051", "1053", "1055", "1057"})
+    @TestRail(testCaseId = {"6375", "6379", "6384", "6386", "6388", "6390"})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
 
@@ -163,7 +163,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     /*@Test
-    @TestRail(testCaseId = {"1046", "1051", "1055"})
+    @TestRail(testCaseId = {"6379", "6384", "6388"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
 
@@ -191,12 +191,14 @@ public class DTCCastingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .openGuidanceTab()
-            .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:7");
+            .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:7");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface is below the minimum recommended draft angle."));
+        guidanceIssuesPage.closePanel();
 
         guidanceIssuesPage.selectIssueTypeGcd("Material Issue", "Minimum Wall Thickness", "Component:1");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Gravity Die Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
+        guidanceIssuesPage.closePanel();
 
         guidanceIssuesPage.selectIssueTypeGcd("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Gravity Die Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
@@ -204,7 +206,7 @@ public class DTCCastingTests extends TestBase {
 
     @Test
     @Category({SmokeTests.class, SanityTests.class})
-    @TestRail(testCaseId = {"1044"})
+    @TestRail(testCaseId = {"6377"})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
 
@@ -232,32 +234,39 @@ public class DTCCastingTests extends TestBase {
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PROFILESURFACE.getToleranceName()), "6"), Matchers.is(true));
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.ROUGHNESSRA.getToleranceName()), "3"), Matchers.is(true));
         assertThat(tolerancePage.isToleranceCount((ToleranceEnum.STRAIGHTNESS.getToleranceName()), "3"), Matchers.is(true));
-    }
+    } */
 
     @Test
-    @TestRail(testCaseId = {"1052", "1060", "1061"})
+    @TestRail(testCaseId = {"6385", "6393", "6394"})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "SandCastIssues.SLDPRT");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "SandCastIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit()
             .costScenario()
             .openDesignGuidance()
-            .openGuidanceTab()
             .selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "MultiStepHole:1");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+        guidanceIssuesPage.closePanel();
 
         guidanceIssuesPage.selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+        guidanceIssuesPage.closePanel();
 
         guidanceIssuesPage.selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. Part Thickness is more than the maximum limit with this material."));
-    }*/
+    }
 }
