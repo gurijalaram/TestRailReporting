@@ -119,7 +119,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     private GuidanceIssuesPage selectGcd(String gcd) {
         WebElement byGcd = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd))).findElement(By.cssSelector("[role='cell']")));
-        pageUtils.waitForElementAndClick(byGcd);
+        deSelectAll().
+            pageUtils.waitForElementAndClick(byGcd);
         return this;
     }
 
