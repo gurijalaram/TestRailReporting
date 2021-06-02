@@ -85,7 +85,7 @@ public class Constants {
      * @return string
      */
     public static String getSecretKey() {
-        return secretKey = System.getProperty("cidSecretKey") == null ? PROPERTIES.getProperty("cid.secret.key") : System.getProperty("cidSecretKey");
+        return secretKey = System.getProperty("cidSecretKey") == null ? PROPERTIES.getProperty("ats.secret.key") : System.getProperty("cidSecretKey");
     }
 
     /**
