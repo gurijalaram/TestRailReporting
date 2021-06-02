@@ -143,23 +143,30 @@ public class DTCCastingTests extends TestBase {
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface is below the minimum recommended draft angle."));
         assertThat(guidanceIssuesPage.getGcdCount("Curved Wall"), equalTo(87));
-        guidanceIssuesPage.closePanel();
 
-        guidanceIssuesPage.selectIssueTypeGcd("Material Issue", "Minimum Wall Thickness", "Component:1");
+        guidanceIssuesPage.closePanel()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Material Issue", "Minimum Wall Thickness", "Component:1");
+
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
-        guidanceIssuesPage.closePanel();
 
-        guidanceIssuesPage.selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
+        guidanceIssuesPage.closePanel()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
+
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Part Thickness is more than the maximum limit with this material."));
-        guidanceIssuesPage.closePanel();
 
-        guidanceIssuesPage.selectIssueTypeGcd("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:39");
+        guidanceIssuesPage.closePanel()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:39");
+
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
-        guidanceIssuesPage.closePanel();
 
-        guidanceIssuesPage.selectIssueTypeGcd("Hole Issue", "Minimum Hole Diameter", "SimpleHole:13");
+        guidanceIssuesPage.closePanel()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Hole Issue", "Minimum Hole Diameter", "SimpleHole:13");
+
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Hole Diameter is less than the minimum limit with this material."));
-        guidanceIssuesPage.closePanel();
     }
 
     /*@Test
@@ -260,13 +267,17 @@ public class DTCCastingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "MultiStepHole:1");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
-        guidanceIssuesPage.closePanel();
 
-        guidanceIssuesPage.selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
+        guidanceIssuesPage.closePanel()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
+
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
-        guidanceIssuesPage.closePanel();
 
-        guidanceIssuesPage.selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
+        guidanceIssuesPage.closePanel()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
+
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. Part Thickness is more than the maximum limit with this material."));
     }
 }
