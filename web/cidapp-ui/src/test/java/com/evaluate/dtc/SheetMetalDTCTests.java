@@ -126,7 +126,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Simple Holes", "SimpleHole:2");
+            .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Simple Hole", "SimpleHole:2");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Increase the distance between the holes to the suggested value."));
     }
 
