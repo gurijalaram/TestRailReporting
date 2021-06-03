@@ -24,8 +24,8 @@ sourceSets {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
-
-    compile project(':microservices:cidapp-api')
+    implementation project(':microservices:cidapp-api')
+    implementation project(':microservices:ats-api')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

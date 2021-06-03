@@ -8,8 +8,8 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import com.apriori.apibase.services.cas.IdentityProviders;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.SingleIdp;
 import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
@@ -26,13 +26,7 @@ public class CasIdentityProvidersTests extends TestUtil {
 
     @Before
     public void getToken() {
-        token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-            Constants.getCasServiceHost(),
-            HttpStatus.SC_CREATED,
-            Constants.getCasTokenUsername(),
-            Constants.getCasTokenEmail(),
-            Constants.getCasTokenIssuer(),
-            Constants.getCasTokenSubject());
+        token = new JwtTokenUtil().retrieveJwtToken();
     }
 
     @Test

@@ -3,8 +3,7 @@ package utils;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,9 +11,8 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Constants {
-
-    private static final Logger logger = LoggerFactory.getLogger(Constants.class);
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String LOGOUT_HEADER = "CI DESIGN AUTOMATION";
@@ -54,15 +52,15 @@ public class Constants {
     public static final String PERCENT_VALUE = "Percent";
     public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
     public static final String FORGOT_PWD_MSG_QA_ENV = "IF THE SUPPLIED EMAIL ADDRESS IS VALID, YOU WILL RECEIVE AN " +
-            "EMAIL SHORTLY WITH INSTRUCTIONS ON RESETTING YOUR PASSWORD. IF YOU DID NOT RECEIVE AN EMAIL AND STILL " +
-            "REQUIRE ASSISTANCE, PLEASE SEND AN EMAIL TO SUPPORT@APRIORI.COM.";
+        "EMAIL SHORTLY WITH INSTRUCTIONS ON RESETTING YOUR PASSWORD. IF YOU DID NOT RECEIVE AN EMAIL AND STILL " +
+        "REQUIRE ASSISTANCE, PLEASE SEND AN EMAIL TO SUPPORT@APRIORI.COM.";
     public static final String FORGOT_PWD_MSG_STAGING_ENV = "WE'VE JUST SENT YOU AN EMAIL TO RESET YOUR PASSWORD.";
     public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
     public static final String INVALID_ERROR_MESSAGE = "Invalid";
     public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cir-qa";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa";
 
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
@@ -72,14 +70,14 @@ public class Constants {
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile("cir-ui-" + environment + ".properties");
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            log.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }
