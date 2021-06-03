@@ -42,7 +42,8 @@ public class TableHeadersTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser());
 
         assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.THUMBNAIL.getColumns(), ColumnsEnum.COMPONENT_NAME.getColumns(), ColumnsEnum.SCENARIO_NAME.getColumns(),
-            ColumnsEnum.STATE.getColumns(), ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.VPE.getColumns()));
+            ColumnsEnum.COMPONENT_TYPE.getColumns(), ColumnsEnum.STATE.getColumns(), ColumnsEnum.PROCESS_GROUP.getColumns(), ColumnsEnum.DIGITAL_FACTORY.getColumns(), ColumnsEnum.CREATED_AT.getColumns(),
+            ColumnsEnum.CREATED_BY.getColumns(), ColumnsEnum.ANNUAL_VOLUME.getColumns(), ColumnsEnum.BATCH_SIZE.getColumns(), ColumnsEnum.DFM_RISK.getColumns(), ColumnsEnum.FULLY_BURDENED_COST.getColumns()));
     }
 
     @Test
@@ -102,8 +103,8 @@ public class TableHeadersTests extends TestBase {
         explorePage.sortColumn(ColumnsEnum.PROCESS_GROUP, SortOrderEnum.ASCENDING);
         assertThat(explorePage.getSortOrder(ColumnsEnum.PROCESS_GROUP), is(equalTo(SortOrderEnum.ASCENDING.getOrder())));
 
-        explorePage.sortColumn(ColumnsEnum.VPE, SortOrderEnum.ASCENDING);
-        assertThat(explorePage.getSortOrder(ColumnsEnum.VPE), is(equalTo(SortOrderEnum.ASCENDING.getOrder())));
+        explorePage.sortColumn(ColumnsEnum.DIGITAL_FACTORY, SortOrderEnum.ASCENDING);
+        assertThat(explorePage.getSortOrder(ColumnsEnum.DIGITAL_FACTORY), is(equalTo(SortOrderEnum.ASCENDING.getOrder())));
 
         explorePage.sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
         assertThat(explorePage.getSortOrder(ColumnsEnum.CREATED_AT), is(equalTo(SortOrderEnum.DESCENDING.getOrder())));

@@ -573,8 +573,8 @@ public class ProcessGroupsTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.isDfmRiskIcon("Critical"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Plasma Cut"));
     }
 
@@ -597,12 +597,12 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
-            .search("AISI 1020")
+            .search("1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE), is(true));
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Fiber Laser Cut"));
     }
 }

@@ -105,7 +105,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
 
-        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));

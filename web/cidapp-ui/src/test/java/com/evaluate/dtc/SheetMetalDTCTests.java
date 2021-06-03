@@ -118,7 +118,7 @@ public class SheetMetalDTCTests extends TestBase {
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
             .submit()
-            .costScenario()
+            .costScenario(3)
             .openDesignGuidance()
             .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Complex Hole", "ComplexHole:14");
 
@@ -126,7 +126,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Simple Holes", "SimpleHole:2");
+            .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Simple Hole", "SimpleHole:2");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Increase the distance between the holes to the suggested value."));
     }
 
@@ -162,7 +162,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance().selectIssueTypeGcd("Bend Issue, Bend - Min Radius", "Straight Bend", "StraightBend:4");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Bend radius is too small"));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("The bend failed feasibility for 3 Roll Bending as the radius is too small for the machine capability"));
     }
 
     @Test
