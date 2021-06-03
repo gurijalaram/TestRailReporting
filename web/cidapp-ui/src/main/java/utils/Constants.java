@@ -1,11 +1,8 @@
 package utils;
 
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,11 +12,12 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "cidapp-ui-qa-21-1";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
     public static final List<String> INPUT_VALUES = Arrays.asList("annual volume", "batch size", "material", "production life", "component name", "description", "notes",
         "scenario name", "tolerance count", "fully burdened cost", "material cost", "piece part cost", "total capital investment",
         "cycle time", "finish mass", "process routing", "utilization");
@@ -27,7 +25,6 @@ public class Constants {
     public static final List<String> DATE_VALUES = Arrays.asList("created at", "last updated at");
     public static final List<String> TYPE_INPUT_VALUES = Arrays.asList("process group", "vpe", "assignee", "component type", "cost maturity", "created by", "last updated by",
         "state", "status", "dfm");
-    private static final Logger logger = LoggerFactory.getLogger(Constants.class);
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
@@ -44,14 +41,14 @@ public class Constants {
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile("cidapp-ui-" + environment + ".properties");
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            log.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }
