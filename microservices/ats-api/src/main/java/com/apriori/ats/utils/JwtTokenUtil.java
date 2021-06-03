@@ -30,6 +30,7 @@ public class JwtTokenUtil {
     }
 
     // TODO: cf - 27/05/2021 to be removed
+    @Deprecated
     public String retrieveJwtToken(String secretKey, String url, int statusCode, String username, String email, String issuer, String subject) {
         url = url.concat(String.format("/tokens?key=%s", secretKey));
         TokenRequest body = new TokenRequest();
@@ -50,6 +51,11 @@ public class JwtTokenUtil {
         return token.getToken();
     }
 
+    /**
+     * Retrieves a JWT token
+     *
+     * @return string
+     */
     public String retrieveJwtToken() {
         String url;
 
