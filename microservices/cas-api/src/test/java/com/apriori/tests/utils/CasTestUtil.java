@@ -34,13 +34,7 @@ import java.util.Collections;
 
 public class CasTestUtil extends TestUtil {
 
-    private static String token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-            Constants.getCasServiceHost(),
-            HttpStatus.SC_CREATED,
-            Constants.getCasTokenUsername(),
-            Constants.getCasTokenEmail(),
-            Constants.getCasTokenIssuer(),
-            Constants.getCasTokenSubject());
+    private static String token = new JwtTokenUtil().retrieveJwtToken();
     private String url = String.format(Constants.getApiUrl(), "customers/");
 
     /**

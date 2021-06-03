@@ -48,14 +48,7 @@ public class UserTestDataUtil {
     }
 
     public String initToken(UserCredentials userCredentials) {
-        return new JwtTokenUtil().retrieveJwtToken(
-            Constants.getSecretKey(),
-            Constants.getEdcServiceHost(),
-            HttpStatus.SC_CREATED,
-            userCredentials.getUsername().split("@")[0],
-            userCredentials.getUsername(),
-            Constants.getEdcTokenIssuer(),
-            Constants.getEdcTokenSubject());
+        return new JwtTokenUtil(userCredentials).retrieveJwtToken();
     }
 
     public UserDataEDC initBillOfMaterials() {

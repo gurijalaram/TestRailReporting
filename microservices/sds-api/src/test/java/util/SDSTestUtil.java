@@ -77,13 +77,7 @@ public class SDSTestUtil extends TestUtil {
 
     private static String initToken() {
         if (token == null) {
-            token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-                Constants.getCidServiceHost(),
-                HttpStatus.SC_CREATED,
-                Constants.getCidTokenUsername(),
-                Constants.getCidTokenEmail(),
-                Constants.getCidTokenIssuer(),
-                Constants.getCidTokenSubject());
+            token = new JwtTokenUtil().retrieveJwtToken();
         }
 
         return token;

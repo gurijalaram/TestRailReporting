@@ -26,13 +26,7 @@ public class CasConfigurationsTests extends TestUtil {
 
     @Before
     public void getToken() {
-        token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-                Constants.getCasServiceHost(),
-                HttpStatus.SC_CREATED,
-                Constants.getCasTokenUsername(),
-                Constants.getCasTokenEmail(),
-                Constants.getCasTokenIssuer(),
-                Constants.getCasTokenSubject());
+        token = new JwtTokenUtil().retrieveJwtToken();
     }
 
     @Test

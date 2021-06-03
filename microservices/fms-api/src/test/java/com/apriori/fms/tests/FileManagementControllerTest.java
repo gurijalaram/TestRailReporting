@@ -22,13 +22,7 @@ public class FileManagementControllerTest extends TestUtil {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-            Constants.getServiceHost(),
-            HttpStatus.SC_CREATED,
-            "mparker",
-            "mparker@apriori.com",
-            Constants.getFmsTokenIssuer(),
-            Constants.getFmsTokenSubject());
+        token = new JwtTokenUtil().retrieveJwtToken();
     }
 
     @Test
