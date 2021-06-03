@@ -127,7 +127,7 @@ pipeline {
                 }
 
                 sh """
-                    sleep 10s
+                    sleep 5s
                     docker exec \
                         ${buildInfo.name}-build-${uuid} \
                         java \
