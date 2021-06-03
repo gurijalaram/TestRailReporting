@@ -118,7 +118,7 @@ public class SheetMetalDTCTests extends TestBase {
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
             .submit()
-            .costScenario()
+            .costScenario(3)
             .openDesignGuidance()
             .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Complex Hole", "ComplexHole:14");
 
