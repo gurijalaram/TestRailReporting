@@ -1,10 +1,10 @@
 package tests;
 
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.entity.response.AuthorizationResponse;
 import com.apriori.ats.utils.AuthorizeUserUtil;
 import com.apriori.ats.utils.Constants;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
@@ -30,7 +30,7 @@ public class AtsAuthorization extends TestUtil {
         AuthorizationResponse response = AuthorizeUserUtil.authorizeUser(Constants.getSecretKey(),
             Constants.getAtsServiceHost(),
             Constants.getAtsAuthTargetCloudContext(),
-                token,
-                HttpStatus.SC_OK);
+            token,
+            HttpStatus.SC_OK);
     }
 }

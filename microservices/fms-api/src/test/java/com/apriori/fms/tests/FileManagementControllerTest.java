@@ -1,10 +1,9 @@
 package com.apriori.fms.tests;
 
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.fms.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
@@ -36,10 +35,10 @@ public class FileManagementControllerTest extends TestUtil {
         String fileIdentity = files.get(new Random().nextInt(files.size())).getIdentity();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                FileManagementController.getFileByIdentity(
-                        token,
-                        fileIdentity
-                ).getStatusCode());
+            FileManagementController.getFileByIdentity(
+                token,
+                fileIdentity
+            ).getStatusCode());
     }
 
     @Test
@@ -53,9 +52,9 @@ public class FileManagementControllerTest extends TestUtil {
         ).getResponseEntity().getResponse().getIdentity();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                FileManagementController.getFileByIdentity(
-                        token,
-                        fileIdentity
-                ).getStatusCode());
+            FileManagementController.getFileByIdentity(
+                token,
+                fileIdentity
+            ).getStatusCode());
     }
 }
