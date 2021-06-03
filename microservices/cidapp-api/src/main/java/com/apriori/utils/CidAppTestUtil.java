@@ -2,16 +2,16 @@ package com.apriori.utils;
 
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidapp.entity.enums.CidAppAPIEnum;
-import com.apriori.cidapp.entity.enums.CssAPIEnum;
 import com.apriori.cidapp.entity.request.CostRequest;
 import com.apriori.cidapp.entity.response.ComponentIdentityResponse;
 import com.apriori.cidapp.entity.response.GetComponentResponse;
 import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidapp.entity.response.css.CssComponentResponse;
-import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.css.entity.response.CssComponentResponse;
+import com.apriori.css.entity.response.Item;
 import com.apriori.cidapp.entity.response.scenarios.CostResponse;
 import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
+import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
@@ -74,7 +74,7 @@ public class CidAppTestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        ResponseWrapper<CssComponentResponse> itemResponse = getUnCostedCssComponents(componentName, scenarioName);
+        ResponseWrapper<CssComponentResponse> itemResponse = new UncostedComponents().getUnCostedCssComponents(componentName, scenarioName);
 
         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
         return itemResponse.getResponseEntity().getItems().get(0);
@@ -100,7 +100,7 @@ public class CidAppTestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        ResponseWrapper<CssComponentResponse> itemResponse = getUnCostedCssComponents(componentName, scenarioName);
+        ResponseWrapper<CssComponentResponse> itemResponse = new UncostedComponents().getUnCostedCssComponents(componentName, scenarioName);
 
         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
         return itemResponse.getResponseEntity().getItems().get(0);
@@ -247,50 +247,5 @@ public class CidAppTestUtil {
                 .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity));
 
         return HTTP2Request.build(requestEntity).get();
-    }
-
-    /**
-     * Gets the uncosted component from Css
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @return response object
-     */
-    public ResponseWrapper<CssComponentResponse> getUnCostedCssComponents(String componentName, String scenarioName) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
-            .inlineVariables(Arrays.asList(componentName.split("\\.")[0].toUpperCase(), scenarioName));
-
-        int currentCount = 0;
-        int attemptsCount = 60;
-        int secondsToWait = 2;
-
-        final String verifiedState = "NOT_COSTED";
-
-        try {
-
-            do {
-                TimeUnit.SECONDS.sleep(secondsToWait);
-
-                ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
-
-                Assert.assertEquals(String.format("Failed to receive data about component name: %s, with scenario name: %s", componentName, scenarioName),
-                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-
-                if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()
-                    && scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
-                    return scenarioRepresentation;
-                }
-
-            } while (currentCount++ <= attemptsCount);
-
-        } catch (InterruptedException e) {
-            logger.error(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
-
-        throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d attempts with period in %d seconds.",
-                componentName, scenarioName, attemptsCount, secondsToWait)
-        );
     }
 }

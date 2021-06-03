@@ -18,12 +18,12 @@ public class Constants {
     private static final File INPUT_STREAM;
     public static String environment;
     private static String baseUrl;
-    private static String cidApiUrl;
+    private static String cssApiUrl;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile("cidapp-api-" + environment + ".properties");
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile("css-api-" + environment + ".properties");
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
@@ -54,6 +54,6 @@ public class Constants {
      * @return string
      */
     public static String getApiUrl() {
-        return cidApiUrl = System.getProperty("cidApiUrl") == null ? PROPERTIES.getProperty("cid.api.url").concat("%s") : System.getProperty("cidApiUrl");
+        return cssApiUrl = System.getProperty("cssApiUrl") == null ? PROPERTIES.getProperty("css.api.url").concat("%s") : System.getProperty("cssApiUrl");
     }
 }

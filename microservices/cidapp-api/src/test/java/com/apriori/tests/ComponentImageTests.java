@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidapp.entity.response.componentiteration.ActiveAxes;
 import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.css.entity.response.Item;
 import com.apriori.cidapp.entity.response.scenarios.CostResponse;
 import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
 import com.apriori.utils.CidAppTestUtil;
