@@ -573,8 +573,8 @@ public class ProcessGroupsTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.isDfmRiskIcon("Critical"), is(true));
+        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Plasma Cut"));
     }
 

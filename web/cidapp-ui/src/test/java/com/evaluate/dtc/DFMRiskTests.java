@@ -310,7 +310,7 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), cadResourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .inputProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -437,7 +437,7 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario(5);
 
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(640, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(690, 1));
 
         // TODO uncomment this section when update cad file is implemented
         /*evaluatePage.updateCadFile(cadResourceFile);
