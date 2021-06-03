@@ -32,7 +32,7 @@ public class Constants {
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile("cia-ui" + environment + ".properties");
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile("cia-ui-" + environment + ".properties");
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
