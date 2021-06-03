@@ -13,9 +13,9 @@ pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         choice(name: 'TARGET_MODULE', choices: ['cid-ui', 'apitests', 'ciconnect-ui', 'cas-ui', 'cir-ui', 'cia-ui', 'cidapp-ui'], description: 'What target module to run?')
-        choice(name: 'TARGET_ENV', choices: ['qa-21-1', 'qa-20-1', 'qa-core', 'int-core'], description: 'What is the target environment?')
+        choice(name: 'TARGET_ENV', choices: ['qa-21-1', 'qa-20-1', 'int-core'], description: 'What is the target environment?')
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
-        string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
+        string(name: 'OTHER_TEST', defaultValue: 'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
@@ -114,7 +114,7 @@ pipeline {
                         --name ${buildInfo.name}-build-${uuid} \
                         ${buildInfo.name}-build-${uuid}:latest
                      """
-                     }
+                }
 
                 echo "Testing.."
 
