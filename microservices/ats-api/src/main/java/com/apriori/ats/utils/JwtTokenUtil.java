@@ -29,6 +29,28 @@ public class JwtTokenUtil {
     public JwtTokenUtil() {
     }
 
+    // TODO: cf - 27/05/2021 to be removed
+    @Deprecated
+    public String retrieveJwtToken(String secretKey, String url, int statusCode, String username, String email, String issuer, String subject) {
+        url = url.concat(String.format("/tokens?key=%s", secretKey));
+        TokenRequest body = new TokenRequest();
+        TokenInformation information = new TokenInformation();
+        information
+            .setIssuer(issuer)
+            .setSubject(subject)
+            .setNameAndEmail(username, email);
+        body.setToken(information);
+
+        Token token = (Token) GenericRequestUtil.postMultipart(
+            RequestEntity.init(url, Token.class)
+                .setBody(body)
+                .setStatusCode(statusCode),
+            new RequestAreaApi()
+        ).getResponseEntity();
+
+        return token.getToken();
+    }
+
     /**
      * Retrieves a JWT token
      *
