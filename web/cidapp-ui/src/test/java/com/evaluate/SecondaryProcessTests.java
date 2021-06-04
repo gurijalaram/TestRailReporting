@@ -20,6 +20,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
@@ -72,6 +73,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     @Test
+    @Ignore("Secondary Processes has not went in yet")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5120", "5121", "5123"})
     @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
@@ -228,6 +230,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     @Test
+    @Ignore("Secondary Processes has not went in yet")
     @Description("Test secondary process Stress Relief")
     public void secondaryProcessStressRelief() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -254,6 +257,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Ignore("Secondary Processes has not went in yet")
     @Description("Test secondary process Anodize")
     public void secondaryProcessAnodize() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -280,6 +284,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Ignore("Secondary Processes has not went in yet")
     @Description("Test secondary process Certification")
     public void secondaryProcessCertification() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -409,6 +414,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     @Test
+    @Ignore("Secondary Processes has not went in yet")
     @Description("Test secondary process Passivation")
     public void secondaryProcessPassivation() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -469,6 +475,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
+    @Ignore("Secondary Processes has not went in yet")
     @TestRail(testCaseId = {"5117"})
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
@@ -792,6 +799,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Ignore("Secondary Processes has not went in yet")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5127"})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
