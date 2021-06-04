@@ -29,7 +29,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return String.format(Constants.getApiUrl(), String.format(getEndpointString(), variables));
+        return String.format(Constants.getCidApiUrl(), String.format(getEndpointString(), variables));
     }
 }
 

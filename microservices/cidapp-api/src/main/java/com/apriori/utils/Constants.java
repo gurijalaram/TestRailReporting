@@ -53,7 +53,7 @@ public class Constants {
      *
      * @return string
      */
-    public static String getApiUrl() {
+    public static String getCidApiUrl() {
         return cidApiUrl = System.getProperty("cidApiUrl") == null ? PROPERTIES.getProperty("cid.api.url").concat("%s") : System.getProperty("cidApiUrl");
     }
 }
