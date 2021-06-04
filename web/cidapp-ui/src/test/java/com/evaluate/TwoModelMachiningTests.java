@@ -44,7 +44,7 @@ public class TwoModelMachiningTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @Description("Validate Source and util tile appears when 2 MM is selected")
-    @TestRail(testCaseId = {"3927", "3928", "3929", "3930", "3947"})
+    @TestRail(testCaseId = {"7861", "7862", "7863", "7864", "7870"})
     public void testTwoModelMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -92,7 +92,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the User can open the source part in the evaluate tab")
-    @TestRail(testCaseId = {"3844", "3941"})
+    @TestRail(testCaseId = {"6466", "7866"})
     public void testOpenSourceModel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -131,7 +131,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
-    @TestRail(testCaseId = {"3940", "3946", "4133"})
+    @TestRail(testCaseId = {"7865", "7869", "7872"})
     public void multiLevel2Model() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
@@ -188,7 +188,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the User can open a public source part in the evaluate tab")
-    @TestRail(testCaseId = {"4178", "4138"})
+    @TestRail(testCaseId = {"7867", "7876"})
     public void testOpenPublicSourceModel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -222,7 +222,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the user can switch the source part")
-    @TestRail(testCaseId = {"3845", "4134", "4315"})
+    @TestRail(testCaseId = {"6467", "7873", "7874"})
     public void switchSourcePart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
         currentUser = UserUtil.getUser();
@@ -285,7 +285,7 @@ public class TwoModelMachiningTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @Description("Validate the user cannot use two completely different CAD models")
-    @TestRail(testCaseId = {"3948"})
+    @TestRail(testCaseId = {"7871"})
     public void testTwoModelCorrectCADModels() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
         currentUser = UserUtil.getUser();
@@ -326,7 +326,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     /*@Test
     @Description("Validate the user can fix the source scenario but selecting the continue button to return to the part")
-    @TestRail(testCaseId = {"4339"})
+    @TestRail(testCaseId = {"7879"})
     public void continueSourceButton() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.TWO_MODEL_MACHINING;
 
@@ -358,7 +358,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     /*@Test
     @Description("Validate the user can fix the source scenario but selecting the fix source button, fixing part and recosting 2MM")
-    @TestRail(testCaseId = {"4339"})
+    @TestRail(testCaseId = {"7879"})
     public void fixSourceButton() {
 
         String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
