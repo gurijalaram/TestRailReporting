@@ -13,8 +13,8 @@ include(':apibase')
 project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 
-final String[] microservicesModules = ["ats", "cas", "cds", "cid", "cidapp", "bcs", "edc", "fms", "nts", "vds", "sds"]
-final String[] webModules = ["cas", "cia", "ciconnect", "cid", "cidapp", "cir"]
+final String[] microservicesModules = ["ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api"]
+final String[] webModules = ["cas-ui", "cia-ui", "ciconnect-ui", "cid-ui", "cidapp-ui", "cir-ui"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
@@ -39,44 +39,46 @@ if (configuration != null) {
 
     //Microservices
 
-    include(':microservices:ats')
-    include(':microservices:cas')
-    include(':microservices:cds')
-    include(':microservices:cid')
-    include(':microservices:cidapp')
-    include(':microservices:bcs')
-    include(':microservices:edc')
-    include(':microservices:fms')
-    include(':microservices:nts')
-    include(':microservices:vds')
-    include(':microservices:sds')
+    include(':microservices:ats-api')
+    include(':microservices:cas-api')
+    include(':microservices:cds-api')
+    include(':microservices:cid-api')
+    include(':microservices:cidapp-api')
+    include(':microservices:css-api')
+    include(':microservices:bcs-api')
+    include(':microservices:edc-api')
+    include(':microservices:fms-api')
+    include(':microservices:nts-api')
+    include(':microservices:vds-api')
+    include(':microservices:sds-api')
 
-    project(':microservices:ats').projectDir = file('../microservices/ats')
-    project(':microservices:cas').projectDir = file('../microservices/cas')
-    project(':microservices:cid').projectDir = file('../microservices/cid')
-    project(':microservices:cidapp').projectDir = file('../microservices/cidapp')
-    project(':microservices:cds').projectDir = file('../microservices/cds')
-    project(':microservices:bcs').projectDir = file('../microservices/bcs')
-    project(':microservices:edc').projectDir = file('../microservices/edc')
-    project(':microservices:fms').projectDir = file('../microservices/fms')
-    project(':microservices:nts').projectDir = file('../microservices/nts')
-    project(':microservices:vds').projectDir = file('../microservices/vds')
-    project(':microservices:sds').projectDir = file('../microservices/sds')
+    project(':microservices:ats-api').projectDir = file('../microservices/ats-api')
+    project(':microservices:cas-api').projectDir = file('../microservices/cas-api')
+    project(':microservices:cid-api').projectDir = file('../microservices/cid-api')
+    project(':microservices:cidapp-api').projectDir = file('../microservices/cidapp-api')
+    project(':microservices:css-api').projectDir = file('../microservices/css-api')
+    project(':microservices:cds-api').projectDir = file('../microservices/cds-api')
+    project(':microservices:bcs-api').projectDir = file('../microservices/bcs-api')
+    project(':microservices:edc-api').projectDir = file('../microservices/edc-api')
+    project(':microservices:fms-api').projectDir = file('../microservices/fms-api')
+    project(':microservices:nts-api').projectDir = file('../microservices/nts-api')
+    project(':microservices:vds-api').projectDir = file('../microservices/vds-api')
+    project(':microservices:sds-api').projectDir = file('../microservices/sds-api')
 
     //Web
-    include ':web:cia'
-    include ':web:cid'
-    include ':web:cir'
-    include ':web:cidapp'
-    include ':web:ciconnect'
-    include ':web:cas'
+    include ':web:cia-ui'
+    include ':web:cid-ui'
+    include ':web:cir-ui'
+    include ':web:cidapp-ui'
+    include ':web:ciconnect-ui'
+    include ':web:cas-ui'
 
-    project(':web:cia').projectDir = file('../web/cia')
-    project(':web:cid').projectDir = file('../web/cid')
-    project(':web:cir').projectDir = file('../web/cir')
-    project(':web:cidapp').projectDir = file('../web/cidapp')
-    project(':web:ciconnect').projectDir = file('../web/ciconnect')
-    project(':web:cas').projectDir = file('../web/cas')
+    project(':web:cia-ui').projectDir = file('../web/cia-ui')
+    project(':web:cid-ui').projectDir = file('../web/cid-ui')
+    project(':web:cir-ui').projectDir = file('../web/cir-ui')
+    project(':web:cidapp-ui').projectDir = file('../web/cidapp-ui')
+    project(':web:ciconnect-ui').projectDir = file('../web/ciconnect-ui')
+    project(':web:cas-ui').projectDir = file('../web/cas-ui')
 
     if (System.getProperty("all") != null) {
         include(':database')

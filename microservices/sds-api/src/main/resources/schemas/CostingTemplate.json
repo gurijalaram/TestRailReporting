@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "required": [
+    "identity"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "locked": {
+      "type": "boolean"
+    },
+    "published": {
+      "type": "boolean"
+    },
+    "customAttributes": {
+      "type": "object"
+    },
+    "materialName": {
+      "type": "string"
+    },
+    "pinnedRouting": {
+      "type": "string"
+    },
+    "processGroupName": {
+      "type": "string"
+    },
+    "processSetupOptions": {
+      "type": "object"
+    },
+    "secondaryProcesses": {
+      "type": "object"
+    },
+    "secondaryVpes": {
+      "type": "object"
+    },
+    "threads": {
+      "type": "object"
+    },
+    "tolerances": {
+      "type": "object"
+    },
+    "vpeName": {
+      "type": "string"
+    }
+  }
+}
