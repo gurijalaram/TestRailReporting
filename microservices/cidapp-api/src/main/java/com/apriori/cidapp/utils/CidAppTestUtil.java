@@ -1,4 +1,4 @@
-package com.apriori.utils;
+package com.apriori.cidapp.utils;
 
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidapp.entity.enums.CidAppAPIEnum;
@@ -11,6 +11,8 @@ import com.apriori.cidapp.entity.response.scenarios.CostResponse;
 import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;

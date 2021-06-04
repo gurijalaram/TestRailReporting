@@ -1,4 +1,6 @@
-package com.apriori.utils;
+package com.apriori.cidapp.utils;
+
+import com.apriori.utils.FileResourceUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,7 +55,7 @@ public class Constants {
      *
      * @return string
      */
-    public static String getCidApiUrl() {
+    public static String getApiUrl() {
         return cidApiUrl = System.getProperty("cidApiUrl") == null ? PROPERTIES.getProperty("cid.api.url").concat("%s") : System.getProperty("cidApiUrl");
     }
 }

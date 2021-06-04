@@ -12,7 +12,6 @@ public enum CssAPIEnum implements ExternalEndpointEnum {
         this.endpoint = endpoint;
     }
 
-
     @Override
     public String getEndpointString() {
         return endpoint;
@@ -20,7 +19,7 @@ public enum CssAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return String.format(Constants.getCssApiUrl(), String.format(getEndpointString(), variables));
+        return String.format(Constants.getApiUrl(), String.format(getEndpointString(), variables));
     }
 }
 

@@ -53,7 +53,7 @@ public class Constants {
      *
      * @return string
      */
-    public static String getCssApiUrl() {
+    public static String getApiUrl() {
         return cssApiUrl = System.getProperty("cssApiUrl") == null ? PROPERTIES.getProperty("css.api.url").concat("%s") : System.getProperty("cssApiUrl");
     }
 }

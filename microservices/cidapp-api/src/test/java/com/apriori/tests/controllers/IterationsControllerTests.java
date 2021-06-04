@@ -5,8 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidapp.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
-import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
