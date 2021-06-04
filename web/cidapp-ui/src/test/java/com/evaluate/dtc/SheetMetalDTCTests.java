@@ -162,7 +162,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance().selectIssueTypeGcd("Bend Issue, Bend - Min Radius", "Straight Bend", "StraightBend:4");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("The bend failed feasibility for 3 Roll Bending as the radius is too small for the machine capability"));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("the radius is too small for the machine capability"));
     }
 
     @Test
