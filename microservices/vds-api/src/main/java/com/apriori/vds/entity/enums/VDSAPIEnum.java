@@ -63,7 +63,15 @@ public enum VDSAPIEnum implements EdcQaAPI {
     POST_SITE_VARIABLE("site-variables"),
     PUT_SITE_VARIABLES("site-variables"),
     DELETE_SITE_VARIABLE_BY_ID("site-variables/%s"),
-    PATCH_SITE_VARIABLES_BY_ID("site-variables/%s");
+    PATCH_SITE_VARIABLES_BY_ID("site-variables/%s"),
+
+    // User Group Associations,
+    GET_UG_ASSOCIATIONS_BY_GROUP_ID("groups/%s/user-group-associations"),
+    POST_UG_ASSOCIATIONS_BY_GROUP_ID("groups/%s/user-group-associations"),
+    GET_SPECIFIC_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs("groups/%s/user-group-associations/%s"),
+    DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs("groups/%s/user-group-associations/%s"),
+    PATCH_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs("groups/%s/user-group-associations/%s");
+
 
     private final String endpoint;
 

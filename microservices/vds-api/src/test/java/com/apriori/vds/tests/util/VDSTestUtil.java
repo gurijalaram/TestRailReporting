@@ -7,6 +7,8 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
+import com.apriori.vds.entity.response.access.control.AccessControlGroup;
+import com.apriori.vds.entity.response.access.control.AccessControlGroupItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
@@ -20,10 +22,31 @@ import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
     private static DigitalFactory digitalFactory;
+
+    private static String groupIdentity;
+
     private static String digitalFactoryIdentity;
     private static String associatedProcessGroupIdentity;
     private static String processGroupIdentity;
     private static String materialIdentity;
+
+    protected static List<AccessControlGroup> getGroupsResponse() {
+        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class);
+
+        ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTP2Request.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
+            accessControlGroupsResponse.getStatusCode()
+        );
+
+        return accessControlGroupsResponse.getResponseEntity().getItems();
+    }
+
+    private static AccessControlGroup getSingleGroup(){
+        List<AccessControlGroup> accessControlGroups = getGroupsResponse();
+        Assert.assertNotEquals("To get Access Control Group, response should contain it.", 0, accessControlGroups.size());
+
+        return accessControlGroups.get(5);
+    }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
@@ -118,4 +141,12 @@ public abstract class VDSTestUtil extends TestUtil {
         }
         return materialIdentity;
     }
+
+    public static String getGroupIdentity() {
+        if (groupIdentity == null) {
+            groupIdentity = getSingleGroup().getIdentity();
+        }
+        return groupIdentity;
+    }
+
 }
