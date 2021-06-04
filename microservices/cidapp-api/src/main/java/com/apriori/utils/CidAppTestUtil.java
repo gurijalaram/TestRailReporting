@@ -1,6 +1,6 @@
 package com.apriori.utils;
 
-import com.apriori.apibase.utils.JwtTokenUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidapp.entity.enums.CidAppAPIEnum;
 import com.apriori.cidapp.entity.enums.CssAPIEnum;
 import com.apriori.cidapp.entity.request.CostRequest;
@@ -34,17 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class CidAppTestUtil {
     private static final Logger logger = LoggerFactory.getLogger(CidAppTestUtil.class);
 
-    private static String token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-        Constants.getCidServiceHost(),
-        HttpStatus.SC_CREATED,
-        Constants.getCidTokenUsername(),
-        Constants.getCidTokenEmail(),
-        Constants.getCidTokenIssuer(),
-        Constants.getCidTokenSubject());
-
-    static {
-        RequestEntityUtil.useTokenForRequests(token);
-    }
+    private String token;
 
     /**
      * Adds a new component
@@ -57,17 +47,7 @@ public class CidAppTestUtil {
      */
     public Item postComponents(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
 
-        if (userCredentials.getToken() != null) {
-            token = userCredentials.getToken();
-        } else {
-            token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-                Constants.getCidServiceHost(),
-                HttpStatus.SC_CREATED,
-                userCredentials.getUsername().split("@")[0],
-                userCredentials.getUsername(),
-                Constants.getCidTokenIssuer(),
-                Constants.getCidTokenSubject());
-        }
+        token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
 
         RequestEntityUtil.useTokenForRequests(token);
         return postComponents(componentName, scenarioName, resourceFile);

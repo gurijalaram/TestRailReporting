@@ -483,7 +483,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public String getColour(String element) {
         WebElement elementColour = element.equalsIgnoreCase("Process Group") ? processGroupDropdown
-            : element.equalsIgnoreCase("VPE") ? digitalFactoryDropdown
+            : element.equalsIgnoreCase("Digital Factory") ? digitalFactoryDropdown
             : element.equalsIgnoreCase("Secondary Processes") ? secondaryProcessBox
             : element.equalsIgnoreCase("Annual Volume") ? annualVolumeInput
             : element.equalsIgnoreCase("Years") ? productionLifeInput
