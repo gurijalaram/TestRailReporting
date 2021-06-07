@@ -21,7 +21,8 @@
               "description",
               "cidSupported",
               "assemblySupported",
-              "vpeNames"
+              "vpeNames",
+              "defaultVpeName"
             ],
             "properties": {
               "identity": {
@@ -42,6 +43,9 @@
               "vpeNames": {
                 "type": "array",
                 "items": {
+                  "type": "string"
+                },
+                "defaultVpeName": {
                   "type": "string"
                 }
               }

@@ -18,13 +18,23 @@ import org.apache.http.HttpStatus;
 
 import java.util.UUID;
 
-public class BatchResources extends CisBase {
+public class BatchResources extends BcsBase {
     private static final String endpointBatches = String.format(getBatchUrl(), "");
     private static final String endpointBatchesWithIdentity = String.format(getBatchUrlWithIdentity(), "");
     private static final String endPointBatchCosting = String.format(getBatchUrlWithIdentity(), "/start-costing");
 
     public static <T> ResponseWrapper<T> getBatches() {
-        String url = endpointBatches;
+        return getBatches(null);
+    }
+
+    public static <T> ResponseWrapper<T> getBatches(String queries) {
+        if (queries != null) {
+            queries = "&" + queries;
+        } else {
+            queries = "";
+        }
+
+        String url = endpointBatches.concat(queries);
         return GenericRequestUtil.get(
                 RequestEntity.init(url, Batches.class),
                 new RequestAreaApi()

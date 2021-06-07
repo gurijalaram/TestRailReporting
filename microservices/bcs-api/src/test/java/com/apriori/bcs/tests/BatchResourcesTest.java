@@ -4,13 +4,14 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Cancel;
-import com.apriori.bcs.utils.CisUtils;
+import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -19,7 +20,12 @@ import java.util.Arrays;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BatchResourcesTest extends TestUtil {
+    private static Batch batch;
 
+    @BeforeClass
+    public static void testSetup() {
+        batch = BatchResources.createNewBatch();
+    }
 
     @Test
     @TestRail(testCaseId = {"4284"})
@@ -29,7 +35,7 @@ public class BatchResourcesTest extends TestUtil {
         Batch batch = BatchResources.createNewBatch();
 
         try {
-            String batchIdentity = CisUtils.getIdentity(batch, Batch.class);
+            String batchIdentity = BcsUtils.getIdentity(batch, Batch.class);
             Constants.setCisBatchIdentity(batchIdentity);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -49,7 +55,7 @@ public class BatchResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"4277"})
     @Description("API returns a representation of a single Batch in the CIS DB")
     public void getBatch() {
-        BatchResources.getBatchRepresentation(Constants.getCisBatchIdentity());
+        BatchResources.getBatchRepresentation(batch.getIdentity());
     }
 
     @Test

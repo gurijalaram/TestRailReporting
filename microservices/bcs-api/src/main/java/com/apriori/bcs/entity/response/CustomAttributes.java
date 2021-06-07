@@ -10,13 +10,14 @@ import lombok.Data;
 @JsonRootName("response")
 @Schema(location = "CustomAttributesSchema.json")
 public class CustomAttributes extends Pagination {
-    private String allowedValues;
-    private Integer decimalPlaces;
-    private String defaultValue;
+    private String[] allowedValues;
+    private Integer ordinal;
+    private String identity;
+    private String customerIdentity;
     private String displayName;
-    private Boolean multiselect;
+    private Boolean multiSelect;
     private String name;
-    private Boolean required;
+    private String requiredAttributeType;
     private String type;
     private CustomAttributes[] items;
 
