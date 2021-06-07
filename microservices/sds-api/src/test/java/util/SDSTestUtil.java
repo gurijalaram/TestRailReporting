@@ -8,7 +8,6 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.utils.Constants;
 import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
