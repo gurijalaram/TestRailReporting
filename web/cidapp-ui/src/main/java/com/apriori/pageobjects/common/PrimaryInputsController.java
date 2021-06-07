@@ -145,4 +145,15 @@ public class PrimaryInputsController {
         pageUtils.waitForElementAndClick(materialsPencil);
         return this;
     }
+
+    /**
+     * Opens the source component selector table
+     *
+     * @param sourceComponentPencil - Source Model pencil icon
+     * @return new page object
+     */
+    public PrimaryInputsController openSourceModelSelectorTable(WebElement sourceComponentPencil) {
+        pageUtils.waitForElementAndClick(sourceComponentPencil);
+        return this;
+    }
 }

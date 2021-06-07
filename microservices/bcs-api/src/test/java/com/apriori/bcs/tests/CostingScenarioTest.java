@@ -9,7 +9,7 @@ import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.request.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
-import com.apriori.bcs.utils.CisUtils;
+import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -65,7 +65,7 @@ public class CostingScenarioTest extends TestUtil {
             isPartComplete = pollState(partDetails, Part.class);
 
             if (exitTest) {
-                String errors = CisUtils.getErrors(batchPart, Part.class);
+                String errors = BcsUtils.getErrors(batchPart, Part.class);
                 logger.error(errors);
                 fail("Part was in state 'ERRORED'");
                 return;
@@ -112,7 +112,7 @@ public class CostingScenarioTest extends TestUtil {
     private Boolean pollState(Object obj, Class klass) {
         String state = "";
         try {
-            state = CisUtils.getState(obj, klass);
+            state = BcsUtils.getState(obj, klass);
             if (state.equalsIgnoreCase("ERRORED")) {
                 exitTest = true;
                 return true;

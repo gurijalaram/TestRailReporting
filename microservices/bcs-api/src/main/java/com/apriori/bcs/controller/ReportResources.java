@@ -4,8 +4,6 @@ import com.apriori.bcs.entity.request.NewReportRequest;
 import com.apriori.bcs.entity.response.Report;
 import com.apriori.bcs.entity.response.ReportExport;
 import com.apriori.bcs.entity.response.ReportTemplates;
-import com.apriori.bcs.entity.response.ReportType;
-import com.apriori.bcs.entity.response.ReportTypes;
 import com.apriori.bcs.entity.response.Reports;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -18,7 +16,7 @@ import org.apache.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportResources extends CisBase {
+public class ReportResources extends BcsBase {
     private static final String endpointReports = "reports";
     private static final String endpointReportRepresentation = "reports/%s";
     private static final String endpointExportReport = "reports/%s/export";
@@ -30,10 +28,6 @@ public class ReportResources extends CisBase {
                 RequestEntity.init(url, Reports.class),
                 new RequestAreaApi()
         );
-    }
-
-    public static <T> ResponseWrapper<T> getReportRepresentation() {
-        return getReportRepresentation(null);
     }
 
     public static <T> ResponseWrapper<T> getReportRepresentation(String identity) {
@@ -53,35 +47,7 @@ public class ReportResources extends CisBase {
         );
     }
 
-    public static <T> ResponseWrapper<T> getReportTypes() {
-        String url = String.format(getReportTypesUrl(), "");
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, ReportTypes.class),
-                new RequestAreaApi()
-        );
-    }
-
-    public static <T> ResponseWrapper<T> getSpecificReportType() {
-        String url = String.format(getReportTypesUrl(), "/" + Constants.getCisReportTypeIdentity());
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, ReportType.class),
-                new RequestAreaApi()
-        );
-    }
-
-    public static Report createReport(Object obj) {
-        return createReport(obj, null);
-    }
-
-    public static Report createReport(Object obj, String identity) {
-        NewReportRequest nrr = (NewReportRequest)obj;
-
-        if (identity != null) {
-            nrr.setScopedIdentity(identity);
-        } else {
-            nrr.setScopedIdentity(Constants.getCisPartIdentity());
-        }
-
+    public static Report createReport(NewReportRequest nrr) {
         String url = String.format(getCisUrl(), endpointReports);
         List<String> partsIdentities = new ArrayList<>();
         partsIdentities.add(Constants.getCisPartIdentity());
@@ -103,7 +69,17 @@ public class ReportResources extends CisBase {
     }
 
     public static <T> ResponseWrapper<T> getReportTemplates() {
-        String url = String.format(getCisUrl(), endpointReportTemplate);
+        return getReportTemplates(null);
+    }
+
+    public static <T> ResponseWrapper<T> getReportTemplates(String queries) {
+        if (queries != null) {
+            queries = "&" + queries;
+        } else {
+            queries = "";
+        }
+
+        String url = String.format(getCisUrl(), endpointReportTemplate).concat(queries);
         return GenericRequestUtil.get(
                 RequestEntity.init(url, ReportTemplates.class),
                 new RequestAreaApi()

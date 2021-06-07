@@ -5,6 +5,7 @@ import com.apriori.pageobjects.common.PrimaryInputsController;
 import com.apriori.pageobjects.common.SecondaryInputsController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
+import com.apriori.pageobjects.pages.compare.CompareExplorePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
@@ -119,6 +120,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = ".sub-components-summary.card .pill-text")
     private WebElement componentsDetailsButton;
+
+    @FindBy(css = "div[id='qa-source-model-modal-select-field'] button")
+    private WebElement sourceComponentPencil;
 
     @FindBy(id = "qa-scenario-select-field")
     @CacheLookup
@@ -517,5 +521,50 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isIconDisplayed(StatusIconEnum icon) {
         return statusIcon.isIconDisplayed(icon);
+    }
+
+    /**
+     * Opens the source selector table
+     *
+     * @return new page object
+     */
+    public CompareExplorePage selectSourcePart() {
+        primaryInputsController.openSourceModelSelectorTable(sourceComponentPencil);
+        return new CompareExplorePage(driver);
+    }
+
+    /**
+     * Gets the source model material
+     *
+     * @return string
+     */
+    public String getSourceModelMaterial() {
+        By sourceModelMaterial = By.xpath("//label[.='Source Model Material']/following-sibling::p");
+        pageUtils.waitForElementToAppear(sourceModelMaterial);
+        return driver.findElement(sourceModelMaterial).getAttribute("textContent");
+    }
+
+    /**
+     * Gets the source part details
+     *
+     * @return string
+     */
+    public String getSourcePartDetails() {
+        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'] .input-group");
+        pageUtils.waitForElementToAppear(sourcePart);
+        return driver.findElement(sourcePart).getAttribute("textContent");
+    }
+
+    /**
+     * Opens the source component
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openSourceScenario(String componentName, String scenarioName) {
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        pageUtils.waitForElementAndClick(scenario);
+        return new EvaluatePage(driver);
     }
 }

@@ -12,4 +12,5 @@ public class ProcessGroup {
     private Boolean cidSupported;
     private Boolean assemblySupported;
     private List<String> vpeNames;
+    private String defaultVpeName;
 }
