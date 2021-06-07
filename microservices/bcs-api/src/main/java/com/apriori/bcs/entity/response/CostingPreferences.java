@@ -12,6 +12,7 @@ import java.util.List;
 @JsonRootName("response")
 @Schema(location = "CostingPreferencesSchema.json")
 public class CostingPreferences {
+    private Integer annualVolume;
     private String batchMode;
     private Boolean cadTolerances;
     private Double cadToleranceReplacement;
@@ -20,9 +21,9 @@ public class CostingPreferences {
     private Boolean multiBodyIgnoreMissingComponents;
     private Boolean multiBodyPreserveCad;
     private String processGroup;
+    private Double productionLife;
     private String scenarioName;
     private List<Tolerance> tolerances;
     private Boolean useCadToleranceThreshold;
     private Boolean useVpeForAllProcesses;
-    private String vpeName;
 }

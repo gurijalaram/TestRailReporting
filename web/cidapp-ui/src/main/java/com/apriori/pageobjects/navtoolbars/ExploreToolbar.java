@@ -1,11 +1,11 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.cidapp.utils.CidAppTestUtil;
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
-import com.apriori.utils.CidAppTestUtil;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
 

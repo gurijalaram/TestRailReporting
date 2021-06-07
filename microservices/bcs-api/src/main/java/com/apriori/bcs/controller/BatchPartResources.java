@@ -5,7 +5,7 @@ import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.PartReport;
 import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.entity.response.Results;
-import com.apriori.bcs.utils.CisUtils;
+import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BatchPartResources extends CisBase {
+public class BatchPartResources extends BcsBase {
 
     enum EndPoint {
         BATCH_PARTS(String.format(getCisUrl(),"batches/%s/parts")),
@@ -38,9 +38,10 @@ public class BatchPartResources extends CisBase {
         }
     }
 
-    public static <T> ResponseWrapper<T> getBatchParts() {
+    public static <T> ResponseWrapper<T> getBatchParts(String batchIdentity) {
         return GenericRequestUtil.get(
-            RequestEntity.init(EndPoint.BATCH_PARTS.getEndPoint(), Parts.class),
+            RequestEntity.init(String.format(EndPoint.BATCH_PARTS.getEndPoint(), batchIdentity),
+                    Parts.class),
             new RequestAreaApi()
         );
     }
@@ -56,7 +57,6 @@ public class BatchPartResources extends CisBase {
     public static Part createNewBatchPart(NewPartRequest npr, String batchIdentity) {
         String url = String.format(EndPoint.BATCH_PARTS.getEndPoint(),
                 batchIdentity);
-        url = url.concat("&generateWatchpointReport=true");
         System.out.println("UUU: " + EndPoint.BATCH_PARTS.getEndPoint());
 
         File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(npr.getProcessGroup()),
@@ -75,12 +75,13 @@ public class BatchPartResources extends CisBase {
                         .use("BatchSize", npr.getBatchSize().toString())
                         .use("Description", npr.getDescription())
                         //.use("PinnedRouting", npr.getPinnedRouting())
-                        //.use("ProcessGroup", npr.getProcessGroup())
+                        .use("ProcessGroup", npr.getProcessGroup())
                         //.use("ProductionLife", npr.getProductionLife().toString())
                         //.use("ScenarioName", npr.getScenarioName())
                         //.use("Udas", npr.getUdas())
                         //.use("VpeName", npr.getVpeName())
                         .use("MaterialName", npr.getMaterialName())
+                        .use("generateWatchpointReport", "true")
                 );
 
 
@@ -89,6 +90,19 @@ public class BatchPartResources extends CisBase {
 
 
     public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity) {
+        Object partDetails;
+        BcsUtils.State isPartComplete;
+        int count = 0;
+        while (count <= Constants.getPollingTimeout()) {
+            partDetails =
+                    BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
+            isPartComplete = BcsUtils.pollState(partDetails, Part.class);
+            if (isPartComplete.equals(BcsUtils.State.COMPLETE)) {
+                break;
+            }
+            count += 1;
+        }
+
         String url = String.format(EndPoint.GET_RESULTS.getEndPoint(), batchIdentity, partIdentity);
         return GenericRequestUtil.get(
                 RequestEntity.init(url, Results.class),
@@ -98,13 +112,13 @@ public class BatchPartResources extends CisBase {
 
     public static <T> ResponseWrapper<T> getPartReport(String batchIdentity, String partIdentity) {
         Object partDetails;
-        Boolean isPartComplete = false;
+        BcsUtils.State isPartComplete;
         int count = 0;
         while (count <= Constants.getPollingTimeout()) {
             partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
-            isPartComplete = CisUtils.pollState(partDetails, Part.class);
-            if (isPartComplete) {
+            isPartComplete = BcsUtils.pollState(partDetails, Part.class);
+            if (isPartComplete.equals(BcsUtils.State.COMPLETE)) {
                 break;
             }
             count += 1;

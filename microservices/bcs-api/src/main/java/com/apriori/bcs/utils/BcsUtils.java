@@ -7,10 +7,23 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class CisUtils extends ApiUtils {
+public class BcsUtils extends ApiUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(CisUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(BcsUtils.class);
 
+    public enum State {
+        COMPLETE,
+        ERRORED,
+        PROCESSING
+    }
+
+    /**
+     * Get the entity's identity
+     *
+     * @param obj Entity
+     * @param klass
+     * @return string
+     */
     public static String getIdentity(Object obj, Class klass) {
         String value = null;
         try {
@@ -23,6 +36,13 @@ public class CisUtils extends ApiUtils {
         return value;
     }
 
+    /**
+     * Get the entity's state
+     *
+     * @param obj Entity
+     * @param klass
+     * @return string
+     */
     public static String getState(Object obj, Class klass) {
         String value = null;
         try {
@@ -35,6 +55,13 @@ public class CisUtils extends ApiUtils {
         return value;
     }
 
+    /**
+     * Check for and return any error message
+     *
+     * @param obj Entity
+     * @param klass
+     * @return string
+     */
     public static String getErrors(Object obj, Class klass) {
         String value = null;
         try {
@@ -47,6 +74,13 @@ public class CisUtils extends ApiUtils {
         return value;
     }
 
+    /**
+     * Gets the provided report identity
+     *
+     * @param obj Report
+     * @param klass
+     * @return string
+     */
     public static String getReportIdentity(Object obj, Class klass) {
         String value = null;
         try {
@@ -59,18 +93,25 @@ public class CisUtils extends ApiUtils {
         return value;
     }
 
-    public static Boolean pollState(Object obj, Class klass) {
+    /**
+     * Checks the state of the provided entity
+     *
+     * @param obj Entity to check state for
+     * @param klass
+     * @return Entity State
+     */
+    public static State pollState(Object obj, Class klass) {
         String state;
         try {
-            state = CisUtils.getState(obj, klass);
+            state = BcsUtils.getState(obj, klass);
 
             if (state.toUpperCase().equals("ERRORED")) {
                 logger.debug("Part process has errored");
-                return false;
+                return State.ERRORED;
             }
 
             if (state.toUpperCase().equals("COMPLETED")) {
-                return true;
+                return State.COMPLETE;
             } else {
                 Thread.sleep(10000);
             }
@@ -79,6 +120,6 @@ public class CisUtils extends ApiUtils {
             logger.error(Arrays.toString(e.getStackTrace()));
         }
 
-        return false;
+        return State.PROCESSING;
     }
 }
