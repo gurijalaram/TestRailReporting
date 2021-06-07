@@ -66,10 +66,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 class ConnectionManager<T> {
-
-    private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
-    private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
-    private static Map<String, String> authTokens = new ConcurrentHashMap<>();
     private Class<T> returnType;
     private RequestEntity requestEntity;
 
@@ -87,10 +83,6 @@ class ConnectionManager<T> {
         List<Map<String, ?>> urlParams = requestEntity.urlParams();
         MultiPartFiles multiPartFiles = requestEntity.multiPartFiles();
         FormParams formParams = requestEntity.formParams();
-
-        if (requestEntity.autoLogin()) {
-            requestEntity.headers(AuthorizationFormUtil.getTokenAuthorizationForm(this.getAuthToken()));
-        }
 
         if (multiPartFiles != null) {
             builder.setContentType("multipart/form-data");
@@ -156,19 +148,8 @@ class ConnectionManager<T> {
             log.error("Error with URI" + e.getMessage());
         }
 
-
-        if (requestEntity.statusCode() != null) {
-            return RestAssured.given()
-                .spec(builder.build())
-                .expect().statusCode(isOneOf(requestEntity.statusCode())).request()
-                .redirects().follow(requestEntity.followRedirection())
-                .log()
-                .all();
-        }
-
         return RestAssured.given()
             .spec(builder.build())
-
             .redirects().follow(requestEntity.followRedirection())
             .log()
             .all();
@@ -176,38 +157,6 @@ class ConnectionManager<T> {
 
     private boolean ignoreSslCheck() {
         return !StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"));
-    }
-
-    // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
-    private String getAuthToken() {
-
-        UserAuthenticationEntity userAuthenticationEntity = requestEntity.userAuthenticationEntity();
-
-        if (requestEntity.token() != null) {
-            return requestEntity.token();
-        }
-
-        if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
-            logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
-            RequestEntity authEntity = RequestEntityUtil.initBuilder(AuthEndpointEnum.POST_AUTH, AuthenticateJSON.class)
-                .xwwwwFormUrlEncoded(
-                    AuthorizationFormUtil.getDefaultAuthorizationForm(requestEntity.userAuthenticationEntity().getEmailAddress(),
-                        requestEntity.userAuthenticationEntity().getPassword()
-                ))
-                .autoLogin(false)
-                .followRedirection(false)
-                .build();
-
-            String authToken =
-                ((AuthenticateJSON) HTTP2Request.build(authEntity).post()
-                    .getResponseEntity()
-                ).getAccessToken();
-
-            authTokens.put(requestEntity.userAuthenticationEntity().getEmailAddress(), authToken);
-        }
-
-        return authTokens.get(requestEntity.userAuthenticationEntity().getEmailAddress());
-
     }
 
     private <T> ResponseWrapper<T> resultOf(ValidatableResponse response) {
