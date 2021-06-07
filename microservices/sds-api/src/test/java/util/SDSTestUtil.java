@@ -6,7 +6,6 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
-import com.apriori.cidapp.entity.enums.CidAppAPIEnum;
 import com.apriori.cidapp.entity.response.PostComponentResponse;
 import com.apriori.cidapp.entity.response.css.CssComponentResponse;
 import com.apriori.cidapp.entity.response.css.Item;
@@ -99,7 +98,7 @@ public class SDSTestUtil extends TestUtil {
      */
     protected static Item postComponents(String componentName, String scenarioName, String resourceFile) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+            RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
                 .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
