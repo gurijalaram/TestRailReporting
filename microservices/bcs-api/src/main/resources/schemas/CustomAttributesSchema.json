@@ -15,7 +15,7 @@
           "items": {
             "type": "array",
             "items": {
-              "$ref": "CustomAttributesSchema.json"
+              "$ref": "CustomAttributeSchema.json"
             }
           }
         }}

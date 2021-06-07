@@ -2,7 +2,7 @@ package com.apriori.bcs.controller;
 
 import com.apriori.bcs.utils.Constants;
 
-public class CisBase {
+public class BcsBase {
     private static String baseUrl;
 
     static {
@@ -10,7 +10,7 @@ public class CisBase {
     }
 
     /**
-     * Return cis url with customer identity appended
+     * Return bcs url with customer identity appended
      *
      * @return url
      */
@@ -21,7 +21,7 @@ public class CisBase {
     }
 
     /**
-     * Return base cis url
+     * Return base bcs url
      *
      * @return url
      */
