@@ -20,7 +20,7 @@ public class Constants {
     private static final File INPUT_STREAM;
     public static String environment;
     private static String baseUrl;
-    private static String cidApiUrl;
+    private static String sdsApiUrl;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -56,6 +56,6 @@ public class Constants {
      * @return string
      */
     public static String getApiUrl() {
-        return cidApiUrl = System.getProperty("cidApiUrl") == null ? PROPERTIES.getProperty("cid.api.url") : System.getProperty("cidApiUrl");
+        return sdsApiUrl = System.getProperty("sdsApiUrl") == null ? PROPERTIES.getProperty("sds.api.url") : System.getProperty("sdsApiUrl");
     }
 }
