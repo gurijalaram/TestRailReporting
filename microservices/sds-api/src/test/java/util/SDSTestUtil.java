@@ -6,19 +6,27 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.cidapp.entity.enums.CidAppAPIEnum;
+import com.apriori.cidapp.entity.response.PostComponentResponse;
+import com.apriori.cidapp.entity.response.css.CssComponentResponse;
 import com.apriori.cidapp.entity.response.css.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.utils.CidAppTestUtil;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.utils.FormParams;
+import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 
 public class SDSTestUtil extends TestUtil {
-
-    private static final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     protected static String token;
     private static Item partPostComponentResponse;
@@ -55,7 +63,7 @@ public class SDSTestUtil extends TestUtil {
         String processGroup = "Casting - Die";
 
         Item response =
-            cidAppTestUtil.postComponents(partName, scenarioName,
+            postComponents(partName, scenarioName,
                 processGroup
             );
 
@@ -80,5 +88,31 @@ public class SDSTestUtil extends TestUtil {
         }
 
         return token;
+    }
+
+    /**
+     * Adds a new component
+     *
+     * @param componentName - the part name
+     * @param scenarioName  - the scenario name
+     * @return responsewrapper
+     */
+    protected static Item postComponents(String componentName, String scenarioName, String resourceFile) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+                .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
+                .formParams(new FormParams().use("filename", componentName)
+                    .use("override", "false")
+                    .use("scenarioName", scenarioName));
+
+        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+
+        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
+            HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+
+        ResponseWrapper<CssComponentResponse> itemResponse = getUnCostedCssComponents(componentName, scenarioName);
+
+        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
+        return itemResponse.getResponseEntity().getItems().get(0);
     }
 }
