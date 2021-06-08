@@ -12,18 +12,24 @@ import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.PostComponentResponse;
 import com.apriori.sds.utils.Constants;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.UncostedComponents;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class SDSTestUtil extends TestUtil {
@@ -104,7 +110,7 @@ public class SDSTestUtil extends TestUtil {
                     .scenarioName(scenarioName)
                     .override(false)
                     // TODO: 08/06/2021 cn - need to figure out what this file content is
-                    .fileContents("I1VHQzoyIFBBUlQvU0hFRVRNRVRBTCAxMzE1IDYyMCAwIDEgMSAxNSAyNTAwIDIwMDQyODAgMDAwMDExNTcgXAojLSBWRVJTIDAgMCAgICAgICAgICAgICAgI")
+                    .fileContents(encodeFileToBase64Binary(componentName, resourceFile))
                     .build());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
@@ -116,5 +122,15 @@ public class SDSTestUtil extends TestUtil {
 
         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
         return itemResponse.getResponseEntity().getItems().get(0);
+    }
+
+    private static String encodeFileToBase64Binary(String fileName, String resourceFile)  {
+        byte[] encoded = new byte[0];
+        try {
+            encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), fileName)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new String(encoded, StandardCharsets.US_ASCII);
     }
 }
