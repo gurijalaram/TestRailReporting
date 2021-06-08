@@ -444,11 +444,11 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return boolean
      */
     public boolean isDfmRiskIcon(String riskFactor) {
-        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success)"
-            : riskFactor.equalsIgnoreCase("Medium") ? "var(--info)"
-            : riskFactor.equalsIgnoreCase("High") ? "var(--warning)"
-            : riskFactor.equalsIgnoreCase("Critical") ? "var(--danger)"
-            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--secondary-light)"
+        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--green-light)"
+            : riskFactor.equalsIgnoreCase("Medium") ? "var(--cyan-light)"
+            : riskFactor.equalsIgnoreCase("High") ? "var(--yellow-light)"
+            : riskFactor.equalsIgnoreCase("Critical") ? "var(--red-light)"
+            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--gray-500)"
             : null;
 
         By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
