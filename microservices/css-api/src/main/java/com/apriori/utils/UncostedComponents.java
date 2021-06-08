@@ -28,7 +28,18 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public ResponseWrapper<CssComponentResponse> getUnCostedCssComponents(String componentName, String scenarioName) {
+    public ResponseWrapper<CssComponentResponse> getUnCostedCssComponent(String componentName, String scenarioName) {
+        return getCssComponent(componentName, scenarioName, "NOT_COSTED");
+    }
+
+    /**
+     * Gets component from Css
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return response object
+     */
+    public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, String verifiedState) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(Arrays.asList(componentName.split("\\.")[0].toUpperCase(), scenarioName));
 
@@ -36,7 +47,6 @@ public class UncostedComponents {
         int attemptsCount = 60;
         int secondsToWait = 2;
 
-        final String verifiedState = "NOT_COSTED";
 
         try {
 
