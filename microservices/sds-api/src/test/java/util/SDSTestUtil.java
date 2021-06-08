@@ -10,7 +10,6 @@ import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.PostComponentResponse;
-import com.apriori.sds.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.UncostedComponents;
@@ -26,8 +25,6 @@ import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-
-import java.util.HashMap;
 
 public class SDSTestUtil extends TestUtil {
 
@@ -101,9 +98,6 @@ public class SDSTestUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
-                .headers(new HashMap<String, String>() {{
-                    put("ap-user-context", Constants.getUserContext());
-                }})
                 .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
                     .use("scenarioName", scenarioName));
