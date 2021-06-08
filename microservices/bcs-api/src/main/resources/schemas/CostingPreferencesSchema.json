@@ -7,6 +7,7 @@
     "response": {
       "type": "object",
       "required": [
+        "annualVolume",
         "batchMode",
         "cadTolerances",
         "cadToleranceReplacement",
@@ -15,13 +16,16 @@
         "multiBodyIgnoreMissingComponents",
         "multiBodyPreserveCad",
         "processGroup",
+        "productionLife",
         "scenarioName",
         "tolerances",
         "useCadToleranceThreshold",
-        "useVpeForAllProcesses",
-        "vpeName"
+        "useVpeForAllProcesses"
       ],
       "properties": {
+        "annualVolume": {
+          "type": "integer"
+        },
         "batchMode": {
           "type": "string"
         },
@@ -46,6 +50,9 @@
         "processGroup": {
           "type": "string"
         },
+        "productionLife": {
+          "type": "number"
+        },
         "scenarioName": {
           "type": "string"
         },
@@ -57,9 +64,6 @@
         },
         "useVpeForAllProcesses": {
           "type": "boolean"
-        },
-        "vpeName": {
-          "type": "string"
         }
       }
     }

@@ -14,6 +14,7 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.ReCostScenarioTests;
 import com.evaluate.SecondaryProcessTests;
+import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -64,7 +65,8 @@ import org.junit.runners.Suite;
     ActionsTests.class,
     TableHeadersTests.class,
     DTCMachiningTests.class,
-    DTCCastingTests.class
+    DTCCastingTests.class,
+    TwoModelMachiningTests.class
 })
 public class CIDSmokeTestSuite {
 }
