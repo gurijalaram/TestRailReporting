@@ -103,7 +103,8 @@ public class SDSTestUtil extends TestUtil {
                 .body("component", PostComponentRequest.builder().filename(componentName)
                     .scenarioName(scenarioName)
                     .override(false)
-                    .fileContents("I1VHQzoyIFBBUlQvU0hFRVRNRVRBTCAxMzE1IDYyMCAwIDEgMSAxNSAyNTAwIDIwMDQyODAgMDAwMDExNTcgXAojLSBWRVJTIDAgMCAgICAgICAgICAgICAgI"));
+                    .fileContents("I1VHQzoyIFBBUlQvU0hFRVRNRVRBTCAxMzE1IDYyMCAwIDEgMSAxNSAyNTAwIDIwMDQyODAgMDAwMDExNTcgXAojLSBWRVJTIDAgMCAgICAgICAgICAgICAgI")
+                    .build());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
