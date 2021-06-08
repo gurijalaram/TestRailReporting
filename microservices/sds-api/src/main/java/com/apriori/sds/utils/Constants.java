@@ -58,4 +58,8 @@ public class Constants {
     public static String getApiUrl() {
         return sdsApiUrl = System.getProperty("sdsApiUrl") == null ? PROPERTIES.getProperty("sds.api.url") : System.getProperty("sdsApiUrl");
     }
+
+    public static String getUserContext() {
+        return PROPERTIES.getProperty("ap.user.context");
+    }
 }
