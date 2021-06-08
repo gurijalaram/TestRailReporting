@@ -97,13 +97,13 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = ".material-summary-card.card input")
     private WebElement materialName;
 
-    @FindBy(css = ".design-guidance-summary-card.card .pill-text")
+    @FindBy(css = ".design-guidance-summary-card button")
     private WebElement designGuidanceDetailsButton;
 
-    @FindBy(css = ".process-summary-card.card .pill-text")
+    @FindBy(css = ".process-summary-card button")
     private WebElement processesDetailsButton;
 
-    @FindBy(css = ".cost-result-summary-card.card .pill-text")
+    @FindBy(css = ".cost-result-summary-card button")
     private WebElement costDetailsButton;
 
     @FindBy(css = ".production-info-summary-card.card .pill.action-button")
@@ -118,7 +118,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "[id='qa-process-group-select-field']")
     private WebElement processGroupList;
 
-    @FindBy(css = ".sub-components-summary.card .pill-text")
+    @FindBy(css = ".sub-components-summary-card button")
     private WebElement componentsDetailsButton;
 
     @FindBy(css = "div[id='qa-source-model-modal-select-field'] button")
@@ -444,11 +444,11 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return boolean
      */
     public boolean isDfmRiskIcon(String riskFactor) {
-        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success)"
-            : riskFactor.equalsIgnoreCase("Medium") ? "var(--info)"
-            : riskFactor.equalsIgnoreCase("High") ? "var(--warning)"
-            : riskFactor.equalsIgnoreCase("Critical") ? "var(--danger)"
-            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--secondary-light)"
+        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--green-light)"
+            : riskFactor.equalsIgnoreCase("Medium") ? "var(--cyan-light)"
+            : riskFactor.equalsIgnoreCase("High") ? "var(--yellow-light)"
+            : riskFactor.equalsIgnoreCase("Critical") ? "var(--red-light)"
+            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--gray-500)"
             : null;
 
         By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
