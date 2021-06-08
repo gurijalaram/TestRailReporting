@@ -9,13 +9,11 @@ import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
+import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.PostComponentResponse;
-import com.apriori.utils.FileResourceUtil;
+import com.apriori.sds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.UncostedComponents;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.FormParams;
-import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
@@ -25,6 +23,8 @@ import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+
+import java.util.HashMap;
 
 public class SDSTestUtil extends TestUtil {
 
@@ -97,10 +97,13 @@ public class SDSTestUtil extends TestUtil {
     protected static Item postComponents(String componentName, String scenarioName, String resourceFile) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
-                .formParams(new FormParams().use("filename", componentName)
-                    .use("override", "false")
-                    .use("scenarioName", scenarioName));
+                .headers(new HashMap<String, String>() {{
+                    put("ap-user-context", Constants.getUserContext());
+                }})
+                .body("component", PostComponentRequest.builder().filename(componentName)
+                    .scenarioName(scenarioName)
+                    .override(false)
+                    .fileContents("I1VHQzoyIFBBUlQvU0hFRVRNRVRBTCAxMzE1IDYyMCAwIDEgMSAxNSAyNTAwIDIwMDQyODAgMDAwMDExNTcgXAojLSBWRVJTIDAgMCAgICAgICAgICAgICAgI"));
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
