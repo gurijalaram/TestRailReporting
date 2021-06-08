@@ -103,6 +103,7 @@ public class SDSTestUtil extends TestUtil {
                 .body("component", PostComponentRequest.builder().filename(componentName)
                     .scenarioName(scenarioName)
                     .override(false)
+                    // TODO: 08/06/2021 cn - need to figure out what this file content is
                     .fileContents("I1VHQzoyIFBBUlQvU0hFRVRNRVRBTCAxMzE1IDYyMCAwIDEgMSAxNSAyNTAwIDIwMDQyODAgMDAwMDExNTcgXAojLSBWRVJTIDAgMCAgICAgICAgICAgICAgI")
                     .build());
 
