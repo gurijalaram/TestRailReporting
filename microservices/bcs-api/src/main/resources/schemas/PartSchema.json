@@ -10,7 +10,9 @@
         "customerIdentity",
         "state",
         "externalId",
-        "requireWatchpointReport"
+        "requireWatchpointReport",
+        "url",
+        "partName"
       ],
       "properties": {
         "identity": {
@@ -41,6 +43,15 @@
           "type": "boolean"
         },
         "errors": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "partName": {
+          "type": "string"
+        },
+        "costingResult": {
           "type": "string"
         }
       }

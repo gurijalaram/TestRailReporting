@@ -26,4 +26,5 @@ public class CostingPreferences {
     private List<Tolerance> tolerances;
     private Boolean useCadToleranceThreshold;
     private Boolean useVpeForAllProcesses;
+    private String vpeName;
 }
