@@ -6,12 +6,13 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
-import com.apriori.cidapp.entity.response.PostComponentResponse;
-import com.apriori.cidapp.entity.response.css.CssComponentResponse;
-import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.css.entity.response.CssComponentResponse;
+import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
+import com.apriori.sds.entity.response.PostComponentResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
@@ -109,7 +110,7 @@ public class SDSTestUtil extends TestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        ResponseWrapper<CssComponentResponse> itemResponse = getUnCostedCssComponents(componentName, scenarioName);
+        ResponseWrapper<CssComponentResponse> itemResponse = new UncostedComponents().getUnCostedCssComponents(componentName, scenarioName);
 
         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
         return itemResponse.getResponseEntity().getItems().get(0);
