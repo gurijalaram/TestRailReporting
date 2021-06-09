@@ -12,24 +12,19 @@ import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.PostComponentResponse;
 import com.apriori.sds.utils.Constants;
-import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.Base64EncoderUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.UncostedComponents;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class SDSTestUtil extends TestUtil {
@@ -136,7 +131,7 @@ public class SDSTestUtil extends TestUtil {
                 .body("component", PostComponentRequest.builder().filename(componentName)
                     .scenarioName(scenarioName)
                     .override(false)
-                    .fileContents(encodeFileToBase64Binary(componentName, resourceFile))
+                    .fileContents(Base64EncoderUtil.encodeFileToBase64Binary(componentName, resourceFile))
                     .build());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
@@ -148,22 +143,5 @@ public class SDSTestUtil extends TestUtil {
 
         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
         return itemResponse.getResponseEntity().getItems().get(0);
-    }
-
-    /**
-     * Encodes file to base64
-     *
-     * @param componentName - the component name
-     * @param resourceFile  - the resource file
-     * @return string
-     */
-    private static String encodeFileToBase64Binary(String componentName, String resourceFile) {
-        byte[] encoded = new byte[0];
-        try {
-            encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new String(encoded, StandardCharsets.US_ASCII);
     }
 }
