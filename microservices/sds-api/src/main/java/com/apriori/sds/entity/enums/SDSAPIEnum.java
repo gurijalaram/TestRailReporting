@@ -33,8 +33,9 @@ public enum SDSAPIEnum implements EdcQaAPI {
     GET_CONNECTIONS("connections"),
 
     // COMPONENTS
-    GET_COMPONENTS("components"),
-    POST_COMPONENTS("components"),
+    //TODO 09/06 cn - remove the 'key' from below and set them properly from constants or wherever
+    GET_COMPONENTS("components?key=65J1ID2B6LDG"),
+    POST_COMPONENTS("components?key=65J1ID2B6LDG"),
     GET_COMPONENT_SINGLE_BY_IDENTITY("components/%s");
 
 
