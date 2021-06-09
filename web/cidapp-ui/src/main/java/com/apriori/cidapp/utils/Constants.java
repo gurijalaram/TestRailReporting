@@ -1,4 +1,4 @@
-package utils;
+package com.apriori.cidapp.utils;
 
 import com.apriori.utils.FileResourceUtil;
 
@@ -17,7 +17,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
     public static final List<String> INPUT_VALUES = Arrays.asList("annual volume", "batch size", "material", "production life", "component name", "description", "notes",
         "scenario name", "tolerance count", "fully burdened cost", "material cost", "piece part cost", "total capital investment",
         "cycle time", "finish mass", "process routing", "utilization");
@@ -40,7 +40,7 @@ public class Constants {
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            log.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            log.info(String.format("Listing properties for '%s' " + "\n" + "%s", INPUT_STREAM, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.compare;
 
+import com.apriori.cidapp.utils.ComparisonCardEnum;
+import com.apriori.cidapp.utils.ComparisonDeltaEnum;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 import com.apriori.utils.PageUtils;
@@ -12,8 +14,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.ComparisonCardEnum;
-import utils.ComparisonDeltaEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;

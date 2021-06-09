@@ -1,4 +1,4 @@
-package utils;
+package com.apriori.cidapp.utils;
 
 public enum ColumnsEnum {
 

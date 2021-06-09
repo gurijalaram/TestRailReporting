@@ -7,6 +7,9 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.not;
 
+import com.apriori.cidapp.utils.ColumnsEnum;
+import com.apriori.cidapp.utils.DirectionEnum;
+import com.apriori.cidapp.utils.SortOrderEnum;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -19,9 +22,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
-import utils.ColumnsEnum;
-import utils.DirectionEnum;
-import utils.SortOrderEnum;
 
 
 public class TableHeadersTests extends TestBase {

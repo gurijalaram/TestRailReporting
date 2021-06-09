@@ -1,12 +1,15 @@
 package com.explore;
 
+import static com.apriori.cidapp.utils.ColumnsEnum.COST_MATURITY;
+import static com.apriori.cidapp.utils.ColumnsEnum.STATUS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static utils.ColumnsEnum.COST_MATURITY;
-import static utils.ColumnsEnum.STATUS;
 
+import com.apriori.cidapp.utils.ColumnsEnum;
+import com.apriori.cidapp.utils.DirectionEnum;
+import com.apriori.cidapp.utils.SortOrderEnum;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -28,9 +31,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
-import utils.ColumnsEnum;
-import utils.DirectionEnum;
-import utils.SortOrderEnum;
 
 import java.io.File;
 

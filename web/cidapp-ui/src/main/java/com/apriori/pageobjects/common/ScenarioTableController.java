@@ -1,5 +1,8 @@
 package com.apriori.pageobjects.common;
 
+import com.apriori.cidapp.utils.ColumnsEnum;
+import com.apriori.cidapp.utils.Constants;
+import com.apriori.cidapp.utils.SortOrderEnum;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -12,9 +15,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.ColumnsEnum;
-import utils.Constants;
-import utils.SortOrderEnum;
 
 import java.util.Arrays;
 import java.util.Collection;

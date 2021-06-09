@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.cidapp.utils.ColumnsEnum;
+import com.apriori.cidapp.utils.SortOrderEnum;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
@@ -15,8 +17,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.ColumnsEnum;
-import utils.SortOrderEnum;
 
 import java.util.List;
 
