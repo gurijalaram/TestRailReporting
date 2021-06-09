@@ -8,6 +8,9 @@ import org.apache.commons.io.FileUtils;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * @author cfrith
+ */
 public class Base64EncoderUtil {
     /**
      * Encodes file to base64
