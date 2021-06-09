@@ -19,6 +19,9 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     @FindBy(xpath = "//span[.='Topics']")
     private WebElement topicsHeader;
 
+    @FindBy(css = ".investigation-overview .topic-description")
+    private WebElement investigationDescription;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -52,6 +55,15 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
         By byTopic = By.xpath(String.format("//div[contains(text(),'%s')]", topic));
         pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(byTopic), true).click();
         return this;
+    }
+
+    /**
+     * Gets the investigation description
+     *
+     * @return string
+     */
+    public String getInvestigationDescription() {
+        return pageUtils.waitForElementToAppear(investigationDescription).getAttribute("textContent");
     }
 
     /**
