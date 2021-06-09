@@ -51,28 +51,51 @@ public class SDSTestUtil extends TestUtil {
         }
     }
 
+    /**
+     * Get component id
+     * @return string
+     */
     protected static String getComponentId() {
         return partPostComponentResponse.getComponentIdentity();
     }
 
+    /**
+     * Get scenario id
+     * @return string
+     */
     protected static String getScenarioId() {
         return partPostComponentResponse.getScenarioIdentity();
     }
 
+    /**
+     * Get iteration id
+     * @return string
+     */
     protected static String getIterationId() {
         return partPostComponentResponse.getIterationIdentity();
     }
 
+    /**
+     * Post testing component
+     * @return object
+     */
     protected static Item postTestingComponent() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String partName = "Casting.prt";
+        String componentName = "Casting.prt";
         String processGroup = "Casting - Die";
 
-        Item response = postComponents(partName, scenarioName, processGroup);
+        Item response = postComponents(componentName, scenarioName, processGroup);
 
         return response;
     }
 
+    /**
+     * Remove testing component
+     * @param componentId - component id
+     * @param scenarioId - scenario id
+     * @return response object
+     */
+    // TODO: 09/06/2021 cn - @vlad maybe instead of using raw type the variable can be declared as ResponseWrapper<String> ?
     protected static ResponseWrapper removeTestingComponent(final String componentId, final String scenarioId) {
         ResponseWrapper response =
             new CommonRequestUtil().deleteCommonRequestWithInlineVariables(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null,
@@ -85,6 +108,10 @@ public class SDSTestUtil extends TestUtil {
         return response;
     }
 
+    /**
+     * Init token
+     * @return string
+     */
     private static String initToken() {
         if (token == null) {
             token = new JwtTokenUtil().retrieveJwtToken();
@@ -109,7 +136,6 @@ public class SDSTestUtil extends TestUtil {
                 .body("component", PostComponentRequest.builder().filename(componentName)
                     .scenarioName(scenarioName)
                     .override(false)
-                    // TODO: 08/06/2021 cn - need to figure out what this file content is
                     .fileContents(encodeFileToBase64Binary(componentName, resourceFile))
                     .build());
 
@@ -124,10 +150,17 @@ public class SDSTestUtil extends TestUtil {
         return itemResponse.getResponseEntity().getItems().get(0);
     }
 
-    private static String encodeFileToBase64Binary(String fileName, String resourceFile)  {
+    /**
+     * Encodes file to base64
+     *
+     * @param componentName - the component name
+     * @param resourceFile  - the resource file
+     * @return string
+     */
+    private static String encodeFileToBase64Binary(String componentName, String resourceFile) {
         byte[] encoded = new byte[0];
         try {
-            encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), fileName)));
+            encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)));
         } catch (IOException e) {
             e.printStackTrace();
         }
