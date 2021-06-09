@@ -5,14 +5,13 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -21,9 +20,8 @@ import java.util.stream.Stream;
  * @author cfrith
  */
 
+@Slf4j
 public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(GuidanceIssuesPage.class);
 
     @FindBy(css = ".design-guidance-detail-card .apriori-table")
     private WebElement chartTable;
@@ -34,6 +32,15 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     @FindBy(css = ".issue-description")
     private WebElement issueDescription;
 
+    @FindBy(xpath = "//span[.='Investigation']")
+    private WebElement investigationTab;
+
+    @FindBy(xpath = "//span[.='Tolerances']")
+    private WebElement tolerancesTab;
+
+    @FindBy(xpath = "//span[.='Threads']")
+    private WebElement threadsTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -42,7 +49,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -211,6 +218,36 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     public String getIssueDescription() {
         return pageUtils.waitForElementToAppear(issueDescription).getAttribute("textContent");
+    }
+
+    /**
+     * Opens investigation tab
+     *
+     * @return new page object
+     */
+    public InvestigationPage openInvestigationTab() {
+        pageUtils.waitForElementAndClick(investigationTab);
+        return new InvestigationPage(driver);
+    }
+
+    /**
+     * Opens tolerances tab
+     *
+     * @return new page object
+     */
+    public TolerancesPage openTolerancesTab() {
+        pageUtils.waitForElementAndClick(tolerancesTab);
+        return new TolerancesPage(driver);
+    }
+
+    /**
+     * Opens threads tab
+     *
+     * @return new page object
+     */
+    public ThreadsPage openThreadsTab() {
+        pageUtils.waitForElementAndClick(threadsTab);
+        return new ThreadsPage(driver);
     }
 
     /**
