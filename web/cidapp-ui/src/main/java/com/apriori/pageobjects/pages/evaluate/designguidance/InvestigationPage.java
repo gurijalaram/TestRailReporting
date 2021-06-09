@@ -6,12 +6,18 @@ import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class InvestigationPage extends LoadableComponent<InvestigationPage> {
+
+    @FindBy(xpath = "//span[.='Topics']")
+    private WebElement topicsHeader;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -33,7 +39,19 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(topicsHeader);
+    }
 
+    /**
+     * Selects the topic
+     *
+     * @param topic - the topic
+     * @return current page object
+     */
+    public InvestigationPage selectTopic(String topic) {
+        By byTopic = By.xpath(String.format("//div[contains(text(),'%s')]", topic));
+        pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(byTopic), true).click();
+        return this;
     }
 
     /**
