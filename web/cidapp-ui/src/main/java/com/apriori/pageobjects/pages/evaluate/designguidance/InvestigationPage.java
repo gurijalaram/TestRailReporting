@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.common.DesignGuidanceController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
@@ -27,11 +28,13 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
+    private DesignGuidanceController designGuidanceController;
 
     public InvestigationPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
+        this.designGuidanceController = new DesignGuidanceController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -54,7 +57,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return current page object
      */
     public InvestigationPage selectTopic(String topic) {
-        By byTopic = getBy(topic);
+        By byTopic = designGuidanceController.getBy(topic);
         pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(byTopic), true).click();
         return this;
     }
@@ -68,9 +71,36 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     public InvestigationPage selectMachiningSetup(String machiningSetup) {
         String[] machining = machiningSetup.split(",");
 
-        Arrays.stream(machining).map(x -> pageUtils.waitForElementToAppear(getBy(x.trim())).findElement(By.cssSelector("svg[data-icon='chevron-down']")))
+        Arrays.stream(machining).map(x -> pageUtils.waitForElementToAppear(designGuidanceController.getBy(x.trim())).findElement(By.cssSelector("svg[data-icon='chevron-down']")))
             .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
         return this;
+    }
+
+    /**
+     * Gets count column
+     *
+     * @return string
+     */
+    public String getGcdCount(String gcd) {
+        return designGuidanceController.getColumn(gcd, 1);
+    }
+
+    /**
+     * Gets cycle time column
+     *
+     * @return string
+     */
+    public String getCycleTime(String gcd) {
+        return designGuidanceController.getColumn(gcd, 1);
+    }
+
+    /**
+     * Gets cycle time percentage column
+     *
+     * @return string
+     */
+    public String getCycleTimePercentage(String gcd) {
+        return designGuidanceController.getColumn(gcd, 2);
     }
 
     /**
@@ -80,19 +110,8 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return current page object
      */
     public InvestigationPage selectGcd(String gcd) {
-        By byGcd = getBy(gcd);
-        pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(byGcd), true).click();
+        designGuidanceController.selectGcd(gcd);
         return this;
-    }
-
-    /**
-     * Gets element By
-     *
-     * @param element - the element
-     * @return By
-     */
-    private By getBy(String element) {
-        return By.xpath(String.format("//div[normalize-space(text())='%s']/..", element));
     }
 
     /**
