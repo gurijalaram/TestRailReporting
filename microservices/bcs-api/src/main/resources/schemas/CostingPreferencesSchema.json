@@ -20,7 +20,8 @@
         "scenarioName",
         "tolerances",
         "useCadToleranceThreshold",
-        "useVpeForAllProcesses"
+        "useVpeForAllProcesses",
+        "vpeName"
       ],
       "properties": {
         "annualVolume": {
@@ -64,6 +65,9 @@
         },
         "useVpeForAllProcesses": {
           "type": "boolean"
+        },
+        "vpeName": {
+          "type": "string"
         }
       }
     }
