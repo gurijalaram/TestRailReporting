@@ -13,6 +13,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.Arrays;
+
 @Slf4j
 public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
@@ -58,13 +60,39 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
     }
 
     /**
+     * Selects machining setup
+     *
+     * @param machiningSetup - the machining setup
+     * @return current page object
+     */
+    public InvestigationPage selectMachiningSetup(String machiningSetup) {
+        String[] machining = machiningSetup.split(",");
+
+        Arrays.stream(machining).map(x -> pageUtils.waitForElementToAppear(getBy(x.trim())).findElement(By.cssSelector("svg[data-icon='chevron-down']")))
+            .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
+        return this;
+    }
+
+    /**
+     * Selects gcd
+     *
+     * @param gcd - the gcd
+     * @return current page object
+     */
+    public InvestigationPage selectGcd(String gcd) {
+        By byGcd = getBy(gcd);
+        pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(byGcd), true).click();
+        return this;
+    }
+
+    /**
      * Gets element By
      *
      * @param element - the element
      * @return By
      */
     private By getBy(String element) {
-        return By.xpath(String.format("//div[normalize-space(text())='%s']", element));
+        return By.xpath(String.format("//div[normalize-space(text())='%s']/..", element));
     }
 
     /**
