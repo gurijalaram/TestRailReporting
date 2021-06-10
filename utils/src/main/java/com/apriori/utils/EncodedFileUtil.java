@@ -11,20 +11,20 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author cfrith
  */
-public class Base64EncoderUtil {
+public class EncodedFileUtil {
     /**
      * Encodes file to base64
      *
      * @param componentName - the component name
-     * @param resourceFile  - the resource file
+     * @param processGroup  - the resource file
      * @return string
      */
-    public static String encodeFileToBase64Binary(String componentName, String resourceFile) {
-        byte[] encoded = new byte[0];
+    public static String encodeFileFromCloudToBase64Binary(String componentName, ProcessGroupEnum processGroup) {
+        byte[] encoded;
         try {
-            encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)));
+            encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(FileResourceUtil.getCloudFile(processGroup, componentName)));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Failed to encode request file: " + componentName);
         }
         return new String(encoded, StandardCharsets.US_ASCII);
     }

@@ -99,9 +99,7 @@ public class ScenariosTest extends SDSTestUtil {
     public void deleteScenario() {
         final Item postComponentResponse = postTestingComponent();
 
-        final ResponseWrapper removeComponentResponseWrapper = removeTestingComponent(postComponentResponse.getComponentIdentity(),
+        removeTestingComponent(postComponentResponse.getComponentIdentity(),
             postComponentResponse.getScenarioIdentity());
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, removeComponentResponseWrapper.getStatusCode());
     }
 }
