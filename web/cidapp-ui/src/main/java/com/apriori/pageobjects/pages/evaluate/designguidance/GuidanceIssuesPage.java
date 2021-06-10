@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.common.DesignGuidanceController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
@@ -44,11 +45,13 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
+    private DesignGuidanceController designGuidanceController;
 
     public GuidanceIssuesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
+        this.designGuidanceController = new DesignGuidanceController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -113,7 +116,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     private GuidanceIssuesPage selectIssueType(String issueType) {
-        By byIssueType = getBy(issueType);
+        By byIssueType = designGuidanceController.getBy(issueType);
         pageUtils.waitForElementAndClick(byIssueType);
         return this;
     }
@@ -125,20 +128,10 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     private GuidanceIssuesPage selectGcd(String gcd) {
-        By byGcd = getBy(gcd);
+        By byGcd = designGuidanceController.getBy(gcd);
         deSelectAllGcd();
         pageUtils.waitForElementAndClick(byGcd);
         return this;
-    }
-
-    /**
-     * Gets element By
-     *
-     * @param element - the element
-     * @return By
-     */
-    private By getBy(String element) {
-        return By.xpath(String.format("//div[normalize-space(text())='%s']/..", element));
     }
 
     /**
@@ -157,7 +150,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return string
      */
     public int getGcdCount(String issueType) {
-        return Integer.parseInt(getColumn(issueType, 2));
+        return Integer.parseInt(designGuidanceController.getColumn(issueType, 2));
     }
 
     /**
@@ -166,7 +159,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return string
      */
     public String getGcdCurrent(String gcd) {
-        return getColumn(gcd, 1);
+        return designGuidanceController.getColumn(gcd, 1);
     }
 
     /**
@@ -175,17 +168,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return string
      */
     public String getGcdSuggested(String gcd) {
-        return getColumn(gcd, 2);
-    }
-
-    /**
-     * Gets column
-     *
-     * @return string
-     */
-    private String getColumn(String issue, int column) {
-        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", issue.trim())));
-        return cells.get(column).findElement(By.cssSelector(".cell-text")).getAttribute("textContent");
+        return designGuidanceController.getColumn(gcd, 2);
     }
 
     /**
