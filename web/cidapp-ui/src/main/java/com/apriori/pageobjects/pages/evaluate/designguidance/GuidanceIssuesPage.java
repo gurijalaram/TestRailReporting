@@ -113,7 +113,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     private GuidanceIssuesPage selectIssueType(String issueType) {
-        By byIssueType = By.cssSelector(String.format("[id*='-%s']", issueType.substring(0, 1).toLowerCase() + issueType.substring(1).replace(" ", "").trim()));
+        By byIssueType = getBy(issueType);
         pageUtils.waitForElementAndClick(byIssueType);
         return this;
     }
@@ -125,10 +125,20 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     private GuidanceIssuesPage selectGcd(String gcd) {
-        WebElement byGcd = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd))).findElement(By.cssSelector("[role='cell']")));
+        By byGcd = getBy(gcd);
         deSelectAllGcd();
         pageUtils.waitForElementAndClick(byGcd);
         return this;
+    }
+
+    /**
+     * Gets element By
+     *
+     * @param element - the element
+     * @return By
+     */
+    private By getBy(String element) {
+        return By.xpath(String.format("//div[normalize-space(text())='%s']", element));
     }
 
     /**

@@ -52,9 +52,19 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return current page object
      */
     public InvestigationPage selectTopic(String topic) {
-        By byTopic = By.xpath(String.format("//div[contains(text(),'%s')]", topic));
+        By byTopic = getBy(topic);
         pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(byTopic), true).click();
         return this;
+    }
+
+    /**
+     * Gets element By
+     *
+     * @param element - the element
+     * @return By
+     */
+    private By getBy(String element) {
+        return By.xpath(String.format("//div[normalize-space(text())='%s']", element));
     }
 
     /**
