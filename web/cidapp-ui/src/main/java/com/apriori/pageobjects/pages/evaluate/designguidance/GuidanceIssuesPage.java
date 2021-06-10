@@ -138,7 +138,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return By
      */
     private By getBy(String element) {
-        return By.xpath(String.format("//div[normalize-space(text())='%s']", element));
+        return By.xpath(String.format("//div[normalize-space(text())='%s']/..", element));
     }
 
     /**
