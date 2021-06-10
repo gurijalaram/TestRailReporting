@@ -48,6 +48,7 @@ public class SDSTestUtil extends TestUtil {
 
     /**
      * Get component id
+     *
      * @return string
      */
     protected static String getComponentId() {
@@ -56,6 +57,7 @@ public class SDSTestUtil extends TestUtil {
 
     /**
      * Get scenario id
+     *
      * @return string
      */
     protected static String getScenarioId() {
@@ -64,6 +66,7 @@ public class SDSTestUtil extends TestUtil {
 
     /**
      * Get iteration id
+     *
      * @return string
      */
     protected static String getIterationId() {
@@ -72,6 +75,7 @@ public class SDSTestUtil extends TestUtil {
 
     /**
      * Post testing component
+     *
      * @return object
      */
     protected static Item postTestingComponent() {
@@ -86,8 +90,9 @@ public class SDSTestUtil extends TestUtil {
 
     /**
      * Remove testing component
+     *
      * @param componentId - component id
-     * @param scenarioId - scenario id
+     * @param scenarioId  - scenario id
      * @return response object
      */
     protected static void removeTestingComponent(final String componentId, final String scenarioId) {
@@ -102,6 +107,7 @@ public class SDSTestUtil extends TestUtil {
 
     /**
      * Init token
+     *
      * @return string
      */
     // TODO z: should be fixed in scope of refactoring sds
@@ -120,8 +126,9 @@ public class SDSTestUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .headers(new HashMap<String, String>() {{
-                    put("ap-user-context", Constants.getApUserContext());
-                }})
+                        put("ap-user-context", Constants.getApUserContext());
+                    }
+                })
                 .body("component", PostComponentRequest.builder().filename(componentName)
                     .scenarioName(scenarioName)
                     .override(false)
