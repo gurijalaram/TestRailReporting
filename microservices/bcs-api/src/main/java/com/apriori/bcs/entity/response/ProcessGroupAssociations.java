@@ -73,11 +73,15 @@ public class ProcessGroupAssociations {
     @Data
     public static class SurfaceTreatment {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
     public static class StockMachining {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
@@ -90,6 +94,8 @@ public class ProcessGroupAssociations {
     @Data
     public static class MultiSpindleMachining {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
@@ -102,6 +108,8 @@ public class ProcessGroupAssociations {
     @Data
     public static class Machining {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
@@ -135,6 +143,8 @@ public class ProcessGroupAssociations {
     @Data
     public static class HeatTreatment {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
@@ -154,11 +164,15 @@ public class ProcessGroupAssociations {
     @Data
     public static class Assembly {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
     public static class InjectionMolding {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
@@ -171,6 +185,8 @@ public class ProcessGroupAssociations {
     @Data
     public static class SheetMetalTransferDie {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
@@ -253,6 +269,8 @@ public class ProcessGroupAssociations {
     @Data
     public static class TwoModelMachining {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
@@ -265,5 +283,7 @@ public class ProcessGroupAssociations {
     @Data
     static class UserGuided {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 }
