@@ -309,7 +309,7 @@ public class WorkflowFeatures {
         valuesI.put("displayedWorkflows", workflowPage.getNumberOfDisplayedWorkflows());
 
         workflowPage.openMaxPageDropDown(Constants.DEFAULT_PAGE_SIZE);
-        workflowPage.clickOnMaxSizeDropDown(5);
+        workflowPage.clickOnMaxSizeDropDown(Constants.DEFAULT_PAGE_SIZE, 5);
         pageSize = workflowPage.getPageSize(5);
         valuesI.put("changedMaxPageSize", pageSize);
         valuesI.put("displayedWorkflowsUpdated", workflowPage.getNumberOfDisplayedWorkflows());

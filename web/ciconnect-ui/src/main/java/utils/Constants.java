@@ -17,7 +17,7 @@ public class Constants {
     public static final String DEFAULT_PASSWORD_KEY = System.getProperty("password");
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21.1";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
     // Login Credentials
     public static final String USER_EMAIL = "dmorrow@apriori.com";
     public static final String USER_PASSWORD = "Q@1testerr";
