@@ -81,8 +81,8 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      *
      * @return string
      */
-    public String getGcdCount(String gcd) {
-        return designGuidanceController.getColumn(gcd, 1);
+    public int getGcdCount(String gcd) {
+        return Integer.parseInt(designGuidanceController.getColumn(gcd, 1));
     }
 
     /**

@@ -39,8 +39,8 @@ public class DesignGuidanceController {
      * @return string
      */
     public String getColumn(String issue, int column) {
-        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", issue.trim())));
-        return cells.get(column).findElement(By.cssSelector(".cell-text")).getAttribute("textContent");
+        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[normalize-space()='%s']/..//div[@role='cell']", issue.trim())));
+        return pageUtils.waitForElementToAppear(cells.get(column).findElement(By.cssSelector(".cell-text"))).getAttribute("textContent");
     }
 
     /**
