@@ -104,24 +104,16 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     }
 
     private UserGroupAssociation postUserGroupAssociation() {
-//        UserGroupAssociation exampleOfUserGroupAssociation = getFirstUserGroupAssociation();
-//        deleteUserGroupAssociationById(getGroupIdentity(), exampleOfUserGroupAssociation.getIdentity());
-
-        String identity = getGroupsResponse().get(3).getIdentity();
-
-        System.out.println("********************************************" + identity + "***********************************");
+        UserGroupAssociation exampleOfUserGroupAssociation = getFirstUserGroupAssociation();
+        deleteUserGroupAssociationById(exampleOfUserGroupAssociation.getIdentity());
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
-                .inlineVariables(Collections.singletonList("MDK30376GBGC"))
-//                .inlineVariables(Collections.singletonList("MDK30376GBGC"))
+                .inlineVariables(Collections.singletonList(getGroupIdentity()))
                 .body(UserGroupAssociationRequest.builder()
-//                    .customerIdentity(exampleOfUserGroupAssociation.getCustomerIdentity())
-                    .customerIdentity("H337GKD0LA0M")
-//                    .userIdentity(exampleOfUserGroupAssociation.getUserIdentity())
-                    .userIdentity("JLF7MA33C7JG")
-//                    .createdBy(exampleOfUserGroupAssociation.getCreatedBy())
-                    .createdBy("#ETL00000000")
+                    .customerIdentity(exampleOfUserGroupAssociation.getCustomerIdentity())
+                    .userIdentity(exampleOfUserGroupAssociation.getUserIdentity())
+                    .createdBy(exampleOfUserGroupAssociation.getCreatedBy())
                     .build()
                 );
 

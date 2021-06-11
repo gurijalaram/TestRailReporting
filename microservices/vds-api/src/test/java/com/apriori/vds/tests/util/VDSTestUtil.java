@@ -41,11 +41,11 @@ public abstract class VDSTestUtil extends TestUtil {
         return accessControlGroupsResponse.getResponseEntity().getItems();
     }
 
-    private static AccessControlGroup getSingleGroup(){
+    private static AccessControlGroup getSingleGroup() {
         List<AccessControlGroup> accessControlGroups = getGroupsResponse();
         Assert.assertNotEquals("To get Access Control Group, response should contain it.", 0, accessControlGroups.size());
 
-        return accessControlGroups.get(5);
+        return accessControlGroups.get(0);
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
