@@ -152,7 +152,6 @@ public class ScenarioAction {
             .setReturnType(AuthenticateJSON.class)
             .setEndpoint(baseURL + "ws/auth/token")
             .setStatusCode(HttpStatus.SC_OK)
-            .setAutoLogin(false)
             .commitChanges()
             .connect()
             .post();
