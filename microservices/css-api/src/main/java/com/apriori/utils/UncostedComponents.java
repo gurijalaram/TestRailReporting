@@ -30,7 +30,7 @@ public class UncostedComponents {
      */
     public ResponseWrapper<CssComponentResponse> getUnCostedCssComponents(String componentName, String scenarioName) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
-            .inlineVariables(Arrays.asList(componentName.split("\\.")[0].toUpperCase(), scenarioName));
+            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName);
 
         int currentCount = 0;
         int attemptsCount = 60;
