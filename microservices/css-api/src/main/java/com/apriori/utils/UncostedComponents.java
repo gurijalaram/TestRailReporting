@@ -42,8 +42,9 @@ public class UncostedComponents {
      */
     public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, String verifiedState) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
-            .inlineVariables(Arrays.asList(componentName.split("\\.")[0].toUpperCase(), scenarioName))
+            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
             .token(new JwtTokenUtil().retrieveJwtToken());
+
         int currentCount = 0;
         int attemptsCount = 60;
         int secondsToWait = 2;

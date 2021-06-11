@@ -128,7 +128,7 @@ public class CidAppTestUtil {
     public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(String componentIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(Collections.singletonList(componentIdentity));
+                .inlineVariables(componentIdentity);
 
         return HTTP2Request.build(requestEntity).get();
     }
@@ -143,7 +143,7 @@ public class CidAppTestUtil {
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
-                .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity));
+                .inlineVariables(componentIdentity, scenarioIdentity);
 
         return checkNonNullIterationLatest(requestEntity);
     }
@@ -185,7 +185,7 @@ public class CidAppTestUtil {
     public ResponseWrapper<CostResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
-                .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity));
+                .inlineVariables(componentIdentity, scenarioIdentity);
 
         long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 5L;
@@ -223,7 +223,7 @@ public class CidAppTestUtil {
     public ResponseWrapper<CostResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
-                .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity))
+                .inlineVariables(componentIdentity, scenarioIdentity)
                 .body("costingInputs",
                     new CostRequest().setAnnualVolume(5500)
                         .setBatchSize(458)
@@ -245,7 +245,7 @@ public class CidAppTestUtil {
     public ResponseWrapper<ImageResponse> getHoopsImage(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
-                .inlineVariables(Arrays.asList(componentIdentity, scenarioIdentity));
+                .inlineVariables(componentIdentity, scenarioIdentity);
 
         return HTTP2Request.build(requestEntity).get();
     }
