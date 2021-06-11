@@ -1,4 +1,4 @@
-package com.apriori.cidapp.entity.response;
+package com.apriori.sds.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
@@ -19,4 +19,3 @@ public class PostComponentResponse {
     private String componentIdentity;
     private String scenarioIdentity;
 }
-

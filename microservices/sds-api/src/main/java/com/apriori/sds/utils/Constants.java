@@ -15,12 +15,14 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "int";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
     public static String environment;
     private static String baseUrl;
-    private static String cidApiUrl;
+    private static String sdsApiUrl;
+    private static String secretKey;
+    private static String apUserContext;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -56,6 +58,19 @@ public class Constants {
      * @return string
      */
     public static String getApiUrl() {
-        return cidApiUrl = System.getProperty("cidApiUrl") == null ? PROPERTIES.getProperty("cid.api.url") : System.getProperty("cidApiUrl");
+        return sdsApiUrl = System.getProperty("sdsApiUrl") == null ? PROPERTIES.getProperty("sds.api.url") : System.getProperty("sdsApiUrl");
+    }
+
+    /**
+     * Get user context
+     *
+     * @return string
+     */
+    public static String getApUserContext() {
+        return apUserContext = System.getProperty("apUserContext") == null ? PROPERTIES.getProperty("sds.ap.user.context") : System.getProperty("apUserContext");
+    }
+
+    public static String getSecretKey() {
+        return secretKey = System.getProperty("secretKey") == null ? PROPERTIES.getProperty("sds.secret.key") : System.getProperty("secretKey");
     }
 }
