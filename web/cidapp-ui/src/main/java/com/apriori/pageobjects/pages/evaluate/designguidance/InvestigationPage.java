@@ -14,8 +14,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import java.util.Arrays;
-
 @Slf4j
 public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
@@ -69,10 +67,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
      * @return current page object
      */
     public InvestigationPage selectMachiningSetup(String machiningSetup) {
-        String[] machining = machiningSetup.split(",");
-
-        Arrays.stream(machining).map(x -> pageUtils.waitForElementToAppear(designGuidanceController.getBy(x.trim())).findElement(By.cssSelector("svg[data-icon='chevron-down']")))
-            .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
+        designGuidanceController.selectDropdown(machiningSetup);
         return this;
     }
 
