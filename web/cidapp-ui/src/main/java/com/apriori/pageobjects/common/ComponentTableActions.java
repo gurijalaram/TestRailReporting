@@ -52,7 +52,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @return new page object
      */
     public ScenarioTableController clickSearch(String componentName) {
-        search(componentName);
+        search(componentName.toUpperCase());
         searchIconButton.click();
         return new ScenarioTableController(driver);
     }
@@ -64,7 +64,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @return new page object
      */
     public ScenarioTableController enterKeySearch(String componentName) {
-        search(componentName);
+        search(componentName.toUpperCase());
         searchInput.sendKeys(Keys.ENTER);
         return new ScenarioTableController(driver);
     }
