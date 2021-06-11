@@ -19,11 +19,7 @@ public class AccessControlsTest extends VDSTestUtil {
     @TestRail(testCaseId = {"7752"})
     @Description("Get a list of Access Control Groups for a specific customer.")
     public void getGroups() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class);
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTP2Request.build(requestEntity).get().getStatusCode()
-        );
+        getGroupsResponse();
     }
 
     @Test

@@ -59,8 +59,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "$ref": "AccessControlPermission.json"
-    },
+        "$ref": "AccessControlPermission.json"}
     },
     "systemGroup": {
       "type": "boolean"
