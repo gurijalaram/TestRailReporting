@@ -158,8 +158,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return string
      */
-    public String getGcdCurrent(String gcd) {
-        return designGuidanceController.getColumn(gcd, 1);
+    public int getGcdCurrent(String gcd) {
+        return Integer.parseInt(designGuidanceController.getColumn(gcd, 1));
     }
 
     /**
