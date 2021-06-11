@@ -2,15 +2,12 @@ package util;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.PostComponentResponse;
-import com.apriori.sds.utils.Constants;
 import com.apriori.utils.EncodedFileUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.UncostedComponents;
@@ -23,21 +20,10 @@ import com.apriori.utils.http2.utils.RequestEntityUtil;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-
-import java.util.HashMap;
 
 public class SDSTestUtil extends TestUtil {
 
-    protected static String token;
     private static Item partPostComponentResponse;
-
-    @BeforeClass
-    public static void initTestingComponentInfo() {
-        initToken();
-
-        partPostComponentResponse = postTestingComponent();
-    }
 
     @AfterClass
     public static void clearTestingData() {
@@ -52,7 +38,7 @@ public class SDSTestUtil extends TestUtil {
      * @return string
      */
     protected static String getComponentId() {
-        return partPostComponentResponse.getComponentIdentity();
+        return getTestingComponent().getComponentIdentity();
     }
 
     /**
@@ -61,7 +47,7 @@ public class SDSTestUtil extends TestUtil {
      * @return string
      */
     protected static String getScenarioId() {
-        return partPostComponentResponse.getScenarioIdentity();
+        return getTestingComponent().getScenarioIdentity();
     }
 
     /**
@@ -70,7 +56,7 @@ public class SDSTestUtil extends TestUtil {
      * @return string
      */
     protected static String getIterationId() {
-        return partPostComponentResponse.getIterationIdentity();
+        return getTestingComponent().getIterationIdentity();
     }
 
     /**
@@ -83,9 +69,7 @@ public class SDSTestUtil extends TestUtil {
         String componentName = "AGC0-LP-700144754.prt.1";
         ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
 
-        Item response = postComponents(componentName, scenarioName, processGroup);
-
-        return response;
+        return postComponent(componentName, scenarioName, processGroup);
     }
 
     /**
@@ -96,23 +80,26 @@ public class SDSTestUtil extends TestUtil {
      * @return response object
      */
     protected static void removeTestingComponent(final String componentId, final String scenarioId) {
-        ResponseWrapper<String> response =
-            new CommonRequestUtil().deleteCommonRequestWithInlineVariables(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null,
-                new APIAuthentication().initAuthorizationHeaderContent(token), componentId, scenarioId
-            );
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
+            .inlineVariables(componentId, scenarioId);
+
+        ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
 
         assertEquals(String.format("The component with scenario %s, was not removed", scenarioId),
             HttpStatus.SC_NO_CONTENT, response.getStatusCode());
     }
 
     /**
-     * Init token
-     *
-     * @return string
+     * Lazy init for Testing component to avoid it if it is not necessary
+     * @return
      */
-    // TODO z: should be fixed in scope of refactoring sds
-    private static String initToken() {
-        return token;
+    private static Item getTestingComponent() {
+        if(partPostComponentResponse == null) {
+            partPostComponentResponse = postTestingComponent();
+        }
+
+        return partPostComponentResponse;
     }
 
     /**
@@ -122,13 +109,9 @@ public class SDSTestUtil extends TestUtil {
      * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    protected static Item postComponents(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
-                .headers(new HashMap<String, String>() {{
-                        put("ap-user-context", Constants.getApUserContext());
-                    }
-                })
+    protected static Item postComponent(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .body("component", PostComponentRequest.builder().filename(componentName)
                     .scenarioName(scenarioName)
                     .override(false)
@@ -145,4 +128,5 @@ public class SDSTestUtil extends TestUtil {
         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
         return itemResponse.getResponseEntity().getItems().get(0);
     }
+
 }

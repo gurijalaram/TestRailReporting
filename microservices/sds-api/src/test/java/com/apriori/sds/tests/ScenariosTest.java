@@ -1,7 +1,5 @@
 package com.apriori.sds.tests;
 
-import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Scenario;
@@ -12,6 +10,9 @@ import com.apriori.sds.entity.response.ScenarioManifest;
 import com.apriori.sds.entity.response.ScenarioSecondaryProcess;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -24,11 +25,13 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6922"})
     @Description("Find scenarios for a given component matching a specified query.")
     public void getScenarios() {
-        ResponseWrapper<ScenarioItemsResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId()
-            );
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
+                .inlineVariables(
+                    getComponentId()
+                );
 
+        ResponseWrapper<ScenarioItemsResponse> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -37,11 +40,13 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6923"})
     @Description("Get the current representation of a scenario.")
     public void getScenarioByIdentity() {
-        ResponseWrapper<Scenario> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
-            );
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .inlineVariables(
+                    getComponentId(), getScenarioId()
+                );
 
+        ResponseWrapper<Scenario> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -49,11 +54,13 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6924"})
     @Description("Get production defaults for a scenario.")
     public void getCostingDefaults() {
-        ResponseWrapper<ScenarioCostingDefaultsResponse> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS, ScenarioCostingDefaultsResponse.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
-            );
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS, ScenarioCostingDefaultsResponse.class)
+                .inlineVariables(
+                    getComponentId(), getScenarioId()
+                );
 
+        ResponseWrapper<ScenarioCostingDefaultsResponse> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -61,11 +68,13 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6925"})
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getHoopsImage() {
-        ResponseWrapper<ScenarioHoopsImage> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIO_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
-            );
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
+                .inlineVariables(
+                    getComponentId(), getScenarioId()
+                );
 
+        ResponseWrapper<ScenarioHoopsImage> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -73,11 +82,13 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6926"})
     @Description("Returns the manifest for a scenario if the component type is a container.")
     public void getManifest() {
-        ResponseWrapper<ScenarioManifest> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
-            );
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class)
+                .inlineVariables(
+                    getComponentId(), getScenarioId()
+                );
 
+        ResponseWrapper<ScenarioManifest> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -85,11 +96,13 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6927"})
     @Description("Get the available secondary processes for a scenario.")
     public void getSecondaryProcesses() {
-        ResponseWrapper<ScenarioSecondaryProcess> response =
-            new CommonRequestUtil().getCommonRequestWithInlineVariables(SDSAPIEnum.GET_SCENARIO_SECONDARY_PROCESSES_BY_COMPONENT_SCENARIO_IDS, ScenarioSecondaryProcess.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token), getComponentId(), getScenarioId()
-            );
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SECONDARY_PROCESSES_BY_COMPONENT_SCENARIO_IDS, ScenarioSecondaryProcess.class)
+                .inlineVariables(
+                    getComponentId(), getScenarioId()
+                );
 
+        ResponseWrapper<ScenarioSecondaryProcess> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 

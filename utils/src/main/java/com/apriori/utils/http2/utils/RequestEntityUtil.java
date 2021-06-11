@@ -1,5 +1,6 @@
 package com.apriori.utils.http2.utils;
 
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
@@ -11,6 +12,12 @@ public class RequestEntityUtil {
 
     public static String useTokenForRequests(final String tokenForRequests) {
         return token = tokenForRequests;
+    }
+
+    public static RequestEntity initWithApUserContext(EndpointEnum endpoint, Class<?> returnType) {
+        return initBuilder(endpoint, returnType)
+            .header("ap-user-context", CommonConstants.getApUserContext())
+            .build();
     }
 
     public static RequestEntity.RequestEntityBuilder initBuilder(EndpointEnum endpoint, Class<?> returnType) {
