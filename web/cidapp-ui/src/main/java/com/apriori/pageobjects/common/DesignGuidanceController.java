@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -52,6 +53,20 @@ public class DesignGuidanceController {
     public DesignGuidanceController selectGcd(String gcd) {
         By byGcd = getBy(gcd);
         pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(byGcd), true).click();
+        return this;
+    }
+
+    /**
+     * Selects dropdown
+     *
+     * @param issueType - the issue type
+     * @return current page object
+     */
+    public DesignGuidanceController selectDropdown(String issueType) {
+        String[] issue = issueType.split(",");
+
+        Arrays.stream(issue).map(x -> pageUtils.waitForElementToAppear(getBy(x.trim())).findElement(By.cssSelector("svg[data-icon='chevron-down']")))
+            .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
         return this;
     }
 }

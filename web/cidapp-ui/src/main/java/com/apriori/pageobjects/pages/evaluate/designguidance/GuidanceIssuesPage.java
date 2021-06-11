@@ -14,8 +14,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author cfrith
@@ -102,11 +102,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     private void selectIssue(String issueDropdown) {
         String[] issues = issueDropdown.split(",");
 
-        Stream.of(issues).forEach(issue -> {
-            WebElement byChevron = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", issue.trim())))
-                .findElement(By.cssSelector("svg[data-icon='chevron-down']")));
-            pageUtils.waitForElementAndClick(byChevron);
-        });
+        Arrays.stream(issues).map(x -> pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", x.trim()))).findElement(By.cssSelector("svg[data-icon='chevron-down']"))))
+            .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
     }
 
     /**
