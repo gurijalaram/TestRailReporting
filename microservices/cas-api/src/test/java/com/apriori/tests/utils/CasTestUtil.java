@@ -2,9 +2,9 @@ package com.apriori.tests.utils;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.JwtTokenUtil;
 import com.apriori.apibase.utils.TestUtil;
 
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
 import com.apriori.entity.response.CustomProperties;
@@ -34,13 +34,7 @@ import java.util.Collections;
 
 public class CasTestUtil extends TestUtil {
 
-    private static String token = new JwtTokenUtil().retrieveJwtToken(Constants.getSecretKey(),
-            Constants.getCasServiceHost(),
-            HttpStatus.SC_CREATED,
-            Constants.getCasTokenUsername(),
-            Constants.getCasTokenEmail(),
-            Constants.getCasTokenIssuer(),
-            Constants.getCasTokenSubject());
+    private static String token = new JwtTokenUtil().retrieveJwtToken();
     private String url = String.format(Constants.getApiUrl(), "customers/");
 
     /**

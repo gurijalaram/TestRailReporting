@@ -1,9 +1,9 @@
 package com.apriori.sds.entity.enums;
 
 import com.apriori.sds.utils.Constants;
-import com.apriori.utils.http.enums.common.EdcQaAPI;
+import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 
-public enum SDSAPIEnum implements EdcQaAPI {
+public enum SDSAPIEnum implements ExternalEndpointEnum {
 
     // ITERATIONS
     GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/iterations"),
@@ -52,7 +52,7 @@ public enum SDSAPIEnum implements EdcQaAPI {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return Constants.getApiUrl() + String.format(getEndpointString(), variables);
+        return Constants.getApiUrl() + String.format(getEndpointString(), variables) + "?key=" + Constants.getSecretKey();
     }
 
 }

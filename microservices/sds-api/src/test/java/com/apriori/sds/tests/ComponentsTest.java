@@ -2,7 +2,7 @@ package com.apriori.sds.tests;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Component;
 import com.apriori.sds.entity.response.ComponentsItemsResponse;
@@ -44,14 +44,11 @@ public class ComponentsTest extends SDSTestUtil {
     @Test
     @TestRail(testCaseId = "7248")
     @Description("Add a new component.")
-    @Ignore
     public void postComponents() {
         final Item postComponentResponse = postTestingComponent();
 
-        final ResponseWrapper removeComponentResponseWrapper = removeTestingComponent(postComponentResponse.getComponentIdentity(),
+        removeTestingComponent(postComponentResponse.getComponentIdentity(),
             postComponentResponse.getScenarioIdentity());
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, removeComponentResponseWrapper.getStatusCode());
     }
 
 

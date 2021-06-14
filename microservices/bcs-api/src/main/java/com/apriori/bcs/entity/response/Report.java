@@ -35,7 +35,7 @@ public class Report {
     private String fileName;
     private String contentType;
     private String reportFormat;
-    private ReportParameters reportParameters;
+    private ReportParametersResponse reportParameters;
     private String batchIdentity;
     private String errors;
 }

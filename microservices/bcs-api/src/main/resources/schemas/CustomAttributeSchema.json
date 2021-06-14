@@ -2,12 +2,13 @@
   "type": "object",
   "required": [
     "allowedValues",
-    "decimalPlaces",
-    "defaultValue",
+    "ordinal",
+    "identity",
+    "customerIdentity",
     "displayName",
-    "multiselect",
+    "multiSelect",
     "name",
-    "required",
+    "requiredAttributeType",
     "type"
   ],
   "properties": {
@@ -16,30 +17,33 @@
       "items": {
         "anyOf": [
           {
-            "type": "string"
+            "type": "object"
           }
         ]
       }
     },
-    "decimalPlaces": {
+    "ordinal": {
       "type": "integer"
-    },
-    "defaultValue": {
-      "type": "string"
     },
     "displayName": {
       "type": "string"
     },
-    "multiselect": {
+    "multiSelect": {
       "type": "boolean"
     },
     "name": {
       "type": "string"
     },
-    "required": {
-      "type": "boolean"
+    "requiredAttributeType": {
+      "type": "string"
     },
     "type": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "customerIdentity": {
       "type": "string"
     }
   }

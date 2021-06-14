@@ -41,7 +41,6 @@ public class APIValue {
             .unauthorized()
             .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
             .setEndpoint(baseUrl + endpoint)
-            .setAutoLogin(false)
             .setReturnType(entityClass)
             .commitChanges()
             .connect()

@@ -18,10 +18,13 @@
             "required": [
               "name",
               "displayName",
+              "identity",
               "type",
-              "required",
-              "multiselect",
-              "allowedValues"
+              "requiredAttributeType",
+              "multiSelect",
+              "allowedValues",
+              "ordinal",
+              "customerIdentity"
             ],
             "properties": {
               "name": {
@@ -32,25 +35,26 @@
                 "type": "string",
                 "pattern": "^(.*)$"
               },
-              "type": {
-                "type": "string",
-                "pattern": "^(.*)$"
+              "identity": {
+                "type": "string"
               },
-              "required": {
+              "type": {
+                "type": "string"
+              },
+              "requiredAttributeType": {
                 "type": "boolean"
               },
-              "multiselect": {
+              "multiSelect": {
                 "type": "boolean"
               },
               "allowedValues": {
                 "type": "array"
               },
-              "decimalPlaces": {
+              "ordinal": {
                 "type": "integer"
               },
-              "defaultValue": {
-                "type": "string",
-                "pattern": "^(.*)$"
+              "customerIdentity": {
+                "type": "string"
               }
             }
           }

@@ -271,7 +271,6 @@ public class ConnectionManager<T> {
                 )
                 .setReturnType(AuthenticateJSON.class)
                 .setEndpoint(AuthEndpointEnum.POST_AUTH)
-                .setAutoLogin(false)
                 .setFollowRedirection(false);
 
             String authToken =

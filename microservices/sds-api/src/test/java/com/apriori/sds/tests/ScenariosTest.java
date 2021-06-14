@@ -2,7 +2,7 @@ package com.apriori.sds.tests;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.cidapp.entity.response.css.Item;
+import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
@@ -15,7 +15,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Ignore;
 import org.junit.Test;
 import util.SDSTestUtil;
 
@@ -100,9 +99,7 @@ public class ScenariosTest extends SDSTestUtil {
     public void deleteScenario() {
         final Item postComponentResponse = postTestingComponent();
 
-        final ResponseWrapper removeComponentResponseWrapper = removeTestingComponent(postComponentResponse.getComponentIdentity(),
+        removeTestingComponent(postComponentResponse.getComponentIdentity(),
             postComponentResponse.getScenarioIdentity());
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, removeComponentResponseWrapper.getStatusCode());
     }
 }

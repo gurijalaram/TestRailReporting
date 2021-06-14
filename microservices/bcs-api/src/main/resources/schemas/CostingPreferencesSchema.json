@@ -7,6 +7,7 @@
     "response": {
       "type": "object",
       "required": [
+        "annualVolume",
         "batchMode",
         "cadTolerances",
         "cadToleranceReplacement",
@@ -15,6 +16,7 @@
         "multiBodyIgnoreMissingComponents",
         "multiBodyPreserveCad",
         "processGroup",
+        "productionLife",
         "scenarioName",
         "tolerances",
         "useCadToleranceThreshold",
@@ -22,6 +24,9 @@
         "vpeName"
       ],
       "properties": {
+        "annualVolume": {
+          "type": "integer"
+        },
         "batchMode": {
           "type": "string"
         },
@@ -45,6 +50,9 @@
         },
         "processGroup": {
           "type": "string"
+        },
+        "productionLife": {
+          "type": "number"
         },
         "scenarioName": {
           "type": "string"

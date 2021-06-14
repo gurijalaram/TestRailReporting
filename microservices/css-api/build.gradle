@@ -14,6 +14,7 @@ repositories {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
+    implementation project(':microservices:ats-api')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
