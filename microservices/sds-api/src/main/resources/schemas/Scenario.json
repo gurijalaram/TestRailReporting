@@ -5,7 +5,6 @@
     "identity",
     "createdAt",
     "createdBy",
-    "updatedAt",
     "customerIdentity"
   ],
   "properties": {

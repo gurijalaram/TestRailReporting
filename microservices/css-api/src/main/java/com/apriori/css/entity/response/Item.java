@@ -1,5 +1,6 @@
 package com.apriori.css.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @JsonRootName("response")
+@JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -65,6 +67,7 @@ public class Item {
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
     private PartNestingDiagram partNestingDiagram;
     private Thumbnail thumbnail;
+    private Boolean scenarioSystemLocked;
 
     public static class AnalysisOfChildren {
     }
