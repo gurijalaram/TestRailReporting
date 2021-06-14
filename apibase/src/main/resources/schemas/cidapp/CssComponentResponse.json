@@ -111,6 +111,8 @@
                   },
                   "scenarioPublished": {
                     "type": "boolean"
+                  },"scenarioSystemLocked": {
+                    "type": "boolean"
                   },
                   "scenarioCreatedAt": {
                     "type": "string"
@@ -219,6 +221,11 @@
                     "type": "object",
                     "properties": {
                       "identity": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },"createdBy": {
                         "type": "string"
                       },
                       "image": {

@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.utils.Constants;
 import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
+import com.utils.Constants;
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

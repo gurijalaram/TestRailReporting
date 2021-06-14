@@ -149,7 +149,7 @@ public class DTCCastingTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Material Issue, Minimum Wall Thicknes", "Component", "Component:1");
+            .selectIssueTypeGcd("Material Issue, Minimum Wall Thickness", "Component", "Component:1");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
 
