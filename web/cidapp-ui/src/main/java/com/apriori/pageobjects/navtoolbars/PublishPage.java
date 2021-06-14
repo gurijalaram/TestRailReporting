@@ -105,7 +105,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage inputAssignee(String assignee) {
-        pageUtils.typeAheadInput(assigneeDropdown, assigneeInput, assignee, 1000);
+        pageUtils.typeAheadInput(assigneeDropdown, assignee);
         return this;
     }
 
