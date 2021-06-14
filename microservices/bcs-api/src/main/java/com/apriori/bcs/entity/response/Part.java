@@ -34,4 +34,7 @@ public class Part {
     private String externalId;
     private Boolean requireWatchpointReport;
     private String errors;
+    private String url;
+    private String partName;
+    private String costingResult;
 }

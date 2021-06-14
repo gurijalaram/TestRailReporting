@@ -9,12 +9,11 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.edc.tests.util.UserDataEDC;
 import com.apriori.edc.tests.util.UserTestDataUtil;
 import com.apriori.edc.utils.Constants;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.enums.common.api.AccountEndpointEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
@@ -37,6 +36,8 @@ public class AccountsTest extends TestUtil {
     public void initUser() {
         Constants.getDefaultUrl();
         token = new UserTestDataUtil().initToken(userData.getUserCredentials());
+        RequestEntityUtil.useTokenForRequests(token);
+
         userData.setIdentity(createAndActivateNewAccount(userData.getUsername(), "TestSecretForTesting").getIdentity());
     }
 
@@ -51,13 +52,9 @@ public class AccountsTest extends TestUtil {
     @Description("Test get accounts")
     @Severity(SeverityLevel.NORMAL)
     public void testGetAccounts() {
+        RequestEntity requestEntity = RequestEntityUtil.init(AccountEndpointEnum.GET_ACCOUNTS, Accounts.class);
 
-        ResponseWrapper<Accounts> accountsResponseWrapper = GenericRequestUtil.get(
-                RequestEntity.init(AccountEndpointEnum.GET_ACCOUNTS, UserCredentials.init(userData.getUsername(), userData.getPassword()), Accounts.class)
-                        .setToken(token)
-                        .setAutoLogin(true),
-                new RequestAreaApi());
-
+        ResponseWrapper<Accounts> accountsResponseWrapper = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountsResponseWrapper.getStatusCode());
     }
 
@@ -71,12 +68,12 @@ public class AccountsTest extends TestUtil {
 
         identity = accountStatus.getIdentity();
         final AccountStatus updatedAccount = updateAccount(identity,
-                accountStatus.setName(newName)
+            accountStatus.setName(newName)
         );
 
         assertEquals("The user name, should be updated",
-                updatedAccount.getName(),
-                newName);
+            updatedAccount.getName(),
+            newName);
 
         activateDefaultUserAndDeleteAnotherByIdentity(identity);
         identity = "";
@@ -89,8 +86,8 @@ public class AccountsTest extends TestUtil {
         final AccountStatus receivedAccountsStatus = getAccountByIdentity(userData.getIdentity());
 
         assertEquals("Search identity and received identity, should be the same",
-                userData.getIdentity(),
-                receivedAccountsStatus.getIdentity());
+            userData.getIdentity(),
+            receivedAccountsStatus.getIdentity());
     }
 
     @Test
@@ -113,7 +110,7 @@ public class AccountsTest extends TestUtil {
 
     private AccountStatus createAndActivateNewAccount(String name, String secret) {
         return activateAccount(
-                createNewAccount(name, secret).getIdentity()
+            createNewAccount(name, secret).getIdentity()
         );
     }
 
@@ -123,84 +120,72 @@ public class AccountsTest extends TestUtil {
     }
 
     private AccountStatus getActiveAccount() {
+        RequestEntity requestEntity = RequestEntityUtil.init(
+            AccountEndpointEnum.GET_ACTIVE_USER, AccountsStatusWrapper.class);
 
-        RequestEntity requestEntity = RequestEntity.init(
-                AccountEndpointEnum.GET_ACTIVE_USER, userData.getUserCredentials(), AccountsStatusWrapper.class)
-                .setStatusCode(HttpStatus.SC_OK)
-                .setToken(token)
-                .setAutoLogin(true);
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getResponseEntity()).getAccountStatus();
+        return responseWrapper.getResponseEntity().getAccountStatus();
     }
 
     private AccountStatus getAccountByIdentity(String identity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(
+            AccountEndpointEnum.GET_ACCOUNTS_BY_IDENTITY, AccountsStatusWrapper.class)
+            .inlineVariables(identity);
 
-        final RequestEntity requestEntity = RequestEntity.init(
-                AccountEndpointEnum.GET_ACCOUNTS_BY_IDENTITY,
-                userData.getUserCredentials(),
-                AccountsStatusWrapper.class)
-                .setInlineVariables(identity)
-                .setStatusCode(HttpStatus.SC_OK)
-                .setToken(token)
-                .setAutoLogin(true);
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.get(requestEntity, new RequestAreaApi())
-                .getResponseEntity()).getAccountStatus();
+        return responseWrapper.getResponseEntity().getAccountStatus();
     }
 
     private AccountStatus activateAccount(String identity) {
-        RequestEntity requestEntity = RequestEntity.init(
-                AccountEndpointEnum.ACTIVATE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), AccountsStatusWrapper.class)
-                .setInlineVariables(identity)
-                .setStatusCode(HttpStatus.SC_OK)
-                .setToken(token)
-                .setAutoLogin(true);
+        RequestEntity requestEntity = RequestEntityUtil.init(AccountEndpointEnum.ACTIVATE_ACCOUNTS_BY_IDENTITY, AccountsStatusWrapper.class)
+            .inlineVariables(identity);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity()).getAccountStatus();
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).post();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
+
+        return responseWrapper.getResponseEntity().getAccountStatus();
     }
 
     private AccountStatus updateAccount(final String identity, final AccountStatus accountStatus) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(
+            AccountEndpointEnum.UPDATE_ACCOUNTS_BY_IDENTITY, AccountsStatusWrapper.class)
+            .inlineVariables(identity)
+            .body(accountStatus);
 
-        RequestEntity requestEntity = RequestEntity.init(
-                AccountEndpointEnum.UPDATE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), AccountsStatusWrapper.class)
-                .setStatusCode(HttpStatus.SC_OK)
-                .setInlineVariables(identity)
-                .setBody(accountStatus)
-                .setToken(token)
-                .setAutoLogin(true);
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).patch();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.patch(requestEntity, new RequestAreaApi())
-                .getResponseEntity()).getAccountStatus();
+        return responseWrapper.getResponseEntity().getAccountStatus();
     }
 
     private AccountStatus createNewAccount(String name, String secret) {
-
         final AccountStatus accountStatus = new AccountStatus()
-                .setAccountId("Apriori")
-                .setType("Silicon Expert")
-                .setName(name)
-                .setAccountSecret(secret);
+            .setAccountId("Apriori")
+            .setType("Silicon Expert")
+            .setName(name)
+            .setAccountSecret(secret);
 
-        final RequestEntity requestEntity = RequestEntity.init(
-                AccountEndpointEnum.POST_ACCOUNTS, userData.getUserCredentials(), AccountsStatusWrapper.class)
-                .setBody(accountStatus)
-                .setStatusCode(HttpStatus.SC_CREATED)
-                .setToken(token)
-                .setAutoLogin(true);
+        final RequestEntity requestEntity = RequestEntityUtil.init(
+            AccountEndpointEnum.POST_ACCOUNTS, AccountsStatusWrapper.class)
+            .body(accountStatus);
 
-        return ((AccountsStatusWrapper) GenericRequestUtil.post(requestEntity, new RequestAreaApi())
-                .getResponseEntity()).getAccountStatus();
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).post();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+
+        return responseWrapper.getResponseEntity()
+            .getAccountStatus();
     }
 
     private void deleteAccountByIdentity(String identity) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(
+            AccountEndpointEnum.DELETE_ACCOUNTS_BY_IDENTITY, null)
+            .inlineVariables(identity);
 
-        RequestEntity requestEntity = RequestEntity.init(
-                AccountEndpointEnum.DELETE_ACCOUNTS_BY_IDENTITY, userData.getUserCredentials(), null)
-                .setInlineVariables(identity)
-                .setStatusCode(HttpStatus.SC_NO_CONTENT)
-                .setToken(token)
-                .setAutoLogin(true);
-
-        GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).delete();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, responseWrapper.getStatusCode());
     }
 }

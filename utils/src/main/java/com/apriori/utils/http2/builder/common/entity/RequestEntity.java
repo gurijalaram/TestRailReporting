@@ -6,10 +6,12 @@ import com.apriori.utils.http.enums.EndpointType;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.Singular;
 import lombok.experimental.Accessors;
 import org.openqa.selenium.WebDriver;
@@ -23,7 +25,6 @@ import java.util.Map;
  * Entity class which is designed to contain and transfer data for Internal API request.
  * You can setup:
  * {@link #endpoint}           -   internal api endpoint
- * {@link #statusCode}         -   expected response status code
  * {@link #urlParams}          -   inline url params formatted in the following way: ?param1=value1&param2=value2
  * {@link #inlineVariables}    -   inline variables.
  */
@@ -34,33 +35,27 @@ import java.util.Map;
 @Builder
 @Accessors(fluent = true)
 public class RequestEntity {
-
-    private String token;
-
-    private WebDriver driver;
-    private UserAuthenticationEntity userAuthenticationEntity;
-
+    private Object body;
+    private int connectionTimeout = 60000;
     private String customBody;
-
-    private EndpointEnum endpoint;
-    private String customEndpoint;
-    private Integer[] statusCode;
-    private boolean useCookie = false;
-    private boolean autoLogin = false;
     private boolean defaultAuthorizationData = false;
+    private WebDriver driver;
+    private EndpointEnum endpoint;
     private EndpointType endpointType = EndpointType.EXTERNAL;
     private boolean followRedirection = false;
-    @Singular private Map<String, String> headers = new HashMap<>();
-    @Singular private List<Map<String, ?>> urlParams = new ArrayList<>();
-    @Singular private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
-    private List<String> inlineVariables;
-    private MultiPartFiles multiPartFiles;
     private FormParams formParams;
-    private Object body;
+    @Singular private Map<String, String> headers = new HashMap<>();
+    private Object[] inlineVariablesArray;
+    private MultiPartFiles multiPartFiles;
     private Class<?> returnType;
-    private int connectionTimeout = 60000;
     private int socketTimeout = 60000;
+    private String token;
     private boolean urlEncodingEnabled = true;
+    @Singular private List<Map<String, ?>> urlParams = new ArrayList<>();
+    private boolean useCookie = false;
+    private UserAuthenticationEntity userAuthenticationEntity;
+    @Singular private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
+
 
     public RequestEntity body(String node, Object body) {
         this.body = new HashMap<String, Object>() {
@@ -71,12 +66,12 @@ public class RequestEntity {
         return this;
     }
 
+    public RequestEntity inlineVariables(String... inlineVariables) {
+        this.inlineVariablesArray = inlineVariables;
+        return this;
+    }
+
     public String buildEndpoint() {
-
-        if (this.customEndpoint != null) {
-            return this.customEndpoint;
-        }
-
-        return this.inlineVariables != null ? endpoint.getEndpoint(inlineVariables.toArray()) : endpoint.getEndpoint();
+        return this.inlineVariablesArray != null ? endpoint.getEndpoint(inlineVariablesArray) : endpoint.getEndpoint();
     }
 }

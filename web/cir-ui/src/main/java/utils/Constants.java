@@ -3,8 +3,7 @@ package utils;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,9 +13,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Constants {
-
-    private static final Logger logger = LoggerFactory.getLogger(Constants.class);
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String LOGOUT_HEADER = "CI DESIGN AUTOMATION";
@@ -85,14 +83,14 @@ public class Constants {
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile(environment.concat(".properties"));
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile("cir-ui-" + environment + ".properties");
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
             String properties = PROPERTIES.stringPropertyNames().stream()
                 .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
                 .collect(Collectors.joining());
-            logger.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            log.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

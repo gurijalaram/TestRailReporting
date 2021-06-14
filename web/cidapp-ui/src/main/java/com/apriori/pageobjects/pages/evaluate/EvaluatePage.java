@@ -5,6 +5,7 @@ import com.apriori.pageobjects.common.PrimaryInputsController;
 import com.apriori.pageobjects.common.SecondaryInputsController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
+import com.apriori.pageobjects.pages.compare.CompareExplorePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
@@ -102,13 +103,13 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//span[contains(text(), 'Finish Mass')]/following-sibling::span")
     private WebElement finishMass;
 
-    @FindBy(css = ".design-guidance-summary-card.card .pill-text")
+    @FindBy(css = ".design-guidance-summary-card button")
     private WebElement designGuidanceDetailsButton;
 
-    @FindBy(css = ".process-summary-card.card .pill-text")
+    @FindBy(css = ".process-summary-card button")
     private WebElement processesDetailsButton;
 
-    @FindBy(css = ".cost-result-summary-card.card .pill-text")
+    @FindBy(css = ".cost-result-summary-card button")
     private WebElement costDetailsButton;
 
     @FindBy(css = ".production-info-summary-card.card .pill.action-button")
@@ -123,8 +124,11 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "[id='qa-process-group-select-field']")
     private WebElement processGroupList;
 
-    @FindBy(css = ".sub-components-summary.card .pill-text")
+    @FindBy(css = ".sub-components-summary-card button")
     private WebElement componentsDetailsButton;
+
+    @FindBy(css = "div[id='qa-source-model-modal-select-field'] button")
+    private WebElement sourceComponentPencil;
 
     @FindBy(id = "qa-scenario-select-field")
     @CacheLookup
@@ -452,11 +456,11 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return boolean
      */
     public boolean isDfmRiskIcon(String riskFactor) {
-        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--success)"
-            : riskFactor.equalsIgnoreCase("Medium") ? "var(--info)"
-            : riskFactor.equalsIgnoreCase("High") ? "var(--warning)"
-            : riskFactor.equalsIgnoreCase("Critical") ? "var(--danger)"
-            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--secondary-light)"
+        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--green-light)"
+            : riskFactor.equalsIgnoreCase("Medium") ? "var(--cyan-light)"
+            : riskFactor.equalsIgnoreCase("High") ? "var(--yellow-light)"
+            : riskFactor.equalsIgnoreCase("Critical") ? "var(--red-light)"
+            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--gray-500)"
             : null;
 
         By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
@@ -491,7 +495,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public String getColour(String element) {
         WebElement elementColour = element.equalsIgnoreCase("Process Group") ? processGroupDropdown
-            : element.equalsIgnoreCase("VPE") ? digitalFactoryDropdown
+            : element.equalsIgnoreCase("Digital Factory") ? digitalFactoryDropdown
             : element.equalsIgnoreCase("Secondary Processes") ? secondaryProcessBox
             : element.equalsIgnoreCase("Annual Volume") ? annualVolumeInput
             : element.equalsIgnoreCase("Years") ? productionLifeInput
@@ -579,5 +583,50 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isIconDisplayed(StatusIconEnum icon) {
         return statusIcon.isIconDisplayed(icon);
+    }
+
+    /**
+     * Opens the source selector table
+     *
+     * @return new page object
+     */
+    public CompareExplorePage selectSourcePart() {
+        primaryInputsController.openSourceModelSelectorTable(sourceComponentPencil);
+        return new CompareExplorePage(driver);
+    }
+
+    /**
+     * Gets the source model material
+     *
+     * @return string
+     */
+    public String getSourceModelMaterial() {
+        By sourceModelMaterial = By.xpath("//label[.='Source Model Material']/following-sibling::p");
+        pageUtils.waitForElementToAppear(sourceModelMaterial);
+        return driver.findElement(sourceModelMaterial).getAttribute("textContent");
+    }
+
+    /**
+     * Gets the source part details
+     *
+     * @return string
+     */
+    public String getSourcePartDetails() {
+        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'] .input-group");
+        pageUtils.waitForElementToAppear(sourcePart);
+        return driver.findElement(sourcePart).getAttribute("textContent");
+    }
+
+    /**
+     * Opens the source component
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openSourceScenario(String componentName, String scenarioName) {
+        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        pageUtils.waitForElementAndClick(scenario);
+        return new EvaluatePage(driver);
     }
 }

@@ -67,7 +67,6 @@ public class APIAuthentication {
                 .customizeRequest()
                 .setReturnType(AuthenticateJSON.class)
                 .setEndpoint(baseUrl + "ws/auth/token")
-                .setAutoLogin(false)
                 .commitChanges()
                 .connect()
                 .post();

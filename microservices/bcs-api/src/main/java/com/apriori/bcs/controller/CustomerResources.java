@@ -15,7 +15,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import org.apache.http.HttpStatus;
 
-public class CustomerResources extends CisBase {
+public class CustomerResources extends BcsBase {
 
     private static final String endpointCostingPreferences = "costing-preferences";
     private static final String endpointProcessGroups = "process-groups";

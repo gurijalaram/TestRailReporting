@@ -3,11 +3,10 @@ package com.apriori.bcs.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
-import com.apriori.bcs.controller.PartResources;
 import com.apriori.bcs.entity.request.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
-import com.apriori.bcs.utils.CisUtils;
+import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -49,7 +48,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
     public void costMultipleParts() throws InterruptedException {
         // create batch
         Batch batch = BatchResources.createNewBatch();
-        MultiPartCostingScenarioTest.batchIdentity = CisUtils.getIdentity(batch, Batch.class);
+        MultiPartCostingScenarioTest.batchIdentity = BcsUtils.getIdentity(batch, Batch.class);
 
         //Generate Part List & download part file from S3
         this.getPartsList();
@@ -78,7 +77,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
         CostingElementStatus batchElementStatus = waitingForBatchProcessingComplete();
         Assert.assertEquals(batchElementStatus, CostingElementStatus.COMPLETE);
 
-        PartResources.getPartCosting(partIdentity);
+        BatchResources.startCosting(partIdentity);
     }
 
     /**
@@ -105,7 +104,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
             newPartRequest.setProcessGroup(partSummary[1]);
             batchPart = (Part) BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
             try {
-                partIdentity = CisUtils.getIdentity(batchPart, Part.class);
+                partIdentity = BcsUtils.getIdentity(batchPart, Part.class);
             } catch (Exception e) {
                 logger.error(e.getMessage());
                 logger.error(Arrays.toString(e.getStackTrace()));
@@ -185,7 +184,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
      * @return Costing Status
      */
     private CostingElementStatus pollState(Object obj, Class klass) throws InterruptedException {
-        String state = CisUtils.getState(obj, klass);
+        String state = BcsUtils.getState(obj, klass);
         if (state.toUpperCase().equals("COMPLETED")) {
             return CostingElementStatus.COMPLETE;
         } else if (state.toUpperCase().equals("ERRORED")) {
