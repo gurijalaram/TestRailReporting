@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.cidapp.utils.ColumnsEnum;
-import com.apriori.cidapp.utils.DirectionEnum;
 import com.apriori.utils.PageUtils;
 
+import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

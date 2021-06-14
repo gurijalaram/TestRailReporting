@@ -2,10 +2,12 @@ package com.evaluate.dtc;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -30,6 +32,7 @@ public class DTCCastingTests extends TestBase {
     private UserCredentials currentUser;
 
     private File resourceFile;
+    private InvestigationPage investigationsPage;
 
     public DTCCastingTests() {
         super();
@@ -257,27 +260,49 @@ public class DTCCastingTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
-            .costScenario()
+            .clickSearch("IE0X100BD")
+            .openScenario("IE0X100BD", "INT CIG WC 20")
             .openDesignGuidance()
-            .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+            .selectIssueTypeGcd("Machining Issues, Missing Setups", "Curved Surface", "CurvedSurface:5");
 
-        guidanceIssuesPage.closePanel()
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Contouring: Setup Axis was not automatically assigned. Manually assign a new Setup Axis normal to the face."));
+        assertThat(guidanceIssuesPage.getGcdCount("Curved Wall"), equalTo(1));
+        assertThat(guidanceIssuesPage.getGcdCurrent("CurvedSurface:4"), is(equalTo(4)));
+        assertThat(guidanceIssuesPage.isSeverity("Curved Wall", GuidanceIssuesPage.Severity.WARNING), is(true));
+
+        investigationsPage = guidanceIssuesPage.closePanel()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Simple Hole", "SimpleHole:2");
+            .openInvestigationTab()
+        .selectTopic("Holes and Fillets")
+        .selectMachiningSetup("Fillet Radius - Non-Standard (4 Tools), 0.19cm")
+        .selectGcd("CurvedSurface:99");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+        assertThat(investigationsPage.getInvestigationDescription(), is(containsString("Non-standard tools and using many unique tools can increase manufacturing complexity and cost.")));
+        assertThat(investigationsPage.getGcdCount("0.19cm"), is(equalTo(13)));
 
-        guidanceIssuesPage.closePanel()
+        investigationsPage.closePanel()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
+            .openInvestigationTab()
+            .selectTopic("Machining Setups")
+            .selectMachiningSetup("SetupAxis:1")
+            .selectGcd("Slot:1");
 
+        assertThat(investigationsPage.getInvestigationDescription(), is(containsString("Review the active setups used to machine this part.")));
+        assertThat(investigationsPage.getGcdCount("SetupAxis:1"), is(equalTo(125)));
+
+        investigationsPage.closePanel()
+            .openDesignGuidance()
+            .openInvestigationTab()
+            .selectTopic("Slow Machining Operations")
+            .selectMachiningSetup("Contoured Surface")
+            .selectGcd("CurvedWall:4");
+
+        assertThat(investigationsPage.getInvestigationDescription(), is(containsString("These GCDS are requiring significant cycle time to machine.")));
+        assertThat(investigationsPage.getCycleTime("CurvedWall:4"), is(equalTo("0.14s")));
+        assertThat(investigationsPage.getCycleTimePercentage("CurvedWall:4"), is(equalTo("0.00%")));
+
+        assertThat(investigationsPage.getCycleTime("PlanarFace:23"), is(equalTo("4.69s")));
+        assertThat(investigationsPage.getCycleTimePercentage("PlanarFace:23"), is(equalTo("0.17%")));
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. Part Thickness is more than the maximum limit with this material."));
     }
 }

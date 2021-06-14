@@ -1,12 +1,12 @@
 package com.apriori.pageobjects.pages.compare;
 
-import com.apriori.cidapp.utils.ComparisonCardEnum;
-import com.apriori.cidapp.utils.ComparisonDeltaEnum;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
+import com.utils.ComparisonCardEnum;
+import com.utils.ComparisonDeltaEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

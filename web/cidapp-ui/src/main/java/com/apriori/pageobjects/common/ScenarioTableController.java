@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.cidapp.utils.ColumnsEnum;
-import com.apriori.cidapp.utils.Constants;
-import com.apriori.cidapp.utils.SortOrderEnum;
+import com.apriori.utils.Constants;
 import com.apriori.utils.PageUtils;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

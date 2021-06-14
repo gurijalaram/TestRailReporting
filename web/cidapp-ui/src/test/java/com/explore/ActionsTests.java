@@ -1,15 +1,12 @@
 package com.explore;
 
-import static com.apriori.cidapp.utils.ColumnsEnum.COST_MATURITY;
-import static com.apriori.cidapp.utils.ColumnsEnum.STATUS;
+import static com.utils.ColumnsEnum.COST_MATURITY;
+import static com.utils.ColumnsEnum.STATUS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidapp.utils.ColumnsEnum;
-import com.apriori.cidapp.utils.DirectionEnum;
-import com.apriori.cidapp.utils.SortOrderEnum;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -25,6 +22,9 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;

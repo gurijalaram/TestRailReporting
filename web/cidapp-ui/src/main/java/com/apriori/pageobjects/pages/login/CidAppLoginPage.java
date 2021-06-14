@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.pages.login;
 
-import com.apriori.cidapp.utils.Constants;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
 
+import com.utils.Constants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
