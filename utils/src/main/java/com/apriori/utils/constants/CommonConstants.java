@@ -29,14 +29,17 @@ public class CommonConstants {
 
     private static String csvFile;
     private static final Properties PROPERTIES = new Properties();
+    private static final File COMMON_PROPERTIES_STREAM;
     private static final File INPUT_STREAM;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
+        COMMON_PROPERTIES_STREAM = FileResourceUtil.getResourceAsFile("common.properties");
         INPUT_STREAM = FileResourceUtil.getResourceAsFile("common-" + environment + ".properties");
 
         try {
+            PROPERTIES.load(new FileInputStream(COMMON_PROPERTIES_STREAM));
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
         } catch (IOException e) {
             e.printStackTrace();

@@ -23,11 +23,11 @@ import org.junit.Assert;
 
 public class SDSTestUtil extends TestUtil {
 
-    private static Item partPostComponentResponse;
+    private static Item testingComponent;
 
     @AfterClass
     public static void clearTestingData() {
-        if (partPostComponentResponse != null) {
+        if (testingComponent != null) {
             removeTestingComponent(getComponentId(), getScenarioId());
         }
     }
@@ -94,12 +94,12 @@ public class SDSTestUtil extends TestUtil {
      * Lazy init for Testing component to avoid it if it is not necessary
      * @return
      */
-    private static Item getTestingComponent() {
-        if(partPostComponentResponse == null) {
-            partPostComponentResponse = postTestingComponent();
+    protected static Item getTestingComponent() {
+        if(testingComponent == null) {
+            testingComponent = postTestingComponent();
         }
 
-        return partPostComponentResponse;
+        return testingComponent;
     }
 
     /**

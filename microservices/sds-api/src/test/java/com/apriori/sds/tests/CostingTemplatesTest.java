@@ -11,8 +11,11 @@ import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.Assert;
 import org.junit.Test;
 import util.SDSTestUtil;
+
+import java.util.List;
 
 public class CostingTemplatesTest extends SDSTestUtil {
 
@@ -29,21 +32,22 @@ public class CostingTemplatesTest extends SDSTestUtil {
     public void getCostingTemplateByIdentity() {
         final RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
-                .inlineVariables(
-                    this.getCostingTemplatesResponseWrapper().getResponseEntity().getItems().get(0).getIdentity()
-                );
+                .inlineVariables( this.getFirstCostingTemplate().getIdentity());
 
         ResponseWrapper<CostingTemplate> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
+    private CostingTemplate getFirstCostingTemplate() {
+        List<CostingTemplate> costingTemplates = this.getCostingTemplatesResponseWrapper().getResponseEntity().getItems();
+        Assert.assertNotEquals("To get CostingTemplate, response should contain it.", 0, costingTemplates.size());
+
+        return costingTemplates.get(0);
+    }
+
     private ResponseWrapper<CostingTemplatesItems> getCostingTemplatesResponseWrapper() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
-                .inlineVariables(
-                    this.getCostingTemplatesResponseWrapper().getResponseEntity().getItems().get(0).getIdentity()
-                );
-
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
         return HTTP2Request.build(requestEntity).get();
     }
 
