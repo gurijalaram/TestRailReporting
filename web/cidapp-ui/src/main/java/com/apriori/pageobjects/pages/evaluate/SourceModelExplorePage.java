@@ -113,7 +113,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      * @return size of the element as int
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//div[.='%s']/ancestor::div//span[.='%s']", scenarioName.trim(), componentName.toUpperCase().trim()));
+        return By.xpath(String.format("//div[@class='scenario-selector-table']//div[.='%s']/ancestor::div//span[normalize-space(.)='%s']", scenarioName.trim(), componentName.toUpperCase().trim()));
     }
 
     /**
