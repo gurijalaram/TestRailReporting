@@ -111,7 +111,8 @@
                   },
                   "scenarioPublished": {
                     "type": "boolean"
-                  },"scenarioSystemLocked": {
+                  },
+                  "scenarioSystemLocked": {
                     "type": "boolean"
                   },
                   "scenarioCreatedAt": {
@@ -225,7 +226,8 @@
                       },
                       "createdAt": {
                         "type": "string"
-                      },"createdBy": {
+                      },
+                      "createdBy": {
                         "type": "string"
                       },
                       "image": {
