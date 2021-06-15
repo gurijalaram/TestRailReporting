@@ -178,8 +178,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-//            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .openScenario("DTCCASTINGISSUES", "AutoScenario490-874197441916400")
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .costScenario();
