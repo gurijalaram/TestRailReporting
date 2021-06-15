@@ -84,7 +84,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return current page object
      */
     public ExplorePage inputFilter(String filter) {
-        pageUtils.typeAheadInput(filterDropdown, filterInput, filter);
+        pageUtils.typeAheadInput(filterDropdown, filter);
         return this;
     }
 

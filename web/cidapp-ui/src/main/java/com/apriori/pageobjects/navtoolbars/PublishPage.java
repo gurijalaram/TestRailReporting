@@ -83,7 +83,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage inputStatus(String status) {
-        pageUtils.typeAheadInput(statusDropdown, statusInput, status);
+        pageUtils.typeAheadInput(statusDropdown, status);
         return this;
     }
 
@@ -94,7 +94,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage inputCostMaturity(String costMaturity) {
-        pageUtils.typeAheadInput(costMaturityDropdown, costMaturityInput, costMaturity);
+        pageUtils.typeAheadInput(costMaturityDropdown, costMaturity);
         return this;
     }
 

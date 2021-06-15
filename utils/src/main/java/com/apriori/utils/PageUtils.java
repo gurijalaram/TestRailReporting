@@ -810,28 +810,13 @@ public class PageUtils {
      * Interacts with a dropdown and input the relevant info
      *
      * @param dropdownSelector - the selector
-     * @param dropdownInput    - the locator
-     * @param value            - the value
-     * @return current page object
-     */
-    public void typeAheadInput(WebElement dropdownSelector, WebElement dropdownInput, String value) {
-        waitForElementAndClick(dropdownSelector);
-        dropdownInput.clear();
-        dropdownInput.sendKeys(value);
-        dropdownInput.sendKeys(Keys.ENTER);
-    }
-
-    /**
-     * Interacts with a dropdown and input the relevant info
-     *
-     * @param dropdownSelector - the selector
      * @param value            - the value
      * @return current page object
      */
     public void typeAheadInput(WebElement dropdownSelector, String value) {
         waitForElementAndClick(dropdownSelector);
-        By byValue = By.xpath(String.format("//div[normalize-space(text())='%s']", value));
-        waitForElementAndClick(byValue);
+        By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
+        scrollWithJavaScript(driver.findElement(byValue), true).click();
     }
 
     /**

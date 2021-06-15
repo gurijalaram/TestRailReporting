@@ -56,7 +56,7 @@ public class PrimaryInputsController {
      * @return current page object
      */
     public PrimaryInputsController typeAheadProcessGroup(WebElement processGroupInput, String processGroup) {
-        pageUtils.typeAheadInput(pgDropdown, processGroupInput, processGroup);
+        pageUtils.typeAheadInput(pgDropdown, processGroup);
         return this;
     }
 
@@ -91,12 +91,11 @@ public class PrimaryInputsController {
     /**
      * Uses type ahead to input the vpe dropdown
      *
-     * @param digitalFactoryInput - the vpe input
-     * @param digitalFactory      - the vpe
+     * @param digitalFactory - the vpe
      * @return current page object
      */
-    public PrimaryInputsController typeAheadDigitalFactory(WebElement digitalFactoryInput, String digitalFactory) {
-        pageUtils.typeAheadInput(digitalFactoryDropdown, digitalFactoryInput, digitalFactory);
+    public PrimaryInputsController typeAheadDigitalFactory(String digitalFactory) {
+        pageUtils.typeAheadInput(digitalFactoryDropdown, digitalFactory);
         return this;
     }
 

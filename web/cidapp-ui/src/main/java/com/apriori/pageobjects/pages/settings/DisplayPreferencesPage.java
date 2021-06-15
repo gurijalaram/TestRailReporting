@@ -68,9 +68,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     public DisplayPreferencesPage typeAheadInSection(String label, String value) {
         String labelLocator = "//label[.='%s']/following-sibling::div[contains(@class,'apriori-select')]";
         WebElement labelDropdown = driver.findElement(By.xpath(String.format(labelLocator, label)));
-        WebElement valueInput = driver.findElement(By.xpath(String.format(labelLocator.concat("//input"), label)));
-
-        pageUtils.typeAheadInput(labelDropdown, valueInput, value);
+        pageUtils.typeAheadInput(labelDropdown, value);
         return this;
     }
 

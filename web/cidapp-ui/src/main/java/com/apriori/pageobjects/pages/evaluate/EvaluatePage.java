@@ -203,7 +203,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage inputDigitalFactory(String digitalFactory) {
-        primaryInputsController.typeAheadDigitalFactory(digitalFactoryInput, digitalFactory);
+        primaryInputsController.typeAheadDigitalFactory(digitalFactory);
         return this;
     }
 

@@ -68,7 +68,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage inputFilter(String filter) {
-        pageUtils.typeAheadInput(filterDropDown, filterInput, filter);
+        pageUtils.typeAheadInput(filterDropDown, filter);
         return this;
     }
 
@@ -199,8 +199,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     private FilterPage inputProperty(String property) {
         WebElement propertyDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index)));
-        WebElement propertyInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject'] input", index)));
-        pageUtils.typeAheadInput(propertyDropdown, propertyInput, property);
+        pageUtils.typeAheadInput(propertyDropdown, property);
         return this;
     }
 
@@ -212,8 +211,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     private FilterPage inputOperation(String operation) {
         WebElement operationDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index)));
-        WebElement operationInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation'] input", index)));
-        pageUtils.typeAheadInput(operationDropdown, operationInput, operation);
+        pageUtils.typeAheadInput(operationDropdown, operation);
         return this;
     }
 
