@@ -68,8 +68,14 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin("", "");
 
-        assertThat(loginPage.getEmailOrPwdInputErrorMsg(true), is(equalTo(Constants.EMAIL_EMPTY_FIELDS_MESSAGE)));
-        assertThat(loginPage.getEmailOrPwdInputErrorMsg(false), is(equalTo(Constants.PASSWORD_EMPTY_FIELDS_MESSAGE)));
+        assertThat(
+                loginPage.getEmailOrPwdInputErrorMsg(true),
+                is(equalTo(Constants.EMPTY_FIELDS_MESSAGE))
+        );
+        assertThat(
+                loginPage.getEmailOrPwdInputErrorMsg(false),
+                is(equalTo(Constants.EMPTY_FIELDS_MESSAGE))
+        );
     }
 
     @Test
@@ -80,6 +86,9 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getEmailOrPwdInputErrorMsg(true), is(equalTo(Constants.INVALID_EMAIL_ERROR_MESSAGE)));
+        assertThat(
+                loginPage.getEmailOrPwdInputErrorMsg(true),
+                is(equalTo(Constants.INVALID_EMAIL_ERROR_MESSAGE))
+        );
     }
 }

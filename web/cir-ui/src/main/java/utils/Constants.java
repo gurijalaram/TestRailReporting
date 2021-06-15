@@ -66,10 +66,11 @@ public class Constants {
     public static final String PERCENT_VALUE = "Percent";
     public static final String PRIVACY_POLICY_STRING = "APRIORI TECHNOLOGIES, INC. PRIVACY POLICY";
     public static final String FAILED_LOGIN_MESSAGE = "We're sorry, something went wrong when attempting to log in.";
-    public static final String FORGOT_PWD_MSG = "We've just sent you an email to reset your password.";
-    public static final String EMAIL_EMPTY_FIELDS_MESSAGE = "Email can't be blank";
-    public static final String PASSWORD_EMPTY_FIELDS_MESSAGE = "Password can't be blank";
-    public static final String INVALID_EMAIL_ERROR_MESSAGE = "Email is invalid";
+    public static final String FORGOT_PWD_MSG = "IF THE SUPPLIED EMAIL ADDRESS IS VALID, YOU WILL RECEIVE AN EMAIL "
+            .concat("SHORTLY WITH INSTRUCTIONS ON RESETTING YOUR PASSWORD. IF YOU DID NOT RECEIVE AN EMAIL AND STILL ")
+            .concat("REQUIRE ASSISTANCE, PLEASE SEND AN EMAIL TO SUPPORT@APRIORI.COM.");
+    public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
+    public static final String INVALID_EMAIL_ERROR_MESSAGE = "Invalid";
     public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";

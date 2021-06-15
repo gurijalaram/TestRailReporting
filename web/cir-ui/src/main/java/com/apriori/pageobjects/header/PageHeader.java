@@ -110,7 +110,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "span[id='globalSearch'] > a")
     private WebElement searchButton;
 
-    @FindBy(id = "toolbar_logo_link")
+    @FindBy(css = ".pageHeader-title-text")
     protected WebElement pageTitle;
 
     @FindBy(xpath = "//h1[contains(text(), '404')]")

@@ -33,10 +33,10 @@ public class ReportsLoginPage extends ReportsPageHeader {
     @FindBy(css = "span[class='animated fadeInUp']")
     private WebElement loginMsg;
 
-    @FindBy(css = "div#auth0-lock-error-msg-email")
+    @FindBy(xpath = "//div[contains(@class, 'email')]/div[@class='auth0-lock-error-msg']")
     private WebElement emailInputErrorMsg;
 
-    @FindBy(css = "div#auth0-lock-error-msg-password")
+    @FindBy(xpath = "//div[contains(@class, 'password')]/div[@class='auth0-lock-error-msg']")
     private WebElement passwordInputErrorMsg;
 
     @FindBy(css = "a[href='https://www.apriori.com/sso-instructions-page']")
