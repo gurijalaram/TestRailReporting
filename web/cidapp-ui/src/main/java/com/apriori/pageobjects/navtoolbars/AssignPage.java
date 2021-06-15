@@ -50,8 +50,8 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @param assignee - the assignee
      * @return current page object
      */
-    public AssignPage inputAssignee(String assignee) {
-        pageUtils.typeAheadInput(assigneeDropdown, assignee);
+    public AssignPage selectAssignee(String assignee) {
+        pageUtils.typeAheadSelect(assigneeDropdown, assignee);
         return this;
     }
 

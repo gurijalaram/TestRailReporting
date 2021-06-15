@@ -2,7 +2,6 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,21 +41,7 @@ public class PrimaryInputsController {
      * @return current page object
      */
     public PrimaryInputsController selectProcessGroup(WebElement processGroupDropdown, String processGroup) {
-        pageUtils.waitForElementAndClick(processGroupDropdown);
-        By group = By.cssSelector(String.format("button[value='%s']", processGroup));
-        pageUtils.scrollWithJavaScript(driver.findElement(group), true).click();
-        return this;
-    }
-
-    /**
-     * Uses type ahead to input the pg
-     *
-     * @param processGroupInput - the process group locator
-     * @param processGroup      - the process group
-     * @return current page object
-     */
-    public PrimaryInputsController typeAheadProcessGroup(WebElement processGroupInput, String processGroup) {
-        pageUtils.typeAheadInput(pgDropdown, processGroup);
+        pageUtils.typeAheadSelect(processGroupDropdown, processGroup);
         return this;
     }
 
@@ -82,20 +67,7 @@ public class PrimaryInputsController {
      * @return current page object
      */
     public PrimaryInputsController selectDigitalFactory(WebElement digitalFactoryDropdown, String digitalFactory) {
-        pageUtils.waitForElementAndClick(digitalFactoryDropdown);
-        By df = By.xpath(String.format("//div[.='%s']//div[@id]", digitalFactory));
-        pageUtils.scrollWithJavaScript(driver.findElement(df), true).click();
-        return this;
-    }
-
-    /**
-     * Uses type ahead to input the vpe dropdown
-     *
-     * @param digitalFactory - the vpe
-     * @return current page object
-     */
-    public PrimaryInputsController typeAheadDigitalFactory(String digitalFactory) {
-        pageUtils.typeAheadInput(digitalFactoryDropdown, digitalFactory);
+        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory);
         return this;
     }
 

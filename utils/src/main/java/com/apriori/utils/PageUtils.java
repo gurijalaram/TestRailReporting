@@ -813,10 +813,10 @@ public class PageUtils {
      * @param value            - the value
      * @return current page object
      */
-    public void typeAheadInput(WebElement dropdownSelector, String value) {
+    public void typeAheadSelect(WebElement dropdownSelector, String value) {
         waitForElementAndClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
-        scrollWithJavaScript(driver.findElement(byValue), true).click();
+        waitForElementAndClick(byValue);
     }
 
     /**

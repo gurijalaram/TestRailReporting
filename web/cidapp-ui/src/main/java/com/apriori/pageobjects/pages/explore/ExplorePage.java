@@ -83,8 +83,8 @@ public class ExplorePage extends ExploreToolbar {
      * @param filter - the filter
      * @return current page object
      */
-    public ExplorePage inputFilter(String filter) {
-        pageUtils.typeAheadInput(filterDropdown, filter);
+    public ExplorePage selectFilter(String filter) {
+        pageUtils.typeAheadSelect(filterDropdown, filter);
         return this;
     }
 

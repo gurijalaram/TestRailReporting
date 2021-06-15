@@ -80,8 +80,8 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @param status - the status
      * @return current page object
      */
-    public InfoPage inputStatus(String status) {
-        pageUtils.typeAheadInput(statusDropdown, status);
+    public InfoPage selectStatus(String status) {
+        pageUtils.typeAheadSelect(statusDropdown, status);
         return this;
     }
 
@@ -92,7 +92,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage inputCostMaturity(String costMaturity) {
-        pageUtils.typeAheadInput(costMaturityDropdown, costMaturity);
+        pageUtils.typeAheadSelect(costMaturityDropdown, costMaturity);
         return this;
     }
 

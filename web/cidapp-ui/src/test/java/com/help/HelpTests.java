@@ -55,7 +55,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openInputDetails()
             .openHelp();
@@ -76,7 +76,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openHelp();
@@ -97,7 +97,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openHelp();
@@ -118,7 +118,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openHelp();
@@ -139,7 +139,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openCostDetails()
             .openHelp();
