@@ -18,11 +18,11 @@ import java.util.List;
 public class WorkflowPage {
     private static final Logger logger = LoggerFactory.getLogger(WorkflowPage.class);
 
-    @FindBy(css = "img[title='Users']")
+    @FindBy(css = "span[title='Users']")
     private WebElement userTab;
-    @FindBy(css = "img[title='Workflows']")
+    @FindBy(css = "span[title='Workflows']")
     private WebElement workflowTab;
-    @FindBy(css = "img[title='Connectors']")
+    @FindBy(css = "span[title='Connectors']")
     private WebElement connectorTab;
     @FindBy(css = "div[title='View History']")
     private WebElement historyTab;
