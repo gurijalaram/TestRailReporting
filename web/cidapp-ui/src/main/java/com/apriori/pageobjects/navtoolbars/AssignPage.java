@@ -51,7 +51,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return current page object
      */
     public AssignPage inputAssignee(String assignee) {
-        pageUtils.typeAheadInput(assigneeDropdown, assigneeInput, assignee);
+        pageUtils.typeAheadInput(assigneeDropdown, assignee);
         return this;
     }
 
