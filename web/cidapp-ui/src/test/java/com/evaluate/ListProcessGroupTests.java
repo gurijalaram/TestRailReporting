@@ -20,6 +20,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class ListProcessGroupTests extends TestBase {
 
@@ -49,7 +50,7 @@ public class ListProcessGroupTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
 
-        assertThat(evaluatePage.getListOfProcessGroups(), hasItems(ProcessGroupEnum.getNames()));
+        assertThat(evaluatePage.getListOfProcessGroups(), hasItems(Arrays.stream(ProcessGroupEnum.getNames()).filter(x -> !x.equals("Without PG") && !x.equals("Assembly")).toArray(String[]::new)));
     }
 
     @Ignore("Assemblies cannot be upload")
