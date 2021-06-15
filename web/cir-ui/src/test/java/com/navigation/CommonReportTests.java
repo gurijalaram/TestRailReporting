@@ -402,6 +402,7 @@ public class CommonReportTests extends TestBase {
         for (String assemblyName : assemblyNames) {
             assemblyCostReportPage.selectAssemblySetDropdown(assemblyName);
 
+            assemblyCostReportPage.waitForCorrectAssemblyPartNumber(assemblyName);
             assertThat(assemblyCostReportPage.getCurrentAssemblyPartNumber(), is(equalTo(assemblyName)));
         }
     }
