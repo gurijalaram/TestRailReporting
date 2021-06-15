@@ -460,7 +460,6 @@ public class PageUtils {
     }
 
     /**
-     *
      * @param element The element to check is clickable
      * @return True if the element is clickable
      */
@@ -822,12 +821,17 @@ public class PageUtils {
         dropdownInput.sendKeys(Keys.ENTER);
     }
 
-    public void typeAheadInput(WebElement dropdownSelector, WebElement dropdownInput, String value, Integer time) {
+    /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param value            - the value
+     * @return current page object
+     */
+    public void typeAheadInput(WebElement dropdownSelector, String value) {
         waitForElementAndClick(dropdownSelector);
-        dropdownInput.clear();
-        dropdownInput.sendKeys(value);
-        waitFor(time);
-        dropdownInput.sendKeys(Keys.ENTER);
+        By byValue = By.xpath(String.format("//div[normalize-space(text())='%s']", value));
+        waitForElementAndClick(byValue);
     }
 
     /**
@@ -842,7 +846,8 @@ public class PageUtils {
 
     /**
      * Drag and drop an element from source to target
-     *  @param byElementSource - element source
+     *
+     * @param byElementSource - element source
      * @param byElementTarget - element target
      */
     public void dragAndDrop(WebElement byElementSource, WebElement byElementTarget) {

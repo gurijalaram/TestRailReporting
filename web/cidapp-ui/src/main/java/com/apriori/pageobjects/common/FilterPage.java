@@ -235,7 +235,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
             valuesEntry(property, value, valueInput, Constants.INPUT_VALUES);
 
-            inputValuesEntry(property, value, valueDropdown, valueInput, Constants.TYPE_INPUT_VALUES);
+            inputValuesEntry(property, value, valueDropdown, Constants.TYPE_INPUT_VALUES);
 
             valuesEntry(property, value, valueInput, Constants.DATE_VALUES);
         }
@@ -248,10 +248,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param property      - the property
      * @param value         - the value
      * @param valueDropdown - the value dropdown
-     * @param valueInput    - the value input
      */
-    private void inputValuesEntry(String property, String value, WebElement valueDropdown, WebElement valueInput, List<String> valueList) {
-        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadInput(valueDropdown, valueInput, value));
+    private void inputValuesEntry(String property, String value, WebElement valueDropdown, List<String> valueList) {
+        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadInput(valueDropdown, value));
     }
 
     /**
