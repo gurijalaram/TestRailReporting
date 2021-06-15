@@ -79,7 +79,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
 
-        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
+        validateUpdatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).put();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
-        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
+        validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
     private static void deleteProcessGroupSiteVariableById(final String identity) {

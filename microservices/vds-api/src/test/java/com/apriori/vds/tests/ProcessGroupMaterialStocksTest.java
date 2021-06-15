@@ -34,7 +34,7 @@ public class ProcessGroupMaterialStocksTest extends VDSTestUtil {
         Assert.assertNotEquals("To get Material Stock, response should contain it.", 0, processGroupMaterialsStocks.size());
 
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, null)
+            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialStock.class)
                 .inlineVariables(Arrays.asList(
                     getDigitalFactoryIdentity(),
                     getAssociatedProcessGroupIdentity(),

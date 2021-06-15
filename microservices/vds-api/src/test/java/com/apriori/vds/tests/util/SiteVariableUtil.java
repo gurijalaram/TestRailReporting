@@ -17,16 +17,23 @@ public abstract class SiteVariableUtil extends VDSTestUtil {
     protected static final String updatedValue = "UpdatedValue";
     protected static final String updatedNotes = "UpdatedNotes";
 
-    protected static void validateUpdatedFields(SiteVariable updatedSiteVariable) {
-        assertNotEquals("The name should not be updated.", updatedName, updatedSiteVariable.getName());
-        assertEquals("The value should be updated.", updatedValue, updatedSiteVariable.getValue());
-        assertEquals("Notes should be updated.", updatedNotes, updatedSiteVariable.getNotes());
+    protected static void validateUpdatedObject(SiteVariable updatedSiteVariable) {
+        assertNotEquals("The name should not be updated", updatedName, updatedSiteVariable.getName());
+        assertEquals("The value should be updated", updatedValue, updatedSiteVariable.getValue());
+        assertEquals("Notes should be updated", updatedNotes, updatedSiteVariable.getNotes());
+    }
+
+    protected static void validateCreatedObject(SiteVariable updatedSiteVariable) {
+        assertEquals("The name should be created", updatedName, updatedSiteVariable.getName());
+        assertEquals("The value should be created", updatedValue, updatedSiteVariable.getValue());
+        assertEquals("Notes should be created", updatedNotes, updatedSiteVariable.getNotes());
     }
 
     protected SiteVariableRequest initUpdateRequestBody(final SiteVariable siteVariableInfo) {
         return SiteVariableRequest.builder()
             .name(updatedName)
             .value(updatedValue)
+            .type("DOUBLE")
             .notes(updatedNotes)
             .updatedBy(siteVariableInfo.getCreatedBy())
             .createdBy(siteVariableInfo.getCreatedBy())

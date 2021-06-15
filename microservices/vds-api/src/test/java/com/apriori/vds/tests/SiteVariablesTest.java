@@ -1,5 +1,6 @@
 package com.apriori.vds.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.utils.GenerateStringUtil;
@@ -76,7 +77,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
-        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
+        validateUpdatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
     @Test
@@ -91,7 +92,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).put();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
-        validateUpdatedFields(updatedSiteVariableResponse.getResponseEntity());
+        validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
     private static void deleteSiteVariableById(final String identity) {

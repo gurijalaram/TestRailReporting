@@ -7,7 +7,7 @@
   "properties": {
     "response": {
       "type": "object",
-      "$ref": "ProcessGroupMaterialStockResponse.json"
+      "$ref": "ProcessGroupMaterialStock.json"
     }
   }
 }
