@@ -5,7 +5,6 @@ import com.apriori.pageobjects.common.PrimaryInputsController;
 import com.apriori.pageobjects.common.SecondaryInputsController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
-import com.apriori.pageobjects.pages.compare.CompareExplorePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
@@ -506,9 +505,9 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public CompareExplorePage selectSourcePart() {
+    public SourceModelExplorePage selectSourcePart() {
         primaryInputsController.openSourceModelSelectorTable(sourceComponentPencil);
-        return new CompareExplorePage(driver);
+        return new SourceModelExplorePage(driver);
     }
 
     /**
