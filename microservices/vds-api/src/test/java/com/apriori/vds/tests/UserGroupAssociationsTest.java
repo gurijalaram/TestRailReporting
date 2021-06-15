@@ -71,6 +71,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     @Description("DELETE a UserGroupAssociation.")
     public void deleteSiteVariablesByIdentity() {
         deleteUserGroupAssociationById(this.postUserGroupAssociation().getIdentity());
+//        deleteUserGroupAssociationById("K0NCDA6413J2");
     }
 
     @Test
@@ -96,6 +97,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     private List<UserGroupAssociation> getUserGroupAssociationsResponse() {
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
             .inlineVariables(Collections.singletonList(getGroupIdentity()));
+//            .inlineVariables(Collections.singletonList("MDK300J15BIE"));
 
         ResponseWrapper<UserGroupAssociationsItems> userGroupAssociationsResponse = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, userGroupAssociationsResponse.getStatusCode());
@@ -104,15 +106,25 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     }
 
     private UserGroupAssociation postUserGroupAssociation() {
+//        UserGroupAssociation exampleOfUserGroupAssociation = getFirstUserGroupAssociation();
+//        deleteUserGroupAssociationById(exampleOfUserGroupAssociation.getIdentity());
+
+        List<UserGroupAssociation> userGroupAssociations = this.getUserGroupAssociationsResponse();
         UserGroupAssociation exampleOfUserGroupAssociation = getFirstUserGroupAssociation();
-        deleteUserGroupAssociationById(exampleOfUserGroupAssociation.getIdentity());
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
                 .inlineVariables(Collections.singletonList(getGroupIdentity()))
+//                .inlineVariables(Collections.singletonList("MDK300J15BIE"))
                 .body(UserGroupAssociationRequest.builder()
                     .customerIdentity(exampleOfUserGroupAssociation.getCustomerIdentity())
+//                    .customerIdentity("H337GKD0LA0M")
+//                    .customerIdentity("DF038C3C63CB")
+//                    .userIdentity("JLF7MA33C7JG")
+//                    .userIdentity("87A01AD4D90B")
                     .userIdentity(exampleOfUserGroupAssociation.getUserIdentity())
+//                    .createdBy("SYSTEM00000")
+//                    .createdBy("#ETL00000000")
                     .createdBy(exampleOfUserGroupAssociation.getCreatedBy())
                     .build()
                 );
@@ -126,7 +138,8 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     private static void deleteUserGroupAssociationById(final String ugaIdentity) {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
-                .inlineVariables(Arrays.asList(getGroupIdentity(), ugaIdentity));
+//                .inlineVariables(Arrays.asList(getGroupIdentity(), ugaIdentity));
+                .inlineVariables(Arrays.asList("MDK300J15BIE", ugaIdentity));
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
     }
 }
