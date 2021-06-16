@@ -1,7 +1,5 @@
 package com.apriori.bcs.tests;
 
-import static org.junit.Assert.fail;
-
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
@@ -40,14 +38,14 @@ public class ReportResourcesTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        batch = (Batch)BatchResources.createNewBatch();
+        batch = BatchResources.createNewBatch();
 
         NewPartRequest newPartRequest =
                 (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
                         FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
         newPartRequest.setFilename("bracket_form.prt");
 
-        part = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
+        part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
 
         int intervals = Constants.getPollingTimeout();
         int interval = 0;
@@ -79,8 +77,6 @@ public class ReportResourcesTest extends TestUtil {
 
         report  = ReportResources.createReport(newReportRequest);
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(ReportResourcesTest.class);
 
     @Test
     @Issue("AP-69406")
