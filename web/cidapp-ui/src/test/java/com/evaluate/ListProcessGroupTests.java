@@ -15,6 +15,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -33,6 +34,7 @@ public class ListProcessGroupTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1877")
     @TestRail(testCaseId = {"6197"})
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {

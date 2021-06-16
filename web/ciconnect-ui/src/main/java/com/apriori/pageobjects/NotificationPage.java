@@ -229,7 +229,7 @@ public class NotificationPage {
         }
 
         String selected = selectOption(Field.TEMPLATE, templateName);
-        //pageUtils.waitForElementAndClick(emailTemplateArrow);
+        pageUtils.waitForElementAndClick(emailTemplateArrow);
         return selected;
     }
 
@@ -251,8 +251,8 @@ public class NotificationPage {
                 type = "Constant";
         }
 
-        String selected = selectOption(Field.RECIPIENTSELECTFIELD, type);
         pageUtils.waitFor(5000);
+        String selected = selectOption(Field.RECIPIENTSELECTFIELD, type);
         pageUtils.waitForElementAndClick(emailRecipientgArrow);
         return selected;
     }
@@ -279,7 +279,6 @@ public class NotificationPage {
         }
 
         String selected = selectOption(Field.APRIORICOSTSELECTFIELD, costOption);
-        //pageUtils.waitForElementAndClick(aprioriCostArrow);
         return selected;
     }
 
@@ -302,8 +301,8 @@ public class NotificationPage {
         }
 
         pageUtils.waitForElementAndClick(costRoundingArrow);
+        pageUtils.waitForElementAndClick(costRoundingArrow);
         String selected = selectOption(Field.COSTROUNDINGSELECTFIELD, roundingOption);
-        //pageUtils.waitForElementAndClick(costRoundingArrow);
         return selected;
     }
 

@@ -21,8 +21,10 @@ public class ProcessGroup {
     private String description;
     private Boolean cidSupported;
     private Boolean assemblySupported;
-    private List<String> vpeNames;
+    private Boolean partSupported;
+    private Boolean secondaryProcessGroup;
     private String defaultVpeName;
+    private List<String> vpeNames;
     private String defaultVpeIdentity;
 
     @JsonSerialize(using = ToStringSerializer.class)

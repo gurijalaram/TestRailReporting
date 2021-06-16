@@ -17,8 +17,8 @@ public class LibraryPage extends ReportsPageHeader {
     @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
     private WebElement libraryPageTitle;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final PageUtils pageUtils;
+    private final WebDriver driver;
 
     public LibraryPage(WebDriver driver) {
         super(driver);
@@ -60,7 +60,7 @@ public class LibraryPage extends ReportsPageHeader {
     /**
      * Navigate to a particular report
      *
-     * @param reportName
+     * @param reportName String
      * @return new page object
      */
     public <T> T navigateToReport(String reportName, Class<T> className) {

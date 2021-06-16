@@ -13,9 +13,9 @@ pipeline {
     parameters {
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         choice(name: 'TARGET_MODULE', choices: ['cid-ui', 'apitests', 'ciconnect-ui', 'cas-ui', 'cir-ui', 'cia-ui', 'cidapp-ui'], description: 'What target module to run?')
-        choice(name: 'MODULE_PROP', choices: ['customer-smoke', 'cic-qa', 'cas-int', 'cas-qa', 'cid-int', 'cid-qa', 'cidapp-int', 'staging', 'cia-qa-21-1', 'cir-qa-21-1'], description: 'What is the module properties file?')
+        choice(name: 'TARGET_ENV', choices: ['qa-21-1', 'qa-20-1', 'int-core'], description: 'What is the target environment?')
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
-        string(name: 'OTHER_TEST', defaultValue:'test name', description: 'What is the test/tests.suite to execute')
+        string(name: 'OTHER_TEST', defaultValue: 'test name', description: 'What is the test/tests.suite to execute')
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
@@ -47,7 +47,7 @@ pipeline {
 
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
-                    javaOpts = javaOpts + " -Denv=${params.MODULE_PROP}"
+                    javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
                     url = params.TARGET_URL
                     if (url != "none") {
@@ -114,7 +114,7 @@ pipeline {
                         --name ${buildInfo.name}-build-${uuid} \
                         ${buildInfo.name}-build-${uuid}:latest
                      """
-                     }
+                }
 
                 echo "Testing.."
 
@@ -127,7 +127,7 @@ pipeline {
                 }
 
                 sh """
-                    sleep 10s
+                    sleep 5s
                     docker exec \
                         ${buildInfo.name}-build-${uuid} \
                         java \

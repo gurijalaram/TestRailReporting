@@ -121,7 +121,7 @@ public class RequestEntity {
     }
 
     public static RequestEntity unAuthorized() {
-        return new RequestEntity(new UserAuthenticationEntity(), null).setAutoLogin(false);
+        return new RequestEntity(new UserAuthenticationEntity(), null);
     }
 
     private List<Map<String, ?>> initFormUrlUserData() {

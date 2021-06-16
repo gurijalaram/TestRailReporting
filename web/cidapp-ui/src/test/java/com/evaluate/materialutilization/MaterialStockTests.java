@@ -4,8 +4,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.materialutilization.MaterialUtilizationPage;
-import com.apriori.pageobjects.pages.evaluate.materialutilization.StockPage;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.StockPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -25,12 +25,11 @@ import java.io.File;
 
 public class MaterialStockTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private StockPage stockPage;
     private MaterialUtilizationPage materialUtilizationPage;
-
     private File resourceFile;
-    UserCredentials currentUser;
 
     public MaterialStockTests() {
         super();
@@ -57,20 +56,22 @@ public class MaterialStockTests extends TestBase {
             .selectMaterial("F-0005")
             .submit()
             .costScenario()
-            .openMaterialUtilization();
+            .openMaterialProcess()
+            .openMaterialUtilizationTab();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("F-0005")));
-        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("1.1")));
+        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("1.10")));
 
         materialUtilizationPage.closePanel()
             .openMaterialSelectorTable()
             .selectMaterial("FN-0205")
             .submit()
             .costScenario()
-            .openMaterialUtilization();
+            .openMaterialProcess()
+            .openMaterialUtilizationTab();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("FN-0205")));
-        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("2.1")));
+        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("2.10")));
     }
 
     /*@Test
@@ -141,7 +142,7 @@ public class MaterialStockTests extends TestBase {
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario()
-            .openMaterialUtilization()
+            .openMaterialProcess()
             .goToStockTab();
 
         assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("ROUND_BAR")));
@@ -154,7 +155,7 @@ public class MaterialStockTests extends TestBase {
             .selectMaterial("Steel, Cold Worked, AISI 1010")
             .submit()
             .costScenario()
-            .openMaterialUtilization()
+            .openMaterialProcess()
             .goToStockTab();
 
         assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("3 in OD. 20 ft lengths")));

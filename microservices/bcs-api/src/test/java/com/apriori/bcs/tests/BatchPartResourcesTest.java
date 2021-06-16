@@ -47,7 +47,7 @@ public class BatchPartResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"4279"})
     @Description("API returns a list of Parts per Batch in the CIS DB")
     public void getBatchParts() {
-        BatchPartResources.getBatchParts();
+        BatchPartResources.getBatchParts(batch.getIdentity());
     }
 
     @Test

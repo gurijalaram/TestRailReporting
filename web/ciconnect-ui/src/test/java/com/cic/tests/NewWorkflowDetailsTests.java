@@ -51,6 +51,7 @@ public class NewWorkflowDetailsTests extends TestBase {
 
     @After
     public void cleanup() {
+        workflowPage.refreshPage();
         workflowNames.forEach(name -> {
             workflowPage.sortBy("Last Modified By")
                     .sortBy("Last Modified By");

@@ -119,6 +119,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     private GuidanceIssuesPage selectGcd(String gcd) {
         WebElement byGcd = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd))).findElement(By.cssSelector("[role='cell']")));
+        deSelectAllGcd();
         pageUtils.waitForElementAndClick(byGcd);
         return this;
     }
@@ -175,7 +176,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return current page object
      */
-    public GuidanceIssuesPage selectAll() {
+    public GuidanceIssuesPage selectAllGcd() {
         if (!getCheckboxStatus().contains("check")) {
             pageUtils.waitForElementAndClick(gcdCheckbox);
         }
@@ -187,7 +188,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return current page object
      */
-    public GuidanceIssuesPage deSelectAll() {
+    public GuidanceIssuesPage deSelectAllGcd() {
         if (!getCheckboxStatus().equals("square")) {
             pageUtils.waitForElementAndClick(gcdCheckbox);
         }

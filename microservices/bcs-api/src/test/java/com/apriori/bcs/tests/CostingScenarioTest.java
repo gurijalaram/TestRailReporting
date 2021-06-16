@@ -9,13 +9,14 @@ import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.request.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
-import com.apriori.bcs.utils.CisUtils;
+import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class CostingScenarioTest extends TestUtil {
     private static final Logger logger = LoggerFactory.getLogger(CostingScenarioTest.class);
     private static Boolean exitTest = false;
 
+    @Issue("AP-70043")
     @Test
     @TestRail(testCaseId = {"4278", "4177"})
     @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
@@ -65,7 +67,7 @@ public class CostingScenarioTest extends TestUtil {
             isPartComplete = pollState(partDetails, Part.class);
 
             if (exitTest) {
-                String errors = CisUtils.getErrors(batchPart, Part.class);
+                String errors = BcsUtils.getErrors(batchPart, Part.class);
                 logger.error(errors);
                 fail("Part was in state 'ERRORED'");
                 return;
@@ -112,7 +114,7 @@ public class CostingScenarioTest extends TestUtil {
     private Boolean pollState(Object obj, Class klass) {
         String state = "";
         try {
-            state = CisUtils.getState(obj, klass);
+            state = BcsUtils.getState(obj, klass);
             if (state.equalsIgnoreCase("ERRORED")) {
                 exitTest = true;
                 return true;
