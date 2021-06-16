@@ -4,6 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -50,11 +51,13 @@ public class ProcessGroupMaterial {
     private Double hardness;
     private Double heatOfFusion;
     private Double hexBarCostPerUnit;
-    private Double iBeamCostPerUnit;
+    @JsonProperty("iBeamCostPerUnit")
+    private Double beamCostPerUnitI;
     private Double injectionPressureMax;
     private Double injectionPressureMin;
     private Double injectionTemperature;
-    private Double k;
+    @JsonProperty("k")
+    private Double valueK;
     private Double liquidusTemperature;
     private Double lowerFormingTemperature;
     private Double lubricantPercentContent;
@@ -71,12 +74,14 @@ public class ProcessGroupMaterial {
     private Double minGreenDensity;
     private Double minWallThickness;
     private Double moldTemperature;
-    private Double n;
+    @JsonProperty("n")
+    private Double valueN;
     private Double normalFormingTemperature;
     private Double plateCostPerUnit;
     private Double possionRatio;
     private Double pourTemperature;
-    private Double r;
+    @JsonProperty("r")
+    private Double valueR;
     private Double rectangularBarCostPerUnit;
     private Double rectangularTubeCostPerUnit;
     private Double recyclePercentage;
@@ -95,7 +100,8 @@ public class ProcessGroupMaterial {
     private Double squareTubeCostPerUnit;
     private Double strainRateSensitivity;
     private Double strengthCoefficient;
-    private Double tBeamCostPerUnit;
+    @JsonProperty("tBeamCostPerUnit")
+    private Double beamCostPerUnitT;
     private Double tappedDensity;
     private Double tensileYieldStrength;
     private Double thermalConductivity;
@@ -117,7 +123,8 @@ public class ProcessGroupMaterial {
     private String canBlowMold;
     private String canDieCast;
     private String canHLU;
-    private String canIM_SFM;
+    @JsonProperty("canIM_SFM")
+    private String canIMSFM;
     private String canPermanentMold;
     private String canRIM;
     private String canRotationalMold;
@@ -131,7 +138,8 @@ public class ProcessGroupMaterial {
     private String description;
     private String hardnessSystem;
     private String hexBarCostUnits;
-    private String iBeamCostUnits;
+    @JsonProperty("iBeamCostUnits")
+    private String beamCostUnitsI;
     private String identity;
     private String manufacturer;
     private String materialForm;
@@ -147,7 +155,8 @@ public class ProcessGroupMaterial {
     private String sheetCostUnits;
     private String squareBarCostUnits;
     private String squareTubeCostUnits;
-    private String tBeamCostUnits;
+    @JsonProperty("tBeamCostUnits")
+    private String beamCostUnitsT;
     private String updatedBy;
 
     @JsonSerialize(using = ToStringSerializer.class)
