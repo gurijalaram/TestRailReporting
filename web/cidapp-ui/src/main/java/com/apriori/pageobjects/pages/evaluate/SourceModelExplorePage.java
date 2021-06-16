@@ -7,6 +7,8 @@ import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.utils.PageUtils;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,8 +16,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import utils.ColumnsEnum;
-import utils.SortOrderEnum;
 
 /**
  * @author cfrith
@@ -77,8 +77,8 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      * @param filter - the filter
      * @return current page object
      */
-    public SourceModelExplorePage inputFilter(String filter) {
-        pageUtils.typeAheadInput(filterDropdown, filterInput, filter);
+    public SourceModelExplorePage selectFilter(String filter) {
+        pageUtils.typeAheadInput(filterDropdown, filter);
         return this;
     }
 

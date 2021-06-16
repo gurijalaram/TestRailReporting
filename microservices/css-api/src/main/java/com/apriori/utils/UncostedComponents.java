@@ -1,6 +1,5 @@
 package com.apriori.utils;
 
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -12,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -42,13 +40,11 @@ public class UncostedComponents {
      */
     public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, String verifiedState) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
-            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
-            .token(new JwtTokenUtil().retrieveJwtToken());
+            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName);
 
         int currentCount = 0;
         int attemptsCount = 60;
         int secondsToWait = 2;
-
 
         try {
 
