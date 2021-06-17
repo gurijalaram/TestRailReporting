@@ -275,7 +275,7 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 
-        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo("0.02")));
-        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo("0.06")));
+        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo(0.02)));
+        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo(0.06)));
     }
 }
