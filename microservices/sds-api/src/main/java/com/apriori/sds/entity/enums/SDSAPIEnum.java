@@ -22,7 +22,7 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
 
 
     // SCENARIO ASSOCIATIONS
-    GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/associations/occurrences=1"),
+    GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/associations"),
     GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS("components/%s/scenarios/%s/associations/%s"),
     POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/associations"),
     DELETE_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS("components/%s/scenarios/%s/associations/%s"),

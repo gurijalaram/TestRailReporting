@@ -14,12 +14,6 @@ public class RequestEntityUtil {
         return token = tokenForRequests;
     }
 
-    public static RequestEntity initWithApUserContext(EndpointEnum endpoint, Class<?> returnType) {
-        return initBuilder(endpoint, returnType)
-            .header("ap-user-context", CommonConstants.getApUserContext())
-            .build();
-    }
-
     public static RequestEntity.RequestEntityBuilder initBuilder(EndpointEnum endpoint, Class<?> returnType) {
         return RequestEntity.builder()
             .endpoint(endpoint)

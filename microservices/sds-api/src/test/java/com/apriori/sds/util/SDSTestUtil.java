@@ -1,4 +1,4 @@
-package util;
+package com.apriori.sds.util;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,7 +15,6 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
@@ -81,7 +80,7 @@ public class SDSTestUtil extends TestUtil {
      */
     protected static void removeTestingComponent(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
             .inlineVariables(componentId, scenarioId);
 
         ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
@@ -95,7 +94,7 @@ public class SDSTestUtil extends TestUtil {
      * @return
      */
     protected static Item getTestingComponent() {
-        if(testingComponent == null) {
+        if (testingComponent == null) {
             testingComponent = postTestingComponent();
         }
 
@@ -111,7 +110,7 @@ public class SDSTestUtil extends TestUtil {
      */
     protected static Item postComponent(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .body("component", PostComponentRequest.builder().filename(componentName)
                     .scenarioName(scenarioName)
                     .override(false)

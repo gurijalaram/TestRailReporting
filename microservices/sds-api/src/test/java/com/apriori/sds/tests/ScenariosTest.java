@@ -8,16 +8,16 @@ import com.apriori.sds.entity.response.ScenarioHoopsImage;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.entity.response.ScenarioManifest;
 import com.apriori.sds.entity.response.ScenarioSecondaryProcess;
+import com.apriori.sds.util.SDSRequestEntityUtil;
+import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
-import util.SDSTestUtil;
 
 public class ScenariosTest extends SDSTestUtil {
 
@@ -26,7 +26,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Find scenarios for a given component matching a specified query.")
     public void getScenarios() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
                 .inlineVariables(
                     getComponentId()
                 );
@@ -41,7 +41,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Get the current representation of a scenario.")
     public void getScenarioByIdentity() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -55,7 +55,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Get production defaults for a scenario.")
     public void getCostingDefaults() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS, ScenarioCostingDefaultsResponse.class)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS, ScenarioCostingDefaultsResponse.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -69,7 +69,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getHoopsImage() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -83,7 +83,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Returns the manifest for a scenario if the component type is a container.")
     public void getManifest() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -97,7 +97,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Get the available secondary processes for a scenario.")
     public void getSecondaryProcesses() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SECONDARY_PROCESSES_BY_COMPONENT_SCENARIO_IDS, ScenarioSecondaryProcess.class)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SECONDARY_PROCESSES_BY_COMPONENT_SCENARIO_IDS, ScenarioSecondaryProcess.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );

@@ -6,22 +6,21 @@ import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.AssociationRequest;
 import com.apriori.sds.entity.response.CostingTemplate;
+import com.apriori.sds.util.SDSRequestEntityUtil;
+import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import util.SDSTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,29 +30,9 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     private static Item testingAssembly;
     private static List<String> assemblyIdToDelete = new ArrayList<>();
 
-    @BeforeClass
-    public static void init() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "Piston_assembly.stp";
-
-        testingAssembly = postComponent(componentName, scenarioName, ProcessGroupEnum.ASSEMBLY);
-    }
-
     @AfterClass
     public static void clearTestingData() {
-        assemblyIdToDelete.forEach(id -> removeTestingAssociation(id));
-    }
-
-    private static void removeTestingAssociation(String associationIdentity) {
-        final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
-                .inlineVariables(testingAssembly.getComponentIdentity(), testingAssembly.getScenarioIdentity(),
-                    associationIdentity);
-
-        ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
-
-        assertEquals(String.format("The association %s, was not removed", associationIdentity),
-            HttpStatus.SC_NO_CONTENT, response.getStatusCode());
+        assemblyIdToDelete.forEach(ScenarioAssociationsTest::removeTestingAssociation);
     }
 
     @Test
@@ -71,7 +50,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     @Description("Get the current representation of a scenario assocation.")
     public void getAssociationsByIdentity() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
                 .inlineVariables(
                     getComponentId(), getScenarioId(), getFirstAssociation().getIdentity()
                 );
@@ -88,11 +67,11 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     // TODO z: finish it
     @Test
     public void patchScenarioAssociation() {
-        RequestEntity request = RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, null)
-            .inlineVariables(testingAssembly.getComponentIdentity(), testingAssembly.getScenarioIdentity())
+        RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, null)
+            .inlineVariables(testingAssembly.getComponentIdentity(), getTestingAssembly().getScenarioIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
                 .occurrences(1)
-                .createdBy(testingAssembly.getComponentCreatedBy())
+                .createdBy(getTestingAssembly().getComponentCreatedBy())
                 .build());
 
         ResponseWrapper<Void> response = HTTP2Request.build(request).post();
@@ -107,11 +86,11 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
 
     private Void postAssociation() {
-        RequestEntity request = RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, null)
-            .inlineVariables(testingAssembly.getComponentIdentity(), testingAssembly.getScenarioIdentity())
+        RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, null)
+            .inlineVariables(getTestingAssembly().getComponentIdentity(), getTestingAssembly().getScenarioIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
                 .occurrences(1)
-                .createdBy(testingAssembly.getComponentCreatedBy())
+                .createdBy(getTestingAssembly().getComponentCreatedBy())
                 .build());
 
         ResponseWrapper<Void> response = HTTP2Request.build(request).post();
@@ -129,11 +108,33 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
     private ResponseWrapper<Void> getAssociations() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, null)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, null)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
 
         return HTTP2Request.build(requestEntity).get();
+    }
+
+    private static void removeTestingAssociation(String associationIdentity) {
+        final RequestEntity requestEntity =
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
+                .inlineVariables(getTestingAssembly().getComponentIdentity(), getTestingAssembly().getScenarioIdentity(),
+                    associationIdentity);
+
+        ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
+
+        assertEquals(String.format("The association %s, was not removed", associationIdentity),
+            HttpStatus.SC_NO_CONTENT, response.getStatusCode());
+    }
+
+    public static Item getTestingAssembly() {
+        if (testingAssembly != null) {
+            return testingAssembly;
+        }
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "Piston_assembly.stp";
+        return testingAssembly = postComponent(componentName, scenarioName, ProcessGroupEnum.ASSEMBLY);
     }
 }
