@@ -13,16 +13,42 @@ import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ProcessGroupsTest extends VDSTestUtil {
+    private static final List<String> cidSupportedPgNames = Arrays.asList("2-Model Machining", "Additive Manufacturing", "Assembly", "Bar & Tube Fab", "Casting", "Casting - Die", "Casting - Sand");
+    private static final List<String> cidNotSupportedPgNames = Arrays.asList("Assembly Molding", "Assembly Plastic Molding", "Casting - Investment");
 
     @Test
     @TestRail(testCaseId = {"8271"})
     @Description("Get a list of process groups for a specific customer.")
     public void getProcessGroups() {
-        getProcessGroupsResponse();
+        List<ProcessGroup> processGroups = getProcessGroupsResponse();
+
+        final String failedProcessGroups = this.validateProcessGroups(processGroups);
+
+        Assert.assertTrue("Process groups are not appropriate to supported types : " + failedProcessGroups,
+            failedProcessGroups.isEmpty()
+        );
     }
+
+    private String validateProcessGroups(List<ProcessGroup> processGroups) {
+        StringBuilder failedPGs = new StringBuilder();
+
+        processGroups.forEach(processGroup -> {
+            if (processGroup.getCidSupported() && !cidSupportedPgNames.contains(processGroup.getName())) {
+                failedPGs.append(String.format("Should be supported: %s | ", processGroup.getName()));
+            }
+
+            if (!processGroup.getCidSupported() && !cidNotSupportedPgNames.contains(processGroup.getName())) {
+                failedPGs.append(String.format("Should NOT be supported: %s | ", processGroup.getName()));
+            }
+        });
+
+        return failedPGs.toString();
+    }
+
 
     @Test
     @TestRail(testCaseId = {"8272"})

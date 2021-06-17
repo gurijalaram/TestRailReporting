@@ -12,6 +12,7 @@ import com.apriori.vds.tests.ProcessGroupMaterialsTest;
 import com.apriori.vds.tests.ProcessGroupSiteVariablesTest;
 import com.apriori.vds.tests.ProcessGroupsTest;
 import com.apriori.vds.tests.SiteVariablesTest;
+import com.apriori.vds.tests.UserGroupAssociationsTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -28,7 +29,8 @@ import org.junit.runners.Suite;
     ProcessGroupMaterialStocksTest.class,
     ProcessGroupsTest.class,
     ProcessGroupSiteVariablesTest.class,
-    SiteVariablesTest.class
+    SiteVariablesTest.class,
+    UserGroupAssociationsTest.class
 })
 public class APISuite {
 }
