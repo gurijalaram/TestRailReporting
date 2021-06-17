@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -26,6 +25,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class SDSTestUtil extends TestUtil {
 
@@ -140,9 +140,9 @@ public class SDSTestUtil extends TestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        ResponseWrapper<CssComponentResponse> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
 
-        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
-        return itemResponse.getResponseEntity().getItems().get(0);
+        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse);
+        return itemResponse.get(0);
     }
 }

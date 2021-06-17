@@ -2,6 +2,7 @@ package com.apriori.utils;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
+import com.apriori.css.entity.response.Item;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
@@ -11,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -27,7 +30,7 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public ResponseWrapper<CssComponentResponse> getUnCostedCssComponent(String componentName, String scenarioName) {
+    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
         return getCssComponent(componentName, scenarioName, "NOT_COSTED");
     }
 
@@ -38,7 +41,7 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, String verifiedState) {
+    public List<Item> getCssComponent(String componentName, String scenarioName, String verifiedState) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName);
 
@@ -58,7 +61,10 @@ public class UncostedComponents {
 
                 if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()
                     && scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
-                    return scenarioRepresentation;
+
+                    Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
+                    return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
                 }
 
             } while (currentCount++ <= attemptsCount);
