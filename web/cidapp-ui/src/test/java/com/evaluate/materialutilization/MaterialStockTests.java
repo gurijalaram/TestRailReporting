@@ -50,8 +50,8 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         materialUtilizationPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -135,8 +135,8 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         stockPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -149,7 +149,7 @@ public class MaterialStockTests extends TestBase {
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("Yes")));
 
         stockPage.closePanel()
-            .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Cold Worked, AISI 1010")

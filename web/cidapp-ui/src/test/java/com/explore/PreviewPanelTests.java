@@ -45,7 +45,7 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS,10")
             .selectMaterial("ABS, 10% Glass")
@@ -73,14 +73,14 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
             .submit()
             .costScenario()
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .highlightScenario("225_gasket-1-solid1", testScenarioName)
             .previewPanel();
 

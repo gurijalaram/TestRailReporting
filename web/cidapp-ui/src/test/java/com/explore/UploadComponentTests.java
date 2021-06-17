@@ -39,7 +39,7 @@ public class UploadComponentTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, resourceFile, ExplorePage.class)
-            .inputFilter("Recent");
+            .selectFilter("Recent");
 
         assertThat(explorePage.getListOfScenarios("CASTING", scenarioName), is(equalTo(1)));
     }

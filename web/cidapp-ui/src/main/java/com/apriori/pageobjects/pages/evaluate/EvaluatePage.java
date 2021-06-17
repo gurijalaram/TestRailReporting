@@ -174,17 +174,6 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Inputs the pg
-     *
-     * @param processGroup - the process group
-     * @return current page object
-     */
-    public EvaluatePage inputProcessGroup(String processGroup) {
-        primaryInputsController.typeAheadProcessGroup(processGroupInput, processGroup);
-        return this;
-    }
-
-    /**
      * Selects the vpe dropdown
      *
      * @param digitalFactory - the vpe
@@ -192,17 +181,6 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public EvaluatePage selectDigitalFactory(String digitalFactory) {
         primaryInputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
-        return this;
-    }
-
-    /**
-     * Inputs the vpe dropdown
-     *
-     * @param digitalFactory - the vpe
-     * @return current page object
-     */
-    public EvaluatePage inputDigitalFactory(String digitalFactory) {
-        primaryInputsController.typeAheadDigitalFactory(digitalFactoryInput, digitalFactory);
         return this;
     }
 

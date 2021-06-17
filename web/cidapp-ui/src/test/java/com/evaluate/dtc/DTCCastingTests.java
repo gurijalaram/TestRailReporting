@@ -138,7 +138,7 @@ public class DTCCastingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:6");
@@ -260,6 +260,11 @@ public class DTCCastingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit()
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openDesignGuidance()

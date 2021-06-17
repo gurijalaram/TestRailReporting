@@ -147,7 +147,7 @@ public class LoginTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -157,7 +157,7 @@ public class LoginTests extends TestBase {
             .publish(EvaluatePage.class)
             .logout()
             .login(UserUtil.getUser())
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .openScenario("225_gasket-1-solid1", scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
