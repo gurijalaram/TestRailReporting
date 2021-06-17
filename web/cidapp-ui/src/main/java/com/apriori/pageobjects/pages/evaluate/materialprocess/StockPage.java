@@ -18,11 +18,8 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(StockPage.class);
 
-    @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
-    private WebElement panelDetails;
-
-    @FindBy(xpath = "//button[.='Stock']")
-    private WebElement stockPanel;
+    @FindBy(xpath = "//div[.='Dimensions']")
+    private WebElement panelHeading;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -44,7 +41,7 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(panelDetails);
+        pageUtils.waitForElementAppear(panelHeading);
     }
 
     /**
