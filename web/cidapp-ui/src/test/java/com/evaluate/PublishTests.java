@@ -52,7 +52,7 @@ public class PublishTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -61,7 +61,7 @@ public class PublishTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent");
+            .selectFilter("Recent");
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
     }
@@ -83,16 +83,16 @@ public class PublishTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario()
             .publishScenario()
-            .inputStatus("Analysis")
-            .inputCostMaturity("Low")
-            .inputAssignee("Abe")
+            .selectStatus("Analysis")
+            .selectCostMaturity("Low")
+            .selectAssignee("Abe")
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()

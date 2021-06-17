@@ -80,8 +80,8 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
      * @param filter - the filter
      * @return current page object
      */
-    public CompareExplorePage inputFilter(String filter) {
-        pageUtils.typeAheadInput(filterDropdown, filterInput, filter);
+    public CompareExplorePage selectFilter(String filter) {
+        pageUtils.typeAheadSelect(filterDropdown, filter);
         return this;
     }
 
