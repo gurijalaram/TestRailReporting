@@ -10,13 +10,13 @@ import com.apriori.sds.entity.response.ScenarioHoopsImage;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.entity.response.ScenarioManifest;
 import com.apriori.sds.entity.response.ScenarioSecondaryProcess;
+import com.apriori.sds.tests.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
-import util.SDSTestUtil;
 
 public class ScenariosTest extends SDSTestUtil {
 

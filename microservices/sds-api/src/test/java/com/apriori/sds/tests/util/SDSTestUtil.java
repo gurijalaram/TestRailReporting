@@ -1,4 +1,4 @@
-package util;
+package com.apriori.sds.tests.util;
 
 import static org.junit.Assert.assertEquals;
 
