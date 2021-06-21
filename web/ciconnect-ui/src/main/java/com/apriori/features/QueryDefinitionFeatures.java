@@ -5,8 +5,6 @@ import com.apriori.pageobjects.WorkflowPage;
 
 import org.openqa.selenium.WebDriver;
 
-import utils.Constants;
-
 import java.util.HashMap;
 import java.util.Map;
 
