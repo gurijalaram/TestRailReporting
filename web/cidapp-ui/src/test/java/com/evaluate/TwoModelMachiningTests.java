@@ -115,8 +115,8 @@ public class TwoModelMachiningTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon(EvaluateDfmIconEnum.MEDIUM), is(true));
-        assertThat(evaluatePage.isDfmRisk(EvaluateDfmIconEnum.MEDIUM), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
@@ -250,8 +250,8 @@ public class TwoModelMachiningTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon(EvaluateDfmIconEnum.LOW), is(true));
-        assertThat(evaluatePage.isDfmRisk(EvaluateDfmIconEnum.LOW), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(source2PartName, source2ScenarioName, twoModelFile, currentUser)

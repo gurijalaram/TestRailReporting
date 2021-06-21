@@ -2,11 +2,11 @@ package utils;
 
 public enum EvaluateDfmIconEnum {
 
-    CRITICAL("var(--red-light)"),
-    HIGH("var(--yellow-light)"),
-    MEDIUM("var(--cyan-light)"),
-    LOW("var(--green-light)"),
-    UNKNOWN("var(--gray-500)");
+    CRITICAL("var(--red)"),
+    HIGH("var(--yellow)"),
+    MEDIUM("var(--cyan)"),
+    LOW("var(--green)"),
+    UNKNOWN("var(--gray)");
 
     private final String icon;
 

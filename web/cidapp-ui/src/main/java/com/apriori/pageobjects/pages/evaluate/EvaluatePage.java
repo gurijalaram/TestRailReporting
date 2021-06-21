@@ -20,7 +20,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.EvaluateDfmIconEnum;
 
 import java.util.Arrays;
 import java.util.List;
@@ -432,20 +431,19 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return true/false
      */
-    public boolean isDfmRisk(EvaluateDfmIconEnum riskFactor) {
-        By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor.getIcon()));
-        return pageUtils.waitForElementToAppear(risk).isDisplayed();
+    public String getDfmRisk() {
+        By risk = By.cssSelector(".design-guidance span[style]");
+        return pageUtils.waitForElementToAppear(risk).getAttribute("textContent");
     }
 
     /**
      * Checks the dfm risk icon
      *
-     * @param riskFactor - risk
      * @return boolean
      */
-    public boolean isDfmRiskIcon(EvaluateDfmIconEnum riskFactor) {
-        By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", riskFactor.getIcon()));
-        return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
+    public String getDfmRiskIcon() {
+        By riskIcon = By.cssSelector(".design-guidance span svg circle");
+        return pageUtils.waitForElementToAppear(riskIcon).getAttribute("stroke");
     }
 
     /**
