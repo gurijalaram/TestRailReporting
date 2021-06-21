@@ -2,6 +2,9 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import com.utils.ColumnsEnum;
+import com.utils.Constants;
+import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -12,9 +15,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.ColumnsEnum;
-import utils.Constants;
-import utils.SortOrderEnum;
 
 import java.util.Arrays;
 import java.util.Collection;

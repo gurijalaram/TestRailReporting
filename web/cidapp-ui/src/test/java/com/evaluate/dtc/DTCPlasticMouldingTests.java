@@ -50,7 +50,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -123,7 +123,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -148,7 +148,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -216,7 +216,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -276,7 +276,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()

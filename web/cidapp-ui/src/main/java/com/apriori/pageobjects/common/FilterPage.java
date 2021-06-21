@@ -2,6 +2,7 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +11,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.Constants;
 
 import java.util.List;
 
@@ -67,8 +67,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param filter - the filter
      * @return current page object
      */
-    public FilterPage inputFilter(String filter) {
-        pageUtils.typeAheadInput(filterDropDown, filterInput, filter);
+    public FilterPage selectFilter(String filter) {
+        pageUtils.typeAheadSelect(filterDropDown, filter);
         return this;
     }
 
@@ -199,8 +199,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     private FilterPage inputProperty(String property) {
         WebElement propertyDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index)));
-        WebElement propertyInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject'] input", index)));
-        pageUtils.typeAheadInput(propertyDropdown, propertyInput, property);
+        pageUtils.typeAheadSelect(propertyDropdown, property);
         return this;
     }
 
@@ -212,8 +211,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     private FilterPage inputOperation(String operation) {
         WebElement operationDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index)));
-        WebElement operationInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation'] input", index)));
-        pageUtils.typeAheadInput(operationDropdown, operationInput, operation);
+        pageUtils.typeAheadSelect(operationDropdown, operation);
         return this;
     }
 
@@ -250,7 +248,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param valueDropdown - the value dropdown
      */
     private void inputValuesEntry(String property, String value, WebElement valueDropdown, List<String> valueList) {
-        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadInput(valueDropdown, value));
+        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadSelect(valueDropdown, value));
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.cidapp.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;

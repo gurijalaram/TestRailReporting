@@ -79,7 +79,7 @@ public class NewScenarioNameTests extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
-        evaluatePage.inputProcessGroup(processGroupEnum.getProcessGroup())
+        evaluatePage.selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -87,7 +87,7 @@ public class NewScenarioNameTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .highlightScenario("partbody_2", testScenarioName)
             .createScenario()
             .enterScenarioName(testNewScenarioName)
@@ -115,7 +115,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioA, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -124,7 +124,7 @@ public class NewScenarioNameTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .uploadComponentAndOpen(componentName, scenarioB, resourceFile, currentUser)
-            .inputProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -133,7 +133,7 @@ public class NewScenarioNameTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .uploadComponentAndOpen(componentName, scenarioC, resourceFile, currentUser)
-            .inputProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()

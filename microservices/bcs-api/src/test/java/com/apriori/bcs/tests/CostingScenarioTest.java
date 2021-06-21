@@ -16,6 +16,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class CostingScenarioTest extends TestUtil {
     private static final Logger logger = LoggerFactory.getLogger(CostingScenarioTest.class);
     private static Boolean exitTest = false;
 
+    @Issue("AP-70043")
     @Test
     @TestRail(testCaseId = {"4278", "4177"})
     @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +

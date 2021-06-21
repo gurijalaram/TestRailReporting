@@ -66,7 +66,7 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -113,7 +113,7 @@ public class SheetMetalDTCTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -145,7 +145,7 @@ public class SheetMetalDTCTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -187,7 +187,7 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -266,7 +266,7 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -275,7 +275,7 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 
-        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo("0.02")));
-        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo("0.06")));
+        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo(0.02)));
+        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo(0.06)));
     }
 }

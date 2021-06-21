@@ -50,7 +50,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -75,7 +75,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -101,7 +101,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -127,7 +127,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -153,7 +153,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -178,7 +178,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -204,7 +204,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -230,7 +230,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -257,7 +257,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -283,7 +283,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -309,7 +309,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -335,7 +335,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -361,7 +361,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -387,7 +387,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -413,7 +413,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -439,7 +439,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -465,7 +465,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -491,7 +491,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -517,7 +517,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Polyethylene, High Density (HDPE)")
             .submit()
@@ -542,7 +542,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -568,7 +568,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -597,7 +597,7 @@ public class ProcessGroupsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")

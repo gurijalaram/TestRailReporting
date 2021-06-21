@@ -82,6 +82,9 @@
                   "componentUpdatedAt": {
                     "type": "string"
                   },
+                  "componentUpdatedBy": {
+                    "type": "string"
+                  },
                   "scenarioIdentity": {
                     "type": "string"
                   },
@@ -110,6 +113,9 @@
                     "type": "boolean"
                   },
                   "scenarioPublished": {
+                    "type": "boolean"
+                  },
+                  "scenarioSystemLocked": {
                     "type": "boolean"
                   },
                   "scenarioCreatedAt": {
@@ -219,6 +225,12 @@
                     "type": "object",
                     "properties": {
                       "identity": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "createdBy": {
                         "type": "string"
                       },
                       "image": {
