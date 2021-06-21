@@ -105,7 +105,6 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return size of the element as int
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
-        pageUtils.waitForElementToAppear(getByScenario(componentName, scenarioName));
         return driver.findElements(getByScenario(componentName, scenarioName)).size();
     }
 

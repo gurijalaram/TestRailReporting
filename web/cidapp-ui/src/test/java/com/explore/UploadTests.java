@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -44,14 +45,17 @@ public class UploadTests extends TestBase {
     @TestRail(testCaseId = {"5423"})
     @Description("Nothing uploaded or translated if user select a file but then cancels the new component dialog")
     public void cancelUpload() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("Piston_assembly.stp");
-        String testComponentName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "Piston_assembly";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndCancel(testComponentName, resourceFile, ExplorePage.class);
+            .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
+            .clickSearch(componentName);
 
-        assertThat(explorePage.getListOfScenarios(testComponentName, "Piston_assembly"), is(equalTo(0)));
+        assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(equalTo(0)));
     }
 }
