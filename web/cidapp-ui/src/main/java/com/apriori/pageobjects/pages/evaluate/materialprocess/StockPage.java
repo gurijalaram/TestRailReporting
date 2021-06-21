@@ -18,6 +18,9 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(StockPage.class);
 
+    @FindBy(css = ".tab.active [data-icon='clone']")
+    private WebElement stockTabActive;
+
     @FindBy(xpath = "//div[.='Dimensions']")
     private WebElement panelHeading;
 
@@ -41,6 +44,7 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(stockTabActive);
         pageUtils.waitForElementAppear(panelHeading);
     }
 
