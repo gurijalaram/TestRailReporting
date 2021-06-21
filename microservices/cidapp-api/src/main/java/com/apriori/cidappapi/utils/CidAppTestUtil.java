@@ -9,7 +9,6 @@ import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.CostResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
-import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
@@ -28,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CidAppTestUtil {
@@ -73,10 +73,9 @@ public class CidAppTestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        ResponseWrapper<CssComponentResponse> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
 
-        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
-        return itemResponse.getResponseEntity().getItems().get(0);
+        return itemResponse.get(0);
     }
 
     /**
@@ -99,10 +98,9 @@ public class CidAppTestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        ResponseWrapper<CssComponentResponse> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
 
-        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse.getStatusCode());
-        return itemResponse.getResponseEntity().getItems().get(0);
+        return itemResponse.get(0);
     }
 
     /**
