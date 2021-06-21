@@ -22,6 +22,9 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     private static final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
+    @FindBy(css = ".tab.active [data-icon='box']")
+    private WebElement materialTabActive;
+
     @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
     private WebElement panelDetails;
 
@@ -45,6 +48,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(materialTabActive);
         pageUtils.waitForElementAppear(panelDetails);
     }
 
