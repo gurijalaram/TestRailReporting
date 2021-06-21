@@ -106,7 +106,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
-        getWebElementScenario(componentName, scenarioName).click();
+        pageUtils.waitForElementAndClick(getWebElementScenario(componentName, scenarioName));
         return this;
     }
 
