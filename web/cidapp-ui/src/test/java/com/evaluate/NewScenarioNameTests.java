@@ -142,8 +142,8 @@ public class NewScenarioNameTests extends TestBase {
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()
-            .inputName(filterName)
             .saveAs()
+            .inputName(filterName)
             .addCriteriaWithOption("Component Name", "Contains", "MultiUpload")
             .submit(ExplorePage.class);
 

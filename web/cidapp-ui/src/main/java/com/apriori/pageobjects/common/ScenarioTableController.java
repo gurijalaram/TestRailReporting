@@ -3,7 +3,6 @@ package com.apriori.pageobjects.common;
 import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
-import com.utils.Constants;
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -82,18 +81,6 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     private ScenarioTableController moveToScenario(String componentName, String scenarioName) {
         pageUtils.scrollWithJavaScript(getWebElementScenario(componentName, scenarioName), true);
         pageUtils.mouseMove(getWebElementScenario(componentName, scenarioName));
-        return this;
-    }
-
-    /**
-     * Navigates to the scenario via url
-     *
-     * @param componentId - component id
-     * @param scenarioId  - scenario id
-     * @return a new page object
-     */
-    public ScenarioTableController navigateToScenario(String componentId, String scenarioId) {
-        driver.navigate().to(Constants.getDefaultUrl().concat(String.format("components/%s/scenarios/%s", componentId, scenarioId)));
         return this;
     }
 

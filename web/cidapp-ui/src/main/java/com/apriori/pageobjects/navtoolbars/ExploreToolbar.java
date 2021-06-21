@@ -4,11 +4,11 @@ import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
 
+import com.utils.Constants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -109,7 +109,19 @@ public class ExploreToolbar extends MainNavBar {
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         Item component = new CidAppTestUtil().postComponents(componentName, scenarioName, resourceFile, userCredentials);
-        return new ExplorePage(driver).navigateToScenario(component.getComponentIdentity(), component.getScenarioIdentity());
+        return navigateToScenario(component.getComponentIdentity(), component.getScenarioIdentity());
+    }
+
+    /**
+     * Navigates to the scenario via url
+     *
+     * @param componentId - component id
+     * @param scenarioId  - scenario id
+     * @return a new page object
+     */
+    public EvaluatePage navigateToScenario(String componentId, String scenarioId) {
+        driver.navigate().to(Constants.getDefaultUrl().concat(String.format("components/%s/scenarios/%s", componentId, scenarioId)));
+        return new EvaluatePage(driver);
     }
 
     /**
