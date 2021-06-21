@@ -1,7 +1,6 @@
 package com.apriori.utils.http2.builder.service;
 
 import com.apriori.utils.http.utils.ResponseWrapper;
-
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.interfaces.Request;
 
