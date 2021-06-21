@@ -1,9 +1,11 @@
 package com.apriori.bcs.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProcessGroupAssociations {
     @JsonProperty("Composites")
     private Composites composites;
@@ -69,192 +71,210 @@ public class ProcessGroupAssociations {
     private StockMachining surfaceTreatment;
 
     @Data
-    static class SurfaceTreatment {
-        private String processGroupIdentity;
-    }
-
-    @Data
-    static class StockMachining {
-        private String processGroupIdentity;
-    }
-
-    @Data
-    static class Composites {
+    public static class SurfaceTreatment {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class MultiSpindleMachining {
-        private String processGroupIdentity;
-    }
-
-    @Data
-    static class CastingDie {
+    public static class StockMachining {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class Machining {
-        private String processGroupIdentity;
-    }
-
-    @Data
-    static class AdditiveManufacturing {
+    public static class Composites {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class Forging {
+    public static class MultiSpindleMachining {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class PowderMetal {
+    public static class CastingDie {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class SheetPlastic {
+    public static class Machining {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class HeatTreatment {
-        private String processGroupIdentity;
-    }
-
-    @Data
-    static class SheetMetalHydroforming {
+    public static class AdditiveManufacturing {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class BarTubeFab {
+    public static class Forging {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class Assembly {
-        private String processGroupIdentity;
-    }
-
-    @Data
-    static class InjectionMolding {
-        private String processGroupIdentity;
-    }
-
-    @Data
-    static class CastingInvestment {
+    public static class PowderMetal {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class SheetMetalTransferDie {
-        private String processGroupIdentity;
-    }
-
-    @Data
-    static class AssemblyPlasticMolding {
+    public static class SheetPlastic {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class SheetMetal {
+    public static class HeatTreatment {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class PrintedCircuitBoard {
+    public static class SheetMetalHydroforming {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class AssemblyMolding {
+    public static class BarTubeFab {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class CastingSand {
+    public static class Assembly {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class RapidPrototyping {
+    public static class InjectionMolding {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class Casting {
+    public static class CastingInvestment {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class PartAssembly {
+    public static class SheetMetalTransferDie {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class PlasticMolding {
+    public static class AssemblyPlasticMolding {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class RotoBlowMolding {
+    public static class SheetMetal {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class OtherSecondaryProcesses {
+    public static class PrintedCircuitBoard {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
     }
 
     @Data
-    static class TwoModelMachining {
+    public static class AssemblyMolding {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 
     @Data
-    static class SheetMetalStretchForming {
+    public static class CastingSand {
+        private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
+    }
+
+    @Data
+    public static class RapidPrototyping {
+        private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
+    }
+
+    @Data
+    public static class Casting {
+        private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
+    }
+
+    @Data
+    public static class PartAssembly {
+        private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
+    }
+
+    @Data
+    public static class PlasticMolding {
+        private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
+    }
+
+    @Data
+    public static class RotoBlowMolding {
+        private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
+    }
+
+    @Data
+    public static class OtherSecondaryProcesses {
+        private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
+    }
+
+    @Data
+    public static class TwoModelMachining {
+        private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
+    }
+
+    @Data
+    public static class SheetMetalStretchForming {
         private String processGroupIdentity;
         private String defaultMaterialName;
         private String defaultMaterialIdentity;
@@ -263,5 +283,7 @@ public class ProcessGroupAssociations {
     @Data
     static class UserGuided {
         private String processGroupIdentity;
+        private String defaultMaterialName;
+        private String defaultMaterialIdentity;
     }
 }
