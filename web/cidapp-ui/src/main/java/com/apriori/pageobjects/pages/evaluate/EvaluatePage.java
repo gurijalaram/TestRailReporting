@@ -427,9 +427,9 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Checks the dfm risk score
+     * Gets the dfm risk score
      *
-     * @return true/false
+     * @return string
      */
     public String getDfmRisk() {
         By risk = By.cssSelector(".design-guidance span[style]");
@@ -437,9 +437,9 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Checks the dfm risk icon
+     * Gets the dfm risk icon
      *
-     * @return boolean
+     * @return string
      */
     public String getDfmRiskIcon() {
         By riskIcon = By.cssSelector(".design-guidance span svg circle");
