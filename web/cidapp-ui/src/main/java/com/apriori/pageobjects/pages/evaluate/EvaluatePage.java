@@ -405,31 +405,23 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Checks the dfm risk score
+     * Gets the dfm risk score
      *
-     * @return true/false
+     * @return string
      */
-    public boolean isDfmRisk(String riskFactor) {
-        By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor));
-        return pageUtils.waitForElementToAppear(risk).isDisplayed();
+    public String getDfmRisk() {
+        By risk = By.cssSelector(".design-guidance span[style]");
+        return pageUtils.waitForElementToAppear(risk).getAttribute("textContent");
     }
 
     /**
-     * Checks the dfm risk icon
+     * Gets the dfm risk icon
      *
-     * @param riskFactor - risk
-     * @return boolean
+     * @return string
      */
-    public boolean isDfmRiskIcon(String riskFactor) {
-        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--green-light)"
-            : riskFactor.equalsIgnoreCase("Medium") ? "var(--cyan-light)"
-            : riskFactor.equalsIgnoreCase("High") ? "var(--yellow-light)"
-            : riskFactor.equalsIgnoreCase("Critical") ? "var(--red-light)"
-            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--gray-500)"
-            : null;
-
-        By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
-        return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
+    public String getDfmRiskIcon() {
+        By riskIcon = By.cssSelector(".design-guidance span svg circle");
+        return pageUtils.waitForElementToAppear(riskIcon).getAttribute("stroke");
     }
 
     /**
