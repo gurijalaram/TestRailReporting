@@ -22,6 +22,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
+import utils.EvaluateDfmIconEnum;
 
 import java.io.File;
 
@@ -114,8 +115,8 @@ public class TwoModelMachiningTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
@@ -249,8 +250,8 @@ public class TwoModelMachiningTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Low"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(source2PartName, source2ScenarioName, twoModelFile, currentUser)

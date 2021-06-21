@@ -18,6 +18,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
+import utils.EvaluateDfmIconEnum;
 
 import java.io.File;
 
@@ -54,8 +55,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
     }
 
     @Test
@@ -79,8 +80,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
     }
 
     @Test
@@ -103,8 +104,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Critical"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.CRITICAL.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
     }
 
     @Test
@@ -128,8 +129,7 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
     }
 
     @Test
@@ -151,8 +151,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
     }
 
     @Test
@@ -176,8 +176,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Low"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
     }
 
     @Test
@@ -201,14 +201,14 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         evaluatePage.selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Unknown"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Unknown"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.UNKNOWN.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Unknown"));
     }
 
     @Test
@@ -235,8 +235,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario(5);
 
-        assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
 
         // TODO uncomment this section when update cad file is implemented
         /*        evaluatePage.updateCadFile(cadResourceFile);
@@ -250,7 +250,7 @@ public class DFMRiskTests extends TestBase {
             .revertScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));*/
+        assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
     }
 
     @Test
@@ -276,8 +276,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
 
         // TODO uncomment this section when update cad file is implemented
         /*        evaluatePage.updateCadFile(cadResourceFile);
@@ -291,7 +291,7 @@ public class DFMRiskTests extends TestBase {
             .revertScenario();
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));*/
+        assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
 
     }
 
@@ -318,8 +318,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         // TODO uncomment this section when update cad file is implemented
         /*        evaluatePage.updateCadFile(cadResourceFile);
@@ -358,8 +358,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Medium"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Medium"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         // TODO uncomment this section when update cad file is implemented
         /*evaluatePage.updateCadFile(cadResourceFile);
@@ -398,8 +398,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("High"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
 
         // TODO uncomment this section when update cad file is implemented
         /*        evaluatePage.updateCadFile(cadResourceFile);
@@ -411,7 +411,7 @@ public class DFMRiskTests extends TestBase {
         evaluatePage.revert()
             .revertScenario();
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));*/
+        assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
     }
 
     @Test

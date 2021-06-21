@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -20,6 +21,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
+import utils.EvaluateDfmIconEnum;
 
 import java.io.File;
 
@@ -573,8 +575,8 @@ public class ProcessGroupsTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Critical"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(equalTo(EvaluateDfmIconEnum.CRITICAL.getIcon())));
+        assertThat(evaluatePage.getDfmRisk(), is(equalTo("Critical")));
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Plasma Cut"));
     }
 
