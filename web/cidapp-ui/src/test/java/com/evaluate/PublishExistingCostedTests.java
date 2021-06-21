@@ -67,7 +67,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .openScenario(scenarioName, componentName)
+            .openScenario(componentName, scenarioName)
             .editScenario()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario()
