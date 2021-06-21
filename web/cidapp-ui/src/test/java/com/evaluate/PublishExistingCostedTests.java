@@ -72,6 +72,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .publishScenario()
+            .override()
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()
