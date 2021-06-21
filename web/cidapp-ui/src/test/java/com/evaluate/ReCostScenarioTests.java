@@ -68,7 +68,7 @@ public class ReCostScenarioTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         String componentName = "case_002_00400016-003M10_A";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, ".STP");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STP");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
