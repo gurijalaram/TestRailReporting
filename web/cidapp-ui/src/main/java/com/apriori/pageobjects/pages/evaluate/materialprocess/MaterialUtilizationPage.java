@@ -25,9 +25,6 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @FindBy(css = ".tab.active [data-icon='box']")
     private WebElement materialTabActive;
 
-    @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
-    private WebElement panelDetails;
-
     private PageUtils pageUtils;
     private WebDriver driver;
     private PanelController panelController;
@@ -49,7 +46,6 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(materialTabActive);
-        pageUtils.waitForElementAppear(panelDetails);
     }
 
     /**
