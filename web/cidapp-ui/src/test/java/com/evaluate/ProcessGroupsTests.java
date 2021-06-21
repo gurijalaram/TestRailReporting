@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
+import utils.EvaluateDfmIconEnum;
 
 import java.io.File;
 
@@ -573,8 +574,8 @@ public class ProcessGroupsTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.isDfmRiskIcon("Critical"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+        assertThat(evaluatePage.isDfmRiskIcon(EvaluateDfmIconEnum.CRITICAL), is(true));
+        assertThat(evaluatePage.isDfmRisk(EvaluateDfmIconEnum.CRITICAL), is(true));
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Plasma Cut"));
     }
 

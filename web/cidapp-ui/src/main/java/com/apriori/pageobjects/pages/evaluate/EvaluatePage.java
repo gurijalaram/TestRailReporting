@@ -20,6 +20,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.EvaluateDfmIconEnum;
 
 import java.util.Arrays;
 import java.util.List;
@@ -431,8 +432,8 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return true/false
      */
-    public boolean isDfmRisk(String riskFactor) {
-        By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor));
+    public boolean isDfmRisk(EvaluateDfmIconEnum riskFactor) {
+        By risk = By.xpath(String.format("//span[.='DFM Risk']/following-sibling::span[.='%s']", riskFactor.getIcon()));
         return pageUtils.waitForElementToAppear(risk).isDisplayed();
     }
 
@@ -442,15 +443,8 @@ public class EvaluatePage extends EvaluateToolbar {
      * @param riskFactor - risk
      * @return boolean
      */
-    public boolean isDfmRiskIcon(String riskFactor) {
-        String risk = riskFactor.equalsIgnoreCase("Low") ? "var(--green-light)"
-            : riskFactor.equalsIgnoreCase("Medium") ? "var(--cyan-light)"
-            : riskFactor.equalsIgnoreCase("High") ? "var(--yellow-light)"
-            : riskFactor.equalsIgnoreCase("Critical") ? "var(--red-light)"
-            : riskFactor.equalsIgnoreCase("Unknown") ? "var(--gray-500)"
-            : null;
-
-        By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", risk));
+    public boolean isDfmRiskIcon(EvaluateDfmIconEnum riskFactor) {
+        By riskIcon = By.cssSelector(String.format("circle[stroke='%s']", riskFactor.getIcon()));
         return pageUtils.waitForElementToAppear(riskIcon).isDisplayed();
     }
 

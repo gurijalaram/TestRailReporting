@@ -1,6 +1,6 @@
-package com.apriori.utils.enums;
+package utils;
 
-public enum DfmIconEnum {
+public enum AssemDfmIconEnum {
 
     CRITICAL("var(--danger-light)"),
     HIGH("var(--warning-light)"),
@@ -9,7 +9,7 @@ public enum DfmIconEnum {
 
     private final String icon;
 
-    DfmIconEnum(String icon) {
+    AssemDfmIconEnum(String icon) {
         this.icon = icon;
     }
 
