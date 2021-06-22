@@ -73,6 +73,7 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .override()
+            .continues(PublishPage.class)
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()
