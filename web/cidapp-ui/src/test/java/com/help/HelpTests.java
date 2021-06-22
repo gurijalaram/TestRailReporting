@@ -116,7 +116,7 @@ public class HelpTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(UserUtil.getUser())
+        helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
@@ -137,7 +137,7 @@ public class HelpTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(UserUtil.getUser())
+        helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
