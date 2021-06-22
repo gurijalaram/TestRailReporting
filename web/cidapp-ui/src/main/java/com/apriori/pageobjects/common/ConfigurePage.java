@@ -24,7 +24,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     @FindBy(xpath = "//label[.='Number of sticky columns']/ancestor::div//div[contains(@class,'apriori-select')]")
     private WebElement stickyDropdown;
 
-    @FindBy(css = "div[class='apriori-card medium-card shuttle-box-list card']")
+    @FindBy(css = ".apriori-card.medium-card.shuttle-box-list.card")
     private List<WebElement> columnList;
 
     private PageUtils pageUtils;

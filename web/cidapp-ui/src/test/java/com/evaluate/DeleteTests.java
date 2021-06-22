@@ -15,6 +15,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -33,6 +34,7 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
+    @Ignore
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6736", "5431"})
     @Description("Test a private scenario can be deleted from the component table")
@@ -62,6 +64,7 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
+    @Ignore
     @TestRail(testCaseId = {"7709"})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {

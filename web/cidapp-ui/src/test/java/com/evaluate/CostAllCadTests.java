@@ -22,17 +22,17 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.Keys;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
 public class CostAllCadTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private CostDetailsPage costDetailsPage;
     private FileUploadPage fileUploadPage;
 
@@ -334,7 +334,7 @@ public class CostAllCadTests extends TestBase {
     public void failedUpload() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"LargePart.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "LargePart.prt.1");
 
         loginPage = new CidAppLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())
@@ -349,11 +349,11 @@ public class CostAllCadTests extends TestBase {
     public void failedBlankScenarioName() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit("", resourceFile, FileUploadPage.class);
+            .uploadComponent(" " + Keys.BACK_SPACE, resourceFile);
 
         assertThat(fileUploadPage.getFieldWarningText(), containsString("Required."));
     }
