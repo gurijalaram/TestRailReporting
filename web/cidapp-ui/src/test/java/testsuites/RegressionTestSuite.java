@@ -38,7 +38,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(SmokeTests.class)
+@Categories.ExcludeCategory(SmokeTests.class)
 @Suite.SuiteClasses({
     CostAllCadTests.class,
     CostScenarioTests.class,
@@ -71,5 +71,5 @@ import testsuites.suiteinterface.SmokeTests;
     DTCCastingTests.class,
     TwoModelMachiningTests.class
 })
-public class CIDSmokeTestSuite {
+public class RegressionTestSuite {
 }

@@ -97,7 +97,6 @@ public class CostAllCadTests extends TestBase {
     }*/
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - par")
     public void testCADFormatPar() {
@@ -144,7 +143,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
@@ -216,7 +214,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
@@ -240,7 +237,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
@@ -264,7 +260,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParaSolid() {
@@ -288,7 +283,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {

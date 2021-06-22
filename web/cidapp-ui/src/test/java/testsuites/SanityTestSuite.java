@@ -34,42 +34,15 @@ import com.settings.DecimalPlaceTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("562")
 @RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(SmokeTests.class)
+@Categories.IncludeCategory(SanityTests.class)
 @Suite.SuiteClasses({
-    CostAllCadTests.class,
-    CostScenarioTests.class,
-    ListOfDigitalFactoryTests.class,
-    ListProcessGroupTests.class,
-    NewScenarioNameTests.class,
-    ProcessGroupsTests.class,
-    ReCostScenarioTests.class,
-    SecondaryProcessTests.class,
-    ChangeMaterialSelectionTests.class,
-    MaterialStockTests.class,
     UploadComponentTests.class,
-    UploadTests.class,
-    HelpTests.class,
-    LoginTests.class,
-    DecimalPlaceTests.class,
-    UploadAssembliesTests.class,
-    PublishExistingCostedTests.class,
-    PreviewPanelTests.class,
-    DFMRiskTests.class,
-    DeleteTests.class,
-    DFMRiskTests.class,
-    PublishTests.class,
-    SheetMetalDTCTests.class,
-    DTCPlasticMouldingTests.class,
-    SheetMetalDTCTests.class,
-    ActionsTests.class,
-    TableHeadersTests.class,
-    DTCMachiningTests.class,
-    DTCCastingTests.class,
-    TwoModelMachiningTests.class
+    CostScenarioTests.class
 })
-public class CIDSmokeTestSuite {
+public class SanityTestSuite {
 }

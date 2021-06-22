@@ -75,7 +75,6 @@ public class MaterialStockTests extends TestBase {
     }
 
     /*@Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5148", "5151", "5152", "5153", "5156", "5160"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {

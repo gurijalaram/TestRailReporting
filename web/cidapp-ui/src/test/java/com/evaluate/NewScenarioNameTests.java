@@ -96,7 +96,6 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(), is(testNewScenarioName));
     }
 
-    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"5953"})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")

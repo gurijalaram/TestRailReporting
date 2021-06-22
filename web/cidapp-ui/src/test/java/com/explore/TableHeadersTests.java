@@ -65,7 +65,6 @@ public class TableHeadersTests extends TestBase {
             .submit(ExplorePage.class);
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6346"})
     @Description("Test remove thumbnails")
@@ -89,7 +88,7 @@ public class TableHeadersTests extends TestBase {
         assertThat(configurePage.getChosenList(), hasItem(ColumnsEnum.THUMBNAIL.getColumns()));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"6340"})
     @Description("Test sort all columns")
