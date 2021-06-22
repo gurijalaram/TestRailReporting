@@ -39,6 +39,7 @@ public class Item {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime componentUpdatedAt;
     private String componentUpdatedBy;
+    private String componentUpdatedByName;
     private String scenarioIdentity;
     private String scenarioName;
     private String scenarioType;

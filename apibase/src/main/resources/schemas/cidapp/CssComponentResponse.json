@@ -85,6 +85,9 @@
                   "componentUpdatedBy": {
                     "type": "string"
                   },
+                  "componentUpdatedByName": {
+                    "type": "string"
+                  },
                   "scenarioIdentity": {
                     "type": "string"
                   },
