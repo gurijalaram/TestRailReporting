@@ -56,24 +56,27 @@ public class UncostedComponents {
 
                 ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
 
-                Assert.assertEquals(String.format("Failed to receive data about component name: %s, with scenario name: %s", componentName, scenarioName),
+                Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()
-                    && scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
+                if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()) {
 
-                    Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+                    if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals("PROCESSING_FAILED")) {
+                        throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
+                    }
 
-                    return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
+                    if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
+                        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
+                        return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
+                    }
                 }
-
             } while (currentCount++ <= attemptsCount);
 
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d attempts with period in %d seconds.",
                 componentName, scenarioName, attemptsCount, secondsToWait)
