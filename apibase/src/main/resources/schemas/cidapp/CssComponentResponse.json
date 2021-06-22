@@ -142,6 +142,9 @@
                   "scenarioIterationKey": {
                     "type": "string"
                   },
+                  "iterationHasCustomImage": {
+                    "type": "boolean"
+                  },
                   "iterationHasWebImage": {
                     "type": "boolean"
                   },

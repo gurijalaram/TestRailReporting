@@ -62,6 +62,7 @@ public class Item {
     private Integer iteration;
     private Boolean latest;
     private String scenarioIterationKey;
+    private Boolean iterationHasCustomImage;
     private Boolean iterationHasWebImage;
     private Boolean iterationIsCadConnected;
     @JsonSerialize(using = ToStringSerializer.class)
