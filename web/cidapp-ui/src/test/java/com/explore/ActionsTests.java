@@ -50,7 +50,6 @@ public class ActionsTests extends TestBase {
         super();
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
     @Description("Validate user can add notes to a scenario")
@@ -133,7 +132,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class})
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7902"})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
@@ -423,7 +422,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7186", "7191"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
