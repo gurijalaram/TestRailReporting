@@ -67,6 +67,7 @@ public class UncostedComponents {
 
                     if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
                     }
                 }
