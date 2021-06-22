@@ -85,6 +85,9 @@
                   "componentUpdatedBy": {
                     "type": "string"
                   },
+                  "componentUpdatedByName": {
+                    "type": "string"
+                  },
                   "scenarioIdentity": {
                     "type": "string"
                   },
@@ -141,6 +144,9 @@
                   },
                   "scenarioIterationKey": {
                     "type": "string"
+                  },
+                  "iterationHasCustomImage": {
+                    "type": "boolean"
                   },
                   "iterationHasWebImage": {
                     "type": "boolean"
