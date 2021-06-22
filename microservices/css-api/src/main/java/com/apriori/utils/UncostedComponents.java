@@ -59,6 +59,10 @@ public class UncostedComponents {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, with scenario name: %s", componentName, scenarioName),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
+                if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals("PROCESSING_FAILED")) {
+                    throw new IllegalArgumentException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
+                }
+
                 if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()
                     && scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
 
@@ -66,14 +70,12 @@ public class UncostedComponents {
 
                     return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
                 }
-
             } while (currentCount++ <= attemptsCount);
 
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d attempts with period in %d seconds.",
                 componentName, scenarioName, attemptsCount, secondsToWait)
