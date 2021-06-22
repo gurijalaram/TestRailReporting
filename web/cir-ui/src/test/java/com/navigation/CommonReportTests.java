@@ -21,6 +21,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.Constants;
 
@@ -175,7 +176,20 @@ public class CommonReportTests extends TestBase {
             .waitForSortOrderSelection(sortOrder)
             .clickOk(GenericReportPage.class);
 
-        genericReportPage.waitForReportToLoad();
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
+                .getText().equals(ExportSetEnum.CASTING_DTC.getExportSetName())) {
+            genericReportPage.waitForReportToLoad();
+            genericReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("0")
+                    .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("1")
+                    .waitForExportSetSelected(ExportSetEnum.CASTING_DTC.getExportSetName())
+                    .clickOk(GenericReportPage.class)
+                    .waitForReportToLoad();
+        }
+
         String[] elementNames = {elementNameOne, elementNameTwo};
 
         assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),

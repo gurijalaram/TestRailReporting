@@ -323,7 +323,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(),
             "JEEP WJ FRONT BRAKE DISC 99-04 (Init…",
-            "GEAR HOUSING (Initial)"
+            "CYLINDER HEAD (Initial)"
         );
     }
 
@@ -336,7 +336,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(),
             "DTCCASTINGISSUES (sand casting)",
-            "DTCCASTINGISSUES (Initial)"
+            "1205DU1017494_K (Initial)"
         );
     }
 
@@ -349,7 +349,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
             "OBSTRUCTED MACHINING (Initial)",
-            "B2315 (Initial)"
+            "BARCO_R8552931 (Initial)"
         );
     }
 

@@ -559,11 +559,24 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public <T> T selectExportSet(String exportSet, Class<T> className) {
-        exportSetSearchInput.sendKeys(exportSet);
+        //exportSetSearchInput.sendKeys(exportSet);
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
+    }
+
+    public GenericReportPage waitForExpectedExportSetSelectionCount(String expected) {
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", expected);
+        return this;
+    }
+
+    public GenericReportPage waitForExportSetSelected(String exportSet) {
+        pageUtils.waitForElementToAppear(
+                By.xpath(
+                        String.format("(//li[@title='---01-dtc-casting' and contains(@class, 'jr-isSelected')])[1]",
+                                exportSet)));
+        return this;
     }
 
     /**
