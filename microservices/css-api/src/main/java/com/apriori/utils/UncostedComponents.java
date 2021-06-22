@@ -59,16 +59,16 @@ public class UncostedComponents {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, with scenario name: %s", componentName, scenarioName),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals("PROCESSING_FAILED")) {
-                    throw new IllegalArgumentException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
-                }
+                if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()) {
 
-                if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()
-                    && scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
+                    if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals("PROCESSING_FAILED")) {
+                        throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
+                    }
 
-                    Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-
-                    return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
+                    if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
+                        Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+                        return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
+                    }
                 }
             } while (currentCount++ <= attemptsCount);
 
