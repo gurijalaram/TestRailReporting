@@ -18,6 +18,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -229,6 +231,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6221"})
     @Description("Test public criteria assembly description")
     public void testFilterAttributes() {

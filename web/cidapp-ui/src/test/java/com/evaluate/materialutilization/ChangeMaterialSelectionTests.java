@@ -257,7 +257,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Ignore("PMI Material not in yet")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6193"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
@@ -283,7 +282,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Ignore("PMI not in yet")
     @TestRail(testCaseId = {"6194"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {

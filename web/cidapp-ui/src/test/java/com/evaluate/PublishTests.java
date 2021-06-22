@@ -66,7 +66,6 @@ public class PublishTests extends TestBase {
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6743", "6744", "6745", "6747"})
     @Description("Publish a part and add an assignee, cost maturity and status")

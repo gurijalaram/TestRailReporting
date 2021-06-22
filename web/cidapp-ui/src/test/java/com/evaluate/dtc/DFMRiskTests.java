@@ -156,7 +156,6 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6471"})
     @Description("Validate DFM Risk - Low for Sand Casting")
     public void sandCastLowDFM() {
@@ -212,7 +211,6 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6472", "6824", "6473"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
@@ -254,7 +252,6 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6480", "6481"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
@@ -335,7 +332,6 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6476", "5439", "6477"})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
@@ -375,7 +371,6 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6478", "6479"})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
