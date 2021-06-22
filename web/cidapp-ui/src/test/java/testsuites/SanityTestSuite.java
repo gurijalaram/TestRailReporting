@@ -42,7 +42,8 @@ import testsuites.suiteinterface.SmokeTests;
 @Categories.IncludeCategory(SanityTests.class)
 @Suite.SuiteClasses({
     UploadComponentTests.class,
-    CostScenarioTests.class
+    CostScenarioTests.class,
+    PublishTests.class
 })
 public class SanityTestSuite {
 }

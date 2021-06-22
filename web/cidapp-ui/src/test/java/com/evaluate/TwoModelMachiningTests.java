@@ -284,7 +284,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @Description("Validate the user cannot use two completely different CAD models")
     @TestRail(testCaseId = {"7871"})
     public void testTwoModelCorrectCADModels() {
