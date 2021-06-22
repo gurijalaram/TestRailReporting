@@ -170,7 +170,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(id = "apply")
     private WebElement applyButton;
 
-    @FindBy(id = "ok")
+    @FindBy(xpath = "//button[@id='ok']/span/span")
     private WebElement okButton;
 
     @FindBy(id = "reset")
@@ -567,6 +567,18 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Waits for specified export set to be selected
+     *
+     * @param exportSet String - export set to wait for selection of
+     * @return instance of GenericReportPage
+     */
+    public GenericReportPage waitForExportSetSelection(String exportSet) {
+        By locator = By.xpath(String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", exportSet));
+        pageUtils.waitForElementToAppear(locator);
+        return this;
+    }
+
+    /**
      * Inputs Minimum Annual Spend
      *
      * @return current page object
@@ -774,6 +786,19 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.waitForElementToAppear(locator);
             driver.findElement(locator).click();
         }
+        pageUtils.waitFor(1000);
+        return this;
+    }
+
+    /**
+     * Waits for specified export set to be selected
+     *
+     * @param sortOrder String - export set to wait for selection of
+     * @return instance of GenericReportPage
+     */
+    public GenericReportPage waitForSortOrderSelection(String sortOrder) {
+        By locator = By.xpath(String.format("//div[@id='sortOrder']//a[@title='%s']", sortOrder));
+        pageUtils.waitForElementToAppear(locator);
         return this;
     }
 
@@ -870,6 +895,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T clickOk(Class<T> className) {
         pageUtils.waitForElementAndClick(okButton);
+        okButton.click();
         pageUtils.waitForElementToAppear(upperTitle);
         return PageFactory.initElements(driver, className);
     }

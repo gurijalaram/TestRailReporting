@@ -22,7 +22,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     private static final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
-    @FindBy(xpath = "//div[contains(@class,'apriori-card tabbed')]")
+    @FindBy(xpath = "//div[contains(@class,'apriori-card dark tabbed')]")
     private WebElement panelDetails;
 
     @FindBy(xpath = "//button[.='Stock']")

@@ -24,8 +24,6 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -1085,7 +1083,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .inputAnnualisedOrPercentValue(valueToTest, "10.00")
+                .inputAnnualisedOrPercentValue(valueToTest, "210000.00")
                 .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();

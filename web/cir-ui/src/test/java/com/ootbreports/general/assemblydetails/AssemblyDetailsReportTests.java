@@ -10,7 +10,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
@@ -24,9 +23,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.ComponentsPage;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;

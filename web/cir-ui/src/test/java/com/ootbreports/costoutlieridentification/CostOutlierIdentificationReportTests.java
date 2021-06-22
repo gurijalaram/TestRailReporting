@@ -15,8 +15,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -280,6 +278,10 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 .clickOk(CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
+        costOutlierIdentificationReportPage.clickInputControlsButton()
+                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), GenericReportPage.class)
+                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), GenericReportPage.class)
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
         assertThat(
                 costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(

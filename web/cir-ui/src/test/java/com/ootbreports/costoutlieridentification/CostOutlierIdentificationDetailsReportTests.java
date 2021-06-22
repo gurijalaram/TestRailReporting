@@ -14,8 +14,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -141,6 +139,13 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .clickOk(CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
+        costOutlierIdentificationReportPage.clickInputControlsButton()
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                        CostOutlierIdentificationReportPage.class)
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+                CostOutlierIdentificationReportPage.class)
+                .clickOk(GenericReportPage.class)
+                .waitForReportToLoad();
 
         assertThat(costOutlierIdentificationReportPage.isCostOutlierSvgDisplayedAndEnabled("1"),
                 is(equalTo(true))

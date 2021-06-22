@@ -5,10 +5,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -18,12 +21,11 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
+import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
@@ -175,7 +177,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3367"})
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {
@@ -198,23 +200,25 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
         String reportsProcessGroup = targetAndQuotedCostValueTrackingPage.getValueFromReport("14");
         String reportsMaterialComposition = targetAndQuotedCostValueTrackingPage.getValueFromReport("17")
                 .replace("\n", " ");
-        String reportsAnnualVolume = targetAndQuotedCostValueTrackingPage.getValueFromReport("22");
+        String reportsAnnualVolume = targetAndQuotedCostValueTrackingPage.getValueFromReport("22")
+                .replace(",", "");
         String reportsCurrentCost = targetAndQuotedCostValueTrackingPage.getValueFromReport("24");
 
         targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
                 .addCriteriaWithOption("Component Name", "Equals", partName)
                 .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
-                .openFirstScenario();
+                .openScenario(partName, Constants.DEFAULT_SCENARIO_NAME);
 
         String cidScenarioName = evaluatePage.getCurrentScenarioName();
         String cidVPE = evaluatePage.getSelectedVPE();
         String cidProcessGroup = evaluatePage.getSelectedProcessGroup();
-        String cidMaterialComposition = evaluatePage.openMaterialUtilization().getMaterialName();
+        String cidMaterialComposition =
+                evaluatePage.openMaterialProcess().openMaterialUtilizationTab().getMaterialName();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
         String cidFbc = String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost"));
 
@@ -223,7 +227,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
         assertThat(reportsProcessGroup, is(equalTo(cidProcessGroup)));
         assertThat(reportsMaterialComposition, is(equalTo(cidMaterialComposition)));
         assertThat(reportsAnnualVolume, is(equalTo(cidAnnualVolume)));
-        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));*/
+        assertThat(reportsCurrentCost, is(equalTo(cidFbc)));
     }
 
     /**
