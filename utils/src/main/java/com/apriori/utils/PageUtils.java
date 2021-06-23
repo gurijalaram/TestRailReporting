@@ -32,6 +32,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author kpatel
@@ -352,6 +353,29 @@ public class PageUtils {
 
     public List<WebElement> waitForElementsToAppear(List<WebElement> elements) {
         return waitForAppear(ExpectedConditions.visibilityOfAllElements(elements), "Elements did not appear");
+    }
+
+    /**
+     * Checks the elements is displayed by size
+     * @param element - the element
+     * @return int
+     */
+    public int waitForElementsToAppear(By element) {
+        int count = 0;
+        int retries = 60;
+        int secondsToWait = 1;
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(secondsToWait);
+                driver.findElements(element);
+            } while (driver.findElements(element).size() < 1 && count++ <= retries);
+
+            return driver.findElements(element).size();
+
+        } catch (StaleElementReferenceException | InterruptedException e) {
+            logger.debug("Trying to recover from a stale element reference exception");
+        }
+        throw new AssertionError("Element is not displayed");
     }
 
     public WebElement waitForElementAppear(WebElement element) {

@@ -12,6 +12,8 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -31,13 +33,14 @@ public class UploadComponentTests extends TestBase {
     public void testUploadComponent() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"Casting.prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, resourceFile, ExplorePage.class)
-            .selectFilter("Recent");
+            .clickSearch("CASTING")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("CASTING", scenarioName), is(equalTo(1)));
     }
