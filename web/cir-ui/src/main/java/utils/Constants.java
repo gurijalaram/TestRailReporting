@@ -59,6 +59,7 @@ public class Constants {
         ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
     );
     public static final String DEFAULT_SCENARIO_NAME = "Initial";
+    public static final String OTHER_SCENARIO_NAME = "sand casting";
     public static final String PART_SCENARIO_TYPE = "Part";
     public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
     public static final String COST_NAME = "Cost";

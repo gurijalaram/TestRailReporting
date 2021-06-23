@@ -1,6 +1,5 @@
 package com.ootbreports.dtcmetrics.castingdtc;
 
-
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.utils.TestRail;
@@ -23,7 +22,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
@@ -324,7 +322,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(),
-            SortOrderItemsEnum.JEEP.getSortOrderItemName(),
+            SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
             SortOrderItemsEnum.CYLINDER.getSortOrderItemName()
         );
     }
@@ -351,7 +349,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
             SortOrderItemsEnum.OBSTRUCTED.getSortOrderItemName(),
-            SortOrderItemsEnum.BARCO.getSortOrderItemName()
+            SortOrderItemsEnum.BARCO_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -390,7 +388,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(),
             SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.GEAR_HOUSING.getSortOrderItemName()
+            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
 

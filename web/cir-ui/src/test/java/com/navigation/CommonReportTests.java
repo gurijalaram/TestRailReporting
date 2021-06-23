@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyCostReportPage;
+import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -31,6 +32,7 @@ public class CommonReportTests extends TestBase {
 
     private AssemblyCostReportPage assemblyCostReportPage;
     private ViewSearchResultsPage viewSearchResultsPage;
+    private CastingDtcReportPage castingDtcReportPage;
     private GenericReportPage genericReportPage;
     private ReportsPageHeader reportsPageHeader;
     private CirUserGuidePage cirUserGuide;
@@ -159,69 +161,80 @@ public class CommonReportTests extends TestBase {
     }
 
     /**
-     * Machining DTC Comparison Sort Order Test
+     * Generic test for Casting DTC Comparison sort order
+     *
+     * @param sortOrder - String
+     * @param doFourAsserts - boolean
+     * @param valuesToAssert - ArrayList<String>
+     */
+    public void castingDtcDetailsSortOrderTest(String sortOrder, boolean doFourAsserts,
+                                                  ArrayList<String> valuesToAssert) {
+        castingSortOrderTestCore(sortOrder);
+
+        assertThat(
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                is(equalTo(valuesToAssert.get(0)))
+        );
+
+        assertThat(
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                is(equalTo(valuesToAssert.get(1)))
+        );
+
+        if (doFourAsserts) {
+            assertThat(true, is(equalTo(true)));
+            assertThat(true, is(equalTo(true)));
+            assertThat(
+                    castingDtcReportPage.getScenarioNameCastingDtcDetails(true),
+                    is(equalTo(valuesToAssert.get(2)))
+            );
+            assertThat(
+                    castingDtcReportPage.getScenarioNameCastingDtcDetails(false),
+                    is(equalTo(valuesToAssert.get(3)))
+            );
+        }
+    }
+
+    /**
+     * Casting DTC Comparison Sort Order Test
      *
      * @param sortOrder      String
      * @param elementNameOne String
      * @param elementNameTwo String
      */
     public void castingDtcComparisonSortOrderTest(String sortOrder, String elementNameOne, String elementNameTwo) {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
-            .waitForExportSetSelection(ExportSetEnum.CASTING_DTC.getExportSetName())
-            .selectSortOrder(sortOrder)
-            .waitForSortOrderSelection(sortOrder)
-            .clickOk(GenericReportPage.class);
-
-        genericReportPage.waitForReportToLoad();
-
-        if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
-                .getText().equals(ExportSetEnum.CASTING_DTC.getExportSetName())) {
-            genericReportPage.waitForReportToLoad();
-            genericReportPage.clickInputControlsButton()
-                    .waitForInputControlsLoad()
-                    .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("0")
-                    .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("1")
-                    .waitForExportSetSelected(ExportSetEnum.CASTING_DTC.getExportSetName())
-                    .clickOk(GenericReportPage.class)
-                    .waitForReportToLoad();
-        }
+        castingSortOrderTestCore(sortOrder);
 
         String[] elementNames = {elementNameOne, elementNameTwo};
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("1", "1"),
             is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("1", "2"),
             is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("2", "1"),
             is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "2"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("2", "2"),
             is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("3", "1"),
             is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "2"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("3", "2"),
             is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("4", "1"),
             is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("4", "2"),
             is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("5", "1"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("5", "1"),
             is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("5", "2"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("5", "2"),
             is(equalTo(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("6", "1"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("6", "1"),
             is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("6", "2"),
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("6", "2"),
             is(equalTo(elementNames[1])));
     }
 
@@ -464,5 +477,35 @@ public class CommonReportTests extends TestBase {
 
         assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getCostSumValue("Piece Part Cost"))));
         assertThat(reportsCiCost, is(equalTo(String.valueOf(evaluatePage.getCostResults("Total Capital Investment")))));*/
+    }
+
+    /**
+     * Core part of Casting DTC Sort Order test
+     *
+     * @param sortOrder - String
+     */
+    private void castingSortOrderTestCore(String sortOrder) {
+        castingDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportPage.class)
+                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), CastingDtcReportPage.class)
+                .selectSortOrder(sortOrder)
+                .clickOk(CastingDtcReportPage.class);
+
+        castingDtcReportPage.waitForReportToLoad();
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
+                .getText().equals(ExportSetEnum.CASTING_DTC.getExportSetName())) {
+            castingDtcReportPage.waitForReportToLoad();
+            castingDtcReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), CastingDtcReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("0")
+                    .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), CastingDtcReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("1")
+                    .waitForExportSetSelected(ExportSetEnum.CASTING_DTC.getExportSetName())
+                    .clickOk(CastingDtcReportPage.class)
+                    .waitForReportToLoad();
+        }
     }
 }
