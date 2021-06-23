@@ -26,6 +26,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+import java.util.Locale;
 
 public class ChangeMaterialSelectionTests extends TestBase {
 
@@ -192,7 +193,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .openScenario(scenarioName, "bracket_basic");
+            .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));
     }
@@ -276,7 +277,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(scenarioName, "MACHINED BOX AMERICAS");
+            .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1095"), is(true));
     }

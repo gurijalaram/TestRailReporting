@@ -6,7 +6,7 @@ public enum EvaluateDfmIconEnum {
     HIGH("var(--yellow)"),
     MEDIUM("var(--cyan)"),
     LOW("var(--green)"),
-    UNKNOWN("var(--gray)");
+    UNKNOWN("var(--gray-600)");
 
     private final String icon;
 
