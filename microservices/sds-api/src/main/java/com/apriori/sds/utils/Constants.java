@@ -21,7 +21,8 @@ public class Constants {
     private static String secretKey;
     private static String apUserContext;
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
+//    public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
     public static String environment;
 
     static {

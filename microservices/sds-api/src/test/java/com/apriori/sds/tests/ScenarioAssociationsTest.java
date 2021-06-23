@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ScenarioAssociationsTest extends SDSTestUtil {
 
-    private static Item testingAssembly;
+    private static Item testingRollUp;
     private static List<String> assemblyIdToDelete = new ArrayList<>();
 
     @AfterClass
@@ -68,10 +68,10 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     @Test
     public void patchScenarioAssociation() {
         RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, null)
-            .inlineVariables(testingAssembly.getComponentIdentity(), getTestingAssembly().getScenarioIdentity())
+            .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
                 .occurrences(1)
-                .createdBy(getTestingAssembly().getComponentCreatedBy())
+                .createdBy(getTestingRollUp().getComponentCreatedBy())
                 .build());
 
         ResponseWrapper<Void> response = HTTP2Request.build(request).post();
@@ -87,10 +87,10 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
     private Void postAssociation() {
         RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, null)
-            .inlineVariables(getTestingAssembly().getComponentIdentity(), getTestingAssembly().getScenarioIdentity())
+            .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
                 .occurrences(1)
-                .createdBy(getTestingAssembly().getComponentCreatedBy())
+                .createdBy(getTestingRollUp().getComponentCreatedBy())
                 .build());
 
         ResponseWrapper<Void> response = HTTP2Request.build(request).post();
@@ -119,7 +119,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     private static void removeTestingAssociation(String associationIdentity) {
         final RequestEntity requestEntity =
             SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
-                .inlineVariables(getTestingAssembly().getComponentIdentity(), getTestingAssembly().getScenarioIdentity(),
+                .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(),
                     associationIdentity);
 
         ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
@@ -128,13 +128,13 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
             HttpStatus.SC_NO_CONTENT, response.getStatusCode());
     }
 
-    public static Item getTestingAssembly() {
-        if (testingAssembly != null) {
-            return testingAssembly;
+    public static Item getTestingRollUp() {
+        if (testingRollUp != null) {
+            return testingRollUp;
         }
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "Piston_assembly.stp";
-        return testingAssembly = postComponent(componentName, scenarioName, ProcessGroupEnum.ASSEMBLY);
+        String componentName = "test.Initial.ap";
+        return testingRollUp = postComponent(componentName, scenarioName, ProcessGroupEnum.ROLL_UP);
     }
 }
