@@ -18,7 +18,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -30,7 +29,6 @@ public class PublishTests extends TestBase {
     private ExplorePage explorePage;
 
     private File resourceFile;
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     UserCredentials currentUser;
 
     public PublishTests() {
