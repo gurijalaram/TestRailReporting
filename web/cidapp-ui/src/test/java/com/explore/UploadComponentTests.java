@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -17,7 +16,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
-import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -26,7 +24,6 @@ public class UploadComponentTests extends TestBase {
     private File resourceFile;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private EvaluateToolbar evaluateToolbar;
 
     @Test
     @Category(SanityTests.class)
