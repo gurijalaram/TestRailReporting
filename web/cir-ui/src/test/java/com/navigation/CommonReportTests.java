@@ -176,6 +176,8 @@ public class CommonReportTests extends TestBase {
             .waitForSortOrderSelection(sortOrder)
             .clickOk(GenericReportPage.class);
 
+        genericReportPage.waitForReportToLoad();
+
         if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
                 .getText().equals(ExportSetEnum.CASTING_DTC.getExportSetName())) {
             genericReportPage.waitForReportToLoad();

@@ -12,6 +12,7 @@ import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.enums.reports.SortOrderEnum;
+import com.apriori.utils.enums.reports.SortOrderItemsEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
@@ -22,6 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
+import utils.Constants;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
@@ -322,8 +324,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(),
-            "JEEP WJ FRONT BRAKE DISC 99-04 (Init…",
-            "CYLINDER HEAD (Initial)"
+            SortOrderItemsEnum.JEEP.getSortOrderItemName(),
+            SortOrderItemsEnum.CYLINDER.getSortOrderItemName()
         );
     }
 
@@ -335,8 +337,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(),
-            "DTCCASTINGISSUES (sand casting)",
-            "1205DU1017494_K (Initial)"
+            SortOrderItemsEnum.DTC_SAND.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -348,8 +350,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
-            "OBSTRUCTED MACHINING (Initial)",
-            "BARCO_R8552931 (Initial)"
+            SortOrderItemsEnum.OBSTRUCTED.getSortOrderItemName(),
+            SortOrderItemsEnum.BARCO.getSortOrderItemName()
         );
     }
 
@@ -361,8 +363,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-            "DTCCASTINGISSUES (Initial)",
-            "DTCCASTINGISSUES (sand casting)"
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -374,8 +376,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
-            "DTCCASTINGISSUES (Initial)",
-            "DTCCASTINGISSUES (sand casting)"
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -387,8 +389,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(),
-            "DU600051458 (Initial)",
-            "DU200068073_B (Initial)"
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.GEAR_HOUSING.getSortOrderItemName()
         );
     }
 
@@ -400,8 +402,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
-            "E3-241-4-N (Initial)",
-            "40137441.MLDES.0002 (Initial)"
+            SortOrderItemsEnum.E3.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
