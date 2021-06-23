@@ -15,6 +15,8 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -59,7 +61,8 @@ public class PublishTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .selectFilter("Recent");
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
     }

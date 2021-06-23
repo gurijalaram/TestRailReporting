@@ -63,7 +63,7 @@ public class CostAllCadTests extends TestBase {
             .openCostDetails()
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$24.29")));
+        assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$11.69")));
         assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.80")));
         assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.84")));
     }
