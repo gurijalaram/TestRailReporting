@@ -5,6 +5,9 @@ import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 
 public enum SDSAPIEnum implements ExternalEndpointEnum {
 
+    // AP FILES
+    POST_AP_FILES("ap-files"),
+
     // ITERATIONS
     GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/iterations"),
     GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/iterations/latest"),
