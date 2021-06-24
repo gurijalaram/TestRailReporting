@@ -30,8 +30,8 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
-        return getCssComponent(componentName, scenarioName, "NOT_COSTED");
+    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, String token) {
+        return getCssComponent(componentName, scenarioName, token, "NOT_COSTED");
     }
 
     /**
@@ -41,9 +41,10 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getCssComponent(String componentName, String scenarioName, String verifiedState) {
+    public List<Item> getCssComponent(String componentName, String scenarioName, String token, String verifiedState) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
-            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName);
+            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
+            .token(token);
 
         int currentCount = 0;
         int attemptsCount = 60;

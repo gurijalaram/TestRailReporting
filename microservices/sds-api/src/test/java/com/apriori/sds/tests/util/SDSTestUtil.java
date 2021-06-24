@@ -140,7 +140,7 @@ public class SDSTestUtil extends TestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
 
         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, itemResponse);
         return itemResponse.get(0);
