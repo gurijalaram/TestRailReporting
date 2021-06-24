@@ -20,6 +20,7 @@ public class JwtTokenUtil {
     private String secretKey = Constants.getSecretKey();
     private String issuer = Constants.getAtsTokenIssuer();
     private String subject = Constants.getAtsTokenSubject();
+    private String currentToken;
 
     public JwtTokenUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername().split("@")[0];
@@ -35,11 +36,13 @@ public class JwtTokenUtil {
      * @return string
      */
     public String retrieveJwtToken() {
-        String url;
+        if (currentToken != null) {
+            return currentToken;
+        }
 
         log.info("Retrieving JWT Token...");
 
-        url = apiUrl.concat(String.format("/tokens?key=%s", secretKey));
+        String url = apiUrl.concat(String.format("/tokens?key=%s", secretKey));
         TokenRequest body = new TokenRequest();
         TokenInformation information = new TokenInformation();
         information
@@ -55,6 +58,6 @@ public class JwtTokenUtil {
             new RequestAreaApi()
         ).getResponseEntity();
 
-        return token.getToken();
+        return currentToken = token.getToken();
     }
 }

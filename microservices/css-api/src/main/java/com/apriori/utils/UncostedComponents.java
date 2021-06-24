@@ -1,5 +1,6 @@
 package com.apriori.utils;
 
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
@@ -41,6 +42,17 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
+    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
+        return getCssComponent(componentName, scenarioName, new JwtTokenUtil().retrieveJwtToken(), "NOT_COSTED");
+    }
+
+    /**
+     * Gets component from Css
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return response object
+     */
     public List<Item> getCssComponent(String componentName, String scenarioName, String token, String verifiedState) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
@@ -69,7 +81,7 @@ public class UncostedComponents {
                     if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                        return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
+                        return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                     }
                 }
             } while (currentCount++ <= attemptsCount);
