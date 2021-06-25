@@ -23,7 +23,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(css = "[data-ap-help='CIDesign:NGRN:NG_whats_new_2']")
     private WebElement whatsNewButton;
 
-    @FindBy(css = "[data-ap-nav-dialog='showAbout']")
+    @FindBy(css = "[data-icon='info-circle']")
     private WebElement aboutaPrioriButton;
 
     @FindBy(css = "a.navbar-help")

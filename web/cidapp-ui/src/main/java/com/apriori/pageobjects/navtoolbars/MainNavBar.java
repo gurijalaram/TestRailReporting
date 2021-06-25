@@ -90,7 +90,6 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
      */
     public HelpPage goToHelp() {
         pageUtils.waitForElementAndClick(helpDropdown);
-        pageUtils.waitForElementAndClick(helpButton);
         return new HelpPage(driver);
     }
 
