@@ -82,6 +82,33 @@
                   "componentUpdatedAt": {
                     "type": "string"
                   },
+                  "componentUpdatedBy": {
+                    "type": "string"
+                  },
+                  "componentUpdatedByName": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "createdByName": {
+                    "type": "string"
+                  },
+                  "deletedAt": {
+                    "type": "string"
+                  },
+                  "deletedBy": {
+                    "type": "string"
+                  },
+                  "deletedByName": {
+                    "type": "string"
+                  },
+                  "identity": {
+                    "type": "string"
+                  },
                   "scenarioIdentity": {
                     "type": "string"
                   },
@@ -112,6 +139,15 @@
                   "scenarioPublished": {
                     "type": "boolean"
                   },
+                  "scenarioPublishedBy": {
+                    "type": "boolean"
+                  },
+                  "scenarioPublishedByName": {
+                    "type": "boolean"
+                  },
+                  "scenarioSystemLocked": {
+                    "type": "boolean"
+                  },
                   "scenarioCreatedAt": {
                     "type": "string"
                   },
@@ -124,17 +160,38 @@
                   "scenarioUpdatedAt": {
                     "type": "string"
                   },
+                  "scenarioStatus": {
+                    "type": "string"
+                  },
+                  "scenarioSystemLockCode": {
+                    "type": "integer"
+                  },
+                  "scenarioSystemLockedAt": {
+                    "type": "string"
+                  },
+                  "scenarioUpdatedBy": {
+                    "type": "string"
+                  },
+                  "scenarioUpdatedByName": {
+                    "type": "string"
+                  },
                   "iterationIdentity": {
                     "type": "string"
                   },
                   "iteration": {
                     "type": "integer"
                   },
+                  "iterationCostingMessage": {
+                    "type": "string"
+                  },
                   "latest": {
                     "type": "boolean"
                   },
                   "scenarioIterationKey": {
                     "type": "string"
+                  },
+                  "iterationHasCustomImage": {
+                    "type": "boolean"
                   },
                   "iterationHasWebImage": {
                     "type": "boolean"
@@ -152,6 +209,12 @@
                     "type": "string"
                   },
                   "iterationUpdatedAt": {
+                    "type": "string"
+                  },
+                  "iterationUpdatedBy": {
+                    "type": "string"
+                  },
+                  "iterationUpdatedByName": {
                     "type": "string"
                   },
                   "costingInput": {
@@ -177,9 +240,30 @@
                       }
                     }
                   },
+                  "scenarioAssignedAt": {
+                    "type": "string"
+                  },
+                  "scenarioAssignedBy": {
+                    "type": "string"
+                  },
+                  "scenarioAssignedByName": {
+                    "type": "string"
+                  },
+                  "scenarioAssignedTo": {
+                    "type": "string"
+                  },
+                  "scenarioAssignedToName": {
+                    "type": "string"
+                  },
+                  "scenarioCostMaturity": {
+                    "type": "string"
+                  },
                   "scenarioCustomAttributes": {
                     "type": "array",
                     "items": {}
+                  },
+                  "scenarioDescription": {
+                    "type": "string"
                   },
                   "scenarioDesignInvestigations": {
                     "type": "array",
@@ -188,6 +272,18 @@
                   "scenarioDesignIssues": {
                     "type": "array",
                     "items": {}
+                  },
+                  "scenarioLockedAt": {
+                    "type": "string"
+                  },
+                  "scenarioNotes": {
+                    "type": "string"
+                  },
+                  "scenarioLockedBy": {
+                    "type": "string"
+                  },
+                  "scenarioLockedByName": {
+                    "type": "string"
                   },
                   "scenarioDesignNotices": {
                     "type": "array",
@@ -219,6 +315,12 @@
                     "type": "object",
                     "properties": {
                       "identity": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "createdBy": {
                         "type": "string"
                       },
                       "image": {

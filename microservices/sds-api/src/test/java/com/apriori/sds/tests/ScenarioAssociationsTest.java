@@ -5,7 +5,8 @@ import static org.junit.Assert.assertEquals;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.AssociationRequest;
-import com.apriori.sds.entity.response.CostingTemplate;
+import com.apriori.sds.entity.response.ScenarioAssociation;
+import com.apriori.sds.entity.response.ScenarioAssociationsItems;
 import com.apriori.sds.util.SDSRequestEntityUtil;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -19,6 +20,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -26,94 +28,101 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScenarioAssociationsTest extends SDSTestUtil {
-
     private static Item testingRollUp;
-    private static List<String> assemblyIdToDelete = new ArrayList<>();
 
-    @AfterClass
-    public static void clearTestingData() {
-        assemblyIdToDelete.forEach(ScenarioAssociationsTest::removeTestingAssociation);
+    @BeforeClass
+    public static void init() {
+        postAssociationForTestingRollup();
     }
 
     @Test
     @TestRail(testCaseId = {"6928"})
-    @Description("Find scenario associations for a given scenario matching a specified query.")
-    @Ignore
+    @Description("Get scenario associations for a given scenario matching a specified query.")
     public void getAssociationsTest() {
-        ResponseWrapper<Void> response = this.getAssociations();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        this.getAssociations();
     }
 
-    // TODO z: add association identity
     @Test
     @TestRail(testCaseId = {"6929"})
     @Description("Get the current representation of a scenario assocation.")
     public void getAssociationsByIdentity() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioAssociation.class)
                 .inlineVariables(
-                    getComponentId(), getScenarioId(), getFirstAssociation().getIdentity()
+                    getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(), getFirstAssociation().getIdentity()
                 );
 
-        ResponseWrapper<Void> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioAssociation> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
     @Test
+    @TestRail(testCaseId = {"8422"})
+    @Description("Add a scenario association to a scenario.")
     public void postAssociationTest() {
-        this.postAssociation();
+        postAssociationForTestingRollup();
     }
 
-    // TODO z: finish it
     @Test
+    @TestRail(testCaseId = {"8424"})
+    @Description("Update an existing scenario association.")
     public void patchScenarioAssociation() {
-        RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, null)
-            .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity())
+        final Integer updatedOccurrences = 2;
+
+        RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.PATCH_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioAssociation.class)
+            .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(), getFirstAssociation().getIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
-                .occurrences(1)
+                .occurrences(updatedOccurrences)
                 .createdBy(getTestingRollUp().getComponentCreatedBy())
                 .build());
 
-        ResponseWrapper<Void> response = HTTP2Request.build(request).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
+        final ResponseWrapper<ScenarioAssociation> response = HTTP2Request.build(request).patch();
+        final ScenarioAssociation scenarioAssociation = response.getResponseEntity();
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        assertEquals("Occurrences should be updated", scenarioAssociation.getOccurrences(), updatedOccurrences);
     }
 
-    // TODO z: fix id
     @Test
+    @TestRail(testCaseId = {"8423"})
+    @Description("Remove an existing scenario association.")
     public void deleteScenarioAssociation() {
-        removeTestingAssociation(postAssociation().toString());
+        removeTestingAssociation(postAssociationForTestingRollup().getIdentity());
     }
 
 
-    private Void postAssociation() {
-        RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, null)
+    private static ScenarioAssociation postAssociationForTestingRollup() {
+        RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociation.class)
             .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
                 .occurrences(1)
                 .createdBy(getTestingRollUp().getComponentCreatedBy())
                 .build());
 
-        ResponseWrapper<Void> response = HTTP2Request.build(request).post();
+        final ResponseWrapper<ScenarioAssociation> response = HTTP2Request.build(request).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
 
         return response.getResponseEntity();
     }
 
-    private CostingTemplate getFirstAssociation() {
-        List<CostingTemplate> costingTemplates = null;// = this.getAssociations().getResponseEntity();
-        Assert.assertNotEquals("To get CostingTemplate, response should contain it.", 0, costingTemplates.size());
+    private ScenarioAssociation getFirstAssociation() {
+        List<ScenarioAssociation> scenarioAssociations = this.getAssociations();
 
-        return costingTemplates.get(0);
+        Assert.assertNotEquals("To get Scenario Association, response should contain it.", 0, scenarioAssociations.size());
+        return scenarioAssociations.get(0);
     }
 
-    private ResponseWrapper<Void> getAssociations() {
+    private List<ScenarioAssociation> getAssociations() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, null)
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociationsItems.class)
                 .inlineVariables(
-                    getComponentId(), getScenarioId()
+                    getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity()
                 );
 
-        return HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioAssociationsItems> responseWrapper = HTTP2Request.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
+
+        return responseWrapper.getResponseEntity().getItems();
     }
 
     private static void removeTestingAssociation(String associationIdentity) {
@@ -135,6 +144,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "test.Initial.ap";
-        return testingRollUp = postComponent(componentName, scenarioName, ProcessGroupEnum.ROLL_UP);
+//        return testingRollUp = postComponent(componentName, scenarioName, ProcessGroupEnum.ROLL_UP);
+        return testingRollUp = postRollUp(componentName, scenarioName, ProcessGroupEnum.ROLL_UP);
     }
 }

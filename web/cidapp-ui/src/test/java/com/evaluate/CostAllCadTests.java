@@ -22,17 +22,17 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.Keys;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
 public class CostAllCadTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private CostDetailsPage costDetailsPage;
     private FileUploadPage fileUploadPage;
 
@@ -54,7 +54,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         costDetailsPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -63,7 +63,7 @@ public class CostAllCadTests extends TestBase {
             .openCostDetails()
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$24.29")));
+        assertThat(costDetailsPage.getCostContribution("Material Cost"), is(equalTo("$11.69")));
         assertThat(costDetailsPage.getCostContribution("Labor"), is(equalTo("$6.80")));
         assertThat(costDetailsPage.getCostContribution("Direct Overhead"), is(equalTo("$1.84")));
     }
@@ -97,7 +97,6 @@ public class CostAllCadTests extends TestBase {
     }*/
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - par")
     public void testCADFormatPar() {
@@ -110,7 +109,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -134,7 +133,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -144,7 +143,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
@@ -157,7 +155,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -181,7 +179,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -205,7 +203,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -216,7 +214,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
@@ -229,7 +226,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -240,7 +237,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
@@ -253,7 +249,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -264,7 +260,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParaSolid() {
@@ -277,7 +272,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -288,7 +283,6 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
@@ -301,7 +295,7 @@ public class CostAllCadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -334,7 +328,7 @@ public class CostAllCadTests extends TestBase {
     public void failedUpload() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"LargePart.prt.1");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "LargePart.prt.1");
 
         loginPage = new CidAppLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())
@@ -349,11 +343,11 @@ public class CostAllCadTests extends TestBase {
     public void failedBlankScenarioName() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,"PowderMetalShaft.stp");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
         fileUploadPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit("", resourceFile, FileUploadPage.class);
+            .uploadComponent(" " + Keys.BACK_SPACE, resourceFile);
 
         assertThat(fileUploadPage.getFieldWarningText(), containsString("Required."));
     }

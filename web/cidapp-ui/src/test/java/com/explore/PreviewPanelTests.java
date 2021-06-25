@@ -16,6 +16,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -45,7 +47,7 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS,10")
             .selectMaterial("ABS, 10% Glass")
@@ -59,6 +61,7 @@ public class PreviewPanelTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
     @TestRail(testCaseId = {"6351"})
     public void previewPanelMetrics() {
@@ -73,14 +76,14 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
             .submit()
             .costScenario()
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .highlightScenario("225_gasket-1-solid1", testScenarioName)
             .previewPanel();
 

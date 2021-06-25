@@ -62,6 +62,7 @@ public class NewWorkflowFeatures {
             valuesB.put(entry.getKey(), entry.getValue());
         }
 
+        newWorkflowPage.cancelNewWorkflow(NewWorkflowPage.Tab.DETAILS);
         return valuesB;
     }
 
@@ -248,6 +249,7 @@ public class NewWorkflowFeatures {
                 return null;
         }
 
+        newWorkflowPage.cancelNewWorkflow(NewWorkflowPage.Tab.DETAILS);
         return valuesB;
     }
 

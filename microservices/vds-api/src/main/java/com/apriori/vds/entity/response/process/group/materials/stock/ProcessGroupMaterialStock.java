@@ -1,0 +1,58 @@
+package com.apriori.vds.entity.response.process.group.materials.stock;
+
+import com.apriori.utils.http.enums.Schema;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Schema(location = "ProcessGroupMaterialStockResponse.json")
+@Data
+@JsonRootName(value = "response")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ProcessGroupMaterialStock {
+    private Double costPerUnit;
+    private String costUnits;
+    private String createdBy;
+    private String deletedBy;
+    private String description;
+    private Double flangeThickness;
+    private String formName;
+    private Double hardness;
+    private String hardnessSystem;
+    private Double height;
+    private String identity;
+    private Double insideDiameter;
+    private String isStructural;
+    private Double length;
+    private Double massPerMeter;
+    private String name;
+    private Double outsideDiameter;
+    private String stockForm;
+    private String structural;
+    private String subTypeName;
+    private Double thickness;
+    private String updatedBy;
+    private String virtual;
+    private Double wallThickness;
+    private Double webThickness;
+    private Double width;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime createdAt;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime deletedAt;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
+}

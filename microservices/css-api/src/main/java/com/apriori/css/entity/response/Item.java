@@ -1,19 +1,23 @@
 package com.apriori.css.entity.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @JsonRootName("response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,12 +30,30 @@ public class Item {
     private String componentName;
     private String componentType;
     private String componentFilename;
-    private String componentCreatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime componentCreatedAt;
     private String componentCreatedBy;
     private String componentCreatedByName;
-    private String componentUpdatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime componentUpdatedAt;
+    private String componentUpdatedBy;
+    private String componentUpdatedByName;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime createdAt;
+    private String createdBy;
+    private String createdByName;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime deletedAt;
+    private String deletedBy;
+    private String deletedByName;
+    private String identity;
     private String scenarioIdentity;
     private String scenarioName;
+    private String scenarioNotes;
     private String scenarioType;
     private String scenarioState;
     private String previousScenarioState;
@@ -39,35 +61,73 @@ public class Item {
     private String scenarioOwnedBy;
     private String scenarioOwnedByName;
     private Boolean scenarioLocked;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime scenarioLockedAt;
+    private Boolean scenarioLockedBy;
+    private Boolean scenarioLockedByName;
     private Boolean scenarioPublished;
-    private String scenarioCreatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime scenarioPublishedAt;
+    private String scenarioPublishedBy;
+    private String scenarioPublishedByName;
+    private String scenarioSystemLocked;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime scenarioCreatedAt;
     private String scenarioCreatedBy;
     private String scenarioCreatedByName;
-    private String scenarioUpdatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime scenarioUpdatedAt;
     private String iterationIdentity;
     private Integer iteration;
+    private String iterationCostingMessage;
     private Boolean latest;
     private String scenarioIterationKey;
+    private Boolean iterationHasCustomImage;
     private Boolean iterationHasWebImage;
     private Boolean iterationIsCadConnected;
-    private String iterationCreatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime iterationCreatedAt;
     private String iterationCreatedBy;
     private String iterationCreatedByName;
-    private String iterationUpdatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime iterationUpdatedAt;
+    private String iterationUpdatedBy;
+    private String iterationUpdatedByName;
     private CostingInput costingInput;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime scenarioAssignedAt;
+    private String scenarioAssignedBy;
+    private String scenarioAssignedByName;
+    private String scenarioAssignedTo;
+    private String scenarioAssignedToName;
+    private String scenarioCostMaturity;
     private List<Object> scenarioCustomAttributes;
+    private String scenarioDescription;
     private List<Object> scenarioDesignInvestigations;
     private List<Object> scenarioDesignIssues;
     private List<Object> scenarioDesignNotices;
     private ScenarioGcd scenarioGcd;
     private ScenarioMetadata scenarioMetadata;
     private List<Object> scenarioProcesses;
+    private String scenarioStatus;
+    private Integer scenarioSystemLockCode;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private String scenarioSystemLockedAt;
+    private String scenarioUpdatedBy;
+    private String scenarioUpdatedByName;
     private AnalysisOfChildren analysisOfChildren;
     private AnalysisOfScenario analysisOfScenario;
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
     private PartNestingDiagram partNestingDiagram;
     private Thumbnail thumbnail;
-    private Boolean scenarioSystemLocked;
 
     public static class AnalysisOfChildren {
     }

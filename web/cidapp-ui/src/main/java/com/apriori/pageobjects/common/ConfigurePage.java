@@ -2,6 +2,8 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,8 +12,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.ColumnsEnum;
-import utils.DirectionEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +24,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     @FindBy(xpath = "//label[.='Number of sticky columns']/ancestor::div//div[contains(@class,'apriori-select')]")
     private WebElement stickyDropdown;
 
-    @FindBy(css = "div[class='apriori-card medium-card shuttle-box-list card']")
+    @FindBy(css = ".apriori-card.medium-card.shuttle-box-list.card")
     private List<WebElement> columnList;
 
     private PageUtils pageUtils;

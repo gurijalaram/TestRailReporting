@@ -74,7 +74,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Ignore("Secondary Processes has not went in yet")
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5120", "5121", "5123"})
     @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
     public void secondaryProcessXray() {
@@ -88,7 +87,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS, 10% Glass")
             .submit();
@@ -243,7 +242,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("7075")
             .selectMaterial("Aluminum, Cast, ANSI 7075")
@@ -270,7 +269,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -297,7 +296,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit()
@@ -309,7 +308,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Certification"));
     }
 
-    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
+    /*
     @Test
     @TestRail(testCaseId = {"5132"})
     @Description("Test secondary process Paint")
@@ -427,7 +426,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit()
@@ -439,7 +438,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation"));
     }
 
-    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
+    /*
     @Test
     @TestRail(testCaseId = {"5116", "5119"})
     @Description("Multiple Secondary Processes before Costing")
@@ -473,7 +472,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }*/
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category({SmokeTests.class})
     @Test
     @Ignore("Secondary Processes has not went in yet")
     @TestRail(testCaseId = {"5117"})
@@ -489,7 +488,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
             .submit()
@@ -503,7 +502,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize / Carton Forming / Pack & Load"));
     }
 
-    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
+    /*
     @Test
     @TestRail(testCaseId = {"5131"})
     @Description("secondary process automatically added by aPriori")
@@ -789,7 +788,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openSecondaryProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .cancel()
@@ -800,7 +799,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Ignore("Secondary Processes has not went in yet")
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5127"})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
@@ -814,7 +812,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
             .submit(EvaluateToolbar.class)
@@ -824,7 +822,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     /*@Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5133", "5134", "5138"})
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {

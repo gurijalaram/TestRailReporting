@@ -20,4 +20,6 @@ public class PostComponentRequest {
     private String scenarioName;
     private Boolean override;
     private String fileContents;
+    private String componentType;
+    private String componentName;
 }
