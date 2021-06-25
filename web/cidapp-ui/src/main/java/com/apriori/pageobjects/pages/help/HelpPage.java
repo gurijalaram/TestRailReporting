@@ -14,10 +14,10 @@ public class HelpPage extends LoadableComponent<HelpPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(HelpPage.class);
 
-    @FindBy(css = "[data-ap-help='CIDesign:NGHELP:CID_QS_title_page']")
-    private WebElement onlineHelpButton;
+    @FindBy(css = "[data-icon='user-check']")
+    private WebElement userGuideButton;
 
-    @FindBy(css = "[data-ap-help='CIDesign:NGHELP:NG_DQS_chap_get_to_work']")
+    @FindBy(css = "[data-icon='flag']")
     private WebElement gettingStartedButton;
 
     @FindBy(css = "[data-ap-help='CIDesign:NGRN:NG_whats_new_2']")
@@ -47,7 +47,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(aboutaPrioriButton);
-        pageUtils.waitForElementToAppear(onlineHelpButton);
+        pageUtils.waitForElementToAppear(userGuideButton);
     }
 
     /**
@@ -67,8 +67,8 @@ public class HelpPage extends LoadableComponent<HelpPage> {
      *
      * @return new page object
      */
-    public HelpPage clickOnlineHelp() {
-        pageUtils.waitForElementAndClick(onlineHelpButton);
+    public HelpPage clickUserGuide() {
+        pageUtils.waitForElementAndClick(userGuideButton);
         return this;
     }
 
