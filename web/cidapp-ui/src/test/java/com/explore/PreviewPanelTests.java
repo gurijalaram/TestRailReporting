@@ -83,6 +83,7 @@ public class PreviewPanelTests extends TestBase {
             .submit()
             .costScenario()
             .clickExplore()
+            .selectFilter("Recent")
             .clickSearch(componentName)
             .highlightScenario(componentName, testScenarioName)
             .previewPanel();

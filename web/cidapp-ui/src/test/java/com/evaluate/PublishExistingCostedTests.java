@@ -67,6 +67,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
+            .selectFilter("Recent")
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName)
             .editScenario()
