@@ -82,7 +82,7 @@ public class UncostedComponents {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> x.getComponentType().equals("PARTS")
-                            && x.getComponentType().equals("ROLL_UP")).collect(Collectors.toList());
+                            || x.getComponentType().equals("ROLL_UP")).collect(Collectors.toList());
                     }
                 }
             } while (currentCount++ <= attemptsCount);
