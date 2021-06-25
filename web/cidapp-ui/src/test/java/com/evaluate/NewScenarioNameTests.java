@@ -87,8 +87,8 @@ public class NewScenarioNameTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .selectFilter("Recent")
-            .highlightScenario("partbody_2", testScenarioName)
+            .clickSearch(componentName)
+            .highlightScenario(componentName, testScenarioName)
             .createScenario()
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
