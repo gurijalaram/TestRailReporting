@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.MachiningDtcReportPage;
 import com.apriori.utils.TestRail;
@@ -26,6 +27,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.By;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 
@@ -309,13 +311,29 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"3025"})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
+        String exportSet = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
+            .selectExportSet(exportSet, GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
             .clickOk(GenericReportPage.class);
+
+        genericReportPage.waitForReportToLoad();
+
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
+                .getText().equals(exportSet)) {
+            genericReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .selectExportSet(exportSet, GenericReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("0")
+                    .selectExportSet(exportSet, GenericReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("1")
+                    .waitForExportSetSelected(exportSet)
+                    .clickOk(CastingDtcReportPage.class)
+                    .waitForReportToLoad();
+        }
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCMACHINING_001")));

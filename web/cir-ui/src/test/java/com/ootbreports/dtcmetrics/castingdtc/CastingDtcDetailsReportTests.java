@@ -1,8 +1,15 @@
 package com.ootbreports.dtcmetrics.castingdtc;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -153,7 +160,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7620"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Details Report")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
@@ -172,7 +179,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         castingDtcReportPage.openNewCidTabAndFocus(1);
 
         genericReportPage.openNewCidTabAndFocus(1);
-        /*GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -184,7 +191,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
         String holeIssueCidValue = guidanceIssuesPage.getDtcIssueCount("Hole");
 
-        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));*/
+        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 
     @Test

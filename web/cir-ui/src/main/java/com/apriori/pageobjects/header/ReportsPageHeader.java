@@ -108,6 +108,16 @@ public class ReportsPageHeader extends PageHeader {
     }
 
     /**
+     * Waits for no data available to appear
+     *
+     * @return instance of GenericReportPage
+     */
+    public GenericReportPage waitForNoDataAvailable() {
+        pageUtils.waitForElementToAppear(By.xpath("//span[contains(text(), 'No data available')]"));
+        return new GenericReportPage(driver);
+    }
+
+    /**
      * Check if Create button is displayed
      *
      * @return Visibility of button

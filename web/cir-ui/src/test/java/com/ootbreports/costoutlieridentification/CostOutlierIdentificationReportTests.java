@@ -4,9 +4,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CostOutlierIdentificationReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -114,7 +117,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1959"})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Main Report")
     public void testDataIntegrityAgainstCID() {
@@ -134,7 +137,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 "aPriori Cost Value (Cost Outlier) Bottom");
 
         genericReportPage.openNewCidTabAndFocus(1);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -144,7 +147,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
 
         BigDecimal cidFbc = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost")));
 
-        assertThat(reportsCostValue.compareTo(cidFbc), is(equalTo(0)));*/
+        assertThat(reportsCostValue.compareTo(cidFbc), is(equalTo(0)));
     }
 
     @Test
@@ -248,6 +251,8 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 ),
                 is(equalTo("100.0%"))
         );
+
+        costOutlierIdentificationReportPage.waitForSvgToRender();
 
         assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
                 is(equalTo(1))

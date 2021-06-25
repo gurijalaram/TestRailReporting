@@ -9,6 +9,7 @@ import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -506,7 +507,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[16]/td[27]")
     private WebElement costOutlierApCostOne;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[117]/td[24]")
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[18]/td[27]")
     private WebElement costOutlierApCostTwo;
 
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
@@ -566,15 +567,32 @@ public class GenericReportPage extends ReportsPageHeader {
         return PageFactory.initElements(driver, className);
     }
 
+    public GenericReportPage scrollToExportSetList() {
+        pageUtils.scrollWithJavaScript(exportSetList, true);
+        return this;
+    }
+
+    /**
+     * Wait for expected export set selection count
+     *
+     * @param expected String
+     * @return GenericReportPage instance
+     */
     public GenericReportPage waitForExpectedExportSetSelectionCount(String expected) {
         waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", expected);
         return this;
     }
 
+    /**
+     * Waits for export set to be selected
+     *
+     * @param exportSet String
+     * @return GenericReportPage instance
+     */
     public GenericReportPage waitForExportSetSelected(String exportSet) {
         pageUtils.waitForElementToAppear(
                 By.xpath(
-                        String.format("(//li[@title='---01-dtc-casting' and contains(@class, 'jr-isSelected')])[1]",
+                        String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]",
                                 exportSet)));
         return this;
     }
@@ -617,7 +635,10 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(locator);
         WebElement inputField = driver.findElement(locator);
         pageUtils.clearInput(inputField);
+
+        pageUtils.waitForSteadinessOfElement(locator);
         inputField.sendKeys(inputValue);
+
         return this;
     }
 
@@ -795,11 +816,14 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(sortOrderDropdown);
         if (!sortOrderDropdown.getAttribute("title").equals(sortOrder)) {
             sortOrderDropdown.click();
+            By inputLocator = By.xpath("//div[@id='sortOrder']//input");
+            pageUtils.waitForElementAndClick(inputLocator);
+            pageUtils.waitForSteadinessOfElement(inputLocator);
+            driver.findElement(inputLocator).sendKeys(sortOrder);
             By locator = By.xpath(String.format("//li[@title='%s']/div/a", sortOrder));
             pageUtils.waitForElementToAppear(locator);
             driver.findElement(locator).click();
         }
-        pageUtils.waitFor(1000);
         return this;
     }
 
@@ -1000,6 +1024,7 @@ public class GenericReportPage extends ReportsPageHeader {
         dateInputToUse.click();
         By locator = By.xpath("//input[contains(@class, 'date') and @value='']");
         pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForSteadinessOfElement(locator);
         dateInputToUse.sendKeys(valueToInput);
 
         return this;
@@ -1086,6 +1111,16 @@ public class GenericReportPage extends ReportsPageHeader {
     public void waitForReportToLoad() {
         pageUtils.waitForElementNotDisplayed(inputControlsDiv, 1);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+    }
+
+    /**
+     * Waits for SVG to render
+     */
+    public void waitForSvgToRender() {
+        By locator = By.xpath("//*[local-name()='svg']");
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.isElementDisplayed(locator);
+        pageUtils.isElementEnabled(driver.findElement(locator));
     }
 
     /**
@@ -1289,6 +1324,8 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!rollupDropdown.getAttribute("title").equals(rollupName)) {
             pageUtils.waitForElementAndClick(rollupDropdown);
             pageUtils.waitForElementAndClick(rollupSearchInput);
+            pageUtils.waitForSteadinessOfElement(By.xpath("//div[@id='rollup']//div[@class='jr-mSingleselect-search jr "
+                    .concat("jr-isOpen']/input")));
             rollupSearchInput.sendKeys(rollupName);
             By rollupLocator = By.xpath(String.format("//li[@title='%s']", rollupName));
             pageUtils.waitForElementToAppear(rollupLocator);
@@ -1423,6 +1460,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage enterSaveName(String saveName) {
         pageUtils.waitForElementAndClick(saveInput);
         pageUtils.clearInput(saveInput);
+        pageUtils.waitForSteadinessOfElement(By.xpath("input[id='savedValuesName']"));
         saveInput.sendKeys(saveName);
         return this;
     }
@@ -1629,9 +1667,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return GenericReportPage instance
      */
     public GenericReportPage selectComponent(String componentName) {
-        pageUtils.waitFor(1000);
         componentSelectDropdown.click();
         componentSelectSearchInput.click();
+        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Component Select']//input"));
         componentSelectSearchInput.sendKeys(componentName);
         By componentToSelectLocator = By.xpath(String.format("//a[contains(text(), '%s')]", componentName));
         pageUtils.waitForElementAndClick(componentToSelectLocator);
@@ -1759,7 +1797,8 @@ public class GenericReportPage extends ReportsPageHeader {
     public void searchForExportSet(String exportSet) {
         pageUtils.waitForElementAndClick(exportSetSearchInput);
         exportSetSearchInput.sendKeys(exportSet);
-
+        pageUtils.waitForSteadinessOfElement(By.xpath(
+                "//div[@id='exportSetName']//input[contains(@class, 'jr-mInput-search')]"));
         By listLocator = By.xpath(
                 "//div[@title='Single export set selection.']//ul[@class='jr-mSelectlist jr' and count(./li/*) = 2]");
         pageUtils.waitForElementToAppear(listLocator);
@@ -1830,10 +1869,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param inputString String - input string to input
      */
     public void searchListForName(String listName, String inputString) {
-        WebElement currentSearchInput = driver.findElement(By.xpath(
-                String.format("//div[@title='%s']//input[@placeholder='Search list...']", listName)));
+        By currentSearchInputLocator = By.xpath(
+                String.format("//div[@title='%s']//input[@placeholder='Search list...']", listName));
+        WebElement currentSearchInput = driver.findElement(currentSearchInputLocator);
         pageUtils.waitForElementAndClick(currentSearchInput);
         currentSearchInput.clear();
+        pageUtils.waitForSteadinessOfElement(currentSearchInputLocator);
         currentSearchInput.sendKeys(inputString);
         if (inputString.equals("fakename")) {
             By locator = By.xpath(String.format(
@@ -1902,6 +1943,7 @@ public class GenericReportPage extends ReportsPageHeader {
         inputString = inputString.isEmpty() ? "random" : inputString;
         pageUtils.waitForElementAndClick(assemblyNumberSearchCriteria);
         assemblyNumberSearchCriteria.clear();
+        pageUtils.waitForSteadinessOfElement(By.cssSelector("div[id='assemblyNumber'] input"));
         assemblyNumberSearchCriteria.sendKeys(inputString);
         assemblyNumberSearchCriteria.sendKeys(Keys.ENTER);
         String dropdownText = inputString.equals("random") ? "" : inputString;
@@ -2090,6 +2132,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(input);
         input.clear();
         input.click();
+        pageUtils.waitForSteadinessOfElement(locatorToUse);
         input.sendKeys(valueToInput);
     }
 

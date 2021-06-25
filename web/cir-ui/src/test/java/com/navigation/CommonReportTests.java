@@ -15,11 +15,13 @@ import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.By;
@@ -132,32 +134,29 @@ public class CommonReportTests extends TestBase {
 
         genericReportPage.waitForReportToLoad();
 
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
+                .getText().equals(exportSet)) {
+            genericReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad();
+
+            if (sortOrder.equals(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())) {
+                genericReportPage.selectExportSet(exportSet, GenericReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("0");
+            }
+
+            genericReportPage.selectExportSet(exportSet, GenericReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("1")
+                    .waitForExportSetSelected(exportSet)
+                    .clickOk(CastingDtcReportPage.class)
+                    .waitForReportToLoad();
+        }
+
         for (int i = 1; i < 5; i++) {
             assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(1)),
                     is(equalTo(partNames[0])));
             assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(2)),
                     is(equalTo(partNames[1])));
         }
-
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
-            is(equalTo(partNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
-            is(equalTo(partNames[1])));
-
-        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
-            is(equalTo(partNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "2"),
-            is(equalTo(partNames[1])));
-
-        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
-            is(equalTo(partNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "2"),
-            is(equalTo(partNames[1])));
-
-        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
-            is(equalTo(partNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
-            is(equalTo(partNames[1])));
     }
 
     /**

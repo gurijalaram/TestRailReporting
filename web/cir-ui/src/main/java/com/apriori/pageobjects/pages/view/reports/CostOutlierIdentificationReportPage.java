@@ -142,7 +142,6 @@ public class CostOutlierIdentificationReportPage extends GenericReportPage {
         return new BigDecimal(driver.findElement(locator).getText());
     }
 
-
     /**
      * Initialise cost outlier value element map
      */

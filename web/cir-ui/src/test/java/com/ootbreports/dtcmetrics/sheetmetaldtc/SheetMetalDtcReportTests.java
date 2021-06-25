@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.TestRail;
@@ -26,6 +27,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.By;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -248,6 +250,22 @@ public class SheetMetalDtcReportTests extends TestBase {
                 .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
                 .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+
+        sheetMetalDtcReportPage.waitForReportToLoad();
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
+                .getText().equals(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())) {
+            sheetMetalDtcReportPage.waitForReportToLoad();
+            sheetMetalDtcReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .waitForNoDataAvailable()
+                    .scrollToExportSetList()
+                    .waitForExpectedExportSetSelectionCount("0")
+                    .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("1")
+                    .waitForExportSetSelected(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                    .clickOk(SheetMetalDtcReportPage.class)
+                    .waitForReportToLoad();
+        }
 
         sheetMetalDtcReportPage.setReportName(ReportNamesEnum.SHEET_METAL_DTC.getReportName());
         sheetMetalDtcReportPage.hoverPartNameBubbleDtcReports();

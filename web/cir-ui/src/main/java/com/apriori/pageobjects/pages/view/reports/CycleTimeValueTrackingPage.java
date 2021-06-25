@@ -139,7 +139,10 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     public <T> T clickHyperlink(String name, Class<T> className) {
         pageUtils.waitForElementToAppear(chartSvg);
         By locator = By.xpath(String.format("//span[contains(text(), '%s')]", name));
+        pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
+        pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
+        driver.findElement(locator).click();
         return PageFactory.initElements(driver, className);
     }
 

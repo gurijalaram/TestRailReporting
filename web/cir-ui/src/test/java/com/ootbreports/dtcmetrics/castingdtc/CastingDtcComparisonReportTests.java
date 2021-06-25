@@ -1,7 +1,14 @@
 package com.ootbreports.dtcmetrics.castingdtc;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -22,6 +29,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
+import utils.Constants;
 
 public class CastingDtcComparisonReportTests extends TestBase {
 
@@ -148,7 +156,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7619"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Comparison Report")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
@@ -171,7 +179,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         castingDtcReportPage.openNewCidTabAndFocus(2);
 
         castingDtcReportPage.openNewCidTabAndFocus(2);
-        /*GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -183,7 +191,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
 
         String holeIssueCidValue = guidanceIssuesPage.getDtcIssueCount("Hole");
 
-        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));*/
+        assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
 
     @Test

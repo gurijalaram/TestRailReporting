@@ -5,9 +5,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.PlasticDtcReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -27,6 +30,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
+import utils.Constants;
 
 import java.math.BigDecimal;
 
@@ -163,7 +167,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1376"})
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
@@ -182,7 +186,7 @@ public class PlasticDtcReportTests extends TestBase {
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         genericReportPage.openNewCidTabAndFocus(1);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -193,7 +197,7 @@ public class PlasticDtcReportTests extends TestBase {
 
         BigDecimal cidFbcValue = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost")));
 
-        assertThat(reportFbcValue, is(equalTo(cidFbcValue)));*/
+        assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
 
     @Test

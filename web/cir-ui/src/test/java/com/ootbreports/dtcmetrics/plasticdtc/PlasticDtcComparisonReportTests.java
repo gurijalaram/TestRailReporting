@@ -256,6 +256,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
             .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
+        genericReportPage.waitForSvgToRender();
         String elementName = "PLASTIC MOULDED CAP THICKPART";
 
         assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),

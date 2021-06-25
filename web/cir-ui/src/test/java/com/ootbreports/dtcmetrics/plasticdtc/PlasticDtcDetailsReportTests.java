@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -31,7 +30,6 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public PlasticDtcDetailsReportTests() {
         super();

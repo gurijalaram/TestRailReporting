@@ -7,9 +7,13 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColumnIndexEnum;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
@@ -481,7 +485,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1930"})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
@@ -503,18 +507,19 @@ public class AssemblyDetailsReportTests extends TestBase {
             ComponentInfoColumnEnum.CAPITAL_INVESTMENT.getColumnName()
         );
 
-        /*ComponentsPage componentsPage = new ExplorePage(driver)
+        ComponentsListPage componentsPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
                 .addCriteriaWithOption("Component Name", "Equals", Constants.PISTON_ASSEMBLY_CID_NAME)
                 .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
-                .openFirstScenario().openComponents();
-          .openComponentsTable()
-            .openColumnsTable()
-            .checkColumnSettings(columnsToAdd)
-            .selectSaveButton();*/
+                .openFirstScenario()
+                .openComponents();
+                /*.openComponentsTable()
+                .openColumnsTable()
+                .checkColumnSettings(columnsToAdd)
+                .selectSaveButton();*/
 
         /*ArrayList<BigDecimal> cidPartOneValues = componentsPage
             .getTableValsByRow(
@@ -533,7 +538,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 ColumnIndexEnum.CID_PART_FOUR.getColumnIndex()
             );
 
-        componentsPage.switchBackToTabOne();*/
+        componentsPage.switchBackToTabOne();
         ArrayList<BigDecimal> reportsPartOneValues = assemblyDetailsReportPage.getValuesByRow(
                 ColumnIndexEnum.CIR_PART_ONE.getColumnIndex()
             );
@@ -547,7 +552,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 ColumnIndexEnum.CIR_PART_FOUR.getColumnIndex()
             );
 
-        /*assertThat(
+        assertThat(
             cidPartOneValues.equals(reportsPartFourValues),
             is(true)
         );
@@ -796,7 +801,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1924"})
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
@@ -819,7 +824,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             assemblyDetailsReportPage.getFiguresFromTable("Capital Investments"));
 
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -837,7 +842,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(reportsValues.get("Cycle Time"), is(equalTo(cidValues.get("Cycle Time"))));
         assertThat(reportsValues.get("Piece Part Cost"), is(cidValues.get("Piece Part Cost")));
         assertThat(reportsValues.get("Fully Burdened Cost"), is(cidValues.get("Fully Burdened Cost")));
-        assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));*/
+        assertThat(reportsValues.get("Capital Investments").substring(0, 3), is(cidValues.get("Capital Investments")));
     }
 
     @Test
@@ -896,7 +901,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1927"})
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
@@ -922,7 +927,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
 
-        /*ComponentsPage componentsPage = new ExplorePage(driver)
+        ComponentsListPage componentsListPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -932,7 +937,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .submit(ExplorePage.class)
                 .openFirstScenario().openComponents();
 
-        ArrayList<String> cidVpeValues = componentsListPage.getVpeValues();
+        /*ArrayList<String> cidVpeValues = componentsListPage.getVpeValues();
 
         assertThat(reportsVpeValues.equals(cidVpeValues), is(equalTo(true)));*/
     }

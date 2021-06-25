@@ -4,8 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -156,7 +159,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1715"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Report")
     public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
@@ -175,7 +178,7 @@ public class CastingDtcReportTests extends TestBase {
         String partName = genericReportPage.getPartNameDtcReports();
 
         genericReportPage.openNewCidTabAndFocus(1);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -184,14 +187,14 @@ public class CastingDtcReportTests extends TestBase {
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        BigDecimal cidFbcValue = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully BurdenedCost")));*/
+        BigDecimal cidFbcValue = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully BurdenedCost")));
 
         /*
             This is great now, but rounding in CID is not done at all really (long story)
             Thus this may start failing in due course, and can be fixed then
             Currency in Reports and CID needs to match for this test also (both default to USD)
          */
-        //assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
+        assertThat(reportFbcValue, is(equalTo(cidFbcValue)));
     }
 
     @Test
