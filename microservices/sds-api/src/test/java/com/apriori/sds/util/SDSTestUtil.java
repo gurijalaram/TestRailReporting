@@ -3,7 +3,6 @@ package com.apriori.sds.util;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -20,7 +19,6 @@ import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +73,7 @@ public class SDSTestUtil extends TestUtil {
         String componentName = "AGC0-LP-700144754.prt.1";
         ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
 
-        return postComponent(componentName, scenarioName, processGroup);
+        return postPart(componentName, scenarioName, processGroup);
     }
 
     /**
@@ -109,48 +107,52 @@ public class SDSTestUtil extends TestUtil {
     }
 
     /**
-     * Adds a new component
+     * Adds a new part
      *
      * @param componentName - the part name
      * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    protected static Item postComponent(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
-        final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
-                .body("component", PostComponentRequest.builder().filename(componentName)
-                    .scenarioName(scenarioName)
-                    .override(false)
-                    .fileContents(EncodedFileUtil.encodeFileFromCloudToBase64Binary(componentName, processGroup))
-                    .build());
+    protected static Item postPart(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
+        final PostComponentRequest postComponentRequest = PostComponentRequest.builder().filename(componentName)
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .override(false)
+            .fileContents(EncodedFileUtil.encodeFileFromCloudToBase64Binary(componentName, processGroup))
+            .build();
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
-
-        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
-            HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
-
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
-        componentsToDelete.add(itemResponse.get(0));
-
-        return itemResponse.get(0);
+        return postComponent(postComponentRequest);
     }
 
-    protected static Item postRollUp(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
+    /**
+     * Adds a new Roll up
+     *
+     * @param componentName - the roll up name
+     * @param scenarioName  - the scenario name
+     * @return responsewrapper
+     */
+    protected static Item postRollUp(String componentName, String scenarioName) {
+        final PostComponentRequest postComponentRequest = PostComponentRequest.builder()
+            .scenarioName(scenarioName)
+            .override(false)
+            .componentName(componentName)
+            .componentType("ROLLUP")
+            .build();
+
+        return postComponent(postComponentRequest);
+    }
+
+    protected static Item postComponent(final PostComponentRequest postComponentRequest) {
         final RequestEntity requestEntity =
             SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
-                .body("component", PostComponentRequest.builder()
-                    .scenarioName(scenarioName)
-                    .override(false)
-                    .componentName(componentName)
-                    .componentType("ROLLUP")
-                    .build());
+                .body("component", postComponentRequest);
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
-        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
+        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", postComponentRequest.getComponentName(), postComponentRequest.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName());
 
         componentsToDelete.add(itemResponse.get(0));
         return itemResponse.get(0);

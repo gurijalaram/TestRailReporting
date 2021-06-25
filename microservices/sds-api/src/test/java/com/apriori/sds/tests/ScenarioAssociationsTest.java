@@ -143,8 +143,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
         }
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "test.Initial.ap";
-//        return testingRollUp = postComponent(componentName, scenarioName, ProcessGroupEnum.ROLL_UP);
-        return testingRollUp = postRollUp(componentName, scenarioName, ProcessGroupEnum.ROLL_UP);
+        String componentName = "AutomationRollUp.ap";
+        return testingRollUp = postRollUp(componentName, scenarioName);
     }
 }

@@ -16,13 +16,11 @@ public class Constants {
 
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
-    //public static String environment = CommonConstants.getEnvironment();
     private static String sdsApiUrl;
     private static String secretKey;
     private static String apUserContext;
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
-//    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
     public static String environment;
 
     static {
