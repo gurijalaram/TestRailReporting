@@ -2,10 +2,10 @@ package com.apriori.cds.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.not;
 
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Site;
@@ -19,7 +19,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -27,24 +26,25 @@ import org.junit.Test;
 
 public class CdsSitesTests {
     private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private static ResponseWrapper<Customer> customer;
     private static String customerName;
     private static String cloudRef;
     private static String salesForceId;
     private static String emailPattern;
-    private static String siteName;
-    private static String userName;
+    private static String customerIdentity;
     private String url;
-    private String customerIdentityEndpoint;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private static String customerIdentityEndpoint;
 
     @BeforeClass
-    public static void setCustomerDetails() {
+    public static void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
-        siteName = generateStringUtil.generateSiteName();
-        userName = generateStringUtil.generateUserName();
+
+        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
     }
 
     @Before
@@ -92,10 +92,9 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"3299"})
     @Description("Add a site to a customer")
     public void addCustomerSite() {
+        String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
@@ -108,8 +107,6 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"3279"})
     @Description("Get Sites for a customer")
     public void getCustomerSites() {
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
         String siteEndpoint = String.format(url, String.format("customers/%s/sites", customerIdentity));
 
@@ -123,10 +120,9 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"5310"})
     @Description("Add a site to a customer")
     public void getCustomerSiteDetails() {
+        String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
@@ -142,13 +138,13 @@ public class CdsSitesTests {
     @Test
     @TestRail(testCaseId = {"5970"})
     public void deleteSite() {
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String userName = generateStringUtil.generateUserName();
+
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
 
-        assertThat(user.getStatusCode(), Matchers.is(Matchers.equalTo(HttpStatus.SC_CREATED)));
+        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String userIdentity = user.getResponseEntity().getResponse().getIdentity();
         String deleteEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
