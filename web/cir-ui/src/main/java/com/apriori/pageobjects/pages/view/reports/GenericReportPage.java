@@ -815,13 +815,15 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.scrollWithJavaScript(sortOrderDropdown, true);
         pageUtils.waitForElementToAppear(sortOrderDropdown);
         if (!sortOrderDropdown.getAttribute("title").equals(sortOrder)) {
+            pageUtils.waitForSteadinessOfElement(By.xpath("//div[@id='sortOrder']//a"));
             sortOrderDropdown.click();
             By inputLocator = By.xpath("//div[@id='sortOrder']//input");
-            pageUtils.waitForElementAndClick(inputLocator);
-            pageUtils.waitForSteadinessOfElement(inputLocator);
+            //pageUtils.waitForElementAndClick(inputLocator);
+            driver.findElement(inputLocator).click();
+            //pageUtils.waitForSteadinessOfElement(inputLocator);
             driver.findElement(inputLocator).sendKeys(sortOrder);
             By locator = By.xpath(String.format("//li[@title='%s']/div/a", sortOrder));
-            pageUtils.waitForElementToAppear(locator);
+            pageUtils.waitForElementToAppear(By.xpath(String.format("//li[@title='%s']/div/a", sortOrder)));
             driver.findElement(locator).click();
         }
         return this;
@@ -1121,6 +1123,15 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(locator);
         pageUtils.isElementDisplayed(locator);
         pageUtils.isElementEnabled(driver.findElement(locator));
+    }
+
+    /**
+     * Waits for sort order to appear on report
+     */
+    public void waitForSortOrderToAppearOnReport() {
+        pageUtils.waitForElementToAppear(
+                By.xpath("//span[contains(text(), 'Sort Metric')]/../following-sibling::td[2]/span")
+        );
     }
 
     /**

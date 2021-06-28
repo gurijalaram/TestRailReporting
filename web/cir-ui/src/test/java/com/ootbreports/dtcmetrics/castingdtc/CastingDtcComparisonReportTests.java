@@ -356,7 +356,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
-            SortOrderItemsEnum.OBSTRUCTED.getSortOrderItemName(),
+            SortOrderItemsEnum.OBSTRUCTED_INITIAL.getSortOrderItemName(),
             SortOrderItemsEnum.BARCO_INITIAL.getSortOrderItemName()
         );
     }
@@ -369,8 +369,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -382,8 +382,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -395,7 +395,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_TWO_INITIAL.getSortOrderItemName(),
             SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
@@ -408,7 +408,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
-            SortOrderItemsEnum.E3.getSortOrderItemName(),
+            SortOrderItemsEnum.E3_INITIAL.getSortOrderItemName(),
             SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }

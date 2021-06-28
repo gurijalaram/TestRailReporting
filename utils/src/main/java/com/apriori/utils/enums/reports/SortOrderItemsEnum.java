@@ -18,9 +18,16 @@ public enum SortOrderItemsEnum {
     BARCO_THREE("BARCO_R8761310"),
     GEAR_HOUSING_INITIAL("GEAR HOUSING (Initial)"),
     GEAR_HOUSING("GEAR HOUSING"),
-    E3("E3-241-4-N (Initial)"),
+    E3_INITIAL("E3-241-4-N (Initial)"),
+    E3("E3-241-4-N"),
     MLDES("40137441.MLDES.0002"),
-    B2("B2315");
+    B2("B2315"),
+    MACHINING_DTC_INITIAL("MACHININGDESIGN_TO_COST (Initial)"),
+    PARTBODY_INITIAL("PARTBODY_1 (Initial)"),
+    DTC_MACHINING_TOLERANCED("DTCMACHINING_001 (Toleranced)"),
+    PUNCH_INITIAL("PUNCH (Initial)"),
+    PMI_ROUGH_INITIAL("PMI_ROUGHNESSCREO (Initial)"),
+    PMI_PROFILE_INITIAL("PMI_PROFILEOFSURFACECREO (Initial)");
 
     private final String sortOrderItemName;
 

@@ -134,22 +134,40 @@ public class CommonReportTests extends TestBase {
 
         genericReportPage.waitForReportToLoad();
 
-        if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
-                .getText().equals(exportSet)) {
+        if (!driver.findElement(
+                By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
+                .getText().equals(exportSet) ||
+                !driver.findElement(
+                        By.xpath("//span[contains(text(), 'Sort Metric')]/../following-sibling::td[2]/span"))
+                        .getText().equals(sortOrder)) {
             genericReportPage.clickInputControlsButton()
                     .waitForInputControlsLoad();
+
+            if (!driver.findElement(
+                    By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
+                    .getText().equals(exportSet)) {
+                genericReportPage.selectExportSet(exportSet, GenericReportPage.class)
+                        .waitForExpectedExportSetSelectionCount("1")
+                        .waitForExportSetSelected(exportSet);
+            } else if (!driver.findElement(
+                    By.xpath("//span[contains(text(), 'Sort Metric')]/../following-sibling::td[2]/span"))
+                    .getText().equals(sortOrder)) {
+                genericReportPage.selectSortOrder(sortOrder)
+                        .waitForSortOrderSelection(sortOrder);
+            }
 
             if (sortOrder.equals(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())) {
                 genericReportPage.selectExportSet(exportSet, GenericReportPage.class)
                     .waitForExpectedExportSetSelectionCount("0");
             }
 
-            genericReportPage.selectExportSet(exportSet, GenericReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("1")
-                    .waitForExportSetSelected(exportSet)
-                    .clickOk(CastingDtcReportPage.class)
+            genericReportPage.clickOk(CastingDtcReportPage.class)
                     .waitForReportToLoad();
+            genericReportPage.waitForSvgToRender();
         }
+
+        genericReportPage.waitForSvgToRender();
+        genericReportPage.waitForSortOrderToAppearOnReport();
 
         for (int i = 1; i < 5; i++) {
             assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(1)),
@@ -168,7 +186,7 @@ public class CommonReportTests extends TestBase {
      */
     public void castingDtcDetailsSortOrderTest(String sortOrder, boolean doFourAsserts,
                                                   ArrayList<String> valuesToAssert) {
-        castingSortOrderTestCore(sortOrder);
+        castingSortOrderTestCore(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), sortOrder);
 
         assertThat(
                 castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -202,7 +220,7 @@ public class CommonReportTests extends TestBase {
      * @param elementNameTwo String
      */
     public void castingDtcComparisonSortOrderTest(String sortOrder, String elementNameOne, String elementNameTwo) {
-        castingSortOrderTestCore(sortOrder);
+        castingSortOrderTestCore(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), sortOrder);
 
         String[] elementNames = {elementNameOne, elementNameTwo};
 
@@ -481,13 +499,14 @@ public class CommonReportTests extends TestBase {
     /**
      * Core part of Casting DTC Sort Order test
      *
+     * @param reportName - String
      * @param sortOrder - String
      */
-    private void castingSortOrderTestCore(String sortOrder) {
+    private void castingSortOrderTestCore(String reportName, String sortOrder) {
         castingDtcReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportPage.class)
+                .navigateToReport(reportName, CastingDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), CastingDtcReportPage.class)
                 .selectSortOrder(sortOrder)
                 .clickOk(CastingDtcReportPage.class);
