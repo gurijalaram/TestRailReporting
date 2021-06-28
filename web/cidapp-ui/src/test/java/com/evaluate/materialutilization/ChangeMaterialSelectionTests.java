@@ -20,13 +20,11 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
-import java.util.Locale;
 
 public class ChangeMaterialSelectionTests extends TestBase {
 
@@ -193,6 +191,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
+            .selectFilter("Recent")
+            .clickSearch(componentName)
             .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));

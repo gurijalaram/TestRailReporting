@@ -47,7 +47,7 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS,10")
             .selectMaterial("ABS, 10% Glass")
@@ -76,7 +76,7 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
@@ -84,7 +84,8 @@ public class PreviewPanelTests extends TestBase {
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
-            .highlightScenario("225_gasket-1-solid1", testScenarioName)
+            .clickSearch(componentName)
+            .highlightScenario(componentName, testScenarioName)
             .previewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));
