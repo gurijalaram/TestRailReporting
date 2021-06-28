@@ -22,13 +22,30 @@ import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CdsSitesTests {
+    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private static String customerName;
+    private static String cloudRef;
+    private static String salesForceId;
+    private static String emailPattern;
+    private static String siteName;
+    private static String userName;
     private String url;
     private String customerIdentityEndpoint;
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+
+    @BeforeClass
+    public static void setCustomerDetails() {
+        customerName = generateStringUtil.generateCustomerName();
+        cloudRef = generateStringUtil.generateCloudReference();
+        salesForceId = generateStringUtil.generateSalesForceId();
+        emailPattern = "\\S+@".concat(customerName);
+        siteName = generateStringUtil.generateSiteName();
+        userName = generateStringUtil.generateUserName();
+    }
 
     @Before
     public void setServiceUrl() {
@@ -75,11 +92,6 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"3299"})
     @Description("Add a site to a customer")
     public void addCustomerSite() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
@@ -96,11 +108,6 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"3279"})
     @Description("Get Sites for a customer")
     public void getCustomerSites() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
@@ -116,11 +123,6 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"5310"})
     @Description("Add a site to a customer")
     public void getCustomerSiteDetails() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
@@ -140,12 +142,6 @@ public class CdsSitesTests {
     @Test
     @TestRail(testCaseId = {"5970"})
     public void deleteSite() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String userName = generateStringUtil.generateUserName();
-
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
