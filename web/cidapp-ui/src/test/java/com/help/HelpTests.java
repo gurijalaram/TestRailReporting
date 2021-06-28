@@ -39,7 +39,7 @@ public class HelpTests extends TestBase {
             .goToHelp()
             .clickUserGuide();
 
-        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight Design:User Guide"));
+        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight DesignUser Guide"));
     }
 
     @Test

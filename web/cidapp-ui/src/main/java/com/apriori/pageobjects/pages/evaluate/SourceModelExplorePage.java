@@ -5,6 +5,7 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
@@ -27,6 +28,9 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
     @FindBy(css = "div h5")
     private WebElement componentHeader;
 
+    @FindBy(css = ".paginator .left")
+    private WebElement paginatorDropdown;
+
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
 
@@ -36,7 +40,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
     @FindBy(id = "qa-scenario-list-filter-button")
     private WebElement filterButton;
 
-    @FindBy(id = "qa-scenario-list-filter-selector")
+    @FindBy(id = "qa-scenario-selector-table-filter-selector")
     private WebElement filterDropdown;
 
     @FindBy(css = "[id='qa-scenario-list-filter-selector'] input")
@@ -72,6 +76,17 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
     }
 
     /**
+     * Sets pagination to by default
+     *
+     * @return current page object
+     */
+    public SourceModelExplorePage setPagination() {
+        pageUtils.waitForElementAndClick(paginatorDropdown);
+        pageUtils.javaScriptClick(driver.findElement(By.xpath("//div[.='100']")));
+        return this;
+    }
+
+    /**
      * Uses type ahead to input the filter
      *
      * @param filter - the filter
@@ -79,6 +94,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      */
     public SourceModelExplorePage selectFilter(String filter) {
         pageUtils.typeAheadSelect(filterDropdown, filter);
+        setPagination();
         return this;
     }
 

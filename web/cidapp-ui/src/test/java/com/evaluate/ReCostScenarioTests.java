@@ -17,6 +17,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -35,6 +36,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
+    @Issue("MIC-3121")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6101"})
     @Description("Test recosting a cad file - Gear Making")

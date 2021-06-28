@@ -76,7 +76,7 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
@@ -89,8 +89,8 @@ public class PreviewPanelTests extends TestBase {
             .previewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));
-        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.50, 1));
-        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(0.88, 1));
+        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.48, 1));
+        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(0.86, 1));
         assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10526.66, 2));
     }
 }
