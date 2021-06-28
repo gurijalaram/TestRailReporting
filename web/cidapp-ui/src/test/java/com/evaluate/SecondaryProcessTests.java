@@ -774,6 +774,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     @Test
+    @Ignore("Secondary Processes have not been implemented yet")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5122"})
     @Description("Selections are cleared when user cancels changes")
