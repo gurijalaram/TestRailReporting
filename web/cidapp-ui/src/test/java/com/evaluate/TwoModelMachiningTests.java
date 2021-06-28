@@ -69,6 +69,8 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
             .selectSourcePart()
+            .selectFilter("Recent")
+            .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, testScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
