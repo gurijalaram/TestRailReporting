@@ -104,19 +104,22 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     }
 
     private UserGroupAssociation postUserGroupAssociation() {
-        //        UserGroupAssociation exampleOfUserGroupAssociation = getFirstUserGroupAssociation();
-        //        deleteUserGroupAssociationById(exampleOfUserGroupAssociation.getIdentity());
+//                List<UserGroupAssociation> exampleOfUserGroupAssociation = this.getUserGroupAssociationsResponse();
 
-        List<UserGroupAssociation> userGroupAssociations = this.getUserGroupAssociationsResponse();
-        UserGroupAssociation exampleOfUserGroupAssociation = getFirstUserGroupAssociation();
+//                if(exampleOfUserGroupAssociation.isEmpty()) {
+//                    deleteUserGroupAssociationById(exampleOfUserGroupAssociation.getIdentity());
+//                }
+
+//        List<UserGroupAssociation> userGroupAssociations = this.getUserGroupAssociationsResponse();
+//        UserGroupAssociation exampleOfUserGroupAssociation = getFirstUserGroupAssociation();
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity())
                 .body(UserGroupAssociationRequest.builder()
-                        .customerIdentity(exampleOfUserGroupAssociation.getCustomerIdentity())
-                        .userIdentity(exampleOfUserGroupAssociation.getUserIdentity())
-                        .createdBy(exampleOfUserGroupAssociation.getCreatedBy())
+                        .customerIdentity(customerId)
+                        .userIdentity(userId)
+                        .createdBy(userId)
                         .build()
                 );
 
