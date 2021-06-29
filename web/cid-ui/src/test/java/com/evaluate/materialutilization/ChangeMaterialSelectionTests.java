@@ -36,7 +36,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"864", "866", "867"})
+    @TestRail(testCaseId = {"864", "866", "867", "6349"})
     @Description("Test making changes to the Material for Additive Manufacturing, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestAdditive() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
@@ -228,7 +228,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"864", "866", "867"})
+    @TestRail(testCaseId = {"864", "866", "867", ""})
     @Description("Test making changes to the Material for Rapid Prototyping, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestRapidPrototyping() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
