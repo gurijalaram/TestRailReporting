@@ -51,8 +51,6 @@ public class CdsGetCustomerTests {
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-
-        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
     }
 
     @AfterClass
