@@ -93,7 +93,8 @@ public class CdsGetCustomerTests {
         RequestEntity requestEntity = RequestEntity.init(customerIdentityEndpoint, Customer.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("customer",
-                Customer.builder().emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
+                Customer.builder()
+                    .emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
                     .build());
 
         ResponseWrapper<Customer> updatedEmail = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
