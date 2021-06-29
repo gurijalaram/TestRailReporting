@@ -56,7 +56,7 @@ public class CdsDeploymentsTests {
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
+        String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
@@ -81,7 +81,7 @@ public class CdsDeploymentsTests {
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
+        String siteIdentity = site.getResponseEntity().getIdentity();
 
         String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
@@ -110,7 +110,7 @@ public class CdsDeploymentsTests {
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
+        String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
