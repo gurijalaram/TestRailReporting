@@ -55,7 +55,7 @@ public class CdsSitesApplicationsTests {
         String siteID = generateStringUtil.generateSiteID();
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
@@ -82,7 +82,7 @@ public class CdsSitesApplicationsTests {
         String siteID = generateStringUtil.generateSiteID();
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);

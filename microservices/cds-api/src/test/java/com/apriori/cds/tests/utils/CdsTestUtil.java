@@ -71,18 +71,19 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
             .setBody("customer",
-                new Customer().setName(name)
-                    .setDescription("Add new customers api test")
-                    .setCustomerType("CLOUD_ONLY")
-                    .setCreatedBy("#SYSTEM00000")
-                    .setCloudReference(cloudReference)
-                    .setSalesforceId(salesForceId)
-                    .setActive(true)
-                    .setMfaRequired(false)
-                    .setUseExternalIdentityProvider(false)
-                    .setMaxCadFileRetentionDays(1095)
-                    .setMaxCadFileSize(51)
-                    .setEmailRegexPatterns(Arrays.asList(email + ".com", email + ".co.uk")));
+                Customer.builder().name(name)
+                    .description("Add new customers api test")
+                    .customerType("CLOUD_ONLY")
+                    .createdBy("#SYSTEM00000")
+                    .cloudReference(cloudReference)
+                    .salesforceId(salesForceId)
+                    .active(true)
+                    .mfaRequired(false)
+                    .useExternalIdentityProvider(false)
+                    .maxCadFileRetentionDays(1095)
+                    .maxCadFileSize(51)
+                    .emailRegexPatterns(Arrays.asList(email + ".com", email + ".co.uk"))
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }

@@ -50,8 +50,8 @@ public class CdsCustomersTests {
         ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(url, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getMaxCadFileRetentionDays(), is(not(nullValue())));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getItems().get(0).getMaxCadFileRetentionDays(), is(not(nullValue())));
     }
 
     @Test
@@ -64,9 +64,9 @@ public class CdsCustomersTests {
         String emailPattern = "\\S+@".concat(customerName);
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
     }
 }

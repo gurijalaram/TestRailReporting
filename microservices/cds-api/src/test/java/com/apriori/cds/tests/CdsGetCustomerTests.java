@@ -18,7 +18,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.hamcrest.CoreMatchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,7 +49,7 @@ public class CdsGetCustomerTests {
         updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateCustomerName());
 
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
     }
 
@@ -65,39 +64,40 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"3278"})
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
-        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
 
         ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(customerIdentityEndpoint, Customer.class);
-        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
-        assertThat(response.getResponseEntity().getResponse().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
+        assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
+        assertThat(response.getResponseEntity().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
 
     @Test
     @TestRail(testCaseId = {"5957"})
     @Description("Get customer applications")
     public void getCustomersApplications() {
-        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
 
         String applicationsEndpoint = String.format(url, String.format("customers/%s/applications", customerIdentity));
 
         ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(applicationsEndpoint, Applications.class);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), CoreMatchers.is(equalTo(0)));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(equalTo(0)));
     }
 
     @Test
     @TestRail(testCaseId = {"5305"})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
-        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
 
         RequestEntity requestEntity = RequestEntity.init(customerIdentityEndpoint, Customer.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("customer",
-                new Customer().setEmailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk")));
+                Customer.builder().emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
+                    .build());
 
         ResponseWrapper<Customer> updatedEmail = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
 
-        assertThat(updatedEmail.getResponseEntity().getResponse().getEmailRegexPatterns(), hasItem(updatedEmailPattern + ".com"));
+        assertThat(updatedEmail.getResponseEntity().getEmailRegexPatterns(), hasItem(updatedEmailPattern + ".com"));
     }
 }
