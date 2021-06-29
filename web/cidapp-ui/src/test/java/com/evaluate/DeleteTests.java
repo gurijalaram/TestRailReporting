@@ -18,6 +18,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -34,8 +35,8 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @Ignore
-    @Category(SmokeTests.class)
+    @Ignore("Processing state")
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6736", "5431"})
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
@@ -64,7 +65,8 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @Ignore
+    @Ignore("ProcessingState")
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"7709"})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
