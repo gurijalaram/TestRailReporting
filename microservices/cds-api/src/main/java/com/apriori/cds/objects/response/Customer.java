@@ -20,6 +20,10 @@ public class Customer {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    private String deletedBy;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime deletedAt;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
@@ -79,6 +83,24 @@ public class Customer {
 
     public Customer setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
+    }
+
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    public Customer setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
+        return this;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public Customer setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
         return this;
     }
 
