@@ -51,6 +51,8 @@ public class CdsGetCustomerTests {
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+
+        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
     }
 
     @AfterClass
@@ -64,8 +66,6 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"3278"})
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
-        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
-
         ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(customerIdentityEndpoint, Customer.class);
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
@@ -75,8 +75,6 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"5957"})
     @Description("Get customer applications")
     public void getCustomersApplications() {
-        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
-
         String applicationsEndpoint = String.format(url, String.format("customers/%s/applications", customerIdentity));
 
         ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(applicationsEndpoint, Applications.class);
@@ -88,8 +86,6 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"5305"})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
-        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
-
         RequestEntity requestEntity = RequestEntity.init(customerIdentityEndpoint, Customer.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("customer",
