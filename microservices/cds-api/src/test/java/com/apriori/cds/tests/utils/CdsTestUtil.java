@@ -149,11 +149,12 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, Site.class)
             .setBody("site",
-                new Site().setName(siteName)
-                    .setDescription("Site created by automation test")
-                    .setSiteId(siteID)
-                    .setCreatedBy("#SYSTEM00000")
-                    .setActive(true));
+                Site.builder().name(siteName)
+                    .description("Site created by automation test")
+                    .siteId(siteID)
+                    .createdBy("#SYSTEM00000")
+                    .active(true)
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }

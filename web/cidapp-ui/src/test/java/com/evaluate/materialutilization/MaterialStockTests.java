@@ -160,7 +160,7 @@ public class MaterialStockTests extends TestBase {
             .openMaterialProcess()
             .goToStockTab();
 
-        assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("3 in OD. 20 ft lengths")));
+        assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("3 in OD. 20 ft lengths")));
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
     }
 }
