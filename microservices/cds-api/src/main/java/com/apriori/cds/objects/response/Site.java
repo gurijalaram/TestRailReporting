@@ -3,18 +3,29 @@ package com.apriori.cds.objects.response;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/SiteSchema.json")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+@JsonRootName("response")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Site {
-    private Site response;
     private String identity;
     private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
@@ -27,104 +38,4 @@ public class Site {
     private String customerIdentity;
     private List<Deployment> deployments;
     private List<LicensedApplication> licensedApplications = null;
-
-
-    public Site getResponse() {
-        return response;
-    }
-
-    public Site setResponse(Site response) {
-        this.response = response;
-        return this;
-    }
-
-    public List<LicensedApplication> getLicensedApplications() {
-        return licensedApplications;
-    }
-
-    public Site setLicensedApplications(List<LicensedApplication> licensedApplications) {
-        this.licensedApplications = licensedApplications;
-        return this;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public Site setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public Site setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public Site setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Site setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Site setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public Site setActive(Boolean active) {
-        this.active = active;
-        return this;
-    }
-
-    public String getSiteId() {
-        return siteId;
-    }
-
-    public Site setSiteId(String siteId) {
-        this.siteId = siteId;
-        return this;
-    }
-
-    public String getCustomerIdentity() {
-        return customerIdentity;
-    }
-
-    public Site setCustomerIdentity(String customerIdentity) {
-        this.customerIdentity = customerIdentity;
-        return this;
-    }
-
-    public List<Deployment> getDeployments() {
-        return deployments;
-    }
-
-    public Site setDeployments(List<Deployment> deployments) {
-        this.deployments = deployments;
-        return this;
-    }
 }
