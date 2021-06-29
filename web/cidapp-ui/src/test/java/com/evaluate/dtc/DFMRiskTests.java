@@ -315,8 +315,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         // TODO uncomment this section when update cad file is implemented
         /*        evaluatePage.updateCadFile(cadResourceFile);
