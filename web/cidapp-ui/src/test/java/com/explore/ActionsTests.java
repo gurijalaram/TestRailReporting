@@ -29,6 +29,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -602,6 +603,7 @@ public class ActionsTests extends TestBase {
 
     @Ignore("Not sure if this is allowed or not yet")
     @Test
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6727"})
     @Description("Ensure scripts cannot be entered into text input fields")
     public void cannotUseScript() {

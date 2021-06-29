@@ -21,6 +21,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -245,7 +246,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Test
     //TODO update testrail case 719 when editing tolerances are ported
     @Ignore("Requires tolerances for additional operation")
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, IgnoreTests.class})
     @TestRail(testCaseId = {"6502", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {

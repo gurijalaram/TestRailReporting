@@ -19,6 +19,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -115,6 +116,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6216"})
     @Description("Test private criteria assembly")
@@ -141,6 +143,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6217"})
     @Description("Test private criteria assembly status")
@@ -200,6 +203,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6219"})
     @Description("Test public criteria assembly description")
