@@ -44,7 +44,7 @@ public class CdsSitesTests {
         emailPattern = "\\S+@".concat(customerName);
 
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
     }
 
