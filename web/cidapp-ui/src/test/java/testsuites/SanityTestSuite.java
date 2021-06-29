@@ -37,7 +37,7 @@ import org.junit.runners.Suite;
 import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
-@ProjectRunID("562")
+@ProjectRunID("769")
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SanityTests.class)
 @Suite.SuiteClasses({

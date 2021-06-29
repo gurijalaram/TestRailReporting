@@ -38,7 +38,7 @@ import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
-@ProjectRunID("562")
+@ProjectRunID("767")
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SmokeTests.class)
 @Categories.ExcludeCategory(IgnoreTests.class)
