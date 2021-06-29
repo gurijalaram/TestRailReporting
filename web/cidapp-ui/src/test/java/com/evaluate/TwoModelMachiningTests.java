@@ -161,7 +161,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(96.98, 1)));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(15.36, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(18.88, 5));
         assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(2.33, 1)));
 
         evaluatePage.clickExplore()
