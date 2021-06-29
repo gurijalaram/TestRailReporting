@@ -35,7 +35,7 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Description("Test preview panel data is displayed")
-    @TestRail(testCaseId = {"6350"})
+    @TestRail(testCaseId = {"6350", "6349"})
     public void testPreviewPanelDisplay() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -63,7 +63,7 @@ public class PreviewPanelTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
-    @TestRail(testCaseId = {"6351"})
+    @TestRail(testCaseId = {"6351", "6201", "6352"})
     public void previewPanelMetrics() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;

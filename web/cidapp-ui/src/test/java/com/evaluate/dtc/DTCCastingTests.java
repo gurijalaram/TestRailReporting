@@ -246,7 +246,7 @@ public class DTCCastingTests extends TestBase {
     } */
 
     @Test
-    @TestRail(testCaseId = {"6385", "6393", "6394"})
+    @TestRail(testCaseId = {"6385", "6393", "6394", "8333"})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
 
