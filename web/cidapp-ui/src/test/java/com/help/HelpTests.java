@@ -15,6 +15,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -43,6 +44,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
+    @Ignore("Currently no help button for inputs")
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void moreInputsHelp() {
@@ -81,7 +83,7 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Process Details"));
     }
 
     @Test
@@ -144,6 +146,6 @@ public class HelpTests extends TestBase {
             .openCostDetails()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Results Details"));
     }
 }
