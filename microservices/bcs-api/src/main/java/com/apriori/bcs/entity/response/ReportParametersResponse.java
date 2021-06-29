@@ -9,5 +9,10 @@ public class ReportParametersResponse {
     private String partNumber;
     private String exportSetName;
     private String scenarioName;
+    private String sortMetric;
+    private String massMetric;
+    private String costMetric;
+    private String[] riskRating;
+    private String rollup;
 }
 
