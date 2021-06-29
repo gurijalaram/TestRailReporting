@@ -6,6 +6,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
+import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.library.LibraryPage;
@@ -128,42 +130,26 @@ public class CommonReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
+            .waitForInputControlsLoad()
             .selectExportSet(exportSet, GenericReportPage.class)
             .selectSortOrder(sortOrder)
+            .waitForLoadingPopupToDisappear()
             .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
 
-        if (!driver.findElement(
-                By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
-                .getText().equals(exportSet) ||
-                !driver.findElement(
-                        By.xpath("//span[contains(text(), 'Sort Metric')]/../following-sibling::td[2]/span"))
-                        .getText().equals(sortOrder)) {
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
+                .getText().equals(exportSet)) {
             genericReportPage.clickInputControlsButton()
-                    .waitForInputControlsLoad();
-
-            if (!driver.findElement(
-                    By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
-                    .getText().equals(exportSet)) {
-                genericReportPage.selectExportSet(exportSet, GenericReportPage.class)
-                        .waitForExpectedExportSetSelectionCount("1")
-                        .waitForExportSetSelected(exportSet);
-            } else if (!driver.findElement(
-                    By.xpath("//span[contains(text(), 'Sort Metric')]/../following-sibling::td[2]/span"))
-                    .getText().equals(sortOrder)) {
-                genericReportPage.selectSortOrder(sortOrder)
-                        .waitForSortOrderSelection(sortOrder);
-            }
+                    .waitForInputControlsLoad()
+                    .selectExportSet(exportSet, GenericReportPage.class)
+                    .waitForExpectedExportSetSelectionCount("1")
+                    .waitForExportSetSelected(exportSet);
 
             if (sortOrder.equals(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())) {
                 genericReportPage.selectExportSet(exportSet, GenericReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("0");
+                        .waitForExpectedExportSetSelectionCount("0");
             }
-
-            genericReportPage.clickOk(CastingDtcReportPage.class)
-                    .waitForReportToLoad();
-            genericReportPage.waitForSvgToRender();
         }
 
         genericReportPage.waitForSvgToRender();
@@ -477,7 +463,7 @@ public class CommonReportTests extends TestBase {
         String reportsCiCost = assemblyCostReportPage.getGeneralCostInfoValue("Capital", false);
 
         assemblyCostReportPage.openNewCidTabAndFocus(1);
-        /*EvaluatePage evaluatePage = new ExplorePage(driver)
+        EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -493,7 +479,8 @@ public class CommonReportTests extends TestBase {
         assertThat(reportsScenarioName, is(equalTo(evaluatePage.getCurrentScenarioName())));
 
         assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getCostSumValue("Piece Part Cost"))));
-        assertThat(reportsCiCost, is(equalTo(String.valueOf(evaluatePage.getCostResults("Total Capital Investment")))));*/
+        assertThat(reportsCiCost,
+                is(equalTo(String.valueOf(evaluatePage.getCostResults("Total Capital Investment")))));
     }
 
     /**

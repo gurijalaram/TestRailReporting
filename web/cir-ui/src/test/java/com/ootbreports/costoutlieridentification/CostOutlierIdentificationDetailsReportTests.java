@@ -234,7 +234,6 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         );
     }
 
-
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6990"})

@@ -825,6 +825,8 @@ public class GenericReportPage extends ReportsPageHeader {
             By locator = By.xpath(String.format("//li[@title='%s']/div/a", sortOrder));
             pageUtils.waitForElementToAppear(By.xpath(String.format("//li[@title='%s']/div/a", sortOrder)));
             driver.findElement(locator).click();
+            pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='sortOrder']//a[@title='%s']", sortOrder)));
+            clickUseLatestExportDropdownTwice();
         }
         return this;
     }
@@ -934,9 +936,24 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T clickOk(Class<T> className) {
         pageUtils.waitForElementAndClick(okButton);
-        okButton.click();
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        //waitForSvgToRender();
+        waitForReportToLoad();
+        if (!getInputControlsDivClassName().contains("hidden") && okButton.isDisplayed() && okButton.isEnabled()) {
+            okButton.click();
+        }
         pageUtils.waitForElementToAppear(upperTitle);
         return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Waits for loading popup to disappear
+     *
+     * @return instance of GenericReportPage
+     */
+    public GenericReportPage waitForLoadingPopupToDisappear() {
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
     }
 
     /**
