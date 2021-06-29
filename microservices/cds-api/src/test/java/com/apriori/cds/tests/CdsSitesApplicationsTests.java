@@ -60,7 +60,7 @@ public class CdsSitesApplicationsTests {
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
+        String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
@@ -87,7 +87,7 @@ public class CdsSitesApplicationsTests {
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String siteIdentity = site.getResponseEntity().getResponse().getIdentity();
+        String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
