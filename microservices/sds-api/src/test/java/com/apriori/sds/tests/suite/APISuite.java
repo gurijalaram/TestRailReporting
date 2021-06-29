@@ -15,12 +15,11 @@ import org.junit.runners.Suite;
 @ProjectRunID("656")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    ComponentsTest.class,
-    ConnectionsTest.class,
-    CostingTemplatesTest.class,
-    IterationsTest.class,
+//    ComponentsTest.class,
+//    ConnectionsTest.class,
+//    CostingTemplatesTest.class,
     ScenarioAssociationsTest.class,
-    ScenariosTest.class
+//    ScenariosTest.class
 })
 public class APISuite {
 }

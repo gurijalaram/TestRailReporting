@@ -48,8 +48,7 @@ public class CidAppTestUtil {
 
         token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
 
-        RequestEntityUtil.useTokenForRequests(token);
-        return postComponents(componentName, scenarioName, resourceFile);
+        return postComponents(componentName, scenarioName, resourceFile, token);
     }
 
 
@@ -73,7 +72,7 @@ public class CidAppTestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
 
         return itemResponse.get(0);
     }
@@ -85,20 +84,21 @@ public class CidAppTestUtil {
      * @param componentName - the part name
      * @return responsewrapper
      */
-    public Item postComponents(String componentName, String scenarioName, File resourceFile) {
+    public Item postComponents(String componentName, String scenarioName, File resourceFile, String token) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
                 .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
-                    .use("scenarioName", scenarioName));
+                    .use("scenarioName", scenarioName))
+                .token(token);
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
 
         return itemResponse.get(0);
     }

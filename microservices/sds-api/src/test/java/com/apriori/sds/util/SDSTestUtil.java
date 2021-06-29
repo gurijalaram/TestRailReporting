@@ -24,14 +24,14 @@ import java.util.List;
 
 public class SDSTestUtil extends TestUtil {
 
-    private static final List<Item> componentsToDelete = new ArrayList<>();
+    protected static final List<Item> scenariosToDelete = new ArrayList<>();
     private static Item testingComponent;
 
     @AfterClass
     public static void clearTestingData() {
-        if (!componentsToDelete.isEmpty()) {
-            componentsToDelete.forEach(component -> {
-                removeTestingComponent(component.getComponentIdentity(), component.getScenarioIdentity());
+        if (!scenariosToDelete.isEmpty()) {
+            scenariosToDelete.forEach(component -> {
+                removeTestingScenario(component.getComponentIdentity(), component.getScenarioIdentity());
             });
         }
     }
@@ -83,7 +83,7 @@ public class SDSTestUtil extends TestUtil {
      * @param scenarioId  - scenario id
      * @return response object
      */
-    protected static void removeTestingComponent(final String componentId, final String scenarioId) {
+    protected static void removeTestingScenario(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
             SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
             .inlineVariables(componentId, scenarioId);
@@ -154,7 +154,7 @@ public class SDSTestUtil extends TestUtil {
 
         List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName());
 
-        componentsToDelete.add(itemResponse.get(0));
+        scenariosToDelete.add(itemResponse.get(0));
         return itemResponse.get(0);
     }
 }

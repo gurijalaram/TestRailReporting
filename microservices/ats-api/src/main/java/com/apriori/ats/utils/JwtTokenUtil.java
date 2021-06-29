@@ -13,6 +13,7 @@ import org.apache.http.HttpStatus;
 
 @Slf4j
 public class JwtTokenUtil {
+    private static String currentToken;
 
     private String username = Constants.getAtsTokenUsername();
     private String email = Constants.getAtsTokenEmail();
@@ -20,7 +21,6 @@ public class JwtTokenUtil {
     private String secretKey = Constants.getSecretKey();
     private String issuer = Constants.getAtsTokenIssuer();
     private String subject = Constants.getAtsTokenSubject();
-    private String currentToken;
 
     public JwtTokenUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername().split("@")[0];
@@ -36,16 +36,13 @@ public class JwtTokenUtil {
      * @return string
      */
     public String retrieveJwtToken() {
-
         if (currentToken != null) {
             return currentToken;
         }
 
-        String url;
-
         log.info("Retrieving JWT Token...");
 
-        url = apiUrl.concat(String.format("/tokens?key=%s", secretKey));
+        String url = apiUrl.concat(String.format("/tokens?key=%s", secretKey));
         TokenRequest body = new TokenRequest();
         TokenInformation information = new TokenInformation();
         information

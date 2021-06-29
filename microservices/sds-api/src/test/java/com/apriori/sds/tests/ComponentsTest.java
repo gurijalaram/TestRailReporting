@@ -46,7 +46,7 @@ public class ComponentsTest extends SDSTestUtil {
     public void postComponents() {
         final Item postComponentResponse = postTestingComponent();
 
-        removeTestingComponent(postComponentResponse.getComponentIdentity(),
+        removeTestingScenario(postComponentResponse.getComponentIdentity(),
             postComponentResponse.getScenarioIdentity());
     }
 

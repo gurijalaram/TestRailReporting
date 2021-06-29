@@ -22,4 +22,6 @@ public class PostComponentRequest {
     private String fileContents;
     private String componentType;
     private String componentName;
+    private String updatedBy;
+    private String createdBy;
 }

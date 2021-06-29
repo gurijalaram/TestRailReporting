@@ -15,6 +15,7 @@ import org.junit.Assert;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -30,8 +31,8 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
-        return getCssComponent(componentName, scenarioName, "NOT_COSTED");
+    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, String token) {
+        return getCssComponent(componentName, scenarioName, token, "NOT_COSTED");
     }
 
     /**
@@ -41,14 +42,25 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getCssComponent(String componentName, String scenarioName, String verifiedState) {
+    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
+        return getCssComponent(componentName, scenarioName, new JwtTokenUtil().retrieveJwtToken(), "NOT_COSTED");
+    }
+
+    /**
+     * Gets component from Css
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return response object
+     */
+    public List<Item> getCssComponent(String componentName, String scenarioName, String token, String verifiedState) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
-            .token(new JwtTokenUtil().retrieveJwtToken());
+            .token(token);
 
+        final int attemptsCount = 60;
+        final int secondsToWait = 2;
         int currentCount = 0;
-        int attemptsCount = 60;
-        int secondsToWait = 2;
 
         try {
 
@@ -60,19 +72,19 @@ public class UncostedComponents {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                List<Item> responseItems = scenarioRepresentation.getResponseEntity().getItems();
+                final List<Item> items = scenarioRepresentation.getResponseEntity().getItems();
 
-                if (!responseItems.isEmpty()) {
+                if (!items.isEmpty()) {
+                    final Item firstItem = scenarioRepresentation.getResponseEntity().getItems().get(0);
 
-                    Item validateItem = responseItems.get(0);
-                    if (validateItem.getScenarioState().equals("PROCESSING_FAILED")) {
+                    if (firstItem.getScenarioState().equals("PROCESSING_FAILED")) {
                         throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                     }
 
-                    if (validateItem.getScenarioState().equals(verifiedState.toUpperCase())) {
+                    if (firstItem.getScenarioState().equals(verifiedState.toUpperCase())) {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                        return scenarioRepresentation.getResponseEntity().getItems();//.stream().filter(x -> x.getComponentType().equals("PART")).collect(Collectors.toList());
+                        return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                     }
                 }
             } while (currentCount++ <= attemptsCount);
