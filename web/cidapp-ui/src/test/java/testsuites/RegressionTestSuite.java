@@ -34,12 +34,13 @@ import com.settings.DecimalPlaceTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
-@ProjectRunID("562")
+@ProjectRunID("768")
 @RunWith(CategorySuiteRunner.class)
-@Categories.ExcludeCategory({SmokeTests.class, SanityTests.class})
+@Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
 @Suite.SuiteClasses({
     CostAllCadTests.class,
     CostScenarioTests.class,

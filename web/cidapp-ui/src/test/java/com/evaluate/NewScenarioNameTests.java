@@ -20,6 +20,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -61,7 +62,7 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.getCurrentScenarioName(), is(testScenarioName2));
     }
 
-    @Category(SmokeTests.class)
+    @Category(IgnoreTests.class)
     @Test
     @Ignore("At the moment a new scenario name cannot be created from a public scenario")
     @TestRail(testCaseId = {"5950", "5951", "5952"})
