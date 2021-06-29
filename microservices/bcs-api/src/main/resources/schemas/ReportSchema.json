@@ -51,32 +51,97 @@
     },
     "reportParameters": {
       "type": "object",
-      "required": [
-        "roundToDollar",
-        "currencyCode",
-        "partNumber",
-        "exportSetName",
-        "scenarioName"
-      ],
-      "properties": {
-        "roundToDollar": {
-          "type": "boolean"
+      "allOf": [{
+        "if": {
+          "properties": {
+            "reportTemplate": {
+              "const": "DFM Multiple Parts Summary"
+            }
+          },
+          "required": [
+            "sortMetric",
+            "massMetric",
+            "costMetric",
+            "currencyCode",
+            "riskRating",
+            "scenarioName",
+            "rollup"
+          ]
+
         },
-        "currencyCode": {
-          "type": "string"
-        },
-        "partNumber": {
-          "type": "string"
-        },
-        "exportSetName": {
-          "type": "string"
-        },
-        "scenarioName": {
-          "type": "string"
+        "then": {
+          "properties": {
+            "sortMetric": {
+              "type": "string"
+            },
+            "massMetric": {
+              "type": "string"
+            },
+            "costMetric": {
+              "type": "string"
+            },
+            "currencyCode": {
+              "type": "string"
+            },
+            "riskRating": {
+              "type": "array",
+              "items": {
+                "anyOf": [{
+                  "type": "string"
+                }]
+              }
+            },
+            "scenarioName": {
+              "type": "string"
+            },
+            "rollup": {
+              "type": "string"
+            }
+          }
         }
-      }
+      },
+        {
+          "if": {
+            "properties": {
+              "reportTemplate": {
+                "const": "DTC Part Summary"
+              }
+            },
+            "required": [
+              "roundToDollar",
+              "currencyCode",
+              "partNumber",
+              "exportSetName",
+              "scenarioName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "roundToDollar": {
+                "type": "boolean"
+              },
+              "currencyCode": {
+                "type": "string"
+              },
+              "partNumber": {
+                "type": "string"
+              },
+              "exportSetName": {
+                "type": "string"
+              },
+              "scenarioName": {
+                "type": "string"
+              }
+            }
+          }
+        }
+
+      ]
     },
     "batchIdentity": {
+      "type": "string"
+    },
+    "errors": {
       "type": "string"
     }
   }
