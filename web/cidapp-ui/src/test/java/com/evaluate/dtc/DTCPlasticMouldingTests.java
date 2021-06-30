@@ -223,7 +223,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Molding is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidanceIssuesPage.getGcdSuggested("Component:1"), containsString("<= 3.556 mm"));
 
         /*designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
@@ -283,7 +283,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Minimum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Molding is not feasible. Part Thickness is less than the minimum limit with this material."));
 
         /*designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
         guidanceIssuesPage = designguidanceIssuesPage.closePanel()
