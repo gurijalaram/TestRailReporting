@@ -20,7 +20,7 @@ import org.junit.runners.Suite;
     ComponentsTest.class,
     ConnectionsTest.class,
     CostingTemplatesTest.class,
-    IterationsTest.class
+    IterationsTest.class,
     ScenarioAssociationsTest.class,
     ScenariosTest.class
 })
