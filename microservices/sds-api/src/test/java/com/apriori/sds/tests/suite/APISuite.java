@@ -1,5 +1,6 @@
 package com.apriori.sds.tests.suite;
 
+import com.apriori.sds.tests.ApFilesTest;
 import com.apriori.sds.tests.ComponentsTest;
 import com.apriori.sds.tests.ConnectionsTest;
 import com.apriori.sds.tests.CostingTemplatesTest;
@@ -15,9 +16,11 @@ import org.junit.runners.Suite;
 @ProjectRunID("656")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
+    ApFilesTest.class,
     ComponentsTest.class,
     ConnectionsTest.class,
     CostingTemplatesTest.class,
+    IterationsTest.class
     ScenarioAssociationsTest.class,
     ScenariosTest.class
 })

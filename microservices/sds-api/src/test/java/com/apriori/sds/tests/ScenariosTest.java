@@ -150,7 +150,7 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = "8431")
     @Description("Cost a scenario.")
     public void testCostScenario() {
-        final Scenario testingScenario = this.getTestingScenario();
+        final Scenario testingScenario = this.postAndGetReadyToWorkTestingScenario();
 
         final RequestEntity requestEntity =
             SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
@@ -163,7 +163,6 @@ public class ScenariosTest extends SDSTestUtil {
                     .setVpeName("aPriori USA"));
 
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
     }
 
@@ -207,7 +206,7 @@ public class ScenariosTest extends SDSTestUtil {
             return testingScenario;
         }
 
-        return testingScenario = this.postTestingScenario();
+        return testingScenario = this.postAndGetReadyToWorkTestingScenario();
     }
 
     private Scenario getReadyToWorkScenario(final String identity) {
@@ -256,6 +255,12 @@ public class ScenariosTest extends SDSTestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
+    }
+
+    private Scenario postAndGetReadyToWorkTestingScenario() {
+        return this.getReadyToWorkScenario(
+            this.postTestingScenario().getIdentity()
+        );
     }
 
     private Scenario postTestingScenario() {

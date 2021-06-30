@@ -3,11 +3,13 @@ package com.apriori.sds.tests;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.PostComponentResponse;
 import com.apriori.sds.util.SDSRequestEntityUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 
+import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.io.File;
@@ -30,6 +32,8 @@ public class ApFilesTest  { //extends SDSTestUtil {
     //}
     //]
     @Test
+    @TestRail(testCaseId = {"8417"})
+    @Description("Import an existing aP File resulting in the creation/modification of components, scenarios and/or iterations. ")
     public void testPostApFile() {
         final RequestEntity requestEntity =
             SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_AP_FILES, null)
