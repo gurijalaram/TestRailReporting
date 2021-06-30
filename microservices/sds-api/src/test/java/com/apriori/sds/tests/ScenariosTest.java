@@ -1,6 +1,6 @@
 package com.apriori.sds.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.css.entity.response.Item;
@@ -150,8 +150,6 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = "8431")
     @Description("Cost a scenario.")
     public void testCostScenario() {
-//        {\n    \"costingInputs\": {\n        \"annualVolume\": 5500,\n        \"customAttributes\": {\n            \"priority\": \"3\",\n            \"target_cost\": 17.5\n        },\n        \"materialName\": \"Aluminum, Stock, ANSI 1050A\",\n        \"processGroupName\": \"Sheet Metal\",\n        \"productionLife\": 5,\n        \"updatedBy\": \"{{user_identity}}\",\n        \"vpeName\": \"aPriori USA\"\n    }\n}\n
-//        final String copiedScenarioName = "CopiedScenarioName";
         final Scenario testingScenario = this.getTestingScenario();
 
         final RequestEntity requestEntity =
@@ -167,10 +165,6 @@ public class ScenariosTest extends SDSTestUtil {
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
-
-        List<Scenario> copiedScenario = this.getScenarios();
-//        assertTrue("Copied scenario should present for component", copiedScenario.isPresent());
-
     }
 
     //TODO z: should be finished
@@ -216,7 +210,6 @@ public class ScenariosTest extends SDSTestUtil {
         return testingScenario = this.postTestingScenario();
     }
 
-    @SneakyThrows
     private Scenario getReadyToWorkScenario(final String identity) {
         Scenario scenarioRepresentation;
         int attemptsCount = 10;
@@ -224,9 +217,13 @@ public class ScenariosTest extends SDSTestUtil {
         int currentCount = 0;
 
         do {
-            TimeUnit.SECONDS.sleep(secondsToWait);
+            try {
+                TimeUnit.SECONDS.sleep(secondsToWait);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             scenarioRepresentation = this.getScenarioByIdentity(identity);
-        } while (isScenarioStateIsProcessing(scenarioRepresentation) && currentCount++ < attemptsCount );
+        } while (isScenarioStateIsProcessing(scenarioRepresentation) && currentCount++ < attemptsCount);
 
         return scenarioRepresentation;
     }

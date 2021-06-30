@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.io.File;
 
 // TODO z: currently not working endpoint, should be added
-public class ApFilesTest {//extends SDSTestUtil {
+public class ApFilesTest  { //extends SDSTestUtil {
 
 
     //"mode": "formdata",
