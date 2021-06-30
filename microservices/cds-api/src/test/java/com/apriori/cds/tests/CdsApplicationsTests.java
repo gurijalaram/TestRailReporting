@@ -39,8 +39,8 @@ public class CdsApplicationsTests {
         ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(url, Applications.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getIsSingleTenant(), CoreMatchers.is(notNullValue()));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getItems().get(0).getIsSingleTenant(), CoreMatchers.is(notNullValue()));
     }
 
     @Test
@@ -64,6 +64,6 @@ public class CdsApplicationsTests {
         ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(url, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 }
