@@ -3,7 +3,6 @@ package com.apriori.sds.tests;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.PostComponentResponse;
 import com.apriori.sds.util.SDSRequestEntityUtil;
-import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
@@ -14,7 +13,7 @@ import org.junit.Test;
 import java.io.File;
 
 // TODO z: currently not working endpoint, should be added
-public class ApFilesTest extends SDSTestUtil {
+public class ApFilesTest {//extends SDSTestUtil {
 
 
     //"mode": "formdata",
@@ -50,4 +49,5 @@ public class ApFilesTest extends SDSTestUtil {
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
     }
+
 }

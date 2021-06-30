@@ -3,6 +3,7 @@ package com.apriori.sds.tests;
 import static org.junit.Assert.*;
 
 import com.apriori.cidappapi.entity.request.CostRequest;
+import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.Scenario;
@@ -15,52 +16,37 @@ import com.apriori.sds.util.SDSRequestEntityUtil;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 
 import io.qameta.allure.Description;
+import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class ScenariosTest extends SDSTestUtil {
+    private static Scenario testingScenario;
 
     @Test
     @TestRail(testCaseId = {"6922"})
-    @Description("Find scenarios for a given component matching a specified query.")
+    @Description("Find scenarios for a gfiven component matching a specified query.")
     public void testGetScenarios() {
         this.getScenarios();
     }
 
-    private List<Scenario> getScenarios() {
-        final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
-                .inlineVariables(
-                    getComponentId()
-                );
-
-        ResponseWrapper<ScenarioItemsResponse> response = HTTP2Request.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-
-        return response.getResponseEntity().getItems();
-    }
-
-
     @Test
     @TestRail(testCaseId = {"6923"})
     @Description("Get the current representation of a scenario.")
-    public void getScenarioByIdentity() {
-        final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
-                .inlineVariables(
-                    getComponentId(), getScenarioId()
-                );
-
-        ResponseWrapper<Scenario> response = HTTP2Request.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+    public void testGetScenarioByIdentity() {
+        this.getScenarioByIdentity(getScenarioId());
     }
 
     @Test
@@ -130,13 +116,13 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = "8430")
     @Description("Copy a scenario.")
     public void testCopyScenario() {
-//        {\n    \"scenario\": {\n        \"name\": \"Version 1\",\n        \"createdBy\": \"{{user_identity}}\"\n    }\n}
-
         final String copiedScenarioName = "CopiedScenarioName";
         final Scenario scenarioToCopy = this.postTestingScenario();
 
+        this.getReadyToWorkScenario(scenarioToCopy.getIdentity());
+
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
-            .scenarioName(copiedScenarioName)
+            .name(copiedScenarioName)
             .createdBy(getTestingComponent().getComponentCreatedBy())
             .build();
 
@@ -146,14 +132,18 @@ public class ScenariosTest extends SDSTestUtil {
                 .body("scenario", scenarioRequestBody);
 
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        Optional<Scenario> copiedScenario = this.getScenarios().stream().parallel()
-            .filter(scenario -> scenario.getScenarioName().equals(copiedScenarioName))
-            .findAny();
+        final Scenario copiedScenario = responseWrapper.getResponseEntity();
+        this.getReadyToWorkScenario(copiedScenario.getIdentity());
 
-        assertTrue("Copied scenario should present for component", copiedScenario.isPresent());
+        assertEquals("Copied scenario should present for a component", copiedScenarioName, this.getScenarioByIdentity(copiedScenario.getIdentity()).getScenarioName());
+
+        scenariosToDelete.add(Item.builder()
+            .componentIdentity(getComponentId())
+            .scenarioIdentity(copiedScenario.getIdentity())
+            .build()
+        );
     }
 
     @Test
@@ -161,12 +151,12 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Cost a scenario.")
     public void testCostScenario() {
 //        {\n    \"costingInputs\": {\n        \"annualVolume\": 5500,\n        \"customAttributes\": {\n            \"priority\": \"3\",\n            \"target_cost\": 17.5\n        },\n        \"materialName\": \"Aluminum, Stock, ANSI 1050A\",\n        \"processGroupName\": \"Sheet Metal\",\n        \"productionLife\": 5,\n        \"updatedBy\": \"{{user_identity}}\",\n        \"vpeName\": \"aPriori USA\"\n    }\n}\n
-        final String copiedScenarioName = "CopiedScenarioName";
-        final Scenario scenarioToCopy = this.postTestingScenario();
+//        final String copiedScenarioName = "CopiedScenarioName";
+        final Scenario testingScenario = this.getTestingScenario();
 
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .inlineVariables(getComponentId(), scenarioToCopy.getIdentity())
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .inlineVariables(getComponentId(), testingScenario.getIdentity())
                 .body("costingInputs", new CostRequest().setAnnualVolume(5500)
                     .setBatchSize(458)
                     .setMaterialName("Aluminum, Stock, ANSI 1050A")
@@ -176,13 +166,10 @@ public class ScenariosTest extends SDSTestUtil {
 
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
-        Optional<Scenario> copiedScenario = this.getScenarios().stream().parallel()
-            .filter(scenario -> scenario.getScenarioName().equals(copiedScenarioName))
-            .findAny();
-
-        assertTrue("Copied scenario should present for component", copiedScenario.isPresent());
+        List<Scenario> copiedScenario = this.getScenarios();
+//        assertTrue("Copied scenario should present for component", copiedScenario.isPresent());
 
     }
 
@@ -221,6 +208,59 @@ public class ScenariosTest extends SDSTestUtil {
         removeTestingScenario(getComponentId(), postTestingScenario().getIdentity());
     }
 
+    private Scenario getTestingScenario() {
+        if (testingScenario != null) {
+            return testingScenario;
+        }
+
+        return testingScenario = this.postTestingScenario();
+    }
+
+    @SneakyThrows
+    private Scenario getReadyToWorkScenario(final String identity) {
+        Scenario scenarioRepresentation;
+        int attemptsCount = 10;
+        int secondsToWait = 2;
+        int currentCount = 0;
+
+        do {
+            TimeUnit.SECONDS.sleep(secondsToWait);
+            scenarioRepresentation = this.getScenarioByIdentity(identity);
+        } while (isScenarioStateIsProcessing(scenarioRepresentation) && currentCount++ < attemptsCount );
+
+        return scenarioRepresentation;
+    }
+
+    private boolean isScenarioStateIsProcessing(final Scenario scenario) {
+        return scenario.getScenarioState().toUpperCase().equals(ScenarioStateEnum.PROCESSING.getState());
+    }
+
+    private Scenario getScenarioByIdentity(final String scenarioIdentity) {
+        final RequestEntity requestEntity =
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .inlineVariables(
+                    getComponentId(), scenarioIdentity
+                );
+
+        ResponseWrapper<Scenario> response = HTTP2Request.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+
+        return response.getResponseEntity();
+    }
+
+    private List<Scenario> getScenarios() {
+        final RequestEntity requestEntity =
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
+                .inlineVariables(
+                    getComponentId()
+                );
+
+        ResponseWrapper<ScenarioItemsResponse> response = HTTP2Request.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+
+        return response.getResponseEntity().getItems();
+    }
+
     private Scenario postTestingScenario() {
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(new GenerateStringUtil().generateScenarioName())
@@ -238,10 +278,6 @@ public class ScenariosTest extends SDSTestUtil {
 
         assertEquals(String.format("The scenario with a name %s, was not uploaded.", scenarioRequestBody.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
-//        scenariosToDelete.add(Item.builder()
-//            .componentIdentity(getComponentId())
-//            .scenarioIdentity(scenario.getIdentity())
-//            .build());
 
         return scenario;
     }

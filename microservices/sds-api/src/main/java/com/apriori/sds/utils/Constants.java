@@ -1,7 +1,6 @@
 package com.apriori.sds.utils;
 
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.constants.CommonConstants;
 
 import lombok.extern.slf4j.Slf4j;
 

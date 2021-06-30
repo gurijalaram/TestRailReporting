@@ -24,6 +24,7 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
     POST_SCENARIO_BY_COMPONENT_ID("components/%s/scenarios"),
     PATCH_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s"),
     POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/copy"),
+    POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
     DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s"),
 
 

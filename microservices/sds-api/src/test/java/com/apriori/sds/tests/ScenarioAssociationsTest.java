@@ -11,20 +11,16 @@ import com.apriori.sds.util.SDSRequestEntityUtil;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ScenarioAssociationsTest extends SDSTestUtil {
@@ -143,7 +139,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
         }
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "AutomationRollUp.ap";
+        String componentName = "AutomationRollup";
         return testingRollUp = postRollUp(componentName, scenarioName);
     }
 }
