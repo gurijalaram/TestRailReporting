@@ -3,6 +3,7 @@ package testsuites;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.ootbreports.componentcost.ComponentCostReportTests;
+import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import com.ootbreports.scenariocomparison.ScenarioComparisonReportTests;
 import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
 import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
@@ -14,8 +15,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        ScenarioComparisonReportTests.class,
-        TargetAndQuotedCostValueTrackingReportTests.class
+        AssemblyDetailsReportTests.class
 })
 
 public class CiaCirTestDevSuite {
