@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.explore;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -86,7 +85,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      */
     private FileUploadPage inputScenarioName(String scenarioName) {
         pageUtils.waitForElementToAppear(scenarioNameInput);
-        scenarioNameInput.clear();
         pageUtils.clearInput(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
         return this;
@@ -123,7 +121,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return string
      */
     public String getFieldWarningText() {
-        scenarioNameInput.sendKeys(Keys.TAB);
         return pageUtils.waitForElementToAppear(scenarioNameWarning).getText();
     }
 

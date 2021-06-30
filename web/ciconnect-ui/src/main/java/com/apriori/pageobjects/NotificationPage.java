@@ -229,6 +229,7 @@ public class NotificationPage {
         }
 
         String selected = selectOption(Field.TEMPLATE, templateName);
+        //pageUtils.waitForElementAndClick(emailTemplateArrow);
         return selected;
     }
 
@@ -252,6 +253,7 @@ public class NotificationPage {
 
         pageUtils.waitFor(5000);
         String selected = selectOption(Field.RECIPIENTSELECTFIELD, type);
+        //pageUtils.waitForElementAndClick(emailRecipientgArrow);
         return selected;
     }
 

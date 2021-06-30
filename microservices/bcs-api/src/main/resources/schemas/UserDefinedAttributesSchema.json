@@ -55,6 +55,12 @@
               },
               "customerIdentity": {
                 "type": "string"
+              },
+              "defaultValue": {
+                "type": "string"
+              },
+              "precision": {
+                "type": "integer"
               }
             }
           }

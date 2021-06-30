@@ -31,11 +31,17 @@ import com.explore.UploadTests;
 import com.help.HelpTests;
 import com.login.LoginTests;
 import com.settings.DecimalPlaceTests;
+import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import testsuites.suiteinterface.IgnoreTests;
+import testsuites.suiteinterface.SanityTests;
+import testsuites.suiteinterface.SmokeTests;
 
-@ProjectRunID("562")
+@ProjectRunID("767")
 @RunWith(CategorySuiteRunner.class)
+@Categories.IncludeCategory(SmokeTests.class)
+@Categories.ExcludeCategory(IgnoreTests.class)
 @Suite.SuiteClasses({
     CostAllCadTests.class,
     CostScenarioTests.class,

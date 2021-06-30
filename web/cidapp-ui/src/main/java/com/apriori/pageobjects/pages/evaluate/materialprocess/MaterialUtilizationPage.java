@@ -24,6 +24,9 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @FindBy(xpath = "//div[contains(@class,'apriori-card dark tabbed')]")
     private WebElement panelDetails;
+	
+    @FindBy(css = ".tab.active [data-icon='box']")
+    private WebElement materialTabActive;
 
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockPanel;
@@ -51,7 +54,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(panelDetails);
+        pageUtils.waitForElementAppear(materialTabActive);
     }
 
     /**

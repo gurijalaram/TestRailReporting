@@ -113,17 +113,6 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
     }
 
     /**
-     * Inputs the pg
-     *
-     * @param processGroup - the process group
-     * @return current page object
-     */
-    public PrimaryInputsPage inputProcessGroup(String processGroup) {
-        primaryInputsController.typeAheadProcessGroup(processGroupInput, processGroup);
-        return this;
-    }
-
-    /**
      * Selects the vpe dropdown
      *
      * @param digitalFactory - the vpe

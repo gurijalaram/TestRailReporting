@@ -22,4 +22,6 @@ public class UserDefinedAttributes extends Pagination {
     private String multiSelect;
     private String[] allowedValues;
     private List<UserDefinedAttributes> items;
+    private String defaultValue;
+    private Integer precision;
 }

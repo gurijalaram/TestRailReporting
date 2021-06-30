@@ -44,7 +44,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6645"})
     @Description("Test successful login")
     public void testLogin() {
@@ -80,7 +79,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6648"})
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
@@ -92,7 +90,6 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6649"})
     @Description("Validate Login Dialog")
     public void loginDialog() {
@@ -117,7 +114,6 @@ public class LoginTests extends TestBase {
         assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
     }
 
-    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"6651"})
     @Description("Validate Welcome Message")
@@ -132,7 +128,6 @@ public class LoginTests extends TestBase {
         assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
     }
 
-    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"6652"})
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
@@ -147,7 +142,7 @@ public class LoginTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -157,7 +152,7 @@ public class LoginTests extends TestBase {
             .publish(EvaluatePage.class)
             .logout()
             .login(UserUtil.getUser())
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .openScenario("225_gasket-1-solid1", scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));

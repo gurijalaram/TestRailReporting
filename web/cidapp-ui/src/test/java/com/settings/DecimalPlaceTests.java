@@ -64,11 +64,11 @@ public class DecimalPlaceTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .openSettings()
-            .typeAheadInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
+            .selectInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -84,7 +84,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.000000, 1));
 
         evaluatePage.openSettings()
-            .typeAheadInSection("Decimal Places", DecimalPlaceEnum.ONE.getDecimalPlaces())
+            .selectInSection("Decimal Places", DecimalPlaceEnum.ONE.getDecimalPlaces())
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3kg"));
@@ -111,7 +111,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(21.1, 1));
 
         evaluatePage.openSettings()
-            .typeAheadInSection("Decimal Places", DecimalPlaceEnum.FOUR.getDecimalPlaces())
+            .selectInSection("Decimal Places", DecimalPlaceEnum.FOUR.getDecimalPlaces())
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3095kg"));
@@ -140,7 +140,7 @@ public class DecimalPlaceTests extends TestBase {
         costDetailsPage.closePanel();
 
         evaluatePage.openSettings()
-            .typeAheadInSection("Decimal Places", DecimalPlaceEnum.FIVE.getDecimalPlaces())
+            .selectInSection("Decimal Places", DecimalPlaceEnum.FIVE.getDecimalPlaces())
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
@@ -151,7 +151,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(21.05727, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
 
-        evaluatePage.inputDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
             .costScenario();
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));

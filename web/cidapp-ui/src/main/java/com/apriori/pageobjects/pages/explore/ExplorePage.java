@@ -8,6 +8,8 @@ import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,8 +17,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.ColumnsEnum;
-import utils.SortOrderEnum;
 
 import java.util.List;
 
@@ -83,8 +83,9 @@ public class ExplorePage extends ExploreToolbar {
      * @param filter - the filter
      * @return current page object
      */
-    public ExplorePage inputFilter(String filter) {
-        pageUtils.typeAheadInput(filterDropdown, filterInput, filter);
+    public ExplorePage selectFilter(String filter) {
+        pageUtils.typeAheadSelect(filterDropdown, filter);
+        setPagination();
         return this;
     }
 

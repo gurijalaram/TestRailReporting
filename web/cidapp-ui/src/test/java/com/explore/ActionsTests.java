@@ -1,11 +1,11 @@
 package com.explore;
 
+import static com.utils.ColumnsEnum.COST_MATURITY;
+import static com.utils.ColumnsEnum.STATUS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static utils.ColumnsEnum.COST_MATURITY;
-import static utils.ColumnsEnum.STATUS;
 
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
@@ -22,15 +22,15 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
-import utils.ColumnsEnum;
-import utils.DirectionEnum;
-import utils.SortOrderEnum;
 
 import java.io.File;
 
@@ -50,7 +50,6 @@ public class ActionsTests extends TestBase {
         super();
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
     @Description("Validate user can add notes to a scenario")
@@ -65,7 +64,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -75,7 +74,7 @@ public class ActionsTests extends TestBase {
             .clickExplore()
             .highlightScenario("M3CapScrew", scenarioName)
             .info()
-            .inputStatus("New")
+            .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("Qa Description")
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
@@ -102,7 +101,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -110,9 +109,11 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("M3CapScrew", scenarioName)
+            .selectFilter("Recent")
+            .clickSearch(componentName)
+            .highlightScenario(componentName, scenarioName)
             .info()
-            .inputStatus("Analysis")
+            .selectStatus("Analysis")
             .inputCostMaturity("Medium")
             .inputDescription("Qa Description")
             .inputNotes("Adding QA notes")
@@ -133,8 +134,8 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class})
-    @TestRail(testCaseId = {"7902"})
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"7902", "5436"})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -147,7 +148,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -156,9 +157,11 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("bracket_basic", scenarioName)
+            .selectFilter("Recent")
+            .clickSearch(componentName)
+            .highlightScenario(componentName, scenarioName)
             .lock(ExplorePage.class)
-            .highlightScenario("bracket_basic", scenarioName)
+            .highlightScenario(componentName, scenarioName)
             .previewPanel();
 
         assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
@@ -186,12 +189,12 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
             .info()
-            .inputStatus("Complete")
+            .selectStatus("Complete")
             .inputCostMaturity("Medium")
             .inputDescription("Qa Auto Test")
             .inputNotes("Uploaded and costed via automation")
@@ -219,9 +222,9 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .info()
-            .inputStatus("New")
+            .selectStatus("New")
             .inputCostMaturity("High")
             .inputDescription("infoNotesPanel")
             .inputNotes("Panel Test")
@@ -241,7 +244,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7172", "7175"})
+    @TestRail(testCaseId = {"7172", "7175", "5437"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -254,7 +257,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -262,11 +265,13 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("PowderMetalShaft", scenarioName)
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .highlightScenario(componentName, scenarioName)
             .assign()
-            .inputAssignee("Moya Parker")
+            .selectAssignee("Moya Parker")
             .submit(ExplorePage.class)
-            .openScenario(scenarioName, "PowderMetalShaft")
+            .openScenario(componentName, scenarioName)
             .info();
 
         assertThat(infoPage.getScenarioInfo("Assignee"), is("Moya Parker"));
@@ -286,7 +291,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         assignPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -294,11 +299,11 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
             .assign()
-            .inputAssignee("Sinead Plunkett")
+            .selectAssignee("Sinead Plunkett")
             .submit(EvaluatePage.class)
             .assign();
 
@@ -320,15 +325,15 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
             .costScenario()
             .publishScenario()
-            .inputStatus("New")
-            .inputCostMaturity("Low")
-            .inputAssignee("Ciene Frith")
+            .selectStatus("New")
+            .selectCostMaturity("Low")
+            .selectAssignee("Ciene Frith")
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -354,7 +359,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Cold Worked, AISI 1010")
@@ -365,7 +370,7 @@ public class ActionsTests extends TestBase {
             .clickExplore()
             .highlightScenario("BasicScenario_Forging", scenarioName)
             .info()
-            .inputStatus("New")
+            .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
@@ -393,7 +398,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Cold Worked, AISI 1010")
@@ -402,16 +407,16 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
-            .inputStatus("New")
+            .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -423,7 +428,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7186", "7191"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
@@ -437,7 +441,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -445,17 +449,17 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
-            .inputStatus("New")
+            .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -481,7 +485,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(testUser1)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, testUser1)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -489,19 +493,19 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
-            .inputStatus("New")
+            .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .logout()
             .login(testUser2)
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
@@ -527,15 +531,15 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Default")
             .submit()
             .costScenario()
             .publishScenario()
-            .inputStatus("Complete")
-            .inputCostMaturity("Medium")
-            .inputAssignee("Moya Parker")
+            .selectStatus("Complete")
+            .selectCostMaturity("Medium")
+            .selectAssignee("Moya Parker")
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -569,7 +573,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -577,16 +581,16 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
-            .inputStatus("New")
+            .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QAutomation Test Remove Description")
             .inputNotes("")
             .submit(ExplorePage.class)
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -599,6 +603,7 @@ public class ActionsTests extends TestBase {
 
     @Ignore("Not sure if this is allowed or not yet")
     @Test
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6727"})
     @Description("Ensure scripts cannot be entered into text input fields")
     public void cannotUseScript() {
@@ -613,7 +618,7 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -621,11 +626,11 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent")
+            .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
-            .inputStatus("New")
+            .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("<script src=http://www.example.com/malicious-code.js></script>")
             .inputNotes("<script>alert(document.cookie)</script>")

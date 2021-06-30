@@ -14,14 +14,14 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
-import utils.ColumnsEnum;
-import utils.DirectionEnum;
-import utils.SortOrderEnum;
 
 
 public class TableHeadersTests extends TestBase {
@@ -65,7 +65,6 @@ public class TableHeadersTests extends TestBase {
             .submit(ExplorePage.class);
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6346"})
     @Description("Test remove thumbnails")
@@ -89,7 +88,7 @@ public class TableHeadersTests extends TestBase {
         assertThat(configurePage.getChosenList(), hasItem(ColumnsEnum.THUMBNAIL.getColumns()));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"6340"})
     @Description("Test sort all columns")
