@@ -61,9 +61,9 @@ public class CdsAssociationUserTests  {
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         String associationsEndpoint = String.format(url + "&pageSize=5000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
@@ -89,9 +89,9 @@ public class CdsAssociationUserTests  {
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         String associationsEndpoint = String.format(url + "&pageSize=5000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
@@ -122,9 +122,9 @@ public class CdsAssociationUserTests  {
         String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        assertThat(customer.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         String associationsEndpoint = String.format(url + "&pageSize=5000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
