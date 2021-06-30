@@ -8,6 +8,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
+import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -562,6 +563,10 @@ public class GenericReportPage extends ReportsPageHeader {
     public <T> T selectExportSet(String exportSet, Class<T> className) {
         //exportSetSearchInput.sendKeys(exportSet);
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        //pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
+        pageUtils.waitForElementAndClick(locator);
+        pageUtils.waitForElementAndClick(resetButton);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
@@ -579,7 +584,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return GenericReportPage instance
      */
     public GenericReportPage waitForExpectedExportSetSelectionCount(String expected) {
-        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", expected);
+        waitForCorrectAvailableSelectedCount("export set selection.", "Selected: ", expected);
         return this;
     }
 
@@ -935,12 +940,15 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of class passed in
      */
     public <T> T clickOk(Class<T> className) {
-        pageUtils.waitForElementAndClick(okButton);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(okButton).perform();
+        actions.click().perform();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         //waitForSvgToRender();
         waitForReportToLoad();
         if (!getInputControlsDivClassName().contains("hidden") && okButton.isDisplayed() && okButton.isEnabled()) {
-            okButton.click();
+            actions.moveToElement(okButton).perform();
+            actions.click().perform();
         }
         pageUtils.waitForElementToAppear(upperTitle);
         return PageFactory.initElements(driver, className);
@@ -1272,7 +1280,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void waitForCorrectAvailableSelectedCount(String listName, String option, String expectedCount) {
         By locator = By.xpath(String.format(
-                "//div[@title='%s']//span[@title='%s']",
+                "//div[contains(@title, '%s')]//span[@title='%s']",
                 listName,
                 option + expectedCount
         ));

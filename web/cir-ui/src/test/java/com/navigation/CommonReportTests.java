@@ -499,7 +499,7 @@ public class CommonReportTests extends TestBase {
                 .clickOk(CastingDtcReportPage.class);
 
         castingDtcReportPage.waitForReportToLoad();
-        if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
+        /*if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
                 .getText().equals(ExportSetEnum.CASTING_DTC.getExportSetName())) {
             castingDtcReportPage.waitForReportToLoad();
             castingDtcReportPage.clickInputControlsButton()
@@ -511,6 +511,6 @@ public class CommonReportTests extends TestBase {
                     .waitForExportSetSelected(ExportSetEnum.CASTING_DTC.getExportSetName())
                     .clickOk(CastingDtcReportPage.class)
                     .waitForReportToLoad();
-        }
+        }*/
     }
 }
