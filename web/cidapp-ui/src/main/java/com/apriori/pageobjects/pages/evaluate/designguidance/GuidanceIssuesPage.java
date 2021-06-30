@@ -223,8 +223,9 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         );
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
+    }
 
-	/*
+	/**
      * Opens investigation tab
      *
      * @return new page object

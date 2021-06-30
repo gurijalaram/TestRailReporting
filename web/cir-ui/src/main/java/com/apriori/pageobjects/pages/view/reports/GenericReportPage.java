@@ -561,17 +561,18 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public <T> T selectExportSet(String exportSet, Class<T> className) {
-        //exportSetSearchInput.sendKeys(exportSet);
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        //pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementAndClick(resetButton);
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
     }
 
+    /**
+     * Scroll to export set list
+     *
+     * @return instance of GenericReportPage
+     */
     public GenericReportPage scrollToExportSetList() {
         pageUtils.scrollWithJavaScript(exportSetList, true);
         return this;

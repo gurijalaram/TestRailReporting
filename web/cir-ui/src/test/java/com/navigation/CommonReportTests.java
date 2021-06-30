@@ -138,20 +138,6 @@ public class CommonReportTests extends TestBase {
 
         genericReportPage.waitForReportToLoad();
 
-        if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
-                .getText().equals(exportSet)) {
-            genericReportPage.clickInputControlsButton()
-                    .waitForInputControlsLoad()
-                    .selectExportSet(exportSet, GenericReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("1")
-                    .waitForExportSetSelected(exportSet);
-
-            if (sortOrder.equals(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())) {
-                genericReportPage.selectExportSet(exportSet, GenericReportPage.class)
-                        .waitForExpectedExportSetSelectionCount("0");
-            }
-        }
-
         genericReportPage.waitForSvgToRender();
         genericReportPage.waitForSortOrderToAppearOnReport();
 
@@ -326,7 +312,7 @@ public class CommonReportTests extends TestBase {
         }
 
         genericReportPage.openNewCidTabAndFocus(1);
-        /*GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
@@ -341,7 +327,7 @@ public class CommonReportTests extends TestBase {
         String cidRadiusValue = guidanceIssuesPage.getDtcIssueCount(radiusString);
 
         assertThat(reportsMaterialValue, is(equalTo(cidMaterialValue)));
-        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));*/
+        assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
     }
 
     /**
@@ -499,18 +485,5 @@ public class CommonReportTests extends TestBase {
                 .clickOk(CastingDtcReportPage.class);
 
         castingDtcReportPage.waitForReportToLoad();
-        /*if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
-                .getText().equals(ExportSetEnum.CASTING_DTC.getExportSetName())) {
-            castingDtcReportPage.waitForReportToLoad();
-            castingDtcReportPage.clickInputControlsButton()
-                    .waitForInputControlsLoad()
-                    .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), CastingDtcReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("0")
-                    .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), CastingDtcReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("1")
-                    .waitForExportSetSelected(ExportSetEnum.CASTING_DTC.getExportSetName())
-                    .clickOk(CastingDtcReportPage.class)
-                    .waitForReportToLoad();
-        }*/
     }
 }

@@ -252,20 +252,6 @@ public class SheetMetalDtcReportTests extends TestBase {
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         sheetMetalDtcReportPage.waitForReportToLoad();
-        if (!driver.findElement(By.xpath("//span[contains(text(), 'Rollup:')]/../following-sibling::td[2]/span"))
-                .getText().equals(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())) {
-            sheetMetalDtcReportPage.waitForReportToLoad();
-            sheetMetalDtcReportPage.clickInputControlsButton()
-                    .waitForInputControlsLoad()
-                    .waitForNoDataAvailable()
-                    .scrollToExportSetList()
-                    .waitForExpectedExportSetSelectionCount("0")
-                    .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("1")
-                    .waitForExportSetSelected(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                    .clickOk(SheetMetalDtcReportPage.class)
-                    .waitForReportToLoad();
-        }
 
         sheetMetalDtcReportPage.setReportName(ReportNamesEnum.SHEET_METAL_DTC.getReportName());
         sheetMetalDtcReportPage.hoverPartNameBubbleDtcReports();

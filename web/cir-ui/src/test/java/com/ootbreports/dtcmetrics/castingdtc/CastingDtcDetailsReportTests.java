@@ -160,7 +160,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"7620"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Details Report")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
@@ -176,7 +176,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
         castingDtcReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
         String partName = castingDtcReportPage.getPartNameDtcReports();
         String holeIssueNumReports = castingDtcReportPage.getHoleIssuesFromDetailsReport();
-        castingDtcReportPage.openNewCidTabAndFocus(1);
 
         genericReportPage.openNewCidTabAndFocus(1);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)

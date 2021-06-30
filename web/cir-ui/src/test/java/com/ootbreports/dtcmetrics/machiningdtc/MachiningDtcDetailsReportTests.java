@@ -322,19 +322,6 @@ public class MachiningDtcDetailsReportTests extends TestBase {
 
         genericReportPage.waitForReportToLoad();
 
-        if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
-                .getText().equals(exportSet)) {
-            genericReportPage.clickInputControlsButton()
-                    .waitForInputControlsLoad()
-                    .selectExportSet(exportSet, GenericReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("0")
-                    .selectExportSet(exportSet, GenericReportPage.class)
-                    .waitForExpectedExportSetSelectionCount("1")
-                    .waitForExportSetSelected(exportSet)
-                    .clickOk(CastingDtcReportPage.class)
-                    .waitForReportToLoad();
-        }
-
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCMACHINING_001")));
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
