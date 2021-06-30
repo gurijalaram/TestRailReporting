@@ -35,7 +35,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//label[@title='Assembly Select']//a")
     private WebElement currentAssemblyElement;
 
-    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    @FindBy(xpath = "//table[@class='jrPage']/tbody/tr[7]/td/span")
     private WebElement currentAssembly;
 
     @FindBy(css = "button[class='ui-datepicker-trigger']")

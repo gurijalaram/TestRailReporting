@@ -184,10 +184,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY_LOWERCASE.getAssemblySetName())
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -236,11 +235,10 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
                 .clickOk(AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -289,11 +287,10 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -332,10 +329,16 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        assemblyDetailsReportPage.clickInputControlsButton()
+                .waitForInputControlsLoad()
+                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+                .clickOk(AssemblyDetailsReportPage.class)
+                .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
                 assemblyType,
@@ -383,11 +386,10 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
                 assemblyType,
@@ -435,11 +437,10 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class)
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
                 assemblyType,
