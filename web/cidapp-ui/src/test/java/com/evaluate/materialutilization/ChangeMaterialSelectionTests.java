@@ -171,7 +171,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Test
     @Issue("MIC-3130")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6190"})
+    @TestRail(testCaseId = {"6190", "5420"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -268,7 +268,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @Test
     @Issue("MIC-3130")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6193"})
+    @TestRail(testCaseId = {"6193", "5420"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;

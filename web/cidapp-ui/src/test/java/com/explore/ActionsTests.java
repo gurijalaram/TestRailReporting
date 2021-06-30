@@ -135,7 +135,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7902"})
+    @TestRail(testCaseId = {"7902", "5436"})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -244,7 +244,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7172", "7175"})
+    @TestRail(testCaseId = {"7172", "7175", "5437"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;

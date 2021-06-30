@@ -37,7 +37,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"6410"})
+    @TestRail(testCaseId = {"6410", "8334"})
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;

@@ -45,7 +45,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Test
     @Issue("MIC-3108")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6209"})
+    @TestRail(testCaseId = {"6209", "5427"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
@@ -93,7 +93,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Test
     @Category(IgnoreTests.class)
     @Ignore("Processing state")
-    @TestRail(testCaseId = {"6210"})
+    @TestRail(testCaseId = {"6210", "5435"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
 
