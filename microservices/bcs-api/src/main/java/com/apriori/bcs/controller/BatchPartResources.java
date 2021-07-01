@@ -57,7 +57,6 @@ public class BatchPartResources extends BcsBase {
     public static Part createNewBatchPart(NewPartRequest npr, String batchIdentity) {
         String url = String.format(EndPoint.BATCH_PARTS.getEndPoint(),
                 batchIdentity);
-        System.out.println("UUU: " + EndPoint.BATCH_PARTS.getEndPoint());
 
         File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(npr.getProcessGroup()),
                 npr.getFilename());
@@ -77,7 +76,7 @@ public class BatchPartResources extends BcsBase {
                         //.use("PinnedRouting", npr.getPinnedRouting())
                         .use("ProcessGroup", npr.getProcessGroup())
                         //.use("ProductionLife", npr.getProductionLife().toString())
-                        //.use("ScenarioName", npr.getScenarioName())
+                        .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
                         //.use("Udas", npr.getUdas())
                         //.use("VpeName", npr.getVpeName())
                         .use("MaterialName", npr.getMaterialName())
