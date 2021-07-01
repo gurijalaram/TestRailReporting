@@ -62,7 +62,6 @@ public class UncostedComponents {
         final int WAIT_TIME = 120;
 
         try {
-
             long START_TIME;
             do {
                 TimeUnit.SECONDS.sleep(secondsToWait);
