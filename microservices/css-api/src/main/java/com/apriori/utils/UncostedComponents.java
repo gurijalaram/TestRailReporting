@@ -58,14 +58,16 @@ public class UncostedComponents {
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
             .token(token);
 
-        int currentCount = 0;
-        int attemptsCount = 60;
-        int secondsToWait = 2;
+        int secondsToWait = 1;
+        final int WAIT_TIME = 120;
 
         try {
 
+            long START_TIME;
             do {
                 TimeUnit.SECONDS.sleep(secondsToWait);
+
+                START_TIME = System.currentTimeMillis() / 1000;
 
                 ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
 
@@ -84,15 +86,15 @@ public class UncostedComponents {
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                     }
                 }
-            } while (currentCount++ <= attemptsCount);
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
         throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d attempts with period in %d seconds.",
-                componentName, scenarioName, attemptsCount, secondsToWait)
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
+                componentName, scenarioName, WAIT_TIME)
         );
     }
 }
