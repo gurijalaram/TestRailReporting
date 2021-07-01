@@ -121,7 +121,6 @@ public class MaterialStockTests extends TestBase {
     }*/
 
     @Test
-    @Issue("BA-1915")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5154", "5155", "5156"})
     @Description("check that Stock Form is accurate and updates correctly")
