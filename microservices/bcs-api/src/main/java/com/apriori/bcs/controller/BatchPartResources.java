@@ -90,13 +90,17 @@ public class BatchPartResources extends BcsBase {
 
     public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity) {
         Object partDetails;
-        BcsUtils.State isPartComplete;
+        BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
         int count = 0;
         while (count <= Constants.getPollingTimeout()) {
             partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
-            isPartComplete = BcsUtils.pollState(partDetails, Part.class);
-            if (isPartComplete.equals(BcsUtils.State.COMPLETE)) {
+            try {
+                isPartComplete = BcsUtils.pollState(partDetails, Part.class);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
                 break;
             }
             count += 1;
@@ -111,13 +115,17 @@ public class BatchPartResources extends BcsBase {
 
     public static <T> ResponseWrapper<T> getPartReport(String batchIdentity, String partIdentity) {
         Object partDetails;
-        BcsUtils.State isPartComplete;
+        BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
         int count = 0;
         while (count <= Constants.getPollingTimeout()) {
             partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
-            isPartComplete = BcsUtils.pollState(partDetails, Part.class);
-            if (isPartComplete.equals(BcsUtils.State.COMPLETE)) {
+            try {
+                isPartComplete = BcsUtils.pollState(partDetails, Part.class);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
                 break;
             }
             count += 1;

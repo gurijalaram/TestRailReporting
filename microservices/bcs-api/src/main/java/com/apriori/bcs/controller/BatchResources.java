@@ -120,4 +120,14 @@ public class BatchResources extends BcsBase {
                 new RequestAreaApi()
         );
     }
+
+    public static <T> ResponseWrapper<T> cancelBatchProccessing(String batchIdentity) {
+        String url = String.format(getBatchUrlWithIdentity(batchIdentity), "/cancel");
+        return GenericRequestUtil.post(
+                RequestEntity.init(url, Cancel.class)
+                        .setBody("{}")
+                        .setStatusCode(null),
+                new RequestAreaApi()
+        );
+    }
 }

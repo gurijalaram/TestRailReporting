@@ -16,6 +16,7 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang.time.StopWatch;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -43,15 +44,14 @@ public class MultiPartCostingScenarioTest extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(MultiPartCostingScenarioTest.class);
 
+    private static Batch batch;
     private static NewPartRequest newPartRequest;
-
     private static String batchIdentity;
     private static String partIdentity;
     private static List<String> partList = new ArrayList<>();
     private static List<String> partIdentities = new ArrayList();
     private static Part batchPart;
     private static List<String> failedParts = new ArrayList<>();
-    private static Batch batch;
     private static Map<String, String> parts = new HashMap<>();
     private static CountDownLatch countDownLatch;
     private static Materials materials = new Materials();
@@ -106,6 +106,11 @@ public class MultiPartCostingScenarioTest extends TestUtil {
                 countDownLatch.countDown();
             }
         }
+    }
+
+    @AfterClass
+    public static void testCleanup() {
+        BcsUtils.checkAndCancelBatch(batch);
     }
 
     @Test
@@ -182,6 +187,8 @@ public class MultiPartCostingScenarioTest extends TestUtil {
         // TODO: where to report final polled part states and timings?
         stopWatch.stop();
         long runTime = stopWatch.getTime();
+        System.out.println("Total Run Time: " + runTime);
+
 
 
 

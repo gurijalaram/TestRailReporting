@@ -20,13 +20,12 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReportResourcesTest extends TestUtil {
@@ -49,12 +48,18 @@ public class ReportResourcesTest extends TestUtil {
 
         int intervals = Constants.getPollingTimeout();
         int interval = 0;
-        BcsUtils.State isPartCompleted;
+        BcsUtils.State isPartCompleted = BcsUtils.State.PROCESSING;
+
         while (interval <= intervals) {
             part = (Part)BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
                             part.getIdentity()).getResponseEntity();
-            isPartCompleted = BcsUtils.pollState(part, Part.class);
-            if (isPartCompleted.equals(BcsUtils.State.COMPLETE)) {
+            try {
+                isPartCompleted = BcsUtils.pollState(part, Part.class);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (isPartCompleted.equals(BcsUtils.State.COMPLETED)) {
                 break;
             }
             interval++;
@@ -76,6 +81,11 @@ public class ReportResourcesTest extends TestUtil {
         newReportRequest.setReportParameters(reportParameters);
 
         report  = ReportResources.createReport(newReportRequest);
+    }
+
+    @AfterClass
+    public static void testCleanup() {
+        BcsUtils.checkAndCancelBatch(batch);
     }
 
     @Test
@@ -128,7 +138,7 @@ public class ReportResourcesTest extends TestUtil {
                         report.getErrors()));
                 return;
 
-            } else if (reportState.equals(BcsUtils.State.COMPLETE)) {
+            } else if (reportState.equals(BcsUtils.State.COMPLETED)) {
                 isReportReady = true;
                 break;
             }
@@ -159,6 +169,12 @@ public class ReportResourcesTest extends TestUtil {
      */
     private BcsUtils.State getReportState() {
         report = (Report)ReportResources.getReportRepresentation(report.getIdentity()).getResponseEntity();
-        return BcsUtils.pollState(report, Report.class);
+        try {
+            return BcsUtils.pollState(report, Report.class);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
