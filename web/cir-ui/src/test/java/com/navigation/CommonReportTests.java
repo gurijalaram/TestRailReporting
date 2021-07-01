@@ -105,7 +105,7 @@ public class CommonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSet(exportSetName, GenericReportPage.class)
-            .clickOk(CirUserGuidePage.class)
+            .clickOk(true, CirUserGuidePage.class)
             .navigateToReportUserGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -134,7 +134,7 @@ public class CommonReportTests extends TestBase {
             .selectExportSet(exportSet, GenericReportPage.class)
             .selectSortOrder(sortOrder)
             .waitForLoadingPopupToDisappear()
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
 
@@ -240,7 +240,7 @@ public class CommonReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(GenericReportPage.class)
+            .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         String partName = "";
@@ -291,7 +291,7 @@ public class CommonReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(GenericReportPage.class)
+            .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         String partName = "";
@@ -437,7 +437,7 @@ public class CommonReportTests extends TestBase {
                 .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
 
-        assemblyCostReportPage.clickOk(GenericReportPage.class)
+        assemblyCostReportPage.clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyCostReportPage.class);
 
         String reportsPartName =
@@ -482,7 +482,7 @@ public class CommonReportTests extends TestBase {
                 .navigateToReport(reportName, CastingDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), CastingDtcReportPage.class)
                 .selectSortOrder(sortOrder)
-                .clickOk(CastingDtcReportPage.class);
+                .clickOk(true, CastingDtcReportPage.class);
 
         castingDtcReportPage.waitForReportToLoad();
     }

@@ -347,7 +347,7 @@ public class MachiningDtcReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
-            .clickOk(MachiningDtcReportPage.class)
+            .clickOk(true, MachiningDtcReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
         machiningDtcReportPage.hoverMachiningBubbleTwice();

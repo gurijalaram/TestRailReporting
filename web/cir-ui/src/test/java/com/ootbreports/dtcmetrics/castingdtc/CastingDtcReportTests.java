@@ -170,7 +170,7 @@ public class CastingDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();

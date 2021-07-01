@@ -280,7 +280,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
-            .clickOk(MachiningDtcReportPage.class)
+            .clickOk(true, MachiningDtcReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
         String partName = machiningDtcReportPage.clickMachiningDtcComparisonBar();

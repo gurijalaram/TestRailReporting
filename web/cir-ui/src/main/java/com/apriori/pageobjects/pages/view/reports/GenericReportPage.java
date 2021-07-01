@@ -564,8 +564,22 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementAndClick(resetButton);
+        pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Select export set for dtc tests
+     *
+     * @param exportSet String
+     * @return instance of GenericReportPage
+     */
+    public GenericReportPage selectExportSetDtcTests(String exportSet) {
+        By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        pageUtils.waitForElementAndClick(locator);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
     }
 
     /**
@@ -625,8 +639,17 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(locator);
         WebElement minimumAnnualSpend = driver.findElement(locator);
         pageUtils.clearInput(driver.findElement(locator));
+        pageUtils.waitForSteadinessOfElement(locator);
         minimumAnnualSpend.sendKeys("6631000");
         return this;
+    }
+
+    /**
+     * Wait for minimum annual spend to appear on chart
+     */
+    public void waitForMinimumAnnualSpendOnChart() {
+        By locator = By.xpath("//span[contains(text(), 'Minimum Annual Spend')]/../following-sibling::td[2]/span[contains(text(), '6,631,000.00')]");
+        pageUtils.waitForElementToAppear(locator);
     }
 
     /**
@@ -940,18 +963,20 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param className - className
      * @return Instance of class passed in
      */
-    public <T> T clickOk(Class<T> className) {
+    public <T> T clickOk(boolean waitForReportLoad, Class<T> className) {
         Actions actions = new Actions(driver);
         actions.moveToElement(okButton).perform();
         actions.click().perform();
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         //waitForSvgToRender();
-        waitForReportToLoad();
-        if (!getInputControlsDivClassName().contains("hidden") && okButton.isDisplayed() && okButton.isEnabled()) {
+        if (!getInputControlsDivClassName().contains("hidden")) {
             actions.moveToElement(okButton).perform();
             actions.click().perform();
         }
-        pageUtils.waitForElementToAppear(upperTitle);
+        if (waitForReportLoad) {
+            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+            waitForReportToLoad();
+            pageUtils.waitForElementToAppear(upperTitle);
+        }
         return PageFactory.initElements(driver, className);
     }
 
@@ -1740,7 +1765,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return GenericReportPage instance
      */
     public GenericReportPage deselectAllDtcScores() {
+        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath(String.format(genericDeselectLocator, "DTC Score"))), true);
+        pageUtils.waitForSteadinessOfElement(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
+        pageUtils.waitForElementToAppear(By.xpath("//div[@id='dtcScore']//span[contains(text(), 'Selected: 0')]"));
         return this;
     }
 

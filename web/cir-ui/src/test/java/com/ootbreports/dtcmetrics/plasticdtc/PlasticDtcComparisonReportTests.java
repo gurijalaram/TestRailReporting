@@ -253,7 +253,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
         genericReportPage.waitForSvgToRender();

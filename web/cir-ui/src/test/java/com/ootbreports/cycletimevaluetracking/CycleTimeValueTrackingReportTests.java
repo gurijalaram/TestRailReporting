@@ -74,7 +74,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
         String expectedProjectRollup = "AC CYCLE TIME VT 1";
         assertThat(cycleTimeValueTrackingPage.getFirstRollupName(), is(equalTo(expectedProjectRollup)));
 
-        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
+        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class);
 
         assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo(expectedProjectRollup)));
         assertThat(cycleTimeValueTrackingPage.getRollupInUseInChart(), is(equalTo(expectedProjectRollup)));
@@ -96,7 +96,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("1")));
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("1")));
 
-        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
+        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class);
         assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo("AC CYCLE TIME VT 1")));
     }
 
@@ -113,7 +113,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
                         CycleTimeValueTrackingPage.class
                 );
 
-        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
+        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class);
         cycleTimeValueTrackingPage.clickHyperlink("PROJECT 2", CycleTimeValueTrackingPage.class);
         cycleTimeValueTrackingPage.switchTab(1);
         cycleTimeValueTrackingPage.waitForNewTabSwitchCycleTimeToDetailsOrComponentCost();
