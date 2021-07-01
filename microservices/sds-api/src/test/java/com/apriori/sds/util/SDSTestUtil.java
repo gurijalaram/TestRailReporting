@@ -22,12 +22,13 @@ import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SDSTestUtil extends TestUtil {
 
-    protected static final List<Item> scenariosToDelete = new ArrayList<>();
+    protected static final Set<Item> scenariosToDelete = new HashSet<>();
     private static Item testingComponent;
 
     @AfterClass

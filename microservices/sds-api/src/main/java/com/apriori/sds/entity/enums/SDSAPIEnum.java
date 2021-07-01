@@ -17,9 +17,11 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
     GET_SCENARIOS_BY_COMPONENT_IDS("components/%s/scenarios"),
     GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s"),
     GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/costing-defaults"),
-    GET_SCENARIO_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/hoops-image"),
+    GET_SCENARIO_CUSTOM_IMAGE_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/custom-image"),
+    GET_SCENARIO_WEB_IMAGE_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/web-image"),
     GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/manifest"),
-    GET_SCENARIO_SECONDARY_PROCESSES_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/secondary-processes"),
+    GET_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/watchpoint-report"),
+
 
     POST_SCENARIO_BY_COMPONENT_ID("components/%s/scenarios"),
     PATCH_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s"),
@@ -27,7 +29,7 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
     POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
     POST_FORK_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/fork"),
     POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/publish"),
-    POST_WATCHPOINT_REPORT__SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/watchpoint-report"),
+    POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/watchpoint-report"),
     DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s"),
 
 
