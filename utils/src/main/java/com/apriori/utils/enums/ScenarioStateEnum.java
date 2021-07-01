@@ -2,7 +2,7 @@ package com.apriori.utils.enums;
 
 public enum ScenarioStateEnum {
     PROCESSING("PROCESSING"),
-    NO_COSTED("NO_COSTED");
+    NOT_COSTED("NOT_COSTED");
 
     private final String state;
 

@@ -1,11 +1,14 @@
 package com.apriori.sds.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
+import com.apriori.sds.entity.response.CostingTemplate;
+import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.entity.response.PostComponentResponse;
 import com.apriori.utils.EncodedFileUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -156,5 +159,22 @@ public class SDSTestUtil extends TestUtil {
 
         scenariosToDelete.add(itemResponse.get(0));
         return itemResponse.get(0);
+    }
+
+    protected CostingTemplate getFirstCostingTemplate() {
+        List<CostingTemplate> costingTemplates = getCostingTemplates();
+        assertFalse("To get CostingTemplate it should present in response", costingTemplates.isEmpty());
+        return costingTemplates.get(0);
+    }
+
+
+    protected List<CostingTemplate> getCostingTemplates() {
+        final RequestEntity requestEntity =
+            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
+
+        ResponseWrapper<CostingTemplatesItems> response = HTTP2Request.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+
+        return response.getResponseEntity().getItems();
     }
 }

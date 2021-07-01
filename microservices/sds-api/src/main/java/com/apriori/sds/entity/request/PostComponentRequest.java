@@ -25,4 +25,6 @@ public class PostComponentRequest {
     private String componentName;
     private String updatedBy;
     private String createdBy;
+    private String description;
+    private String notes;
 }
