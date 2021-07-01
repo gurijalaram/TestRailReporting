@@ -14,6 +14,7 @@ public enum PartProcessGroupEnum {
     PLASTIC_MOLDING("Plastic Molding"),
     POWDER_METAL("Powder Metal"),
     RAPID_PROTOTYPING("Rapid Prototyping"),
+    ROLL_UP("Roll Up"),
     ROTO_BLOW_MOLDING("Roto & Blow Molding"),
     SHEET_METAL("Sheet Metal"),
     SHEET_METAL_HYDROFORMING("Sheet Metal - Hydroforming"),
