@@ -54,19 +54,20 @@ public class UncostedComponents {
      * @return response object
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, String token, String verifiedState) {
+        final int SOCKET_TIMEOUT = 120000;
+
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
-            .token(token);
+            .token(token)
+            .socketTimeout(SOCKET_TIMEOUT);
 
-        final int POLL_TIME = 3;
+        final int POLL_TIME = 2;
         final int WAIT_TIME = 120;
+        final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
-            long START_TIME;
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
-
-                START_TIME = System.currentTimeMillis() / 1000;
 
                 ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
 
