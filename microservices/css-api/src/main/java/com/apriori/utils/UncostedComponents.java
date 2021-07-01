@@ -58,13 +58,13 @@ public class UncostedComponents {
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
             .token(token);
 
-        int secondsToWait = 1;
+        final int POLL_TIME = 3;
         final int WAIT_TIME = 120;
 
         try {
             long START_TIME;
             do {
-                TimeUnit.SECONDS.sleep(secondsToWait);
+                TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 START_TIME = System.currentTimeMillis() / 1000;
 
