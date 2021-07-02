@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SDSTestUtil extends TestUtil {
+public abstract class SDSTestUtil extends TestUtil {
 
     protected static final Set<Item> scenariosToDelete = new HashSet<>();
     private static Item testingComponent;
@@ -177,5 +177,13 @@ public class SDSTestUtil extends TestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
+    }
+
+    protected void addScenarioToDelete(final String identity) {
+        scenariosToDelete.add(Item.builder()
+            .componentIdentity(getComponentId())
+            .scenarioIdentity(identity)
+            .build()
+        );
     }
 }

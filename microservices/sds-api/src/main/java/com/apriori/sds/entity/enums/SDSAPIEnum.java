@@ -32,6 +32,8 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
     POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/watchpoint-report"),
     DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s"),
 
+    // SCENARIO ITERATIONS
+    POST_SCENARIO_ITERATIONS("/scenario-iterations"),
 
     // SCENARIO ASSOCIATIONS
     GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/associations"),

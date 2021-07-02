@@ -3,7 +3,6 @@ package com.apriori.sds.tests;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.request.CostRequest;
-import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -12,7 +11,6 @@ import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
 import com.apriori.sds.entity.response.ScenarioHoopsImage;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.entity.response.ScenarioManifest;
-import com.apriori.sds.entity.response.ScenarioSecondaryProcess;
 import com.apriori.sds.util.SDSRequestEntityUtil;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -30,8 +28,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ScenariosTest extends SDSTestUtil {
-    private static Scenario testingScenario;
-
     @Test
     @TestRail(testCaseId = {"6922"})
     @Description("Find scenarios for a gfiven component matching a specified query.")
@@ -108,9 +104,6 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = "8427")
     @Description("Add a scenario to a component.")
     public void testPostScenario() {
-        //TODO z: not supported endpoint
-
-        // this.postAndGetReadyToWorkTestingScenario();
         this.postTestingScenario();
     }
 
@@ -138,11 +131,7 @@ public class ScenariosTest extends SDSTestUtil {
         assertEquals("Copied scenario should present for a component",
             copiedScenarioName, this.getReadyToWorkScenario(copiedScenario.getIdentity()).getScenarioName());
 
-        scenariosToDelete.add(Item.builder()
-            .componentIdentity(getComponentId())
-            .scenarioIdentity(copiedScenario.getIdentity())
-            .build()
-        );
+        this.addScenarioToDelete(copiedScenario.getIdentity());
     }
 
     @Test
@@ -174,8 +163,7 @@ public class ScenariosTest extends SDSTestUtil {
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).patch();
         final Scenario scenario = responseWrapper.getResponseEntity();
 
-        assertEquals(String.format("The scenario with a name %s, was not updated.", scenarioRequestBody.getScenarioName()),
-            HttpStatus.SC_OK, responseWrapper.getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         assertEquals("Scenario notes should be updated.",
             scenario.getNotes(), updatedNotes);
@@ -219,11 +207,7 @@ public class ScenariosTest extends SDSTestUtil {
             forkScenarioName, this.getReadyToWorkScenario(forkScenario.getIdentity()).getScenarioName()
         );
 
-        scenariosToDelete.add(Item.builder()
-            .componentIdentity(getComponentId())
-            .scenarioIdentity(forkScenario.getIdentity())
-            .build()
-        );
+        addScenarioToDelete(forkScenario.getIdentity());
     }
 
     @Test
@@ -245,6 +229,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Create a watchpoint report.")
     public void testCreateWatchpointReport() {
         final Scenario scenario = this.costAndGetReadyScenario();
+
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(scenario.getScenarioName())
             .override(false)
@@ -259,44 +244,33 @@ public class ScenariosTest extends SDSTestUtil {
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
-        final Scenario scenarioWatchPoint = responseWrapper.getResponseEntity();
-
-        scenariosToDelete.add(Item.builder()
-            .componentIdentity(getComponentId())
-            .scenarioIdentity(scenarioWatchPoint.getIdentity())
-            .build()
-        );
+        addScenarioToDelete(responseWrapper.getResponseEntity().getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = "7246")
     @Description("Delete an existing scenario.")
     public void deleteScenario() {
-        Item componentToDelete = postTestingComponent();
+        final Item componentToDelete = postTestingComponent();
+
         removeTestingScenario(componentToDelete.getComponentIdentity(), componentToDelete.getScenarioIdentity());
         scenariosToDelete.remove(componentToDelete);
     }
 
-    private Scenario getTestingScenario() {
-        if (testingScenario != null) {
-            return testingScenario;
-        }
-
-        return testingScenario = this.postAndGetReadyToWorkTestingScenario();
-    }
-
     private Scenario getReadyToWorkScenario(final String identity) {
-        Scenario scenario;
-        int attemptsCount = 15;
-        int secondsToWait = 10;
+        final int attemptsCount = 15;
+        final int secondsToWait = 10;
         int currentCount = 0;
+        Scenario scenario;
 
         do {
             this.doSleep(secondsToWait);
             scenario = this.getScenarioByIdentity(identity);
 
             if (scenario.getScenarioState().toUpperCase().contains("FAILED")) {
-                throw new IllegalStateException("Scenario failed state. Scenario Id: " + scenario.getIdentity());
+                throw new IllegalStateException(String.format("Scenario failed state: %s. Scenario Id: %s",
+                    scenario.getIdentity(), scenario.getScenarioState())
+                );
             }
 
             if (isScenarioStateAsExpected(scenario)) {
@@ -310,7 +284,7 @@ public class ScenariosTest extends SDSTestUtil {
         );
     }
 
-    private void doSleep(int secondsToWait) {
+    private void doSleep(final int secondsToWait) {
         try {
             TimeUnit.SECONDS.sleep(secondsToWait);
         } catch (InterruptedException e) {
@@ -349,12 +323,6 @@ public class ScenariosTest extends SDSTestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
-    }
-
-    private Scenario postAndGetReadyToWorkTestingScenario() {
-        return this.getReadyToWorkScenario(
-            this.postTestingScenario().getIdentity()
-        );
     }
 
     private Scenario postTestingScenario() {
@@ -398,12 +366,12 @@ public class ScenariosTest extends SDSTestUtil {
 
         final Scenario publishedScenario = responseWrapper.getResponseEntity();
 
-        assertEquals("Copied scenario should present for a component",
+        assertEquals("Published scenario should present for a component",
             publishScenarioName, this.getReadyToWorkScenario(publishedScenario.getIdentity()).getScenarioName()
         );
 
         scenariosToDelete.add(Item.builder()
-            .componentIdentity(getComponentId())
+            .componentIdentity(testingComponent.getComponentIdentity())
             .scenarioIdentity(publishedScenario.getIdentity())
             .build()
         );
@@ -412,6 +380,12 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     private Scenario costAndGetReadyScenario() {
+        return this.getReadyToWorkScenario(
+            this.costScenario().getIdentity()
+        );
+    }
+
+    private Scenario costScenario() {
         final RequestEntity requestEntity =
             SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(getComponentId(), getScenarioId())
@@ -430,9 +404,6 @@ public class ScenariosTest extends SDSTestUtil {
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
-        final Scenario scenario = responseWrapper.getResponseEntity();
-        this.getReadyToWorkScenario(scenario.getIdentity());
-
-        return scenario;
+        return responseWrapper.getResponseEntity();
     }
 }
