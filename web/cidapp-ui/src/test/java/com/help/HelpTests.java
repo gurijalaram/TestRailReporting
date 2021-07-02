@@ -37,9 +37,9 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpPage = loginPage.login(UserUtil.getUser())
             .goToHelp()
-            .clickOnlineHelp();
+            .clickUserGuide();
 
-        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight Design:User Guide"));
+        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight DesignUser Guide"));
     }
 
     @Test

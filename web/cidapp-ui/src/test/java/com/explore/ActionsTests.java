@@ -29,7 +29,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -109,7 +108,9 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("M3CapScrew", scenarioName)
+            .selectFilter("Recent")
+            .clickSearch(componentName)
+            .highlightScenario(componentName, scenarioName)
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("Medium")
@@ -155,9 +156,11 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("bracket_basic", scenarioName)
+            .selectFilter("Recent")
+            .clickSearch(componentName)
+            .highlightScenario(componentName, scenarioName)
             .lock(ExplorePage.class)
-            .highlightScenario("bracket_basic", scenarioName)
+            .highlightScenario(componentName, scenarioName)
             .previewPanel();
 
         assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
@@ -267,7 +270,7 @@ public class ActionsTests extends TestBase {
             .assign()
             .selectAssignee("Moya Parker")
             .submit(ExplorePage.class)
-            .openScenario(scenarioName, "PowderMetalShaft")
+            .openScenario(componentName, scenarioName)
             .info();
 
         assertThat(infoPage.getScenarioInfo("Assignee"), is("Moya Parker"));

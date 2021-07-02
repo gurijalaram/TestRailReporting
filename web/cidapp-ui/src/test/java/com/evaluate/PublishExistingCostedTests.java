@@ -19,6 +19,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -41,6 +42,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
+    @Issue("MIC-3108")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6209"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
@@ -67,6 +69,8 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
+            .selectFilter("Recent")
+            .clickSearch(componentName)
             .openScenario(componentName, scenarioName)
             .editScenario()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())

@@ -17,6 +17,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -62,6 +63,7 @@ public class NewScenarioNameTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
+    @Ignore("At the moment a new scenario name cannot be created from a public scenario")
     @TestRail(testCaseId = {"5950", "5951", "5952"})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
@@ -88,7 +90,8 @@ public class NewScenarioNameTests extends TestBase {
             .publish(EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
-            .highlightScenario("partbody_2", testScenarioName)
+            .clickSearch(componentName)
+            .highlightScenario(componentName, testScenarioName)
             .createScenario()
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
