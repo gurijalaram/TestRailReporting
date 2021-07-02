@@ -8,9 +8,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
-import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -323,7 +321,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Process Group:')]/../following-sibling::td[1]/span")
     private WebElement processGroupCurrentValueDtcPartSummary;
 
-    @FindBy(xpath = "//label[@title='Component Select']//a/span[2]")
+    @FindBy(xpath = "//label[@title='Component Select']//a")
     private WebElement componentSelectDropdown;
 
     @FindBy(xpath = "//label[@title='Component Select']//input")
@@ -1729,8 +1727,16 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return GenericReportPage instance
      */
     public GenericReportPage selectComponent(String componentName) {
-        componentSelectDropdown.click();
-        componentSelectSearchInput.click();
+        pageUtils.scrollWithJavaScript(componentSelectDropdown, true);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(componentSelectDropdown).perform();
+        actions.click().perform();
+        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isFocused')]"));
+        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Component Select']//a"));
+        pageUtils.waitForElementAndClick(componentSelectDropdown);
+        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isOpen')]"));
+        pageUtils.waitForElementAndClick(componentSelectSearchInput);
+        componentSelectSearchInput.clear();
         pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Component Select']//input"));
         componentSelectSearchInput.sendKeys(componentName);
         By componentToSelectLocator = By.xpath(String.format("//a[contains(text(), '%s')]", componentName));

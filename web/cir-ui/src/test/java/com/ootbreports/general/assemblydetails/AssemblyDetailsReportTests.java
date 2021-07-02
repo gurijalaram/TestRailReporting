@@ -184,7 +184,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .clickOk(true, AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY_LOWERCASE.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
@@ -227,7 +227,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -279,7 +279,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -329,7 +329,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
             .clickOk(true, AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
@@ -378,7 +378,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -429,7 +429,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -487,7 +487,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1930"})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
@@ -894,7 +894,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(ExportSetEnum.SUB_SUB_ASM.getExportSetName(), GenericReportPage.class)
+            .selectExportSetDtcTests(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
+            .waitForExportSetSelected(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
             .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
