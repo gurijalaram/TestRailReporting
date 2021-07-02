@@ -87,14 +87,6 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
      * Waits for scenario filter to take effect
      */
     public void waitForScenarioFilter() {
-        for (int i = 1; i < 21; i++) {
-            By locator = By.xpath(
-                    String.format(
-                            "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, 'Initial')])[%s]", i)
-            );
-            pageUtils.waitForElementToAppear(locator);
-        }
-
         By filteredLocator = By.xpath(
                 "((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, '(Initial)')])[1]");
         pageUtils.waitForElementToAppear(filteredLocator);
@@ -103,7 +95,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(),
                 "Available: ",
-                "134"
+                "215"
         );
     }
 

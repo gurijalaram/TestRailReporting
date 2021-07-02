@@ -893,7 +893,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
-            .waitForExportSetSelected(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
+            .waitForExportSetSelection(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
             .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);

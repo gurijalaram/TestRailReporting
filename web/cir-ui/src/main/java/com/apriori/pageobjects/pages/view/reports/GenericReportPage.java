@@ -602,20 +602,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Waits for export set to be selected
-     *
-     * @param exportSet String
-     * @return GenericReportPage instance
-     */
-    public GenericReportPage waitForExportSetSelected(String exportSet) {
-        pageUtils.waitForElementToAppear(
-                By.xpath(
-                        String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]",
-                                exportSet)));
-        return this;
-    }
-
-    /**
      * Waits for specified export set to be selected
      *
      * @param exportSet String - export set to wait for selection of
@@ -1257,11 +1243,17 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of specified class
      */
     public <T> T selectDefaultScenarioName(Class<T> className) {
+        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//div[@title='Scenario Name']")), true);
+        By inputLocator = By.xpath("//div[@title='Scenario Name']//input[contains(@class, 'jr-mInput-search jr')]");
+        pageUtils.waitForElementAndClick(inputLocator);
+
+        pageUtils.waitForSteadinessOfElement(inputLocator);
+        driver.findElement(inputLocator).sendKeys("Initial");
+
         By locator = By.xpath("//li[@title='Initial']/div/a");
         pageUtils.waitForElementAndClick(locator);
 
-        By selectedLocator = By.xpath("(//li[@title='Initial' and contains(@class, 'jr-isSelected')])[1]");
-        pageUtils.waitForElementToAppear(selectedLocator);
+        waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIO_NAME.getListName(), "Selected: ", "1");
 
         if (className.equals(ScenarioComparisonReportPage.class)) {
             By filteredLocator = By.xpath("((//div[@title='Scenarios to Compare']//ul)[1]/li[contains(@title, " +

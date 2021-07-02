@@ -78,7 +78,8 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForExportSetSelection(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Available: ", "2");
@@ -88,10 +89,10 @@ public class ScenarioComparisonReportTests extends TestBase {
         assertThat(genericReportPage.getComponentName("2"), is(equalTo("part")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("2")));
+                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("1")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("3")));
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("2")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
@@ -116,7 +117,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .selectFirstTwoComparisonScenarios()
                 .clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
