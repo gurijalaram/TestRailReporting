@@ -58,9 +58,9 @@ public class UncostedComponents {
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
             .token(token);
 
+        final int attemptsCount = 60;
+        final int secondsToWait = 2;
         int currentCount = 0;
-        int attemptsCount = 60;
-        int secondsToWait = 2;
 
         try {
 
@@ -72,13 +72,16 @@ public class UncostedComponents {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                if (!scenarioRepresentation.getResponseEntity().getItems().isEmpty()) {
+                final List<Item> items = scenarioRepresentation.getResponseEntity().getItems();
 
-                    if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals("PROCESSING_FAILED")) {
+                if (!items.isEmpty()) {
+                    final Item firstItem = scenarioRepresentation.getResponseEntity().getItems().get(0);
+
+                    if (firstItem.getScenarioState().equals("PROCESSING_FAILED")) {
                         throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                     }
 
-                    if (scenarioRepresentation.getResponseEntity().getItems().get(0).getScenarioState().equals(verifiedState.toUpperCase())) {
+                    if (firstItem.getScenarioState().equals(verifiedState.toUpperCase())) {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());

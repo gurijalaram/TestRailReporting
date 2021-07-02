@@ -1,7 +1,6 @@
 package com.apriori.utils.enums;
 
 public enum StatusIconEnum {
-
     CUBE("cube"),
     CAD("link"),
     LOCK("lock"),
