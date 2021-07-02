@@ -575,11 +575,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param exportSet String
      * @return instance of GenericReportPage
      */
-    public GenericReportPage selectExportSetDtcTests(String exportSet) {
+    public ComponentCostReportPage selectExportSetDtcTests(String exportSet) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return this;
+        return new ComponentCostReportPage(driver);
     }
 
     /**
