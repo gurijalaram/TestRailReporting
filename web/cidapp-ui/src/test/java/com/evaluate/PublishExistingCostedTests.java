@@ -23,6 +23,7 @@ import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -44,7 +45,7 @@ public class PublishExistingCostedTests extends TestBase {
     @Test
     @Issue("MIC-3108")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6209"})
+    @TestRail(testCaseId = {"6209", "5427"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
@@ -90,8 +91,9 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Ignore
-    @TestRail(testCaseId = {"6210"})
+    @Category(IgnoreTests.class)
+    @Ignore("Processing state")
+    @TestRail(testCaseId = {"6210", "5435"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
 
@@ -127,6 +129,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1920")
     @TestRail(testCaseId = {"6211"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
@@ -160,7 +163,8 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Ignore
+    @Category(IgnoreTests.class)
+    @Ignore("Processing state")
     @TestRail(testCaseId = {"6212"})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {

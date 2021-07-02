@@ -22,6 +22,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 import utils.AssemDfmIconEnum;
 
@@ -39,7 +40,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Ignore("Upload assemblies will be blocked")
-    @Category(SmokeTests.class)
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5612"})
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssembliesComponentsTests() {
