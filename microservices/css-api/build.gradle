@@ -14,7 +14,6 @@ repositories {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
-    implementation project(':microservices:ats-api')
 
     implementation project(':microservices:ats-api')
     implementation project(':microservices:bcs-api')

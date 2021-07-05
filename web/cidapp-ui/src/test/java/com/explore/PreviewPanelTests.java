@@ -35,7 +35,7 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Description("Test preview panel data is displayed")
-    @TestRail(testCaseId = {"6350"})
+    @TestRail(testCaseId = {"6350", "6349"})
     public void testPreviewPanelDisplay() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -47,9 +47,9 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
-            .search("ABS,10")
+            .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
             .submit()
             .costScenario()
@@ -63,7 +63,7 @@ public class PreviewPanelTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
-    @TestRail(testCaseId = {"6351"})
+    @TestRail(testCaseId = {"6351", "6201", "6352"})
     public void previewPanelMetrics() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;

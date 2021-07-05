@@ -24,6 +24,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -73,6 +74,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Secondary Processes has not went in yet")
     @TestRail(testCaseId = {"5120", "5121", "5123"})
     @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
@@ -229,6 +231,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Secondary Processes has not went in yet")
     @Description("Test secondary process Stress Relief")
     public void secondaryProcessStressRelief() {
@@ -256,6 +259,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Secondary Processes has not went in yet")
     @Description("Test secondary process Anodize")
     public void secondaryProcessAnodize() {
@@ -283,6 +287,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Secondary Processes has not went in yet")
     @Description("Test secondary process Certification")
     public void secondaryProcessCertification() {
@@ -413,6 +418,7 @@ public class SecondaryProcessTests extends TestBase {
     }*/
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Secondary Processes has not went in yet")
     @Description("Test secondary process Passivation")
     public void secondaryProcessPassivation() {
@@ -472,7 +478,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }*/
 
-    @Category({SmokeTests.class})
+    @Category({SmokeTests.class, IgnoreTests.class})
     @Test
     @Ignore("Secondary Processes has not went in yet")
     @TestRail(testCaseId = {"5117"})
@@ -775,7 +781,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Ignore("Secondary Processes have not been implemented yet")
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, IgnoreTests.class})
     @TestRail(testCaseId = {"5122"})
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {
@@ -799,6 +805,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Secondary Processes has not went in yet")
     @TestRail(testCaseId = {"5127"})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")

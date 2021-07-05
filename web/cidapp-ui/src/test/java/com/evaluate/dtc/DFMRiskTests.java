@@ -149,7 +149,7 @@ public class DFMRiskTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
-            .costScenario();
+            .costScenario(3);
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Medium"));
@@ -271,7 +271,7 @@ public class DFMRiskTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
-            .costScenario();
+            .costScenario(3);
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
@@ -315,8 +315,8 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
         // TODO uncomment this section when update cad file is implemented
         /*        evaluatePage.updateCadFile(cadResourceFile);
@@ -432,7 +432,7 @@ public class DFMRiskTests extends TestBase {
             .submit()
             .costScenario(5);
 
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(690, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(437, 10));
 
         // TODO uncomment this section when update cad file is implemented
         /*evaluatePage.updateCadFile(cadResourceFile);

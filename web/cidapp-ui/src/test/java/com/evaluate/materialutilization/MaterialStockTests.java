@@ -121,7 +121,6 @@ public class MaterialStockTests extends TestBase {
     }*/
 
     @Test
-    @Issue("BA-1915")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5154", "5155", "5156"})
     @Description("check that Stock Form is accurate and updates correctly")
@@ -160,7 +159,7 @@ public class MaterialStockTests extends TestBase {
             .openMaterialProcess()
             .goToStockTab();
 
-        assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("3 in OD. 20 ft lengths")));
+        assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("3 in OD. 20 ft lengths")));
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
     }
 }

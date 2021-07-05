@@ -13,6 +13,7 @@ import org.apache.http.HttpStatus;
 
 @Slf4j
 public class JwtTokenUtil {
+    private static String currentToken;
 
     private String username = Constants.getAtsTokenUsername();
     private String email = Constants.getAtsTokenEmail();
@@ -20,7 +21,6 @@ public class JwtTokenUtil {
     private String secretKey = Constants.getSecretKey();
     private String issuer = Constants.getAtsTokenIssuer();
     private String subject = Constants.getAtsTokenSubject();
-    private String currentToken;
 
     public JwtTokenUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername().split("@")[0];

@@ -6,11 +6,13 @@ import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.request.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
+import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -29,6 +31,11 @@ public class BatchPartResourcesTest extends TestUtil {
 
         part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
 
+    }
+
+    @AfterClass
+    public static void testCleanup() {
+        BcsUtils.checkAndCancelBatch(batch);
     }
 
     @Test

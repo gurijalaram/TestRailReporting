@@ -18,6 +18,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 
 import java.io.File;
 import java.util.Arrays;
@@ -55,6 +57,7 @@ public class ListProcessGroupTests extends TestBase {
 
     @Ignore("Assemblies cannot be upload")
     @Test
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6198"})
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
