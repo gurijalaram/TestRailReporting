@@ -20,6 +20,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class TargetAndQuotedCostTrendReportTests extends TestBase {
@@ -130,7 +131,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3358"})
     @Description("Validate Cost Metric Input Control - PPC")
     public void testCostMetricFbc() {
@@ -143,7 +144,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7423"})
     @Description("Validate Cost Metric Input Control - FBC")
     public void testCostMetricPpc() {
@@ -156,7 +157,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3359"})
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
@@ -183,7 +184,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"3360"})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidBase() {
@@ -192,7 +193,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"3360"})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidFinal() {
