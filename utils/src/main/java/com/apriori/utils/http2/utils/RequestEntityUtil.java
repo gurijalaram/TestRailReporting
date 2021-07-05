@@ -1,5 +1,6 @@
 package com.apriori.utils.http2.utils;
 
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;

@@ -15,16 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonRootName("component")
-public class PostComponentRequest {
-    private String filename;
-    private String scenarioName;
-    private String name;
-    private Boolean override;
-    private String fileContents;
-    private String componentType;
-    private String componentName;
-    private String updatedBy;
+public class AssociationRequest {
+    private Integer occurrences;
+    private String scenarioIdentity;
     private String createdBy;
-    private String description;
-    private String notes;
 }
