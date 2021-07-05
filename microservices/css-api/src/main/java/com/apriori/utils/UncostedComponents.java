@@ -54,18 +54,20 @@ public class UncostedComponents {
      * @return response object
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, String token, String verifiedState) {
+        final int SOCKET_TIMEOUT = 120000;
+
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
-            .token(token);
+            .token(token)
+            .socketTimeout(SOCKET_TIMEOUT);
 
-        final int attemptsCount = 60;
-        final int secondsToWait = 2;
-        int currentCount = 0;
+        final int POLL_TIME = 2;
+        final int WAIT_TIME = 120;
+        final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
-
             do {
-                TimeUnit.SECONDS.sleep(secondsToWait);
+                TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
 
@@ -87,15 +89,15 @@ public class UncostedComponents {
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                     }
                 }
-            } while (currentCount++ <= attemptsCount);
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
         throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d attempts with period in %d seconds.",
-                componentName, scenarioName, attemptsCount, secondsToWait)
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
+                componentName, scenarioName, WAIT_TIME)
         );
     }
 }
