@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// TODO z: should be updated after VDS bugs fix
 public class UserGroupAssociationsTest extends VDSTestUtil {
     private static final List<String> userGroupAssociationsToDelete = new ArrayList<>();
 
@@ -104,14 +103,14 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     }
 
     private UserGroupAssociation postUserGroupAssociation() {
-//                List<UserGroupAssociation> exampleOfUserGroupAssociation = this.getUserGroupAssociationsResponse();
+                List<UserGroupAssociation> exampleOfUserGroupAssociation = this.getUserGroupAssociationsResponse();
 
-//                if(exampleOfUserGroupAssociation.isEmpty()) {
-//                    deleteUserGroupAssociationById(exampleOfUserGroupAssociation.getIdentity());
-//                }
+                if(!exampleOfUserGroupAssociation.isEmpty()) {
+                    exampleOfUserGroupAssociation.forEach(
+                        ug -> deleteUserGroupAssociationById(ug.getIdentity())
+                    );
+                }
 
-//        List<UserGroupAssociation> userGroupAssociations = this.getUserGroupAssociationsResponse();
-//        UserGroupAssociation exampleOfUserGroupAssociation = getFirstUserGroupAssociation();
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
@@ -126,6 +125,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
         ResponseWrapper<UserGroupAssociation> userGroupAssociationResponse = HTTP2Request.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, userGroupAssociationResponse.getStatusCode());
 
+        this.getUserGroupAssociations();
         return userGroupAssociationResponse.getResponseEntity();
     }
 
