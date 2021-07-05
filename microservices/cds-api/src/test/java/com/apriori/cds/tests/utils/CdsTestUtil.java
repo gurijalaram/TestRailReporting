@@ -166,12 +166,12 @@ public class CdsTestUtil extends TestUtil {
      * @param siteIdentity     - the site Identity
      * @return new object
      */
-    public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String siteIdentity, String deploymentType) {
+    public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String deploymentName, String siteIdentity, String deploymentType) {
         url = String.format(serviceUrl, String.format("customers/%s/deployments", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Deployment.class)
             .setBody("deployment",
-                new AddDeployment().setName("Production Deployment")
+                new AddDeployment().setName(deploymentName)
                     .setDescription("Deployment added by API automation")
                     .setDeploymentType(deploymentType)
                     .setSiteIdentity(siteIdentity)

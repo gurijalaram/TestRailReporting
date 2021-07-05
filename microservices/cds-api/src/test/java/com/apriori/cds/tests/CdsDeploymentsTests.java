@@ -68,7 +68,7 @@ public class CdsDeploymentsTests {
     @TestRail(testCaseId = {"3301"})
     @Description("Add a deployment to a customer")
     public void addCustomerDeployment() {
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity, "PRODUCTION");
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("Production Deployment")));
         assertThat(response.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));
@@ -79,7 +79,7 @@ public class CdsDeploymentsTests {
     @Description("Get a list of deployments for a customer")
     public void getCustomerDeployments() {
         String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity, "PREVIEW");
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(deploymentsEndpoint, Deployments.class);
@@ -92,7 +92,7 @@ public class CdsDeploymentsTests {
     @TestRail(testCaseId = {"5315"})
     @Description("Add a deployment to a customer")
     public void getDeploymentByIdentity() {
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity, "SANDBOX");
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
