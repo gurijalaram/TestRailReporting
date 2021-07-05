@@ -22,8 +22,6 @@ public class CommonConstants {
     //public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
     //public static String environment;
     private static final Properties PROPERTIES = new Properties();
-    public static final Level consoleLogLevel = Level.parse(PROPERTIES.getProperty("console.log.level"));
-    public static final String schemaBasePath = PROPERTIES.getProperty("schema.base.path");
     private static final File COMMON_PROPERTIES_STREAM;
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
     //private static final File INPUT_STREAM;
@@ -43,6 +41,9 @@ public class CommonConstants {
             e.printStackTrace();
         }
     }
+
+    public static final Level consoleLogLevel = Level.parse(PROPERTIES.getProperty("console.log.level"));
+    public static final String schemaBasePath = PROPERTIES.getProperty("schema.base.path");
 
     /**
      * Get build environment
