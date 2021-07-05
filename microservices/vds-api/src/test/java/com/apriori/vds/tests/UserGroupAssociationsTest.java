@@ -103,23 +103,22 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     }
 
     private UserGroupAssociation postUserGroupAssociation() {
-                List<UserGroupAssociation> exampleOfUserGroupAssociation = this.getUserGroupAssociationsResponse();
+        List<UserGroupAssociation> exampleOfUserGroupAssociation = this.getUserGroupAssociationsResponse();
 
-                if(!exampleOfUserGroupAssociation.isEmpty()) {
-                    exampleOfUserGroupAssociation.forEach(
-                        ug -> deleteUserGroupAssociationById(ug.getIdentity())
-                    );
-                }
-
+        if (!exampleOfUserGroupAssociation.isEmpty()) {
+            exampleOfUserGroupAssociation.forEach(
+                ug -> deleteUserGroupAssociationById(ug.getIdentity())
+            );
+        }
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity())
                 .body(UserGroupAssociationRequest.builder()
-                        .customerIdentity(customerId)
-                        .userIdentity(userId)
-                        .createdBy(userId)
-                        .build()
+                    .customerIdentity(customerId)
+                    .userIdentity(userId)
+                    .createdBy(userId)
+                    .build()
                 );
 
         ResponseWrapper<UserGroupAssociation> userGroupAssociationResponse = HTTP2Request.build(requestEntity).post();
@@ -132,7 +131,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     private static void deleteUserGroupAssociationById(final String ugaIdentity) {
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
-                 .inlineVariables(getGroupIdentity(), ugaIdentity);
+                .inlineVariables(getGroupIdentity(), ugaIdentity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
     }
 }
