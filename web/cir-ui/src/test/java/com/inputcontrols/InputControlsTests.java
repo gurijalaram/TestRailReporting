@@ -1135,18 +1135,25 @@ public class InputControlsTests extends TestBase {
         );
         genericReportPage.clickOk(true, GenericReportPage.class);
 
-        assertThat(genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
+        String initialMinValue = genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
                 reportName,
                 costOrMass,
-                "Min"),
+                "Min");
+        String minAssertValue = costOrMass.equals("Mass") ? initialMinValue.substring(0, initialMinValue.length() - 1) :
+                initialMinValue;
+        assertThat(minAssertValue,
                 is(equalTo(minValue))
         );
-        assertThat(genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
+
+        String initialMaxValue = genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
                 reportName,
                 costOrMass,
-                "Max"),
+                "Max");
+        String maxAssertVal = costOrMass.equals("Mass") ? initialMaxValue.substring(0, initialMaxValue.length() - 1) : initialMaxValue;
+        assertThat(maxAssertVal,
                 is(equalTo(maxValue))
         );
+
         return genericReportPage;
     }
 

@@ -512,7 +512,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
     private WebElement designOutlierApCostOne;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[86]/td[24]")
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[84]/td[24]")
     private WebElement designOutlierApCostTwo;
 
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
