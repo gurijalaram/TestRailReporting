@@ -1141,15 +1141,17 @@ public class InputControlsTests extends TestBase {
                 "Min");
         String minAssertValue = costOrMass.equals("Mass") ? initialMinValue.substring(0, initialMinValue.length() - 1) :
                 initialMinValue;
+        String minInputValue = costOrMass.equals("Mass") ? minValue.substring(0, minValue.length() - 1) : minValue;
         assertThat(minAssertValue,
-                is(equalTo(minValue))
+                is(equalTo(minInputValue))
         );
 
         String initialMaxValue = genericReportPage.getMassOrCostMinOrMaxAboveChartValue(
                 reportName,
                 costOrMass,
                 "Max");
-        String maxAssertVal = costOrMass.equals("Mass") ? initialMaxValue.substring(0, initialMaxValue.length() - 1) : initialMaxValue;
+        String maxAssertVal = costOrMass.equals("Mass") ? initialMaxValue.substring(0, initialMaxValue.length() - 1) :
+                initialMaxValue;
         assertThat(maxAssertVal,
                 is(equalTo(maxValue))
         );

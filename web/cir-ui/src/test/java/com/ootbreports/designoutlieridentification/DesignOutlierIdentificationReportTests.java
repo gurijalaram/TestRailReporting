@@ -195,9 +195,8 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                        GenericReportPage.class);
-
-        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
+                        GenericReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.ROLL_UP_A.getExportSetName())
                 .clickOk(true, GenericReportPage.class);
 
         genericReportPage.setReportName(
