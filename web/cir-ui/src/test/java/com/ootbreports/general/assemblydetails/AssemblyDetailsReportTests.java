@@ -472,7 +472,9 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
+        );
     }
 
     @Test

@@ -9,6 +9,7 @@ import com.apriori.pageobjects.pages.view.reports.DesignOutlierIdentificationRep
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -18,6 +19,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 
 import java.math.BigDecimal;
@@ -93,7 +95,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1988"})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateCalendar() {
@@ -104,7 +106,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1988"})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateInputField() {

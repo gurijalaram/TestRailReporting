@@ -155,7 +155,9 @@ public class CastingDtcReportTests extends TestBase {
     @Description("Verify export date filters correctly filters export sets - Input - Casting DTC Report")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.CASTING_DTC.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(
+                ReportNamesEnum.CASTING_DTC.getReportName()
+        );
     }
 
     @Test

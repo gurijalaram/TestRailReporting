@@ -145,7 +145,9 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.PLASTIC_DTC.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(
+                ReportNamesEnum.PLASTIC_DTC.getReportName()
+        );
     }
 
     @Test

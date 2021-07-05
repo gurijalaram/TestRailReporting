@@ -150,7 +150,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Details Report")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName()
+        );
     }
 
     @Test
