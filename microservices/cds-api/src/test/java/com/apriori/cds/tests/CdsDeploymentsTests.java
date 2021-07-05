@@ -32,6 +32,10 @@ public class CdsDeploymentsTests {
     private static String url;
     private static String customerIdentityEndpoint;
     private static ResponseWrapper<Customer> customer;
+    private static String siteName;
+    private static String siteID;
+    private static ResponseWrapper<Site> site;
+    private static String siteIdentity;
 
     @BeforeClass
     public static void setDetails() {
@@ -45,6 +49,12 @@ public class CdsDeploymentsTests {
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+
+        siteName = generateStringUtil.generateSiteName();
+        siteID = generateStringUtil.generateSiteID();
+
+        site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        siteIdentity = site.getResponseEntity().getIdentity();
     }
 
     @AfterClass
@@ -58,14 +68,7 @@ public class CdsDeploymentsTests {
     @TestRail(testCaseId = {"3301"})
     @Description("Add a deployment to a customer")
     public void addCustomerDeployment() {
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String siteIdentity = site.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity, "PRODUCTION");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("Production Deployment")));
         assertThat(response.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));
@@ -75,15 +78,8 @@ public class CdsDeploymentsTests {
     @TestRail(testCaseId = {"5314"})
     @Description("Get a list of deployments for a customer")
     public void getCustomerDeployments() {
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String siteIdentity = site.getResponseEntity().getIdentity();
-
         String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity, "PREVIEW");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(deploymentsEndpoint, Deployments.class);
@@ -96,14 +92,7 @@ public class CdsDeploymentsTests {
     @TestRail(testCaseId = {"5315"})
     @Description("Add a deployment to a customer")
     public void getDeploymentByIdentity() {
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String siteIdentity = site.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity);
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, siteIdentity, "SANDBOX");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
