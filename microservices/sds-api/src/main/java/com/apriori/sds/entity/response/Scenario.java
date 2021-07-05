@@ -27,7 +27,11 @@ public class Scenario {
     private String locked;
     private String scenarioName;
     private String scenarioType;
+    private String scenarioState;
     private String ownedBy;
+    private String previousScenarioState;
+    private String notes;
+    private String description;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)

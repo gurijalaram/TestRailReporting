@@ -5,11 +5,11 @@ import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.utils.BcsUtils;
-import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -27,20 +27,18 @@ public class BatchResourcesTest extends TestUtil {
         batch = BatchResources.createNewBatch();
     }
 
+    @AfterClass
+    public static void testCleanup() {
+        BcsUtils.checkAndCancelBatch(batch);
+    }
+
     @Test
     @TestRail(testCaseId = {"4284"})
     @Description("API returns a list of Batches in the CIS DB")
     public void createNewBatches() {
-
         Batch batch = BatchResources.createNewBatch();
-
-        try {
-            String batchIdentity = BcsUtils.getIdentity(batch, Batch.class);
-            Constants.setCisBatchIdentity(batchIdentity);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
-        }
+        boolean canceled = BcsUtils.checkAndCancelBatch(batch);
+        Assert.assertTrue("Batch was canceled", canceled);
     }
 
 
@@ -65,21 +63,9 @@ public class BatchResourcesTest extends TestUtil {
         ResponseWrapper<Cancel> responseWrapper = BatchResources.cancelBatchProccessing();
         String identity = responseWrapper.getResponseEntity().getIdentity();
 
-
-        /*
-         *  Give the batch process time to move to a cancelled state
-         */
-        try {
-            Thread.sleep(10000);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
-        }
-
         ResponseWrapper<Batch> batchResponseWrapper = BatchResources.getBatchRepresentation(identity);
         Assert.assertEquals("CANCELLED", batchResponseWrapper.getResponseEntity()
                 .getState().toUpperCase());
-
     }
 
 

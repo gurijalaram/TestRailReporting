@@ -221,12 +221,14 @@ public class CidAppTestUtil {
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity)
                 .body("costingInputs",
-                    new CostRequest().setAnnualVolume(5500)
-                        .setBatchSize(458)
-                        .setMaterialName("Aluminum, Stock, ANSI 1050A")
-                        .setProcessGroupName("Sheet Metal")
-                        .setProductionLife(5.0)
-                        .setVpeName("aPriori USA"));
+                    CostRequest.builder().annualVolume(5500)
+                        .batchSize(458)
+                        .materialName("Aluminum, Stock, ANSI 1050A")
+                        .processGroupName("Sheet Metal")
+                        .productionLife(5.0)
+                        .vpeName("aPriori USA")
+                        .build()
+                );
 
         return HTTP2Request.build(requestEntity).post();
     }
