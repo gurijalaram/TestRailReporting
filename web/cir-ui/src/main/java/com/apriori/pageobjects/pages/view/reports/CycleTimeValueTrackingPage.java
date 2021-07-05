@@ -142,7 +142,6 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
         pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
-        driver.findElement(locator).click();
         return PageFactory.initElements(driver, className);
     }
 
