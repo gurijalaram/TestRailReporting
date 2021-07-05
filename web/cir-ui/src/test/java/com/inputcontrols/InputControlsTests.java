@@ -1139,14 +1139,15 @@ public class InputControlsTests extends TestBase {
                 reportName,
                 costOrMass,
                 "Min");
+
         String minAssertValue = minValue;
         String minInputValue = minValue;
-        if (reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()) && costOrMass.equals("Mass")) {
+        if (costOrMass.equals("Mass")) {
             minAssertValue = initialMinValue.substring(0, initialMinValue.length() - 1);
-        } else if (reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName()) && costOrMass.equals("Mass")) {
-            minInputValue = minValue.substring(0, minValue.length() - 1);
-            minAssertValue = initialMinValue.substring(0, initialMinValue.length() - 1);
+            minInputValue = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName()) ?
+                    minValue.substring(0, minValue.length() - 1) : minInputValue;
         }
+
         assertThat(minAssertValue,
                 is(equalTo(minInputValue))
         );
