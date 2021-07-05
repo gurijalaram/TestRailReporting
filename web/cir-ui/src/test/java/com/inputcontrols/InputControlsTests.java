@@ -422,7 +422,8 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSet(exportSet, GenericReportPage.class)
+            .selectExportSetDtcTests(exportSet)
+            .waitForExportSetSelection(exportSet)
             .selectMassMetric(massMetric)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);

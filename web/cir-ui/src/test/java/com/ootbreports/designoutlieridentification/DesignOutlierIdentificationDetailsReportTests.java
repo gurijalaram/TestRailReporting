@@ -79,7 +79,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7386"})
     @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
     public void testMassMetricRoughMass() {
@@ -92,7 +92,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1988"})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateCalendar() {
@@ -103,7 +103,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1988"})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateInputField() {
