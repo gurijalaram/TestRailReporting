@@ -858,9 +858,7 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.waitForSteadinessOfElement(By.xpath("//div[@id='sortOrder']//a"));
             sortOrderDropdown.click();
             By inputLocator = By.xpath("//div[@id='sortOrder']//input");
-            //pageUtils.waitForElementAndClick(inputLocator);
             driver.findElement(inputLocator).click();
-            //pageUtils.waitForSteadinessOfElement(inputLocator);
             driver.findElement(inputLocator).sendKeys(sortOrder);
             By locator = By.xpath(String.format("//li[@title='%s']/div/a", sortOrder));
             pageUtils.waitForElementToAppear(By.xpath(String.format("//li[@title='%s']/div/a", sortOrder)));
@@ -978,7 +976,6 @@ public class GenericReportPage extends ReportsPageHeader {
         Actions actions = new Actions(driver);
         actions.moveToElement(okButton).perform();
         actions.click().perform();
-        //waitForSvgToRender();
         if (!getInputControlsDivClassName().contains("hidden")) {
             actions.moveToElement(okButton).perform();
             actions.click().perform();
