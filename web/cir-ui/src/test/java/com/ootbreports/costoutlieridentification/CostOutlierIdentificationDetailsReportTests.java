@@ -138,15 +138,13 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class)
-                .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), CostOutlierIdentificationReportPage.class)
                 .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
+        costOutlierIdentificationReportPage.waitForSvgToRender();
         costOutlierIdentificationReportPage.clickInputControlsButton()
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                        CostOutlierIdentificationReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                CostOutlierIdentificationReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
                 .clickOk(true, GenericReportPage.class)
                 .waitForReportToLoad();
 
