@@ -22,6 +22,7 @@ import com.evaluate.dtc.DTCMachiningTests;
 import com.evaluate.dtc.DTCPlasticMouldingTests;
 import com.evaluate.dtc.SheetMetalDTCTests;
 import com.evaluate.materialutilization.ChangeMaterialSelectionTests;
+import com.evaluate.materialutilization.MaterialPMITests;
 import com.evaluate.materialutilization.MaterialStockTests;
 import com.explore.ActionsTests;
 import com.explore.PreviewPanelTests;
@@ -71,7 +72,8 @@ import testsuites.suiteinterface.SmokeTests;
     TableHeadersTests.class,
     DTCMachiningTests.class,
     DTCCastingTests.class,
-    TwoModelMachiningTests.class
+    TwoModelMachiningTests.class,
+    MaterialPMITests.class
 })
 public class RegressionTestSuite {
 }
