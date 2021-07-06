@@ -21,7 +21,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -130,7 +129,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1965"})
     @Description("Validate details report generates")
     public void testDetailsReportGenerates() {

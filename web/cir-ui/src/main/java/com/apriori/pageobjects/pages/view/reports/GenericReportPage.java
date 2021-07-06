@@ -800,14 +800,17 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.scrollWithJavaScript(costMetricDropdown, true);
         if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
             pageUtils.waitForElementToAppear(By.xpath("//div[@id='sortOrder']"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='componentCostMin']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='componentCostMax']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='annualizedPotentialThreshold']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='percentDifferenceThreshold']//input"));
             pageUtils.waitForElementToAppear(applyButton);
             pageUtils.waitForElementToAppear(okButton);
             pageUtils.waitForElementToAppear(resetButton);
             pageUtils.waitForElementToAppear(cancelButton);
+            pageUtils.waitForElementToAppear(upperTitle);
+            pageUtils.waitForElementToAppear(inputControlsDiv);
+            pageUtils.waitForElementToAppear(backButton);
+            pageUtils.waitForElementToAppear(inputControlsButton);
+            pageUtils.waitForElementToAppear(zoomInButton);
+            pageUtils.waitForElementToAppear(zoomOutButton);
+            pageUtils.waitForElementToAppear(zoomValueDropdown);
 
             pageUtils.waitForElementAndClick(costMetricDropdown);
             pageUtils.waitForElementAndClick(By.xpath(String.format("//li[@title='%s']/div/a", costMetric)));

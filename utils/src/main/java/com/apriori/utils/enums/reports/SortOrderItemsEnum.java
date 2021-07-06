@@ -1,7 +1,7 @@
 package com.apriori.utils.enums.reports;
 
 public enum SortOrderItemsEnum {
-    JEEP_INITIAL("JEEP WJ FRONT BRAKE DISC 99-04 (Init…"),
+    JEEP_INITIAL("JEEP WJ FRONT BRAKE DISC 99-04 (Ini"),
     JEEP("JEEP WJ FRONT BRAKE DISC 99-04"),
     CYLINDER("CYLINDER HEAD (Initial)"),
     DTC_INITIAL("DTCCASTINGISSUES (Initial)"),

@@ -3,6 +3,7 @@ package com.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
@@ -197,34 +198,34 @@ public class CommonReportTests extends TestBase {
         String[] elementNames = {elementNameOne, elementNameTwo};
 
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("1", "1"),
-            is(equalTo(elementNames[0])));
+            is(startsWith(elementNames[0])));
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("1", "2"),
-            is(equalTo(elementNames[1])));
+            is(startsWith(elementNames[1])));
 
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("2", "1"),
-            is(equalTo(elementNames[0])));
+            is(startsWith(elementNames[0])));
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("2", "2"),
-            is(equalTo(elementNames[1])));
+            is(startsWith(elementNames[1])));
 
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("3", "1"),
-            is(equalTo(elementNames[0])));
+            is(startsWith(elementNames[0])));
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("3", "2"),
-            is(equalTo(elementNames[1])));
+            is(startsWith(elementNames[1])));
 
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("4", "1"),
-            is(equalTo(elementNames[0])));
+            is(startsWith(elementNames[0])));
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("4", "2"),
-            is(equalTo(elementNames[1])));
+            is(startsWith(elementNames[1])));
 
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("5", "1"),
-            is(equalTo(elementNames[0])));
+            is(startsWith(elementNames[0])));
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("5", "2"),
-            is(equalTo(elementNames[1])));
+            is(startsWith(elementNames[1])));
 
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("6", "1"),
-            is(equalTo(elementNames[0])));
+            is(startsWith(elementNames[0])));
         assertThat(castingDtcReportPage.getTableElementNameDtcComparison("6", "2"),
-            is(equalTo(elementNames[1])));
+            is(startsWith(elementNames[1])));
     }
 
     /**
@@ -476,14 +477,32 @@ public class CommonReportTests extends TestBase {
      * @param sortOrder - String
      */
     private void castingSortOrderTestCore(String reportName, String sortOrder) {
+        String exportSet = ExportSetEnum.CASTING_DTC.getExportSetName();
         castingDtcReportPage = new ReportsLoginPage(driver)
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, CastingDtcReportPage.class)
-                .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), CastingDtcReportPage.class)
+                .selectExportSetDtcTests(exportSet)
                 .selectSortOrder(sortOrder)
                 .clickOk(true, CastingDtcReportPage.class);
 
         castingDtcReportPage.waitForReportToLoad();
+
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set')]/../following-sibling::td[2]/span"))
+                .getText().equals(exportSet)
+                && reportName.equals(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName())
+                && sortOrder.equals(SortOrderEnum.CASTING_ISSUES.getSortOrderEnum())) {
+            castingDtcReportPage.clickInputControlsButton()
+                    .selectExportSetDtcTests(exportSet)
+                    .selectExportSetDtcTests(exportSet)
+                    .waitForExportSetSelection(exportSet)
+                    .clickOk(true, GenericReportPage.class);
+            castingDtcReportPage.waitForReportToLoad();
+            castingDtcReportPage.waitForSvgToRender();
+        }
+
+        if (!reportName.contains("Details")) {
+            castingDtcReportPage.waitForSvgToRender();
+        }
     }
 }

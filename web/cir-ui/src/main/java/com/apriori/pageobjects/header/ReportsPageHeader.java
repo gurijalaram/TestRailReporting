@@ -25,7 +25,7 @@ public class ReportsPageHeader extends PageHeader {
     private WebElement refreshButton;
 
     @FindBy(id = "back")
-    private WebElement backButton;
+    protected WebElement backButton;
 
     @FindBy(id = "export")
     private WebElement exportButton;
@@ -40,16 +40,16 @@ public class ReportsPageHeader extends PageHeader {
     private WebElement undoAllButton;
 
     @FindBy(id = "ICDialog")
-    private WebElement inputControlsButton;
+    protected WebElement inputControlsButton;
 
     @FindBy(id = "zoom_out")
-    private WebElement zoomOutButton;
+    protected WebElement zoomOutButton;
 
     @FindBy(id = "zoom_in")
-    private WebElement zoomInButton;
+    protected WebElement zoomInButton;
 
     @FindBy(id = "zoom_value_button")
-    private WebElement zoomValueDropdown;
+    protected WebElement zoomValueDropdown;
 
     @FindBy(id = "search_report")
     private WebElement searchReportInput;
