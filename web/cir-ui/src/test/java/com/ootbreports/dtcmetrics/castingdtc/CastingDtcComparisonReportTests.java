@@ -326,7 +326,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7643"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderManufacturingCastingIssues() {
