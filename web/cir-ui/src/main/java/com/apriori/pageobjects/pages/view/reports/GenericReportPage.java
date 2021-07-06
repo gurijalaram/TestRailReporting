@@ -797,9 +797,20 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectCostMetric(String costMetric) {
+        pageUtils.scrollWithJavaScript(costMetricDropdown, true);
         if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
-            costMetricDropdown.click();
-            driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric))).click();
+            pageUtils.waitForElementToAppear(By.xpath("//div[@id='sortOrder']"));
+            pageUtils.waitForElementToAppear(By.xpath("//div[@id='componentCostMin']//input"));
+            pageUtils.waitForElementToAppear(By.xpath("//div[@id='componentCostMax']//input"));
+            pageUtils.waitForElementToAppear(By.xpath("//div[@id='annualizedPotentialThreshold']//input"));
+            pageUtils.waitForElementToAppear(By.xpath("//div[@id='percentDifferenceThreshold']//input"));
+            pageUtils.waitForElementToAppear(applyButton);
+            pageUtils.waitForElementToAppear(okButton);
+            pageUtils.waitForElementToAppear(resetButton);
+            pageUtils.waitForElementToAppear(cancelButton);
+
+            pageUtils.waitForElementAndClick(costMetricDropdown);
+            pageUtils.waitForElementAndClick(By.xpath(String.format("//li[@title='%s']/div/a", costMetric)));
         }
         return this;
     }
@@ -825,7 +836,8 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.waitForElementToAppear(massMetricDropdown);
 
             pageUtils.waitForElementAndClick(massMetricDropdown);
-            pageUtils.waitForElementAndClick(driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", massMetric))));
+            pageUtils.waitForElementAndClick(driver.findElement(By.xpath(
+                    String.format("//li[@title='%s']/div/a", massMetric))));
         }
         return this;
     }
