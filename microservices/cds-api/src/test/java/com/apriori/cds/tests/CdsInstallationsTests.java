@@ -92,7 +92,7 @@ public class CdsInstallationsTests {
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
 
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
@@ -131,7 +131,7 @@ public class CdsInstallationsTests {
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
 
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
@@ -172,7 +172,7 @@ public class CdsInstallationsTests {
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
 
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);

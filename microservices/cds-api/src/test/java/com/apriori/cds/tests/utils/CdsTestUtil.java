@@ -196,8 +196,10 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, LicensedApplication.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("licensedApplication",
-                new LicensedApplication().setApplicationIdentity(Constants.getApProApplicationIdentity())
-                    .setCreatedBy("#SYSTEM00000"));
+                LicensedApplication.builder()
+                    .applicationIdentity(Constants.getApProApplicationIdentity())
+                    .createdBy("#SYSTEM00000")
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
