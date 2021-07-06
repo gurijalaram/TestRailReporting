@@ -2,6 +2,7 @@ package com.apriori.cds.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
@@ -74,6 +75,8 @@ public class CdsIdentityProvidersTests {
     @TestRail(testCaseId = {"5824", "5961"})
     @Description("Create an Identity provider for a customer")
     public void postCustomerIdentityProviders() {
+        String customerName = generateStringUtil.generateCustomerName();
+
         ResponseWrapper<IdentityProviderResponse> samlResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(samlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
@@ -85,6 +88,8 @@ public class CdsIdentityProvidersTests {
     @TestRail(testCaseId = {"5963"})
     @Description("Update Identity provider for a customer")
     public void patchCustomerIdentityProviders() {
+        String customerName = generateStringUtil.generateCustomerName();
+
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String idpIdentity = response.getResponseEntity().getIdentity();
@@ -98,6 +103,8 @@ public class CdsIdentityProvidersTests {
     @TestRail(testCaseId = {"5962"})
     @Description("getIDP details by Identity")
     public void getIDPbyIdentity() {
+        String customerName = generateStringUtil.generateCustomerName();
+
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String idpIdentity = response.getResponseEntity().getIdentity();
@@ -113,6 +120,8 @@ public class CdsIdentityProvidersTests {
     @TestRail(testCaseId = {"5960"})
     @Description("getIDP list for customer")
     public void getListOfIDPsForCustomer() {
+        String customerName = generateStringUtil.generateCustomerName();
+
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String idpIdentity = response.getResponseEntity().getIdentity();
@@ -122,7 +131,7 @@ public class CdsIdentityProvidersTests {
         ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getCommonRequest(identityProviderEndpoint, IdentityProviderPagination.class);
 
         assertThat(idpPagination.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(idpPagination.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
+        assertThat(idpPagination.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
