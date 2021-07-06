@@ -1911,6 +1911,9 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.waitForSteadinessOfElement(locator);
             pageUtils.waitForElementAndClick(driver.findElement(locator));
         }
+        pageUtils.waitForElementToAppear(By.xpath(String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", dtcScoreOption)));
+        String dtcScoreSelectedCount = dtcScoreOption.equals("High, Low, Medium") ? "3" : "1";
+        pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='dtcScore']//span[@title='Selected: %s']", dtcScoreSelectedCount)));
         return this;
     }
 

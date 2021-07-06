@@ -25,6 +25,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.By;
@@ -1258,6 +1259,17 @@ public class InputControlsTests extends TestBase {
             .setDtcScore(dtcScore)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set')]/../following-sibling::td[2]/span"))
+                .getText().equals(exportSet)) {
+            genericReportPage.clickInputControlsButton()
+                    .selectExportSetDtcTests(exportSet)
+                    .selectExportSetDtcTests(exportSet)
+                    .waitForExportSetSelection(exportSet)
+                    .clickOk(true, GenericReportPage.class);
+            genericReportPage.waitForReportToLoad();
+            genericReportPage.waitForSvgToRender();
+        }
     }
 
     private void dtcScoreCastingMachiningAssertions(String dtcScore) {

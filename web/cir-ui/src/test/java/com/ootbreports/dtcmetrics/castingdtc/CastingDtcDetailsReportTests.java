@@ -424,7 +424,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"7644"})
     @Description("Verify DTC issue counts are correct - Casting DTC Details Report")
     public void testDtcIssueCountsAreCorrect() {
