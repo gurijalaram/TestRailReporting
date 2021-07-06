@@ -72,9 +72,6 @@ public class CommonConstants {
     }
 
     public static String getCisPartIdentity() {
-        if (cisPartIdentity == null) {
-            cisPartIdentity = System.getProperty("cisPartIdentity", PROPERTIES.getProperty("cis.part.identity"));
-        }
-        return cisPartIdentity;
+        return cisPartIdentity = cisPartIdentity == null ? System.getProperty("cisPartIdentity", PROPERTIES.getProperty("cis.part.identity")) : cisPartIdentity;
     }
 }
