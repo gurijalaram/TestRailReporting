@@ -20,6 +20,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -128,7 +129,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1965"})
     @Description("Validate details report generates")
     public void testDetailsReportGenerates() {
@@ -137,8 +138,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                        CostOutlierIdentificationReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
                 .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
