@@ -20,6 +20,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.By;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -142,11 +143,14 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
-        costOutlierIdentificationReportPage.waitForSvgToRender();
-        costOutlierIdentificationReportPage.clickInputControlsButton()
-                .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                .clickOk(true, GenericReportPage.class)
-                .waitForReportToLoad();
+        if (driver.findElement(By.xpath("//span[contains(text(), 'Rollup')]/../following-sibling::td[2]/span"))
+                .getText().contains("SHEET METAL DTC")) {
+            costOutlierIdentificationReportPage.clickInputControlsButton()
+                    .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                    .clickOk(true, GenericReportPage.class)
+                    .waitForReportToLoad();
+            costOutlierIdentificationReportPage.waitForSvgToRender();
+        }
 
         assertThat(costOutlierIdentificationReportPage.isCostOutlierSvgDisplayedAndEnabled("1"),
                 is(equalTo(true))
