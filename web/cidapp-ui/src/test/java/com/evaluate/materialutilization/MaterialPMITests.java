@@ -52,8 +52,7 @@ public class MaterialPMITests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-
-        loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             /*.openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(processGroupEnum.getProcessGroup())
