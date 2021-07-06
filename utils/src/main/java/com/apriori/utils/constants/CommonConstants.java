@@ -21,15 +21,12 @@ public class CommonConstants {
     //public static final String DEFAULT_ENVIRONMENT_KEY = "env";
     //public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
     //public static String environment;
-
-    public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
-
-    private static String cisPartIdentity;
-
-    private static String csvFile;
     private static final Properties PROPERTIES = new Properties();
     private static final File COMMON_PROPERTIES_STREAM;
+    public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
     //private static final File INPUT_STREAM;
+    private static String cisPartIdentity;
+    private static String csvFile;
 
     static {
         //environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -58,6 +55,7 @@ public class CommonConstants {
 
     /**
      * Get true/false value of whether to use different user
+     *
      * @return string
      */
     public static String getUseDifferentUser() {
@@ -66,21 +64,17 @@ public class CommonConstants {
 
     /**
      * Get csv file to use
+     *
      * @return string
      */
     public static String getCsvFile() {
-        if (csvFile == null) {
-            csvFile = csvFile == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
-        }
-
-        return csvFile;
+        return csvFile = csvFile == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
     }
 
     public static String getCisPartIdentity() {
         if (cisPartIdentity == null) {
             cisPartIdentity = System.getProperty("cisPartIdentity", PROPERTIES.getProperty("cis.part.identity"));
         }
-
         return cisPartIdentity;
     }
 }
