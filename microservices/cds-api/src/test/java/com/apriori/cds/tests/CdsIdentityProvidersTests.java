@@ -17,25 +17,48 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.hamcrest.CoreMatchers;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CdsIdentityProvidersTests {
-    private String url;
-    private String customerIdentityEndpoint;
-    private String userIdentityEndpoint;
-    private String idpIdentityEndpoint;
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private static String url;
+    private static String customerIdentityEndpoint;
+    private static String userIdentityEndpoint;
+    private static String idpIdentityEndpoint;
+    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private static String customerName;
+    private static String cloudRef;
+    private static String salesForceId;
+    private static String emailPattern;
+    private static String customerIdentity;
+    private static ResponseWrapper<Customer> customer;
+    private static String userName;
+    private static ResponseWrapper<User> user;
+    private static String userIdentity;
 
-    @Before
-    public void setServiceUrl() {
+    @BeforeClass
+    public static void setDetails() {
         url = Constants.getServiceUrl();
+
+        customerName = generateStringUtil.generateCustomerName();
+        userName = generateStringUtil.generateUserName();
+        cloudRef = generateStringUtil.generateCloudReference();
+        salesForceId = generateStringUtil.generateSalesForceId();
+        emailPattern = "\\S+@".concat(customerName);
+
+        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customerIdentity = customer.getResponseEntity().getIdentity();
+        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+
+        user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        userIdentity = user.getResponseEntity().getIdentity();
+        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
     }
 
-    @After
-    public void cleanUp() {
+    @AfterClass
+    public static void cleanUp() {
         if (idpIdentityEndpoint != null) {
             cdsTestUtil.delete(idpIdentityEndpoint);
         }
@@ -51,23 +74,10 @@ public class CdsIdentityProvidersTests {
     @TestRail(testCaseId = {"5824", "5961"})
     @Description("Create an Identity provider for a customer")
     public void postCustomerIdentityProviders() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<IdentityProviderResponse> samlResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        assertThat(samlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
-
-        ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
+        String idpIdentity = samlResponse.getResponseEntity().getResponse().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
     }
 
@@ -86,7 +96,7 @@ public class CdsIdentityProvidersTests {
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
@@ -113,7 +123,7 @@ public class CdsIdentityProvidersTests {
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
@@ -142,7 +152,7 @@ public class CdsIdentityProvidersTests {
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
@@ -172,7 +182,7 @@ public class CdsIdentityProvidersTests {
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviderResponse> identityProviderResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, userName);
         String identityProviderIdentity = identityProviderResponse.getResponseEntity().getResponse().getIdentity();

@@ -101,17 +101,17 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
-                new User().setUsername(userName)
-                    .setEmail(userName + "@" + customerName + ".com")
-                    .setCreatedBy("#SYSTEM00000")
-                    .setActive(true)
-                    .setUserType("AP_CLOUD_USER")
-                    .setUserProfile(new UserProfile().setGivenName(userName)
-                        .setFamilyName("Automater")
-                        .setJobTitle("Automation Engineer")
-                        .setDepartment("Automation")
-                        .setSupervisor("Ciene Frith")
-                        .setCreatedBy("#SYSTEM00000")));
+                User.builder().username(userName)
+                    .email(userName + "@" + customerName + ".com")
+                    .createdBy("#SYSTEM00000")
+                    .active(true)
+                    .userType("AP_CLOUD_USER")
+                    .userProfile(UserProfile.builder().givenName(userName)
+                        .familyName("Automater")
+                        .jobTitle("Automation Engineer")
+                        .department("Automation")
+                        .supervisor("Ciene Frith")
+                        .createdBy("#SYSTEM00000").build()).build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -128,10 +128,10 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
-                new User()
-                    .setUserProfile(new UserProfile()
-                        .setDepartment("Design Dept")
-                        .setSupervisor("Moya Parker")));
+                User.builder()
+                    .userProfile(UserProfile.builder()
+                        .department("Design Dept")
+                        .supervisor("Moya Parker").build()).build());
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
