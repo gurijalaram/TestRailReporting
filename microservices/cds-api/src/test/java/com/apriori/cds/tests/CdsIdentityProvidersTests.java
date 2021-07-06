@@ -77,7 +77,7 @@ public class CdsIdentityProvidersTests {
         ResponseWrapper<IdentityProviderResponse> samlResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(samlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String idpIdentity = samlResponse.getResponseEntity().getResponse().getIdentity();
+        String idpIdentity = samlResponse.getResponseEntity().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
     }
 
@@ -85,79 +85,37 @@ public class CdsIdentityProvidersTests {
     @TestRail(testCaseId = {"5963"})
     @Description("Update Identity provider for a customer")
     public void patchCustomerIdentityProviders() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
-
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
+        String idpIdentity = response.getResponseEntity().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
         ResponseWrapper<IdentityProviderResponse> updatedDescription = cdsTestUtil.patchIdp(customerIdentity, idpIdentity, userIdentity);
-        assertThat(updatedDescription.getResponseEntity().getResponse().getDescription(), is(equalTo("patch IDP using Automation")));
+        assertThat(updatedDescription.getResponseEntity().getDescription(), is(equalTo("patch IDP using Automation")));
     }
 
     @Test
     @TestRail(testCaseId = {"5962"})
     @Description("getIDP details by Identity")
     public void getIDPbyIdentity() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
-
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
+        String idpIdentity = response.getResponseEntity().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
         ResponseWrapper<IdentityProviderResponse> idp = cdsTestUtil.getCommonRequest(idpIdentityEndpoint, IdentityProviderResponse.class);
 
         assertThat(idp.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
-        assertThat(idp.getResponseEntity().getResponse().getIdentity(), is(equalTo(idpIdentity)));
+        assertThat(idp.getResponseEntity().getIdentity(), is(equalTo(idpIdentity)));
     }
 
     @Test
     @TestRail(testCaseId = {"5960"})
     @Description("getIDP list for customer")
     public void getListOfIDPsForCustomer() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
-
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String idpIdentity = response.getResponseEntity().getResponse().getIdentity();
+        String idpIdentity = response.getResponseEntity().getIdentity();
         idpIdentityEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
 
         String identityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers", customerIdentity));
@@ -171,21 +129,10 @@ public class CdsIdentityProvidersTests {
     @TestRail(testCaseId = {" "})
     @Description("Deletes identity provider")
     public void deleteCustomerIdentityProvider() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
-
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getIdentity();
-
         ResponseWrapper<IdentityProviderResponse> identityProviderResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, userName);
-        String identityProviderIdentity = identityProviderResponse.getResponseEntity().getResponse().getIdentity();
+        String identityProviderIdentity = identityProviderResponse.getResponseEntity().getIdentity();
 
         String deleteIdentityProviderEndpoint = String.format(url, String.format("customers/%s/identity-providers/%s", customerIdentity, identityProviderIdentity));
         ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(deleteIdentityProviderEndpoint);
