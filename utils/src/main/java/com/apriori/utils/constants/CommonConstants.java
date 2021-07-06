@@ -70,8 +70,4 @@ public class CommonConstants {
     public static String getCsvFile() {
         return csvFile = csvFile == null ? System.getProperty("csvFile", "common-users.csv") : System.getProperty("csvFile");
     }
-
-    public static String getCisPartIdentity() {
-        return cisPartIdentity = cisPartIdentity == null ? System.getProperty("cisPartIdentity", PROPERTIES.getProperty("cis.part.identity")) : cisPartIdentity;
-    }
 }
