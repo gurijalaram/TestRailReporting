@@ -101,17 +101,18 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
-                new User().setUsername(userName)
-                    .setEmail(userName + "@" + customerName + ".com")
-                    .setCreatedBy("#SYSTEM00000")
-                    .setActive(true)
-                    .setUserType("AP_CLOUD_USER")
-                    .setUserProfile(new UserProfile().setGivenName(userName)
-                        .setFamilyName("Automater")
-                        .setJobTitle("Automation Engineer")
-                        .setDepartment("Automation")
-                        .setSupervisor("Ciene Frith")
-                        .setCreatedBy("#SYSTEM00000")));
+                User.builder().username(userName)
+                    .email(userName + "@" + customerName + ".com")
+                    .createdBy("#SYSTEM00000")
+                    .active(true)
+                    .userType("AP_CLOUD_USER")
+                    .userProfile(UserProfile.builder().givenName(userName)
+                        .familyName("Automater")
+                        .jobTitle("Automation Engineer")
+                        .department("Automation")
+                        .supervisor("Ciene Frith")
+                        .createdBy("#SYSTEM00000").build())
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -128,10 +129,11 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
-                new User()
-                    .setUserProfile(new UserProfile()
-                        .setDepartment("Design Dept")
-                        .setSupervisor("Moya Parker")));
+                User.builder()
+                    .userProfile(UserProfile.builder()
+                        .department("Design Dept")
+                        .supervisor("Moya Parker").build())
+                    .build());
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
@@ -309,26 +311,28 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
             .setBody("identityProvider",
-                new IdentityProviderRequest().setContact(userIdentity)
-                    .setName(customerName + "-idp")
-                    .setDisplayName(customerName + "SAML")
-                    .setIdpDomains(Arrays.asList(customerName + ".com"))
-                    .setIdentityProviderPlatform("Azure AD")
-                    .setDescription("Create IDP using CDS automation")
-                    .setActive(true)
-                    .setCreatedBy("#SYSTEM00000")
-                    .setSignInUrl(Constants.getSignInUrl())
-                    .setSigningCertificate(Constants.getSignInCert())
-                    .setSigningCertificateExpiresAt("2030-07-22T22:45Z")
-                    .setSignRequest(true)
-                    .setSignRequestAlgorithm("RSA_SHA256")
-                    .setSignRequestAlgorithmDigest("SHA256")
-                    .setProtocolBinding("HTTP_POST")
-                    .setAttributeMappings(new AttributeMappings().setUserId(Constants.getSamlNameIdentifier())
-                        .setEmail(Constants.getSamlAttributeEmail())
-                        .setName(Constants.getSamlAttributeName())
-                        .setGivenName(Constants.getSamlAttributeGivenName())
-                        .setFamilyName(Constants.getSamlAttributeFamilyName())));
+                IdentityProviderRequest.builder().contact(userIdentity)
+                    .name(customerName + "-idp")
+                    .displayName(customerName + "SAML")
+                    .idpDomains(Arrays.asList(customerName + ".com"))
+                    .identityProviderPlatform("Azure AD")
+                    .description("Create IDP using CDS automation")
+                    .active(true)
+                    .createdBy("#SYSTEM00000")
+                    .signInUrl(Constants.getSignInUrl())
+                    .signingCertificate(Constants.getSignInCert())
+                    .signingCertificateExpiresAt("2030-07-22T22:45Z")
+                    .signRequest(true)
+                    .signRequestAlgorithm("RSA_SHA256")
+                    .signRequestAlgorithmDigest("SHA256")
+                    .protocolBinding("HTTP_POST")
+                    .attributeMappings(AttributeMappings.builder()
+                        .userId(Constants.getSamlNameIdentifier())
+                        .email(Constants.getSamlAttributeEmail())
+                        .name(Constants.getSamlAttributeName())
+                        .givenName(Constants.getSamlAttributeGivenName())
+                        .familyName(Constants.getSamlAttributeFamilyName()).build())
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -347,8 +351,10 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("identityProvider",
-                new IdentityProviderRequest().setDescription("patch IDP using Automation")
-                    .setContact(userIdentity));
+                IdentityProviderRequest.builder()
+                    .description("patch IDP using Automation")
+                    .contact(userIdentity)
+                    .build());
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
 

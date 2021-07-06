@@ -63,7 +63,7 @@ public class CdsAccessControlsTests  {
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
