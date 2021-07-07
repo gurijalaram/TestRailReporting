@@ -88,7 +88,7 @@ public class ThreadsPage extends LoadableComponent<ThreadsPage> {
      * @return string
      */
     public String getThreaded(String threaded) {
-        return designGuidanceController.getColumn(threaded, 1);
+        return designGuidanceController.getColumnIcon(threaded, 1);
     }
 
     /**

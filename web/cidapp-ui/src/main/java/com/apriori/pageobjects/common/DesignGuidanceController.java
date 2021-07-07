@@ -49,6 +49,16 @@ public class DesignGuidanceController {
     }
 
     /**
+     * Gets column
+     *
+     * @return string
+     */
+    public String getColumnIcon(String issue, int column) {
+        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[normalize-space()='%s']/..//div[@role='cell']", issue.trim())));
+        return pageUtils.waitForElementToAppear(cells.get(column).findElement(By.cssSelector(".cell-text svg"))).getAttribute("data-icon");
+    }
+
+    /**
      * Selects gcd
      *
      * @param gcd - the gcd
