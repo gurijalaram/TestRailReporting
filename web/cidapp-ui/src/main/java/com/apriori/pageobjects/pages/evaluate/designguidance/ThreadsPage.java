@@ -17,8 +17,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ThreadsPage extends LoadableComponent<ThreadsPage> {
 
-    @FindBy(css = "[data-icon='screwdriver']")
-    private WebElement threadTab;
+    @FindBy(css = ".active [data-icon='screwdriver']")
+    private WebElement threadTabActive;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -42,6 +42,7 @@ public class ThreadsPage extends LoadableComponent<ThreadsPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(threadTabActive);
     }
 
     /**
