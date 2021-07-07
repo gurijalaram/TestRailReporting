@@ -24,6 +24,9 @@ import java.util.List;
 @Slf4j
 public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
+    @FindBy(css = ".active [data-icon='exclamation-circle']")
+    private WebElement issuesTabActive;
+
     @FindBy(css = ".design-guidance-detail-card .apriori-table")
     private WebElement chartTable;
 
@@ -64,6 +67,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(issuesTabActive);
         pageUtils.waitForElementAppear(chartTable);
     }
 
