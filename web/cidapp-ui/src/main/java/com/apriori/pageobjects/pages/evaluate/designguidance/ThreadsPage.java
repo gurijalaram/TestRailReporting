@@ -77,7 +77,7 @@ public class ThreadsPage extends LoadableComponent<ThreadsPage> {
      */
     private ThreadsPage selectGcd(String gcd) {
         By byGcd = designGuidanceController.getBy(gcd);
-        deSelectAllGcd();
+        designGuidanceController.deSelectAllGcd();
         pageUtils.waitForElementAndClick(byGcd);
         return this;
     }

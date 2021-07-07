@@ -87,6 +87,18 @@ public class DesignGuidanceController {
     }
 
     /**
+     * Deselects all gcd checkbox
+     *
+     * @return current page object
+     */
+    public DesignGuidanceController deSelectAllGcd() {
+        if (!getCheckboxStatus().equals("square")) {
+            pageUtils.waitForElementAndClick(gcdCheckbox);
+        }
+        return this;
+    }
+
+    /**
      * Gets status of header gcd checkbox
      *
      * @return string

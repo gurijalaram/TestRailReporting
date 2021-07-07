@@ -126,7 +126,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     private GuidanceIssuesPage selectGcd(String gcd) {
         By byGcd = designGuidanceController.getBy(gcd);
-        deSelectAllGcd();
+        designGuidanceController.deSelectAllGcd();
         pageUtils.waitForElementAndClick(byGcd);
         return this;
     }
@@ -168,29 +168,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         return designGuidanceController.getColumn(gcd, 2);
     }
 
-    /**
-     * Selects all gcd checkbox
-     *
-     * @return current page object
-     */
-    public GuidanceIssuesPage selectAllGcd() {
-        if (!getCheckboxStatus().contains("check")) {
-            pageUtils.waitForElementAndClick(gcdCheckbox);
-        }
-        return this;
-    }
-
-    /**
-     * Deselects all gcd checkbox
-     *
-     * @return current page object
-     */
-    public GuidanceIssuesPage deSelectAllGcd() {
-        if (!getCheckboxStatus().equals("square")) {
-            pageUtils.waitForElementAndClick(gcdCheckbox);
-        }
-        return this;
-    }
 
     /**
      * Gets status of header gcd checkbox
