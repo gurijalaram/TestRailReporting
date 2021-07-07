@@ -87,8 +87,8 @@ public class ThreadsPage extends LoadableComponent<ThreadsPage> {
      *
      * @return string
      */
-    public int getThreaded(String threaded) {
-        return Integer.parseInt(designGuidanceController.getColumn(threaded, 1));
+    public String getThreaded(String threaded) {
+        return designGuidanceController.getColumn(threaded, 1);
     }
 
     /**
@@ -96,8 +96,8 @@ public class ThreadsPage extends LoadableComponent<ThreadsPage> {
      *
      * @return string
      */
-    public int getSource(String source) {
-        return Integer.parseInt(designGuidanceController.getColumn(source, 2));
+    public String getSource(String source) {
+        return designGuidanceController.getColumn(source, 2);
     }
 
     /**
@@ -105,8 +105,8 @@ public class ThreadsPage extends LoadableComponent<ThreadsPage> {
      *
      * @return string
      */
-    public int getLength(String length) {
-        return Integer.parseInt(designGuidanceController.getColumn(length, 3));
+    public String getLength(String length) {
+        return designGuidanceController.getColumn(length, 3);
     }
 
     /**
