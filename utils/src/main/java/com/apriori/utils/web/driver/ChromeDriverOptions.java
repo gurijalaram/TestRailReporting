@@ -43,6 +43,7 @@ public class ChromeDriverOptions {
         // TODO: 28/02/2020 quick fix for running on linux. this will be reworked with major changes in the near future
         if (System.getProperty("os.name").toLowerCase().contains("linux")) {
             options.addArguments("--no-sandbox");
+            options.addArguments("--headless");
             options.addArguments("--disable-gpu");
             options.addArguments("--disable-dev-shm-usage");
         }
