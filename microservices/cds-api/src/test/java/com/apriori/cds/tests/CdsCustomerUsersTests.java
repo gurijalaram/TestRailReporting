@@ -69,11 +69,11 @@ public class CdsCustomerUsersTests {
         String userName = generateStringUtil.generateUserName();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(user.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
+        assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(usersEndpoint, Users.class);
@@ -104,14 +104,14 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(userIdentityEndpoint, User.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getIdentity(), is(equalTo(userIdentity)));
-        assertThat(response.getResponseEntity().getResponse().getUsername(), is(equalTo(userName)));
+        assertThat(response.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
+        assertThat(response.getResponseEntity().getUsername(), is(equalTo(userName)));
     }
 
     @Test
@@ -122,12 +122,12 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
 
         ResponseWrapper<User> patchResponse = cdsTestUtil.patchUser(customerIdentity, userIdentity);
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(patchResponse.getResponseEntity().getResponse().getUserProfile().getDepartment(), is(equalTo("Design Dept")));
+        assertThat(patchResponse.getResponseEntity().getUserProfile().getDepartment(), is(equalTo("Design Dept")));
     }
 
     @Test
@@ -138,7 +138,7 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String userIdentity = user.getResponseEntity().getResponse().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
         String wrongIdentityEndpoint = String.format(url, String.format("customers/%s/users/L2H992829CFB", customerIdentity));
 
