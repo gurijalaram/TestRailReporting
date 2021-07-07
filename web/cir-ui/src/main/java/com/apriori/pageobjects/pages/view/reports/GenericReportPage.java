@@ -581,27 +581,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Scroll to export set list
-     *
-     * @return instance of GenericReportPage
-     */
-    public GenericReportPage scrollToExportSetList() {
-        pageUtils.scrollWithJavaScript(exportSetList, true);
-        return this;
-    }
-
-    /**
-     * Wait for expected export set selection count
-     *
-     * @param expected String
-     * @return GenericReportPage instance
-     */
-    public GenericReportPage waitForExpectedExportSetSelectionCount(String expected) {
-        waitForCorrectAvailableSelectedCount("export set selection.", "Selected: ", expected);
-        return this;
-    }
-
-    /**
      * Waits for specified export set to be selected
      *
      * @param exportSet String - export set to wait for selection of
@@ -866,18 +845,6 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='sortOrder']//a[@title='%s']", sortOrder)));
             clickUseLatestExportDropdownTwice();
         }
-        return this;
-    }
-
-    /**
-     * Waits for specified export set to be selected
-     *
-     * @param sortOrder String - export set to wait for selection of
-     * @return instance of GenericReportPage
-     */
-    public GenericReportPage waitForSortOrderSelection(String sortOrder) {
-        By locator = By.xpath(String.format("//div[@id='sortOrder']//a[@title='%s']", sortOrder));
-        pageUtils.waitForElementToAppear(locator);
         return this;
     }
 
@@ -1382,12 +1349,6 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(exportSetDeselect);
         waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ",
                 "0");
-    }
-
-    public GenericReportPage waitForCorrectRollup(String rollupName) {
-        By locator = By.xpath(String.format("//div[@id='rollup']//a[contains(@title, '%s (Base)')]", rollupName));
-        pageUtils.waitForElementToAppear(locator);
-        return this;
     }
 
     /**
