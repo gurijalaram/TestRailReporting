@@ -83,6 +83,15 @@ public class ThreadsPage extends LoadableComponent<ThreadsPage> {
     }
 
     /**
+     * Gets count column
+     *
+     * @return string
+     */
+    public int getGcdCount(String issueType) {
+        return Integer.parseInt(designGuidanceController.getColumn(issueType, 2));
+    }
+
+    /**
      * Gets threaded column
      *
      * @return string
