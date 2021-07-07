@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.Arrays;
@@ -13,6 +14,9 @@ import java.util.List;
 
 @Slf4j
 public class DesignGuidanceController {
+
+    @FindBy(css = ".table-head .checkbox-icon")
+    private WebElement gcdCheckbox;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -68,5 +72,26 @@ public class DesignGuidanceController {
         Arrays.stream(issue).map(x -> pageUtils.waitForElementToAppear(getBy(x.trim())).findElement(By.cssSelector("svg[data-icon='chevron-down']")))
             .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
         return this;
+    }
+
+    /**
+     * Selects all gcd checkbox
+     *
+     * @return current page object
+     */
+    public DesignGuidanceController selectAllGcd() {
+        if (!getCheckboxStatus().contains("check")) {
+            pageUtils.waitForElementAndClick(gcdCheckbox);
+        }
+        return this;
+    }
+
+    /**
+     * Gets status of header gcd checkbox
+     *
+     * @return string
+     */
+    private String getCheckboxStatus() {
+        return pageUtils.waitForElementToAppear(gcdCheckbox.findElement(By.cssSelector("svg"))).getAttribute("data-icon");
     }
 }
