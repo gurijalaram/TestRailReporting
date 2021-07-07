@@ -35,6 +35,11 @@ public class CdsAssociationUserTests {
     private static String customerIdentity;
     private static String url;
     private static String customerIdentityEndpoint;
+    private static String aPCustomerIdentity;
+    private static String associationsEndpoint;
+    private static String associationIdentity;
+    private static ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
+    private static String aPStaffIdentity;
 
     @BeforeClass
     public static void setDetails() {
@@ -48,6 +53,14 @@ public class CdsAssociationUserTests {
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+
+        aPStaffIdentity = Constants.getUserIdentity();
+        aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
+
+        associationsEndpoint = String.format(url + "&pageSize=5000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
+        customerAssociationResponse = cdsTestUtil.getCommonRequest(associationsEndpoint, CustomerAssociationResponse.class);
+        associationIdentity = customerAssociationResponse.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
+
     }
 
     @AfterClass
@@ -65,13 +78,6 @@ public class CdsAssociationUserTests {
     @TestRail(testCaseId = {"5959"})
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
-        String aPStaffIdentity = Constants.getUserIdentity();
-        String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
-
-        String associationsEndpoint = String.format(url + "&pageSize=5000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
-        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(associationsEndpoint, CustomerAssociationResponse.class);
-        String associationIdentity = response.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
-
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getResponse().getIdentity();
@@ -82,12 +88,6 @@ public class CdsAssociationUserTests {
     @TestRail(testCaseId = {"5965"})
     @Description("Get users associated for customer")
     public void getAssociationUsers() {
-        String aPStaffIdentity = Constants.getUserIdentity();
-        String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
-
-        String associationsEndpoint = String.format(url + "&pageSize=5000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
-        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(associationsEndpoint, CustomerAssociationResponse.class);
-        String associationIdentity = response.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users", aPCustomerIdentity, associationIdentity));
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
@@ -104,13 +104,6 @@ public class CdsAssociationUserTests {
     @TestRail(testCaseId = {"5964"})
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
-        String aPStaffIdentity = Constants.getUserIdentity();
-        String aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
-
-        String associationsEndpoint = String.format(url + "&pageSize=5000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
-        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(associationsEndpoint, CustomerAssociationResponse.class);
-        String associationIdentity = response.getResponseEntity().getResponse().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
-
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getResponse().getIdentity();
