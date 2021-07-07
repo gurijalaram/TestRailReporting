@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.ThreadsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
@@ -36,7 +35,6 @@ public class LoginTests extends TestBase {
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
     private EvaluatePage evaluatePage;
-    private ThreadsPage threadsPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -51,12 +49,7 @@ public class LoginTests extends TestBase {
     public void testLogin() {
 
         loginPage = new CidAppLoginPage(driver);
-        threadsPage = loginPage.login(UserUtil.getUser())
-            .clickSearch("DTCCASTINGISSUES")
-        .openScenario("DTCCASTINGISSUES", "Initial")
-        .openDesignGuidance()
-        .openThreadsTab()
-        .selectIssueTypeGcd("Curved Walls", "CurvedWall:90");
+        explorePage = loginPage.login(UserUtil.getUser());
 
         assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
