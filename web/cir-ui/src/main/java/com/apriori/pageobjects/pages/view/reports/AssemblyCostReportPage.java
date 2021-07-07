@@ -74,6 +74,16 @@ public class AssemblyCostReportPage extends GenericReportPage {
     }
 
     /**
+     * Waits for correct assembly part number
+     *
+     * @param assemblyName String - assembly to wait for
+     */
+    public void waitForCorrectAssemblyPartNumber(String assemblyName) {
+        pageUtils.waitForElementToAppear(
+                By.xpath(String.format("//div[@id='partNumber']//a[@title='%s']", assemblyName)));
+    }
+
+    /**
      * Selects Assembly from Dropdown
      *
      * @param scenarioName String

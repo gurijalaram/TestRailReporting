@@ -81,6 +81,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-digital-factory-select-field'] input")
     private WebElement digitalFactoryInput;
 
+    @FindBy(xpath = "//div[@id='qa-digital-factory-select-field']//div[@class='text-overflow']")
+    private WebElement selectedVPE;
+
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
 
@@ -95,6 +98,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = ".material-summary-card.card input")
     private WebElement materialName;
+
+    @FindBy(xpath = "//span[contains(text(), 'Finish Mass')]/following-sibling::span")
+    private WebElement finishMass;
 
     @FindBy(css = ".design-guidance-summary-card button")
     private WebElement designGuidanceDetailsButton;
@@ -126,6 +132,12 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(id = "qa-scenario-select-field")
     @CacheLookup
     private WebElement scenarioName;
+
+    @FindBy(xpath = "(//div[@class='card-header'])[1]/div[@class='left']/div")
+    private WebElement partName;
+
+    @FindBy(xpath = "//div[@id='qa-process-group-select-field']//div[@class='text-overflow']")
+    private WebElement currentProcessGroup;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -469,6 +481,56 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public String getCurrentScenarioName() {
         return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
+    }
+
+    /**
+     * Gets the part name
+     *
+     * @return part name as String
+     */
+    public String getPartName() {
+        pageUtils.waitForElementToAppear(partName);
+        return partName.getText();
+    }
+
+    /**
+     * Gets the finish mass
+     *
+     * @return finish mass as String
+     */
+    public String getFinishMass() {
+        pageUtils.waitForElementToAppear(finishMass);
+        return finishMass.getText();
+    }
+
+    /**
+     * Gets the selected process group
+     *
+     * @return process group as String
+     */
+    public String getSelectedProcessGroup() {
+        pageUtils.waitForElementToAppear(currentProcessGroup);
+        return currentProcessGroup.getText();
+    }
+
+    /**
+     * Gets the Annual Volume
+     *
+     * @return annual volume as string
+     */
+    public String getAnnualVolume() {
+        pageUtils.waitForElementToAppear(annualVolumeInput);
+        return annualVolumeInput.getAttribute("value");
+    }
+
+    /**
+     * Gets the selected VPE
+     *
+     * @return vpe as String
+     */
+    public String getSelectedVPE() {
+        pageUtils.waitForElementToAppear(selectedVPE);
+        return selectedVPE.getText();
     }
 
     /**
