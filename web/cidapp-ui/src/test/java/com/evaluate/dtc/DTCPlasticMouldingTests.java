@@ -35,9 +35,9 @@ public class DTCPlasticMouldingTests extends TestBase {
         super();
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Category(SmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"6410"})
+    @TestRail(testCaseId = {"6410", "8334"})
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -50,7 +50,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -123,7 +123,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -148,7 +148,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -202,7 +202,6 @@ public class DTCPlasticMouldingTests extends TestBase {
     }*/
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6420", "6421", "6424"})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
@@ -216,7 +215,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -224,7 +223,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Molding is not feasible. Part Thickness is more than the maximum limit with this material."));
         assertThat(guidanceIssuesPage.getGcdSuggested("Component:1"), containsString("<= 3.556 mm"));
 
         /*designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
@@ -276,7 +275,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit()
@@ -284,7 +283,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Minimum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Molding is not feasible. Part Thickness is less than the minimum limit with this material."));
 
         /*designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
         guidanceIssuesPage = designguidanceIssuesPage.closePanel()

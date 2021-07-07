@@ -19,9 +19,11 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -41,8 +43,9 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
+    @Issue("MIC-3108")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6209"})
+    @TestRail(testCaseId = {"6209", "5427"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
 
@@ -58,20 +61,26 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
-            .openScenario(scenarioName, componentName)
+            .publish(EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent")
+            .clickSearch(componentName)
+            .openScenario(componentName, scenarioName)
             .editScenario()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
+            .override()
+            .continues(PublishPage.class)
+            .publish(EvaluatePage.class)
+            .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -82,8 +91,9 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Ignore
-    @TestRail(testCaseId = {"6210"})
+    @Category(IgnoreTests.class)
+    @Ignore("Processing state")
+    @TestRail(testCaseId = {"6210", "5435"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
 
@@ -105,7 +115,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .editScenario()
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .publishScenario()
             .override()
@@ -119,6 +129,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1920")
     @TestRail(testCaseId = {"6211"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
@@ -133,7 +144,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -141,7 +152,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
-            .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario()
             .override()
@@ -152,7 +163,8 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Ignore
+    @Category(IgnoreTests.class)
+    @Ignore("Processing state")
     @TestRail(testCaseId = {"6212"})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
@@ -168,7 +180,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -177,7 +189,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publish(ExplorePage.class)
             .lock(ExplorePage.class)
             .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
-            .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .costScenario()
             .publishScenario()
             .changeName(scenarioName2)

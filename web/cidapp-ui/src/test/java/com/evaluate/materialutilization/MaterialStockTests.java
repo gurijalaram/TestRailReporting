@@ -17,6 +17,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -36,6 +37,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
+    @Issue("MIC-3085")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5115"})
     @Description("Validate material name is updated in material and util panel")
@@ -50,8 +52,8 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         materialUtilizationPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -75,7 +77,6 @@ public class MaterialStockTests extends TestBase {
     }
 
     /*@Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5148", "5151", "5152", "5153", "5156", "5160"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
@@ -135,8 +136,8 @@ public class MaterialStockTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         stockPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .inputDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -149,7 +150,7 @@ public class MaterialStockTests extends TestBase {
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("Yes")));
 
         stockPage.closePanel()
-            .inputProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Cold Worked, AISI 1010")
@@ -158,7 +159,7 @@ public class MaterialStockTests extends TestBase {
             .openMaterialProcess()
             .goToStockTab();
 
-        assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("3 in OD. 20 ft lengths")));
+        assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("3 in OD. 20 ft lengths")));
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
     }
 }

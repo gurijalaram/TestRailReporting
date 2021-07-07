@@ -1,7 +1,5 @@
 package com.apriori.bcs.tests;
 
-import static org.junit.Assert.fail;
-
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
@@ -22,13 +20,12 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReportResourcesTest extends TestUtil {
@@ -40,23 +37,29 @@ public class ReportResourcesTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        batch = (Batch)BatchResources.createNewBatch();
+        batch = BatchResources.createNewBatch();
 
         NewPartRequest newPartRequest =
                 (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
                         FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
         newPartRequest.setFilename("bracket_form.prt");
 
-        part = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
+        part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
 
         int intervals = Constants.getPollingTimeout();
         int interval = 0;
-        BcsUtils.State isPartCompleted;
+        BcsUtils.State isPartCompleted = BcsUtils.State.PROCESSING;
+
         while (interval <= intervals) {
             part = (Part)BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
                             part.getIdentity()).getResponseEntity();
-            isPartCompleted = BcsUtils.pollState(part, Part.class);
-            if (isPartCompleted.equals(BcsUtils.State.COMPLETE)) {
+            try {
+                isPartCompleted = BcsUtils.pollState(part, Part.class);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (isPartCompleted.equals(BcsUtils.State.COMPLETED)) {
                 break;
             }
             interval++;
@@ -80,7 +83,10 @@ public class ReportResourcesTest extends TestUtil {
         report  = ReportResources.createReport(newReportRequest);
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(ReportResourcesTest.class);
+    @AfterClass
+    public static void testCleanup() {
+        BcsUtils.checkAndCancelBatch(batch);
+    }
 
     @Test
     @Issue("AP-69406")
@@ -132,7 +138,7 @@ public class ReportResourcesTest extends TestUtil {
                         report.getErrors()));
                 return;
 
-            } else if (reportState.equals(BcsUtils.State.COMPLETE)) {
+            } else if (reportState.equals(BcsUtils.State.COMPLETED)) {
                 isReportReady = true;
                 break;
             }
@@ -163,6 +169,12 @@ public class ReportResourcesTest extends TestUtil {
      */
     private BcsUtils.State getReportState() {
         report = (Report)ReportResources.getReportRepresentation(report.getIdentity()).getResponseEntity();
-        return BcsUtils.pollState(report, Report.class);
+        try {
+            return BcsUtils.pollState(report, Report.class);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

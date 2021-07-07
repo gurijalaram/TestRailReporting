@@ -6,12 +6,10 @@ import com.apriori.utils.http.enums.EndpointType;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.Singular;
 import lombok.experimental.Accessors;
 import org.openqa.selenium.WebDriver;

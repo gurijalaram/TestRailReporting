@@ -1,29 +1,28 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.pageobjects.common.DesignGuidanceController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author cfrith
  */
 
+@Slf4j
 public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(GuidanceIssuesPage.class);
 
     @FindBy(css = ".design-guidance-detail-card .apriori-table")
     private WebElement chartTable;
@@ -34,15 +33,26 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     @FindBy(css = ".issue-description")
     private WebElement issueDescription;
 
+    @FindBy(xpath = "//span[.='Investigation']")
+    private WebElement investigationTab;
+
+    @FindBy(xpath = "//span[.='Tolerances']")
+    private WebElement tolerancesTab;
+
+    @FindBy(xpath = "//span[.='Threads']")
+    private WebElement threadsTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
+    private DesignGuidanceController designGuidanceController;
 
     public GuidanceIssuesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        this.designGuidanceController = new DesignGuidanceController(driver);
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -92,11 +102,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     private void selectIssue(String issueDropdown) {
         String[] issues = issueDropdown.split(",");
 
-        Stream.of(issues).forEach(issue -> {
-            WebElement byChevron = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", issue.trim())))
-                .findElement(By.cssSelector("svg[data-icon='chevron-down']")));
-            pageUtils.waitForElementAndClick(byChevron);
-        });
+        Arrays.stream(issues).map(x -> pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", x.trim()))).findElement(By.cssSelector("svg[data-icon='chevron-down']"))))
+            .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
     }
 
     /**
@@ -106,7 +113,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     private GuidanceIssuesPage selectIssueType(String issueType) {
-        By byIssueType = By.cssSelector(String.format("[id*='-%s']", issueType.substring(0, 1).toLowerCase() + issueType.substring(1).replace(" ", "").trim()));
+        By byIssueType = designGuidanceController.getBy(issueType);
         pageUtils.waitForElementAndClick(byIssueType);
         return this;
     }
@@ -118,7 +125,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     private GuidanceIssuesPage selectGcd(String gcd) {
-        WebElement byGcd = pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", gcd))).findElement(By.cssSelector("[role='cell']")));
+        By byGcd = designGuidanceController.getBy(gcd);
         deSelectAllGcd();
         pageUtils.waitForElementAndClick(byGcd);
         return this;
@@ -140,7 +147,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return string
      */
     public int getGcdCount(String issueType) {
-        return Integer.parseInt(getColumn(issueType, 2));
+        return Integer.parseInt(designGuidanceController.getColumn(issueType, 2));
     }
 
     /**
@@ -148,8 +155,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      *
      * @return string
      */
-    public String getGcdCurrent(String gcd) {
-        return getColumn(gcd, 1);
+    public int getGcdCurrent(String gcd) {
+        return Integer.parseInt(designGuidanceController.getColumn(gcd, 1));
     }
 
     /**
@@ -158,17 +165,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return string
      */
     public String getGcdSuggested(String gcd) {
-        return getColumn(gcd, 2);
-    }
-
-    /**
-     * Gets column
-     *
-     * @return string
-     */
-    private String getColumn(String issue, int column) {
-        List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[.='%s']/..//div[@role='cell']", issue.trim())));
-        return cells.get(column).findElement(By.cssSelector(".cell-text")).getAttribute("textContent");
+        return designGuidanceController.getColumn(gcd, 2);
     }
 
     /**
@@ -211,6 +208,36 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     public String getIssueDescription() {
         return pageUtils.waitForElementToAppear(issueDescription).getAttribute("textContent");
+    }
+
+    /**
+     * Opens investigation tab
+     *
+     * @return new page object
+     */
+    public InvestigationPage openInvestigationTab() {
+        pageUtils.waitForElementAndClick(investigationTab);
+        return new InvestigationPage(driver);
+    }
+
+    /**
+     * Opens tolerances tab
+     *
+     * @return new page object
+     */
+    public TolerancesPage openTolerancesTab() {
+        pageUtils.waitForElementAndClick(tolerancesTab);
+        return new TolerancesPage(driver);
+    }
+
+    /**
+     * Opens threads tab
+     *
+     * @return new page object
+     */
+    public ThreadsPage openThreadsTab() {
+        pageUtils.waitForElementAndClick(threadsTab);
+        return new ThreadsPage(driver);
     }
 
     /**

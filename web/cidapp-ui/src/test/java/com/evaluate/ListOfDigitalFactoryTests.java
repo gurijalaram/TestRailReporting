@@ -34,7 +34,6 @@ public class ListOfDigitalFactoryTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5415"})
     @Description("Get List of Digital Factory")
     public void getDigitalFactoryList() {

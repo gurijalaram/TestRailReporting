@@ -56,8 +56,8 @@ public class CdsUsersTests {
         ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(identityUrl, User.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getCustomerIdentity(), is(not(emptyString())));
-        assertThat(response.getResponseEntity().getResponse().getIdentity(), is(equalTo(userIdentity)));
+        assertThat(response.getResponseEntity().getCustomerIdentity(), is(not(emptyString())));
+        assertThat(response.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
     }
 
     @Test

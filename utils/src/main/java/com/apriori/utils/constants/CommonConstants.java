@@ -17,20 +17,26 @@ public class CommonConstants {
     public static final String DEFAULT_PASSWORD = "admin";
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
-    public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
-
-    private static String cisPartIdentity;
-
-    private static String csvFile;
+    // TODO z: Uncomment if go with common properties approach
+    //public static final String DEFAULT_ENVIRONMENT_KEY = "env";
+    //public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
+    //public static String environment;
     private static final Properties PROPERTIES = new Properties();
-    private static final File INPUT_STREAM;
+    private static final File COMMON_PROPERTIES_STREAM;
+    public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
+    //private static final File INPUT_STREAM;
+    private static String cisPartIdentity;
+    private static String csvFile;
 
     static {
+        //environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile("common.properties");
+        COMMON_PROPERTIES_STREAM = FileResourceUtil.getResourceAsFile("common.properties");
+        //INPUT_STREAM = FileResourceUtil.getResourceAsFile("common-" + environment + ".properties");
 
         try {
-            PROPERTIES.load(new FileInputStream(INPUT_STREAM));
+            PROPERTIES.load(new FileInputStream(COMMON_PROPERTIES_STREAM));
+            //PROPERTIES.load(new FileInputStream(INPUT_STREAM));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +46,16 @@ public class CommonConstants {
     public static final String schemaBasePath = PROPERTIES.getProperty("schema.base.path");
 
     /**
+     * Get build environment
+     * @return string
+     */
+    //public static String getEnvironment() {
+    //    return environment;
+    //}
+
+    /**
      * Get true/false value of whether to use different user
+     *
      * @return string
      */
     public static String getUseDifferentUser() {
@@ -49,6 +64,7 @@ public class CommonConstants {
 
     /**
      * Get csv file to use
+     *
      * @return string
      */
     public static String getCsvFile() {
@@ -59,7 +75,6 @@ public class CommonConstants {
         if (cisPartIdentity == null) {
             cisPartIdentity = System.getProperty("cisPartIdentity", PROPERTIES.getProperty("cis.part.identity"));
         }
-
         return cisPartIdentity;
     }
 }

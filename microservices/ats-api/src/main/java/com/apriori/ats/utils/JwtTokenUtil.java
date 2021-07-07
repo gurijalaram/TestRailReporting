@@ -14,6 +14,7 @@ import org.apache.http.HttpStatus;
 @Slf4j
 public class JwtTokenUtil {
 
+    private String currentToken;
     private String username = Constants.getAtsTokenUsername();
     private String email = Constants.getAtsTokenEmail();
     private String apiUrl = Constants.getAtsServiceHost();
@@ -29,39 +30,19 @@ public class JwtTokenUtil {
     public JwtTokenUtil() {
     }
 
-    // TODO: cf - 27/05/2021 to be removed
-    @Deprecated
-    public String retrieveJwtToken(String secretKey, String url, int statusCode, String username, String email, String issuer, String subject) {
-        url = url.concat(String.format("/tokens?key=%s", secretKey));
-        TokenRequest body = new TokenRequest();
-        TokenInformation information = new TokenInformation();
-        information
-            .setIssuer(issuer)
-            .setSubject(subject)
-            .setNameAndEmail(username, email);
-        body.setToken(information);
-
-        Token token = (Token) GenericRequestUtil.postMultipart(
-            RequestEntity.init(url, Token.class)
-                .setBody(body)
-                .setStatusCode(statusCode),
-            new RequestAreaApi()
-        ).getResponseEntity();
-
-        return token.getToken();
-    }
-
     /**
      * Retrieves a JWT token
      *
      * @return string
      */
     public String retrieveJwtToken() {
-        String url;
+        if (currentToken != null) {
+            return currentToken;
+        }
 
         log.info("Retrieving JWT Token...");
 
-        url = apiUrl.concat(String.format("/tokens?key=%s", secretKey));
+        String url = apiUrl.concat(String.format("/tokens?key=%s", secretKey));
         TokenRequest body = new TokenRequest();
         TokenInformation information = new TokenInformation();
         information
@@ -77,6 +58,6 @@ public class JwtTokenUtil {
             new RequestAreaApi()
         ).getResponseEntity();
 
-        return token.getToken();
+        return currentToken = token.getToken();
     }
 }

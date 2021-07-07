@@ -21,6 +21,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -66,7 +67,7 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -113,7 +114,7 @@ public class SheetMetalDTCTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -145,7 +146,7 @@ public class SheetMetalDTCTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -187,7 +188,7 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -245,7 +246,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Test
     //TODO update testrail case 719 when editing tolerances are ported
     @Ignore("Requires tolerances for additional operation")
-    @Category(SmokeTests.class)
+    @Category({SmokeTests.class, IgnoreTests.class})
     @TestRail(testCaseId = {"6502", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
@@ -266,7 +267,7 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -275,7 +276,7 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 
-        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo("0.02")));
-        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo("0.06")));
+        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo(0.02)));
+        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo(0.06)));
     }
 }

@@ -15,10 +15,11 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -30,7 +31,6 @@ public class PublishTests extends TestBase {
     private ExplorePage explorePage;
 
     private File resourceFile;
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     UserCredentials currentUser;
 
     public PublishTests() {
@@ -52,7 +52,7 @@ public class PublishTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -61,12 +61,12 @@ public class PublishTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .clickExplore()
-            .inputFilter("Recent");
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6743", "6744", "6745", "6747"})
     @Description("Publish a part and add an assignee, cost maturity and status")
@@ -83,16 +83,16 @@ public class PublishTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit()
             .costScenario()
             .publishScenario()
-            .inputStatus("Analysis")
-            .inputCostMaturity("Low")
-            .inputAssignee("Abe")
+            .selectStatus("Analysis")
+            .selectCostMaturity("Low")
+            .selectAssignee("Abe Chaves")
             .publish(EvaluatePage.class)
             .clickExplore()
             .filter()

@@ -6,7 +6,6 @@
     "createdAt",
     "createdBy",
     "updatedAt",
-    "createdByName",
     "customerIdentity",
     "componentName",
     "componentType"

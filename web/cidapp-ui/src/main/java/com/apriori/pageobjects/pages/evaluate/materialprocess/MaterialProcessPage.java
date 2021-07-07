@@ -22,6 +22,9 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     private static final Logger logger = LoggerFactory.getLogger(MaterialProcessPage.class);
 
+    @FindBy(css = ".tab.active [data-icon='clock']")
+    private WebElement processesTabActive;
+
     @FindBy(css = "div[dir='ltr']")
     private WebElement chartContainer;
 
@@ -60,6 +63,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(processesTabActive);
         pageUtils.waitForElementAppear(chartContainer);
     }
 

@@ -15,9 +15,13 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "int";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
     private static final File INPUT_STREAM;
     private static final Properties PROPERTIES = new Properties();
+    public static final int MAX_NUMBER_OF_PARTS = 100;
+    public static final int MULTIPART_POLLING_INTERVALS = 25;
+    public static final int MULTIPART_POLLING_WAIT = 10000;
+    public static final int MULTIPART_THREAD_COUNT = 100;
     public static String environment;
     private static String costingThreads;
     private static String pollingTimeout;

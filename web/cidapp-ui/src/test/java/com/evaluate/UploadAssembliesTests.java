@@ -13,7 +13,6 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ComponentIconEnum;
 import com.apriori.utils.enums.CostingIconEnum;
-import com.apriori.utils.enums.DfmIconEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
@@ -23,7 +22,9 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
+import utils.AssemDfmIconEnum;
 
 import java.io.File;
 
@@ -39,7 +40,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Ignore("Upload assemblies will be blocked")
-    @Category(SmokeTests.class)
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5612"})
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssembliesComponentsTests() {
@@ -52,7 +53,7 @@ public class UploadAssembliesTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, bigRingComp, EvaluatePage.class)
-            .inputProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -61,7 +62,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, smallRingComp, EvaluatePage.class)
-            .inputProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -70,7 +71,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, pinComp, EvaluatePage.class)
-            .inputProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -79,7 +80,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, hingeAsm, EvaluatePage.class)
-            .inputProcessGroup(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
@@ -88,8 +89,8 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo("0")));
 
         componentsListPage = evaluatePage.openComponents();
-        assertThat(componentsListPage.getRowDetails("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), DfmIconEnum.HIGH.getIcon()));
-        assertThat(componentsListPage.getRowDetails("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), DfmIconEnum.HIGH.getIcon()));
-        assertThat(componentsListPage.getRowDetails("Pin", "Initial"), hasItems("$1.97", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), DfmIconEnum.HIGH.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), AssemDfmIconEnum.HIGH.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), AssemDfmIconEnum.HIGH.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Pin", "Initial"), hasItems("$1.97", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), AssemDfmIconEnum.HIGH.getIcon()));
     }
 }

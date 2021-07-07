@@ -2,6 +2,8 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -12,9 +14,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.ColumnsEnum;
-import utils.Constants;
-import utils.SortOrderEnum;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -66,7 +65,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController openScenario(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
-        By scenario = By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
+        By scenario = By.xpath(String.format("//span[normalize-space(contains(text(),'%s'))]/ancestor::div//div[.='%s']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
         return this;
@@ -86,18 +85,6 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
-     * Navigates to the scenario via url
-     *
-     * @param componentId - component id
-     * @param scenarioId  - scenario id
-     * @return a new page object
-     */
-    public ScenarioTableController navigateToScenario(String componentId, String scenarioId) {
-        driver.navigate().to(Constants.getDefaultUrl().concat(String.format("components/%s/scenarios/%s", componentId, scenarioId)));
-        return this;
-    }
-
-    /**
      * Highlights the scenario in the table
      *
      * @param componentName - component name
@@ -106,7 +93,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
-        getWebElementScenario(componentName, scenarioName).click();
+        pageUtils.waitForElementAndClick(getWebElementScenario(componentName, scenarioName));
         return this;
     }
 
@@ -118,8 +105,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return size of the element as int
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
-        pageUtils.waitForElementToAppear(getByScenario(componentName, scenarioName));
-        return driver.findElements(getByScenario(componentName, scenarioName)).size();
+        return pageUtils.waitForElementsToAppear(getByScenario(componentName,scenarioName));
     }
 
 
@@ -201,7 +187,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return by
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//span[.='%s ']/ancestor::div//div[.='%s'][@class='cell-text']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        return By.xpath(String.format("//span[normalize-space(contains(text(),'%s'))]/ancestor::div//div[.='%s'][@class='cell-text']", componentName.toUpperCase().trim(), scenarioName.trim()));
     }
 
     /**
@@ -310,7 +296,6 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public String getSortOrder(ColumnsEnum column) {
         By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
-
         return pageUtils.waitForElementToAppear(driver.findElement(byColumn).findElement(By.cssSelector("svg"))).getAttribute("data-icon");
     }
 }

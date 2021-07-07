@@ -16,6 +16,8 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -27,7 +29,15 @@ public class CostingScenarioTest extends TestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(CostingScenarioTest.class);
     private static Boolean exitTest = false;
+    private static Batch batch;
 
+
+    @AfterClass
+    public static void testCleanup() {
+        BcsUtils.checkAndCancelBatch(batch);
+    }
+
+    @Issue("AP-70043")
     @Test
     @TestRail(testCaseId = {"4278", "4177"})
     @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
@@ -36,7 +46,7 @@ public class CostingScenarioTest extends TestUtil {
         Integer defaultTimeout = Constants.getPollingTimeout();
 
         // create batch
-        Batch batch = BatchResources.createNewBatch();
+        batch = BatchResources.createNewBatch();
         String batchIdentity = batch.getIdentity();
 
         // create batch part

@@ -20,5 +20,7 @@ public class CustomAttributes extends Pagination {
     private String requiredAttributeType;
     private String type;
     private CustomAttributes[] items;
+    private String defaultValue;
+    private Integer precision;
 
 }

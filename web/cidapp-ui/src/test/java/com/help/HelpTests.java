@@ -15,6 +15,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -37,12 +38,13 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpPage = loginPage.login(UserUtil.getUser())
             .goToHelp()
-            .clickOnlineHelp();
+            .clickUserGuide();
 
-        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight Design:User Guide"));
+        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight DesignUser Guide"));
     }
 
     @Test
+    @Ignore("Currently no help button for inputs")
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void moreInputsHelp() {
@@ -55,7 +57,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openInputDetails()
             .openHelp();
@@ -76,12 +78,12 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Process Details"));
     }
 
     @Test
@@ -97,7 +99,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openHelp();
@@ -116,9 +118,9 @@ public class HelpTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(UserUtil.getUser())
+        helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openHelp();
@@ -137,13 +139,13 @@ public class HelpTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(UserUtil.getUser())
+        helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openCostDetails()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Results Details"));
     }
 }

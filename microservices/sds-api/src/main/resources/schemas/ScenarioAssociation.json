@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "required": [
+    "identity",
+    "createdBy",
+    "occurrences",
+    "scenarioIdentity"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "occurrences": {
+      "type": "number"
+    },
+    "scenarioIdentity": {
+      "type": "string"
+    }
+  }
+}

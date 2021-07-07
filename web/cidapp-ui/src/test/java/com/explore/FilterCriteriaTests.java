@@ -18,6 +18,9 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -81,7 +84,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Process Group", "is", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .addCriteriaWithOption("Process Group", "In", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Casting", scenarioName), is(equalTo(1)));
@@ -113,6 +116,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6216"})
     @Description("Test private criteria assembly")
@@ -139,6 +143,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6217"})
     @Description("Test private criteria assembly status")
@@ -155,7 +160,7 @@ public class FilterCriteriaTests extends TestBase {
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .info()
-            .inputStatus("Analysis")
+            .selectStatus("Analysis")
             .inputCostMaturity("High")
             .inputDescription("Test Description")
             .inputNotes("Test Notes")
@@ -198,6 +203,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Category(IgnoreTests.class)
     @Ignore("Cannot upload assemblies")
     @TestRail(testCaseId = {"6219"})
     @Description("Test public criteria assembly description")
@@ -214,7 +220,7 @@ public class FilterCriteriaTests extends TestBase {
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .info()
-            .inputStatus("Complete")
+            .selectStatus("Complete")
             .inputCostMaturity("High")
             .inputDescription("Test Description")
             .inputNotes("Test Notes")
@@ -229,6 +235,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6221"})
     @Description("Test public criteria assembly description")
     public void testFilterAttributes() {
@@ -245,8 +252,8 @@ public class FilterCriteriaTests extends TestBase {
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .publishScenario()
-            .inputStatus("Analysis")
-            .inputCostMaturity("Initial")
+            .selectStatus("Analysis")
+            .selectCostMaturity("Initial")
             .publish(ExplorePage.class)
             .filter()
             .saveAs()

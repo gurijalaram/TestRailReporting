@@ -5,11 +5,11 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidapp.entity.response.componentiteration.ActiveAxes;
-import com.apriori.cidapp.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidapp.entity.response.scenarios.CostResponse;
-import com.apriori.cidapp.entity.response.scenarios.ImageResponse;
-import com.apriori.cidapp.utils.CidAppTestUtil;
+import com.apriori.cidappapi.entity.response.componentiteration.ActiveAxes;
+import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidappapi.entity.response.scenarios.CostResponse;
+import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
+import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
