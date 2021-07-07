@@ -64,9 +64,9 @@ public class CdsSitesApplicationsTests {
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
-        assertThat(licensedApp.getResponseEntity().getResponse().getApplication(), is(equalTo("aPriori Professional")));
+        assertThat(licensedApp.getResponseEntity().getApplication(), is(equalTo("aPriori Professional")));
     }
 
     @Test
@@ -91,11 +91,11 @@ public class CdsSitesApplicationsTests {
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String licensedApplicationIdentity = licensedApp.getResponseEntity().getResponse().getIdentity();
+        String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
 
         ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(licensedAppIdentityEndpoint, LicensedApplication.class);
-        assertThat(licensedApplicationResponse.getResponseEntity().getResponse().getApplication(), is(equalTo("aPriori Professional")));
-        assertThat(licensedApplicationResponse.getResponseEntity().getResponse().getApplicationIdentity(), is(equalTo(Constants.getApProApplicationIdentity())));
+        assertThat(licensedApplicationResponse.getResponseEntity().getApplication(), is(equalTo("aPriori Professional")));
+        assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity(), is(equalTo(Constants.getApProApplicationIdentity())));
     }
 }
