@@ -2,6 +2,7 @@ package com.apriori.cds.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
@@ -39,7 +40,6 @@ public class CdsAssociationUserTests {
     private static String associationsEndpoint;
     private static String associationIdentity;
     private static ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
-    private static String aPStaffIdentity;
 
     @BeforeClass
     public static void setDetails() {
@@ -54,7 +54,6 @@ public class CdsAssociationUserTests {
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        aPStaffIdentity = Constants.getUserIdentity();
         aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
         associationsEndpoint = String.format(url + "&pageSize=5000", String.format("customers/%s/customer-associations", aPCustomerIdentity));
@@ -71,13 +70,15 @@ public class CdsAssociationUserTests {
         if (customerIdentityEndpoint != null) {
             cdsTestUtil.delete(customerIdentityEndpoint);
         }
-
     }
 
     @Test
     @TestRail(testCaseId = {"5959"})
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
+
+        String aPStaffIdentity = Constants.getUserIdentity01();
+
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
@@ -90,6 +91,8 @@ public class CdsAssociationUserTests {
     public void getAssociationUsers() {
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users", aPCustomerIdentity, associationIdentity));
 
+        String aPStaffIdentity = Constants.getUserIdentity02();
+
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
@@ -97,13 +100,15 @@ public class CdsAssociationUserTests {
 
         ResponseWrapper<AssociationUserResponse> users = cdsTestUtil.getCommonRequest(associationEndpoint, AssociationUserResponse.class);
         assertThat(users.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(users.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
+        assertThat(users.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
     @TestRail(testCaseId = {"5964"})
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
+        String aPStaffIdentity = Constants.getUserIdentity03();
+
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
