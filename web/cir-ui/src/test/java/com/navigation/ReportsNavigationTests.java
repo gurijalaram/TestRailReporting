@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.create.CreateDataSourcePage;
 import com.apriori.pageobjects.pages.create.CreateDomainPage;
 import com.apriori.pageobjects.pages.create.CreateReportPage;
 import com.apriori.pageobjects.pages.library.LibraryPage;
+import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.logout.ReportsLogoutPage;
 import com.apriori.pageobjects.pages.manage.ManageRolesPage;

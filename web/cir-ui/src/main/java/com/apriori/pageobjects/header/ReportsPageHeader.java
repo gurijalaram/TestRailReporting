@@ -3,6 +3,7 @@ package com.apriori.pageobjects.header;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,7 +25,7 @@ public class ReportsPageHeader extends PageHeader {
     private WebElement refreshButton;
 
     @FindBy(id = "back")
-    private WebElement backButton;
+    protected WebElement backButton;
 
     @FindBy(id = "export")
     private WebElement exportButton;
@@ -39,16 +40,16 @@ public class ReportsPageHeader extends PageHeader {
     private WebElement undoAllButton;
 
     @FindBy(id = "ICDialog")
-    private WebElement optionsButton;
+    protected WebElement inputControlsButton;
 
     @FindBy(id = "zoom_out")
-    private WebElement zoomOutButton;
+    protected WebElement zoomOutButton;
 
     @FindBy(id = "zoom_in")
-    private WebElement zoomInButton;
+    protected WebElement zoomInButton;
 
     @FindBy(id = "zoom_value_button")
-    private WebElement zoomValueDropdown;
+    protected WebElement zoomValueDropdown;
 
     @FindBy(id = "search_report")
     private WebElement searchReportInput;
@@ -93,8 +94,26 @@ public class ReportsPageHeader extends PageHeader {
      * @return Input Controls page object
      */
     public GenericReportPage clickInputControlsButton() {
-        pageUtils.waitForElementToAppear(optionsButton);
-        optionsButton.click();
+        pageUtils.waitForElementToAppear(inputControlsButton);
+        pageUtils.waitForElementToAppear(By.id("schedule"));
+        pageUtils.waitForElementToAppear(By.id("embed"));
+        pageUtils.waitForElementToAppear(By.id("export"));
+        pageUtils.waitForElementToAppear(By.id("back"));
+        pageUtils.waitForElementToAppear(By.id("search_report"));
+        pageUtils.waitForElementToAppear(By.id("search_report_button"));
+        pageUtils.waitForElementToAppear(By.id("search_options"));
+        pageUtils.waitForElementToAppear(By.id("dataRefreshButton"));
+        inputControlsButton.click();
+        return new GenericReportPage(driver);
+    }
+
+    /**
+     * Waits for no data available to appear
+     *
+     * @return instance of GenericReportPage
+     */
+    public GenericReportPage waitForNoDataAvailable() {
+        pageUtils.waitForElementToAppear(By.xpath("//span[contains(text(), 'No data available')]"));
         return new GenericReportPage(driver);
     }
 
@@ -115,5 +134,15 @@ public class ReportsPageHeader extends PageHeader {
     public boolean isCreateDashboardsButtonDisplayed() {
         pageUtils.waitForElementToAppear(createDashboardsButton);
         return createDashboardsButton.isDisplayed();
+    }
+
+    /**
+     * Get page title text
+     *
+     * @return String - page title text
+     */
+    public String getTitleText() {
+        pageUtils.waitForElementToAppear(pageTitle);
+        return pageTitle.getText();
     }
 }

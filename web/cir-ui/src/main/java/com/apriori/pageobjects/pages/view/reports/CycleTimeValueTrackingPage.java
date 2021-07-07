@@ -23,7 +23,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Project Tracking Rollup:')]/../following-sibling::td[2]")
     private WebElement projectTrackingRollupAboveChart;
 
-    @FindBy(xpath = "(//td[@colspan='4'])[20]//span")
+    @FindBy(xpath = "(//td[@colspan='4'])[24]//span")
     private WebElement projectTrackingRollupInChart;
 
     @FindBy(xpath = "//label[@title='Projects Rollup']//a")
@@ -149,6 +149,8 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     public <T> T clickHyperlink(String name, Class<T> className) {
         pageUtils.waitForElementToAppear(chartSvg);
         By locator = By.xpath(String.format("//span[contains(text(), '%s')]", name));
+        pageUtils.scrollWithJavaScript(driver.findElement(locator), true);
+        pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
         return PageFactory.initElements(driver, className);
     }

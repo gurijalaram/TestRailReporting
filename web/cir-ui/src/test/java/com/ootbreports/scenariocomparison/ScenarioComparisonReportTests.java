@@ -77,7 +77,8 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .waitForExportSetSelection(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.COMPONENT_TYPE.getListName(), "Available: ", "2");
@@ -115,9 +116,9 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .selectFirstTwoComparisonScenarios()
-                .clickOk(GenericReportPage.class)
+                .clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
 
         usdFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
@@ -125,7 +126,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
         scenarioComparisonReportPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(GenericReportPage.class)
+                .clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ScenarioComparisonReportPage.class);
 
         gbpFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
@@ -296,6 +297,12 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
+        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(),
+                "Selected: ",
+                "1"
+        );
+
         scenarioComparisonReportPage.selectAllScenariosToCompare();
         assertThat(scenarioComparisonReportPage.getCountOfSelectedScenariosToCompare(),
                 is(equalTo(scenarioComparisonReportPage.getCountOfAvailableScenariosToCompare())));
@@ -382,10 +389,10 @@ public class ScenarioComparisonReportTests extends TestBase {
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("2")));
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
-                is(equalTo("0001-2140 (Initial) [part]")));
+                is(equalTo("0200613 (Initial) [part]")));
     }
 }

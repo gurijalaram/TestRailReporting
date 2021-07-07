@@ -107,7 +107,9 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Report ")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.MACHINING_DTC.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(
+                ReportNamesEnum.MACHINING_DTC.getReportName()
+        );
     }
 
     @Test
@@ -347,7 +349,7 @@ public class MachiningDtcReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
-            .clickOk(MachiningDtcReportPage.class)
+            .clickOk(true, MachiningDtcReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
         machiningDtcReportPage.hoverMachiningBubbleTwice();

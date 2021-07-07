@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.view;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,6 +49,6 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
-        return pageUtils.getReportElement(reportName).getText();
+        return driver.findElement(By.xpath(String.format("//a[text() = '%s']", reportName))).getText();
     }
 }

@@ -39,7 +39,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//label[@title='Assembly Select']//a")
     private WebElement currentAssemblyElement;
 
-    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    @FindBy(xpath = "//table[@class='jrPage']/tbody/tr[7]/td/span")
     private WebElement currentAssembly;
 
     @FindBy(css = "button[class='ui-datepicker-trigger']")
@@ -870,6 +870,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     private void initialiseSubAssemblyRowMap() {
         putItemIntoSubAssemblyRowMap("1 Sub Assembly", "5");
+
         putItemIntoSubAssemblyRowMap("2 Sub Assembly", "6");
         putItemIntoSubAssemblyRowMap("3 Sub Assembly", "7");
         putItemIntoSubAssemblyRowMap("4 Sub Assembly", "8");

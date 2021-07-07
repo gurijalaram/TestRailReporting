@@ -5,23 +5,23 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 
 public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
@@ -80,7 +80,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
         cycleTimeValueTrackingPage.selectProjectRollup()
-                .clickOk(CycleTimeValueTrackingPage.class);
+                .clickOk(true, CycleTimeValueTrackingPage.class);
 
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
     }
@@ -105,12 +105,12 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
         assertThat(Integer.parseInt(cycleTimeValueTrackingPage.getCountOfDropdownItems("3")),
                 is(greaterThan(0)));
 
-        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
+        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class);
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"2334"})
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
@@ -121,7 +121,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                         CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 
-        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class)
+        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class)
                 .waitForCorrectPartName("IROBOT_18874");
 
         String reportsPartNumber = cycleTimeValueTrackingPage.getPartNumber();
@@ -134,23 +134,23 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                 .replace(",", "");
 
         cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
-
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains", reportsPartNumber)
-                .setRowTwo("VPE", "is", DigitalFactoryEnum.APRIORI_USA.getVpe())
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", reportsPartNumber)
+                .addCriteriaWithOption("VPE", "In", DigitalFactoryEnum.APRIORI_USA.getVpe())
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
         String cidPartNumber = evaluatePage.getPartName();
-        String cidScenarioName = evaluatePage.getScenarioName();
+        String cidScenarioName = evaluatePage.getCurrentScenarioName();
         String cidFinishMass = String.valueOf(evaluatePage.getFinishMass());
-        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
-        String cidMaterialComposition = evaluatePage.getMaterialInfo();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroup();
+        String cidMaterialComposition = evaluatePage
+                .openMaterialProcess().openMaterialUtilizationTab().getMaterialName();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
-        String cidFinalCycleTime = String.valueOf(evaluatePage.getCycleTimeCount());
+        String cidFinalCycleTime = String.valueOf(evaluatePage.getProcessesResult("Total Cycle Time"));
 
         assertThat(reportsPartNumber, is(equalTo(cidPartNumber)));
         assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));

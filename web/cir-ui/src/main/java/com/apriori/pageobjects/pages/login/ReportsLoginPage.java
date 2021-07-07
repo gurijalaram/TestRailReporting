@@ -28,7 +28,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
     @FindBy(css = "input[name='j_password_pseudo']")
     private WebElement password;
 
-    @FindBy(css = "a[href='javascript:void(0)']")
+    @FindBy(css = "a.auth0-lock-alternative-link")
     private WebElement forgotPassword;
 
     @FindBy(css = "button[id='submitButton']")
@@ -37,8 +37,11 @@ public class ReportsLoginPage extends ReportsPageHeader {
     @FindBy(css = "span[class='animated fadeInUp']")
     private WebElement loginMsg;
 
-    @FindBy(css = "div.auth0-lock-error-msg")
-    private WebElement inputErrorMsg;
+    @FindBy(xpath = "//div[contains(@class, 'email')]/div[@class='auth0-lock-error-msg']")
+    private WebElement emailInputErrorMsg;
+
+    @FindBy(xpath = "//div[contains(@class, 'password')]/div[@class='auth0-lock-error-msg']")
+    private WebElement passwordInputErrorMsg;
 
     @FindBy(css = "a[href='https://www.apriori.com/sso-instructions-page']")
     private WebElement helpButton;
@@ -193,9 +196,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * Click forgot password link
      */
     public ReportsLoginPage clickForgotPassword() {
-        pageUtils.waitForElementToAppear(forgotPassword);
-        forgotPassword.click();
-        return new ReportsLoginPage(driver, false);
+        pageUtils.waitForElementAndClick(forgotPassword);
+        return this;
     }
 
     /**
@@ -214,9 +216,10 @@ public class ReportsLoginPage extends ReportsPageHeader {
      *
      * @return String
      */
-    public String getInputErrorMsg() {
-        pageUtils.waitForElementToAppear(inputErrorMsg);
-        return inputErrorMsg.getText();
+    public String getEmailOrPwdInputErrorMsg(boolean isEmail) {
+        WebElement elementToUse = isEmail ? emailInputErrorMsg : passwordInputErrorMsg;
+        pageUtils.waitForElementToAppear(elementToUse);
+        return elementToUse.getText();
     }
 
     public String getInputErrorMessagesLocalInstall() {

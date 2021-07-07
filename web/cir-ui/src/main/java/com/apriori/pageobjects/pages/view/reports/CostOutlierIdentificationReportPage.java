@@ -57,6 +57,7 @@ public class CostOutlierIdentificationReportPage extends GenericReportPage {
      */
     public boolean isCostOutlierSvgDisplayedAndEnabled(String index) {
         By locator = By.xpath(String.format("(//div[@id='reportContainer']//*[local-name()='svg'])[%s]", index));
+        pageUtils.waitForElementToAppear(locator);
         WebElement element = driver.findElement(locator);
         return element.isDisplayed() && element.isEnabled();
     }
@@ -140,7 +141,6 @@ public class CostOutlierIdentificationReportPage extends GenericReportPage {
         pageUtils.waitForElementToAppear(locator);
         return new BigDecimal(driver.findElement(locator).getText());
     }
-
 
     /**
      * Initialise cost outlier value element map

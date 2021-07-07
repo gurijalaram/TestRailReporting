@@ -172,7 +172,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"2998"})
     @Description("Validate report content aligns to aP desktop or CID values (simple case) - Assembly Cost (A4) Report")
     public void testDataIntegrityAssemblyCostA4() {
@@ -181,7 +181,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"7624"})
     @Description("Validate report content aligns to aP desktop or CID values (simple case) - Assembly Cost (Letter) Report")
     public void testDataIntegrityAssemblyCostLetter() {

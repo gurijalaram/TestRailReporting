@@ -5,10 +5,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -18,8 +21,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -27,6 +28,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
+import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
@@ -107,14 +109,14 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                         TargetAndQuotedCostValueTrackingPage.class);
 
         targetAndQuotedCostValueTrackingPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
 
         targetAndQuotedCostValueTrackingPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
@@ -170,7 +172,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
         String exportDateSelected = targetAndQuotedCostValueTrackingPage.getSelectedExportDate()
                 .replace("T", " ");
 
-        targetAndQuotedCostValueTrackingPage.clickOk(TargetAndQuotedCostValueTrackingPage.class)
+        targetAndQuotedCostValueTrackingPage.clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
 
         assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOnReport()
@@ -178,7 +180,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"3367"})
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {
@@ -188,7 +190,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectProjectNameToAppear("1");
 
@@ -201,25 +203,27 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
         String reportsProcessGroup = targetAndQuotedCostValueTrackingPage.getValueFromReport("14");
         String reportsMaterialComposition = targetAndQuotedCostValueTrackingPage.getValueFromReport("17")
                 .replace("\n", " ");
-        String reportsAnnualVolume = targetAndQuotedCostValueTrackingPage.getValueFromReport("22");
+        String reportsAnnualVolume = targetAndQuotedCostValueTrackingPage.getValueFromReport("22")
+                .replace(",", "");
         String reportsCurrentCost = targetAndQuotedCostValueTrackingPage.getValueFromReport("24");
 
         targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace("Public")
-                .setScenarioType("Part")
-                .setRowOne("Part Name", "Contains", partName)
-                .setRowTwo("Scenario Name", "Contains", "Initial")
-                .apply(ExplorePage.class)
-                .openFirstScenario();
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openScenario(partName, Constants.DEFAULT_SCENARIO_NAME);
 
-        String cidScenarioName = evaluatePage.getScenarioName();
-        String cidVPE = evaluatePage.getVpe();
-        String cidProcessGroup = evaluatePage.getSelectedProcessGroupName();
-        String cidMaterialComposition = evaluatePage.getMaterialInfo();
+        String cidScenarioName = evaluatePage.getCurrentScenarioName();
+        String cidVPE = evaluatePage.getSelectedVPE();
+        String cidProcessGroup = evaluatePage.getSelectedProcessGroup();
+        String cidMaterialComposition =
+                evaluatePage.openMaterialProcess().openMaterialUtilizationTab().getMaterialName();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
-        String cidFbc = evaluatePage.getFullyBurdenedCostValueRoundedUp();
+        String cidFbc = String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost"));
 
         assertThat(reportsScenarioName, is(equalTo(cidScenarioName)));
         assertThat(reportsVpe, is(equalTo(cidVPE)));
@@ -240,7 +244,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .clickProjectLink(index)
                 .switchTab(1)
