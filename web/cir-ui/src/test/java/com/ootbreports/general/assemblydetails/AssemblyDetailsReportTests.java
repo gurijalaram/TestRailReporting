@@ -518,10 +518,10 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .submit(ExplorePage.class)
                 .openFirstScenario()
                 .openComponents();
-                /*.openComponentsTable()
-                .openColumnsTable()
-                .checkColumnSettings(columnsToAdd)
-                .selectSaveButton();*/
+        /*.openComponentsTable()
+        .openColumnsTable()
+        .checkColumnSettings(columnsToAdd)
+        .selectSaveButton();*/
 
         /*ArrayList<BigDecimal> cidPartOneValues = componentsPage
             .getTableValsByRow(

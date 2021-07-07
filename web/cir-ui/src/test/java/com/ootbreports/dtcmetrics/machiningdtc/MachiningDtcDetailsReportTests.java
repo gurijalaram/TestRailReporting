@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.MachiningDtcReportPage;
 import com.apriori.utils.TestRail;
@@ -27,7 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openqa.selenium.By;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 

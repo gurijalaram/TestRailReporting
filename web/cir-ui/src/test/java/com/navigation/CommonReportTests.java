@@ -18,7 +18,6 @@ import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;

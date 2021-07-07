@@ -24,7 +24,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @FindBy(xpath = "//div[contains(@class,'apriori-card dark tabbed')]")
     private WebElement panelDetails;
-	
+
     @FindBy(css = ".tab.active [data-icon='box']")
     private WebElement materialTabActive;
 

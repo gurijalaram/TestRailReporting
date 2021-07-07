@@ -15,7 +15,6 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class CycleTimeValueTrackingReportTests extends TestBase {
@@ -101,7 +100,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2335"})
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {

@@ -25,7 +25,6 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.By;
@@ -1145,8 +1144,8 @@ public class InputControlsTests extends TestBase {
         String minInputValue = minValue;
         if (costOrMass.equals("Mass")) {
             minAssertValue = initialMinValue.substring(0, initialMinValue.length() - 1);
-            minInputValue = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName()) ?
-                    minValue.substring(0, minValue.length() - 1) : minInputValue;
+            minInputValue = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName())
+                    ? minValue.substring(0, minValue.length() - 1) : minInputValue;
         }
 
         assertThat(minAssertValue,
