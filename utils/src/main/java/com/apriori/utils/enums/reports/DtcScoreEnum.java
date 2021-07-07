@@ -4,7 +4,7 @@ public enum DtcScoreEnum {
     LOW("Low"),
     MEDIUM("Medium"),
     HIGH("High"),
-    ALL("High, Medium, Low");
+    ALL("High, Low, Medium");
 
     private final String dtcScoreName;
 
