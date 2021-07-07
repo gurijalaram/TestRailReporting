@@ -71,7 +71,9 @@ public class CdsSitesApplicationsTests {
     @TestRail(testCaseId = {"6058"})
     @Description("Add an application to a site")
     public void addApplicationSite() {
-        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
+        String appIdentity = Constants.getApProApplicationIdentity();
+
+        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
@@ -83,13 +85,15 @@ public class CdsSitesApplicationsTests {
     @TestRail(testCaseId = {"6060"})
     @Description("Returns a specific LicensedApplication for a specific customer site")
     public void getApplicationSite() {
-        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity);
+        String appIdentity = Constants.getCiaApplicationIdentity();
+
+        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
 
         ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(licensedAppIdentityEndpoint, LicensedApplication.class);
-        assertThat(licensedApplicationResponse.getResponseEntity().getApplication(), is(equalTo("aPriori Professional")));
-        assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity(), is(equalTo(Constants.getApProApplicationIdentity())));
+        assertThat(licensedApplicationResponse.getResponseEntity().getApplication(), is(equalTo("Cost Insight Admin")));
+        assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity(), is(equalTo(Constants.getCiaApplicationIdentity())));
     }
 }

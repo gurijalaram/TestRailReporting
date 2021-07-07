@@ -31,6 +31,7 @@ public class Constants {
     private static String apProductionDeploymentIdentity;
     private static String apCoreInstallationIdentity;
     private static String apcloudHomeApplicationIdentity;
+    private static String ciaApplicationIdentity;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -103,6 +104,15 @@ public class Constants {
      */
     public static String getApProApplicationIdentity() {
         return apProApplicationIdentity = System.getProperty("apProApplicationIdentity") == null ? PROPERTIES.getProperty("appro.application.identity") : System.getProperty("apProApplicationIdentity");
+    }
+
+    /**
+     * Get identity application
+     *
+     * @return string
+     */
+    public static String getCiaApplicationIdentity() {
+        return ciaApplicationIdentity = System.getProperty("ciaApplicationIdentity") == null ? PROPERTIES.getProperty("cia.application.identity") : System.getProperty("ciaApplicationIdentity");
     }
 
     /**
