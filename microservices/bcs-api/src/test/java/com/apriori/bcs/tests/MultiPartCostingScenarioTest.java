@@ -8,55 +8,141 @@ import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
+import com.apriori.bcs.utils.Materials;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
-import org.junit.Assert;
+import org.apache.commons.lang.time.StopWatch;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
+
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
-public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
+public class MultiPartCostingScenarioTest extends TestUtil {
     enum CostingElementStatus {
         ERROR, COMPLETE, INCOMPLETE
     }
 
     private static final Logger logger = LoggerFactory.getLogger(MultiPartCostingScenarioTest.class);
 
+    private static Batch batch;
+    private static NewPartRequest newPartRequest;
     private static String batchIdentity;
     private static String partIdentity;
     private static List<String> partList = new ArrayList<>();
     private static List<String> partIdentities = new ArrayList();
     private static Part batchPart;
     private static List<String> failedParts = new ArrayList<>();
+    private static Map<String, String> parts = new HashMap<>();
+    private static CountDownLatch countDownLatch;
+    private static Materials materials = new Materials();
+
+    @BeforeClass
+    public static void testSetup() {
+        getPartsList();
+        batch = BatchResources.createNewBatch();
+    }
+
+    public class LoadParts implements Runnable {
+        @Override
+        public void run() {
+            Random random = new Random();
+            int partIndex;
+
+
+            partIndex = random.nextInt(partList.size());
+            String part = MultiPartCostingScenarioTest.partList.get(partIndex);
+
+            NewPartRequest newPartRequest =
+                    (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
+                            FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"),
+                            NewPartRequest.class);
+
+
+            // S3 part string: common/Process_Group/File_Name
+            String[] partSummary = part.split("/");
+            newPartRequest.setFilename(partSummary[2]);
+            newPartRequest.setExternalId("Auto-part-" + UUID.randomUUID().toString());
+            String material = materials.getProcessGroupMaterial(partSummary[2]);
+            String processGroup = partSummary[1];
+            if (material == null) {
+                material = "";
+            }
+
+            newPartRequest.setProcessGroup(processGroup);
+            newPartRequest.setMaterialName(material);
+
+
+            try {
+                batchPart = (Part) BatchPartResources.createNewBatchPart(newPartRequest,
+                        batch.getIdentity()
+                );
+
+                synchronized (this) {
+                    parts.put(batchPart.getIdentity(), batchPart.getState());
+                }
+            } catch (Exception e) {
+                logger.debug(e.getMessage());
+            } finally {
+                countDownLatch.countDown();
+            }
+        }
+    }
+
+    @AfterClass
+    public static void testCleanup() {
+        BcsUtils.checkAndCancelBatch(batch);
+    }
 
     @Test
     @TestRail(testCaseId = {"7696"})
     @Description("Test costing scenarion, includes creating a new batch, with multiple parts and waiting for the " +
             "costing process to complete for all parts. Then retrieve costing results.")
     public void costMultipleParts() throws InterruptedException {
-        // create batch
-        Batch batch = BatchResources.createNewBatch();
-        MultiPartCostingScenarioTest.batchIdentity = BcsUtils.getIdentity(batch, Batch.class);
+        batchIdentity = BcsUtils.getIdentity(batch, Batch.class);
+        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Constants.MULTIPART_THREAD_COUNT);
+        countDownLatch = new CountDownLatch(Constants.MAX_NUMBER_OF_PARTS);
 
-        //Generate Part List & download part file from S3
-        this.getPartsList();
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
 
-        //upload parts
-        this.initThreadExecution();
+        // Load all parts, set in the constant MAX_NUMBER_OF_PARTS. Parts
+        // will begin costing once added to the batch
+        try {
+            for (int i = 1; i <= Constants.MAX_NUMBER_OF_PARTS; i++) {
+                LoadParts loadParts = new LoadParts();
+                threadPoolExecutor.execute(loadParts);
 
-        // start costing
+            }
+
+            countDownLatch.await();
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+        } finally {
+            threadPoolExecutor.shutdown();
+        }
+
+        System.out.println("Parts added: " + parts.size());
+        // Start Costing the batch, which means no more parts can be added
         try {
             BatchResources.startCosting(batchIdentity);
         } catch (Exception ignored) {
@@ -64,87 +150,66 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
 
         }
 
-        // poll for part state/batch state
-        CostingElementStatus partElementStatus = CostingElementStatus.INCOMPLETE;
-        for (String identity : partIdentities) {
-            partElementStatus = waitForPartProcessingComplete(identity);
-            if (partElementStatus == CostingElementStatus.ERROR) {
-                failedParts.add(identity);
-            }
-        }
-        Assert.assertEquals(partElementStatus, CostingElementStatus.COMPLETE);
 
+        // Wait until the batch processing is complete. Parts belonging
+        // to this batch may still being processed
+        //TODO: What do we with the final polled batch status. Where to report?
         CostingElementStatus batchElementStatus = waitingForBatchProcessingComplete();
-        Assert.assertEquals(batchElementStatus, CostingElementStatus.COMPLETE);
 
-        BatchResources.startCosting(partIdentity);
+        // Poll all parts statuses until all parts are in a COMPLETED or ERRORED
+        // state or the maximum number of intervals are met
+        int interval = 0;
+        int completed;
+        int errored;
+        int rejected;
+        int terminal;
+        while (interval <= Constants.MULTIPART_POLLING_INTERVALS) {
+            updatePartStatus();
+            completed = Collections.frequency(parts.values(), "COMPLETED");
+            errored = Collections.frequency(parts.values(), "ERRORED");
+            rejected = Collections.frequency(parts.values(), "REJECTED");
+
+            System.out.println("Completed: " + completed);
+            System.out.println("Errored: " + errored);
+            System.out.println("Rejected: " + rejected);
+            System.out.println("No. of Parts: " + parts.size());
+            System.out.println("Missing Parts: " + (Constants.MAX_NUMBER_OF_PARTS - parts.size()));
+
+            terminal = completed + errored + rejected;
+            if (terminal >= parts.size()) {
+                break;
+            }
+
+            interval++;
+            Thread.sleep(Constants.MULTIPART_POLLING_WAIT);
+        }
+
+        // TODO: where to report final polled part states and timings?
+        stopWatch.stop();
+        long runTime = stopWatch.getTime();
+        System.out.println("Total Run Time: " + runTime);
+
+
+
+
+
     }
 
     /**
-     * Thread run method
+     * Updates the part state for every part in Hashmap
      */
-    public void run() {
-        Random random = new Random();
-        int partIndex;
-        int count = 1;
-
-        while (count <= Constants.getMaximumPartsUpload()) {
-            partIndex = random.nextInt(partList.size());
-            String part = MultiPartCostingScenarioTest.partList.get(partIndex);
-
-            // create batch part
-            NewPartRequest newPartRequest =
-                    (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
-                            FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"),
-                            NewPartRequest.class);
-
-            // S3 part string: common/Process_Group/File_Name
-            String[] partSummary = part.split("/");
-            newPartRequest.setFilename(partSummary[2]);
-            newPartRequest.setProcessGroup(partSummary[1]);
-            batchPart = (Part) BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
-            try {
-                partIdentity = BcsUtils.getIdentity(batchPart, Part.class);
-            } catch (Exception e) {
-                logger.error(e.getMessage());
-                logger.error(Arrays.toString(e.getStackTrace()));
-                return;
-            }
-
-            partIdentities.add(partIdentity);
-            count++;
-
+    private void updatePartStatus() {
+        // using iterators
+        Iterator<Map.Entry<String, String>> iterator = parts.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> entry = iterator.next();
+            ResponseWrapper<Part> responseWrapper = BatchPartResources.getBatchPartRepresentation(
+                    batchIdentity,
+                    entry.getKey());
+            Part currentPart = responseWrapper.getResponseEntity();
+            parts.put(currentPart.getIdentity(), currentPart.getState());
+            System.out.println(currentPart.getIdentity() + " :: " + currentPart.getState());
         }
-    }
-
-    /**
-     * Wait for the part costing to be COMPLETE or ERRORED
-     * @return status
-     * @throws InterruptedException
-     */
-    private CostingElementStatus waitForPartProcessingComplete(String identity) throws InterruptedException {
-        Object partDetails;
-        Integer pollingInterval = 0;
-        Integer maximumPollingIntervals = Constants.getPollingTimeout() * partIdentities.size();
-        while (pollingInterval <= maximumPollingIntervals) {
-            partDetails =
-                    BatchPartResources.getBatchPartRepresentation(batchIdentity, identity).getResponseEntity();
-            try {
-                CostingElementStatus pollingResult = pollState(partDetails, Part.class);
-                if (pollingResult != CostingElementStatus.INCOMPLETE) {
-                    return pollingResult;
-                }
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage());
-                logger.error(Arrays.toString(e.getStackTrace()));
-                throw e;
-            }
-
-            pollingInterval += 1;
-        }
-
-        return CostingElementStatus.INCOMPLETE;
-
     }
 
     /**
@@ -163,6 +228,8 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
                 if (pollingResult != CostingElementStatus.INCOMPLETE) {
                     return pollingResult;
                 }
+
+                Thread.sleep(Constants.MULTIPART_POLLING_WAIT);
             } catch (Exception e) {
                 logger.error(e.getMessage());
                 logger.error(Arrays.toString(e.getStackTrace()));
@@ -183,7 +250,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
      * @param klass
      * @return Costing Status
      */
-    private CostingElementStatus pollState(Object obj, Class klass) throws InterruptedException {
+    private synchronized CostingElementStatus pollState(Object obj, Class klass) throws InterruptedException {
         String state = BcsUtils.getState(obj, klass);
         if (state.toUpperCase().equals("COMPLETED")) {
             return CostingElementStatus.COMPLETE;
@@ -191,7 +258,7 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
             return CostingElementStatus.ERROR;
         } else {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(3000);
             } catch (Exception e) {
                 logger.error(e.getMessage());
                 logger.error(Arrays.toString(e.getStackTrace()));
@@ -202,42 +269,19 @@ public class MultiPartCostingScenarioTest extends TestUtil implements Runnable {
         return CostingElementStatus.INCOMPLETE;
     }
 
-    /**
-     * Execute thread pool
-     *
-     * @throws InterruptedException
-     */
-    private void initThreadExecution() throws InterruptedException {
-        ExecutorService threadPoolExecutor = Executors.newFixedThreadPool(Constants.getCostingThreads());
-        CountDownLatch countDownLatch = new CountDownLatch(Constants.getCostingThreads());
-
-        try {
-            for (int i = 0; i < Constants.getCostingThreads(); i++) {
-                threadPoolExecutor.execute(new MultiPartCostingScenarioTest());
-            }
-
-            countDownLatch.await();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
-            throw e;
-
-        } finally {
-            threadPoolExecutor.shutdown();
-        }
-    }
 
     /**
      * Get a list of parts from S3
      *
      */
-    private void getPartsList() {
+    private static void getPartsList() {
         List<String> parts = FileResourceUtil.getCloudFileList();
 
         // Filter out path listings with no part file
         partList = parts.stream()
                 .filter(part -> part.split("/").length > 2)
+                .filter(part -> !part.toLowerCase().contains("without pg"))
+                .filter(part -> !part.toLowerCase().contains("assembly"))
                 .collect(Collectors.toList());
-
     }
 }

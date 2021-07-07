@@ -268,7 +268,7 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Missing Setups", "Curved Surface", "CurvedSurface:5");
+            .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
 
         guidanceIssuesPage.closePanel()

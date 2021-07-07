@@ -18,6 +18,13 @@ import lombok.NoArgsConstructor;
 public class PostComponentRequest {
     private String filename;
     private String scenarioName;
+    private String name;
     private Boolean override;
     private String fileContents;
+    private String componentType;
+    private String componentName;
+    private String updatedBy;
+    private String createdBy;
+    private String description;
+    private String notes;
 }

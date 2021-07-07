@@ -596,6 +596,8 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage openSourceScenario(String componentName, String scenarioName) {
         By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementAndClick(scenario);
+        pageUtils.waitForElementAndClick(scenario);
+        pageUtils.windowHandler(1);
         return new EvaluatePage(driver);
     }
 }

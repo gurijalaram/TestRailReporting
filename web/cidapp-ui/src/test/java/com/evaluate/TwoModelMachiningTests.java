@@ -19,6 +19,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -94,6 +95,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1921")
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(testCaseId = {"6466", "7866"})
     public void testOpenSourceModel() {
@@ -190,6 +192,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1885")
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"7867", "7876"})
     public void testOpenPublicSourceModel() {
@@ -224,6 +227,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Issue("MIC-3139")
     @Description("Validate the user can switch the source part")
     @TestRail(testCaseId = {"6467", "7873", "7874"})
     public void switchSourcePart() {
@@ -301,7 +305,7 @@ public class TwoModelMachiningTests extends TestBase {
         twoModelFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.TWO_MODEL_MACHINING, twoModelPartName + ".stp");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(wrongSourcePartName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .openMaterialSelectorTable()
@@ -316,7 +320,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES), is(true));
 
         /*guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()

@@ -49,7 +49,7 @@ public class PreviewPanelTests extends TestBase {
             .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
             .openMaterialSelectorTable()
-            .search("ABS,10")
+            .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
             .submit()
             .costScenario()
