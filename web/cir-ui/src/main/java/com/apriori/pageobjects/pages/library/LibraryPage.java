@@ -65,7 +65,6 @@ public class LibraryPage extends ReportsPageHeader {
      * @return new page object
      */
     public <T> T navigateToReport(String reportName, Class<T> className) {
-        WebElement reportLinkElement = pageUtils.getReportElement(reportName);
         WebElement reportLinkElement = driver.findElement(
                 By.xpath(String.format("//a[text() = '%s']", reportName)));
         pageUtils.waitForElementAndClick(reportLinkElement);

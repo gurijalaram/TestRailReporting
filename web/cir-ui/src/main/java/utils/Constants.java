@@ -65,15 +65,15 @@ public class Constants {
     public static final String OTHER_SCENARIO_NAME = "sand casting";
     public static final String PART_SCENARIO_TYPE = "Part";
     public static final String ASSEMBLY_SCENARIO_TYPE = "Assembly";
-    public static final String FAILED_LOGIN_MESSAGE = "Invalid credentials supplied. Could not login to JasperReports " +
-            "Server.";
     public static final String COST_NAME = "Cost";
     public static final String ANNUALISED_VALUE = "Annualized";
     public static final String PERCENT_VALUE = "Percent";
-    public static final String FORGOT_PWD_MSG_QA_ENV = "IF THE SUPPLIED EMAIL ADDRESS IS VALID, YOU WILL RECEIVE AN " +
-        "EMAIL SHORTLY WITH INSTRUCTIONS ON RESETTING YOUR PASSWORD. IF YOU DID NOT RECEIVE AN EMAIL AND STILL " +
-        "REQUIRE ASSISTANCE, PLEASE SEND AN EMAIL TO SUPPORT@APRIORI.COM.";
-    public static final String FORGOT_PWD_MSG_STAGING_ENV = "WE'VE JUST SENT YOU AN EMAIL TO RESET YOUR PASSWORD.";
+    public static final String PRIVACY_POLICY_STRING = "APRIORI TECHNOLOGIES, INC. PRIVACY POLICY";
+    public static final String FAILED_LOGIN_MESSAGE = "Invalid credentials supplied. Could not login to JasperReports " +
+            "Server.";
+    public static final String FORGOT_PWD_MSG = "IF THE SUPPLIED EMAIL ADDRESS IS VALID, YOU WILL RECEIVE AN EMAIL "
+            .concat("SHORTLY WITH INSTRUCTIONS ON RESETTING YOUR PASSWORD. IF YOU DID NOT RECEIVE AN EMAIL AND STILL ")
+            .concat("REQUIRE ASSISTANCE, PLEASE SEND AN EMAIL TO SUPPORT@APRIORI.COM.");
     public static final String EMPTY_FIELDS_MESSAGE = "Can't be blank";
     public static final String INVALID_EMAIL_ERROR_MESSAGE = "Invalid";
     public static final String NAME_TO_SELECT = "bhegan";
