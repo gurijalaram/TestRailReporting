@@ -4,9 +4,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CostOutlierIdentificationReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -15,8 +18,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -116,7 +117,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"1959"})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Main Report")
     public void testDataIntegrityAgainstCID() {
@@ -126,7 +127,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .clickOk(GenericReportPage.class);
+                .clickOk(true, GenericReportPage.class);
 
         genericReportPage.setReportName(reportName);
         String[] partScenarioName = genericReportPage.getPartNameDtcReports().split(" ");
@@ -138,13 +139,13 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         genericReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setRowOne("Part Name", "Contains", partScenarioName[0])
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partScenarioName[0])
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        BigDecimal cidFbc = evaluatePage.getBurdenedCostValue();
+        BigDecimal cidFbc = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost")));
 
         assertThat(reportsCostValue.compareTo(cidFbc), is(equalTo(0)));
     }
@@ -231,7 +232,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
                 .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.PERCENT_VALUE, "100")
-                .clickOk(CostOutlierIdentificationReportPage.class);
+                .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
 
@@ -250,6 +251,8 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 ),
                 is(equalTo("100.0%"))
         );
+
+        costOutlierIdentificationReportPage.waitForSvgToRender();
 
         assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
                 is(equalTo(1))
@@ -275,9 +278,9 @@ public class CostOutlierIdentificationReportTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
-                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
                 .inputAnnualisedOrPercentValue(Constants.ANNUALISED_VALUE, "10000")
-                .clickOk(CostOutlierIdentificationReportPage.class);
+                .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
 

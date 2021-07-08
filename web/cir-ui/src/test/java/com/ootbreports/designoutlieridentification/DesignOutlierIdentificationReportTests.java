@@ -193,15 +193,14 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                        GenericReportPage.class);
-
-        genericReportPage.selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
-                .clickOk(GenericReportPage.class);
+                        GenericReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .clickOk(true, GenericReportPage.class);
 
         genericReportPage.setReportName(
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
         );
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             genericReportPage.hoverPartNameBubbleDtcReports();
         }
         BigDecimal fbcValue = genericReportPage.getFBCValueFromBubbleTooltip(
