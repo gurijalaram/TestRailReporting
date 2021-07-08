@@ -18,13 +18,12 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.AssemDfmIconEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.IgnoreTests;
-import testsuites.suiteinterface.SmokeTests;
-import utils.AssemDfmIconEnum;
 
 import java.io.File;
 
