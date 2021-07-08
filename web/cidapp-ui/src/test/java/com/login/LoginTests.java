@@ -6,11 +6,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.ThreadsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
-import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -52,11 +52,9 @@ public class LoginTests extends TestBase {
     public void testLogin() {
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceDefaults = loginPage.login(UserUtil.getUser())
-        .openSettings()
-        .goToToleranceTab();
+        explorePage = loginPage.login(UserUtil.getUser());
 
-//        assertThat(explorePage.isScenarioCountPresent(), is(true));
+        assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
 
     @Test
