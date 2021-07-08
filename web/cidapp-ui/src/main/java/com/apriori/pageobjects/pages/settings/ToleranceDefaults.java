@@ -1,10 +1,11 @@
 package com.apriori.pageobjects.pages.settings;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,6 +37,6 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
 
     @Override
     protected void isLoaded() throws Error {
-        Assert.assertTrue(toleranceTab.getAttribute("class").contains("active"));
+        assertTrue(toleranceTab.getAttribute("class").contains("active"));
     }
 }

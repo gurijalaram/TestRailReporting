@@ -1,10 +1,11 @@
 package com.apriori.pageobjects.pages.settings;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,7 +44,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
 
     @Override
     protected void isLoaded() throws Error {
-        Assert.assertTrue(displayTab.getAttribute("class").contains("active"));
+        assertTrue(displayTab.getAttribute("class").contains("active"));
     }
 
     /**
