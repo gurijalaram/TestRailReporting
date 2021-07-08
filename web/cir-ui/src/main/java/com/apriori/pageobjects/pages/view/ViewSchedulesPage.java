@@ -4,8 +4,6 @@ import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +11,6 @@ import org.slf4j.LoggerFactory;
 public class ViewSchedulesPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewSchedulesPage.class);
-
-    @FindBy(xpath = "//div[contains(@class, 'listOfJobs')]/div/div[1]/div")
-    private WebElement schedulesPageTitle;
 
     private final PageUtils pageUtils;
     private final WebDriver driver;
@@ -44,7 +39,6 @@ public class ViewSchedulesPage extends ReportsPageHeader {
      * @return String - page title text
      */
     public String getSchedulesTitleText() {
-        pageUtils.waitForElementToAppear(schedulesPageTitle);
-        return schedulesPageTitle.getText();
+        return getTitleText();
     }
 }

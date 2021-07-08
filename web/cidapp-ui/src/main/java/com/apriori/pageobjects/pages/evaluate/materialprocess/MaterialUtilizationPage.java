@@ -22,8 +22,17 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     private static final Logger logger = LoggerFactory.getLogger(MaterialUtilizationPage.class);
 
+    @FindBy(xpath = "//div[contains(@class,'apriori-card dark tabbed')]")
+    private WebElement panelDetails;
+
     @FindBy(css = ".tab.active [data-icon='box']")
     private WebElement materialTabActive;
+
+    @FindBy(xpath = "//button[.='Stock']")
+    private WebElement stockPanel;
+
+    @FindBy(xpath = "(//span[contains(text(), 'Name')])[1]/following-sibling::span")
+    private WebElement materialName;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -57,6 +66,25 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     public String getUtilizationInfo(String label) {
         By info = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
         return pageUtils.waitForElementToAppear(info).getAttribute("textContent");
+    }
+
+    /**
+     * Gets the material name
+     *
+     * @return material name as String
+     */
+    public String getMaterialName() {
+        pageUtils.waitForElementToAppear(materialName);
+        return materialName.getText();
+    }
+
+    /**
+     * Go to stock tab
+     * @return new page object
+     */
+    public StockPage goToStockTab() {
+        pageUtils.waitForElementAndClick(stockPanel);
+        return new StockPage(driver);
     }
 
     /**

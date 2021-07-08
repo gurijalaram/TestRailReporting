@@ -72,6 +72,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Opens the first scenario
+     *
+     * @return a new page object
+     */
+    public ScenarioTableController openFirstScenario() {
+        By scenarioLocator = By.xpath("(//div[@class='table-body']/div)[1]//div[@class='scenario-thumbnail small']");
+        pageUtils.waitForElementAndClick(scenarioLocator);
+        return this;
+    }
+
+    /**
      * Hovers over the scenario
      *
      * @param componentName - component name
