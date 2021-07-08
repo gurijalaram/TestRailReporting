@@ -4,6 +4,7 @@ import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,6 +21,9 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
 
+    @FindBy(xpath = "//button[.='Tolerance Defaults']")
+    private WebElement tolerancesTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -35,12 +39,20 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
 
     @Override
     protected void load() {
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(displayTab);
+        Assert.assertTrue(displayTab.getAttribute("class").contains("active"));
+    }
+
+    /**
+     * Go to tolerances default tab
+     * @return new page object
+     */
+    public ToleranceDefaults goToToleranceTab() {
+        pageUtils.waitForElementAndClick(tolerancesTab);
+        return new ToleranceDefaults(driver);
     }
 
     /**
