@@ -2,6 +2,7 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,6 +24,9 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
 
     @FindBy(id = "qa-sub-component-detail-filter-button")
     private WebElement filterButton;
+
+    @FindBy(css = ".paginator .left")
+    private WebElement paginatorDropdown;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -86,7 +90,6 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * Open configure page
      *
      * @param element - the configure button
-     *
      * @return new page object
      */
     public ConfigurePage configure(WebElement element) {
@@ -102,5 +105,16 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     public FilterPage filter(WebElement element) {
         pageUtils.waitForElementAndClick(element);
         return new FilterPage(driver);
+    }
+
+    /**
+     * Sets pagination to by default
+     *
+     * @return current page object
+     */
+    public ComponentTableActions setPagination() {
+        pageUtils.waitForElementAndClick(paginatorDropdown);
+        pageUtils.javaScriptClick(driver.findElement(By.xpath("//div[.='100']")));
+        return this;
     }
 }

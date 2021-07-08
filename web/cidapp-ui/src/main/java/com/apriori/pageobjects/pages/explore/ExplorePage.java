@@ -10,7 +10,6 @@ import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,9 +26,6 @@ import java.util.List;
 public class ExplorePage extends ExploreToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
-
-    @FindBy(css = ".paginator .left")
-    private WebElement paginatorDropdown;
 
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
@@ -240,8 +236,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return current page object
      */
     public ExplorePage setPagination() {
-        pageUtils.waitForElementAndClick(paginatorDropdown);
-        pageUtils.javaScriptClick(driver.findElement(By.xpath("//div[.='100']")));
+        componentTableActions.setPagination();
         return this;
     }
 
