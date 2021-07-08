@@ -111,7 +111,7 @@ public class FileUploadResources {
                         .build());
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(fileUploadWorkorderId),
+                checkGetWorkorderDetails(fileUploadWorkorderId, false),
                 FileUploadOutputs.class
         );
     }
@@ -134,7 +134,7 @@ public class FileUploadResources {
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(loadCadMetadataWorkorderId),
+                checkGetWorkorderDetails(loadCadMetadataWorkorderId, false),
                 LoadCadMetadataOutputs.class
         );
     }
@@ -158,7 +158,7 @@ public class FileUploadResources {
         submitWorkorder(generatePartImagesWorkorderId);
 
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(generatePartImagesWorkorderId),
+                checkGetWorkorderDetails(generatePartImagesWorkorderId, false),
                 GeneratePartImagesOutputs.class
         );
     }
@@ -202,7 +202,7 @@ public class FileUploadResources {
         );
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(generateAssemblyImagesWorkorderId),
+                checkGetWorkorderDetails(generateAssemblyImagesWorkorderId, false),
                 GenerateAssemblyImagesOutputs.class
         );
     }
@@ -236,7 +236,7 @@ public class FileUploadResources {
         );
         submitWorkorder(costWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(costWorkorderId),
+                checkGetWorkorderDetails(costWorkorderId, false),
                 CostOrderStatusOutputs.class
         );
     }
@@ -247,7 +247,7 @@ public class FileUploadResources {
      * @param costOutputs - outputs from cost
      * @return PublishResultOutputs - outputs from publish
      */
-    public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs) {
+    public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs, boolean publishOutputs) {
         String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
                 PublishInputs.builder()
                         .comments("Comments go here...")
@@ -259,7 +259,7 @@ public class FileUploadResources {
 
         submitWorkorder(createPublishWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(createPublishWorkorderId),
+                checkGetWorkorderDetails(createPublishWorkorderId, publishOutputs),
                 PublishResultOutputs.class
         );
 
@@ -442,11 +442,13 @@ public class FileUploadResources {
      * @param workorderId - String
      * @return Object
      */
-    private Object checkGetWorkorderDetails(String workorderId) {
+    private Object checkGetWorkorderDetails(String workorderId, boolean returnInputs) {
         String status = checkWorkorderStatus(workorderId);
         if (status.equals("SUCCESS")) {
             WorkorderDetailsResponse workorderDetails = (WorkorderDetailsResponse) getWorkorderDetails(workorderId);
-            return workorderDetails.getCommand().getOutputs();
+            Object returnObject = returnInputs ? workorderDetails.getCommand().getInputs()
+                    : workorderDetails.getCommand().getOutputs();
+            return returnObject;
         }
         return null;
     }

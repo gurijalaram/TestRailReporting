@@ -103,7 +103,7 @@ public class WorkorderAPITests {
 
         getAndValidateImage(costOutputs.getScenarioIterationKey());
 
-        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs, false);
 
         getAndValidateImage(publishResultOutputs.getScenarioIterationKey());
     }
@@ -181,7 +181,7 @@ public class WorkorderAPITests {
         );
 
         // publish cad file with comment and description fields
-        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs, true);
 
         assertThat(publishResultOutputs.getComments(), is(notNullValue()));
         assertThat(publishResultOutputs.getDescription(), is(notNullValue()));

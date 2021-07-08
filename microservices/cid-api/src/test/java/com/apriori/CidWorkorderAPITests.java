@@ -53,7 +53,7 @@ public class CidWorkorderAPITests extends TestUtil {
         CostOrderStatusOutputs costOutputs = fileUploadResources
                 .costPart(productionInfoInputs, fileUploadOutputs, processGroup);
 
-        fileUploadResources.publishPart(costOutputs);
+        fileUploadResources.publishPart(costOutputs, false);
     }
 
     public static class CustomMapper extends IdentityMapper {
