@@ -16,6 +16,7 @@ import com.apriori.pageobjects.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -109,8 +110,8 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     @FindBy(css = "span[id='globalSearch'] > a")
     private WebElement searchButton;
 
-    @FindBy(id = "toolbar_logo_link")
-    private WebElement pageTitle;
+    @FindBy(css = ".pageHeader-title-text")
+    protected WebElement pageTitle;
 
     @FindBy(xpath = "//h1[contains(text(), '404')]")
     private WebElement errorTitle;
@@ -153,7 +154,9 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return Library Page page object
      */
     public LibraryPage navigateToLibraryPage() {
-        return navigateToPage(libraryMenuOption, LibraryPage.class);
+        LibraryPage libraryPage = navigateToPage(libraryMenuOption, LibraryPage.class);
+        pageUtils.waitForElementToAppear(By.xpath("//a[text() = 'Assembly Cost (A4)']"));
+        return libraryPage;
     }
 
     /**
@@ -304,8 +307,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
      * @return String - page title text
      */
     public String getHomeTitleText() {
-        pageUtils.waitForElementToAppear(homePageTitle);
-        return homePageTitle.getText();
+        return homePageTitle.getAttribute("innerText");
     }
 
     /**
@@ -347,6 +349,7 @@ public class PageHeader extends LoadableComponent<PageHeader> {
         searchInput.sendKeys(textToType);
         pageUtils.waitForElementAndClick(searchButton);
         pageUtils.isPageLoaded(homePageTitle);
+        pageUtils.waitForElementToAppear(By.xpath(String.format("//a[text() = '%s']", textToType)));
         return new ViewSearchResultsPage(driver);
     }
 }

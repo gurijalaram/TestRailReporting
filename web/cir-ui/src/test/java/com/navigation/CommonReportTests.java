@@ -3,25 +3,30 @@ package com.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
+import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.library.LibraryPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyCostReportPage;
+import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.pageobjects.pages.evaluate.CostDetailsPage;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
-import com.pageobjects.pages.explore.ExplorePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.Constants;
 
@@ -31,6 +36,7 @@ public class CommonReportTests extends TestBase {
 
     private AssemblyCostReportPage assemblyCostReportPage;
     private ViewSearchResultsPage viewSearchResultsPage;
+    private CastingDtcReportPage castingDtcReportPage;
     private GenericReportPage genericReportPage;
     private ReportsPageHeader reportsPageHeader;
     private CirUserGuidePage cirUserGuide;
@@ -51,7 +57,8 @@ public class CommonReportTests extends TestBase {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToViewRepositoryPage()
-            .navigateToReportFolder(reportName);
+            .navigateToReportFolder(reportName)
+            .waitForReportToAppear(reportName);
 
         assertThat(reportName, is(equalTo(genericReportPage.getReportName(reportName))));
     }
@@ -98,7 +105,7 @@ public class CommonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSet(exportSetName, GenericReportPage.class)
-            .clickOk(CirUserGuidePage.class)
+            .clickOk(true, CirUserGuidePage.class)
             .navigateToReportUserGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -123,11 +130,16 @@ public class CommonReportTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
+            .waitForInputControlsLoad()
             .selectExportSet(exportSet, GenericReportPage.class)
             .selectSortOrder(sortOrder)
-            .clickOk(GenericReportPage.class);
+            .waitForLoadingPopupToDisappear()
+            .clickOk(true, GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
+
+        genericReportPage.waitForSvgToRender();
+        genericReportPage.waitForSortOrderToAppearOnReport();
 
         for (int i = 1; i < 5; i++) {
             assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(1)),
@@ -135,76 +147,84 @@ public class CommonReportTests extends TestBase {
             assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(2)),
                     is(equalTo(partNames[1])));
         }
-
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
-            is(equalTo(partNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
-            is(equalTo(partNames[1])));
-
-        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
-            is(equalTo(partNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "2"),
-            is(equalTo(partNames[1])));
-
-        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
-            is(equalTo(partNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "2"),
-            is(equalTo(partNames[1])));
-
-        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
-            is(equalTo(partNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
-            is(equalTo(partNames[1])));
     }
 
     /**
-     * Machining DTC Comparison Sort Order Test
+     * Generic test for Casting DTC Comparison sort order
+     *
+     * @param sortOrder - String
+     * @param doFourAsserts - boolean
+     * @param valuesToAssert - ArrayList<String>
+     */
+    public void castingDtcDetailsSortOrderTest(String sortOrder, boolean doFourAsserts,
+                                                  ArrayList<String> valuesToAssert) {
+        castingSortOrderTestCore(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), sortOrder);
+
+        assertThat(
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+                is(equalTo(valuesToAssert.get(0)))
+        );
+
+        assertThat(
+                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+                is(equalTo(valuesToAssert.get(1)))
+        );
+
+        if (doFourAsserts) {
+            assertThat(true, is(equalTo(true)));
+            assertThat(true, is(equalTo(true)));
+            assertThat(
+                    castingDtcReportPage.getScenarioNameCastingDtcDetails(true),
+                    is(equalTo(valuesToAssert.get(2)))
+            );
+            assertThat(
+                    castingDtcReportPage.getScenarioNameCastingDtcDetails(false),
+                    is(equalTo(valuesToAssert.get(3)))
+            );
+        }
+    }
+
+    /**
+     * Casting DTC Comparison Sort Order Test
      *
      * @param sortOrder      String
      * @param elementNameOne String
      * @param elementNameTwo String
      */
     public void castingDtcComparisonSortOrderTest(String sortOrder, String elementNameOne, String elementNameTwo) {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
-            .selectSortOrder(sortOrder)
-            .clickOk(GenericReportPage.class);
+        castingSortOrderTestCore(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), sortOrder);
 
-        genericReportPage.waitForReportToLoad();
         String[] elementNames = {elementNameOne, elementNameTwo};
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
-            is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("1", "2"),
-            is(equalTo(elementNames[1])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("1", "1"),
+            is(startsWith(elementNames[0])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("1", "2"),
+            is(startsWith(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "1"),
-            is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("2", "2"),
-            is(equalTo(elementNames[1])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("2", "1"),
+            is(startsWith(elementNames[0])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("2", "2"),
+            is(startsWith(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "1"),
-            is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("3", "2"),
-            is(equalTo(elementNames[1])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("3", "1"),
+            is(startsWith(elementNames[0])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("3", "2"),
+            is(startsWith(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "1"),
-            is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("4", "2"),
-            is(equalTo(elementNames[1])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("4", "1"),
+            is(startsWith(elementNames[0])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("4", "2"),
+            is(startsWith(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("5", "1"),
-            is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("5", "2"),
-            is(equalTo(elementNames[1])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("5", "1"),
+            is(startsWith(elementNames[0])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("5", "2"),
+            is(startsWith(elementNames[1])));
 
-        assertThat(genericReportPage.getTableElementNameDtcComparison("6", "1"),
-            is(equalTo(elementNames[0])));
-        assertThat(genericReportPage.getTableElementNameDtcComparison("6", "2"),
-            is(equalTo(elementNames[1])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("6", "1"),
+            is(startsWith(elementNames[0])));
+        assertThat(castingDtcReportPage.getTableElementNameDtcComparison("6", "2"),
+            is(startsWith(elementNames[1])));
     }
 
     /**
@@ -220,7 +240,7 @@ public class CommonReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(GenericReportPage.class)
+            .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         String partName = "";
@@ -239,20 +259,20 @@ public class CommonReportTests extends TestBase {
             reportsDraftValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, draftString);
             reportsRadiusValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, radiusString);
         }
+
         genericReportPage.openNewCidTabAndFocus(1);
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
 
-        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-            .filter()
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setRowOne("Part Name", "Contains", partName)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario()
-            .openDesignGuidance();
-
-        String cidDraftValue = designGuidancePage.getDtcIssueValue(draftString);
-        String cidRadiusValue = designGuidancePage.getDtcIssueValue(radiusString);
+        String cidDraftValue = guidanceIssuesPage.getDtcIssueCount(draftString);
+        String cidRadiusValue = guidanceIssuesPage.getDtcIssueCount(radiusString);
 
         assertThat(reportsDraftValue, is(equalTo(cidDraftValue)));
         assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
@@ -271,7 +291,7 @@ public class CommonReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(GenericReportPage.class)
+            .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         String partName = "";
@@ -290,21 +310,21 @@ public class CommonReportTests extends TestBase {
             reportsMaterialValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, materialString);
             reportsRadiusValue = genericReportPage.getDtcIssueValueDtcDetails(reportName, radiusString);
         }
-        genericReportPage.openNewCidTabAndFocus(1);
 
-        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-            .filter()
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setRowOne("Part Name", "Contains", partName)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario()
-            .openDesignGuidance();
+        genericReportPage.openNewCidTabAndFocus(1);
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
 
         radiusString = "Radii";
-        String cidMaterialValue = designGuidancePage.getDtcIssueValue(materialString);
-        String cidRadiusValue = designGuidancePage.getDtcIssueValue(radiusString);
+        String cidMaterialValue = guidanceIssuesPage.getDtcIssueCount(materialString);
+        String cidRadiusValue = guidanceIssuesPage.getDtcIssueCount(radiusString);
 
         assertThat(reportsMaterialValue, is(equalTo(cidMaterialValue)));
         assertThat(reportsRadiusValue, is(equalTo(cidRadiusValue)));
@@ -400,6 +420,7 @@ public class CommonReportTests extends TestBase {
         for (String assemblyName : assemblyNames) {
             assemblyCostReportPage.selectAssemblySetDropdown(assemblyName);
 
+            assemblyCostReportPage.waitForCorrectAssemblyPartNumber(assemblyName);
             assertThat(assemblyCostReportPage.getCurrentAssemblyPartNumber(), is(equalTo(assemblyName)));
         }
     }
@@ -416,7 +437,7 @@ public class CommonReportTests extends TestBase {
                 .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
 
-        assemblyCostReportPage.clickOk(GenericReportPage.class)
+        assemblyCostReportPage.clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyCostReportPage.class);
 
         String reportsPartName =
@@ -428,23 +449,59 @@ public class CommonReportTests extends TestBase {
         String reportsCiCost = assemblyCostReportPage.getGeneralCostInfoValue("Capital", false);
 
         assemblyCostReportPage.openNewCidTabAndFocus(1);
-
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setScenarioType(Constants.ASSEMBLY_SCENARIO_TYPE)
-                .setRowOne("Part Name", "Contains", AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
-                .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Contains",
+                        AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        evaluatePage.waitForCostsToLoad();
-        CostDetailsPage costDetailsPage = evaluatePage.openAssemblyCostDetails();
+        CostDetailsPage costDetailsPage = evaluatePage.openCostDetails();
 
         assertThat(reportsPartName, is(equalTo(evaluatePage.getPartName())));
-        assertThat(reportsScenarioName, is(equalTo(evaluatePage.getScenarioName())));
+        assertThat(reportsScenarioName, is(equalTo(evaluatePage.getCurrentScenarioName())));
 
-        assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getPiecePartCostString())));
-        assertThat(reportsCiCost, is(equalTo(costDetailsPage.getTotalCapitalInvestments())));
+        assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getCostSumValue("Piece Part Cost"))));
+        assertThat(reportsCiCost,
+                is(equalTo(String.valueOf(evaluatePage.getCostResults("Total Capital Investment")))));
+    }
+
+    /**
+     * Core part of Casting DTC Sort Order test
+     *
+     * @param reportName - String
+     * @param sortOrder - String
+     */
+    private void castingSortOrderTestCore(String reportName, String sortOrder) {
+        String exportSet = ExportSetEnum.CASTING_DTC.getExportSetName();
+        castingDtcReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, CastingDtcReportPage.class)
+                .selectExportSetDtcTests(exportSet)
+                .selectSortOrder(sortOrder)
+                .clickOk(true, CastingDtcReportPage.class);
+
+        castingDtcReportPage.waitForReportToLoad();
+
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set')]/../following-sibling::td[2]/span"))
+                .getText().equals(exportSet)
+                && reportName.equals(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName())
+                && sortOrder.equals(SortOrderEnum.CASTING_ISSUES.getSortOrderEnum())) {
+            castingDtcReportPage.clickInputControlsButton()
+                    .selectExportSetDtcTests(exportSet)
+                    .selectExportSetDtcTests(exportSet)
+                    .waitForExportSetSelection(exportSet)
+                    .clickOk(true, GenericReportPage.class);
+            castingDtcReportPage.waitForReportToLoad();
+            castingDtcReportPage.waitForSvgToRender();
+        }
+
+        if (!reportName.contains("Details")) {
+            castingDtcReportPage.waitForSvgToRender();
+        }
     }
 }

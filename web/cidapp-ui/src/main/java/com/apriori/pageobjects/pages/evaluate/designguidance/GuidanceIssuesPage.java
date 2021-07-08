@@ -192,6 +192,21 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     }
 
     /**
+     * Gets the dtc issue count
+     *
+     * @param issueType - issue type
+     * @return dtc issue count as string
+     */
+    public String getDtcIssueCount(String issueType) {
+        By locator = By.xpath(String.format(
+                "//div[contains(text(), '%s')]/ancestor::div[@class='table-row ']/div[3]/div/div",
+                issueType)
+        );
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
+    }
+
+    /**
      * Opens investigation tab
      *
      * @return new page object
