@@ -20,6 +20,9 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
 
+    @FindBy(xpath = "//button[.='Production Defaults']")
+    private WebElement productionsTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -41,6 +44,16 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(displayTab);
+    }
+
+    /**
+     * Go to production default tab
+     *
+     * @return new page object
+     */
+    public ProductionDefaultsPage goToProductionTab() {
+        pageUtils.waitForElementAndClick(productionsTab);
+        return new ProductionDefaultsPage(driver);
     }
 
     /**
