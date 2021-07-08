@@ -250,6 +250,8 @@ public class FileUploadResources {
     public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs) {
         String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
                 PublishInputs.builder()
+                        .comments("Comments go here...")
+                        .description("Description goes here...")
                         .scenarioIterationKey(
                                 setPublishScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
                         .build()

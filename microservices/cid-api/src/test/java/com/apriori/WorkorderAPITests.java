@@ -1,5 +1,10 @@
 package com.apriori;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.entity.request.assemblyobjects.Assembly;
 import com.apriori.entity.request.assemblyobjects.AssemblyComponent;
@@ -144,6 +149,42 @@ public class WorkorderAPITests {
         for (String image : images) {
             fileUploadResources.imageValidation(image);
         }
+    }
+
+    @Test
+    @Issue("AP-69600")
+    @Category(CidAPITest.class)
+    @TestRail(testCaseId = {"7710"})
+    @Description("Upload a part, cost it and publish it with comment and description fields")
+    public void testPublishCommentAndDescriptionFields() {
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                        "CreatePartData.json"
+                ).getPath(), NewPartRequest.class
+        );
+
+        // upload cad file
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+                "bracket_basic.prt",
+                processGroup
+        );
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, testScenarioName);
+
+        // cost cad file
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+                productionInfoInputs,
+                fileUploadOutputs,
+                processGroup
+        );
+
+        // publish cad file with comment and description fields
+        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+
+        assertThat(publishResultOutputs.getComments(), is(notNullValue()));
+        assertThat(publishResultOutputs.getDescription(), is(notNullValue()));
     }
 
     private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {
