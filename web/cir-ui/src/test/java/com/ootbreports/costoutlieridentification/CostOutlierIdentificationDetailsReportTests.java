@@ -20,8 +20,8 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
 import org.openqa.selenium.By;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
