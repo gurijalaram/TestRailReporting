@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
+import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -36,6 +37,8 @@ public class LoginTests extends TestBase {
     private PrivacyPolicyPage privacyPolicyPage;
     private EvaluatePage evaluatePage;
 
+    private ToleranceDefaultsPage toleranceDefaults;
+
     private File resourceFile;
     private UserCredentials currentUser;
 
@@ -49,9 +52,11 @@ public class LoginTests extends TestBase {
     public void testLogin() {
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
+        toleranceDefaults = loginPage.login(UserUtil.getUser())
+        .openSettings()
+        .goToToleranceTab();
 
-        assertThat(explorePage.isScenarioCountPresent(), is(true));
+//        assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
 
     @Test

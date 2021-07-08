@@ -38,7 +38,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Section header is not displayed", sectionHeader.getAttribute("textContext").contains("Geometric Tolerance"));
+        assertTrue("Geometric Tolerance header is not displayed", sectionHeader.getAttribute("textContext").contains("Geometric Tolerance"));
     }
 
     /**
