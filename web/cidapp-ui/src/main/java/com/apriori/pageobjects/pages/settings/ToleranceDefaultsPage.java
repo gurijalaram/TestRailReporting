@@ -13,7 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
+public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPage> {
 
     @FindBy(xpath = "//button[.='Tolerance Defaults']")
     private WebElement toleranceTab;
@@ -43,7 +43,7 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public ToleranceDefaults(WebDriver driver) {
+    public ToleranceDefaultsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -66,7 +66,7 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
      *
      * @return current page object
      */
-    public ToleranceDefaults selectSystemDefault() {
+    public ToleranceDefaultsPage selectSystemDefault() {
         pageUtils.waitForElementAndClick(systemRadioButton);
         return this;
     }
@@ -76,9 +76,14 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
      *
      * @return current page object
      */
-    public ToleranceDefaults selectSpecificValues() {
+    public ToleranceDefaultsPage selectSpecificValues() {
         pageUtils.waitForElementAndClick(specificRadioButton);
         return this;
+    }
+
+    public ToleranceOverridesPage editSpecificValues() {
+
+        return new ToleranceOverridesPage(driver);
     }
 
     /**
@@ -86,7 +91,7 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
      *
      * @return current page object
      */
-    public ToleranceDefaults selectCad() {
+    public ToleranceDefaultsPage selectCad() {
         pageUtils.waitForElementAndClick(cadRadioButton);
         return this;
     }
@@ -98,7 +103,7 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
      * @param toleranceValue - the cad tolerance
      * @return current page object
      */
-    public ToleranceDefaults replaceValues(String cadValue, String toleranceValue) {
+    public ToleranceDefaultsPage replaceValues(String cadValue, String toleranceValue) {
         pageUtils.waitForElementAndClick(replaceValuesCheckbox);
         return this;
     }
@@ -109,7 +114,7 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
      * @param cadValue - the cad value
      * @return current page object
      */
-    public ToleranceDefaults inputCadValue(String cadValue) {
+    public ToleranceDefaultsPage inputCadValue(String cadValue) {
         pageUtils.clearInput(minCadInput);
         minCadInput.sendKeys(cadValue);
         return this;
@@ -121,7 +126,7 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
      * @param toleranceValue - the cad tolerance
      * @return current page object
      */
-    public ToleranceDefaults inputCadTolerance(String toleranceValue) {
+    public ToleranceDefaultsPage inputCadTolerance(String toleranceValue) {
         pageUtils.clearInput(cadToleranceInput);
         cadToleranceInput.sendKeys(toleranceValue);
         return this;

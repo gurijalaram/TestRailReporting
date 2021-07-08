@@ -51,9 +51,9 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * Go to tolerances default tab
      * @return new page object
      */
-    public ToleranceDefaults goToToleranceTab() {
+    public ToleranceDefaultsPage goToToleranceTab() {
         pageUtils.waitForElementAndClick(tolerancesTab);
-        return new ToleranceDefaults(driver);
+        return new ToleranceDefaultsPage(driver);
     }
 
     /**
