@@ -41,6 +41,9 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
         assertTrue("Geometric Tolerance header is not displayed", sectionHeader.getAttribute("textContext").contains("Geometric Tolerance"));
     }
 
+    public void inputOverrides(OverridesEnum... overrideValue) {
+
+    }
     /**
      * Selects the submit button
      *
