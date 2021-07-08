@@ -194,14 +194,14 @@ public class CdsTestUtil extends TestUtil {
      * @param siteIdentity     - the site id
      * @return new object
      */
-    public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity) {
+    public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity, String appIdentity) {
         url = String.format(serviceUrl, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, LicensedApplication.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("licensedApplication",
                 LicensedApplication.builder()
-                    .applicationIdentity(Constants.getApProApplicationIdentity())
+                    .applicationIdentity(appIdentity)
                     .createdBy("#SYSTEM00000")
                     .build());
 

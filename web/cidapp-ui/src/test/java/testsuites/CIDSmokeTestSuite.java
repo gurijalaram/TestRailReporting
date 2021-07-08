@@ -35,7 +35,6 @@ import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import testsuites.suiteinterface.IgnoreTests;
-import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("767")
