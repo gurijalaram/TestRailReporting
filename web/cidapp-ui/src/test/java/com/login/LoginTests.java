@@ -36,8 +36,6 @@ public class LoginTests extends TestBase {
     private PrivacyPolicyPage privacyPolicyPage;
     private EvaluatePage evaluatePage;
 
-    private ToleranceDefaultsPage toleranceDefaults;
-
     private File resourceFile;
     private UserCredentials currentUser;
 
