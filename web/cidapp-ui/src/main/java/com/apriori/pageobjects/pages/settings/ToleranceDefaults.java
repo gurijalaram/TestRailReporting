@@ -18,6 +18,27 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
     @FindBy(xpath = "//button[.='Tolerance Defaults']")
     private WebElement toleranceTab;
 
+    @FindBy(css = "[value='SYSTEMDEFAULT']")
+    private WebElement systemRadioButton;
+
+    @FindBy(css = "[value='PARTOVERRIDE']")
+    private WebElement specificRadioButton;
+
+    @FindBy(css = ".tolerance-defaults [data-icon='pencil']")
+    private WebElement specificPencilButton;
+
+    @FindBy(css = "[value='CAD']")
+    private WebElement cadRadioButton;
+
+    @FindBy(css = "[data-icon='square']")
+    private WebElement replaceValuesCheckbox;
+
+    @FindBy(css = "[name='tolerance.minCadToleranceThreshold']")
+    private WebElement minCadInput;
+
+    @FindBy(css = "[name='tolerance.cadToleranceReplacement']")
+    private WebElement cadToleranceInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -37,6 +58,72 @@ public class ToleranceDefaults extends LoadableComponent<ToleranceDefaults> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue(toleranceTab.getAttribute("class").contains("active"));
+        assertTrue("Tolerance tab was not selected", toleranceTab.getAttribute("class").contains("active"));
+    }
+
+    /**
+     * Select system default
+     *
+     * @return current page object
+     */
+    public ToleranceDefaults selectSystemDefault() {
+        pageUtils.waitForElementAndClick(systemRadioButton);
+        return this;
+    }
+
+    /**
+     * Select specific value
+     *
+     * @return current page object
+     */
+    public ToleranceDefaults selectSpecificValues() {
+        pageUtils.waitForElementAndClick(specificRadioButton);
+        return this;
+    }
+
+    /**
+     * Select cad
+     *
+     * @return current page object
+     */
+    public ToleranceDefaults selectCad() {
+        pageUtils.waitForElementAndClick(cadRadioButton);
+        return this;
+    }
+
+    /**
+     * Replace current values
+     *
+     * @param cadValue       - the cad value
+     * @param toleranceValue - the cad tolerance
+     * @return current page object
+     */
+    public ToleranceDefaults replaceValues(String cadValue, String toleranceValue) {
+        pageUtils.waitForElementAndClick(replaceValuesCheckbox);
+        return this;
+    }
+
+    /**
+     * Input cad value
+     *
+     * @param cadValue - the cad value
+     * @return current page object
+     */
+    public ToleranceDefaults inputCadValue(String cadValue) {
+        pageUtils.clearInput(minCadInput);
+        minCadInput.sendKeys(cadValue);
+        return this;
+    }
+
+    /**
+     * Input cad tolerance
+     *
+     * @param toleranceValue - the cad tolerance
+     * @return current page object
+     */
+    public ToleranceDefaults inputCadTolerance(String toleranceValue) {
+        pageUtils.clearInput(cadToleranceInput);
+        cadToleranceInput.sendKeys(toleranceValue);
+        return this;
     }
 }

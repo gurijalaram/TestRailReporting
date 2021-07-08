@@ -44,7 +44,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue(displayTab.getAttribute("class").contains("active"));
+        assertTrue("Display tab was not selected", displayTab.getAttribute("class").contains("active"));
     }
 
     /**
