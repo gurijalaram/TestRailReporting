@@ -19,7 +19,9 @@ public class Constants {
     private static final File INPUT_STREAM;
     private static final Properties PROPERTIES = new Properties();
     public static String environment;
-    private static String userIdentity;
+    private static String userIdentity01;
+    private static String userIdentity02;
+    private static String userIdentity03;
     private static String cdsIdentityRole;
     private static String aPrioriInternalCustomerIdentity;
     private static String apProApplicationIdentity;
@@ -74,8 +76,26 @@ public class Constants {
      *
      * @return string
      */
-    public static String getUserIdentity() {
-        return userIdentity = System.getProperty("userIdentity") == null ? PROPERTIES.getProperty("automation.user.identity") : System.getProperty("userIdentity");
+    public static String getUserIdentity01() {
+        return userIdentity01 = System.getProperty("userIdentity01") == null ? PROPERTIES.getProperty("automation.user.identity01") : System.getProperty("userIdentity01");
+    }
+
+    /**
+     * Get identity user
+     *
+     * @return string
+     */
+    public static String getUserIdentity02() {
+        return userIdentity02 = System.getProperty("userIdentity02") == null ? PROPERTIES.getProperty("automation.user.identity02") : System.getProperty("userIdentity02");
+    }
+
+    /**
+     * Get identity user
+     *
+     * @return string
+     */
+    public static String getUserIdentity03() {
+        return userIdentity03 = System.getProperty("userIdentity03") == null ? PROPERTIES.getProperty("automation.user.identity03") : System.getProperty("userIdentity03");
     }
 
     /**
