@@ -187,7 +187,7 @@ public class PlasticDtcReportTests extends TestBase {
         String partName = genericReportPage.getPartNameDtcReports();
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
-        genericReportPage.openNewCidTabAndFocus(1);
+        //genericReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

@@ -133,7 +133,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
         String reportsFinalCycleTime = cycleTimeValueTrackingPage.getReportsValue("Final Cycle Time")
                 .replace(",", "");
 
-        cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
+        //cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

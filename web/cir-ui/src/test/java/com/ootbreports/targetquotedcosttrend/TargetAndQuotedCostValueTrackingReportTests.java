@@ -207,7 +207,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .replace(",", "");
         String reportsCurrentCost = targetAndQuotedCostValueTrackingPage.getValueFromReport("24");
 
-        targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
+        //targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

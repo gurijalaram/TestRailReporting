@@ -136,7 +136,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         BigDecimal reportsCostValue = genericReportPage.getFBCValueFromBubbleTooltip(
                 "aPriori Cost Value (Cost Outlier) Bottom");
 
-        genericReportPage.openNewCidTabAndFocus(1);
+        //genericReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

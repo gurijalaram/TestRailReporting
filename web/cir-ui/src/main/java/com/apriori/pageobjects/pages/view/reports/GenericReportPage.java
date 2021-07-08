@@ -927,22 +927,6 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Opens new tab with CID open and switches to it
-     *
-     * @param index - int of index to go to
-     * @return current page object
-     */
-    public GenericReportPage openNewCidTabAndFocus(int index) {
-        pageUtils.jsNewTab();
-        pageUtils.windowHandler(index);
-
-        driver.get(Constants.getCidUrl());
-        pageUtils.waitForElementToAppear(cidLogo);
-
-        return new GenericReportPage(driver);
-    }
-
-    /**
      * Clicks ok
      *
      * @param <T> - generic

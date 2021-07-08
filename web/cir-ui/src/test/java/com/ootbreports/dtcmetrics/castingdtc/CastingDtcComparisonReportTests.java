@@ -179,7 +179,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         String partName = castingDtcReportPage.getPartNameDtcReports();
         String holeIssueNumReports = castingDtcReportPage.getHoleIssuesFromComparisonReport();
 
-        castingDtcReportPage.openNewCidTabAndFocus(2);
+        //castingDtcReportPage.openNewCidTabAndFocus(2);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

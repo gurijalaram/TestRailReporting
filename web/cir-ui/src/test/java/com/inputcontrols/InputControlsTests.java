@@ -883,7 +883,7 @@ public class InputControlsTests extends TestBase {
         String reportsAnnualVolume = targetQuotedCostTrendReportPage.getValueFromReport("22");
         String reportsCurrentCost = targetQuotedCostTrendReportPage.getValueFromReport("24");
 
-        targetQuotedCostTrendReportPage.openNewCidTabAndFocus(2);
+        //targetQuotedCostTrendReportPage.openNewCidTabAndFocus(2);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

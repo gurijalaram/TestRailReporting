@@ -113,13 +113,4 @@ public class Constants {
 
         return baseUrl.concat(PROPERTIES.getProperty("url.additional"));
     }
-
-    /**
-     * Gets CID url
-     *
-     * @return String
-     */
-    public static String getCidUrl() {
-        return PROPERTIES.getProperty("url.additional.cid");
-    }
 }

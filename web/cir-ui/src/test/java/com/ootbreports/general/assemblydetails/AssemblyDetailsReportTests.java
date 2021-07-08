@@ -492,7 +492,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
-        assemblyDetailsReportPage.openNewCidTabAndFocus(1);
+        //assemblyDetailsReportPage.openNewCidTabAndFocus(1);
 
         List<String> columnsToAdd = Arrays.asList(
             ComponentInfoColumnEnum.CYCLE_TIME.getColumnName(),
@@ -826,7 +826,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         reportsValues.put("Capital Investments",
             assemblyDetailsReportPage.getFiguresFromTable("Capital Investments"));
 
-        assemblyDetailsReportPage.openNewCidTabAndFocus(1);
+        //assemblyDetailsReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
@@ -934,7 +934,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         ArrayList<String> reportsVpeValues = assemblyDetailsReportPage.getAllVpeValuesAssemblyDetailsReport();
 
-        assemblyDetailsReportPage.openNewCidTabAndFocus(1);
+        //assemblyDetailsReportPage.openNewCidTabAndFocus(1);
 
         ComponentsListPage componentsListPage = new ExplorePage(driver)
                 .filter()

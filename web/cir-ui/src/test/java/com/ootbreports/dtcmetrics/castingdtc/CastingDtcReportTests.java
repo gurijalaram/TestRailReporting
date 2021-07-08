@@ -178,7 +178,7 @@ public class CastingDtcReportTests extends TestBase {
         BigDecimal reportFbcValue = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
         String partName = genericReportPage.getPartNameDtcReports();
 
-        genericReportPage.openNewCidTabAndFocus(1);
+        //genericReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
