@@ -3,6 +3,7 @@ package com.apriori.cds.objects.response;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @JsonRootName("response")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LicensedApplication {
     private String identity;
     private String createdBy;
