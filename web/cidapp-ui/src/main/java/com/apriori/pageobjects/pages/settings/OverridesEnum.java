@@ -3,7 +3,7 @@ package com.apriori.pageobjects.pages.settings;
 public enum OverridesEnum {
     CIRCULARITY("circularity"),
     CONCENTRICITY("concentricity"),
-    CYLINDRICITY(""),
+    CYLINDRICITY("cylindricity"),
     FLATNESS("cylindricity"),
     PARALLELISM("parallelism"),
     PERPENDICULARITY("perpendicularity"),
