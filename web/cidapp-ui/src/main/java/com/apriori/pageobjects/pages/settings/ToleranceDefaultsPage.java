@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.settings;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -81,8 +82,13 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
         return this;
     }
 
+    /**
+     * Edit specific values
+     *
+     * @return new page object
+     */
     public ToleranceOverridesPage editSpecificValues() {
-
+        pageUtils.waitForElementAndClick(specificPencilButton);
         return new ToleranceOverridesPage(driver);
     }
 
@@ -130,5 +136,23 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
         pageUtils.clearInput(cadToleranceInput);
         cadToleranceInput.sendKeys(toleranceValue);
         return this;
+    }
+
+    /**
+     * Selects the submit button
+     *
+     * @return generic page object
+     */
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public EvaluatePage cancel() {
+        return modalDialogController.cancel(EvaluatePage.class);
     }
 }
