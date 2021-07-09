@@ -1,5 +1,7 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
+import static com.apriori.utils.enums.ProcessGroupEnum.POWDER_METAL;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -61,7 +63,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -100,7 +102,7 @@ public class PublishExistingCostedTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioNameB = new GenerateStringUtil().generateScenarioName();
         String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
         currentUser = UserUtil.getUser();
@@ -115,7 +117,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .editScenario()
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
             .publishScenario()
             .override()
@@ -136,7 +138,7 @@ public class PublishExistingCostedTests extends TestBase {
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
@@ -144,7 +146,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -152,7 +154,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .publish(EvaluatePage.class)
             .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
             .override()
@@ -172,7 +174,7 @@ public class PublishExistingCostedTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
@@ -180,7 +182,7 @@ public class PublishExistingCostedTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .selectProcessGroup(POWDER_METAL)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -189,7 +191,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publish(ExplorePage.class)
             .lock(ExplorePage.class)
             .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.FORGING.getProcessGroup())
+            .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
             .changeName(scenarioName2)

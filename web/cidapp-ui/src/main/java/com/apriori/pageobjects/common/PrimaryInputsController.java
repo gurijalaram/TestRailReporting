@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ProcessGroupEnum;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -40,8 +41,8 @@ public class PrimaryInputsController {
      * @param processGroup         - the process group
      * @return current page object
      */
-    public PrimaryInputsController selectProcessGroup(WebElement processGroupDropdown, String processGroup) {
-        pageUtils.typeAheadSelect(processGroupDropdown, processGroup);
+    public PrimaryInputsController selectProcessGroup(WebElement processGroupDropdown, ProcessGroupEnum processGroup) {
+        pageUtils.typeAheadSelect(processGroupDropdown, processGroup.getProcessGroup());
         return this;
     }
 

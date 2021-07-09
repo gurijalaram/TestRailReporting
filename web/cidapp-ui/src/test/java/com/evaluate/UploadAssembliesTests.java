@@ -1,5 +1,7 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
+import static com.apriori.utils.enums.ProcessGroupEnum.CASTING_DIE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,7 +16,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ComponentIconEnum;
 import com.apriori.utils.enums.CostingIconEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -23,7 +24,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.IgnoreTests;
-import testsuites.suiteinterface.SmokeTests;
 import utils.AssemDfmIconEnum;
 
 import java.io.File;
@@ -53,7 +53,7 @@ public class UploadAssembliesTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, bigRingComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(CASTING_DIE)
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -62,7 +62,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, smallRingComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(CASTING_DIE)
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -71,7 +71,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, pinComp, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(CASTING_DIE)
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
@@ -80,7 +80,7 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         evaluatePage.uploadComponentAndSubmit(scenarioName, hingeAsm, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
+            .selectProcessGroup(ASSEMBLY)
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
