@@ -68,7 +68,7 @@ public class DecimalPlaceTests extends TestBase {
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -151,7 +151,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(21.05727, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));

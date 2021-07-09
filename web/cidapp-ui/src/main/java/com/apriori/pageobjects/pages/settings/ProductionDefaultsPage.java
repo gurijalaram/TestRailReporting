@@ -3,9 +3,10 @@ package com.apriori.pageobjects.pages.settings;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +17,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaultsPage> {
+
+    @FindBy(xpath = "//button[.='Production Defaults']")
+    private WebElement productionsTab;
 
     @FindBy(css = ".production-defaults")
     private WebElement productionDefaults;
@@ -64,13 +68,15 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
 
     @Override
     protected void isLoaded() throws Error {
+        assertTrue("Production Defaults tab is not active", productionsTab.getAttribute("class").contains("active"));
         assertTrue("Production Defaults is not displayed", productionDefaults.isDisplayed());
     }
 
-    // TODO: 08/07/2021 cn - complete all javadocs
     /**
-     * @param scenarioName
-     * @return
+     * Input scenario name
+     *
+     * @param scenarioName - the scenario name
+     * @return current page object
      */
     public ProductionDefaultsPage inputScenarioName(String scenarioName) {
         pageUtils.clearInput(scenarioNameInput);
@@ -79,29 +85,35 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     }
 
     /**
-     * @param processGroup
-     * @return
+     * Select process group
+     *
+     * @param processGroup - the process group
+     * @return current page object
      */
-    public ProductionDefaultsPage selectProcessGroup(String processGroup) {
-        pageUtils.typeAheadSelect(processGroupDropdown, processGroup);
+    public ProductionDefaultsPage selectProcessGroup(ProcessGroupEnum processGroup) {
+        pageUtils.typeAheadSelect(processGroupDropdown, processGroup.getProcessGroup());
         return this;
     }
 
     /**
-     * @param digitalFactory
-     * @return
+     * Select digital factory
+     *
+     * @param digitalFactory - the digital factory
+     * @return current page object
      */
-    public ProductionDefaultsPage selectDigitalFactory(String digitalFactory) {
-        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory);
+    public ProductionDefaultsPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
+        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory.getDigitalFactory());
         return this;
     }
 
     /**
-     * @param materialCatalog
-     * @return
+     * Select material catalog
+     *
+     * @param materialCatalog - the material catalog
+     * @return current page object
      */
-    public ProductionDefaultsPage selectMaterialCatalog(String materialCatalog) {
-        pageUtils.typeAheadSelect(materialCatalogDropdown, materialCatalog);
+    public ProductionDefaultsPage selectMaterialCatalog(DigitalFactoryEnum materialCatalog) {
+        pageUtils.typeAheadSelect(materialCatalogDropdown, materialCatalog.getDigitalFactory());
         return this;
     }
 
@@ -116,8 +128,10 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     }
 
     /**
-     * @param annualVolume
-     * @return
+     * Input annual volume
+     *
+     * @param annualVolume - the annual volume
+     * @return current page object
      */
     public ProductionDefaultsPage inputAnnualVolume(String annualVolume) {
         pageUtils.clearInput(annualVolumeInput);
@@ -126,8 +140,10 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     }
 
     /**
-     * @param years
-     * @return
+     * Input years
+     *
+     * @param years - the years
+     * @return current page object
      */
     public ProductionDefaultsPage inputYears(String years) {
         pageUtils.clearInput(yearsInput);
@@ -136,8 +152,10 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     }
 
     /**
-     * @param batchSize
-     * @return
+     * Input batch size
+     *
+     * @param batchSize - the batch size
+     * @return current page object
      */
     public ProductionDefaultsPage inputBatchSize(String batchSize) {
         pageUtils.clearInput(batchSizeInput);
@@ -159,8 +177,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      *
      * @return generic page object
      */
-    // TODO: cn - 08/07/2021 change all of these in this section because settings can be accessed from any page which means a generic PO has to be returned
-    public EvaluatePage cancel() {
-        return modalDialogController.cancel(EvaluatePage.class);
+    public <T> T cancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
     }
 }

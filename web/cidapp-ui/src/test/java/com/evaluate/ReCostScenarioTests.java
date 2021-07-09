@@ -52,12 +52,12 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -83,7 +83,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -109,7 +109,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -135,7 +135,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -161,7 +161,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -187,7 +187,7 @@ public class ReCostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
