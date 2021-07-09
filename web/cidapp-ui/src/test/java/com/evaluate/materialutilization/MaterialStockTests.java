@@ -1,5 +1,6 @@
 package com.evaluate.materialutilization;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,7 +11,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
@@ -53,7 +53,7 @@ public class MaterialStockTests extends TestBase {
         materialUtilizationPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit()
@@ -137,7 +137,7 @@ public class MaterialStockTests extends TestBase {
         stockPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")

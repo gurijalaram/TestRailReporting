@@ -1,5 +1,7 @@
 package com.settings;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,7 +17,6 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DecimalPlaceEnum;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
@@ -68,7 +69,7 @@ public class DecimalPlaceTests extends TestBase {
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
@@ -151,7 +152,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(21.05727, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.selectDigitalFactory(APRIORI_UNITED_KINGDOM)
             .costScenario();
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
