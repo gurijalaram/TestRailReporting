@@ -23,7 +23,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.IgnoreTests;
-import testsuites.suiteinterface.SmokeTests;
 import utils.AssemDfmIconEnum;
 
 import java.io.File;
@@ -57,7 +56,7 @@ public class UploadAssembliesTests extends TestBase {
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
@@ -66,7 +65,7 @@ public class UploadAssembliesTests extends TestBase {
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
@@ -75,7 +74,7 @@ public class UploadAssembliesTests extends TestBase {
             .openMaterialSelectorTable()
             .search("Aluminum, Cast")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 

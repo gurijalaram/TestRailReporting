@@ -72,7 +72,7 @@ public class DecimalPlaceTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getMaterialResult("Finish Mass"), closeTo(5.309458, 1));
