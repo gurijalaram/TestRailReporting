@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.entity.request.assemblyobjects.Assembly;
 import com.apriori.entity.request.assemblyobjects.AssemblyComponent;
+import com.apriori.entity.response.GetAdminInfoResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileResponse;
@@ -103,7 +104,7 @@ public class WorkorderAPITests {
 
         getAndValidateImage(costOutputs.getScenarioIterationKey());
 
-        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs, false);
+        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
         getAndValidateImage(publishResultOutputs.getScenarioIterationKey());
     }
@@ -154,7 +155,7 @@ public class WorkorderAPITests {
     @Test
     @Issue("AP-69600")
     @Category(CidAPITest.class)
-    @TestRail(testCaseId = {"7710"})
+    //@TestRail(testCaseId = {"7710"})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -164,7 +165,6 @@ public class WorkorderAPITests {
                 ).getPath(), NewPartRequest.class
         );
 
-        // upload cad file
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
@@ -173,18 +173,21 @@ public class WorkorderAPITests {
         );
         FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, testScenarioName);
 
-        // cost cad file
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
                 fileUploadOutputs,
                 processGroup
         );
 
-        // publish cad file with comment and description fields
-        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs, true);
+        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+        GetAdminInfoResponse getAdminInfoResponse = fileUploadResources
+                .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
 
-        assertThat(publishResultOutputs.getComments(), is(notNullValue()));
-        assertThat(publishResultOutputs.getDescription(), is(notNullValue()));
+        assertThat(getAdminInfoResponse.getComments(), is(notNullValue()));
+        assertThat(getAdminInfoResponse.getDescription(), is(notNullValue()));
+
+        assertThat(getAdminInfoResponse.getComments(), is(equalTo("Comments go here...")));
+        assertThat(getAdminInfoResponse.getDescription(), is(equalTo("Description goes here...")));
     }
 
     private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {

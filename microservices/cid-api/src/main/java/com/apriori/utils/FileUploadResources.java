@@ -21,6 +21,7 @@ import com.apriori.entity.request.publish.createpublishworkorder.PublishInputs;
 import com.apriori.entity.request.publish.createpublishworkorder.PublishScenarioIterationKey;
 import com.apriori.entity.request.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.entity.response.CreateWorkorderResponse;
+import com.apriori.entity.response.GetAdminInfoResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.cost.iterations.CostIteration;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
@@ -78,6 +79,7 @@ public class FileUploadResources {
     private final String textPlain = "text/plain";
     Map<String, String> headers = new HashMap<>();
     private String baseUrl = System.getProperty("baseUrl");
+    private String sessionUrl = "apriori/cost/session/";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -111,7 +113,7 @@ public class FileUploadResources {
                         .build());
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(fileUploadWorkorderId, false),
+                checkGetWorkorderDetails(fileUploadWorkorderId),
                 FileUploadOutputs.class
         );
     }
@@ -134,7 +136,7 @@ public class FileUploadResources {
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(loadCadMetadataWorkorderId, false),
+                checkGetWorkorderDetails(loadCadMetadataWorkorderId),
                 LoadCadMetadataOutputs.class
         );
     }
@@ -158,7 +160,7 @@ public class FileUploadResources {
         submitWorkorder(generatePartImagesWorkorderId);
 
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(generatePartImagesWorkorderId, false),
+                checkGetWorkorderDetails(generatePartImagesWorkorderId),
                 GeneratePartImagesOutputs.class
         );
     }
@@ -202,7 +204,7 @@ public class FileUploadResources {
         );
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(generateAssemblyImagesWorkorderId, false),
+                checkGetWorkorderDetails(generateAssemblyImagesWorkorderId),
                 GenerateAssemblyImagesOutputs.class
         );
     }
@@ -236,7 +238,7 @@ public class FileUploadResources {
         );
         submitWorkorder(costWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(costWorkorderId, false),
+                checkGetWorkorderDetails(costWorkorderId),
                 CostOrderStatusOutputs.class
         );
     }
@@ -247,7 +249,7 @@ public class FileUploadResources {
      * @param costOutputs - outputs from cost
      * @return PublishResultOutputs - outputs from publish
      */
-    public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs, boolean publishOutputs) {
+    public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs) {
         String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
                 PublishInputs.builder()
                         .comments("Comments go here...")
@@ -259,7 +261,7 @@ public class FileUploadResources {
 
         submitWorkorder(createPublishWorkorderId);
         return objectMapper.convertValue(
-                checkGetWorkorderDetails(createPublishWorkorderId, publishOutputs),
+                checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
 
@@ -284,17 +286,43 @@ public class FileUploadResources {
      * @return FileResponse
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        String url = baseUrl.concat("apriori/cost/session/ws/files");
+        String url = baseUrl.concat(sessionUrl).concat("ws/files");
 
         headers.put(contentType, "multipart/form-data");
 
         RequestEntity requestEntity = RequestEntity.init(url, FileResponse.class)
             .setHeaders(headers)
             .setHeaders(token)
-            .setMultiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup),fileName)))
+            .setMultiPartFiles(new MultiPartFiles().use("data",
+                    FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup),fileName)))
             .setFormParams(new FormParams().use("filename", fileName));
 
         return (FileResponse) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity();
+    }
+
+    /**
+     * Gets Admin Info
+     *
+     * @param publishScenarioKey - Scenario Key from publish action
+     * @return GetAdminInfoResponse object
+     */
+    public GetAdminInfoResponse getAdminInfo(ScenarioKey publishScenarioKey) {
+        String url = baseUrl.concat(
+                sessionUrl).concat(
+                String.format("ws/workspace/%s/scenarios/%s/%s/%s/iterations/latest/admin-info",
+                publishScenarioKey.getWorkspaceId(),
+                publishScenarioKey.getTypeName(),
+                publishScenarioKey.getMasterName(),
+                publishScenarioKey.getStateName())
+        );
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity requestEntity = RequestEntity.init(url, GetAdminInfoResponse.class)
+                .setHeaders(headers)
+                .setHeaders(token);
+
+        return (GetAdminInfoResponse) GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 
     /**
@@ -329,8 +357,9 @@ public class FileUploadResources {
      */
     private Object getWorkorderDetails(String workorderId) {
         String workorderDetailsURL = baseUrl.concat(
-                String.format("apriori/cost/session/ws/workorder/orders/%s", workorderId)
-        );
+                sessionUrl.concat(
+                String.format("ws/workorder/orders/%s", workorderId)
+        ));
 
         headers.put(contentType, applicationJson);
 
@@ -442,13 +471,11 @@ public class FileUploadResources {
      * @param workorderId - String
      * @return Object
      */
-    private Object checkGetWorkorderDetails(String workorderId, boolean returnInputs) {
+    private Object checkGetWorkorderDetails(String workorderId) {
         String status = checkWorkorderStatus(workorderId);
         if (status.equals("SUCCESS")) {
             WorkorderDetailsResponse workorderDetails = (WorkorderDetailsResponse) getWorkorderDetails(workorderId);
-            Object returnObject = returnInputs ? workorderDetails.getCommand().getInputs()
-                    : workorderDetails.getCommand().getOutputs();
-            return returnObject;
+            return workorderDetails.getCommand().getOutputs();
         }
         return null;
     }
@@ -462,13 +489,14 @@ public class FileUploadResources {
      */
     private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
         String orderURL = baseUrl.concat(
-                String.format("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info",
+                sessionUrl.concat(
+                String.format("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info",
                 scenarioKey.getWorkspaceId(),
                 scenarioKey.getTypeName(),
                 UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
                 scenarioKey.getStateName(),
                 getLatestIteration(token, scenarioKey))
-        );
+        ));
 
         headers.put(contentType, applicationJson);
 
@@ -490,18 +518,20 @@ public class FileUploadResources {
      */
     private int getLatestIteration(HashMap<String, String> token, ScenarioKey scenarioKey) {
         String orderURL = baseUrl.concat(
-                String.format("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s",
+                sessionUrl.concat(
+                String.format("ws/workspace/%s/scenarios/%s/%s/%s",
                         scenarioKey.getWorkspaceId(),
                         scenarioKey.getTypeName(),
                         UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
                         scenarioKey.getStateName())
-        );
+        ));
 
         RequestEntity iterationRequestEntity = RequestEntity.init(orderURL, CostIteration.class)
             .setHeaders(headers)
             .setHeaders(token);
 
-        return Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(), "iteration"));
+        return Integer.parseInt(jsonNode(GenericRequestUtil.get(iterationRequestEntity, new RequestAreaApi()).getBody(),
+                "iteration"));
     }
 
     /**
@@ -524,13 +554,15 @@ public class FileUploadResources {
 
         do {
             String orderURL = baseUrl.concat(
-                    String.format("apriori/cost/session/ws/workorder/orderstatus/%s", workorderId));
+                    sessionUrl.concat(
+                    String.format("ws/workorder/orderstatus/%s", workorderId)));
 
             requestEntityBody = RequestEntity.init(orderURL, null)
                     .setHeaders(headers)
                     .setHeaders(token);
 
-            status = GenericRequestUtil.get(requestEntityBody, new RequestAreaApi()).getBody().replace("\"", "");
+            status = GenericRequestUtil.get(requestEntityBody, new RequestAreaApi()).getBody().replace("\"",
+                    "");
 
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -539,7 +571,8 @@ public class FileUploadResources {
                 Thread.currentThread().interrupt();
             }
 
-        } while (!status.equals(orderSuccess) && !status.equals(orderFailed) && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
+        } while (!status.equals(orderSuccess) && !status.equals(orderFailed) && ((System.currentTimeMillis() / 1000) -
+                initialTime) < WAIT_TIME);
 
         return status;
     }
@@ -550,7 +583,7 @@ public class FileUploadResources {
      * @param orderId - the order id
      */
     private void submitWorkorder(String orderId) {
-        String orderURL = baseUrl.concat("apriori/cost/session/ws/workorder/orderstatus");
+        String orderURL = baseUrl.concat(sessionUrl.concat("ws/workorder/orderstatus"));
 
         headers.put(contentType, applicationJson);
 
