@@ -5,8 +5,8 @@ import com.apriori.pageobjects.common.PrimaryInputsController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

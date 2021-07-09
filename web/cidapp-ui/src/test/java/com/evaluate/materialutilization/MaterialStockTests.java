@@ -1,7 +1,7 @@
 package com.evaluate.materialutilization;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

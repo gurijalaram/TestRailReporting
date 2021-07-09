@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
