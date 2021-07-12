@@ -18,12 +18,13 @@ import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class UserGroupAssociationsTest extends VDSTestUtil {
-    private static final List<String> userGroupAssociationsToDelete = new ArrayList<>();
+    private static final Set<String> userGroupAssociationsToDelete = new HashSet<>();
 
     @AfterClass
     public static void deleteTestingData() {
@@ -45,23 +46,16 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SPECIFIC_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
                 .inlineVariables(
                     getGroupIdentity(),
-                    this.getFirstUserGroupAssociation().getIdentity()
+                    this.postUserGroupAssociation().getIdentity()
                 );
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
-    }
-
-    private UserGroupAssociation getFirstUserGroupAssociation() {
-        List<UserGroupAssociation> userGroupAssociations = this.getUserGroupAssociationsResponse();
-        assertNotEquals("To get user group association, response should contain it.", 0, userGroupAssociations.size());
-
-        return userGroupAssociations.get(0);
     }
 
     @Test
     @TestRail(testCaseId = {"8322"})
     @Description("POST a new UserGroupAssociation.")
     public void postUserGroupAssociationTest() {
-        userGroupAssociationsToDelete.add(this.postUserGroupAssociation().getIdentity());
+        this.postUserGroupAssociation();
     }
 
 
@@ -69,7 +63,10 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     @TestRail(testCaseId = {"8324"})
     @Description("DELETE a UserGroupAssociation.")
     public void deleteSiteVariablesByIdentity() {
-        deleteUserGroupAssociationById(this.postUserGroupAssociation().getIdentity());
+        final String idToDelete = this.postUserGroupAssociation().getIdentity();
+
+        deleteUserGroupAssociationById(idToDelete);
+        userGroupAssociationsToDelete.remove(idToDelete);
     }
 
     @Test
@@ -77,20 +74,20 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     @Description("PATCH a UserGroupAssociation.")
     public void patchUserGroupAssociationByIdentity() {
         UserGroupAssociation userGroupAssociationBeforeUpdate = this.postUserGroupAssociation();
-        userGroupAssociationsToDelete.add(userGroupAssociationBeforeUpdate.getIdentity());
 
         RequestEntity requestEntity =
             VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PATCH_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity(), userGroupAssociationBeforeUpdate.getIdentity())
                 .body(UserGroupAssociationRequest.builder()
-                    .userIdentity("testingUserId")
+                    .customerIdentity(customerId)
+                    .userIdentity(userId)
+                    .updatedBy(userId)
                     .build()
                 );
 
         final ResponseWrapper<UserGroupAssociation> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, updatedSiteVariableResponse.getStatusCode());
     }
-
 
     private List<UserGroupAssociation> getUserGroupAssociationsResponse() {
         RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
@@ -107,7 +104,10 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
 
         if (!exampleOfUserGroupAssociation.isEmpty()) {
             exampleOfUserGroupAssociation.forEach(
-                ug -> deleteUserGroupAssociationById(ug.getIdentity())
+                ug -> {
+                    deleteUserGroupAssociationById(ug.getIdentity());
+                    userGroupAssociationsToDelete.remove(ug.getIdentity());
+                }
             );
         }
 
@@ -123,6 +123,10 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
 
         ResponseWrapper<UserGroupAssociation> userGroupAssociationResponse = HTTP2Request.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, userGroupAssociationResponse.getStatusCode());
+
+        UserGroupAssociation createdUserGroupAssociation = userGroupAssociationResponse.getResponseEntity();
+
+        userGroupAssociationsToDelete.add(createdUserGroupAssociation.getIdentity());
 
         this.getUserGroupAssociations();
         return userGroupAssociationResponse.getResponseEntity();
