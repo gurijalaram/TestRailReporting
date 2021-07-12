@@ -13,14 +13,17 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
+import com.apriori.vds.utils.Constants;
 
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
+    protected static final String customerId = Constants.getCustomerId();
+    protected static final String userId = Constants.getUserId();
+
     private static DigitalFactory digitalFactory;
 
     private static String groupIdentity;
