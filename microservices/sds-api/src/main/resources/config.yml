@@ -1,0 +1,21 @@
+# Define the global properties
+sds:
+
+  bla-bla1: bla-bla!
+  bla-bla2: bla-bla_
+  bla-bla3: bla-bla.
+
+#  Specific environment configurations
+  int-core:
+    applicationId: apl2
+    api_url: https://sds.core.int.apriori.net/
+    specific-bla-bla: specific-bla-bla
+
+  qa-21.1:
+    applicationId: apl3
+    api_url: https://sds.core.int.apriori.net/
+    specific-bla-bla: specific-bla-bla
+
+  dev:
+    api_url: https://sds.core.int.apriori.net/
+    specific-bla-bla: specific-bla-bla
