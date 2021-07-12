@@ -536,4 +536,16 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.waitForElementAndClick(scenario);
         return new EvaluatePage(driver);
     }
+
+
+        /**
+         * Switches tab using window handler
+         *
+         * @return new CirUserGuide page object
+         */
+        public EvaluatePage switchTab() {
+            pageUtils.windowHandler(1);
+            return this;
+        }
+
 }
