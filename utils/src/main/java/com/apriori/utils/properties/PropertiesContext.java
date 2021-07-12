@@ -43,16 +43,16 @@ public class PropertiesContext {
     }
 
     private static String getFromPropertyContext(String propertyName) {
-        String propertyPath = parsePropertyOnPresentsReferences(
+        String propertyPath = parsePropertyOnReferencesPresents(
             convertToPropertyPathTemplate(propertyName)
         );
 
-        return parsePropertyOnPresentsReferences(
+        return parsePropertyOnReferencesPresents(
             propertiesContext.at(propertyPath).asText()
         );
     }
 
-    private static String parsePropertyOnPresentsReferences(String propertyPath) {
+    private static String parsePropertyOnReferencesPresents(String propertyPath) {
         if (isPropertyContainPropertyReference(propertyPath)) {
             for (String reference : StringUtils.substringsBetween(propertyPath, variableMarker[0], variableMarker[1])) {
                 propertyPath = replacePropertyReferenceWithAppropriateValue(propertyPath, reference);
