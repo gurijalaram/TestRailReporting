@@ -43,23 +43,30 @@ public class PropertiesContext {
     }
 
     private static String getFromPropertyContext(String propertyName) {
-        String propertyPath = convertToPropertyPathTemplate(propertyName);
-        String propertyValue = propertiesContext.at(propertyPath).asText();
+        String propertyPath = parsePropertyOnPresentsReferences(
+            convertToPropertyPathTemplate(propertyName)
+        );
 
-        if (isPropertyValueContainPropertyReference(propertyValue)) {
-            for (String reference : StringUtils.substringsBetween(propertyValue, variableMarker[0], variableMarker[1])) {
-                propertyValue = replacePropertyReferenceWithAppropriateValue(propertyValue, reference);
+        return parsePropertyOnPresentsReferences(
+            propertiesContext.at(propertyPath).asText()
+        );
+    }
+
+    private static String parsePropertyOnPresentsReferences(String propertyPath) {
+        if (isPropertyContainPropertyReference(propertyPath)) {
+            for (String reference : StringUtils.substringsBetween(propertyPath, variableMarker[0], variableMarker[1])) {
+                propertyPath = replacePropertyReferenceWithAppropriateValue(propertyPath, reference);
             }
         }
 
-        return propertyValue;
+        return propertyPath;
     }
 
     private static String replacePropertyReferenceWithAppropriateValue(final String propertyValue, final String reference) {
         return propertyValue.replace(variableMarker[0] + reference + variableMarker[1], get(reference));
     }
 
-    private static boolean isPropertyValueContainPropertyReference(String propertyValue) {
+    private static boolean isPropertyContainPropertyReference(String propertyValue) {
         return propertyValue.contains(variableMarker[0]) && propertyValue.contains(variableMarker[1]);
     }
 

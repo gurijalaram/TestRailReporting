@@ -1,6 +1,7 @@
 # Define the global properties
+env: int-core
+
 global:
-  env: int-core
   url: varyBasicUrl
   endUrl: /endUrl
   startUrl: ${global.url}/startUrl
@@ -28,6 +29,7 @@ qa-21.1:
 dev:
   secret_key: 65J1ID2B6LDG
   ap_user_context: eyJpZGVudGl0eSI6IjhHRkRJRzIyOTYyOSIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMzFUMTY6MDdaIiwidXBkYXRlZEF0IjoiMjAyMS0wNi0wN1QxMTo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjhHRkRJRzIyTDMxNSIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMzFUMTY6MDdaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyMTF9LCJjdXN0b21lcklkZW50aXR5IjoiSDMzN0dLRDBMQTBNIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
-  current_env: dev
+  current_env: dev-env
+
 
 
