@@ -253,9 +253,10 @@ public class PlasticDtcComparisonReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
+        genericReportPage.waitForSvgToRender();
         String elementName = "PLASTIC MOULDED CAP THICKPART";
 
         assertThat(genericReportPage.getTableElementNameDtcComparison("1", "1"),
@@ -272,7 +273,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"1378"})
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {

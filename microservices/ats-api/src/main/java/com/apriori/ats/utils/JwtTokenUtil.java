@@ -13,8 +13,8 @@ import org.apache.http.HttpStatus;
 
 @Slf4j
 public class JwtTokenUtil {
-    private static String currentToken;
 
+    private String currentToken;
     private String username = Constants.getAtsTokenUsername();
     private String email = Constants.getAtsTokenEmail();
     private String apiUrl = Constants.getAtsServiceHost();

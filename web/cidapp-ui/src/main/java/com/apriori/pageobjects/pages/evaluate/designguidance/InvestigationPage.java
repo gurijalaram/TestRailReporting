@@ -17,6 +17,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
+    @FindBy(css = ".active [data-icon='eye']")
+    private WebElement investigationTabActive;
+
     @FindBy(xpath = "//span[.='Topics']")
     private WebElement topicsHeader;
 
@@ -45,6 +48,7 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(investigationTabActive);
         pageUtils.waitForElementAppear(topicsHeader);
     }
 

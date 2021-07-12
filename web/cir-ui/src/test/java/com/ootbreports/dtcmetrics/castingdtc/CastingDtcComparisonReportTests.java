@@ -4,9 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -16,12 +18,11 @@ import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.enums.reports.SortOrderEnum;
+import com.apriori.utils.enums.reports.SortOrderItemsEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.designguidance.DesignGuidancePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -35,7 +36,6 @@ public class CastingDtcComparisonReportTests extends TestBase {
     private CastingDtcReportPage castingDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public CastingDtcComparisonReportTests() {
         super();
@@ -152,11 +152,13 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Description("Verify export date filters correctly filters export sets - Input - Casting DTC Comparison Report")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName()
+        );
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"7619"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Comparison Report")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
@@ -167,7 +169,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
-            .clickOk(CastingDtcReportPage.class);
+            .clickOk(true, CastingDtcReportPage.class);
 
         castingDtcReportPage.clickComparison()
             .switchTab(1);
@@ -176,19 +178,19 @@ public class CastingDtcComparisonReportTests extends TestBase {
         castingDtcReportPage.setReportName(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
         String partName = castingDtcReportPage.getPartNameDtcReports();
         String holeIssueNumReports = castingDtcReportPage.getHoleIssuesFromComparisonReport();
+
         castingDtcReportPage.openNewCidTabAndFocus(2);
+        GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
+                .filter()
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Contains", partName)
+                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .submit(ExplorePage.class)
+                .openFirstScenario()
+                .openDesignGuidance();
 
-        DesignGuidancePage designGuidancePage = new ExplorePage(driver)
-            .filter()
-            .setWorkspace(Constants.PUBLIC_WORKSPACE)
-            .setScenarioType(Constants.PART_SCENARIO_TYPE)
-            .setRowOne("Part Name", "Contains", partName)
-            .setRowTwo("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
-            .apply(ExplorePage.class)
-            .openFirstScenario()
-            .openDesignGuidance();
-
-        String holeIssueCidValue = designGuidancePage.getHoleIssueValue();
+        String holeIssueCidValue = guidanceIssuesPage.getDtcIssueCount("Hole");
 
         assertThat(holeIssueNumReports, is(equalTo(holeIssueCidValue)));
     }
@@ -329,8 +331,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(),
-            "JEEP WJ FRONT BRAKE DISC 99-04 (Init…",
-            "GEAR HOUSING (Initial)"
+            SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.CYLINDER.getSortOrderItemName()
         );
     }
 
@@ -342,8 +344,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(),
-            "DTCCASTINGISSUES (sand casting)",
-            "DTCCASTINGISSUES (Initial)"
+            SortOrderItemsEnum.DTC_SAND.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -355,8 +357,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
-            "OBSTRUCTED MACHINING (Initial)",
-            "B2315 (Initial)"
+            SortOrderItemsEnum.OBSTRUCTED_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.BARCO_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -368,8 +370,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-            "DTCCASTINGISSUES (Initial)",
-            "DTCCASTINGISSUES (sand casting)"
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -381,8 +383,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
-            "DTCCASTINGISSUES (Initial)",
-            "DTCCASTINGISSUES (sand casting)"
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -394,8 +396,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(),
-            "DU600051458 (Initial)",
-            "DU200068073_B (Initial)"
+            SortOrderItemsEnum.DU_TWO_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -407,13 +409,13 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
-            "E3-241-4-N (Initial)",
-            "40137441.MLDES.0002 (Initial)"
+            SortOrderItemsEnum.E3_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"1708"})
     @Description("Verify DTC issue counts are correct - Casting DTC Comparison Report")
     public void testDtcIssueCountsAreCorrect() {

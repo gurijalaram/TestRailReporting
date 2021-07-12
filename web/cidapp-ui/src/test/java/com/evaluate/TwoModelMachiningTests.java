@@ -305,7 +305,7 @@ public class TwoModelMachiningTests extends TestBase {
         twoModelFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.TWO_MODEL_MACHINING, twoModelPartName + ".stp");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(wrongSourcePartName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .openMaterialSelectorTable()
@@ -320,7 +320,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES), is(true));
 
         /*guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()

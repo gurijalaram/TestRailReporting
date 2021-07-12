@@ -101,17 +101,18 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
-                new User().setUsername(userName)
-                    .setEmail(userName + "@" + customerName + ".com")
-                    .setCreatedBy("#SYSTEM00000")
-                    .setActive(true)
-                    .setUserType("AP_CLOUD_USER")
-                    .setUserProfile(new UserProfile().setGivenName(userName)
-                        .setFamilyName("Automater")
-                        .setJobTitle("Automation Engineer")
-                        .setDepartment("Automation")
-                        .setSupervisor("Ciene Frith")
-                        .setCreatedBy("#SYSTEM00000")));
+                User.builder().username(userName)
+                    .email(userName + "@" + customerName + ".com")
+                    .createdBy("#SYSTEM00000")
+                    .active(true)
+                    .userType("AP_CLOUD_USER")
+                    .userProfile(UserProfile.builder().givenName(userName)
+                        .familyName("Automater")
+                        .jobTitle("Automation Engineer")
+                        .department("Automation")
+                        .supervisor("Ciene Frith")
+                        .createdBy("#SYSTEM00000").build())
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -128,10 +129,11 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
-                new User()
-                    .setUserProfile(new UserProfile()
-                        .setDepartment("Design Dept")
-                        .setSupervisor("Moya Parker")));
+                User.builder()
+                    .userProfile(UserProfile.builder()
+                        .department("Design Dept")
+                        .supervisor("Moya Parker").build())
+                    .build());
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
@@ -166,19 +168,21 @@ public class CdsTestUtil extends TestUtil {
      * @param siteIdentity     - the site Identity
      * @return new object
      */
-    public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String siteIdentity) {
+    public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String deploymentName, String siteIdentity, String deploymentType) {
         url = String.format(serviceUrl, String.format("customers/%s/deployments", customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Deployment.class)
             .setBody("deployment",
-                new AddDeployment().setName("Production Deployment")
-                    .setDescription("Deployment added by API automation")
-                    .setDeploymentType("PRODUCTION")
-                    .setSiteIdentity(siteIdentity)
-                    .setActive("true")
-                    .setIsDefault("true")
-                    .setCreatedBy("#SYSTEM00000")
-                    .setApVersion("2020 R1"));
+                AddDeployment.builder()
+                    .name(deploymentName)
+                    .description("Deployment added by API automation")
+                    .deploymentType(deploymentType)
+                    .siteIdentity(siteIdentity)
+                    .active("true")
+                    .isDefault("true")
+                    .createdBy("#SYSTEM00000")
+                    .apVersion("2020 R1")
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -190,14 +194,16 @@ public class CdsTestUtil extends TestUtil {
      * @param siteIdentity     - the site id
      * @return new object
      */
-    public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity) {
+    public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity, String appIdentity) {
         url = String.format(serviceUrl, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, LicensedApplication.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("licensedApplication",
-                new LicensedApplication().setApplicationIdentity(Constants.getApProApplicationIdentity())
-                    .setCreatedBy("#SYSTEM00000"));
+                LicensedApplication.builder()
+                    .applicationIdentity(appIdentity)
+                    .createdBy("#SYSTEM00000")
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -217,22 +223,24 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
             .setBody("installation",
-                new InstallationItems().setName("Automation Installation")
-                    .setDescription("Installation added by API automation")
-                    .setActive(true)
-                    .setRegion("na-1")
-                    .setRealm(realmKey)
-                    .setUrl("https://na-1.qa.apriori.net")
-                    .setS3Bucket("apriori-qa-blue-fms")
-                    .setTenant("default")
-                    .setTenantGroup("default")
-                    .setClientId("apriori-web-cost")
-                    .setClientSecret("donotusethiskey")
-                    .setCreatedBy("#SYSTEM00000")
-                    .setCidGlobalKey("donotusethiskey")
-                    .setSiteIdentity(siteIdentity)
-                    .setApplications(Arrays.asList(Constants.getApProApplicationIdentity()))
-                    .setCloudReference(cloudReference));
+                InstallationItems.builder()
+                    .name("Automation Installation")
+                    .description("Installation added by API automation")
+                    .active(true)
+                    .region("na-1")
+                    .realm(realmKey)
+                    .url("https://na-1.qa.apriori.net")
+                    .s3Bucket("apriori-qa-blue-fms")
+                    .tenant("default")
+                    .tenantGroup("default")
+                    .clientId("apriori-web-cost")
+                    .clientSecret("donotusethiskey")
+                    .createdBy("#SYSTEM00000")
+                    .cidGlobalKey("donotusethiskey")
+                    .siteIdentity(siteIdentity)
+                    .applications(Arrays.asList(Constants.getApProApplicationIdentity()))
+                    .cloudReference(cloudReference)
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -250,7 +258,9 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
             .setBody("installation",
-                new InstallationItems().setCloudReference("eu-1"));
+                InstallationItems.builder()
+                    .cloudReference("eu-1")
+                    .build());
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
@@ -269,8 +279,10 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, AssociationUserItems.class)
             .setBody("userAssociation",
-                new AssociationUserItems().setUserIdentity(userIdentity)
-                    .setCreatedBy("#SYSTEM00000"));
+                AssociationUserItems.builder()
+                    .userIdentity(userIdentity)
+                    .createdBy("#SYSTEM00000")
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -290,8 +302,10 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, SubLicenseAssociationUser.class)
             .setBody("userAssociation",
-                new AssociationUserItems().setUserIdentity(userIdentity)
-                    .setCreatedBy("#SYSTEM00000"));
+                AssociationUserItems.builder()
+                    .userIdentity(userIdentity)
+                    .createdBy("#SYSTEM00000")
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -309,26 +323,28 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
             .setBody("identityProvider",
-                new IdentityProviderRequest().setContact(userIdentity)
-                    .setName(customerName + "-idp")
-                    .setDisplayName(customerName + "SAML")
-                    .setIdpDomains(Arrays.asList(customerName + ".com"))
-                    .setIdentityProviderPlatform("Azure AD")
-                    .setDescription("Create IDP using CDS automation")
-                    .setActive(true)
-                    .setCreatedBy("#SYSTEM00000")
-                    .setSignInUrl(Constants.getSignInUrl())
-                    .setSigningCertificate(Constants.getSignInCert())
-                    .setSigningCertificateExpiresAt("2030-07-22T22:45Z")
-                    .setSignRequest(true)
-                    .setSignRequestAlgorithm("RSA_SHA256")
-                    .setSignRequestAlgorithmDigest("SHA256")
-                    .setProtocolBinding("HTTP_POST")
-                    .setAttributeMappings(new AttributeMappings().setUserId(Constants.getSamlNameIdentifier())
-                        .setEmail(Constants.getSamlAttributeEmail())
-                        .setName(Constants.getSamlAttributeName())
-                        .setGivenName(Constants.getSamlAttributeGivenName())
-                        .setFamilyName(Constants.getSamlAttributeFamilyName())));
+                IdentityProviderRequest.builder().contact(userIdentity)
+                    .name(customerName + "-idp")
+                    .displayName(customerName + "SAML")
+                    .idpDomains(Arrays.asList(customerName + ".com"))
+                    .identityProviderPlatform("Azure AD")
+                    .description("Create IDP using CDS automation")
+                    .active(true)
+                    .createdBy("#SYSTEM00000")
+                    .signInUrl(Constants.getSignInUrl())
+                    .signingCertificate(Constants.getSignInCert())
+                    .signingCertificateExpiresAt("2030-07-22T22:45Z")
+                    .signRequest(true)
+                    .signRequestAlgorithm("RSA_SHA256")
+                    .signRequestAlgorithmDigest("SHA256")
+                    .protocolBinding("HTTP_POST")
+                    .attributeMappings(AttributeMappings.builder()
+                        .userId(Constants.getSamlNameIdentifier())
+                        .email(Constants.getSamlAttributeEmail())
+                        .name(Constants.getSamlAttributeName())
+                        .givenName(Constants.getSamlAttributeGivenName())
+                        .familyName(Constants.getSamlAttributeFamilyName()).build())
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -347,8 +363,10 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
             .setHeaders("Content-Type", "application/json")
             .setBody("identityProvider",
-                new IdentityProviderRequest().setDescription("patch IDP using Automation")
-                    .setContact(userIdentity));
+                IdentityProviderRequest.builder()
+                    .description("patch IDP using Automation")
+                    .contact(userIdentity)
+                    .build());
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
 
@@ -367,13 +385,17 @@ public class CdsTestUtil extends TestUtil {
         url = String.format(serviceUrl, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, LicenseResponse.class)
-            .setBody(new LicenseRequest().setLicense(
-                new License().setDescription("Test License")
-                    .setApVersion("2020 R1")
-                    .setCreatedBy("#SYSTEM00000")
-                    .setActive("true")
-                    .setLicense(String.format(Constants.getLicense(), customerName, siteId, licenseId, subLicenseId))
-                    .setLicenseTemplate(String.format(Constants.getLicenseTemplate(), customerName))));
+            .setBody(LicenseRequest.builder()
+                .license(
+                    License.builder()
+                        .description("Test License")
+                        .apVersion("2020 R1")
+                        .createdBy("#SYSTEM00000")
+                        .active("true")
+                        .license(String.format(Constants.getLicense(), customerName, siteId, licenseId, subLicenseId))
+                        .licenseTemplate(String.format(Constants.getLicenseTemplate(), customerName))
+                        .build())
+                .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -388,13 +410,15 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntity.init(url, AccessControlResponse.class)
             .setBody("accessControl",
-                new AccessControlRequest().setCustomerIdentity(Constants.getAPrioriInternalCustomerIdentity())
-                    .setDeploymentIdentity(Constants.getApProductionDeploymentIdentity())
-                    .setInstallationIdentity(Constants.getApCoreInstallationIdentity())
-                    .setApplicationIdentity(Constants.getApCloudHomeApplicationIdentity())
-                    .setCreatedBy("#SYSTEM00000")
-                    .setRoleName("USER")
-                    .setRoleIdentity(Constants.getCdsIdentityRole()));
+                AccessControlRequest.builder()
+                    .customerIdentity(Constants.getAPrioriInternalCustomerIdentity())
+                    .deploymentIdentity(Constants.getApProductionDeploymentIdentity())
+                    .installationIdentity(Constants.getApCoreInstallationIdentity())
+                    .applicationIdentity(Constants.getApCloudHomeApplicationIdentity())
+                    .createdBy("#SYSTEM00000")
+                    .roleName("USER")
+                    .roleIdentity(Constants.getCdsIdentityRole())
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }

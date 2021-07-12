@@ -9,6 +9,7 @@ import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.By;
@@ -81,6 +82,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-digital-factory-select-field'] input")
     private WebElement digitalFactoryInput;
 
+    @FindBy(xpath = "//div[@id='qa-digital-factory-select-field']//div[@class='text-overflow']")
+    private WebElement selectedVPE;
+
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
 
@@ -95,6 +99,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = ".material-summary-card.card input")
     private WebElement materialName;
+
+    @FindBy(xpath = "//span[contains(text(), 'Finish Mass')]/following-sibling::span")
+    private WebElement finishMass;
 
     @FindBy(css = ".design-guidance-summary-card button")
     private WebElement designGuidanceDetailsButton;
@@ -126,6 +133,12 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(id = "qa-scenario-select-field")
     @CacheLookup
     private WebElement scenarioName;
+
+    @FindBy(xpath = "(//div[@class='card-header'])[1]/div[@class='left']/div")
+    private WebElement partName;
+
+    @FindBy(xpath = "//div[@id='qa-process-group-select-field']//div[@class='text-overflow']")
+    private WebElement currentProcessGroup;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -179,7 +192,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @param digitalFactory - the vpe
      * @return current page object
      */
-    public EvaluatePage selectDigitalFactory(String digitalFactory) {
+    public EvaluatePage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
         primaryInputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
         return this;
     }
@@ -472,6 +485,56 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets the part name
+     *
+     * @return part name as String
+     */
+    public String getPartName() {
+        pageUtils.waitForElementToAppear(partName);
+        return partName.getText();
+    }
+
+    /**
+     * Gets the finish mass
+     *
+     * @return finish mass as String
+     */
+    public String getFinishMass() {
+        pageUtils.waitForElementToAppear(finishMass);
+        return finishMass.getText();
+    }
+
+    /**
+     * Gets the selected process group
+     *
+     * @return process group as String
+     */
+    public String getSelectedProcessGroup() {
+        pageUtils.waitForElementToAppear(currentProcessGroup);
+        return currentProcessGroup.getText();
+    }
+
+    /**
+     * Gets the Annual Volume
+     *
+     * @return annual volume as string
+     */
+    public String getAnnualVolume() {
+        pageUtils.waitForElementToAppear(annualVolumeInput);
+        return annualVolumeInput.getAttribute("value");
+    }
+
+    /**
+     * Gets the selected VPE
+     *
+     * @return vpe as String
+     */
+    public String getSelectedVPE() {
+        pageUtils.waitForElementToAppear(selectedVPE);
+        return selectedVPE.getText();
+    }
+
+    /**
      * Gets component result - result is returned as a double with strings and special characters parsed
      *
      * @param label - the label
@@ -534,6 +597,8 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage openSourceScenario(String componentName, String scenarioName) {
         By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementAndClick(scenario);
+        pageUtils.waitForElementAndClick(scenario);
+        pageUtils.windowHandler(1);
         return new EvaluatePage(driver);
     }
 }

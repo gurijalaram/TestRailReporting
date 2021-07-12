@@ -4,9 +4,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CostOutlierIdentificationReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -14,11 +17,10 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.explore.ExplorePage;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.By;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -93,7 +95,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"6823"})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Details Report")
     public void testDataIntegrityAgainstCID() {
@@ -106,7 +108,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .selectExportSet(
                         ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                         CostOutlierIdentificationReportPage.class)
-                .clickOk(CostOutlierIdentificationReportPage.class);
+                .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         String partName = costOutlierIdentificationReportPage.getPartNameCastingSheetMetalDtcDetails(
                 true);
@@ -115,13 +117,13 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         costOutlierIdentificationReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
-                .setScenarioType(Constants.PART_SCENARIO_TYPE)
-                .setWorkspace(Constants.PUBLIC_WORKSPACE)
-                .setRowOne("Part Name", "Contains", partName)
-                .apply(ExplorePage.class)
+                .saveAs()
+                .inputName(new GenerateStringUtil().generateFilterName())
+                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .submit(ExplorePage.class)
                 .openFirstScenario();
 
-        BigDecimal cidFbc = evaluatePage.getBurdenedCostValue();
+        BigDecimal cidFbc = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost")));
 
         assertThat(reportsFbc.compareTo(cidFbc), is(equalTo(0)));
     }
@@ -136,11 +138,18 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                        CostOutlierIdentificationReportPage.class)
-                .clickOk(CostOutlierIdentificationReportPage.class);
+                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), CostOutlierIdentificationReportPage.class)
+                .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
+        if (driver.findElement(By.xpath("//span[contains(text(), 'Rollup')]/../following-sibling::td[2]/span"))
+                .getText().contains("SHEET METAL DTC")) {
+            costOutlierIdentificationReportPage.clickInputControlsButton()
+                    .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
+                    .clickOk(true, GenericReportPage.class)
+                    .waitForReportToLoad();
+            costOutlierIdentificationReportPage.waitForSvgToRender();
+        }
 
         assertThat(costOutlierIdentificationReportPage.isCostOutlierSvgDisplayedAndEnabled("1"),
                 is(equalTo(true))
@@ -226,7 +235,6 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
         );
     }
 
-
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6990"})
@@ -241,7 +249,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(),
                         CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.ANNUALISED_VALUE, "10000")
-                .clickOk(CostOutlierIdentificationReportPage.class);
+                .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
 
@@ -288,7 +296,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                         CostOutlierIdentificationReportPage.class)
                 .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.PERCENT_VALUE, "100")
-                .clickOk(CostOutlierIdentificationReportPage.class);
+                .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
 
