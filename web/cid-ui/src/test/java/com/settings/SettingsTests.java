@@ -73,8 +73,8 @@ public class SettingsTests extends TestBase {
             .openProdDefaultTab()
             .enterScenarioName("MP Auto Test")
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory())
             .selectMaterial("ABS, Plating")
             .enterAnnualVolume("3000")
             .enterProductionLife("7")
@@ -88,8 +88,8 @@ public class SettingsTests extends TestBase {
 
         assertThat(productionDefaultPage.getScenarioName(), is("MP Auto Test"));
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()), is(true));
-        assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe()), is(true));
-        assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getVpe()), is(true));
+        assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory()), is(true));
+        assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("ABS, Plating"), is(true));
     }
 
@@ -137,7 +137,7 @@ public class SettingsTests extends TestBase {
         loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
-            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getVpe());
+            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory());
 
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)
@@ -145,7 +145,7 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario();
 
-        assertThat(evaluatePage.getSelectedVPE(DigitalFactoryEnum.APRIORI_MEXICO.getVpe()), is(true));
+        assertThat(evaluatePage.getSelectedVPE(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()), is(true));
     }
 
     @Test
@@ -218,15 +218,15 @@ public class SettingsTests extends TestBase {
         loginPage.login(currentUser)
             .openSettings()
             .openProdDefaultTab()
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_GERMANY.getVpe());
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
         settingsPage = new SettingsPage(driver);
         productionDefaultPage = settingsPage.save(ExplorePage.class)
             .openSettings()
             .openProdDefaultTab();
 
-        assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_USA.getVpe()), is(true));
-        assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_GERMANY.getVpe()), is(true));
+        assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory()), is(true));
+        assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory()), is(true));
     }
 
     @Category({CustomerSmokeTests.class})
@@ -262,8 +262,8 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_INDIA.getVpe())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory())
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
             .selectMaterial("HIPS Extrusion");
 
         settingsPage = new SettingsPage(driver);
@@ -272,8 +272,8 @@ public class SettingsTests extends TestBase {
             .openProdDefaultTab();
 
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()), is(true));
-        assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_INDIA.getVpe()), is(true));
-        assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
+        assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory()), is(true));
+        assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("HIPS Extrusion"), is(true));
     }
 
@@ -289,8 +289,8 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_INDIA.getVpe())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory())
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory())
             .selectMaterial("F-0005 Sponge");
         new SettingsPage(driver).save(ExplorePage.class);
 
@@ -304,8 +304,8 @@ public class SettingsTests extends TestBase {
             .openProdDefaultTab();
 
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup()), is(true));
-        assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_INDIA.getVpe()), is(true));
-        assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_MEXICO.getVpe()), is(true));
+        assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory()), is(true));
+        assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()), is(true));
         assertThat(productionDefaultPage.getSelectedMaterial("F-0005 Sponge"), is(true));
     }
 
@@ -410,7 +410,7 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA.getVpe());
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
 
         assertThat(productionDefaultPage.getListOfMaterials(), containsInAnyOrder("<No default specified>", "F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
     }

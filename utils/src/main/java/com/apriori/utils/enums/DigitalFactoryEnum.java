@@ -14,17 +14,17 @@ public enum DigitalFactoryEnum {
     APRIORI_USA("aPriori USA"),
     APRIORI_WESTERN_EUROPE("aPriori Western Europe");
 
-    private final String vpe;
+    private final String digitalFactory;
 
-    DigitalFactoryEnum(String vpe) {
-        this.vpe = vpe;
+    DigitalFactoryEnum(String digitalFactory) {
+        this.digitalFactory = digitalFactory;
     }
 
-    public String getVpe() {
-        return this.vpe;
+    public String getDigitalFactory() {
+        return this.digitalFactory;
     }
 
     public static String[] getNames() {
-        return Stream.of(DigitalFactoryEnum.values()).map(DigitalFactoryEnum::getVpe).toArray(String[]::new);
+        return Stream.of(DigitalFactoryEnum.values()).map(DigitalFactoryEnum::getDigitalFactory).toArray(String[]::new);
     }
 }
