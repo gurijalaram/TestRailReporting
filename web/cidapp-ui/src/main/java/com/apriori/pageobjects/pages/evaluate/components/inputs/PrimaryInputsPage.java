@@ -5,6 +5,7 @@ import com.apriori.pageobjects.common.PrimaryInputsController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -118,7 +119,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @param digitalFactory - the vpe
      * @return current page object
      */
-    public PrimaryInputsPage selectDigitalFactory(String digitalFactory) {
+    public PrimaryInputsPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
         primaryInputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
         return this;
     }
