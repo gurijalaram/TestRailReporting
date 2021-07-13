@@ -20,6 +20,9 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
 
+    @FindBy(xpath = "//button[.='Production Defaults']")
+    private WebElement productionsTab;
+
     @FindBy(xpath = "//button[.='Tolerance Defaults']")
     private WebElement tolerancesTab;
 
@@ -52,6 +55,16 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     public ToleranceDefaultsPage goToToleranceTab() {
         pageUtils.waitForElementAndClick(tolerancesTab);
         return new ToleranceDefaultsPage(driver);
+    }
+
+    /**
+     * Go to production default tab
+     *
+     * @return new page object
+     */
+    public ProductionDefaultsPage goToProductionTab() {
+        pageUtils.waitForElementAndClick(productionsTab);
+        return new ProductionDefaultsPage(driver);
     }
 
     /**

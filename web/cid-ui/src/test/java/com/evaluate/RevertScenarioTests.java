@@ -43,7 +43,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario(3)
             .selectProcessGroup(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
@@ -70,7 +70,7 @@ public class RevertScenarioTests extends TestBase {
         loginPage = new CidLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario(3)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
