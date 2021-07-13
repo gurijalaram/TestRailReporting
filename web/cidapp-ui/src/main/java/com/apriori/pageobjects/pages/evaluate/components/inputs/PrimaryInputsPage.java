@@ -6,6 +6,7 @@ import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -108,7 +109,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @param processGroup - the process group
      * @return current page object
      */
-    public PrimaryInputsPage selectProcessGroup(String processGroup) {
+    public PrimaryInputsPage selectProcessGroup(ProcessGroupEnum processGroup) {
         primaryInputsController.selectProcessGroup(processGroupDropdown, processGroup);
         return this;
     }

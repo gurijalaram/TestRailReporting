@@ -1,5 +1,6 @@
 package com.explore;
 
+import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
@@ -47,7 +48,7 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
@@ -76,7 +77,7 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
