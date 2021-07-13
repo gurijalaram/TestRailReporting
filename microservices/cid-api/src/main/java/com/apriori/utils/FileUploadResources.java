@@ -22,6 +22,7 @@ import com.apriori.entity.request.publish.createpublishworkorder.PublishScenario
 import com.apriori.entity.request.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.entity.response.CreateWorkorderResponse;
 import com.apriori.entity.response.GetAdminInfoResponse;
+import com.apriori.entity.response.GetCadMetadataResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.cost.iterations.CostIteration;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
@@ -132,6 +133,7 @@ public class FileUploadResources {
                         .freeBodiesIgnoreMissingComponents(true)
                         .fileMetadataIdentity(fileResponse.getIdentity())
                         .requestedBy(fileResponse.getUserIdentity())
+                        .fileName(fileResponse.getFilename())
                         .build()
         );
         submitWorkorder(loadCadMetadataWorkorderId);
@@ -294,7 +296,7 @@ public class FileUploadResources {
             .setHeaders(headers)
             .setHeaders(token)
             .setMultiPartFiles(new MultiPartFiles().use("data",
-                    FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup),fileName)))
+                    FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
             .setFormParams(new FormParams().use("filename", fileName));
 
         return (FileResponse) GenericRequestUtil.post(requestEntity, new RequestAreaApi()).getResponseEntity();
@@ -323,6 +325,25 @@ public class FileUploadResources {
                 .setHeaders(token);
 
         return (GetAdminInfoResponse) GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getResponseEntity();
+    }
+
+    /**
+     * Get CAD Metadata
+     *
+     * @param fileMetadataIdentity - String of file metadata identity
+     * @return GetCadMetadataResponse
+     */
+    public GetCadMetadataResponse getCadMetadata(String fileMetadataIdentity) {
+        String url = baseUrl.concat(sessionUrl).concat(
+                String.format("ws/workspace/cad-metadata/%s", fileMetadataIdentity));
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity requestEntity = RequestEntity.init(url, null)
+                .setHeaders(headers)
+                .setHeaders(token);
+
+        return (GetCadMetadataResponse) GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 
     /**

@@ -9,6 +9,7 @@ import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.entity.request.assemblyobjects.Assembly;
 import com.apriori.entity.request.assemblyobjects.AssemblyComponent;
 import com.apriori.entity.response.GetAdminInfoResponse;
+import com.apriori.entity.response.GetCadMetadataResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileResponse;
@@ -155,7 +156,7 @@ public class WorkorderAPITests {
     @Test
     @Issue("AP-69600")
     @Category(CidAPITest.class)
-    //@TestRail(testCaseId = {"7710"})
+    @TestRail(testCaseId = {"8681"})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -188,6 +189,34 @@ public class WorkorderAPITests {
 
         assertThat(getAdminInfoResponse.getComments(), is(equalTo("Comments go here...")));
         assertThat(getAdminInfoResponse.getDescription(), is(equalTo("Description goes here...")));
+    }
+
+    @Test
+    @Issue("AP-69600")
+    @Category(CidAPITest.class)
+    @TestRail(testCaseId = {"8682"})
+    @Description("Upload a part, load cad metadata with part name and extension and get cad metadata to verify")
+    public void testFileNameAndExtensionInputAndOutput() {
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                        "CreatePartData.json"
+                ).getPath(), NewPartRequest.class
+        );
+
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+                "bracket_basic.prt",
+                processGroup
+        );
+
+        LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
+
+        GetCadMetadataResponse getCadMetadataResponse = fileUploadResources
+                .getCadMetadata(loadCadMetadataOutputs.getCadMetadataIdentity());
+
+        assertThat(getCadMetadataResponse.getFileMetadataIdentity(), is(equalTo(fileResponse.getIdentity())));
     }
 
     private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {

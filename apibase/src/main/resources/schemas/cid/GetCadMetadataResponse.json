@@ -1,0 +1,106 @@
+{
+  "type": "object",
+  "properties": {
+    "fileMetadataIdentity": {
+      "type": "string"
+    },
+    "cadType": {
+      "type": "string"
+    },
+    "keepFreeBodies": {
+      "type": "boolean"
+    },
+    "freeBodiesPreserveCad": {
+      "type": "boolean"
+    },
+    "freeBodiesIgnoreMissingComponents": {
+      "type": "boolean"
+    },
+    "lengthUnit": {
+      "type": "string"
+    },
+    "vendor": {
+      "type": "string"
+    },
+    "pmi": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "value",
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "value",
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "value",
+            "type"
+          ]
+        }
+      ]
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "fileMetadataIdentity",
+    "cadType",
+    "keepFreeBodies",
+    "freeBodiesPreserveCad",
+    "freeBodiesIgnoreMissingComponents",
+    "lengthUnit",
+    "vendor",
+    "pmi",
+    "createdAt",
+    "createdBy"
+  ]
+}
