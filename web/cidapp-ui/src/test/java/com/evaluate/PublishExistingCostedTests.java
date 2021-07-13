@@ -1,5 +1,7 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_CHINA;
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,7 +14,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
@@ -74,7 +75,7 @@ public class PublishExistingCostedTests extends TestBase {
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName)
             .editScenario()
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+            .selectDigitalFactory(APRIORI_CHINA)
             .costScenario()
             .publishScenario()
             .override()
@@ -116,7 +117,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publish(EvaluatePage.class)
             .editScenario()
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectDigitalFactory(APRIORI_USA)
             .publishScenario()
             .override()
             .continues(PublishPage.class)

@@ -24,6 +24,7 @@ public class BatchResourcesTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
+
         batch = BatchResources.createNewBatch();
     }
 

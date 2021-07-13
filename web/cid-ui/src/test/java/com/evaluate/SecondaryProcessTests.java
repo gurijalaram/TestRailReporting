@@ -74,7 +74,7 @@ public class SecondaryProcessTests extends TestBase {
         processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .openSecondaryProcess()
             .selectHighlightSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
             .selectOverrideButton()
@@ -199,7 +199,7 @@ public class SecondaryProcessTests extends TestBase {
 
         processSetupOptionsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 7075")

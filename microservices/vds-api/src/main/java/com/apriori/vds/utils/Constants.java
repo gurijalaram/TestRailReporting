@@ -25,6 +25,8 @@ public class Constants {
     private static String atsServiceHost;
     private static String apiUrl;
     private static String apUserContext;
+    private static String customerId;
+    private static String userId;
 
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
@@ -78,5 +80,23 @@ public class Constants {
      */
     public static String getApUserContext() {
         return apUserContext = System.getProperty("apUserContext") == null ? PROPERTIES.getProperty("vds.ap.user.context") : System.getProperty("apUserContext");
+    }
+
+    /**
+     * Get customerId
+     *
+     * @return string
+     */
+    public static String getCustomerId() {
+        return customerId = System.getProperty("customerId") == null ? PROPERTIES.getProperty("vds.identity.customer") : System.getProperty("customerId");
+    }
+
+    /**
+     * Get userId
+     *
+     * @return string
+     */
+    public static String getUserId() {
+        return userId = System.getProperty("userId") == null ? PROPERTIES.getProperty("vds.identity.user") : System.getProperty("userId");
     }
 }

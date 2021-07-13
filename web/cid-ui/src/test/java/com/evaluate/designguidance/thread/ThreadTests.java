@@ -174,7 +174,7 @@ public class ThreadTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario(3);
 
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
@@ -375,7 +375,7 @@ public class ThreadTests extends TestBase {
         designGuidancePage = new DesignGuidancePage(driver);
         threadingPage = designGuidancePage.closePanel()
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory())
             .openMaterialCompositionTable()
             .selectMaterialComposition("Aluminum, Cast, ANSI 2007")
             .apply()

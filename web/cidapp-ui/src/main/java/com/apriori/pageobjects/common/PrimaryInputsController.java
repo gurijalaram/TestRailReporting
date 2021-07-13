@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -66,8 +67,8 @@ public class PrimaryInputsController {
      * @param digitalFactory         - the vpe
      * @return current page object
      */
-    public PrimaryInputsController selectDigitalFactory(WebElement digitalFactoryDropdown, String digitalFactory) {
-        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory);
+    public PrimaryInputsController selectDigitalFactory(WebElement digitalFactoryDropdown, DigitalFactoryEnum digitalFactory) {
+        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory.getDigitalFactory());
         return this;
     }
 
