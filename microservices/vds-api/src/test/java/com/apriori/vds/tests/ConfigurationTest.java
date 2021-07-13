@@ -16,7 +16,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 public class ConfigurationTest extends VDSTestUtil {
