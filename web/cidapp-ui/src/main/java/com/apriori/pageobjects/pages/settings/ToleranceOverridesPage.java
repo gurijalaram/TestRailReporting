@@ -1,0 +1,77 @@
+package com.apriori.pageobjects.pages.settings;
+
+import static org.junit.Assert.assertTrue;
+
+import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.utils.PageUtils;
+
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
+
+@Slf4j
+public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverridesPage> {
+
+    @FindBy(css = ".tolerance-overrides-form .section-header .left")
+    private WebElement sectionHeader;
+
+    private WebDriver driver;
+    private PageUtils pageUtils;
+    private ModalDialogController modalDialogController;
+
+    public ToleranceOverridesPage(WebDriver driver) {
+        this.driver = driver;
+        this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        PageFactory.initElements(driver, this);
+        this.get();
+    }
+
+    @Override
+    protected void load() {
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        assertTrue("Geometric Tolerance header is not displayed", sectionHeader.getAttribute("textContent").contains("Geometric Tolerance"));
+    }
+
+    /**
+     * Input override value
+     *
+     * @param label - the label
+     * @param value - the value
+     * @return current page object
+     */
+    public ToleranceOverridesPage inputOverride(OverridesEnum label, String value) {
+        WebElement byOverride = driver.findElement(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
+        pageUtils.waitForElementToAppear(byOverride);
+        pageUtils.clearInput(byOverride);
+        byOverride.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Selects the submit button
+     *
+     * @return generic page object
+     */
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public EvaluatePage cancel() {
+        return modalDialogController.cancel(EvaluatePage.class);
+    }
+}
