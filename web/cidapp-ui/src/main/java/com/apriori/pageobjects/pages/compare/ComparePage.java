@@ -278,8 +278,7 @@ public class ComparePage extends CompareToolbar {
         By byComparison = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']/ancestor::div[@class='apriori-card dark medium-card card']", componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(byComparison);
         By byComparisonLink = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']/ancestor::div[@class='apriori-card dark medium-card card']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
-        pageUtils.mouseMove(driver.findElement(byComparisonLink));
-        driver.findElement(byComparisonLink).click();
+        pageUtils.javaScriptClick(driver.findElement(byComparisonLink));
         return new EvaluatePage(driver);
     }
 }
