@@ -339,7 +339,7 @@ public class FileUploadResources {
 
         headers.put(contentType, applicationJson);
 
-        RequestEntity requestEntity = RequestEntity.init(url, null)
+        RequestEntity requestEntity = RequestEntity.init(url, GetCadMetadataResponse.class)
                 .setHeaders(headers)
                 .setHeaders(token);
 
