@@ -68,7 +68,7 @@ public class PrimaryInputsController {
      * @return current page object
      */
     public PrimaryInputsController selectDigitalFactory(WebElement digitalFactoryDropdown, DigitalFactoryEnum digitalFactory) {
-        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory.getVpe());
+        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory.getDigitalFactory());
         return this;
     }
 
