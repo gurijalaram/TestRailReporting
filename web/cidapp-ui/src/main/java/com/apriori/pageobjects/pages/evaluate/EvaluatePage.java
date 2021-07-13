@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.By;
@@ -181,7 +182,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @param processGroup - the process group
      * @return current page object
      */
-    public EvaluatePage selectProcessGroup(String processGroup) {
+    public EvaluatePage selectProcessGroup(ProcessGroupEnum processGroup) {
         primaryInputsController.selectProcessGroup(processGroupDropdown, processGroup);
         return this;
     }
