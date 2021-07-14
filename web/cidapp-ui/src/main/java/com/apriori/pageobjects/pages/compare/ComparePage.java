@@ -275,7 +275,7 @@ public class ComparePage extends CompareToolbar {
      * @param scenarioName  - the scenario name
      * @return new page object
      */
-    public EvaluatePage openComparison(String componentName, String scenarioName) {
+    public EvaluatePage openScenario(String componentName, String scenarioName) {
         By byComparison = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//div[@class='scenario-thumbnail medium']",
             componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(byComparison);
