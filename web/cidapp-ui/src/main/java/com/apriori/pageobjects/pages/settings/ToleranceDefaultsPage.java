@@ -127,6 +127,15 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
     }
 
     /**
+     * Get cad value
+     *
+     * @return double
+     */
+    public double getCadValue() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(minCadInput).getAttribute("value"));
+    }
+
+    /**
      * Input cad tolerance
      *
      * @param toleranceValue - the cad tolerance
@@ -136,6 +145,15 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
         pageUtils.clearInput(cadToleranceInput);
         cadToleranceInput.sendKeys(toleranceValue);
         return this;
+    }
+
+    /**
+     * Get cad tolerance
+     *
+     * @return double
+     */
+    public double getCadTolerance() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(cadToleranceInput).getAttribute("value"));
     }
 
     /**

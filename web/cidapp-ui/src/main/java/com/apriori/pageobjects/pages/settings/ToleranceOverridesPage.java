@@ -51,11 +51,21 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return current page object
      */
     public ToleranceOverridesPage inputOverride(OverridesEnum label, String value) {
-        WebElement byOverride = driver.findElement(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
-        pageUtils.waitForElementToAppear(byOverride);
-        pageUtils.clearInput(byOverride);
-        byOverride.sendKeys(value);
+        WebElement override = driver.findElement(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
+        pageUtils.waitForElementToAppear(override);
+        pageUtils.clearInput(override);
+        override.sendKeys(value);
         return this;
+    }
+
+    /**
+     * Gets tolerance override value
+     * @param label - the label
+     * @return double
+     */
+    public double getToleranceOverride(OverridesEnum label) {
+        By byOverride = By.cssSelector(String.format("[name='%s']", label.getOverrides()));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(byOverride).getAttribute("value"));
     }
 
     /**
