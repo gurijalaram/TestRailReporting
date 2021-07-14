@@ -235,7 +235,7 @@ public class ToleranceTests extends TestBase {
         assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
 
         toleranceEditPage = new ExplorePage(driver).uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
@@ -323,7 +323,7 @@ public class ToleranceTests extends TestBase {
         explorePage = new ExplorePage(driver);
         toleranceEditPage = explorePage.uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
@@ -334,7 +334,7 @@ public class ToleranceTests extends TestBase {
             .apply(TolerancePage.class)
             .closePanel()
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
@@ -366,7 +366,7 @@ public class ToleranceTests extends TestBase {
         explorePage = new ExplorePage(driver);
         toleranceEditPage = explorePage.uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
@@ -425,7 +425,7 @@ public class ToleranceTests extends TestBase {
         toleranceEditPage = settingsPage.save(ExplorePage.class)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
@@ -481,7 +481,7 @@ public class ToleranceTests extends TestBase {
         evaluatePage = settingsPage.save(ExplorePage.class)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.getGcdTolerancesCount(), is("0"));
@@ -524,7 +524,7 @@ public class ToleranceTests extends TestBase {
         tolerancePage = settingsPage.save(ExplorePage.class)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
@@ -587,7 +587,7 @@ public class ToleranceTests extends TestBase {
         tolerancePage = settingsPage.save(ExplorePage.class)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()

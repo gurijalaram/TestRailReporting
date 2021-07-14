@@ -889,7 +889,7 @@ public class InputControlsTests extends TestBase {
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
                 .addCriteriaWithOption("Component Name", "Equals", partName)
-                .addCriteriaWithOption("VPE", "In", DigitalFactoryEnum.APRIORI_USA.getVpe())
+                .addCriteriaWithOption("VPE", "In", DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 

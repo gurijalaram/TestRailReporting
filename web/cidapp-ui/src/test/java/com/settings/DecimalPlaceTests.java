@@ -68,7 +68,7 @@ public class DecimalPlaceTests extends TestBase {
             .selectInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1020")

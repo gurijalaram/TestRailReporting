@@ -1,5 +1,6 @@
 package com.help;
 
+import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -57,7 +58,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openInputDetails()
             .openHelp();
@@ -78,7 +79,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openMaterialProcess()
             .openHelp();
@@ -99,7 +100,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(PLASTIC_MOLDING)
             .costScenario()
             .openDesignGuidance()
             .openHelp();
@@ -120,7 +121,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openMaterialProcess()
             .openHelp();
@@ -141,7 +142,7 @@ public class HelpTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         helpDocPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openCostDetails()
             .openHelp();
