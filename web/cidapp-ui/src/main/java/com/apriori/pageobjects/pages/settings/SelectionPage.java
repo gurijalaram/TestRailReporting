@@ -3,10 +3,9 @@ package com.apriori.pageobjects.pages.settings;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
-import com.utils.OverridesEnum;
+import com.utils.ColourEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,16 +15,19 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverridesPage> {
+public class SelectionPage extends LoadableComponent<SelectionPage> {
 
-    @FindBy(css = ".tolerance-overrides-form .section-header .left")
-    private WebElement sectionHeader;
+    @FindBy(xpath = "//button[.='Selection']")
+    private WebElement selectionTab;
+
+    @FindBy(css = ".flexbox-fix input")
+    private WebElement colourInput;
 
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public ToleranceOverridesPage(WebDriver driver) {
+    public SelectionPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -36,26 +38,34 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
 
     @Override
     protected void load() {
+
     }
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Geometric Tolerance header is not displayed", sectionHeader.getAttribute("textContent").contains("Geometric Tolerance"));
+        assertTrue("Production Defaults tab is not active", selectionTab.getAttribute("class").contains("active"));
     }
 
     /**
-     * Input override value
+     * Selects the colour
      *
-     * @param label - the label
-     * @param value - the value
+     * @param colour - the colour
      * @return current page object
      */
-    public ToleranceOverridesPage inputOverride(OverridesEnum label, String value) {
-        WebElement byOverride = driver.findElement(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
-        pageUtils.waitForElementToAppear(byOverride);
-        pageUtils.clearInput(byOverride);
-        byOverride.sendKeys(value);
+    public SelectionPage selectColour(ColourEnum colour) {
+        By byColour = By.cssSelector(String.format("[title='%s']", colour.getColour()));
+        pageUtils.waitForElementAndClick(byColour);
         return this;
+    }
+
+    /**
+     * Checks the colour
+     * eg. assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
+     *
+     * @return boolean
+     */
+    public boolean isColour(ColourEnum colour) {
+        return pageUtils.waitForElementToAppear(colourInput).getAttribute("value").equals(colour.getColour().toUpperCase());
     }
 
     /**
@@ -72,7 +82,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      *
      * @return generic page object
      */
-    public EvaluatePage cancel() {
-        return modalDialogController.cancel(EvaluatePage.class);
+    public <T> T cancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
     }
 }
