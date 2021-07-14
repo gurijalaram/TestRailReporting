@@ -38,35 +38,21 @@ public class LoginTests extends TestBase {
 
     private File resourceFile;
     private UserCredentials currentUser;
-//    private ProductionDefaultsPage productionDefaultsPage;
 
     public LoginTests() {
         super();
     }
 
-//    @Test
-//    @TestRail(testCaseId = {"6645"})
-//    @Description("Test successful login")
-//    public void testLogin() {
-//
-//        loginPage = new CidAppLoginPage(driver);
-//        evaluatePage = loginPage.login(UserUtil.getUser())
-//            .openSettings()
-//            .goToProductionTab()
-//            .inputScenarioName("Ciene Scenario")
-//            .selectProcessGroup(CASTING)
-//            .selectDigitalFactory(APRIORI_INDIA)
-//            .selectMaterialCatalog(APRIORI_MEXICO)
-//            .inputAnnualVolume("444")
-//            .inputYears("555")
-//            .inputBatchSize("333")
-//            .openMaterialSelectorTable()
-//            .search("ANSI 2007")
-//            .selectMaterial("Aluminum, Cast, ANSI 2007")
-//            .submit();
-//
-////        assertThat(explorePage.isScenarioCountPresent(), is(true));
-//    }
+    @Test
+    @TestRail(testCaseId = {"6645"})
+    @Description("Test successful login")
+    public void testLogin() {
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser());
+
+        assertThat(explorePage.isScenarioCountPresent(), is(true));
+    }
 
     @Test
     @Category(SmokeTests.class)
