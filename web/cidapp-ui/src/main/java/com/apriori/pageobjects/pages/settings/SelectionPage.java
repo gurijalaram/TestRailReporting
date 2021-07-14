@@ -1,0 +1,76 @@
+package com.apriori.pageobjects.pages.settings;
+
+import static org.junit.Assert.assertTrue;
+
+import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.utils.PageUtils;
+
+import com.utils.ColourEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
+
+@Slf4j
+public class SelectionPage extends LoadableComponent<SelectionPage> {
+
+    @FindBy(xpath = "//button[.='Selection']")
+    private WebElement selectionTab;
+
+    @FindBy(xpath = ".flexbox-fix input")
+    private WebElement colourInput;
+
+    private WebDriver driver;
+    private PageUtils pageUtils;
+    private ModalDialogController modalDialogController;
+
+    public SelectionPage(WebDriver driver) {
+        this.driver = driver;
+        this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        PageFactory.initElements(driver, this);
+        this.get();
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        assertTrue("Production Defaults tab is not active", selectionTab.getAttribute("class").contains("active"));
+    }
+
+    public SelectionPage selectColour(ColourEnum colour) {
+        By byColour = By.cssSelector(String.format("[title='%s']", colour));
+        pageUtils.waitForElementToAppear(byColour).click();
+        return this;
+    }
+
+    public String getColourBackground() {
+        return pageUtils.waitForElementToAppear(colourInput).getAttribute("value");
+    }
+
+    /**
+     * Selects the submit button
+     *
+     * @return generic page object
+     */
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public <T> T cancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
+    }
+}

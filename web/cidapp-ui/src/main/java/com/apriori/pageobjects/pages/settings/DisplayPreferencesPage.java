@@ -26,6 +26,9 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     @FindBy(xpath = "//button[.='Tolerance Defaults']")
     private WebElement tolerancesTab;
 
+    @FindBy(xpath = "//button[.='Selection']")
+    private WebElement selectionTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -65,6 +68,16 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     public ProductionDefaultsPage goToProductionTab() {
         pageUtils.waitForElementAndClick(productionsTab);
         return new ProductionDefaultsPage(driver);
+    }
+
+    /**
+     * Go to selecion tab
+     *
+     * @return new page object
+     */
+    public SelectionPage goToSelectionTab() {
+        pageUtils.waitForElementAndClick(selectionTab);
+        return new SelectionPage(driver);
     }
 
     /**
