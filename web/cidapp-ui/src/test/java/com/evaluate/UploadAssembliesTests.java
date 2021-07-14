@@ -1,7 +1,10 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.ComponentIconEnum.PART;
+import static com.apriori.utils.enums.CostingIconEnum.COSTED;
 import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static com.apriori.utils.enums.ProcessGroupEnum.CASTING_DIE;
+import static com.utils.AssemDfmIconEnum.HIGH;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
@@ -13,8 +16,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ComponentIconEnum;
-import com.apriori.utils.enums.CostingIconEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -88,8 +89,8 @@ public class UploadAssembliesTests extends TestBase {
         assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo("0")));
 
         componentsListPage = evaluatePage.openComponents();
-        assertThat(componentsListPage.getRowDetails("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), AssemDfmIconEnum.HIGH.getIcon()));
-        assertThat(componentsListPage.getRowDetails("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), AssemDfmIconEnum.HIGH.getIcon()));
-        assertThat(componentsListPage.getRowDetails("Pin", "Initial"), hasItems("$1.97", "Casting - Die", ComponentIconEnum.PART.getIcon(), CostingIconEnum.COSTED.getIcon(), AssemDfmIconEnum.HIGH.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
+        assertThat(componentsListPage.getRowDetails("Pin", "Initial"), hasItems("$1.97", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
     }
 }
