@@ -36,6 +36,9 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     @FindBy(css = "[id='qa-production-defaults-material-catalog-select'] .apriori-select")
     private WebElement materialCatalogDropdown;
 
+    @FindBy(css = "[id='qa-material-modal-select-field'] .modal-select-content")
+    private WebElement materialInput;
+
     @FindBy(css = "[id='qa-material-modal-select-field'] [data-icon='pencil']")
     private WebElement materialPencil;
 
@@ -161,6 +164,78 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
         pageUtils.clearInput(batchSizeInput);
         batchSizeInput.sendKeys(batchSize);
         return this;
+    }
+
+    /**
+     * Get scenario name
+     *
+     * @return string
+     */
+    public String getScenarioName() {
+        return pageUtils.waitForElementToAppear(scenarioNameInput).getAttribute("value");
+    }
+
+    /**
+     * Gets the selected process group
+     *
+     * @return process group as String
+     */
+    public String getProcessGroup() {
+        return pageUtils.waitForElementToAppear(processGroupDropdown).getAttribute("textContent");
+    }
+
+    /**
+     * Get digital factory
+     *
+     * @return string
+     */
+    public String getDigitalFactory() {
+        return pageUtils.waitForElementToAppear(digitalFactoryDropdown).getAttribute("textContent");
+    }
+
+    /**
+     * Get material catalog
+     *
+     * @return string
+     */
+    public String getMaterialCatalog() {
+        return pageUtils.waitForElementToAppear(materialCatalogDropdown).getAttribute("textContent");
+    }
+
+    /**
+     * Get material
+     *
+     * @return string
+     */
+    public String getMaterial() {
+        return pageUtils.waitForElementToAppear(materialInput).getAttribute("textContent");
+    }
+
+    /**
+     * Get annual volume
+     *
+     * @return string
+     */
+    public String getAnnualVolume() {
+        return pageUtils.waitForElementToAppear(annualVolumeInput).getAttribute("value");
+    }
+
+    /**
+     * Get years
+     *
+     * @return string
+     */
+    public String getYears() {
+        return pageUtils.waitForElementToAppear(yearsInput).getAttribute("value");
+    }
+
+    /**
+     * Get batch size
+     *
+     * @return string
+     */
+    public String getBatchSize() {
+        return pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value");
     }
 
     /**
