@@ -1,5 +1,6 @@
 package com.apriori.entity.response;
 
+import com.apriori.entity.response.upload.ManifestItem;
 import com.apriori.entity.response.upload.PmiItem;
 import com.apriori.utils.http.enums.Schema;
 
@@ -18,6 +19,9 @@ public class GetCadMetadataResponse {
     private String lengthUnit;
     private String vendor;
     private List<PmiItem> pmi;
+    private List<ManifestItem> manifest;
     private String createdAt;
+    private String updatedAt;
     private String createdBy;
+    private String updatedBy;
 }

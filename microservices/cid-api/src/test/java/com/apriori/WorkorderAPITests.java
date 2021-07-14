@@ -17,6 +17,7 @@ import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.entity.response.upload.GenerateAssemblyImagesOutputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
+import com.apriori.entity.response.upload.ManifestItem;
 import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
@@ -29,6 +30,7 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.hamcrest.CoreMatchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -228,6 +230,52 @@ public class WorkorderAPITests {
         assertThat(getCadMetadataResponse.getPmi().size(), is(equalTo(3)));
         assertThat(getCadMetadataResponse.getCreatedAt(), is(notNullValue()));
         assertThat(getCadMetadataResponse.getCreatedBy(), is(notNullValue()));
+    }
+
+    @Test
+    @Issue("AP-69600")
+    @Category(CidAPITest.class)
+    @TestRail(testCaseId = {"8689"})
+    @Description("Upload a part, load cad metadata, then get cad metadata to verify that all comonents are returned")
+    public void testLoadCadMetadataReturnsAllComponents() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
+        ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
+
+        assemblyComponents.add(
+                AssemblyComponent.builder()
+                        .componentName("3574727.prt")
+                        .scenarioName(scenarioName)
+                        .processGroup(processGroup)
+                        .build()
+        );
+        assemblyComponents.add(
+                AssemblyComponent.builder()
+                        .componentName("3574875.prt")
+                        .scenarioName(scenarioName)
+                        .processGroup(processGroup)
+                        .build()
+        );
+
+        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = prepareForGenerateAssemblyImages(
+                Assembly.builder()
+                        .assemblyName("PatternThreadHoles.asm")
+                        .scenarioName(scenarioName)
+                        .processGroup(processGroup)
+                        .components(assemblyComponents)
+                        .build());
+
+        GetCadMetadataResponse getCadMetadataResponse = fileUploadResources.getCadMetadata(
+                generateAssemblyImagesOutputs.getCadMetadataIdentity());
+
+        assertThat(getCadMetadataResponse.getPmi().size(), is(equalTo(39)));
+        assertThat(getCadMetadataResponse.getManifest(), is(notNullValue()));
+        assertThat(getCadMetadataResponse.getManifest().size(), is(equalTo(2)));
+
+        for (int i = 0; i < getCadMetadataResponse.getManifest().size(); i++) {
+            assertThat(getCadMetadataResponse.getManifest().get(i).getOccurrences(), is(equalTo("1")));
+        }
     }
 
     private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {

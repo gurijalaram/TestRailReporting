@@ -24,8 +24,7 @@
     },
     "pmi": {
       "type": "array",
-      "items": [
-        {
+      "items": {
           "type": "object",
           "properties": {
             "name": {
@@ -40,54 +39,50 @@
           },
           "required": [
             "name",
-            "value",
-            "type"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "name",
-            "value",
-            "type"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "name",
-            "value",
             "type"
           ]
         }
-      ]
+    },
+    "manifest": {
+      "type": "array",
+      "items": {
+          "type": "object",
+          "properties": {
+            "modelName": {
+              "type": "string"
+            },
+            "cadType": {
+              "type": "string"
+            },
+            "baseName": {
+              "type": "string"
+            },
+            "fileName": {
+              "type": "string"
+            },
+            "occurrences": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "modelName",
+            "cadType",
+            "baseName",
+            "fileName",
+            "occurrences"
+          ]
+        }
     },
     "createdAt": {
       "type": "string"
     },
+    "updatedAt": {
+      "type": "string"
+    },
     "createdBy": {
+      "type": "string"
+    },
+    "updatedBy": {
       "type": "string"
     }
   },
@@ -101,6 +96,8 @@
     "vendor",
     "pmi",
     "createdAt",
-    "createdBy"
+    "updatedAt",
+    "createdBy",
+    "updatedBy"
   ]
 }
