@@ -96,8 +96,6 @@
     "vendor",
     "pmi",
     "createdAt",
-    "updatedAt",
-    "createdBy",
-    "updatedBy"
+    "createdBy"
   ]
 }
