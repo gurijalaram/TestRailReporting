@@ -184,11 +184,14 @@ public class WorkorderAPITests {
         GetAdminInfoResponse getAdminInfoResponse = fileUploadResources
                 .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
 
-        assertThat(getAdminInfoResponse.getComments(), is(notNullValue()));
-        assertThat(getAdminInfoResponse.getDescription(), is(notNullValue()));
 
+        assertThat(getAdminInfoResponse.getLastModifiedBy(), is(equalTo("aPrioriCIGenerateUser")));
+        assertThat(getAdminInfoResponse.getLastSavedTime(), is(notNullValue()));
         assertThat(getAdminInfoResponse.getComments(), is(equalTo("Comments go here...")));
         assertThat(getAdminInfoResponse.getDescription(), is(equalTo("Description goes here...")));
+        assertThat(getAdminInfoResponse.getLocked(), is(equalTo("false")));
+        assertThat(getAdminInfoResponse.getActive(), is(equalTo("true")));
+        assertThat(getAdminInfoResponse.getLastModifiedByFullName(), is(equalTo("aPriori CIGenerateUser")));
     }
 
     @Test
@@ -197,7 +200,6 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8682"})
     @Description("Upload a part, load cad metadata with part name and extension and get cad metadata to verify")
     public void testFileNameAndExtensionInputAndOutput() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
@@ -217,6 +219,15 @@ public class WorkorderAPITests {
                 .getCadMetadata(loadCadMetadataOutputs.getCadMetadataIdentity());
 
         assertThat(getCadMetadataResponse.getFileMetadataIdentity(), is(equalTo(fileResponse.getIdentity())));
+        assertThat(getCadMetadataResponse.getCadType(), is(equalTo("PART")));
+        assertThat(getCadMetadataResponse.getKeepFreeBodies(), is(equalTo("false")));
+        assertThat(getCadMetadataResponse.getFreeBodiesPreserveCad(), is(equalTo("false")));
+        assertThat(getCadMetadataResponse.getFreeBodiesIgnoreMissingComponents(), is(equalTo("true")));
+        assertThat(getCadMetadataResponse.getLengthUnit(), is(equalTo("MM")));
+        assertThat(getCadMetadataResponse.getVendor(), is(equalTo("PROE")));
+        assertThat(getCadMetadataResponse.getPmi().size(), is(equalTo(3)));
+        assertThat(getCadMetadataResponse.getCreatedAt(), is(notNullValue()));
+        assertThat(getCadMetadataResponse.getCreatedBy(), is(notNullValue()));
     }
 
     private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {
