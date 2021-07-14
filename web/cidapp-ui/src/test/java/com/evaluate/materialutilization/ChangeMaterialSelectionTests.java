@@ -58,7 +58,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
@@ -66,7 +66,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage.openMaterialSelectorTable()
             .search("270")
             .selectMaterial("Brass, Cast, Yellow 270")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Brass, Cast, Yellow 270"), is(true));
@@ -90,7 +90,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
@@ -98,7 +98,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage.openMaterialSelectorTable()
             .search("C28000")
             .selectMaterial("Copper, Cast, UNS C28000")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Copper, Cast, UNS C28000"), is(true));
@@ -121,7 +121,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("ABS"), is(true));
@@ -129,7 +129,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage.openMaterialSelectorTable()
             .search("PET")
             .selectMaterial("PET 30% Glass")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("PET 30% Glass"), is(true));
@@ -153,7 +153,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Cold Worked, AISI 1020"), is(true));
@@ -161,7 +161,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage.openMaterialSelectorTable()
             .search("625")
             .selectMaterial("Inconel 625")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Inconel 625"), is(true));
@@ -192,7 +192,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Polyetheretherketone (PEEK)")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -222,12 +222,12 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialSelectorTable()
             .search("PEEK")
             .selectMaterial("Polyetheretherketone (PEEK)")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));
@@ -252,12 +252,12 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialSelectorTable()
             .search("625")
             .selectMaterial("Inconel 625")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .openMaterialUtilizationTab();
@@ -309,7 +309,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .selectionMethod("MCAD <material not found - VPE default used>")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));
@@ -333,9 +333,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .openMaterialSelectorTable()
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Cold Worked, AISI 1020"), is(true));
@@ -360,7 +360,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .openMaterialSelectorTable()
             .search("316")
             .selectMaterial("Stainless Steel, Stock, AISI 316")

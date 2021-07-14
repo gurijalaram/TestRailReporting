@@ -391,7 +391,7 @@ public class DFMRiskTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
@@ -430,7 +430,7 @@ public class DFMRiskTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario(5);
 
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(437, 10));
