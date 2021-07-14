@@ -60,6 +60,8 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
 
     /**
      * Gets tolerance override value
+     * eg. assertThat(toleranceOverridesPage.getToleranceOverride(OverridesEnum.TOTAL_RUNOUT), is(equalTo(3.0)));
+     *
      * @param label - the label
      * @return double
      */
