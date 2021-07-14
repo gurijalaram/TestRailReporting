@@ -183,12 +183,12 @@ public class AssemblyUploadTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
             .enterAnnualVolume("3126")
             .enterAnnualYears("9")
             .costScenario();
 
-        assertThat(evaluatePage.getSelectedVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe()), is(true));
+        assertThat(evaluatePage.getSelectedVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory()), is(true));
         assertThat(evaluatePage.getAnnualVolume(), is("3,126"));
         assertThat(evaluatePage.getProductionLife(), is("9.00"));
 

@@ -46,7 +46,7 @@ public class ReCostScenarioTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
-            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -65,7 +65,7 @@ public class ReCostScenarioTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
-            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -84,7 +84,7 @@ public class ReCostScenarioTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
-            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -103,7 +103,7 @@ public class ReCostScenarioTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
-            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -122,7 +122,7 @@ public class ReCostScenarioTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
-            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));
@@ -141,7 +141,7 @@ public class ReCostScenarioTests extends TestBase {
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
             .costScenario()
-            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_UP_TO_DATE.getCostingText()), is(true));

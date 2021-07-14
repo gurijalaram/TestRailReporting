@@ -68,7 +68,1359 @@
                   "name",
                   "ownerType",
                   "productionLife",
-                  "revision",
+                  "useType",
+                  "vpeType",
+                  "processGroupAssociations"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "subjectIdentity": {
+                    "type": "string"
+                  },
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "customerIdentity": {
+                    "type": "string"
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "annualVolume": {
+                    "type": "integer"
+                  },
+                  "batchesPerYear": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "ownerType": {
+                    "type": "string"
+                  },
+                  "productionLife": {
+                    "type": "number"
+                  },
+                  "useType": {
+                    "type": "string"
+                  },
+                  "vpeType": {
+                    "type": "string"
+                  },
+                  "processGroupAssociations": {
+                    "type": "object",
+                    "required": [
+                      "Forging",
+                      "Bar & Tube Fab",
+                      "2-Model Machining",
+                      "Casting - Sand"
+                    ],
+                    "properties": {
+                      "Forging": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Bar & Tube Fab": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "2-Model Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting - Sand": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdAt",
+                  "createdBy",
+                  "updatedAt",
+                  "updatedBy",
+                  "subjectIdentity",
+                  "permissions",
+                  "customerIdentity",
+                  "active",
+                  "annualVolume",
+                  "batchesPerYear",
+                  "description",
+                  "location",
+                  "name",
+                  "ownerType",
+                  "productionLife",
+                  "useType",
+                  "vpeType",
+                  "processGroupAssociations"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "updatedBy": {
+                    "type": "string"
+                  },
+                  "subjectIdentity": {
+                    "type": "string"
+                  },
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "customerIdentity": {
+                    "type": "string"
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "annualVolume": {
+                    "type": "integer"
+                  },
+                  "batchesPerYear": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "ownerType": {
+                    "type": "string"
+                  },
+                  "productionLife": {
+                    "type": "number"
+                  },
+                  "revision": {
+                    "type": "string"
+                  },
+                  "useType": {
+                    "type": "string"
+                  },
+                  "vpeType": {
+                    "type": "string"
+                  },
+                  "processGroupAssociations": {
+                    "type": "object",
+                    "required": [
+                      "Composites",
+                      "Multi-Spindle Machining",
+                      "Machining",
+                      "Casting - Die",
+                      "Additive Manufacturing",
+                      "Forging",
+                      "Powder Metal",
+                      "Sheet Plastic",
+                      "Heat Treatment",
+                      "User Guided",
+                      "Sheet Metal - Hydroforming",
+                      "Bar & Tube Fab",
+                      "Assembly",
+                      "Casting - Investment",
+                      "Sheet Metal - Transfer Die",
+                      "Assembly Plastic Molding",
+                      "Sheet Metal",
+                      "PCB",
+                      "Casting - Sand",
+                      "Assembly Molding",
+                      "Rapid Prototyping",
+                      "Casting",
+                      "Plastic Molding",
+                      "Part Assembly",
+                      "Stock Machining",
+                      "Surface Treatment",
+                      "Roto & Blow Molding",
+                      "Other Secondary Processes",
+                      "Sheet Metal - Stretch Forming",
+                      "2-Model Machining"
+                    ],
+                    "properties": {
+                      "Composites": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Multi-Spindle Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting - Die": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Additive Manufacturing": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Forging": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Powder Metal": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Plastic": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Heat Treatment": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "User Guided": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Metal - Hydroforming": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Bar & Tube Fab": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Assembly": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting - Investment": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Metal - Transfer Die": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Assembly Plastic Molding": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Metal": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "PCB": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting - Sand": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Assembly Molding": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Rapid Prototyping": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Plastic Molding": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Part Assembly": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Stock Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Surface Treatment": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Roto & Blow Molding": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Other Secondary Processes": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Metal - Stretch Forming": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "2-Model Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdAt",
+                  "createdBy",
+                  "updatedAt",
+                  "subjectIdentity",
+                  "permissions",
+                  "customerIdentity",
+                  "active",
+                  "annualVolume",
+                  "batchesPerYear",
+                  "description",
+                  "location",
+                  "name",
+                  "ownerType",
+                  "productionLife",
+                  "useType",
+                  "vpeType",
+                  "processGroupAssociations"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "subjectIdentity": {
+                    "type": "string"
+                  },
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "customerIdentity": {
+                    "type": "string"
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "annualVolume": {
+                    "type": "integer"
+                  },
+                  "batchesPerYear": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "ownerType": {
+                    "type": "string"
+                  },
+                  "productionLife": {
+                    "type": "number"
+                  },
+                  "revision": {
+                    "type": "string"
+                  },
+                  "useType": {
+                    "type": "string"
+                  },
+                  "vpeType": {
+                    "type": "string"
+                  },
+                  "processGroupAssociations": {
+                    "type": "object",
+                    "properties": {
+                      "Composites": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Multi-Spindle Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting - Die": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Additive Manufacturing": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Powder Metal": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Forging": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Plastic": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Heat Treatment": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "User Guided": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Metal - Hydroforming": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Bar & Tube Fab": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Assembly": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting - Investment": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Metal - Transfer Die": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Assembly Plastic Molding": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Metal": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "PCB": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting - Sand": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Assembly Molding": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Rapid Prototyping": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Plastic Molding": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Part Assembly": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Stock Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Surface Treatment": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Roto & Blow Molding": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Other Secondary Processes": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "2-Model Machining": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Sheet Metal - Stretch Forming": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdAt",
+                  "createdBy",
+                  "subjectIdentity",
+                  "permissions",
+                  "customerIdentity",
+                  "active",
+                  "annualVolume",
+                  "batchesPerYear",
+                  "description",
+                  "location",
+                  "name",
+                  "ownerType",
+                  "productionLife",
                   "useType",
                   "vpeType",
                   "processGroupAssociations"
@@ -134,57 +1486,39 @@
                   },
                   "processGroupAssociations": {
                     "type": "object",
-                    "required": [
-                      "Composites",
-                      "Multi-Spindle Machining",
-                      "Machining",
-                      "Casting - Die",
-                      "Additive Manufacturing",
-                      "Powder Metal",
-                      "Forging",
-                      "Sheet Plastic",
-                      "Heat Treatment",
-                      "User Guided",
-                      "Sheet Metal - Hydroforming",
-                      "Bar & Tube Fab",
-                      "Assembly",
-                      "Casting - Investment",
-                      "Sheet Metal - Transfer Die",
-                      "Assembly Plastic Molding",
-                      "Sheet Metal",
-                      "PCB",
-                      "Casting - Sand",
-                      "Assembly Molding",
-                      "Rapid Prototyping",
-                      "Casting",
-                      "Plastic Molding",
-                      "Part Assembly",
-                      "Stock Machining",
-                      "Surface Treatment",
-                      "Roto & Blow Molding",
-                      "Other Secondary Processes",
-                      "2-Model Machining",
-                      "Sheet Metal - Stretch Forming"
-                    ],
                     "properties": {
                       "Composites": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
                             "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
                           }
                         }
                       },
-                      "Multi-Spindle Machining": {
+                      "Casting - Die": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -200,24 +1534,20 @@
                           }
                         }
                       },
-                      "Casting - Die": {
-                        "type": "object",
-                        "required": [
-                          "processGroupIdentity"
-                        ],
-                        "properties": {
-                          "processGroupIdentity": {
-                            "type": "string"
-                          }
-                        }
-                      },
                       "Additive Manufacturing": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -226,9 +1556,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -237,9 +1574,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -248,9 +1592,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -270,9 +1621,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -281,9 +1639,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -292,9 +1657,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -310,35 +1682,20 @@
                           }
                         }
                       },
-                      "Casting - Investment": {
-                        "type": "object",
-                        "required": [
-                          "processGroupIdentity"
-                        ],
-                        "properties": {
-                          "processGroupIdentity": {
-                            "type": "string"
-                          }
-                        }
-                      },
                       "Sheet Metal - Transfer Die": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
                             "type": "string"
-                          }
-                        }
-                      },
-                      "Assembly Plastic Molding": {
-                        "type": "object",
-                        "required": [
-                          "processGroupIdentity"
-                        ],
-                        "properties": {
-                          "processGroupIdentity": {
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -347,31 +1704,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
                             "type": "string"
-                          }
-                        }
-                      },
-                      "PCB": {
-                        "type": "object",
-                        "required": [
-                          "processGroupIdentity"
-                        ],
-                        "properties": {
-                          "processGroupIdentity": {
+                          },
+                          "defaultMaterialName": {
                             "type": "string"
-                          }
-                        }
-                      },
-                      "Casting - Sand": {
-                        "type": "object",
-                        "required": [
-                          "processGroupIdentity"
-                        ],
-                        "properties": {
-                          "processGroupIdentity": {
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -380,9 +1722,34 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "Casting - Sand": {
+                        "type": "object",
+                        "required": [
+                          "processGroupIdentity"
+
+                        ],
+                        "properties": {
+                          "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -391,9 +1758,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -402,9 +1776,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -413,9 +1794,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -435,9 +1823,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -457,9 +1852,16 @@
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
+
                         ],
                         "properties": {
                           "processGroupIdentity": {
+                            "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
                             "type": "string"
                           }
                         }
@@ -475,7 +1877,7 @@
                           }
                         }
                       },
-                      "2-Model Machining": {
+                      "Sheet Metal - Stretch Forming": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
@@ -483,10 +1885,16 @@
                         "properties": {
                           "processGroupIdentity": {
                             "type": "string"
+                          },
+                          "defaultMaterialName": {
+                            "type": "string"
+                          },
+                          "defaultMaterialIdentity": {
+                            "type": "string"
                           }
                         }
                       },
-                      "Sheet Metal - Stretch Forming": {
+                      "2-Model Machining": {
                         "type": "object",
                         "required": [
                           "processGroupIdentity"
