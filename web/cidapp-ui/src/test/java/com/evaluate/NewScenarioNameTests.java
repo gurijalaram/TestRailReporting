@@ -87,7 +87,7 @@ public class NewScenarioNameTests extends TestBase {
         evaluatePage.selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)

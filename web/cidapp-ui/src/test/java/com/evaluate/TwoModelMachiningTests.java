@@ -66,7 +66,7 @@ public class TwoModelMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
@@ -118,7 +118,7 @@ public class TwoModelMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
@@ -161,7 +161,7 @@ public class TwoModelMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(96.98, 1)));
@@ -255,7 +255,7 @@ public class TwoModelMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
@@ -267,7 +267,7 @@ public class TwoModelMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile2, currentUser)
@@ -312,7 +312,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)

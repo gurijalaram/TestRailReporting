@@ -364,7 +364,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .openMaterialSelectorTable()
             .search("316")
             .selectMaterial("Stainless Steel, Stock, AISI 316")
-            .cancel()
+            .cancel(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Cold Worked, AISI 1020"), is(true));

@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -39,7 +38,6 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private ModalDialogController modalDialogController;
 
     public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
@@ -120,16 +118,17 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        pageUtils.waitForElementAndClick(submitButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
      * Selects the cancel button
      *
-     * @return new page object
+     * @return generic page object
      */
-    public EvaluatePage cancel() {
+    public <T> T cancel(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 }
