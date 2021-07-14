@@ -270,14 +270,21 @@ public class ComparePage extends CompareToolbar {
 
     /**
      * Opens the comparison
+     *
      * @param componentName - the component name
-     * @param scenarioName - the scenario name
+     * @param scenarioName  - the scenario name
      * @return new page object
      */
     public EvaluatePage openComparison(String componentName, String scenarioName) {
-        By byComparison = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']/ancestor::div[@class='apriori-card dark medium-card card']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        By byComparison = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//div[@class='scenario-thumbnail medium']",
+            componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(byComparison);
-        By byComparisonLink = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']/ancestor::div[@class='apriori-card dark medium-card card']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
+        pageUtils.mouseMove(driver.findElement(byComparison));
+
+        By byComparisonLink = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//a",
+            componentName.toUpperCase().trim(), scenarioName.trim()));
+        pageUtils.waitForElementToAppear(byComparisonLink);
+
         pageUtils.javaScriptClick(driver.findElement(byComparisonLink));
         return new EvaluatePage(driver);
     }
