@@ -20,7 +20,7 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
     @FindBy(xpath = "//button[.='Selection']")
     private WebElement selectionTab;
 
-    @FindBy(xpath = ".flexbox-fix input")
+    @FindBy(css = ".flexbox-fix input")
     private WebElement colourInput;
 
     private WebDriver driver;
@@ -48,6 +48,7 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
 
     /**
      * Selects the colour
+     *
      * @param colour - the colour
      * @return current page object
      */
@@ -58,11 +59,13 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
     }
 
     /**
-     * Gets the colour
-     * @return string
+     * Checks the colour
+     * eg. assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
+     *
+     * @return boolean
      */
-    public String getColour() {
-        return pageUtils.waitForElementToAppear(colourInput).getAttribute("value");
+    public boolean isColour(ColourEnum colour) {
+        return pageUtils.waitForElementToAppear(colourInput).getAttribute("value").equals(colour.getColour().toUpperCase());
     }
 
     /**
