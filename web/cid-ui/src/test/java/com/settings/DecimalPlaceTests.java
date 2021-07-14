@@ -62,7 +62,7 @@ public class DecimalPlaceTests extends TestBase {
             .save(ExplorePage.class)
             .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.getFinishMass(), closeTo(5.309458, 1));
@@ -152,7 +152,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getBurdenedCost(), closeTo(21.05658, 1));
         assertThat(evaluatePage.getCapitalInvestment(), closeTo(0.00000, 1));
 
-        evaluatePage.selectVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.selectVPE(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.isFinishMass("5.30946"), is(true));

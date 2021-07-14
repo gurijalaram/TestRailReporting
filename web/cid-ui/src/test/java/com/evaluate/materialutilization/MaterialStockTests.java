@@ -50,7 +50,7 @@ public class MaterialStockTests extends TestBase {
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openMaterialUtilization();
 
@@ -80,7 +80,7 @@ public class MaterialStockTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario();
         assertThat(evaluatePage.getPartCost(), is(closeTo(20.44, 1)));
 
@@ -119,7 +119,7 @@ public class MaterialStockTests extends TestBase {
         stockPage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openMaterialUtilization()
             .goToStockTab();
@@ -150,7 +150,7 @@ public class MaterialStockTests extends TestBase {
         materialUtilizationPage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openMaterialUtilization()
             .toggleMaterialPropertiesPanel()

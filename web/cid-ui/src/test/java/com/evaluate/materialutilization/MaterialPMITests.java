@@ -58,8 +58,8 @@ public class MaterialPMITests extends TestBase {
             .openSettings()
             .openProdDefaultTab()
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .selectMaterial("Aluminum, Stock, ANSI 6061");
         new SettingsPage(driver).save(ExplorePage.class);
 
