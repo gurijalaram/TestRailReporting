@@ -46,13 +46,22 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
         assertTrue("Production Defaults tab is not active", selectionTab.getAttribute("class").contains("active"));
     }
 
+    /**
+     * Selects the colour
+     * @param colour - the colour
+     * @return current page object
+     */
     public SelectionPage selectColour(ColourEnum colour) {
-        By byColour = By.cssSelector(String.format("[title='%s']", colour));
-        pageUtils.waitForElementToAppear(byColour).click();
+        By byColour = By.cssSelector(String.format("[title='%s']", colour.getColour()));
+        pageUtils.waitForElementAndClick(byColour);
         return this;
     }
 
-    public String getColourBackground() {
+    /**
+     * Gets the colour
+     * @return string
+     */
+    public String getColour() {
         return pageUtils.waitForElementToAppear(colourInput).getAttribute("value");
     }
 
