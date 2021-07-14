@@ -2,9 +2,9 @@ package com.settings;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 
 import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -16,23 +16,14 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ColourEnum;
-import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.MetricEnum;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.evaluate.PublishPage;
-import com.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
-import com.pageobjects.pages.evaluate.inputs.MoreInputsPage;
-import com.pageobjects.pages.explore.ExplorePage;
-import com.pageobjects.pages.login.CidLoginPage;
-import com.pageobjects.pages.settings.ProductionDefaultPage;
-import com.pageobjects.pages.settings.SelectionSettingsPage;
-import com.pageobjects.pages.settings.SettingsPage;
 import io.qameta.allure.Description;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -89,7 +80,6 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = explorePage.openSettings()
             .goToProductionTab();
 
-
         assertThat(productionDefaultPage.getScenarioName(), is("MP Auto Test"));
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()), is(true));
         assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory()), is(true));
@@ -103,12 +93,12 @@ public class SettingsTests extends TestBase {
     public void defaultPG() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "bracket_basic.prt");
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
@@ -116,14 +106,13 @@ public class SettingsTests extends TestBase {
 
         displayPreferencesPage = new DisplayPreferencesPage(driver);
         evaluatePage = displayPreferencesPage.submit(ExplorePage.class)
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openJobQueue()
-            .openScenarioLink(testScenarioName, "bracket_basic", "publish");
+            .publishScenario()
+            .publish(EvaluatePage.class);
 
-        assertThat(evaluatePage.isCostLabel(CostingLabelEnum.COSTING_FAILURE.getCostingText()), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
+
     }
 
     @Test
@@ -132,24 +121,24 @@ public class SettingsTests extends TestBase {
     public void defaultVPE() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "partbody_2.stp");
+        String componentName = "partbody_2";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory());
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_MEXICO);
 
         displayPreferencesPage = new DisplayPreferencesPage(driver);
-        evaluatePage = displayPreferencesPage.save(ExplorePage.class)
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+        evaluatePage = displayPreferencesPage.submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getSelectedVPE(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()), is(true));
+        assertThat(evaluatePage.getSelectedVPE(), is(DigitalFactoryEnum.APRIORI_MEXICO));
     }
 
     @Test
@@ -158,12 +147,12 @@ public class SettingsTests extends TestBase {
     public void defaultProductionLife() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "partbody_2.stp");
+        String componentName = "partbody_2";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
@@ -171,13 +160,13 @@ public class SettingsTests extends TestBase {
             .inputYears("7");
 
         displayPreferencesPage = new DisplayPreferencesPage(driver);
-        evaluatePage = displayPreferencesPage.save(ExplorePage.class)
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+        evaluatePage = displayPreferencesPage.submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
         assertThat(evaluatePage.getAnnualVolume(), is("9,524"));
-        assertThat(evaluatePage.getProductionLife(), containsString("7.00"));
+        assertThat(evaluatePage.getProductionLife(), is("7.00"));
     }
 
     @Test
@@ -185,30 +174,27 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String partName = "Push Pin.stp";
+        final String componentName = "Push Pin";
         final String batchSize = "46";
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName);
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
-            .selectBatchManual()
-            .enterBatchInput(batchSize);
+            .inputBatchSize(batchSize);
 
         displayPreferencesPage = new DisplayPreferencesPage(driver);
-        moreInputsPage = displayPreferencesPage.save(ExplorePage.class)
-            .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .openMoreInputs();
+        evaluatePage = displayPreferencesPage.submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario();
+        //select secondary inputs
 
-        assertThat(moreInputsPage.getBatchSize(), equalTo(batchSize));
-        assertThat(moreInputsPage.getCadFileName(), equalToIgnoringCase(partName));
+        assertThat(secondaryInputsPage.getBatchSize(), equalTo(batchSize));
     }
 
     @Test
@@ -216,18 +202,19 @@ public class SettingsTests extends TestBase {
     @Description("User should be able to select a material catalogue from a different region than the VPE")
     public void differentMaterialCatalog() {
 
-        loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         loginPage.login(currentUser)
             .openSettings()
-            .openProdDefaultTab()
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
-        displayPreferencesPage = new SettingsPage(driver);
-        productionDefaultPage = displayPreferencesPage.save(ExplorePage.class)
+            .goToProductionTab()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_GERMANY);
+
+        displayPreferencesPage = new DisplayPreferencesPage(driver);
+        productionDefaultPage = displayPreferencesPage.submit(ExplorePage.class)
             .openSettings()
-            .openProdDefaultTab();
+            .goToProductionTab();
 
         assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory()), is(true));
         assertThat(productionDefaultPage.getSelectedCatalog(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory()), is(true));
@@ -246,12 +233,12 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .openSelectionTab()
             .setColour(ColourEnum.ELECTRIC_PURPLE.getColour());
-        displayPreferencesPage = new SettingsPage(driver);
-        selectionSettingsPage = displayPreferencesPage.save(ExplorePage.class)
+        displayPreferencesPage = new DisplayPreferencesPage(driver);
+        selectionDisplayPreferencesPage = displayPreferencesPage.save(ExplorePage.class)
             .openSettings()
             .openSelectionTab();
 
-        assertThat(selectionSettingsPage.getColour(), is(equalTo(ColourEnum.ELECTRIC_PURPLE.getColour())));
+        assertThat(selectionDisplayPreferencesPage.getColour(), is(equalTo(ColourEnum.ELECTRIC_PURPLE.getColour())));
     }
 
     @Test
@@ -259,21 +246,21 @@ public class SettingsTests extends TestBase {
     @Description("User can change the default Material")
     public void defaultMaterial() {
 
-        loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        loginPage = new CidAppLoginPage(driver);
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
-            .openProdDefaultTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
-            .selectMaterial("HIPS Extrusion");
-
-        displayPreferencesPage = new SettingsPage(driver);
-        productionDefaultPage = displayPreferencesPage.save(ExplorePage.class)
+            .goToProductionTab()
+            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .openMaterialSelectorTable()
+            .selectMaterial("HIPS Extrusion")
+            .submit(DisplayPreferencesPage.class)
+            .submit(ExplorePage.class)
             .openSettings()
-            .openProdDefaultTab();
+            .goToProductionTab();
 
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()), is(true));
         assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory()), is(true));
@@ -285,27 +272,23 @@ public class SettingsTests extends TestBase {
     @TestRail(testCaseId = {"271"})
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
-
-        loginPage = new CidLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         loginPage.login(currentUser)
             .openSettings()
-            .openProdDefaultTab()
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory())
-            .selectMaterial("F-0005 Sponge");
-        new SettingsPage(driver).save(ExplorePage.class);
-
-        explorePage = new ExplorePage(driver);
-        loginPage = explorePage.openAdminDropdown()
-            .selectLogOut();
-
-        loginPage = new CidLoginPage(driver);
-        productionDefaultPage = loginPage.login(currentUser)
+            .goToProductionTab()
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO)
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005 Sponge")
+            .submit(DisplayPreferencesPage.class)
+            .submit(ExplorePage.class)
+            .logout()
+            .login(currentUser)
             .openSettings()
-            .openProdDefaultTab();
+            .goToProductionTab();
 
         assertThat(productionDefaultPage.getSelectedProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup()), is(true));
         assertThat(productionDefaultPage.getSelectedVPE(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory()), is(true));
@@ -323,11 +306,11 @@ public class SettingsTests extends TestBase {
 
         loginPage.login(currentUser)
             .openSettings()
-            .openProdDefaultTab()
+            .goToProductionTab()
             .selectBatchManual()
             .enterBatchInput("0");
 
-        warningPage = new SettingsPage(driver).save(WarningPage.class);
+        warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));
     }
@@ -342,11 +325,11 @@ public class SettingsTests extends TestBase {
 
         loginPage.login(currentUser)
             .openSettings()
-            .openProdDefaultTab()
+            .goToProductionTab()
             .selectBatchManual()
             .enterBatchInput("JUNK");
 
-        warningPage = new SettingsPage(driver).save(WarningPage.class);
+        warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));
     }
@@ -361,11 +344,11 @@ public class SettingsTests extends TestBase {
 
         loginPage.login(currentUser)
             .openSettings()
-            .openProdDefaultTab()
+            .goToProductionTab()
             .selectBatchManual()
             .enterBatchInput("0.12.00");
 
-        warningPage = new SettingsPage(driver).save(WarningPage.class);
+        warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));
     }
@@ -381,25 +364,25 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .selectSystem(MetricEnum.ENGLISH.getMetricUnit())
-            .openProdDefaultTab()
+            .goToProductionTab()
             .inputScenarioName("Save all tabs test")
             .inputAnnualVolume("295")
             .inputYears("7");
 
-        new SettingsPage(driver).openSelectionTab()
+        new DisplayPreferencesPage(driver).openSelectionTab()
             .setColour(ColourEnum.SHAMROCK_GREEN.getColour());
 
-        new SettingsPage(driver).save(ExplorePage.class);
+        new DisplayPreferencesPage(driver).save(ExplorePage.class);
 
         explorePage = new ExplorePage(driver);
         displayPreferencesPage = explorePage.openSettings();
         assertThat(displayPreferencesPage.isSelectedMetricSystem(MetricEnum.ENGLISH.getMetricUnit()), is(true));
 
-        productionDefaultPage = new SettingsPage(driver).openProdDefaultTab();
+        productionDefaultPage = new DisplayPreferencesPage(driver).goToProductionTab();
         assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));
 
-        selectionSettingsPage = new SettingsPage(driver).openSelectionTab();
-        assertThat(selectionSettingsPage.getColour(), is(equalTo(ColourEnum.SHAMROCK_GREEN.getColour())));
+        selectionDisplayPreferencesPage = new DisplayPreferencesPage(driver).openSelectionTab();
+        assertThat(selectionDisplayPreferencesPage.getColour(), is(equalTo(ColourEnum.SHAMROCK_GREEN.getColour())));
     }
 
     @Test
@@ -412,7 +395,7 @@ public class SettingsTests extends TestBase {
 
         productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
-            .openProdDefaultTab()
+            .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
 
