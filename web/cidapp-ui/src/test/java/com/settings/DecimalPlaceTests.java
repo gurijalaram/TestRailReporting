@@ -1,9 +1,5 @@
 package com.settings;
 
-import static com.apriori.utils.enums.DecimalPlaceEnum.FIVE;
-import static com.apriori.utils.enums.DecimalPlaceEnum.FOUR;
-import static com.apriori.utils.enums.DecimalPlaceEnum.ONE;
-import static com.apriori.utils.enums.DecimalPlaceEnum.SIX;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -20,6 +16,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DecimalPlaceEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
@@ -68,7 +65,7 @@ public class DecimalPlaceTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .openSettings()
-            .selectInSection("Decimal Places", SIX)
+            .selectInSection("Decimal Places", DecimalPlaceEnum.SIX)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
@@ -88,7 +85,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.000000, 1));
 
         evaluatePage.openSettings()
-            .selectInSection("Decimal Places", ONE)
+            .selectInSection("Decimal Places", DecimalPlaceEnum.ONE)
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3kg"));
@@ -115,7 +112,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(21.1, 1));
 
         evaluatePage.openSettings()
-            .selectInSection("Decimal Places", FOUR)
+            .selectInSection("Decimal Places", DecimalPlaceEnum.FOUR)
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3095kg"));
@@ -144,7 +141,7 @@ public class DecimalPlaceTests extends TestBase {
         costDetailsPage.closePanel();
 
         evaluatePage.openSettings()
-            .selectInSection("Decimal Places", FIVE)
+            .selectInSection("Decimal Places", DecimalPlaceEnum.FIVE)
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
