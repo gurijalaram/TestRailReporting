@@ -87,7 +87,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     }
 
     /**
-     * Go to tolerances default tab
+     * Go to display default tab
      *
      * @return new page object
      */

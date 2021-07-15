@@ -67,7 +67,7 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
     }
 
     /**
-     * Go to tolerances default tab
+     * Go to display default tab
      *
      * @return new page object
      */

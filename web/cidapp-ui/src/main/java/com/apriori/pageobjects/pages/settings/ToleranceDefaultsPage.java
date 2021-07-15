@@ -65,7 +65,7 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
     }
 
     /**
-     * Go to tolerances default tab
+     * Go to display default tab
      *
      * @return new page object
      */

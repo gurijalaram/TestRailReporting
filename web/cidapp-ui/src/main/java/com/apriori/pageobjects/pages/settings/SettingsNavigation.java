@@ -37,7 +37,8 @@ public class SettingsNavigation {
     }
 
     /**
-     * Go to tolerances default tab
+     * Go to display tab
+     *
      * @return new page object
      */
     public DisplayPreferencesPage goToDisplayTab() {
@@ -67,6 +68,7 @@ public class SettingsNavigation {
 
     /**
      * Go to tolerances default tab
+     *
      * @return new page object
      */
     public ToleranceDefaultsPage goToToleranceTab() {
