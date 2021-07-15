@@ -341,7 +341,7 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        productionDefaultPage = loginPage.login(currentUser)
+        displayPreferencesPage = loginPage.login(currentUser)
             .openSettings()
             .setSystem("Imperial")
             .goToProductionTab()
