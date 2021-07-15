@@ -61,7 +61,6 @@
         - Open Terminal to root `build` directory
         - Run `gradle --continue :microservices:ats:build :microservices:cds:build :microservices:bcs:build :microservices:edc:build :microservices:fms:build`
      
-
 ## Run Gradle tests with JVM args
 1. Open Terminal to root `build` directory
 2. Run `gradle clean :cid:test --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDNonSmokeTestSuite"`
@@ -175,8 +174,6 @@ _Validation:_
     BillOfMaterialsWrapper.class)`
 `GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth());`
    
-  
-
 ## Run Checkstyle analysis from command line
 1. go to `build` directory, run `gradle check -x test`
 
@@ -194,3 +191,10 @@ When we want to run tests against local env we need to override **env** value `-
 
 If we want to run against Eclipse dev env we also need to change **url** and **ignore ssl check** 
 `-Durl=https://localhost:8543/ -DignoreSslCheck=true`
+
+## How to use assertj in your test class
+1. Import the assertj lib `import org.assertj.core.api.SoftAssertions;`
+2. Create a new object `private SoftAssertions softAssert = new SoftAssertions();`
+3. Compose the assertions eg. `softAssert.assertThat(explorePage.getComponentsFound()).isEqualTo(100); 
+   softAssert.assertThat(explorePage.isScenarioCountPresent()).isTrue();`
+4. The assertAll method must be called to carry out the assertions `softAssert.assertAll();`   
