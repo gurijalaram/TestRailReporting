@@ -21,6 +21,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -53,8 +54,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputScenarioName("MP Auto Test")
@@ -67,10 +67,8 @@ public class SettingsTests extends TestBase {
             .inputAnnualVolume("3000")
             .inputYears("7")
             .inputBatchSize("50")
-            .submit(ExplorePage.class);
-
-        explorePage = new ExplorePage(driver);
-        productionDefaultPage = explorePage.openSettings()
+            .submit(ExplorePage.class)
+            .openSettings()
             .goToProductionTab();
 
         assertThat(productionDefaultPage.getScenarioName(), is("MP Auto Test"));
@@ -105,6 +103,7 @@ public class SettingsTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }
 
+    @Ignore("Test needs more development as assertion has been commented")
     @Test
     @TestRail(testCaseId = {"275"})
     @Description("User can change the default VPE")
@@ -155,6 +154,7 @@ public class SettingsTests extends TestBase {
         assertThat(evaluatePage.getProductionLife(), is("7.00"));
     }
 
+    @Ignore("Test needs more development as assertion has been commented")
     @Test
     @TestRail(testCaseId = {"280", "281"})
     @Description("User can change the default Batch size when set to manual")
@@ -275,6 +275,7 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getMaterial(), is("F-0005 Sponge"));
     }
 
+    @Ignore("Test needs more development as assertion has been commented")
     @Test
     @TestRail(testCaseId = {"282"})
     @Description("Manual Batch Quantity cannot be zero")
@@ -293,6 +294,7 @@ public class SettingsTests extends TestBase {
         assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));*/
     }
 
+    @Ignore("Test needs more development as assertion has been commented")
     @Test
     @TestRail(testCaseId = {"300"})
     @Description("Manual Batch Quantity cannot be junk")
@@ -308,9 +310,10 @@ public class SettingsTests extends TestBase {
 
         /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
 
-        assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
     }
 
+    @Ignore("Test needs more development as assertion has been commented")
     @Test
     @TestRail(testCaseId = {"301", "302"})
     @Description("Manual Batch Quantity cannot be a decimal")
@@ -326,9 +329,10 @@ public class SettingsTests extends TestBase {
 
         /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
 
-        assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
     }
 
+//    @Ignore("Test needs more development as assertion has been commented")
     @Test
     @TestRail(testCaseId = {"303"})
     @Description("Changes made on all tabs of the user preferences should be saved regardless of the tab that the save button was closed on")
@@ -343,21 +347,22 @@ public class SettingsTests extends TestBase {
             .goToProductionTab()
             .inputScenarioName("Save all tabs test")
             .inputAnnualVolume("295")
-            .inputYears("7");
-
-        new DisplayPreferencesPage(driver).goToSelectionTab()
+            .inputYears("7")
+            .goToSelectionTab()
             .selectColour(ColourEnum.AMBER)
             .submit(ExplorePage.class)
             .openSettings();
+
         //assertThat(displayPreferencesPage.(MetricEnum.ENGLISH.getMetricUnit()), is(true));
 
-        productionDefaultPage = new DisplayPreferencesPage(driver).goToProductionTab();
+//        displayPreferencesPage = productionDefaultPage.goToProductionTab();
         assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));
 
         selectionPage = new DisplayPreferencesPage(driver).goToSelectionTab();
         assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
     }
 
+    @Ignore("Test needs more development as assertion has been commented")
     @Test
     @TestRail(testCaseId = {"295", "299"})
     @Description("Options should filter subsequent drop down options available")

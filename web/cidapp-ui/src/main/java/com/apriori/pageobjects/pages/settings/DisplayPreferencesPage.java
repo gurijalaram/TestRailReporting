@@ -116,7 +116,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage setSystem(String system) {
-        By theSystem = By.xpath(String.format("//input[@value='%s']", system));
+        By theSystem = By.xpath(String.format("//input[@value='%s']", system.toUpperCase()));
         pageUtils.waitForElementAndClick(theSystem);
         return this;
     }
