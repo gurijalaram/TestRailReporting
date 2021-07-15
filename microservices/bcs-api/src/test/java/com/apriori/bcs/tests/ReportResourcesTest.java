@@ -16,10 +16,12 @@ import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -29,11 +31,10 @@ import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReportResourcesTest extends TestUtil {
-    private static Report report;
+    private static ResponseWrapper<Report> report;
     private static ReportTemplates reportTemplates;
     private static Part part;
     private static Batch batch;
-    private static NewReportRequest newReportRequest;
 
     @BeforeClass
     public static void testSetup() {
@@ -72,13 +73,7 @@ public class ReportResourcesTest extends TestUtil {
         reportParameters.setCurrencyCode("USD");
         reportParameters.setRoundToDollar(true);
 
-        newReportRequest =
-                (NewReportRequest) JsonManager.deserializeJsonFromInputStream(
-                        FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"),
-                        NewReportRequest.class);
-        newReportRequest.setScopedIdentity(part.getIdentity());
-        newReportRequest.setReportTemplateIdentity(reportTemplates.getItems().get(0).getIdentity());
-        newReportRequest.setReportParameters(reportParameters);
+        NewReportRequest newReportRequest = generateReportRequest(reportParameters);
 
         report  = ReportResources.createReport(newReportRequest);
     }
@@ -89,7 +84,6 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @Test
-    @Issue("AP-69406")
     @TestRail(testCaseId = {"4180"})
     @Description("API returns a list of all the reports in the CIS DB")
     public void getReports() {
@@ -101,14 +95,14 @@ public class ReportResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"4182"})
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
-        ReportResources.getReportRepresentation(report.getIdentity());
+        ReportResources.getReportRepresentation(report.getResponseEntity().getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"4181"})
     @Description("Create a new report using the CIS API")
     public void createNewReport() {
-        Assert.assertNotNull("No report was created", report.getIdentity());
+        Assert.assertNotNull("No report was created", report.getResponseEntity().getIdentity());
 
         int intervals = Constants.getPollingTimeout();
         int interval = 0;
@@ -124,6 +118,46 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @Test
+    @Issue("AP-69406")
+    @TestRail(testCaseId = "8691")
+    @Description("Create a report with unsupported roundToDollar values")
+    public void createReportWithRoundToDollarSettings() {
+        NewReportRequest newReportRequest;
+        ReportParameters reportParameters = new ReportParameters();
+        reportParameters.setCurrencyCode("USD");
+
+        reportParameters.setRoundToDollar("true");
+        newReportRequest = generateReportRequest(reportParameters);
+        report  = ReportResources.createReport(newReportRequest, HttpStatus.SC_CONFLICT, null);
+        Assert.assertEquals("Test passed with string 'true' roundToDollar value",
+                report.getResponseEntity().getErrors(),
+                "Value 'true' is not a 'BOOLEAN' parameter 'roundToDollar'");
+
+
+        reportParameters.setRoundToDollar("hello");
+        newReportRequest = generateReportRequest(reportParameters);
+        report  = ReportResources.createReport(newReportRequest, HttpStatus.SC_CONFLICT, null);
+        Assert.assertEquals("Test passed with string roundToDollar value",
+                report.getResponseEntity().getErrors(),
+                "Value 'hello' is not a 'BOOLEAN' parameter 'roundToDollar'");
+
+        reportParameters.setRoundToDollar("");
+        newReportRequest = generateReportRequest(reportParameters);
+        report  = ReportResources.createReport(newReportRequest, HttpStatus.SC_CONFLICT, null);
+        Assert.assertEquals("Test passed with empty string roundToDollar value",
+                report.getResponseEntity().getErrors(),
+                "Value '' is not a 'BOOLEAN' parameter 'roundToDollar'");
+
+        reportParameters.setRoundToDollar(null);
+        newReportRequest = generateReportRequest(reportParameters);
+        report  = ReportResources.createReport(newReportRequest, HttpStatus.SC_NOT_FOUND, null);
+        Assert.assertEquals("Test passed with NULL roundToDollar value",
+                report.getResponseEntity().getErrors(),
+                "Can't find mandatory report parameter 'roundToDollar' for report template 'DTC Part Summary'");
+    }
+
+
+    @Test
     @TestRail(testCaseId = {"4183"})
     @Description("Export a report using the CIS API")
     public void exportReport() {
@@ -135,7 +169,7 @@ public class ReportResourcesTest extends TestUtil {
             reportState = getReportState();
             if (reportState.equals(BcsUtils.State.ERRORED)) {
                 Assert.fail(String.format("Report processing failed with error: '%s'",
-                        report.getErrors()));
+                        report.getResponseEntity().getErrors()));
                 return;
 
             } else if (reportState.equals(BcsUtils.State.COMPLETED)) {
@@ -151,7 +185,7 @@ public class ReportResourcesTest extends TestUtil {
                     getReportState().toString()));
         }
 
-        ReportResources.exportReport(report.getIdentity());
+        ReportResources.exportReport(report.getResponseEntity().getIdentity());
     }
 
     @Test
@@ -168,13 +202,34 @@ public class ReportResourcesTest extends TestUtil {
      * @return Report state
      */
     private BcsUtils.State getReportState() {
-        report = (Report)ReportResources.getReportRepresentation(report.getIdentity()).getResponseEntity();
+        Report rpt =
+                (Report)ReportResources.getReportRepresentation(report.getResponseEntity().getIdentity()).getResponseEntity();
         try {
-            return BcsUtils.pollState(report, Report.class);
+            return BcsUtils.pollState(rpt, Report.class);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    /**
+     * Generate a new report request
+     *
+     * @param reportParameters Report parameter set
+     * @return new report request
+     */
+    private static NewReportRequest generateReportRequest(ReportParameters reportParameters) {
+        reportParameters.setCurrencyCode("USD");
+
+        NewReportRequest newReportRequest =
+                (NewReportRequest) JsonManager.deserializeJsonFromInputStream(
+                        FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"),
+                        NewReportRequest.class);
+        newReportRequest.setScopedIdentity(part.getIdentity());
+        newReportRequest.setReportTemplateIdentity(reportTemplates.getItems().get(0).getIdentity());
+        newReportRequest.setReportParameters(reportParameters);
+
+        return newReportRequest;
     }
 }

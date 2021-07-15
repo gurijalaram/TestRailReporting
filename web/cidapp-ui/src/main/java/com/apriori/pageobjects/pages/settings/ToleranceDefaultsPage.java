@@ -43,11 +43,13 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
+    private SettingsNavigation settingsNavigation;
 
     public ToleranceDefaultsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
+        this.settingsNavigation = new SettingsNavigation(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -60,6 +62,33 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
     @Override
     protected void isLoaded() throws Error {
         assertTrue("Tolerance tab was not selected", toleranceTab.getAttribute("class").contains("active"));
+    }
+
+    /**
+     * Go to display default tab
+     *
+     * @return new page object
+     */
+    public DisplayPreferencesPage goToDisplayTab() {
+        return settingsNavigation.goToDisplayTab();
+    }
+
+    /**
+     * Go to production default tab
+     *
+     * @return new page object
+     */
+    public ProductionDefaultsPage goToProductionTab() {
+        return settingsNavigation.goToProductionTab();
+    }
+
+    /**
+     * Go to selection tab
+     *
+     * @return new page object
+     */
+    public SelectionPage goToSelectionTab() {
+        return settingsNavigation.goToSelectionTab();
     }
 
     /**
@@ -127,6 +156,15 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
     }
 
     /**
+     * Get cad value
+     *
+     * @return double
+     */
+    public double getCadValue() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(minCadInput).getAttribute("value"));
+    }
+
+    /**
      * Input cad tolerance
      *
      * @param toleranceValue - the cad tolerance
@@ -136,6 +174,15 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
         pageUtils.clearInput(cadToleranceInput);
         cadToleranceInput.sendKeys(toleranceValue);
         return this;
+    }
+
+    /**
+     * Get cad tolerance
+     *
+     * @return double
+     */
+    public double getCadTolerance() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(cadToleranceInput).getAttribute("value"));
     }
 
     /**
