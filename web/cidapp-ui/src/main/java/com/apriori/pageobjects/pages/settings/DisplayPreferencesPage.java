@@ -5,13 +5,13 @@ import static org.junit.Assert.assertTrue;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.DecimalPlaceEnum;
-import com.apriori.utils.enums.LengthEnum;
-import com.apriori.utils.enums.MassEnum;
-import com.apriori.utils.enums.TimeEnum;
 import com.apriori.utils.enums.UnitsEnum;
 
+import com.utils.CurrencyEnum;
+import com.utils.DecimalPlaceEnum;
+import com.utils.LengthEnum;
+import com.utils.MassEnum;
+import com.utils.TimeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
