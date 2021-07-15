@@ -26,14 +26,8 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
 
-    @FindBy(xpath = "//button[.='Production Defaults']")
-    private WebElement productionsTab;
-
-    @FindBy(xpath = "//button[.='Tolerance Defaults']")
-    private WebElement tolerancesTab;
-
-    @FindBy(xpath = "//button[.='Selection']")
-    private WebElement selectionTab;
+    @FindBy(xpath = "//button[.='Multi-Body']")
+    private WebElement multiBodyTab;
 
     @FindBy(css = "[id='qa-preferences-unit-group-select'] .apriori-select")
     private WebElement unitsDropdown;
@@ -62,11 +56,13 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
+    private SettingsNavigation settingsNavigation;
 
     public DisplayPreferencesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
+        this.settingsNavigation = new SettingsNavigation(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -82,13 +78,12 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     }
 
     /**
-     * Go to tolerances default tab
+     * Go to selection tab
      *
      * @return new page object
      */
-    public ToleranceDefaultsPage goToToleranceTab() {
-        pageUtils.waitForElementAndClick(tolerancesTab);
-        return new ToleranceDefaultsPage(driver);
+    public SelectionPage goToSelectionTab() {
+        return settingsNavigation.goToSelectionTab();
     }
 
     /**
@@ -97,18 +92,16 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return new page object
      */
     public ProductionDefaultsPage goToProductionTab() {
-        pageUtils.waitForElementAndClick(productionsTab);
-        return new ProductionDefaultsPage(driver);
+        return settingsNavigation.goToProductionTab();
     }
 
     /**
-     * Go to selection tab
+     * Go to tolerances default tab
      *
      * @return new page object
      */
-    public SelectionPage goToSelectionTab() {
-        pageUtils.waitForElementAndClick(selectionTab);
-        return new SelectionPage(driver);
+    public ToleranceDefaultsPage goToToleranceTab() {
+        return settingsNavigation.goToToleranceTab();
     }
 
     /**
@@ -278,7 +271,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage setSystem(String system) {
-        By theSystem = By.xpath(String.format("//input[@value='%s']", system));
+        By theSystem = By.xpath(String.format("//input[@value='%s']", system.toUpperCase()));
         pageUtils.waitForElementAndClick(theSystem);
         return this;
     }
