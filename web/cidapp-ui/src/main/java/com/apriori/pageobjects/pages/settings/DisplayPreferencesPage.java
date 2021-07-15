@@ -35,28 +35,28 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     @FindBy(xpath = "//button[.='Selection']")
     private WebElement selectionTab;
 
-    @FindBy(xpath = "[id='qa-preferences-unit-group-select'] .apriori-select")
+    @FindBy(css = "[id='qa-preferences-unit-group-select'] .apriori-select")
     private WebElement unitsDropdown;
 
-    @FindBy(xpath = "[id='qa-preferences-length-select'] .apriori-select")
+    @FindBy(css = "[id='qa-preferences-length-select'] .apriori-select")
     private WebElement lengthDropdown;
 
-    @FindBy(xpath = "[id='qa-preferences-mass-select'] .apriori-select")
+    @FindBy(css = "[id='qa-preferences-mass-select'] .apriori-select")
     private WebElement massDropdown;
 
-    @FindBy(xpath = "[id='qa-preferences-time-select'] .apriori-select")
+    @FindBy(css = "[id='qa-preferences-time-select'] .apriori-select")
     private WebElement timeDropdown;
 
-    @FindBy(xpath = "[id='qa-preferences-decimal-select'] .apriori-select")
+    @FindBy(css = "[id='qa-preferences-decimal-select'] .apriori-select")
     private WebElement decimalDropdown;
 
-    @FindBy(xpath = "[id='qa-preferences-language-select'] .apriori-select")
+    @FindBy(css = "[id='qa-preferences-language-select'] .apriori-select")
     private WebElement languageDropdown;
 
-    @FindBy(xpath = "[id='qa-preferences-currency-select'] .apriori-select")
+    @FindBy(css = "[id='qa-preferences-currency-select'] .apriori-select")
     private WebElement currencyDropdown;
 
-    @FindBy(xpath = ".exchange-rate-table-select .apriori-select")
+    @FindBy(css = ".exchange-rate-table-select .apriori-select")
     private WebElement ertDropdown;
 
     private WebDriver driver;
