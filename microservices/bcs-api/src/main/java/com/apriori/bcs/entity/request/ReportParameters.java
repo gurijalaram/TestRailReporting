@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ReportParameters {
-    private boolean roundToDollar;
+    private Object roundToDollar;
     private String currencyCode;
 }
