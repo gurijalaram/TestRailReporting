@@ -43,7 +43,7 @@ public class LoginTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser());
 
         softAssert.assertThat(explorePage.getComponentsFound()).isEqualTo(100);
-        softAssert.assertThat(explorePage.isScenarioCountPresent()).isTrue();
+        softAssert.assertThat(explorePage.isScenarioCountPresent()).isFalse();
         softAssert.assertAll();
     }
 
