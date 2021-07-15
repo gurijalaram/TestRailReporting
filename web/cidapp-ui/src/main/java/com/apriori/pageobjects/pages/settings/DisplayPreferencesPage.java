@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.DecimalPlaceEnum;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -102,10 +103,10 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @param value - the value
      * @return current page object
      */
-    public DisplayPreferencesPage selectInSection(String label, String value) {
+    public DisplayPreferencesPage selectInSection(String label, DecimalPlaceEnum value) {
         String labelLocator = "//label[.='%s']/following-sibling::div[contains(@class,'apriori-select')]";
         WebElement labelDropdown = driver.findElement(By.xpath(String.format(labelLocator, label)));
-        pageUtils.typeAheadSelect(labelDropdown, value);
+        pageUtils.typeAheadSelect(labelDropdown, value.getDecimalPlaces());
         return this;
     }
 
