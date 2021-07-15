@@ -10,6 +10,7 @@ import com.apriori.entity.request.assemblyobjects.Assembly;
 import com.apriori.entity.request.assemblyobjects.AssemblyComponent;
 import com.apriori.entity.response.GetAdminInfoResponse;
 import com.apriori.entity.response.GetCadMetadataResponse;
+import com.apriori.entity.response.GetImageInfoResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.entity.response.upload.FileResponse;
@@ -236,7 +237,7 @@ public class WorkorderAPITests {
     @Issue("AP-69600")
     @Category(CidAPITest.class)
     @TestRail(testCaseId = {"8689"})
-    @Description("Upload a part, load cad metadata, then get cad metadata to verify that all comonents are returned")
+    @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -276,6 +277,43 @@ public class WorkorderAPITests {
         for (int i = 0; i < getCadMetadataResponse.getManifest().size(); i++) {
             assertThat(getCadMetadataResponse.getManifest().get(i).getOccurrences(), is(equalTo("1")));
         }
+    }
+
+    @Test
+    @Issue("AP-69600")
+    @Category(CidAPITest.class)
+    @TestRail(testCaseId = {"8693"})
+    @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
+    public void testGetImageInfo() {
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                        "CreatePartData.json"
+                ).getPath(), NewPartRequest.class
+        );
+
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+                "bracket_basic.prt",
+                processGroup
+        );
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, testScenarioName);
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+                productionInfoInputs,
+                fileUploadOutputs,
+                processGroup
+        );
+
+        GetImageInfoResponse getImageInfoResponse = fileUploadResources
+                .getImageInfo(costOutputs.getScenarioIterationKey());
+
+        assertThat(getImageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
+        assertThat(getImageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
+        assertThat(getImageInfoResponse.getPartNestingDiagramAvailable(), is(equalTo("false")));
+        assertThat(getImageInfoResponse.getWebImageAvailable(), is(equalTo("true")));
+        assertThat(getImageInfoResponse.getWebImageRequiresRegen(), is(equalTo("false")));
     }
 
     private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {

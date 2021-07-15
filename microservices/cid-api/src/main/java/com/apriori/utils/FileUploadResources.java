@@ -23,6 +23,7 @@ import com.apriori.entity.request.publish.createpublishworkorder.PublishScenario
 import com.apriori.entity.response.CreateWorkorderResponse;
 import com.apriori.entity.response.GetAdminInfoResponse;
 import com.apriori.entity.response.GetCadMetadataResponse;
+import com.apriori.entity.response.GetImageInfoResponse;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.cost.iterations.CostIteration;
 import com.apriori.entity.response.publish.publishworkorderresult.PublishResultOutputs;
@@ -36,6 +37,7 @@ import com.apriori.entity.response.upload.GeneratePartImagesInputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataInputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
+import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.entity.response.upload.ScenarioKey;
 import com.apriori.entity.response.upload.WorkorderCommand;
 import com.apriori.entity.response.upload.WorkorderCommands;
@@ -325,6 +327,30 @@ public class FileUploadResources {
                 .setHeaders(token);
 
         return (GetAdminInfoResponse) GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getResponseEntity();
+    }
+
+    /**
+     * Gets image info
+     *
+     * @param scenarioIterationKey - Scenario Iteration Key from previous call
+     * @return GetImageInfoResponse - json response from API call
+     */
+    public GetImageInfoResponse getImageInfo(ScenarioIterationKey scenarioIterationKey) {
+        String url = baseUrl.concat(sessionUrl).concat(
+                String.format("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-info",
+                        scenarioIterationKey.getScenarioKey().getWorkspaceId(),
+                        scenarioIterationKey.getScenarioKey().getTypeName(),
+                        scenarioIterationKey.getScenarioKey().getMasterName(),
+                        scenarioIterationKey.getScenarioKey().getStateName(),
+                        scenarioIterationKey.getIteration()));
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity requestEntity = RequestEntity.init(url, GetImageInfoResponse.class)
+                .setHeaders(headers)
+                .setHeaders(token);
+
+        return (GetImageInfoResponse) GenericRequestUtil.get(requestEntity, new RequestAreaApi()).getResponseEntity();
     }
 
     /**
