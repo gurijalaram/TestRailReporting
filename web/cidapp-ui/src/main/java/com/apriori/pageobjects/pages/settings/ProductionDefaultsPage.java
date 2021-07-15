@@ -54,11 +54,13 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
+    private SettingsNavigation settingsNavigation;
 
     public ProductionDefaultsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
+        this.settingsNavigation = new SettingsNavigation(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -73,6 +75,33 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     protected void isLoaded() throws Error {
         assertTrue("Production Defaults tab is not active", productionsTab.getAttribute("class").contains("active"));
         assertTrue("Production Defaults is not displayed", productionDefaults.isDisplayed());
+    }
+
+    /**
+     * Go to tolerances default tab
+     *
+     * @return new page object
+     */
+    public ToleranceDefaultsPage goToToleranceTab() {
+        return settingsNavigation.goToToleranceTab();
+    }
+
+    /**
+     * Go to tolerances default tab
+     *
+     * @return new page object
+     */
+    public DisplayPreferencesPage goToDisplayTab() {
+        return settingsNavigation.goToDisplayTab();
+    }
+
+    /**
+     * Go to selection tab
+     *
+     * @return new page object
+     */
+    public SelectionPage goToSelectionTab() {
+        return settingsNavigation.goToSelectionTab();
     }
 
     /**

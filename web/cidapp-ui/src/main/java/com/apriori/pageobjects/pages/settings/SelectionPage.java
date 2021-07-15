@@ -26,11 +26,13 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
+    private SettingsNavigation settingsNavigation;
 
     public SelectionPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
+        this.settingsNavigation = new SettingsNavigation(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -44,6 +46,33 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
     @Override
     protected void isLoaded() throws Error {
         assertTrue("Production Defaults tab is not active", selectionTab.getAttribute("class").contains("active"));
+    }
+
+    /**
+     * Go to production default tab
+     *
+     * @return new page object
+     */
+    public ProductionDefaultsPage goToProductionTab() {
+        return settingsNavigation.goToProductionTab();
+    }
+
+    /**
+     * Go to tolerances default tab
+     *
+     * @return new page object
+     */
+    public ToleranceDefaultsPage goToToleranceTab() {
+        return settingsNavigation.goToToleranceTab();
+    }
+
+    /**
+     * Go to tolerances default tab
+     *
+     * @return new page object
+     */
+    public DisplayPreferencesPage goToDisplayTab() {
+        return settingsNavigation.goToDisplayTab();
     }
 
     /**
