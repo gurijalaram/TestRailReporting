@@ -1,12 +1,13 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.common.CustomAttributesInputsController;
-import com.apriori.pageobjects.common.PrimaryInputsController;
-import com.apriori.pageobjects.common.SecondaryInputsController;
+import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryInputsPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -141,10 +142,15 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-process-group-select-field']//div[@class='text-overflow']")
     private WebElement currentProcessGroup;
 
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Secondary']")
+    private WebElement secondaryTab;
+
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
+    private WebElement customAttributesTab;
+
     private PageUtils pageUtils;
     private WebDriver driver;
-    private PrimaryInputsController primaryInputsController;
-    private SecondaryInputsController secondaryInputsController;
+    private InputsController inputsController;
     private CustomAttributesInputsController customAttributesInputsController;
     private StatusIcon statusIcon;
 
@@ -152,8 +158,7 @@ public class EvaluatePage extends EvaluateToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.primaryInputsController = new PrimaryInputsController(driver);
-        this.secondaryInputsController = new SecondaryInputsController(driver);
+        this.inputsController = new InputsController(driver);
         this.customAttributesInputsController = new CustomAttributesInputsController(driver);
         this.statusIcon = new StatusIcon(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -183,18 +188,18 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(ProcessGroupEnum processGroup) {
-        primaryInputsController.selectProcessGroup(processGroupDropdown, processGroup);
+        inputsController.selectProcessGroup(processGroupDropdown, processGroup);
         return this;
     }
 
     /**
-     * Selects the vpe dropdown
+     * Selects the digital factory dropdown
      *
-     * @param digitalFactory - the vpe
+     * @param digitalFactory - the digital factory
      * @return current page object
      */
     public EvaluatePage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        primaryInputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
+        inputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
         return this;
     }
 
@@ -205,7 +210,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage enterAnnualVolume(String annualVolume) {
-        primaryInputsController.enterAnnualVolume(annualVolumeInput, annualVolume);
+        inputsController.enterAnnualVolume(annualVolumeInput, annualVolume);
         return this;
     }
 
@@ -216,8 +221,28 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage enterAnnualYears(String productionLife) {
-        primaryInputsController.enterAnnualYears(productionLifeInput, productionLife);
+        inputsController.enterAnnualYears(productionLifeInput, productionLife);
         return this;
+    }
+
+    /**
+     * Opens secondary input tab
+     *
+     * @return new page object
+     */
+    public SecondaryInputsPage goToSecondaryTab() {
+        pageUtils.waitForElementAndClick(secondaryTab);
+        return new SecondaryInputsPage(driver);
+    }
+
+    /**
+     * Opens custom attributes tab
+     *
+     * @return new page object
+     */
+    public CustomAttributesPage goToCustomAttributesTab() {
+        pageUtils.waitForElementAndClick(customAttributesTab);
+        return new CustomAttributesPage(driver);
     }
 
     /**
@@ -236,7 +261,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public MaterialSelectorPage openMaterialSelectorTable() {
-        primaryInputsController.openMaterialSelectorTable(materialsPencil);
+        inputsController.openMaterialSelectorTable(materialsPencil);
         return new MaterialSelectorPage(driver);
     }
 
@@ -299,7 +324,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public SecondaryProcessesPage openSecondaryProcesses() {
-        primaryInputsController.openSecondaryProcesses(secondaryProcessesPencil);
+        inputsController.openSecondaryProcesses(secondaryProcessesPencil);
         return new SecondaryProcessesPage(driver);
     }
 
@@ -309,7 +334,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return list of string
      */
     public List<String> getSecondaryProcesses() {
-        return primaryInputsController.getSecondaryProcesses(secondaryProcesses);
+        return inputsController.getSecondaryProcesses(secondaryProcesses);
     }
 
     /**
@@ -562,7 +587,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public SourceModelExplorePage selectSourcePart() {
-        primaryInputsController.openSourceModelSelectorTable(sourceComponentPencil);
+        inputsController.openSourceModelSelectorTable(sourceComponentPencil);
         return new SourceModelExplorePage(driver);
     }
 

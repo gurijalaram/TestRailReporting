@@ -1,29 +1,27 @@
-package com.apriori.pageobjects.pages.evaluate.components.inputs;
+package com.apriori.pageobjects.pages.evaluate.inputs;
 
-import com.apriori.pageobjects.common.CustomAttributesInputsController;
+import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class CustomAttributesPage {
-
-    private static final Logger logger = LoggerFactory.getLogger(CustomAttributesPage.class);
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private CustomAttributesInputsController customAttributesInputsController;
+    private InputsController inputsController;
     private ModalDialogController modalDialogController;
 
     public CustomAttributesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.customAttributesInputsController = new CustomAttributesInputsController(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        this.inputsController = new InputsController(driver);
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 }

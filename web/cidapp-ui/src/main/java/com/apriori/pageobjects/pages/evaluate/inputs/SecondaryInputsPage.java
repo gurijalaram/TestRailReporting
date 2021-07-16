@@ -1,0 +1,133 @@
+package com.apriori.pageobjects.pages.evaluate.inputs;
+
+import com.apriori.pageobjects.common.InputsController;
+import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
+import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> {
+
+    private static final Logger logger = LoggerFactory.getLogger(SecondaryInputsPage.class);
+
+    @FindBy(css = ".inputs-container input[name='batchSize']")
+    private WebElement batchSizeInput;
+
+    @FindBy(css = ".inputs-container [data-icon='chevron-down']")
+    private WebElement secondaryVpeDrodown;
+
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
+    private WebElement secondaryProcessesPencil;
+
+    @FindBy(css = "div[id='qa-secondary-digital-factory-select'] [data-icon='chevron-down']")
+    private WebElement secDigitalFactoryDropdown;
+
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
+    private WebElement customAttributesTab;
+
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Primary']")
+    private WebElement primaryTab;
+
+    private WebDriver driver;
+    private PageUtils pageUtils;
+    private InputsController inputsController;
+    private ModalDialogController modalDialogController;
+
+    public SecondaryInputsPage(WebDriver driver) {
+        this.driver = driver;
+        this.pageUtils = new PageUtils(driver);
+        this.inputsController = new InputsController(driver);
+        this.modalDialogController = new ModalDialogController(driver);
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        PageFactory.initElements(driver, this);
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(batchSizeInput);
+    }
+
+    /**
+     * Enters the batch size
+     *
+     * @param batchSize - the batch size
+     * @return current page object
+     */
+    public SecondaryInputsPage enterBatchSize(String batchSize) {
+        inputsController.enterBatchSize(batchSizeInput, batchSize);
+        return this;
+    }
+
+    /**
+     * Selects the digital factory dropdown
+     *
+     * @param digitalFactory - the digital factory
+     * @return current page object
+     */
+    public SecondaryInputsPage selectSecDigitalFactory(DigitalFactoryEnum digitalFactory) {
+        inputsController.selectDigitalFactory(secDigitalFactoryDropdown, digitalFactory);
+        return this;
+    }
+
+    /**
+     * Opens the secondary processes page
+     *
+     * @return new page object
+     */
+    public SecondaryProcessesPage openSecondaryProcesses() {
+        inputsController.openSecondaryProcesses(secondaryProcessesPencil);
+        return new SecondaryProcessesPage(driver);
+    }
+
+    /**
+     * Opens custom attributes tab
+     *
+     * @return new page object
+     */
+    public CustomAttributesPage goToCustomAttributesTab() {
+        pageUtils.waitForElementAndClick(customAttributesTab);
+        return new CustomAttributesPage(driver);
+    }
+
+    /**
+     * Opens primary tab
+     *
+     * @return new page object
+     */
+    public EvaluatePage goToPrimaryTab() {
+        pageUtils.waitForElementAndClick(primaryTab);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public <T> T cancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
+    }
+
+    /**
+     * Cost
+     *
+     * @return current page object
+     */
+    public <T> T cost(Class<T> klass) {
+        return modalDialogController.cost(klass);
+    }
+}
