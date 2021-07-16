@@ -18,7 +18,6 @@ import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.entity.response.upload.GenerateAssemblyImagesOutputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
-import com.apriori.entity.response.upload.ManifestItem;
 import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
@@ -31,7 +30,6 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.hamcrest.CoreMatchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
