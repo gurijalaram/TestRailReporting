@@ -120,3 +120,6 @@ screenshots/
 /sds/build/
 build/
 /vim.exe.stackdump
+utils/gradle/
+utils/gradlew
+utils/gradlew.bat
