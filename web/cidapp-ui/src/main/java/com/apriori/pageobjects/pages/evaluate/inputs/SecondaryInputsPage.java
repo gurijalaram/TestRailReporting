@@ -109,4 +109,13 @@ public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> 
         pageUtils.waitForElementAndClick(primaryTab);
         return new EvaluatePage(driver);
     }
+
+    /**
+     * Gets batch size
+     *
+     * @return string
+     */
+    public String getBatchSize() {
+        return pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value");
+    }
 }
