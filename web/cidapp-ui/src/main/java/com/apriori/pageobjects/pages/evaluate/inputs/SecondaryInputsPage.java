@@ -22,9 +22,6 @@ public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> 
     @FindBy(css = ".inputs-container input[name='batchSize']")
     private WebElement batchSizeInput;
 
-    @FindBy(css = ".inputs-container [data-icon='chevron-down']")
-    private WebElement secondaryVpeDrodown;
-
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
     private WebElement secondaryProcessesPencil;
 
@@ -111,23 +108,5 @@ public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> 
     public EvaluatePage goToPrimaryTab() {
         pageUtils.waitForElementAndClick(primaryTab);
         return new EvaluatePage(driver);
-    }
-
-    /**
-     * Select the cancel button
-     *
-     * @return generic page object
-     */
-    public <T> T cancel(Class<T> klass) {
-        return modalDialogController.cancel(klass);
-    }
-
-    /**
-     * Cost
-     *
-     * @return current page object
-     */
-    public <T> T cost(Class<T> klass) {
-        return modalDialogController.cost(klass);
     }
 }

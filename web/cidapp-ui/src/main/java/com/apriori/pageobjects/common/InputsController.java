@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
@@ -16,12 +15,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class InputsController {
-
-    @FindBy(css = "div[id='qa-process-group-select-field'] .apriori-select")
-    private WebElement pgDropdown;
-
-    @FindBy(css = "div[id='qa-digital-factory-select-field'] .apriori-select")
-    private WebElement digitalFactoryDropdown;
 
     private WebDriver driver;
     private PageUtils pageUtils;
