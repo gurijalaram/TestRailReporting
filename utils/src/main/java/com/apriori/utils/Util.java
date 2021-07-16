@@ -49,4 +49,15 @@ public class Util {
             return collected.stream();
         });
     }
+
+
+    /**
+     * run any javascript query
+     *
+     * @return String
+     */
+    public static String runAnyJavaScript(WebDriver driver, String scriptToBeExecuted) {
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        return String.valueOf(js.executeScript(scriptToBeExecuted));
+    }
 }

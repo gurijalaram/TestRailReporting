@@ -1,11 +1,10 @@
 package com.evaluate.bracketbasic;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.SourceModelExplorePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.PartNestingPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
-import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -13,43 +12,37 @@ import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.io.File;
-
 @Slf4j
 public class BracketBasicTests extends TestBase {
-
-    private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
-
-    private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
-    private ForgottenPasswordPage forgottenPasswordPage;
-    private PrivacyPolicyPage privacyPolicyPage;
-    private EvaluatePage evaluatePage;
-    private SourceModelExplorePage sourceModelExplorePage;
-
-
-    private File resourceFile;
-    private UserCredentials currentUser;
-
     public BracketBasicTests() {
         super();
     }
 
     @Test
-    @Description("Test successful login")
+    @Description("Create PO & methods for nesting tab where required")
     public void testLogin() {
-
-        currentUser = UserUtil.getUser();
         String componentName = "BRACKET_BASIC";
-        String scenarioName = "Gatling_ddd317c0-3868-4542-b0ed-3041f7ddd054";
-        loginPage = new CidAppLoginPage(driver);
+        String scenarioName = "David_Bracket";
+        String presetFilter = "Private";
 
-        loginPage
+        UserCredentials currentUser = UserUtil.getUser();
+        CidAppLoginPage loginPage = new CidAppLoginPage(driver);
+        PartNestingPage partNestingPage = loginPage
                 .login(currentUser)
-                .clickSearch("bracket_basic")
-                .setPagination()
+                .clickSearch(componentName)
+                .selectFilter(presetFilter)
                 .openScenario(componentName, scenarioName)
                 .openMaterialProcess()
-                .goToPartNestingTab();
+                .openPartNestingTab()
+                .SelectUtilizationModeDropDown("True-Part Shape Nesting")
+                .clickOnCost();
+
+        assertThat(partNestingPage.getSelectedSheetInfo("Selected Sheet"), is(equalTo("4.000mm x 1,250.000mm x 2,500.000mm")));
+        assertThat(partNestingPage.getBlankSizeInfo("Blank Size"), is(equalTo("470.782mm x 400.002mm")));
+        assertThat(partNestingPage.getPartsPerSheetInfo("Parts Per Sheet"), is(equalTo("15")));
+        assertThat(partNestingPage.getPartNestingInfo("Part Nesting"), is(equalTo("True-Part Shape Nesting")));
+        assertThat(partNestingPage.getUtilizationModeInfo("Utilization Mode"), is(true));
+        assertThat(partNestingPage.getStockWidthInfo(), is(equalTo("1,250.000mm")));
+        assertThat(partNestingPage.getStockLengthInfo(), is(equalTo("2,500.000mm")));
     }
 }

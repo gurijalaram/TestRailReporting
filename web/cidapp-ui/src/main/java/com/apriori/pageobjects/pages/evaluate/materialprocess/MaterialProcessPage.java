@@ -134,7 +134,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * Go to Part Nesting tab
      * @return new page object
      */
-    public PartNestingPage goToPartNestingTab() {
+    public PartNestingPage openPartNestingTab() {
         pageUtils.waitForElementAndClick(partNestingTab);
         return new PartNestingPage(driver);
     }
