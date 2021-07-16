@@ -62,7 +62,7 @@ public class MaterialPMITests extends TestBase {
         new SettingsPage(driver).save(ExplorePage.class);*/
 
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
         assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Stock, ANSI 6061"), is(true));

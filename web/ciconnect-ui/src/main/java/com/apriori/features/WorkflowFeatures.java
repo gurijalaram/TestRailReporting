@@ -147,7 +147,6 @@ public class WorkflowFeatures {
     public Map<String, Object> deleteWorklow(String workflowName) {
         Map<String, Object> values = new HashMap();
         workflowPage.refreshPage();
-        workflowPage.sortBy("Last Modified By");
 
         workflowPage.selectWorkflow(workflowName);
         workflowPage.clickDeleteButton();

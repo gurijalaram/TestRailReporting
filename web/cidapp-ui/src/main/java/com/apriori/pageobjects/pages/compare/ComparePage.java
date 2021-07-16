@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.compare;
 
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.CompareToolbar;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
@@ -265,5 +266,26 @@ public class ComparePage extends CompareToolbar {
         // TODO: 13/05/2021 cf - the xpath below is the only way i can get back to the parent element. the previous locator was much simpler so i sent a message to Jacob asking for it to be reverted
         return driver.findElements(By.xpath(String.format("//span[.='%s ']/following-sibling::span[.='/ %s']/../../../../..//div[contains(@id,'qa-%s')]//div[@class='content']//div[@class='right']/div",
             componentName, scenarioName, card.getCardHeader()))).get(card.getCardPosition());
+    }
+
+    /**
+     * Opens the comparison
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return new page object
+     */
+    public EvaluatePage openScenario(String componentName, String scenarioName) {
+        By byComparison = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//div[@class='scenario-thumbnail medium']",
+            componentName.toUpperCase().trim(), scenarioName.trim()));
+        pageUtils.waitForElementToAppear(byComparison);
+        pageUtils.mouseMove(driver.findElement(byComparison));
+
+        By byComparisonLink = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//a",
+            componentName.toUpperCase().trim(), scenarioName.trim()));
+        pageUtils.waitForElementToAppear(byComparisonLink);
+
+        pageUtils.javaScriptClick(driver.findElement(byComparisonLink));
+        return new EvaluatePage(driver);
     }
 }

@@ -141,7 +141,7 @@ public class BcsUtils extends ApiUtils {
      *
      * @param batch
      * @return
-     * @throws InterruptedException
+     * @throws InterruptedException Thread interrupted
      */
     public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
         Object batchDetails;

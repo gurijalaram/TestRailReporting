@@ -1,46 +1,77 @@
 package com.apriori.pageobjects.pages.settings;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferencesPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(DisplayPreferencesPage.class);
 
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
 
+    @FindBy(xpath = "//button[.='Multi-Body']")
+    private WebElement multiBodyTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
+    private SettingsNavigation settingsNavigation;
 
     public DisplayPreferencesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        this.settingsNavigation = new SettingsNavigation(driver);
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
 
     @Override
     protected void load() {
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(displayTab);
+        assertTrue("Display tab was not selected", displayTab.getAttribute("class").contains("active"));
+    }
+
+    /**
+     * Go to selection tab
+     *
+     * @return new page object
+     */
+    public SelectionPage goToSelectionTab() {
+        return settingsNavigation.goToSelectionTab();
+    }
+
+    /**
+     * Go to production default tab
+     *
+     * @return new page object
+     */
+    public ProductionDefaultsPage goToProductionTab() {
+        return settingsNavigation.goToProductionTab();
+    }
+
+    /**
+     * Go to tolerances default tab
+     *
+     * @return new page object
+     */
+    public ToleranceDefaultsPage goToToleranceTab() {
+        return settingsNavigation.goToToleranceTab();
     }
 
     /**
@@ -79,7 +110,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage setSystem(String system) {
-        By theSystem = By.xpath(String.format("//input[@value='%s']", system));
+        By theSystem = By.xpath(String.format("//input[@value='%s']", system.toUpperCase()));
         pageUtils.waitForElementAndClick(theSystem);
         return this;
     }

@@ -111,7 +111,7 @@ public class ProcessRoutingTests extends TestBase {
         processRoutingPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails();
 
@@ -132,7 +132,7 @@ public class ProcessRoutingTests extends TestBase {
         processRoutingPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails();
 
@@ -154,7 +154,7 @@ public class ProcessRoutingTests extends TestBase {
         processRoutingPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openMaterialCompositionTable()
             .selectMaterialComposition("Polyurethane, Polymeric MDI")
@@ -184,7 +184,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -216,7 +216,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -248,7 +248,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -284,7 +284,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario();
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(1.56, 1)));
 
@@ -328,7 +328,7 @@ public class ProcessRoutingTests extends TestBase {
         materialCompositionPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -355,7 +355,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -396,7 +396,7 @@ public class ProcessRoutingTests extends TestBase {
         processRoutingPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -433,7 +433,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -456,7 +456,7 @@ public class ProcessRoutingTests extends TestBase {
         loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
@@ -495,7 +495,7 @@ public class ProcessRoutingTests extends TestBase {
         geometryPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openDesignGuidance()
             .openGeometryTab()
@@ -540,7 +540,7 @@ public class ProcessRoutingTests extends TestBase {
         processRoutingPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectProcessChart("Band Saw");
@@ -568,7 +568,7 @@ public class ProcessRoutingTests extends TestBase {
         processRoutingPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton()
@@ -591,7 +591,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -612,7 +612,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -633,7 +633,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -654,7 +654,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -675,7 +675,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -696,7 +696,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -717,7 +717,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -738,7 +738,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -759,7 +759,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -780,7 +780,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -803,7 +803,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -825,7 +825,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -846,7 +846,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -867,7 +867,7 @@ public class ProcessRoutingTests extends TestBase {
         routingsPage = loginPage.login(currentUser)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario()
             .openProcessDetails()
             .selectRoutingsButton();
@@ -898,7 +898,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage = settingsPage.save(ExplorePage.class)
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Melting / High Pressure Die Casting / Trim / 5 Axis Mill / Drill Press / Cylindrical Grinder / " +

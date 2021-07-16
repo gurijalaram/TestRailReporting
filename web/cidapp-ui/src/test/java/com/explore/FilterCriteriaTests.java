@@ -78,7 +78,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .clickExplore()
             .filter()
