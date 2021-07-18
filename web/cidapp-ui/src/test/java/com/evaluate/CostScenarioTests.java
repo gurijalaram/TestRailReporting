@@ -17,7 +17,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
-import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -50,7 +49,7 @@ public class CostScenarioTests extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
-        evaluatePage.selectProcessGroup(processGroupEnum.getProcessGroup())
+        evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));

@@ -5,7 +5,8 @@ public enum RollupEnum {
     DTC_MACHINING_DATASET("DTC_MACHININGDATASET (Initial)"),
     ROLL_UP_A("ROLL-UP A (Initial)"),
     SHEET_METAL_DTC("SHEET METAL DTC (Initial)"),
-    AC_CYCLE_TIME_VT_1("AC CYCLE TIME VT 1");
+    AC_CYCLE_TIME_VT_1("AC CYCLE TIME VT 1"),
+    QA_TEST_ONE("QA TEST 1");
 
     private final String rollupName;
 

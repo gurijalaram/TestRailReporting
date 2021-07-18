@@ -195,6 +195,14 @@ When we want to run tests against local env we need to override **env** value `-
 If we want to run against Eclipse dev env we also need to change **url** and **ignore ssl check** 
 `-Durl=https://localhost:8543/ -DignoreSslCheck=true`
 
+## How to use assertj in your test class
+1. Import the assertj lib `import org.assertj.core.api.SoftAssertions;`
+2. Create a new object `private SoftAssertions softAssert = new SoftAssertions();`
+3. Compose the assertions eg. `softAssert.assertThat(explorePage.getComponentsFound()).isEqualTo(100); 
+   softAssert.assertThat(explorePage.isScenarioCountPresent()).isTrue();`
+4. The assertAll method must be called to carry out the assertions `softAssert.assertAll();`   
+
+
 ## Project properties
 ### Get properties 
 To get any project property use `com.apriori.utils.properties.PropertiesContext` - this is global class to work with properties.

@@ -148,7 +148,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Details Report")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testExportSetFilterUsingInputField(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName());
+        inputControlsTests.testExportSetFilterUsingInputField(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName()
+        );
     }
 
     @Test
@@ -264,7 +266,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
-            .clickOk(GenericReportPage.class)
+            .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
         String partName = machiningDtcReportPage.clickMachiningDtcDetailsPartName().replace("\n", "");
@@ -309,13 +311,16 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @TestRail(testCaseId = {"3025"})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
+        String exportSet = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
-            .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
+            .selectExportSet(exportSet, GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
+
+        genericReportPage.waitForReportToLoad();
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCMACHINING_001")));
@@ -334,7 +339,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum())
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCMACHINING_001")));
@@ -353,7 +358,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));
@@ -372,7 +377,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));
@@ -391,7 +396,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("PMI_ROUGHNESSCREO")));
@@ -410,7 +415,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
-            .clickOk(GenericReportPage.class);
+            .clickOk(true, GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));

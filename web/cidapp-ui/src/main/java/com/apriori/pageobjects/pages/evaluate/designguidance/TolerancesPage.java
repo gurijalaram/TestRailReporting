@@ -7,11 +7,16 @@ import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class TolerancesPage extends LoadableComponent<TolerancesPage> {
+
+    @FindBy(css = ".active [data-icon='ruler']")
+    private WebElement tolerancesTabActive;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -33,7 +38,7 @@ public class TolerancesPage extends LoadableComponent<TolerancesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementAppear(tolerancesTabActive);
     }
 
     /**
