@@ -1,8 +1,11 @@
+package com.apriori.util.test;
+
 import com.apriori.utils.properties.PropertiesContext;
 import org.junit.Test;
 
 public class PropertiesTest {
 
+    // INFO: Test example how to use PropertiesContext
     @Test
     public void testProps() {
         String value = PropertiesContext.getStr("global.base_url");
