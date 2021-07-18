@@ -1,6 +1,7 @@
 package com.apriori.util.test;
 
 import com.apriori.utils.properties.PropertiesContext;
+
 import org.junit.Test;
 
 public class PropertiesTest {
