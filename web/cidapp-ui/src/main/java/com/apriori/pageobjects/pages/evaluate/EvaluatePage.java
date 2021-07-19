@@ -7,7 +7,7 @@ import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryInputsPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -227,9 +227,9 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public SecondaryInputsPage goToSecondaryTab() {
+    public SecondaryPage goToSecondaryTab() {
         pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryInputsPage(driver);
+        return new SecondaryPage(driver);
     }
 
     /**

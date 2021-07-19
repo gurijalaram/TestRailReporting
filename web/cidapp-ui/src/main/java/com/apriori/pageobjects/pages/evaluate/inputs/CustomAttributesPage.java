@@ -65,8 +65,8 @@ public class CustomAttributesPage extends LoadableComponent<CustomAttributesPage
      *
      * @return new page object
      */
-    public SecondaryInputsPage goToSecondaryTab() {
+    public SecondaryPage goToSecondaryTab() {
         pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryInputsPage(driver);
+        return new SecondaryPage(driver);
     }
 }

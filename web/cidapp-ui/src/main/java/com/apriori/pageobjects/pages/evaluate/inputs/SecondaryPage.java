@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> {
+public class SecondaryPage extends LoadableComponent<SecondaryPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SecondaryInputsPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecondaryPage.class);
 
     @FindBy(css = ".inputs-container input[name='batchSize']")
     private WebElement batchSizeInput;
@@ -47,7 +47,7 @@ public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> 
     private InputsController inputsController;
     private ModalDialogController modalDialogController;
 
-    public SecondaryInputsPage(WebDriver driver) {
+    public SecondaryPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.inputsController = new InputsController(driver);
@@ -72,7 +72,7 @@ public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> 
      * @param batchSize - the batch size
      * @return current page object
      */
-    public SecondaryInputsPage enterBatchSize(String batchSize) {
+    public SecondaryPage enterBatchSize(String batchSize) {
         inputsController.enterBatchSize(batchSizeInput, batchSize);
         return this;
     }
@@ -83,7 +83,7 @@ public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> 
      * @param digitalFactory - the digital factory
      * @return current page object
      */
-    public SecondaryInputsPage selectSecDigitalFactory(DigitalFactoryEnum digitalFactory) {
+    public SecondaryPage selectSecDigitalFactory(DigitalFactoryEnum digitalFactory) {
         inputsController.selectDigitalFactory(secDigitalFactoryDropdown, digitalFactory);
         return this;
     }

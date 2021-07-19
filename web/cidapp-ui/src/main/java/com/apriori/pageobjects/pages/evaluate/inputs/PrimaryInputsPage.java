@@ -88,9 +88,9 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      *
      * @return new page object
      */
-    public SecondaryInputsPage openSecondaryInputsTab() {
+    public SecondaryPage openSecondaryInputsTab() {
         pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryInputsPage(driver);
+        return new SecondaryPage(driver);
     }
 
     /**

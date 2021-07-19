@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryInputsPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -32,7 +32,7 @@ public class SecondaryProcessTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private SecondaryInputsPage secondaryInputsPage;
+    private SecondaryPage secondaryPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -86,7 +86,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        secondaryInputsPage = loginPage.login(currentUser)
+        secondaryPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -94,18 +94,18 @@ public class SecondaryProcessTests extends TestBase {
             .submit()
             .goToSecondaryTab();
 
-        assertThat(secondaryInputsPage.getSecondaryProcesses(), is(empty()));
+        assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
 
-        evaluatePage = secondaryInputsPage.openSecondaryProcesses()
+        evaluatePage = secondaryPage.openSecondaryProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Xray Inspection"));
 
-        secondaryInputsPage = evaluatePage.goToSecondaryTab();
+        secondaryPage = evaluatePage.goToSecondaryTab();
 
-        assertThat(secondaryInputsPage.getSecondaryProcesses(), hasItems("Xray", " Packaging"));
+        assertThat(secondaryPage.getSecondaryProcesses(), hasItems("Xray", " Packaging"));
     }
 
     /*@Test
@@ -797,7 +797,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        secondaryInputsPage = loginPage.login(currentUser)
+        secondaryPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openSecondaryProcesses()
@@ -806,7 +806,7 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario()
             .goToSecondaryTab();
 
-        assertThat(secondaryInputsPage.getSecondaryProcesses(), is(empty()));
+        assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
     }
 
     @Test
