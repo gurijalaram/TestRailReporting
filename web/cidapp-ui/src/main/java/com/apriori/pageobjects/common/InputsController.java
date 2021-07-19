@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -133,5 +134,14 @@ public class InputsController {
     public InputsController openSourceModelSelectorTable(WebElement sourceComponentPencil) {
         pageUtils.waitForElementAndClick(sourceComponentPencil);
         return this;
+    }
+
+    /**
+     * Gets list of digital factory
+     *
+     * @return list as string
+     */
+    public List<String> getListOfDigitalFactory(WebElement digitalFactoryList, String filterOption) {
+        return Arrays.stream(digitalFactoryList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase(filterOption)).collect(Collectors.toList());
     }
 }

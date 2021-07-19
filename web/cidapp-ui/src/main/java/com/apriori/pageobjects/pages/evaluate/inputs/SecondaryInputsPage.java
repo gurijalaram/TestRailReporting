@@ -15,6 +15,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(SecondaryInputsPage.class);
@@ -28,11 +30,17 @@ public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> 
     @FindBy(css = "div[id='qa-secondary-digital-factory-select'] [data-icon='chevron-down']")
     private WebElement secDigitalFactoryDropdown;
 
+    @FindBy(css = "[id='qa-secondary-digital-factory-select']")
+    private WebElement secDigitalFactoryList;
+
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
     private WebElement customAttributesTab;
 
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Primary']")
     private WebElement primaryTab;
+
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .badge-pill")
+    private List<WebElement> secondaryProcesses;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -117,5 +125,23 @@ public class SecondaryInputsPage extends LoadableComponent<SecondaryInputsPage> 
      */
     public String getBatchSize() {
         return pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value");
+    }
+
+    /**
+     * Gets list of secondary processes
+     *
+     * @return list of string
+     */
+    public List<String> getSecondaryProcesses() {
+        return inputsController.getSecondaryProcesses(secondaryProcesses);
+    }
+
+    /**
+     * Gets list of secondary digital factory
+     *
+     * @return list as string
+     */
+    public List<String> getListOfSecondaryDigitalFactory() {
+        return inputsController.getListOfDigitalFactory(secDigitalFactoryList, "Secondary Digital Factory");
     }
 }

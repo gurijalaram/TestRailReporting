@@ -90,9 +90,6 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .badge-pill")
-    private List<WebElement> secondaryProcesses;
-
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
     private WebElement secondaryProcessesPencil;
 
@@ -329,15 +326,6 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets list of secondary processes
-     *
-     * @return list of string
-     */
-    public List<String> getSecondaryProcesses() {
-        return inputsController.getSecondaryProcesses(secondaryProcesses);
-    }
-
-    /**
      * Gets the process routing details
      *
      * @return string
@@ -480,7 +468,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfDigitalFactory() {
         pageUtils.waitForElementAndClick(digitalFactoryList);
-        return Arrays.stream(digitalFactoryList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("Digital Factory")).collect(Collectors.toList());
+        return inputsController.getListOfDigitalFactory(digitalFactoryList, "Digital Factory");
     }
 
     /**
