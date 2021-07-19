@@ -12,6 +12,7 @@ import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,8 +54,7 @@ public class NewWorkflowDetailsTests extends TestBase {
     public void cleanup() {
         workflowPage.refreshPage();
         workflowNames.forEach(name -> {
-            workflowPage.sortBy("Last Modified By")
-                    .sortBy("Last Modified By");
+            workflowPage.sortBy("Last Modified By");
             workflowFeatures.deleteWorklow(name);
         });
     }
