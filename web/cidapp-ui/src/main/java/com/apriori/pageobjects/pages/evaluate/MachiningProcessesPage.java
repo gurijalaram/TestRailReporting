@@ -16,9 +16,9 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcessesPage> {
+public class MachiningProcessesPage extends LoadableComponent<MachiningProcessesPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SecondaryProcessesPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(MachiningProcessesPage.class);
 
     @FindBy(xpath = "//div[normalize-space(@class)='tree selectable']")
     private WebElement processTree;
@@ -30,7 +30,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public SecondaryProcessesPage(WebDriver driver) {
+    public MachiningProcessesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -56,7 +56,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @param processName - the process name
      * @return current page object
      */
-    public SecondaryProcessesPage selectSecondaryProcess(String processType, String processName) {
+    public MachiningProcessesPage selectSecondaryProcess(String processType, String processName) {
         findProcessTypeAndName(processType, processName).click();
         return this;
     }
@@ -78,7 +78,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @param processTypes - the secondary process type
      * @return current page object
      */
-    private SecondaryProcessesPage selectProcessType(String processTypes) {
+    private MachiningProcessesPage selectProcessType(String processTypes) {
         Arrays.stream(Stream.of(processTypes)
             .map(processType -> processType.split(","))
             .collect(Collectors.toList())
@@ -107,7 +107,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @param searchTerm - search term
      * @return current page object
      */
-    public SecondaryProcessesPage search(String searchTerm) {
+    public MachiningProcessesPage search(String searchTerm) {
         pageUtils.waitForElementAppear(searchInput).clear();
         searchInput.sendKeys(searchTerm);
         return this;
@@ -118,7 +118,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public SecondaryProcessesPage selectAll() {
+    public MachiningProcessesPage selectAll() {
         modalDialogController.selectAll();
         return this;
     }
@@ -128,7 +128,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public SecondaryProcessesPage deselectAll() {
+    public MachiningProcessesPage deselectAll() {
         modalDialogController.deselectAll();
         return this;
     }
@@ -138,7 +138,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public SecondaryProcessesPage reset() {
+    public MachiningProcessesPage reset() {
         modalDialogController.reset();
         return this;
     }
@@ -148,7 +148,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public SecondaryProcessesPage expandAll() {
+    public MachiningProcessesPage expandAll() {
         modalDialogController.expandAll();
         return this;
     }
@@ -158,7 +158,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public SecondaryProcessesPage collapseAll() {
+    public MachiningProcessesPage collapseAll() {
         modalDialogController.collapseAll();
         return this;
     }

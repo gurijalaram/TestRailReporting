@@ -2,8 +2,8 @@ package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.MachiningProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -140,9 +140,9 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      *
      * @return new page object
      */
-    public SecondaryProcessesPage openSecondaryProcesses() {
-        inputsController.openSecondaryProcesses(secondaryProcessesPencil);
-        return new SecondaryProcessesPage(driver);
+    public MachiningProcessesPage openSecondaryProcesses() {
+        inputsController.openMachiningProcesses(secondaryProcessesPencil);
+        return new MachiningProcessesPage(driver);
     }
 
     /**

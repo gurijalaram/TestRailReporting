@@ -320,9 +320,9 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public SecondaryProcessesPage openSecondaryProcesses() {
-        inputsController.openSecondaryProcesses(secondaryProcessesPencil);
-        return new SecondaryProcessesPage(driver);
+    public MachiningProcessesPage openSecondaryProcesses() {
+        inputsController.openMachiningProcesses(secondaryProcessesPencil);
+        return new MachiningProcessesPage(driver);
     }
 
     /**

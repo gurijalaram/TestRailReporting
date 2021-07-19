@@ -3,7 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.inputs;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
+import com.apriori.pageobjects.pages.evaluate.MachiningProcessesPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 
@@ -25,7 +25,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     private WebElement batchSizeInput;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
-    private WebElement secondaryProcessesPencil;
+    private WebElement machiningProcessesPencil;
 
     @FindBy(css = "div[id='qa-secondary-digital-factory-select'] [data-icon='chevron-down']")
     private WebElement secDigitalFactoryDropdown;
@@ -93,9 +93,9 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      *
      * @return new page object
      */
-    public SecondaryProcessesPage openSecondaryProcesses() {
-        inputsController.openSecondaryProcesses(secondaryProcessesPencil);
-        return new SecondaryProcessesPage(driver);
+    public MachiningProcessesPage openMachiningProcesses() {
+        inputsController.openMachiningProcesses(machiningProcessesPencil);
+        return new MachiningProcessesPage(driver);
     }
 
     /**

@@ -96,7 +96,7 @@ public class SecondaryProcessTests extends TestBase {
 
         assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
 
-        evaluatePage = secondaryPage.openSecondaryProcesses()
+        evaluatePage = secondaryPage.openMachiningProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .submit(EvaluateToolbar.class)
             .costScenario();
