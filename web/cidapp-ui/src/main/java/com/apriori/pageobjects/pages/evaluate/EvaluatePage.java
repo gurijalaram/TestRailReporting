@@ -7,6 +7,7 @@ import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.MachiningProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;

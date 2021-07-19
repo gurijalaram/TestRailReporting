@@ -2,7 +2,6 @@ package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.MachiningProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;

@@ -1,6 +1,7 @@
-package com.apriori.pageobjects.pages.evaluate;
+package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,6 +27,9 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
 
     @FindBy(xpath = "//input[@placeholder='Search...']")
     private WebElement searchInput;
+
+    @FindBy(css = ".selected-preview .pill-box")
+    private WebElement selectedPreviewItems;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -114,34 +119,42 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
     }
 
     /**
-     * Select all
-     *
-     * @return current page object
+     * Get list of selected items
+     * @return list of string
      */
-    public MachiningProcessesPage selectAll() {
-        modalDialogController.selectAll();
-        return this;
+    public List<String> getSelectedPreviewList() {
+        return Arrays.stream(selectedPreviewItems.getText().split("\n")).collect(Collectors.toList());
     }
 
-    /**
-     * Deselect all
-     *
-     * @return current page object
-     */
-    public MachiningProcessesPage deselectAll() {
-        modalDialogController.deselectAll();
-        return this;
-    }
+//    /**
+//     * Select all
+//     *
+//     * @return current page object
+//     */
+//    public MachiningProcessesPage selectAll() {
+//        modalDialogController.selectAll();
+//        return this;
+//    }
+//
+//    /**
+//     * Deselect all
+//     *
+//     * @return current page object
+//     */
+//    public MachiningProcessesPage deselectAll() {
+//        modalDialogController.deselectAll();
+//        return this;
+//    }
 
-    /**
-     * Reset
-     *
-     * @return current page object
-     */
-    public MachiningProcessesPage reset() {
-        modalDialogController.reset();
-        return this;
-    }
+//    /**
+//     * Reset
+//     *
+//     * @return current page object
+//     */
+//    public MachiningProcessesPage reset() {
+//        modalDialogController.reset();
+//        return this;
+//    }
 
     /**
      * Expand all
