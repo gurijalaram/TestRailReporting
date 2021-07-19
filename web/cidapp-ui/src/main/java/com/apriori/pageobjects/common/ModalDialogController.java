@@ -17,7 +17,7 @@ public class ModalDialogController {
     private WebElement selectAllButton;
 
     @FindBy(id = "secondary-process-clear-all-btn")
-    private WebElement deselectAllbutton;
+    private WebElement deselectAllButton;
 
     @FindBy(id = "secondary-process-reset-btn")
     private WebElement resetButton;
@@ -141,7 +141,7 @@ public class ModalDialogController {
      * @return current page object
      */
     public ModalDialogController deselectAll() {
-        pageUtils.waitForElementAndClick(deselectAllbutton);
+        pageUtils.waitForElementAndClick(deselectAllButton);
         return this;
     }
 

@@ -1,32 +1,22 @@
-package com.apriori.pageobjects.pages.evaluate.inputs;
+package com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses;
 
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MachiningProcessesPage extends LoadableComponent<MachiningProcessesPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(MachiningProcessesPage.class);
-
-    @FindBy(xpath = "//button[.='Machining']")
-    private WebElement machiningTab;
-
-    @FindBy(xpath = "//div[normalize-space(@class)='tree selectable']")
-    private WebElement processTree;
+@Slf4j
+public class SecondaryProcessesController {
 
     @FindBy(xpath = "//input[@placeholder='Search...']")
     private WebElement searchInput;
@@ -38,23 +28,12 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public MachiningProcessesPage(WebDriver driver) {
+    public SecondaryProcessesController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(processTree);
     }
 
     /**
@@ -64,7 +43,7 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @param processName - the process name
      * @return current page object
      */
-    public MachiningProcessesPage selectSecondaryProcess(String processType, String processName) {
+    public SecondaryProcessesController selectSecondaryProcess(String processType, String processName) {
         findProcessTypeAndName(processType, processName).click();
         return this;
     }
@@ -86,7 +65,7 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @param processTypes - the secondary process type
      * @return current page object
      */
-    private MachiningProcessesPage selectProcessType(String processTypes) {
+    private SecondaryProcessesController selectProcessType(String processTypes) {
         Arrays.stream(Stream.of(processTypes)
             .map(processType -> processType.split(","))
             .collect(Collectors.toList())
@@ -115,7 +94,7 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @param searchTerm - search term
      * @return current page object
      */
-    public MachiningProcessesPage search(String searchTerm) {
+    public SecondaryProcessesController search(String searchTerm) {
         pageUtils.waitForElementAppear(searchInput).clear();
         searchInput.sendKeys(searchTerm);
         return this;
@@ -129,42 +108,12 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
         return Arrays.stream(selectedPreviewItems.getText().split("\n")).collect(Collectors.toList());
     }
 
-//    /**
-//     * Select all
-//     *
-//     * @return current page object
-//     */
-//    public MachiningProcessesPage selectAll() {
-//        modalDialogController.selectAll();
-//        return this;
-//    }
-//
-//    /**
-//     * Deselect all
-//     *
-//     * @return current page object
-//     */
-//    public MachiningProcessesPage deselectAll() {
-//        modalDialogController.deselectAll();
-//        return this;
-//    }
-
-//    /**
-//     * Reset
-//     *
-//     * @return current page object
-//     */
-//    public MachiningProcessesPage reset() {
-//        modalDialogController.reset();
-//        return this;
-//    }
-
     /**
      * Expand all
      *
      * @return current page object
      */
-    public MachiningProcessesPage expandAll() {
+    public SecondaryProcessesController expandAll() {
         modalDialogController.expandAll();
         return this;
     }
@@ -174,7 +123,7 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      *
      * @return current page object
      */
-    public MachiningProcessesPage collapseAll() {
+    public SecondaryProcessesController collapseAll() {
         modalDialogController.collapseAll();
         return this;
     }
@@ -188,23 +137,5 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
         By amounts = By.cssSelector("div[class='selected-amount'] span");
         String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
         return amount[0].trim();
-    }
-
-    /**
-     * Selects the submit button
-     *
-     * @return generic page object
-     */
-    public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
-    }
-
-    /**
-     * Select the cancel button
-     *
-     * @return generic page object
-     */
-    public EvaluatePage cancel() {
-        return modalDialogController.cancel(EvaluatePage.class);
     }
 }
