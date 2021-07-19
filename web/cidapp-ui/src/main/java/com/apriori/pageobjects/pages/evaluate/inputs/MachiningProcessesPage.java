@@ -22,6 +22,9 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
 
     private static final Logger logger = LoggerFactory.getLogger(MachiningProcessesPage.class);
 
+    @FindBy(xpath = "//button[.='Machining']")
+    private WebElement machiningTab;
+
     @FindBy(xpath = "//div[normalize-space(@class)='tree selectable']")
     private WebElement processTree;
 
