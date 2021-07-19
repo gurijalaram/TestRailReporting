@@ -31,6 +31,7 @@ import com.explore.UploadTests;
 import com.help.HelpTests;
 import com.login.LoginTests;
 import com.settings.DecimalPlaceTests;
+import com.settings.SettingsTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -71,7 +72,8 @@ import testsuites.suiteinterface.SmokeTests;
     TableHeadersTests.class,
     DTCMachiningTests.class,
     DTCCastingTests.class,
-    TwoModelMachiningTests.class
+    TwoModelMachiningTests.class,
+    SettingsTests.class
 })
 public class CIDSmokeTestSuite {
 }
