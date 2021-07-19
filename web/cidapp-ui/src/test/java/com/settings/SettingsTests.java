@@ -13,14 +13,17 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.sun.xml.bind.v2.TODO;
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -47,7 +50,8 @@ public class SettingsTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"1609", "276"})
+    @Issue("MIC-2702")
+    @TestRail(testCaseId = {"6283"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -79,7 +83,8 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"274", "1609", "1602", "573", "599"})
+    @Issue("MIC-2702")
+    @TestRail(testCaseId = {"6281", "5442"})
     @Description("User can change the default Process group")
     public void defaultPG() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
@@ -103,9 +108,10 @@ public class SettingsTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }
 
-    @Ignore("Test needs more development as assertion has been commented")
     @Test
-    @TestRail(testCaseId = {"275"})
+    @Issue("MIC-2702")
+    @Issue("BA-1957")
+    @TestRail(testCaseId = {"6282"})
     @Description("User can change the default VPE")
     public void defaultVPE() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -119,17 +125,19 @@ public class SettingsTests extends TestBase {
         loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
-            //.selectDigitalFactory(DigitalFactoryEnum.APRIORI_MEXICO)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_MEXICO)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
             //assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO));
+            //TODO uncomment above line when BA-1957 is done
     }
 
     @Test
-    @TestRail(testCaseId = {"278", "279", "561"})
+    @Issue("MIC-2702")
+    @TestRail(testCaseId = {"6285", "6286"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -154,9 +162,10 @@ public class SettingsTests extends TestBase {
         assertThat(evaluatePage.getProductionLife(), is("7.00"));
     }
 
-    @Ignore("Test needs more development as assertion has been commented")
+    @Ignore("Uncomment when ba-1955 is done")
     @Test
-    @TestRail(testCaseId = {"280", "281"})
+    @Issue("MIC-2702")
+    @TestRail(testCaseId = {"6287", "6288"})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -182,7 +191,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"293"})
+    @TestRail(testCaseId = {"6298"})
     @Description("User should be able to select a material catalogue from a different region than the VPE")
     public void differentMaterialCatalog() {
 
@@ -203,7 +212,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1609"})
+    @TestRail(testCaseId = {"6280"})
     @Description("User can change the default selection colour")
     public void defaultColor() {
         currentUser = UserUtil.getUser();
@@ -221,7 +230,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"277"})
+    @TestRail(testCaseId = {"6284"})
     @Description("User can change the default Material")
     public void defaultMaterial() {
 
@@ -248,7 +257,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"271"})
+    @TestRail(testCaseId = {"6279"})
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
         currentUser = UserUtil.getUser();
@@ -275,9 +284,9 @@ public class SettingsTests extends TestBase {
         assertThat(productionDefaultPage.getMaterial(), is("F-0005 Sponge"));
     }
 
-    @Ignore("Test needs more development as assertion has been commented")
+    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @TestRail(testCaseId = {"282"})
+    @TestRail(testCaseId = {"6289"})
     @Description("Manual Batch Quantity cannot be zero")
     public void batchSize0() {
 
@@ -294,9 +303,9 @@ public class SettingsTests extends TestBase {
         assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));*/
     }
 
-    @Ignore("Test needs more development as assertion has been commented")
+    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @TestRail(testCaseId = {"300"})
+    @TestRail(testCaseId = {"3605"})
     @Description("Manual Batch Quantity cannot be junk")
     public void batchSizeJunk() {
 
@@ -313,9 +322,9 @@ public class SettingsTests extends TestBase {
         assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
     }
 
-    @Ignore("Test needs more development as assertion has been commented")
+    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @TestRail(testCaseId = {"301", "302"})
+    @TestRail(testCaseId = {"6306", "6307"})
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {
 
@@ -332,9 +341,8 @@ public class SettingsTests extends TestBase {
         assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
     }
 
-    @Ignore("Test needs more development as assertion has been commented")
     @Test
-    @TestRail(testCaseId = {"303"})
+    @TestRail(testCaseId = {"6308"})
     @Description("Changes made on all tabs of the user preferences should be saved regardless of the tab that the save button was closed on")
     public void saveAllTabs() {
 
@@ -353,7 +361,7 @@ public class SettingsTests extends TestBase {
             .submit(ExplorePage.class)
             .openSettings();
 
-        //assertThat(displayPreferencesPage.(MetricEnum.ENGLISH.getMetricUnit()), is(true));
+        assertThat(displayPreferencesPage.(MetricEnum.ENGLISH.getMetricUnit()), is(true));
 
         productionDefaultPage = displayPreferencesPage.goToProductionTab();
         assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));
@@ -364,7 +372,7 @@ public class SettingsTests extends TestBase {
 
     @Ignore("Test needs more development as assertion has been commented")
     @Test
-    @TestRail(testCaseId = {"295", "299"})
+    @TestRail(testCaseId = {"6300", "6304"})
     @Description("Options should filter subsequent drop down options available")
     public void optionsFilter() {
 
