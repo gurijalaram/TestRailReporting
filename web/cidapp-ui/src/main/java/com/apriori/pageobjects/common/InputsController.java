@@ -110,8 +110,8 @@ public class InputsController {
      * @param secondaryProcesses - list of secondary processes
      * @return list of string
      */
-    public List<String> getSecondaryProcesses(List<WebElement> secondaryProcesses) {
-        return secondaryProcesses.stream().map(WebElement::getText).collect(Collectors.toList());
+    public List<String> getSecondaryProcesses(WebElement secondaryProcesses) {
+        return Arrays.stream(secondaryProcesses.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**

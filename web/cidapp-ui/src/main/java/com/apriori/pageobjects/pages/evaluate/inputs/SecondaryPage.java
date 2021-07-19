@@ -39,8 +39,8 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Primary']")
     private WebElement primaryTab;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .badge-pill")
-    private List<WebElement> secondaryProcesses;
+    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
+    private WebElement secondaryProcesses;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -142,6 +142,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      * @return list as string
      */
     public List<String> getListOfSecondaryDigitalFactory() {
+        pageUtils.waitForElementAndClick(secDigitalFactoryList);
         return inputsController.getListOfDigitalFactory(secDigitalFactoryList, "Secondary Digital Factory");
     }
 }
