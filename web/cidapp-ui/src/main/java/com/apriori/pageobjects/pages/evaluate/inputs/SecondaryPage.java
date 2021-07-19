@@ -21,7 +21,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(SecondaryPage.class);
 
-    @FindBy(css = ".inputs-container input[name='batchSize']")
+    @FindBy(css = "input[name='batchSize']")
     private WebElement batchSizeInput;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
@@ -121,10 +121,10 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     /**
      * Gets batch size
      *
-     * @return string
+     * @return int
      */
-    public String getBatchSize() {
-        return pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value");
+    public int getBatchSize() {
+        return Integer.parseInt(pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value"));
     }
 
     /**
