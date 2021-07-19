@@ -2,16 +2,14 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class ModalDialogController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ModalDialogController.class);
 
     @FindBy(id = "secondary-process-select-all-btn")
     private WebElement selectAllButton;
@@ -61,7 +59,7 @@ public class ModalDialogController {
     public ModalDialogController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
