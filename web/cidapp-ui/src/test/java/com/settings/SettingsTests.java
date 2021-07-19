@@ -332,7 +332,7 @@ public class SettingsTests extends TestBase {
         assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
     }
 
-    //    @Ignore("Test needs more development as assertion has been commented")
+    @Ignore("Test needs more development as assertion has been commented")
     @Test
     @TestRail(testCaseId = {"303"})
     @Description("Changes made on all tabs of the user preferences should be saved regardless of the tab that the save button was closed on")
@@ -355,10 +355,10 @@ public class SettingsTests extends TestBase {
 
         //assertThat(displayPreferencesPage.(MetricEnum.ENGLISH.getMetricUnit()), is(true));
 
-        //displayPreferencesPage = productionDefaultPage.goToProductionTab();
+        productionDefaultPage = displayPreferencesPage.goToProductionTab();
         assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));
 
-        selectionPage = new DisplayPreferencesPage(driver).goToSelectionTab();
+        selectionPage = productionDefaultPage.goToSelectionTab();
         assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
     }
 
