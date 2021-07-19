@@ -3,9 +3,14 @@ package com.apriori.acs.utils;
 import com.apriori.acs.entity.response.ScenarioIterationKey;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
-import com.apriori.acs.entity.response.publish.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
+import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
+import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
+import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
+import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
+import com.apriori.acs.entity.response.getsetdisplayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -52,17 +57,58 @@ public class AcsResources {
                 .setHeaders(headers)
                 .setHeaders(token)
                 .setBody(CreateMissingScenarioInputs.builder()
-                        .baseName("Cap Screw Hex Head (Metric)")
-                        .configurationName("M12 x 16")
-                        .modelName("Cap Screw Hex Head (Metric) (M12 x 16)")
+                        .baseName(Constants.PART_FILE_NAME)
+                        .configurationName(Constants.PART_CONFIG_NAME)
+                        .modelName(Constants.PART_MODEL_NAME)
                         .scenarioName(new GenerateStringUtil().generateScenarioName())
-                        .scenarioType("PART")
+                        .scenarioType(Constants.PART_COMPONENT_TYPE)
                         .missing(true)
-                        .createdBy("bhegan").build()
+                        .createdBy(Constants.USERNAME).build()
                 );
 
         return (CreateMissingScenarioResponse) GenericRequestUtil.post(createMissingScenarioRequestEntity,
                 new RequestAreaApi()).getResponseEntity();
+    }
+
+    /**
+     * Gets Display Units
+     *
+     * @return GetDisplayUnitsResponse
+     */
+    public GetDisplayUnitsResponse getDisplayUnits() {
+        String getDisplayUnitsUrl = baseUrl.concat(
+                String.format("ws/workspace/users/%s/display-units", Constants.USERNAME));
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity getDisplayUnitsRequestEntity = RequestEntity.init(
+                getDisplayUnitsUrl, GetDisplayUnitsResponse.class)
+                .setHeaders(headers)
+                .setHeaders(token);
+
+        return (GetDisplayUnitsResponse) GenericRequestUtil.get(getDisplayUnitsRequestEntity, new RequestAreaApi())
+                .getResponseEntity();
+    }
+
+    /**
+     * Sets Display Units
+     *
+     * @return Set Display Units response instance
+     */
+    public SetDisplayUnitsResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
+        String setDisplayUnitsUrl = baseUrl.concat(
+                String.format("ws/workspace/users/%s/display-units", Constants.USERNAME));
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity setDisplayUnitsRequestEntity = RequestEntity.init(
+                setDisplayUnitsUrl, SetDisplayUnitsResponse.class)
+                .setHeaders(headers)
+                .setHeaders(token)
+                .setBody(setDisplayUnitsInputs);
+
+        return (SetDisplayUnitsResponse) GenericRequestUtil.post(setDisplayUnitsRequestEntity, new RequestAreaApi())
+                .getResponseEntity();
     }
 
     /**

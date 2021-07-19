@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.publish.getscenarioinfobyscenarioiterationkey;
+package com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey;
 
 import com.apriori.utils.http.enums.Schema;
 
