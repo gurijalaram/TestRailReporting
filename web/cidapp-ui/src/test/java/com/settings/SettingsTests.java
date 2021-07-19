@@ -16,6 +16,7 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -351,6 +352,7 @@ public class SettingsTests extends TestBase {
 
         displayPreferencesPage = loginPage.login(currentUser)
             .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
             .setSystem("Imperial")
             .goToProductionTab()
             .inputScenarioName("Save all tabs test")
@@ -361,7 +363,7 @@ public class SettingsTests extends TestBase {
             .submit(ExplorePage.class)
             .openSettings();
 
-        assertThat(displayPreferencesPage.(MetricEnum.ENGLISH.getMetricUnit()), is(true));
+        assertThat(displayPreferencesPage.isSystemChecked("Imperial"), is(true));
 
         productionDefaultPage = displayPreferencesPage.goToProductionTab();
         assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));
@@ -370,7 +372,7 @@ public class SettingsTests extends TestBase {
         assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
     }
 
-    @Ignore("Test needs more development as assertion has been commented")
+    @Ignore("Uncomment when ba-1961 is done")
     @Test
     @TestRail(testCaseId = {"6300", "6304"})
     @Description("Options should filter subsequent drop down options available")
