@@ -38,7 +38,7 @@ public class CreateMissingScenarioTests {
 
         GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKeyResponse = acsResources
                 .getScenarioInfoByScenarioIterationKey(createMissingScenarioResponse.getScenarioIterationKey());
-        
+
         assertThat(getScenarioInfoByScenarioIterationKeyResponse, is(notNullValue()));
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.isInitialized(), is(equalTo(false)));

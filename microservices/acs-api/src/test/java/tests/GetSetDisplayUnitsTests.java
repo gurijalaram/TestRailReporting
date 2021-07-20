@@ -2,7 +2,6 @@ package tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -13,7 +12,7 @@ import com.apriori.acs.entity.response.getsetdisplayunits.UnitVariantSettingsInf
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.acs.utils.Constants;
 import com.apriori.utils.enums.CurrencyEnum;
-import org.checkerframework.checker.units.qual.A;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 

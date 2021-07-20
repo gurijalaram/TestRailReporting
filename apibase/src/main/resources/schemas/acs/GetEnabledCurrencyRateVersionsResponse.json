@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "*": {
+      "type": "object",
+      "properties": {
+        "BRL": {
+          "type": "number"
+        },
+        "CAD": {
+          "type": "number"
+        },
+        "CNY": {
+          "type": "number"
+        },
+        "EUR": {
+          "type": "number"
+        },
+        "GBP": {
+          "type": "number"
+        },
+        "HKD": {
+          "type": "number"
+        },
+        "INR": {
+          "type": "number"
+        },
+        "JPY": {
+          "type": "number"
+        },
+        "KRW": {
+          "type": "number"
+        },
+        "MXN": {
+          "type": "number"
+        },
+        "TWD": {
+          "type": "number"
+        },
+        "USD": {
+          "type": "number"
+        },
+        "ZAR": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

@@ -1,16 +1,17 @@
 package com.apriori.acs.utils;
 
-import com.apriori.acs.entity.response.ScenarioIterationKey;
+import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
+import com.apriori.acs.entity.response.getenabledcurrencyrateversions.GetEnabledCurrencyRateVersionsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
-import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
+import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey
+        .GetScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
-import com.apriori.acs.entity.response.getsetdisplayunits.UnitVariantSettingsInfoInputs;
+import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -70,6 +71,32 @@ public class AcsResources {
                 new RequestAreaApi()).getResponseEntity();
     }
 
+
+    /**
+     * Gets Scenario Information by Scenario Iteration Key
+     *
+     * @return GetScenarioInfoByScenarioIterationKeyResponse instance
+     */
+    public GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKey(
+            ScenarioIterationKey scenarioIterationKey) {
+        String createMissingScenarioUrl = baseUrl.concat(
+                String.format("ws/workspace/0/scenarios/%s/%s/%s/iterations/%s/scenario-info",
+                        scenarioIterationKey.getScenarioKey().getTypeName(),
+                        scenarioIterationKey.getScenarioKey().getMasterName(),
+                        scenarioIterationKey.getScenarioKey().getStateName(),
+                        scenarioIterationKey.getIteration()));
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity getScenarioInfoByScenarioIterationKeyRequestEntity =
+                RequestEntity.init(createMissingScenarioUrl, GetScenarioInfoByScenarioIterationKeyResponse.class)
+                        .setHeaders(headers)
+                        .setHeaders(token);
+
+        return (GetScenarioInfoByScenarioIterationKeyResponse) GenericRequestUtil
+                .get(getScenarioInfoByScenarioIterationKeyRequestEntity, new RequestAreaApi()).getResponseEntity();
+    }
+
     /**
      * Gets Display Units
      *
@@ -112,27 +139,41 @@ public class AcsResources {
     }
 
     /**
-     * Gets Scenario Information by Scenario Iteration Key
+     * Gets Unit Variant Settings
      *
-     * @return GetScenarioInfoByScenarioIterationKeyResponse instance
+     * @return GetUnitVariantSettingsResponse instance
      */
-    public GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKey(
-            ScenarioIterationKey scenarioIterationKey) {
-        String createMissingScenarioUrl = baseUrl.concat(
-                String.format("ws/workspace/0/scenarios/%s/%s/%s/iterations/%s/scenario-info",
-                        scenarioIterationKey.getScenarioKey().getTypeName(),
-                        scenarioIterationKey.getScenarioKey().getMasterName(),
-                        scenarioIterationKey.getScenarioKey().getStateName(),
-                        scenarioIterationKey.getIteration()));
+    public GetUnitVariantSettingsResponse getUnitVariantSettings() {
+        String getUnitVariantSettingUrl = baseUrl.concat("ws/workspace/global-info/unitVariantSettings");
 
         headers.put(contentType, applicationJson);
 
-        RequestEntity getScenarioInfoByScenarioIterationKeyRequestEntity =
-                RequestEntity.init(createMissingScenarioUrl, GetScenarioInfoByScenarioIterationKeyResponse.class)
-                        .setHeaders(headers)
-                        .setHeaders(token);
+        RequestEntity getUnitVariantSettingsRequestEntity = RequestEntity.init(
+                getUnitVariantSettingUrl, GetUnitVariantSettingsResponse.class)
+                .setHeaders(headers)
+                .setHeaders(token);
 
-        return (GetScenarioInfoByScenarioIterationKeyResponse) GenericRequestUtil
-                .get(getScenarioInfoByScenarioIterationKeyRequestEntity, new RequestAreaApi()).getResponseEntity();
+        return (GetUnitVariantSettingsResponse) GenericRequestUtil.get(getUnitVariantSettingsRequestEntity,
+                new RequestAreaApi()).getResponseEntity();
+    }
+
+    /**
+     * Gets Enabled Currency Rate Versions
+     *
+     * @return GetEnabledCurrencyRateVersions instance
+     */
+    public GetEnabledCurrencyRateVersionsResponse getEnabledCurrencyRateVersions() {
+        String getEnabledCurrencyRateVersionsUrl = baseUrl.concat("ws/workspace/global-info/enabledCurrency");
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity getEnabledCurrencyRateVersionsRequestEntity = RequestEntity.init(
+                getEnabledCurrencyRateVersionsUrl, GetEnabledCurrencyRateVersionsResponse.class)
+                .setHeaders(headers)
+                .setHeaders(token);
+
+        return (GetEnabledCurrencyRateVersionsResponse) GenericRequestUtil
+                .get(getEnabledCurrencyRateVersionsRequestEntity,
+                new RequestAreaApi()).getResponseEntity();
     }
 }

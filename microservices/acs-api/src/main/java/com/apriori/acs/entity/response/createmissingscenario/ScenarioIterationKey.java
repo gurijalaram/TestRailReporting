@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response;
+package com.apriori.acs.entity.response.createmissingscenario;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

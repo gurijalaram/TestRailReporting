@@ -1,7 +1,5 @@
 package com.apriori.acs.entity.response.createmissingscenario;
 
-import com.apriori.acs.entity.response.ScenarioIterationKey;
-
 import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;

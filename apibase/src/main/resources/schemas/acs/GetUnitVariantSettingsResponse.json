@@ -1,0 +1,667 @@
+{
+  "type": "object",
+  "properties": {
+    "CGM": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "CGS": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "FPM": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "FPS": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "IOM": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "IOS": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "IPM": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "IPS": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "MGM": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "MGS": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "MKM": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "MKS": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "MMGM": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "MMGS": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    },
+    "MMKS": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "string"
+        },
+        "mass": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "@type",
+        "name",
+        "metric",
+        "length",
+        "mass",
+        "time",
+        "decimalPlaces",
+        "system",
+        "custom"
+      ]
+    }
+  },
+  "required": [
+    "CGM",
+    "CGS",
+    "FPM",
+    "FPS",
+    "IOM",
+    "IOS",
+    "IPM",
+    "IPS",
+    "MGM",
+    "MGS",
+    "MKM",
+    "MKS",
+    "MMGM",
+    "MMGS",
+    "MMKS"
+  ]
+}
