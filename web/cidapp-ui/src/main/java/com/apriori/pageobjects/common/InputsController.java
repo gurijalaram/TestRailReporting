@@ -4,34 +4,26 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PrimaryInputsController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PrimaryInputsController.class);
-
-    @FindBy(css = "div[id='qa-process-group-select-field'] .apriori-select")
-    private WebElement pgDropdown;
-
-    @FindBy(css = "div[id='qa-digital-factory-select-field'] .apriori-select")
-    private WebElement digitalFactoryDropdown;
+@Slf4j
+public class InputsController {
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public PrimaryInputsController(WebDriver driver) {
+    public InputsController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -42,7 +34,7 @@ public class PrimaryInputsController {
      * @param processGroup         - the process group
      * @return current page object
      */
-    public PrimaryInputsController selectProcessGroup(WebElement processGroupDropdown, ProcessGroupEnum processGroup) {
+    public InputsController selectProcessGroup(WebElement processGroupDropdown, ProcessGroupEnum processGroup) {
         pageUtils.typeAheadSelect(processGroupDropdown, processGroup.getProcessGroup());
         return this;
     }
@@ -54,7 +46,7 @@ public class PrimaryInputsController {
      * @param annualVolume      - the annual volume
      * @return current page object
      */
-    public PrimaryInputsController enterAnnualVolume(WebElement annualVolumeInput, String annualVolume) {
+    public InputsController enterAnnualVolume(WebElement annualVolumeInput, String annualVolume) {
         annualVolumeInput.clear();
         annualVolumeInput.sendKeys(Keys.DELETE);
         annualVolumeInput.sendKeys(annualVolume);
@@ -68,7 +60,7 @@ public class PrimaryInputsController {
      * @param digitalFactory         - the vpe
      * @return current page object
      */
-    public PrimaryInputsController selectDigitalFactory(WebElement digitalFactoryDropdown, DigitalFactoryEnum digitalFactory) {
+    public InputsController selectDigitalFactory(WebElement digitalFactoryDropdown, DigitalFactoryEnum digitalFactory) {
         pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory.getDigitalFactory());
         return this;
     }
@@ -80,7 +72,7 @@ public class PrimaryInputsController {
      * @param productionLife      - the years
      * @return current page object
      */
-    public PrimaryInputsController enterAnnualYears(WebElement productionLifeInput, String productionLife) {
+    public InputsController enterAnnualYears(WebElement productionLifeInput, String productionLife) {
         productionLifeInput.clear();
         productionLifeInput.sendKeys(Keys.DELETE);
         productionLifeInput.sendKeys(productionLife);
@@ -93,8 +85,22 @@ public class PrimaryInputsController {
      * @param secondaryProcessesPencil - secondary process pencil icon
      * @return new page object
      */
-    public PrimaryInputsController openSecondaryProcesses(WebElement secondaryProcessesPencil) {
+    public InputsController openMachiningProcesses(WebElement secondaryProcessesPencil) {
         pageUtils.waitForElementAndClick(secondaryProcessesPencil);
+        return this;
+    }
+
+    /**
+     * Enters the batch size
+     *
+     * @param batchSizeInput - the batch size input
+     * @param batchSize      - the batch size
+     * @return current page object
+     */
+    public InputsController enterBatchSize(WebElement batchSizeInput, String batchSize) {
+        batchSizeInput.clear();
+        batchSizeInput.sendKeys(Keys.DELETE);
+        batchSizeInput.sendKeys(batchSize);
         return this;
     }
 
@@ -104,8 +110,8 @@ public class PrimaryInputsController {
      * @param secondaryProcesses - list of secondary processes
      * @return list of string
      */
-    public List<String> getSecondaryProcesses(List<WebElement> secondaryProcesses) {
-        return secondaryProcesses.stream().map(WebElement::getText).collect(Collectors.toList());
+    public List<String> getSecondaryProcesses(WebElement secondaryProcesses) {
+        return Arrays.stream(secondaryProcesses.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
@@ -114,7 +120,7 @@ public class PrimaryInputsController {
      * @param materialsPencil - material pencil icon
      * @return new page object
      */
-    public PrimaryInputsController openMaterialSelectorTable(WebElement materialsPencil) {
+    public InputsController openMaterialSelectorTable(WebElement materialsPencil) {
         pageUtils.waitForElementAndClick(materialsPencil);
         return this;
     }
@@ -125,8 +131,17 @@ public class PrimaryInputsController {
      * @param sourceComponentPencil - Source Model pencil icon
      * @return new page object
      */
-    public PrimaryInputsController openSourceModelSelectorTable(WebElement sourceComponentPencil) {
+    public InputsController openSourceModelSelectorTable(WebElement sourceComponentPencil) {
         pageUtils.waitForElementAndClick(sourceComponentPencil);
         return this;
+    }
+
+    /**
+     * Gets list of digital factory
+     *
+     * @return list as string
+     */
+    public List<String> getListOfDigitalFactory(WebElement digitalFactoryList, String filterOption) {
+        return Arrays.stream(digitalFactoryList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase(filterOption)).collect(Collectors.toList());
     }
 }

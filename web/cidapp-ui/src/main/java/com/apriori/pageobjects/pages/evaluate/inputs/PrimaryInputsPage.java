@@ -1,9 +1,9 @@
-package com.apriori.pageobjects.pages.evaluate.components.inputs;
+package com.apriori.pageobjects.pages.evaluate.inputs;
 
+import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.common.PrimaryInputsController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses.MachiningProcessesPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -60,13 +60,13 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private PrimaryInputsController primaryInputsController;
+    private InputsController inputsController;
     private ModalDialogController modalDialogController;
 
     public PrimaryInputsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.primaryInputsController = new PrimaryInputsController(driver);
+        this.inputsController = new InputsController(driver);
         this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -88,9 +88,9 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      *
      * @return new page object
      */
-    public SecondaryInputsPage openSecondaryInputsTab() {
+    public SecondaryPage openSecondaryInputsTab() {
         pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryInputsPage(driver);
+        return new SecondaryPage(driver);
     }
 
     /**
@@ -110,7 +110,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return current page object
      */
     public PrimaryInputsPage selectProcessGroup(ProcessGroupEnum processGroup) {
-        primaryInputsController.selectProcessGroup(processGroupDropdown, processGroup);
+        inputsController.selectProcessGroup(processGroupDropdown, processGroup);
         return this;
     }
 
@@ -121,7 +121,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return current page object
      */
     public PrimaryInputsPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        primaryInputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
+        inputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
         return this;
     }
 
@@ -131,7 +131,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return new page object
      */
     public MaterialSelectorPage openMaterialSelectorTable() {
-        primaryInputsController.openMaterialSelectorTable(materialsPencil);
+        inputsController.openMaterialSelectorTable(materialsPencil);
         return new MaterialSelectorPage(driver);
     }
 
@@ -140,9 +140,9 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      *
      * @return new page object
      */
-    public SecondaryProcessesPage openSecondaryProcesses() {
-        primaryInputsController.openSecondaryProcesses(secondaryProcessesPencil);
-        return new SecondaryProcessesPage(driver);
+    public MachiningProcessesPage openSecondaryProcesses() {
+        inputsController.openMachiningProcesses(secondaryProcessesPencil);
+        return new MachiningProcessesPage(driver);
     }
 
     /**
@@ -152,7 +152,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return current page object
      */
     public PrimaryInputsPage enterAnnualVolume(String annualVolume) {
-        primaryInputsController.enterAnnualVolume(annualVolumeInput, annualVolume);
+        inputsController.enterAnnualVolume(annualVolumeInput, annualVolume);
         return this;
     }
 
@@ -163,7 +163,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return current page object
      */
     public PrimaryInputsPage enterAnnualYears(String productionLife) {
-        primaryInputsController.enterAnnualYears(productionLifeInput, productionLife);
+        inputsController.enterAnnualYears(productionLifeInput, productionLife);
         return this;
     }
 
