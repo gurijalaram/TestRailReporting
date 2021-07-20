@@ -3,6 +3,7 @@ package com.apriori.pageobjects.common;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -180,6 +181,20 @@ public class ModalDialogController {
      */
     public <T> T cost(Class<T> klass) {
         pageUtils.waitForElementAppear(costButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Switches to new tab
+     *
+     * @param tabName - the tab name
+     * @param klass   - the class
+     * @param <T>     - the object
+     * @return - generic page object
+     */
+    public <T> T switchTab(String tabName, Class<T> klass) {
+        By byTabName = By.xpath(String.format("//button[contains(text(),'%s')]", tabName));
+        pageUtils.waitForElementAndClick(byTabName);
         return PageFactory.initElements(driver, klass);
     }
 }
