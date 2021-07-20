@@ -8,7 +8,8 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.SecondaryProcessesPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses.MachiningProcessesPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -32,7 +33,7 @@ public class SecondaryProcessTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private SecondaryProcessesPage secondaryProcessPage;
+    private SecondaryPage secondaryPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -86,21 +87,26 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        secondaryPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS, 10% Glass")
-            .submit();
-        assertThat(evaluatePage.getSecondaryProcesses(), is(empty()));
+            .submit(EvaluatePage.class)
+            .goToSecondaryTab();
 
-        evaluatePage.openSecondaryProcesses()
+        assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
+
+        evaluatePage = secondaryPage.openSecondaryProcesses(MachiningProcessesPage.class)
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .submit(EvaluateToolbar.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Xray Inspection"));
-        assertThat(evaluatePage.getSecondaryProcesses(), hasItems("Xray", " Packaging"));
+
+        secondaryPage = evaluatePage.goToSecondaryTab();
+
+        assertThat(secondaryPage.getSecondaryProcesses(), hasItems("Xray", " Packaging"));
     }
 
     /*@Test
@@ -248,7 +254,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .search("7075")
             .selectMaterial("Aluminum, Cast, ANSI 7075")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes", "Stress Relief")
             .submit(EvaluateToolbar.class)
@@ -276,7 +282,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
             .submit(EvaluateToolbar.class)
@@ -303,7 +309,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment", "Certification")
             .submit(EvaluateToolbar.class)
@@ -434,7 +440,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment", "Passivation")
             .submit(EvaluateToolbar.class)
@@ -496,7 +502,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
@@ -792,15 +798,16 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        secondaryPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .cancel()
-            .costScenario();
+            .costScenario()
+            .goToSecondaryTab();
 
-        assertThat(evaluatePage.getSecondaryProcesses(), is(empty()));
+        assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
     }
 
     @Test

@@ -2,18 +2,19 @@ package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
 public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(MaterialSelectorPage.class);
 
     @FindBy(xpath = "//label[.='Type']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement typeDropdown;
@@ -30,6 +31,9 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     @FindBy(xpath = "//div[@class='cell-content']")
     private WebElement rowText;
 
+    @FindBy(css = ".material-selector .table-body [role='row']")
+    private List<WebElement> materialRow;
+
     @FindBy(xpath = "//button[.='Submit']")
     private WebElement submitButton;
 
@@ -42,7 +46,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -113,22 +117,31 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     }
 
     /**
-     * Selects the select button
+     * Get list of material
      *
-     * @return new page object
+     * @return list of string
      */
-    public EvaluatePage submit() {
+    public List<String> getListOfMaterials() {
+        return materialRow.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
+     * Selects the submit button
+     *
+     * @return generic page object
+     */
+    public <T> T submit(Class<T> klass) {
         pageUtils.waitForElementAndClick(submitButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
      * Selects the cancel button
      *
-     * @return new page object
+     * @return generic page object
      */
-    public EvaluatePage cancel() {
+    public <T> T cancel(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 }

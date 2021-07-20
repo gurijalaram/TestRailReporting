@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -52,7 +53,7 @@ public class PreviewPanelTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .highlightScenario(partName, testScenarioName)
@@ -81,7 +82,7 @@ public class PreviewPanelTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
