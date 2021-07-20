@@ -10,6 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage> {
 
@@ -27,6 +30,9 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     @FindBy(xpath = "//div[@class='cell-content']")
     private WebElement rowText;
+
+    @FindBy(css = ".material-selector .table-body [role='row']")
+    private List<WebElement> materialRow;
 
     @FindBy(xpath = "//button[.='Submit']")
     private WebElement submitButton;
@@ -108,6 +114,15 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
             pageUtils.waitForElementAndClick(material);
         }
         return this;
+    }
+
+    /**
+     * Get list of material
+     *
+     * @return list of string
+     */
+    public List<String> getListOfMaterials() {
+        return materialRow.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
