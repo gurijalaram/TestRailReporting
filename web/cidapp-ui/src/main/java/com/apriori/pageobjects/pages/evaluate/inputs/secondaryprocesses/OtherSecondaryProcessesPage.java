@@ -1,7 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses;
 
-import static org.junit.Assert.assertTrue;
-
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
@@ -11,12 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.List;
 
 @Slf4j
-public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondaryProcessesPage> {
+public class OtherSecondaryProcessesPage extends MachiningProcessesPage {
 
     @FindBy(xpath = "//button[contains(text(),'Other Secondary Processes')]")
     private WebElement otherSecProcessTab;
@@ -24,26 +21,17 @@ public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondar
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
-    private SecondaryProcessesController secondaryProcessesController;
+    private SecondaryProcessController secondaryProcessController;
 
     public OtherSecondaryProcessesPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        this.secondaryProcessesController = new SecondaryProcessesController(driver);
+        this.secondaryProcessController = new SecondaryProcessController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        assertTrue("Machining tab was not selected", otherSecProcessTab.getAttribute("class").contains("active"));
     }
 
     /**
@@ -54,9 +42,10 @@ public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondar
      * @return current page object
      */
     public OtherSecondaryProcessesPage selectSecondaryProcess(String processType, String processName) {
-        secondaryProcessesController.selectSecondaryProcess(processType, processName);
+        secondaryProcessController.selectSecondaryProcess(processType, processName);
         return this;
     }
+
 
     /**
      * Enter search input
@@ -65,7 +54,7 @@ public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondar
      * @return current page object
      */
     public OtherSecondaryProcessesPage search(String searchTerm) {
-        secondaryProcessesController.search(searchTerm);
+        secondaryProcessController.search(searchTerm);
         return this;
     }
 
@@ -74,7 +63,7 @@ public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondar
      * @return list of string
      */
     public List<String> getSelectedPreviewList() {
-        return secondaryProcessesController.getSelectedPreviewList();
+        return secondaryProcessController.getSelectedPreviewList();
     }
 
     /**
@@ -83,7 +72,7 @@ public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondar
      * @return current page object
      */
     public OtherSecondaryProcessesPage expandAll() {
-        secondaryProcessesController.expandAll();
+        modalDialogController.expandAll();
         return this;
     }
 
@@ -93,7 +82,27 @@ public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondar
      * @return current page object
      */
     public OtherSecondaryProcessesPage collapseAll() {
-        secondaryProcessesController.collapseAll();
+        modalDialogController.collapseAll();
+        return this;
+    }
+
+    /**
+     * Deselect all
+     *
+     * @return current page object
+     */
+    public OtherSecondaryProcessesPage deselectAll() {
+        modalDialogController.deselectAll();
+        return this;
+    }
+
+    /**
+     * Reset
+     *
+     * @return current page object
+     */
+    public OtherSecondaryProcessesPage reset() {
+        modalDialogController.reset();
         return this;
     }
 
@@ -103,7 +112,19 @@ public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondar
      * @return
      */
     public String getNoOfSelected() {
-        return secondaryProcessesController.getNoOfSelected();
+        return secondaryProcessController.getNoOfSelected();
+    }
+
+    /**
+     * Switches to new tab
+     *
+     * @param tabName - the tab name
+     * @param klass   - the class
+     * @param <T>     - the object
+     * @return - generic page object
+     */
+    public <T> T switchTab(String tabName, Class<T> klass) {
+        return modalDialogController.switchTab(tabName, klass);
     }
 
     /**

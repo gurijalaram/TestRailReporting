@@ -18,20 +18,19 @@ import java.util.List;
 @Slf4j
 public class MachiningProcessesPage extends LoadableComponent<MachiningProcessesPage> {
 
-
     @FindBy(xpath = "//button[contains(text(),'Machining')]")
     private WebElement machiningTab;
 
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
-    private SecondaryProcessesController secondaryProcessesController;
+    private SecondaryProcessController secondaryProcessController;
 
     public MachiningProcessesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        this.secondaryProcessesController = new SecondaryProcessesController(driver);
+        this.secondaryProcessController = new SecondaryProcessController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -55,9 +54,10 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @return current page object
      */
     public MachiningProcessesPage selectSecondaryProcess(String processType, String processName) {
-        secondaryProcessesController.selectSecondaryProcess(processType, processName);
+        secondaryProcessController.selectSecondaryProcess(processType, processName);
         return this;
     }
+
 
     /**
      * Enter search input
@@ -66,7 +66,7 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @return current page object
      */
     public MachiningProcessesPage search(String searchTerm) {
-        secondaryProcessesController.search(searchTerm);
+        secondaryProcessController.search(searchTerm);
         return this;
     }
 
@@ -75,7 +75,7 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @return list of string
      */
     public List<String> getSelectedPreviewList() {
-        return secondaryProcessesController.getSelectedPreviewList();
+        return secondaryProcessController.getSelectedPreviewList();
     }
 
     /**
@@ -84,7 +84,7 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @return current page object
      */
     public MachiningProcessesPage expandAll() {
-        secondaryProcessesController.expandAll();
+        modalDialogController.expandAll();
         return this;
     }
 
@@ -94,7 +94,27 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @return current page object
      */
     public MachiningProcessesPage collapseAll() {
-        secondaryProcessesController.collapseAll();
+        modalDialogController.collapseAll();
+        return this;
+    }
+
+    /**
+     * Deselect all
+     *
+     * @return current page object
+     */
+    public MachiningProcessesPage deselectAll() {
+        modalDialogController.deselectAll();
+        return this;
+    }
+
+    /**
+     * Reset
+     *
+     * @return current page object
+     */
+    public MachiningProcessesPage reset() {
+        modalDialogController.reset();
         return this;
     }
 
@@ -104,7 +124,19 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      * @return
      */
     public String getNoOfSelected() {
-        return secondaryProcessesController.getNoOfSelected();
+        return secondaryProcessController.getNoOfSelected();
+    }
+
+    /**
+     * Switches to new tab
+     *
+     * @param tabName - the tab name
+     * @param klass   - the class
+     * @param <T>     - the object
+     * @return - generic page object
+     */
+    public <T> T switchTab(String tabName, Class<T> klass) {
+        return modalDialogController.switchTab(tabName, klass);
     }
 
     /**

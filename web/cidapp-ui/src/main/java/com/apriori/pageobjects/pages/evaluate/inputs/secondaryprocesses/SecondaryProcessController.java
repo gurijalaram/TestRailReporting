@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
-public class SecondaryProcessesController {
+public class SecondaryProcessController {
 
     @FindBy(xpath = "//input[@placeholder='Search...']")
     private WebElement searchInput;
@@ -28,7 +28,7 @@ public class SecondaryProcessesController {
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public SecondaryProcessesController(WebDriver driver) {
+    public SecondaryProcessController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -43,7 +43,7 @@ public class SecondaryProcessesController {
      * @param processName - the process name
      * @return current page object
      */
-    public SecondaryProcessesController selectSecondaryProcess(String processType, String processName) {
+    public SecondaryProcessController selectSecondaryProcess(String processType, String processName) {
         findProcessTypeAndName(processType, processName).click();
         return this;
     }
@@ -65,7 +65,7 @@ public class SecondaryProcessesController {
      * @param processTypes - the secondary process type
      * @return current page object
      */
-    private SecondaryProcessesController selectProcessType(String processTypes) {
+    private SecondaryProcessController selectProcessType(String processTypes) {
         Arrays.stream(Stream.of(processTypes)
             .map(processType -> processType.split(","))
             .collect(Collectors.toList())
@@ -94,7 +94,7 @@ public class SecondaryProcessesController {
      * @param searchTerm - search term
      * @return current page object
      */
-    public SecondaryProcessesController search(String searchTerm) {
+    public SecondaryProcessController search(String searchTerm) {
         pageUtils.waitForElementAppear(searchInput).clear();
         searchInput.sendKeys(searchTerm);
         return this;
@@ -102,30 +102,11 @@ public class SecondaryProcessesController {
 
     /**
      * Get list of selected items
+     *
      * @return list of string
      */
     public List<String> getSelectedPreviewList() {
         return Arrays.stream(selectedPreviewItems.getText().split("\n")).collect(Collectors.toList());
-    }
-
-    /**
-     * Expand all
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesController expandAll() {
-        modalDialogController.expandAll();
-        return this;
-    }
-
-    /**
-     * Collapse all
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesController collapseAll() {
-        modalDialogController.collapseAll();
-        return this;
     }
 
     /**

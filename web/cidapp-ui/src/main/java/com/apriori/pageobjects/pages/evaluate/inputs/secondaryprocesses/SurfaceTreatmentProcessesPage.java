@@ -24,13 +24,13 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
-    private SecondaryProcessesController secondaryProcessesController;
+    private SecondaryProcessController secondaryProcessController;
 
     public SurfaceTreatmentProcessesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        this.secondaryProcessesController = new SecondaryProcessesController(driver);
+        this.secondaryProcessController = new SecondaryProcessController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -43,7 +43,7 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Surface Treatment tab was not selected", surfaceTreatmentTab.getAttribute("class").contains("active"));
+        assertTrue("Heat Treatment tab was not selected", surfaceTreatmentTab.getAttribute("class").contains("active"));
     }
 
     /**
@@ -54,9 +54,10 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
      * @return current page object
      */
     public SurfaceTreatmentProcessesPage selectSecondaryProcess(String processType, String processName) {
-        secondaryProcessesController.selectSecondaryProcess(processType, processName);
+        secondaryProcessController.selectSecondaryProcess(processType, processName);
         return this;
     }
+
 
     /**
      * Enter search input
@@ -65,7 +66,7 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
      * @return current page object
      */
     public SurfaceTreatmentProcessesPage search(String searchTerm) {
-        secondaryProcessesController.search(searchTerm);
+        secondaryProcessController.search(searchTerm);
         return this;
     }
 
@@ -74,7 +75,7 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
      * @return list of string
      */
     public List<String> getSelectedPreviewList() {
-        return secondaryProcessesController.getSelectedPreviewList();
+        return secondaryProcessController.getSelectedPreviewList();
     }
 
     /**
@@ -83,7 +84,7 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
      * @return current page object
      */
     public SurfaceTreatmentProcessesPage expandAll() {
-        secondaryProcessesController.expandAll();
+        modalDialogController.expandAll();
         return this;
     }
 
@@ -93,7 +94,27 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
      * @return current page object
      */
     public SurfaceTreatmentProcessesPage collapseAll() {
-        secondaryProcessesController.collapseAll();
+        modalDialogController.collapseAll();
+        return this;
+    }
+
+    /**
+     * Deselect all
+     *
+     * @return current page object
+     */
+    public SurfaceTreatmentProcessesPage deselectAll() {
+        modalDialogController.deselectAll();
+        return this;
+    }
+
+    /**
+     * Reset
+     *
+     * @return current page object
+     */
+    public SurfaceTreatmentProcessesPage reset() {
+        modalDialogController.reset();
         return this;
     }
 
@@ -103,7 +124,19 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
      * @return
      */
     public String getNoOfSelected() {
-        return secondaryProcessesController.getNoOfSelected();
+        return secondaryProcessController.getNoOfSelected();
+    }
+
+    /**
+     * Switches to new tab
+     *
+     * @param tabName - the tab name
+     * @param klass   - the class
+     * @param <T>     - the object
+     * @return - generic page object
+     */
+    public <T> T switchTab(String tabName, Class<T> klass) {
+        return modalDialogController.switchTab(tabName, klass);
     }
 
     /**
