@@ -526,6 +526,16 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets the Production Life in years
+     *
+     * @return production life as string
+     */
+    public String getProductionLife() {
+        pageUtils.waitForElementToAppear(productionLifeInput);
+        return productionLifeInput.getAttribute("value");
+    }
+
+    /**
      * Gets the selected VPE
      *
      * @return vpe as String
