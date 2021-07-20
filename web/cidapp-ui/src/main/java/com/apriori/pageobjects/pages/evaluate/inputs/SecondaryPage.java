@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.evaluate.inputs;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses.MachiningProcessesPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 
@@ -80,10 +79,10 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     /**
      * Selects the digital factory dropdown
      *
-     * @param digitalFactory - the digital factory
+     * @param digitalFactory - the secondary digital factory
      * @return current page object
      */
-    public SecondaryPage selectSecDigitalFactory(DigitalFactoryEnum digitalFactory) {
+    public SecondaryPage selectSecondaryDF(DigitalFactoryEnum digitalFactory) {
         inputsController.selectDigitalFactory(secDigitalFactoryDropdown, digitalFactory);
         return this;
     }
@@ -93,9 +92,9 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      *
      * @return new page object
      */
-    public MachiningProcessesPage openMachiningProcesses() {
+    public <T> T openSecondaryProcesses(Class<T> klass) {
         inputsController.openMachiningProcesses(machiningProcessesPencil);
-        return new MachiningProcessesPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
