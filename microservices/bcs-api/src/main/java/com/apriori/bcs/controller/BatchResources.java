@@ -50,6 +50,10 @@ public class BatchResources extends BcsBase {
     }
 
     public static Batch createNewBatch() {
+        return createNewBatch(Batch.class);
+    }
+
+    public static Batch createNewBatch(Class klass) {
         String url = endpointBatches;
         Long currentMillis = System.currentTimeMillis();
 
@@ -62,7 +66,7 @@ public class BatchResources extends BcsBase {
         body.setBatch(newBatch);
 
         return (Batch) GenericRequestUtil.post(
-                RequestEntity.init(url, Batch.class)
+                RequestEntity.init(url, klass)
                         .setBody(body)
                         .setStatusCode(HttpStatus.SC_CREATED),
                 new RequestAreaApi()
@@ -88,7 +92,7 @@ public class BatchResources extends BcsBase {
      */
     public static <T> ResponseWrapper<T> cancelBatchProccessing() {
         // create batch
-        Batch batch = BatchResources.createNewBatch();
+        Batch batch = createNewBatch();
         String batchIdentity = batch.getIdentity();
 
         // create batch part
@@ -113,6 +117,16 @@ public class BatchResources extends BcsBase {
                 RequestEntity.init(url, Cancel.class)
                         .setBody("{}")
                         .setStatusCode(HttpStatus.SC_ACCEPTED),
+                new RequestAreaApi()
+        );
+    }
+
+    public static <T> ResponseWrapper<T> cancelBatchProccessing(String batchIdentity) {
+        String url = String.format(getBatchUrlWithIdentity(batchIdentity), "/cancel");
+        return GenericRequestUtil.post(
+                RequestEntity.init(url, Cancel.class)
+                        .setBody("{}")
+                        .setStatusCode(null),
                 new RequestAreaApi()
         );
     }

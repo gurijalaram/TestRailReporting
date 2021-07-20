@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.PlasticDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -31,7 +30,6 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public PlasticDtcDetailsReportTests() {
         super();
@@ -242,7 +240,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), PlasticDtcReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), PlasticDtcReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk(PlasticDtcReportPage.class);
+            .clickOk(true, PlasticDtcReportPage.class);
 
         plasticDtcReportPage.waitForReportToLoad();
 
@@ -251,7 +249,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"1378"})
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {

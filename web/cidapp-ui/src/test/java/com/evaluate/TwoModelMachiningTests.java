@@ -1,5 +1,7 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.ProcessGroupEnum.CASTING_DIE;
+import static com.apriori.utils.enums.ProcessGroupEnum.TWO_MODEL_MACHINING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,11 +20,12 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
-import utils.EvaluateDfmIconEnum;
 
 import java.io.File;
 
@@ -47,7 +50,7 @@ public class TwoModelMachiningTests extends TestBase {
     @Description("Validate Source and util tile appears when 2 MM is selected")
     @TestRail(testCaseId = {"7861", "7862", "7863", "7864", "7870"})
     public void testTwoModelMachining() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+        final ProcessGroupEnum processGroupEnum = CASTING_DIE;
 
         String sourcePartName = "casting_BEFORE_machining";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".stp");
@@ -59,15 +62,15 @@ public class TwoModelMachiningTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(sourcePartName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .selectFilter("Recent")
             .clickSearch(sourcePartName)
@@ -94,27 +97,28 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1921")
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(testCaseId = {"6466", "7866"})
     public void testOpenSourceModel() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+        final ProcessGroupEnum processGroupEnum = CASTING_DIE;
 
         String sourcePartName = "VulcainCasting";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".CATPart");
         String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
         String twoModelPartName = "VulcainMachined";
         String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
-        twoModelFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.TWO_MODEL_MACHINING, twoModelPartName + ".CATPart");
+        twoModelFile = FileResourceUtil.getCloudFile(TWO_MODEL_MACHINING, twoModelPartName + ".CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
@@ -122,7 +126,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -146,18 +150,18 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModel2PartName = "2modeltest-machine2";
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".SLDPRT");
-        twoModelFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.TWO_MODEL_MACHINING, twoModel1PartName + ".SLDPRT");
-        twoModelFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.TWO_MODEL_MACHINING, twoModel2PartName + ".SLDPRT");
+        twoModelFile = FileResourceUtil.getCloudFile(TWO_MODEL_MACHINING, twoModel1PartName + ".SLDPRT");
+        twoModelFile2 = FileResourceUtil.getCloudFile(TWO_MODEL_MACHINING, twoModel2PartName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(96.98, 1)));
@@ -166,7 +170,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModel1PartName, twoModel1ScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -178,7 +182,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModel1PartName, twoModel2ScenarioName, twoModelFile2, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .highlightScenario(twoModel1PartName, twoModel1ScenarioName)
             .submit(EvaluatePage.class)
@@ -190,10 +194,11 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-1885")
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"7867", "7876"})
     public void testOpenPublicSourceModel() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+        final ProcessGroupEnum processGroupEnum = CASTING_DIE;
 
         String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
         String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -201,17 +206,17 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModelPartName = "Machined Casting";
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".prt");
-        twoModelFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.TWO_MODEL_MACHINING, twoModelPartName + ".prt");
+        twoModelFile = FileResourceUtil.getCloudFile(TWO_MODEL_MACHINING, twoModelPartName + ".prt");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(CASTING_DIE)
             .costScenario()
             .clickExplore()
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -224,10 +229,11 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Issue("MIC-3139")
     @Description("Validate the user can switch the source part")
     @TestRail(testCaseId = {"6467", "7873", "7874"})
     public void switchSourcePart() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+        final ProcessGroupEnum processGroupEnum = CASTING_DIE;
         currentUser = UserUtil.getUser();
 
         String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -240,16 +246,16 @@ public class TwoModelMachiningTests extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".SLDPRT");
         twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, source2PartName + ".SLDPRT");
-        twoModelFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.TWO_MODEL_MACHINING, twoModelPartName + ".SLDPRT");
+        twoModelFile2 = FileResourceUtil.getCloudFile(TWO_MODEL_MACHINING, twoModelPartName + ".SLDPRT");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(CASTING_DIE)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
@@ -257,15 +263,15 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(source2PartName, source2ScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(CASTING_DIE)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile2, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -298,25 +304,25 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModelPartName = "casting_AFTER_machining";
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, wrongSourcePartName + ".stp");
-        twoModelFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.TWO_MODEL_MACHINING, twoModelPartName + ".stp");
+        twoModelFile = FileResourceUtil.getCloudFile(TWO_MODEL_MACHINING, twoModelPartName + ".stp");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(wrongSourcePartName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup())
+            .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .highlightScenario(wrongSourcePartName, testScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES), is(true));
 
         /*guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .openGuidanceTab()

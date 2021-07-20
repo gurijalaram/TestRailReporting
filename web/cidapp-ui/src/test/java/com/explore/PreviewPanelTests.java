@@ -1,9 +1,11 @@
 package com.explore;
 
+import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -35,7 +37,7 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Description("Test preview panel data is displayed")
-    @TestRail(testCaseId = {"6350"})
+    @TestRail(testCaseId = {"6350", "6349"})
     public void testPreviewPanelDisplay() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -47,11 +49,11 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
-            .search("ABS,10")
+            .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .highlightScenario(partName, testScenarioName)
@@ -63,7 +65,7 @@ public class PreviewPanelTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
-    @TestRail(testCaseId = {"6351"})
+    @TestRail(testCaseId = {"6351", "6201", "6352"})
     public void previewPanelMetrics() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -76,11 +78,11 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")

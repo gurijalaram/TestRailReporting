@@ -1,5 +1,8 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_BRAZIL;
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_CHINA;
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -9,7 +12,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -36,7 +38,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3121")
+    @Issue("MIC-3071")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6101"})
     @Description("Test recosting a cad file - Gear Making")
@@ -51,19 +53,20 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
+    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6102"})
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
@@ -77,18 +80,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("4 Axis Mill"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA.getVpe())
+        evaluatePage.selectDigitalFactory(APRIORI_CHINA)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
+    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6103"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
@@ -102,18 +106,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
+    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6104"})
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
@@ -127,18 +132,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
+    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6105"})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
@@ -152,18 +158,19 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
     @Test
+    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6106"})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
@@ -177,12 +184,12 @@ public class ReCostScenarioTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
+        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));

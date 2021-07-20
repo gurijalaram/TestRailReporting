@@ -54,11 +54,12 @@ public class ViewRepositoryPage extends ReportsPageHeader {
         String[] foldersToGoTo = navigationMap.get(lastFolder);
         navigateToFolder(foldersToGoTo[0]);
 
-        if (foldersToGoTo.length != 1) {
+        int folderArrayLength = foldersToGoTo.length;
+        if (folderArrayLength == 2) {
             navigateToFolder(foldersToGoTo[1]);
-            if (foldersToGoTo.length == 3) {
-                navigateToFolder(foldersToGoTo[2]);
-            }
+        } else if (folderArrayLength == 3) {
+            navigateToFolder(foldersToGoTo[1]);
+            navigateToFolder(foldersToGoTo[2]);
         }
 
         return new GenericReportPage(driver);
@@ -80,7 +81,7 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      * @return String - text of report name
      */
     public String getReportName(String reportName) {
-        return pageUtils.getReportElement(reportName).getText();
+        return driver.findElement(By.xpath(String.format("//a[text() = '%s']", reportName))).getText();
     }
 
     /**
@@ -98,68 +99,128 @@ public class ViewRepositoryPage extends ReportsPageHeader {
      */
     private void initialiseNavigationMap() {
         navigationMap.put(
-                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                new String[]{ Constants.GENERAL_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
+                new String[]{ Constants.GENERAL_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
+                new String[]{ Constants.GENERAL_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), new String[]{ Constants.GENERAL_FOLDER });
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                new String[]{ Constants.GENERAL_FOLDER }
+        );
+        navigationMap.put(
+                ReportNamesEnum.COMPONENT_COST.getReportName(),
+                new String[]{ Constants.GENERAL_FOLDER }
+        );
 
         navigationMap.put(
-                ReportNamesEnum.CASTING_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.CASTING_DTC.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.CASTING_DTC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.CASTING_DTC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.CASTING_DTC_FOLDER }
+        );
 
         navigationMap.put(
-                ReportNamesEnum.MACHINING_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.MACHINING_DTC.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.MACHINING_DTC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.MACHINING_DTC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.MACHINING_DTC_FOLDER }
+        );
 
         navigationMap.put(
-                ReportNamesEnum.PLASTIC_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.PLASTIC_DTC.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.PlASTIC_DTC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.PlASTIC_DTC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.PlASTIC_DTC_FOLDER }
+        );
 
         navigationMap.put(
-                ReportNamesEnum.SHEET_METAL_DTC.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.SHEET_METAL_DTC_FOLDER }
+        );
         navigationMap.put(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), new String[]{ Constants.DTC_METRICS_FOLDER });
+                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.SHEET_METAL_DTC_FOLDER }
+        );
         navigationMap.put(
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
-                new String[]{ Constants.DTC_METRICS_FOLDER });
+                new String[]{ Constants.DTC_METRICS_FOLDER, Constants.SHEET_METAL_DTC_FOLDER }
+        );
 
-        navigationMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
-            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                Constants.CYCLE_TIME_FOLDER });
-        navigationMap.put(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
-            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                Constants.CYCLE_TIME_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER, Constants.CYCLE_TIME_FOLDER }
+        );
+        navigationMap.put(
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER, Constants.CYCLE_TIME_FOLDER }
+        );
 
-        navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                Constants.TARGET_AND_QUOTED_COST_FOLDER });
-        navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                Constants.TARGET_AND_QUOTED_COST_FOLDER });
-        navigationMap.put(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName(),
-            new String[]{ Constants.SOLUTIONS_FOLDER, Constants.DESIGN_TO_COST_FOLDER,
-                Constants.TARGET_AND_QUOTED_COST_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                new String[]{
+                    Constants.SOLUTIONS_FOLDER,
+                    Constants.DESIGN_TO_COST_FOLDER,
+                    Constants.TARGET_AND_QUOTED_COST_FOLDER
+                }
+        );
+        navigationMap.put(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                new String[]{
+                    Constants.SOLUTIONS_FOLDER,
+                    Constants.DESIGN_TO_COST_FOLDER,
+                    Constants.TARGET_AND_QUOTED_COST_FOLDER
+                }
+        );
+        navigationMap.put(
+                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName(),
+                new String[]{
+                    Constants.SOLUTIONS_FOLDER,
+                    Constants.DESIGN_TO_COST_FOLDER,
+                    Constants.TARGET_AND_QUOTED_COST_FOLDER
+                }
+        );
 
-        navigationMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
-        navigationMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER }
+        );
+        navigationMap.put(
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER }
+        );
 
-        navigationMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
-        navigationMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER });
+        navigationMap.put(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER }
+        );
+        navigationMap.put(
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                new String[]{ Constants.SOLUTIONS_FOLDER, Constants.SOURCING_FOLDER }
+        );
     }
 }

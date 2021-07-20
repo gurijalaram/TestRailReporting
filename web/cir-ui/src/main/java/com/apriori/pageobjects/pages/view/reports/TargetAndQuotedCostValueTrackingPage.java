@@ -46,7 +46,8 @@ public class TargetAndQuotedCostValueTrackingPage extends GenericReportPage {
      * @return String
      */
     public String getFinalCost() {
-        By locator = By.xpath("//table[@class='jrPage']//tr[30]/td[23]/span");
+        pageUtils.waitForElementToAppear(By.xpath("//tr[@style='height:3px']//span[contains(text(), 'PROJECT 2')]/ancestor::tr"));
+        By locator = By.xpath("//table[@class='jrPage']//tr[29]/td[23]/span");
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
     }

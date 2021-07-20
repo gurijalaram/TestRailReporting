@@ -35,7 +35,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     @FindBy(xpath = "//label[@title='Assembly Select']//a")
     private WebElement currentAssemblyElement;
 
-    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    @FindBy(xpath = "//table[@class='jrPage']/tbody/tr[7]/td/span")
     private WebElement currentAssembly;
 
     @FindBy(css = "button[class='ui-datepicker-trigger']")
@@ -848,9 +848,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         putItemIntoSubAssemblyRowMap("4 Sub Assembly", "15");
         putItemIntoSubAssemblyRowMap("5 Sub Assembly", "17");
         putItemIntoSubAssemblyRowMap("6 Sub Assembly", "19");
-        putItemIntoSubAssemblyRowMap("Component Subtotal Sub Assembly", "22");
-        putItemIntoSubAssemblyRowMap("Assembly Processes Sub Assembly", "25");
-        putItemIntoSubAssemblyRowMap("Grand Total Sub Assembly", "27");
+        putItemIntoSubAssemblyRowMap("Component Subtotal Sub Assembly", "15");
+        putItemIntoSubAssemblyRowMap("Assembly Processes Sub Assembly", "18");
+        putItemIntoSubAssemblyRowMap("Grand Total Sub Assembly", "20");
     }
 
     /**
@@ -859,9 +859,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     private void initialiseSubSubAsmRowMap() {
         putItemIntoSubSubAsmRowMap("1 Sub Sub ASM", "4");
         putItemIntoSubSubAsmRowMap("2 Sub Sub ASM", "6");
-        putItemIntoSubSubAsmRowMap("Component Subtotal Sub Sub ASM", "10");
-        putItemIntoSubSubAsmRowMap("Assembly Processes Sub Sub ASM", "13");
-        putItemIntoSubSubAsmRowMap("Grand Total Sub Sub ASM", "15");
+        putItemIntoSubSubAsmRowMap("Component Subtotal Sub Sub ASM", "8");
+        putItemIntoSubSubAsmRowMap("Assembly Processes Sub Sub ASM", "11");
+        putItemIntoSubSubAsmRowMap("Grand Total Sub Sub ASM", "13");
     }
 
     /**
@@ -881,9 +881,9 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         putItemIntoTopLevelRowMap("11 Top Level", "33");
         putItemIntoTopLevelRowMap("12 Top Level", "35");
         putItemIntoTopLevelRowMap("13 Top Level", "38");
-        putItemIntoTopLevelRowMap("Component Subtotal Top Level", "38");
-        putItemIntoTopLevelRowMap("Assembly Processes Top Level", "41");
-        putItemIntoTopLevelRowMap("Grand Total Top Level", "43");
+        putItemIntoTopLevelRowMap("Component Subtotal Top Level", "24");
+        putItemIntoTopLevelRowMap("Assembly Processes Top Level", "27");
+        putItemIntoTopLevelRowMap("Grand Total Top Level", "29");
     }
 
     private void putItemIntoColumnMap(String key, String value) {

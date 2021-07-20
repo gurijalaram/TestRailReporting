@@ -138,7 +138,7 @@ public class DTCCastingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:6");
@@ -246,7 +246,7 @@ public class DTCCastingTests extends TestBase {
     } */
 
     @Test
-    @TestRail(testCaseId = {"6385", "6393", "6394"})
+    @TestRail(testCaseId = {"6385", "6393", "6394", "8333"})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
 
@@ -260,15 +260,15 @@ public class DTCCastingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .submit(EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Missing Setups", "Curved Surface", "CurvedSurface:5");
+            .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
 
         guidanceIssuesPage.closePanel()

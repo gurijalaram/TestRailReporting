@@ -1,5 +1,7 @@
 package com.settings;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,13 +16,12 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DecimalPlaceEnum;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.DecimalPlaceEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -64,15 +65,15 @@ public class DecimalPlaceTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .openSettings()
-            .selectInSection("Decimal Places", DecimalPlaceEnum.SIX.getDecimalPlaces())
+            .selectDecimalPlaces(DecimalPlaceEnum.SIX)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getMaterialResult("Finish Mass"), closeTo(5.309458, 1));
@@ -84,7 +85,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.000000, 1));
 
         evaluatePage.openSettings()
-            .selectInSection("Decimal Places", DecimalPlaceEnum.ONE.getDecimalPlaces())
+            .selectDecimalPlaces(DecimalPlaceEnum.ONE)
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3kg"));
@@ -111,7 +112,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(21.1, 1));
 
         evaluatePage.openSettings()
-            .selectInSection("Decimal Places", DecimalPlaceEnum.FOUR.getDecimalPlaces())
+            .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3095kg"));
@@ -140,7 +141,7 @@ public class DecimalPlaceTests extends TestBase {
         costDetailsPage.closePanel();
 
         evaluatePage.openSettings()
-            .selectInSection("Decimal Places", DecimalPlaceEnum.FIVE.getDecimalPlaces())
+            .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
@@ -151,7 +152,7 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(21.05727, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
 
-        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getVpe())
+        evaluatePage.selectDigitalFactory(APRIORI_UNITED_KINGDOM)
             .costScenario();
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
