@@ -2,18 +2,16 @@ package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(MaterialSelectorPage.class);
 
     @FindBy(xpath = "//label[.='Type']/following-sibling::div[contains(@class,'apriori-select form-control')]")
     private WebElement typeDropdown;
@@ -42,7 +40,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
