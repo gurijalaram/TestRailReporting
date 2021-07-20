@@ -118,13 +118,13 @@ public class OtherSecondaryProcessesPage extends MachiningProcessesPage {
     /**
      * Switches to new tab
      *
-     * @param tabName - the tab name
-     * @param klass   - the class
-     * @param <T>     - the object
+     * @param tab   - the tab name
+     * @param klass - the class
+     * @param <T>   - the object
      * @return - generic page object
      */
-    public <T> T switchTab(String tabName, Class<T> klass) {
-        return modalDialogController.switchTab(tabName, klass);
+    public <T> T switchTab(String tab, Class<T> klass) {
+        return modalDialogController.switchTab(tab, klass);
     }
 
     /**
