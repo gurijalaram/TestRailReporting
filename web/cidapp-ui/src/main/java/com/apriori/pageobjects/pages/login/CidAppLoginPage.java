@@ -1,12 +1,10 @@
 package com.apriori.pageobjects.pages.login;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.learnmore.WebinarPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
 
 import com.utils.Constants;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -267,22 +265,5 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
     public String getWelcomeText() {
         return welcomeText.getText();
     }
-
-    public WebinarPage openLearnMore() {
-        String mainWinHandle = driver.getWindowHandle();
-        marketingText
-                .findElements(By.tagName("a"))
-                .stream()
-                .findFirst()
-                .get()
-                .click();
-        for (String winHandle : driver.getWindowHandles()){
-            if(!winHandle.equals(mainWinHandle)){
-                driver.switchTo().window(winHandle);
-            }
-        }
-        return new WebinarPage(driver);
-    }
-
 }
 
