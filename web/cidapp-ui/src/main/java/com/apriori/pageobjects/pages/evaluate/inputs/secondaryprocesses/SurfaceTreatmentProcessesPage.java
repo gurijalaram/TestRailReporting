@@ -123,7 +123,7 @@ public class SurfaceTreatmentProcessesPage extends LoadableComponent<SurfaceTrea
      *
      * @return
      */
-    public String getNoOfSelected() {
+    public int getNoOfSelected() {
         return secondaryProcessController.getNoOfSelected();
     }
 

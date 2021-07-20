@@ -111,7 +111,7 @@ public class OtherSecondaryProcessesPage extends MachiningProcessesPage {
      *
      * @return
      */
-    public String getNoOfSelected() {
+    public int getNoOfSelected() {
         return secondaryProcessController.getNoOfSelected();
     }
 

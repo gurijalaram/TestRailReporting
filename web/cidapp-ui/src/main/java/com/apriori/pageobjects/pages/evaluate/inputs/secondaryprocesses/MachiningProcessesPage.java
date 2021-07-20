@@ -124,7 +124,7 @@ public class MachiningProcessesPage extends LoadableComponent<MachiningProcesses
      *
      * @return
      */
-    public String getNoOfSelected() {
+    public int getNoOfSelected() {
         return secondaryProcessController.getNoOfSelected();
     }
 

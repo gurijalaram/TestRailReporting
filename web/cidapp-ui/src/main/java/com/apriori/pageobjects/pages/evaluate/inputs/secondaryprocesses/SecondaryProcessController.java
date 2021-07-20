@@ -114,9 +114,9 @@ public class SecondaryProcessController {
      *
      * @return
      */
-    public String getNoOfSelected() {
+    public int getNoOfSelected() {
         By amounts = By.cssSelector("div[class='selected-amount'] span");
         String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
-        return amount[0].trim();
+        return Integer.parseInt(amount[0].trim());
     }
 }

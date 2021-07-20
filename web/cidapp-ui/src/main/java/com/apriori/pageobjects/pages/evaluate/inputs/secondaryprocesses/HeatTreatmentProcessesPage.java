@@ -123,7 +123,7 @@ public class HeatTreatmentProcessesPage extends LoadableComponent<MachiningProce
      *
      * @return
      */
-    public String getNoOfSelected() {
+    public int getNoOfSelected() {
         return secondaryProcessController.getNoOfSelected();
     }
 
