@@ -1,52 +1,39 @@
-package com.apriori.pageobjects.pages.evaluate;
+package com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses;
 
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcessesPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(SecondaryProcessesPage.class);
-
-    @FindBy(xpath = "//div[normalize-space(@class)='tree selectable']")
-    private WebElement processTree;
+@Slf4j
+public class SecondaryProcessController {
 
     @FindBy(xpath = "//input[@placeholder='Search...']")
     private WebElement searchInput;
+
+    @FindBy(css = ".selected-preview .pill-box")
+    private WebElement selectedPreviewItems;
 
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public SecondaryProcessesPage(WebDriver driver) {
+    public SecondaryProcessController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(processTree);
     }
 
     /**
@@ -56,7 +43,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @param processName - the process name
      * @return current page object
      */
-    public SecondaryProcessesPage selectSecondaryProcess(String processType, String processName) {
+    public SecondaryProcessController selectSecondaryProcess(String processType, String processName) {
         findProcessTypeAndName(processType, processName).click();
         return this;
     }
@@ -78,7 +65,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @param processTypes - the secondary process type
      * @return current page object
      */
-    private SecondaryProcessesPage selectProcessType(String processTypes) {
+    private SecondaryProcessController selectProcessType(String processTypes) {
         Arrays.stream(Stream.of(processTypes)
             .map(processType -> processType.split(","))
             .collect(Collectors.toList())
@@ -107,60 +94,19 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @param searchTerm - search term
      * @return current page object
      */
-    public SecondaryProcessesPage search(String searchTerm) {
+    public SecondaryProcessController search(String searchTerm) {
         pageUtils.waitForElementAppear(searchInput).clear();
         searchInput.sendKeys(searchTerm);
         return this;
     }
 
     /**
-     * Select all
+     * Get list of selected items
      *
-     * @return current page object
+     * @return list of string
      */
-    public SecondaryProcessesPage selectAll() {
-        modalDialogController.selectAll();
-        return this;
-    }
-
-    /**
-     * Deselect all
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesPage deselectAll() {
-        modalDialogController.deselectAll();
-        return this;
-    }
-
-    /**
-     * Reset
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesPage reset() {
-        modalDialogController.reset();
-        return this;
-    }
-
-    /**
-     * Expand all
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesPage expandAll() {
-        modalDialogController.expandAll();
-        return this;
-    }
-
-    /**
-     * Collapse all
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesPage collapseAll() {
-        modalDialogController.collapseAll();
-        return this;
+    public List<String> getSelectedPreviewList() {
+        return Arrays.stream(selectedPreviewItems.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
@@ -168,27 +114,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return
      */
-    public String getNoOfSelected() {
+    public int getNoOfSelected() {
         By amounts = By.cssSelector("div[class='selected-amount'] span");
         String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
-        return amount[0].trim();
-    }
-
-    /**
-     * Selects the submit button
-     *
-     * @return generic page object
-     */
-    public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
-    }
-
-    /**
-     * Select the cancel button
-     *
-     * @return generic page object
-     */
-    public EvaluatePage cancel() {
-        return modalDialogController.cancel(EvaluatePage.class);
+        return Integer.parseInt(amount[0].trim());
     }
 }
