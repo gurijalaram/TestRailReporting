@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
@@ -9,11 +11,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.List;
 
 @Slf4j
-public class OtherSecondaryProcessesPage extends MachiningProcessesPage {
+public class OtherSecondaryProcessesPage extends LoadableComponent<OtherSecondaryProcessesPage> {
 
     @FindBy(xpath = "//button[contains(text(),'Other Secondary Processes')]")
     private WebElement otherSecProcessTab;
@@ -24,7 +27,6 @@ public class OtherSecondaryProcessesPage extends MachiningProcessesPage {
     private SecondaryProcessController secondaryProcessController;
 
     public OtherSecondaryProcessesPage(WebDriver driver) {
-        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -32,6 +34,16 @@ public class OtherSecondaryProcessesPage extends MachiningProcessesPage {
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        assertTrue("Heat Treatment tab was not selected", otherSecProcessTab.getAttribute("class").contains("active"));
     }
 
     /**
