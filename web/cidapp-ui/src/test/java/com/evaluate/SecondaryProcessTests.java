@@ -91,8 +91,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS, 10% Glass")
-            .submit(EvaluatePage.class);
-        .goToSecondaryTab();
+            .submit(EvaluatePage.class)
+            .goToSecondaryTab();
 
         assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
 
