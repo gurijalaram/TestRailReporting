@@ -146,7 +146,7 @@ public class LoginTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)

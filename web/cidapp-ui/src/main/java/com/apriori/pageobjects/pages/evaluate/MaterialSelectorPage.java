@@ -113,22 +113,22 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     }
 
     /**
-     * Selects the select button
+     * Selects the submit button
      *
-     * @return new page object
+     * @return generic page object
      */
-    public EvaluatePage submit() {
+    public <T> T submit(Class<T> klass) {
         pageUtils.waitForElementAndClick(submitButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
      * Selects the cancel button
      *
-     * @return new page object
+     * @return generic page object
      */
-    public EvaluatePage cancel() {
+    public <T> T cancel(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
-        return new EvaluatePage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 }
