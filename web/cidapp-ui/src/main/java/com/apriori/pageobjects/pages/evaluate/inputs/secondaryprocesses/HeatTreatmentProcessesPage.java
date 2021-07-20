@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import java.util.List;
 
 @Slf4j
-public class HeatTreatmentProcessesPage extends LoadableComponent<MachiningProcessesPage> {
+public class HeatTreatmentProcessesPage extends LoadableComponent<HeatTreatmentProcessesPage> {
 
     @FindBy(xpath = "//button[contains(text(),'Heat Treatment')]")
     private WebElement heatTreatmentTab;
