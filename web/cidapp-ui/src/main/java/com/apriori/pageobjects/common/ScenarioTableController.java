@@ -66,8 +66,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController openScenario(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
         By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@class='table-row ']//div[.='%s']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
-        pageUtils.waitForElementToAppear(scenario);
-        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
+        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        pageUtils.waitForElementAndClick(scenario);
         return this;
     }
 
