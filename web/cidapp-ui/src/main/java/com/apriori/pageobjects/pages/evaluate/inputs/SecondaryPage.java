@@ -24,10 +24,10 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     private WebElement batchSizeInput;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
-    private WebElement machiningProcessesPencil;
+    private WebElement secondaryProcessesPencil;
 
-    @FindBy(css = "div[id='qa-secondary-digital-factory-select'] [data-icon='chevron-down']")
-    private WebElement secDigitalFactoryDropdown;
+    @FindBy(css = "div[id='qa-secondary-digital-factory-select'] button")
+    private WebElement secondaryDFPencil;
 
     @FindBy(css = "[id='qa-secondary-digital-factory-select']")
     private WebElement secDigitalFactoryList;
@@ -77,14 +77,14 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     }
 
     /**
-     * Selects the digital factory dropdown
+     * Opens the digital factory dropdown
      *
      * @param digitalFactory - the secondary digital factory
-     * @return current page object
+     * @return new page object
      */
-    public SecondaryPage selectSecondaryDF(DigitalFactoryEnum digitalFactory) {
-        inputsController.selectDigitalFactory(secDigitalFactoryDropdown, digitalFactory);
-        return this;
+    public SecondaryDFPage openSecondaryDF(DigitalFactoryEnum digitalFactory) {
+        inputsController.selectDigitalFactory(secondaryDFPencil, digitalFactory);
+        return new SecondaryDFPage(driver);
     }
 
     /**
@@ -93,7 +93,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      * @return new page object
      */
     public <T> T openSecondaryProcesses(Class<T> klass) {
-        inputsController.openMachiningProcesses(machiningProcessesPencil);
+        inputsController.openMachiningProcesses(secondaryProcessesPencil);
         return PageFactory.initElements(driver, klass);
     }
 
