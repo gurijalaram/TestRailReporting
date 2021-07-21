@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.inputs;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -17,6 +18,9 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
 
     @FindBy(css = ".secondary-digital-factory-select-form")
     private WebElement secondaryForm;
+
+    @FindBy(css = "qa-Machining-select-field .apriori-select")
+    private WebElement machiningDropdown;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -55,6 +59,17 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
         } else {
             pageUtils.waitForElementAndClick(By.cssSelector(".switch .placeholder-right"));
         }
+        return this;
+    }
+
+    /**
+     * Selects the machining dropdown
+     *
+     * @param digitalFactory - the digital factory
+     * @return current page object
+     */
+    public SecondaryDFPage selectMachiningDropdown(DigitalFactoryEnum digitalFactory) {
+        inputsController.selectDigitalFactory(machiningDropdown, digitalFactory);
         return this;
     }
 
