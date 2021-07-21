@@ -19,7 +19,7 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
     @FindBy(css = ".secondary-digital-factory-select-form")
     private WebElement secondaryForm;
 
-    @FindBy(css = "qa-Machining-select-field .apriori-select")
+    @FindBy(css = ".select-field.digital-factory-select-field .apriori-select")
     private WebElement machiningDropdown;
 
     private WebDriver driver;

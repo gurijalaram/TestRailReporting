@@ -4,7 +4,6 @@ import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -78,11 +77,10 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     /**
      * Opens the digital factory dropdown
      *
-     * @param digitalFactory - the secondary digital factory
      * @return new page object
      */
-    public SecondaryDFPage openSecondaryDF(DigitalFactoryEnum digitalFactory) {
-        inputsController.selectDigitalFactory(secondaryDFPencil, digitalFactory);
+    public SecondaryDFPage openSecondaryDF() {
+        pageUtils.waitForElementAndClick(secondaryDFPencil);
         return new SecondaryDFPage(driver);
     }
 
