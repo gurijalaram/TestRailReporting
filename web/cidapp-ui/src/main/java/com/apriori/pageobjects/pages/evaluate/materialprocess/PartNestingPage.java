@@ -1,5 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
+import com.apriori.pageobjects.common.PanelController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -23,12 +26,17 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
     @FindBy(css = "[id='qa-part-nesting-utilization-mode-select'] > label")
     private WebElement utilizationMode;
 
+    @FindBy(css = ".section-header.show-horizontal-rule")
+    private WebElement utilizationInfoHeader;
+
     private PageUtils pageUtils;
     private WebDriver driver;
+    private PanelController panelController;
 
     public PartNestingPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.panelController = new PanelController(driver);
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -39,12 +47,13 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(utilizationInfoHeader);
     }
 
     /**
      * Gets the Selected Sheet text value on the page
      *
-     * @param label - the value
+     * @param label - the label
      * @return String
      */
     public String getNestingInfo(String label) {
@@ -58,7 +67,7 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
      * @param text - the text
      * @return Boolean
      */
-    public boolean isUtUtilizationModeInfo(String text) {
+    public boolean isUtilizationModeInfo(String text) {
         return pageUtils.waitForElementToAppear(utilizationMode).getAttribute("textContent").equalsIgnoreCase(text);
     }
 
@@ -86,9 +95,27 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
      * @param status - the status
      * @return current page object
      */
-    public PartNestingPage SelectUtilizationModeDropDown(String status) {
+    public PartNestingPage selectUtilizationModeDropDown(String status) {
         pageUtils.typeAheadSelect(utilizationModeDropDown, status);
         return this;
+    }
+
+    /**
+     * Opens the help page
+     *
+     * @return new page object
+     */
+    public HelpDocPage openHelp() {
+        return panelController.openHelp();
+    }
+
+    /**
+     * Closes current panel
+     *
+     * @return new page object
+     */
+    public EvaluatePage closePanel() {
+        return panelController.closePanel();
     }
 }
 
