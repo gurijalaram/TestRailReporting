@@ -176,6 +176,47 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
+     * Expand all
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage expandAll() {
+        modalDialogController.expandAll();
+        return this;
+    }
+
+    /**
+     * Collapse all
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage collapseAll() {
+        modalDialogController.collapseAll();
+        return this;
+    }
+
+    /**
+     * Deselect all
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage deselectAll() {
+        modalDialogController.deselectAll();
+        return this;
+    }
+
+    /**
+     * Reset
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage reset() {
+        modalDialogController.reset();
+        return this;
+    }
+
+
+    /**
      * Get list of selected items
      *
      * @return list of string
