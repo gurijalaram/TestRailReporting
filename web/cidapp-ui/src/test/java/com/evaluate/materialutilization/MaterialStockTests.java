@@ -64,7 +64,7 @@ public class MaterialStockTests extends TestBase {
             .openMaterialUtilizationTab();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("F-0005")));
-        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("1.10")));
+        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("1.1")));
 
         materialUtilizationPage.closePanel()
             .openMaterialSelectorTable()
@@ -75,7 +75,7 @@ public class MaterialStockTests extends TestBase {
             .openMaterialUtilizationTab();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("FN-0205")));
-        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("2.10")));
+        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("2.1")));
     }
 
     /*@Test
@@ -161,7 +161,7 @@ public class MaterialStockTests extends TestBase {
             .openMaterialProcess()
             .goToStockTab();
 
-        assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("3 in OD. 20 ft lengths")));
+        assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("Round Bar:  3 in  OD.  20 ft lengths")));
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
     }
 }
