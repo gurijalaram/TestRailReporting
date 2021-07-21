@@ -26,8 +26,8 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
     @FindBy(css = "[id='qa-part-nesting-utilization-mode-select'] > label")
     private WebElement utilizationMode;
 
-    @FindBy(css = ".section-header.show-horizontal-rule")
-    private WebElement utilizationInfoHeader;
+    @FindBy(css = ".active [data-icon='th']")
+    private WebElement partNestingTab;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -47,7 +47,7 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(utilizationInfoHeader);
+        pageUtils.waitForElementToAppear(partNestingTab);
     }
 
     /**
