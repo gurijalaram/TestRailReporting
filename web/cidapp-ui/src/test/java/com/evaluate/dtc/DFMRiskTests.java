@@ -207,8 +207,7 @@ public class DFMRiskTests extends TestBase {
         evaluatePage.selectProcessGroup(SHEET_METAL_TRANSFER_DIE)
             .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.UNKNOWN.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Unknown"));
+        assertThat(evaluatePage.getDfmRisk(), is("-"));
     }
 
     @Test
