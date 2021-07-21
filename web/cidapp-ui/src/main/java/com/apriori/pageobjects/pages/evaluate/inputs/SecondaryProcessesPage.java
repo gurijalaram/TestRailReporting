@@ -91,6 +91,16 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
+     * Go to other secondary processes tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToCastingDieTab() {
+        goToTab("Casting - Die");
+        return this;
+    }
+
+    /**
      * Go to tab
      *
      * @param tabName - the tab name
