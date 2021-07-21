@@ -141,7 +141,6 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      * @return list as string
      */
     public List<String> getListOfSecondaryDigitalFactory() {
-        pageUtils.waitForElementAndClick(secDigitalFactoryList);
         return inputsController.getListOfDigitalFactory(secDigitalFactoryList, "Secondary Digital Factory");
     }
 }
