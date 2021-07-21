@@ -1,6 +1,9 @@
-package com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses;
+package com.apriori.pageobjects.pages.evaluate.inputs;
+
+import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
-public class SecondaryProcessController {
+public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcessesPage> {
 
     @FindBy(xpath = "//input[@placeholder='Search...']")
     private WebElement searchInput;
@@ -28,12 +32,73 @@ public class SecondaryProcessController {
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public SecondaryProcessController(WebDriver driver) {
+    public SecondaryProcessesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+
+    }
+
+    /**
+     * Go to surface treatment tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToSurfaceTreatmentTab() {
+        goToTab("Surface Treatment");
+        return this;
+    }
+
+    /**
+     * Go to machining tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToMachiningTab() {
+        goToTab("Machining");
+        return this;
+    }
+
+    /**
+     * Go to heat treament tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToHeatTreatmentTab() {
+        goToTab("Heat Treatment");
+        return this;
+    }
+
+    /**
+     * Go to other secondary processes tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToOtherSecProcessesTab() {
+        goToTab("Other Secondary Processes");
+        return this;
+    }
+
+    /**
+     * Go to tab
+     *
+     * @param tabName - the tab name
+     */
+    private void goToTab(String tabName) {
+        By byTabName = By.xpath(String.format("//button[contains(text(),'%s')]", tabName));
+        pageUtils.waitForElementAndClick(byTabName);
+        assertTrue("Correct tab was not selected", driver.findElement(byTabName).getAttribute("class").contains("active"));
     }
 
     /**
@@ -43,7 +108,7 @@ public class SecondaryProcessController {
      * @param processName - the process name
      * @return current page object
      */
-    public SecondaryProcessController selectSecondaryProcess(String processType, String processName) {
+    public SecondaryProcessesPage selectSecondaryProcess(String processType, String processName) {
         findProcessTypeAndName(processType, processName).click();
         return this;
     }
@@ -65,7 +130,7 @@ public class SecondaryProcessController {
      * @param processTypes - the secondary process type
      * @return current page object
      */
-    private SecondaryProcessController selectProcessType(String processTypes) {
+    private SecondaryProcessesPage selectProcessType(String processTypes) {
         Arrays.stream(Stream.of(processTypes)
             .map(processType -> processType.split(","))
             .collect(Collectors.toList())
@@ -94,7 +159,7 @@ public class SecondaryProcessController {
      * @param searchTerm - search term
      * @return current page object
      */
-    public SecondaryProcessController search(String searchTerm) {
+    public SecondaryProcessesPage search(String searchTerm) {
         pageUtils.waitForElementAppear(searchInput).clear();
         searchInput.sendKeys(searchTerm);
         return this;
@@ -118,5 +183,23 @@ public class SecondaryProcessController {
         By amounts = By.cssSelector("div[class='selected-amount'] span");
         String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
         return Integer.parseInt(amount[0].trim());
+    }
+
+    /**
+     * Selects the submit button
+     *
+     * @return generic page object
+     */
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public EvaluatePage cancel() {
+        return modalDialogController.cancel(EvaluatePage.class);
     }
 }
