@@ -131,11 +131,14 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
                 pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(secondaryProcess), true);
 
                 // TODO: 22/07/2021 cn - find a more efficient way of doing this
-                if (pageUtils.isElementPresent(By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim())))) {
-                    pageUtils.waitForElementAndClick(By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim())));
+                By dropdown = By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim()));
+                if (pageUtils.isElementPresent(dropdown)) {
+                    pageUtils.waitForElementAndClick(dropdown);
                 }
-                if (pageUtils.isElementPresent(By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim())))) {
-                    pageUtils.waitForElementAndClick(By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim())));
+
+                By label = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
+                if (pageUtils.isElementPresent(label)) {
+                    pageUtils.waitForElementAndClick(label);
                 }
             });
         return this;
