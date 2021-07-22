@@ -116,55 +116,29 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
-     * Selects both the process type and process name of the secondary process
-     *
-     * @param processType - accepts a comma separated list of type string
-     * @param processName - the process name
-     * @return current page object
-     */
-    public SecondaryProcessesPage selectSecondaryProcess(String processType, String processName) {
-        findProcessTypeAndName(processType, processName).click();
-        return this;
-    }
-
-    /**
-     * Finds the process type and name
-     *
-     * @param processType - the process type
-     * @param processName - the process name
-     * @return webelement
-     */
-    private WebElement findProcessTypeAndName(String processType, String processName) {
-        return selectProcessType(processType).findProcessName(processName);
-    }
-
-    /**
      * Selects the secondary types dropdowns in the process tree
      *
      * @param processTypes - the secondary process type
      * @return current page object
      */
-    private SecondaryProcessesPage selectProcessType(String processTypes) {
+    public SecondaryProcessesPage selectSecondaryProcess(String processTypes) {
         Arrays.stream(Stream.of(processTypes)
             .map(processType -> processType.split(","))
             .collect(Collectors.toList())
             .get(0))
             .forEach(process -> {
-                By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
-                pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(secondaryProcess), true).click();
+                By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span", process.trim()));
+                pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(secondaryProcess), true);
+
+                // TODO: 22/07/2021 cn - find a more efficient way of doing this
+                if (pageUtils.isElementPresent(By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim())))) {
+                    pageUtils.waitForElementAndClick(By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim())));
+                }
+                if (pageUtils.isElementPresent(By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim())))) {
+                    pageUtils.waitForElementAndClick(By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim())));
+                }
             });
         return this;
-    }
-
-    /**
-     * Select the secondary process checkbox
-     *
-     * @param processName - the secondary process
-     * @return current page object
-     */
-    private WebElement findProcessName(String processName) {
-        By processBox = By.xpath(String.format("//span[.='%s']/ancestor::span//label", processName.trim()));
-        return pageUtils.scrollWithJavaScript(driver.findElement(processBox), true);
     }
 
     /**
