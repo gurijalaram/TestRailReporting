@@ -1,30 +1,32 @@
-package com.apriori.pageobjects.pages.evaluate;
+package com.apriori.pageobjects.pages.evaluate.inputs;
+
+import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcessesPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(SecondaryProcessesPage.class);
-
-    @FindBy(xpath = "//div[normalize-space(@class)='tree selectable']")
-    private WebElement processTree;
 
     @FindBy(xpath = "//input[@placeholder='Search...']")
     private WebElement searchInput;
+
+    @FindBy(css = ".selected-preview .pill-box")
+    private WebElement selectedPreviewItems;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -34,9 +36,8 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
     }
 
     @Override
@@ -46,7 +47,68 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(processTree);
+
+    }
+
+    /**
+     * Go to surface treatment tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToSurfaceTreatmentTab() {
+        goToTab("Surface Treatment");
+        return this;
+    }
+
+    /**
+     * Go to machining tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToMachiningTab() {
+        goToTab("Machining");
+        return this;
+    }
+
+    /**
+     * Go to heat treament tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToHeatTreatmentTab() {
+        goToTab("Heat Treatment");
+        return this;
+    }
+
+    /**
+     * Go to other secondary processes tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToOtherSecProcessesTab() {
+        goToTab("Other Secondary Processes");
+        return this;
+    }
+
+    /**
+     * Go to other secondary processes tab
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage goToCastingDieTab() {
+        goToTab("Casting - Die");
+        return this;
+    }
+
+    /**
+     * Go to tab
+     *
+     * @param tabName - the tab name
+     */
+    private void goToTab(String tabName) {
+        By byTabName = By.xpath(String.format("//button[contains(text(),'%s')]", tabName));
+        pageUtils.waitForElementAndClick(byTabName);
+        assertTrue("Correct tab was not selected", driver.findElement(byTabName).getAttribute("class").contains("active"));
     }
 
     /**
@@ -114,12 +176,22 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
-     * Select all
+     * Expand all
      *
      * @return current page object
      */
-    public SecondaryProcessesPage selectAll() {
-        modalDialogController.selectAll();
+    public SecondaryProcessesPage expandAll() {
+        modalDialogController.expandAll();
+        return this;
+    }
+
+    /**
+     * Collapse all
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage collapseAll() {
+        modalDialogController.collapseAll();
         return this;
     }
 
@@ -143,24 +215,14 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
         return this;
     }
 
-    /**
-     * Expand all
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesPage expandAll() {
-        modalDialogController.expandAll();
-        return this;
-    }
 
     /**
-     * Collapse all
+     * Get list of selected items
      *
-     * @return current page object
+     * @return list of string
      */
-    public SecondaryProcessesPage collapseAll() {
-        modalDialogController.collapseAll();
-        return this;
+    public List<String> getSelectedPreviewList() {
+        return Arrays.stream(selectedPreviewItems.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
@@ -168,10 +230,10 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return
      */
-    public String getNoOfSelected() {
+    public int getNoOfSelected() {
         By amounts = By.cssSelector("div[class='selected-amount'] span");
         String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
-        return amount[0].trim();
+        return Integer.parseInt(amount[0].trim());
     }
 
     /**
