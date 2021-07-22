@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -21,6 +22,9 @@ import java.util.stream.Stream;
 
 @Slf4j
 public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcessesPage> {
+
+    @FindBy(css = ".modal-title")
+    private WebElement title;
 
     @FindBy(xpath = "//input[@placeholder='Search...']")
     private WebElement searchInput;
@@ -47,7 +51,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
 
     @Override
     protected void isLoaded() throws Error {
-
+        assertEquals("Secondary Processes page was not displayed", "Secondary Processes", title.getAttribute("textContent"));
     }
 
     /**

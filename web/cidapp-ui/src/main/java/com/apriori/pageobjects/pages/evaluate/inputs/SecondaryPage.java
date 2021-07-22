@@ -90,7 +90,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      * @return new page object
      */
     public SecondaryProcessesPage openSecondaryProcesses() {
-        inputsController.openSecondaryProcesses(machiningProcessesPencil);
+        inputsController.openSecondaryProcesses(secondaryProcessesPencil);
         return new SecondaryProcessesPage(driver);
     }
 
