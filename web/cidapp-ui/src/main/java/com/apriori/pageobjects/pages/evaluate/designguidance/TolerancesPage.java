@@ -87,7 +87,7 @@ public class TolerancesPage extends LoadableComponent<TolerancesPage> {
     /**
      * Gets count column
      *
-     * @return string
+     * @return int
      */
     public int getGcdCount(ToleranceEnum issueType) {
         return Integer.parseInt(designGuidanceController.getColumn(issueType.getToleranceName(), 1));
