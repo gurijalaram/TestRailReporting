@@ -1,47 +1,34 @@
 package com.evaluate.dtc;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.APIValue;
-import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.pages.settings.SelectionPage;
+import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ToleranceEnum;
-import com.apriori.utils.enums.WorkspaceEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.pageobjects.pages.evaluate.EvaluatePage;
-import com.pageobjects.pages.evaluate.PublishPage;
-import com.pageobjects.pages.evaluate.designguidance.tolerances.ToleranceEditPage;
-import com.pageobjects.pages.evaluate.designguidance.tolerances.TolerancePage;
-import com.pageobjects.pages.evaluate.designguidance.tolerances.WarningPage;
-import com.pageobjects.pages.explore.ExplorePage;
-import com.pageobjects.pages.login.CidAppLoginPage;
-import com.pageobjects.pages.settings.SettingsPage;
-import com.pageobjects.pages.settings.ToleranceSettingsPage;
-import com.pageobjects.pages.settings.ToleranceValueSettingsPage;
-import com.pageobjects.toolbars.PageHeader;
+import com.utils.EvaluateDfmIconEnum;
+import com.utils.OverridesEnum;
 import io.qameta.allure.Description;
-import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
-import testsuites.suiteinterface.MigrationTests;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -55,6 +42,8 @@ public class ToleranceTests extends TestBase {
     private ProductionDefaultsPage productionDefaultPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
+    private TolerancesPage tolerancesPage;
+    private ToleranceDefaultsPage toleranceDefaultsPage;
 
     private File resourceFile;
 
@@ -62,15 +51,16 @@ public class ToleranceTests extends TestBase {
         super();
     }
 
-    @After
+/*    @After
     public void resetAllSettings() {
         if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
         }
-    }
+    }*/
 
     @Test
-    @Category({SmokeTests.class})
+    @Ignore("Cannot edit tolerances this release")
+    @Category({IgnoreTests.class})
     @TestRail(testCaseId = {"3842", "707", "1607", "1285"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
@@ -91,14 +81,13 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is("Critical"));
+/*        assertThat(evaluatePage.getDfmRiskIcon(), is("Critical"));
         assertThat(evaluatePage.getDfmRisk(), is("Critical"));
 
         toleranceEditPage = evaluatePage.openDesignGuidance()
             .openTolerancesTab()
 
-            .selectToleranceType(ToleranceEnum.PROFILESURFACE.getToleranceName())
-            .selectGcd("PlanarFace:74")
+            .selectIssueTypeGcd("Profile of Surface", "PlanarFace:74")
             .selectEditButton()
             .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "0.23")
             .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "0.16")
@@ -112,10 +101,10 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName()), containsString("0.23"));
-        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString("0.16"));
+        assertThat(toleranceEditPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString("0.16"));*/
     }
 
-    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    /*    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"708", "1607"})
     @Description("Validate a user can remove an applied tolerance")
@@ -132,7 +121,7 @@ public class ToleranceTests extends TestBase {
             .selectCad();
 
         new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(CAD")));
 
         explorePage = new ExplorePage(driver);
         toleranceEditPage = explorePage.uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
@@ -148,9 +137,9 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString(""));
-    }
+    }*/
 
-    @Category({CustomerSmokeTests.class})
+/*    @Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"716", "1608"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
@@ -167,7 +156,7 @@ public class ToleranceTests extends TestBase {
             .selectCad();
 
         new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(CAD")));
 
         explorePage = new ExplorePage(driver);
         warningPage = explorePage.uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
@@ -182,8 +171,9 @@ public class ToleranceTests extends TestBase {
             .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
-    }
+    }*/
 
+/*
     @Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"717", "1608"})
@@ -201,7 +191,7 @@ public class ToleranceTests extends TestBase {
             .selectCad();
 
         new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(CAD")));
 
         explorePage = new ExplorePage(driver);
         warningPage = explorePage.uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
@@ -217,8 +207,9 @@ public class ToleranceTests extends TestBase {
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
+*/
 
-    @Test
+/*    @Test
     @TestRail(testCaseId = {"726", "712", "1295", "1297"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
@@ -234,7 +225,7 @@ public class ToleranceTests extends TestBase {
             .selectCad();
 
         new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(CAD")));
 
         toleranceEditPage = new ExplorePage(driver).uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
@@ -259,51 +250,49 @@ public class ToleranceTests extends TestBase {
             .selectEditButton();
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString("0.44"));
-    }
+    }*/
 
-    @Category({CustomerSmokeTests.class})
+    @Category({SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"3833", "1595"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PMI_AllTolTypesCatia.CATPart");
+        String componentName = "PMI_AllTolTypesCatia";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
             .goToToleranceTab()
-            .selectCad();
-
-        new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectCad()
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.CRITICAL.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
 
-        tolerancePage = evaluatePage.openDesignGuidance()
-            .goToToleranceTab();
+        tolerancesPage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab();
 
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.CIRCULARITY.getToleranceName()), "1"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.CONCENTRICITY.getToleranceName()), "1"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.CYLINDRICITY.getToleranceName()), "1"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.FLATNESS.getToleranceName()), "2"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PARALLELISM.getToleranceName()), "1"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PERPENDICULARITY.getToleranceName()), "1"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PROFILESURFACE.getToleranceName()), "2"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.ROUGHNESSRA.getToleranceName()), "1"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.ROUGHNESSRZ.getToleranceName()), "2"), is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.RUNOUT.getToleranceName()), "1"), is(true));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CIRCULARITY), is(1));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CONCENTRICITY), is(1));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CYLINDRICITY), is(1));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.FLATNESS), is(2));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PARALLELISM), is(1));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PERPENDICULARITY), is(1));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PROFILESURFACE), is(2));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA), is(1));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRZ), is(2));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.RUNOUT), is(1));
     }
 
-    @Test
+    /*@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"724", "725", "729"})
     @Description("Validate applied tolerances are maintained after changing the scenario process group")
@@ -320,7 +309,7 @@ public class ToleranceTests extends TestBase {
             .selectCad();
 
         new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(CAD")));
 
         explorePage = new ExplorePage(driver);
         toleranceEditPage = explorePage.uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
@@ -363,7 +352,7 @@ public class ToleranceTests extends TestBase {
             .selectCad();
 
         new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(CAD")));
 
         explorePage = new ExplorePage(driver);
         toleranceEditPage = explorePage.uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
@@ -461,7 +450,7 @@ public class ToleranceTests extends TestBase {
 
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName()), containsString("4.01"));
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.RUNOUT.getToleranceName()), containsString(""));
-    }
+    }*/
 
     @Test
     @Category(SmokeTests.class)
@@ -470,23 +459,18 @@ public class ToleranceTests extends TestBase {
     public void assumeTolerances() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PMI_AllTolTypesCatia.CATPart");
+        String componentName = "PMI_AllTolTypesCatia";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + "CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToToleranceTab()
-            .selectAssumeTolerance();
-
-        settingsPage = new SettingsPage(driver);
-        evaluatePage = settingsPage.save(ExplorePage.class)
-            .uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getGcdTolerancesCount(), is("0"));
+        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("0"));
     }
 
     @Test
@@ -496,61 +480,59 @@ public class ToleranceTests extends TestBase {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PMI_AllTolTypesCatia.CATPart");
+        String componentName = "PMI_AllTolTypesCatia";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(currentUser)
+        tolerancesPage = loginPage.login(currentUser)
             .openSettings()
             .goToToleranceTab()
-            .editValues()
-            .setTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "0.1")
-            .setTolerance(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), "0.2")
-            .setTolerance(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "0.3")
-            .setTolerance(ToleranceEnum.TRUEPOSITION.getToleranceName(), "0.4")
-            .setTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName(), "0.5")
-            .setTolerance(ToleranceEnum.CIRCULARITY.getToleranceName(), "0.6")
-            .setTolerance(ToleranceEnum.CONCENTRICITY.getToleranceName(), "0.7")
-            .setTolerance(ToleranceEnum.CYLINDRICITY.getToleranceName(), "0.8")
-            .setTolerance(ToleranceEnum.FLATNESS.getToleranceName(), "0.9")
-            .setTolerance(ToleranceEnum.PARALLELISM.getToleranceName(), "1.0")
-            .setTolerance(ToleranceEnum.PERPENDICULARITY.getToleranceName(), "1.1")
-            .setTolerance(ToleranceEnum.PROFILESURFACE.getToleranceName(), "1.2")
-            .setTolerance(ToleranceEnum.RUNOUT.getToleranceName(), "1.3")
-            .setTolerance(ToleranceEnum.TOTALRUNOUT.getToleranceName(), "1.4")
-            .setTolerance(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "1.5")
-            .setTolerance(ToleranceEnum.SYMMETRY.getToleranceName(), "1.6")
-            .save(ToleranceSettingsPage.class);
-
-        settingsPage = new SettingsPage(driver);
-        tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+            .editSpecificValues()
+            .inputOverride(OverridesEnum.ROUGHNESS_RA, "0.1")
+            .inputOverride(OverridesEnum.ROUGHNESS_RZ, "0.2")
+            .inputOverride(OverridesEnum.DIAMETER_TOLERANCE, "0.3")
+            .inputOverride(OverridesEnum.POSITION_TOLERANCE, "0.4")
+            .inputOverride(OverridesEnum.BEND_ANGLE, "0.5")
+            .inputOverride(OverridesEnum.CIRCULARITY, "0.6")
+            .inputOverride(OverridesEnum.CONCENTRICITY, "0.7")
+            .inputOverride(OverridesEnum.CYLINDRICITY, "0.8")
+            .inputOverride(OverridesEnum.FLATNESS, "0.9")
+            .inputOverride(OverridesEnum.PARALLELISM, "1.0")
+            .inputOverride(OverridesEnum.PERPENDICULARITY, "1.1")
+            .inputOverride(OverridesEnum.PROFILE_OF_SURFACE, "1.2")
+            .inputOverride(OverridesEnum.RUNOUT, "1.3")
+            .inputOverride(OverridesEnum.TOTAL_RUNOUT, "1.4")
+            .inputOverride(OverridesEnum.STRAIGHTNESS, "1.5")
+            .inputOverride(OverridesEnum.SYMMETRY, "1.6")
+            .submit(ToleranceDefaultsPage.class)
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .costScenario()
             .openDesignGuidance()
-            .goToToleranceTab()
-            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
-            .selectGcd("CurvedWall:1");
+            .openTolerancesTab();
 
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CIRCULARITY.getToleranceName(), "Count"), is(equalTo("12")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CONCENTRICITY.getToleranceName(), "Count"), is(equalTo("12")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.CYLINDRICITY.getToleranceName(), "Count"), is(equalTo("12")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "Count"), is(equalTo("16")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.FLATNESS.getToleranceName(), "Count"), is(equalTo("14")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PARALLELISM.getToleranceName(), "Count"), is(equalTo("26")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PERPENDICULARITY.getToleranceName(), "Count"), is(equalTo("26")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.PROFILESURFACE.getToleranceName(), "Count"), is(equalTo("27")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "Count"), is(equalTo("30")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRZ.getToleranceName(), "Count"), is(equalTo("30")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.RUNOUT.getToleranceName(), "Count"), is(equalTo("30")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.STRAIGHTNESS.getToleranceName(), "Count"), is(equalTo("26")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.SYMMETRY.getToleranceName(), "Count"), is(equalTo("30")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.TOTALRUNOUT.getToleranceName(), "Count"), is(equalTo("12")));
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.TRUEPOSITION.getToleranceName(), "Count"), is(equalTo("30")));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CIRCULARITY), is(12));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CONCENTRICITY), is(12));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CYLINDRICITY), is(12));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.DIAMTOLERANCE), is(16));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.FLATNESS), is(14));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PARALLELISM), is(26));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PERPENDICULARITY), is(26));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PROFILESURFACE), is(27));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA), is(30));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRZ), is(30));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.RUNOUT), is(30));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.STRAIGHTNESS), is(26));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.SYMMETRY), is(30));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TOTALRUNOUT), is(12));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TRUEPOSITION), is(30));
     }
 
-    @Test
+    /*@Test
     @TestRail(testCaseId = {"1287", "750"})
     @Description("tolerance Policy Panel functionality in CI Design-JUNK values are prevented")
     public void tolerancePolicyJunk() {
@@ -566,7 +548,7 @@ public class ToleranceTests extends TestBase {
             .save(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
-    }
+    }*/
 
     @Test
     @TestRail(testCaseId = {"1294"})
@@ -574,32 +556,30 @@ public class ToleranceTests extends TestBase {
     public void specificTolerancesNoPMI() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PMI_AllTolTypesCatia.CATPart");
+        String componentName = "PMI_AllTolTypesCatia";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(currentUser)
+        tolerancesPage = loginPage.login(currentUser)
             .openSettings()
             .goToToleranceTab()
-            .editValues()
-            .setTolerance(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "1.2")
-            .save(ToleranceSettingsPage.class);
-
-        settingsPage = new SettingsPage(driver);
-        tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+            .editSpecificValues()
+            .inputOverride(OverridesEnum.ROUGHNESS_RA, "1.2")
+            .submit(ToleranceDefaultsPage.class)
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .costScenario()
             .openDesignGuidance()
-            .goToToleranceTab()
-            .selectToleranceType(ToleranceEnum.ROUGHNESSRA.getToleranceName())
-            .selectGcd("CurvedWall:2");
+            .openTolerancesTab();
 
-        assertThat(tolerancePage.getToleranceCell(ToleranceEnum.ROUGHNESSRA.getToleranceName(), "Count"), is(equalTo("30")));
+        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA), is(30));
     }
 
-    @Test
+    /*@Test
     @TestRail(testCaseId = {"1289", "728"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
@@ -630,7 +610,7 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.BEND_ANGLE_TOLERANCE.getToleranceName()), containsString("1.2"));
         assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.CIRCULARITY.getToleranceName()), is("0.35039"));
         assertThat(toleranceValueSettingsPage.getTolerance(ToleranceEnum.PARALLELISM.getToleranceName()), containsString("0.0748"));
-    }
+    }*/
 
     @Test
     @Category(SmokeTests.class)
@@ -639,81 +619,72 @@ public class ToleranceTests extends TestBase {
     public void replaceValuesButton() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PMI_AllTolTypesCatia.CATPart");
+        String componentName = "PMI_AllTolTypesCatia";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(currentUser)
+        tolerancesPage = loginPage.login(currentUser)
             .openSettings()
             .goToToleranceTab()
             .selectCad()
-            .replaceValues("0.2", "0.35");
-
-        new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
-
-        explorePage = new ExplorePage(driver);
-        tolerancePage = explorePage.uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .replaceValues("0.2", "0.35")
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openDesignGuidance()
-            .goToToleranceTab()
-            .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
-            .selectGcd("CurvedWall:5");
+            .openTolerancesTab()
+            .selectIssueTypeGcd(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5");
 
-        assertThat(tolerancePage.getGCDCell("CurvedWall:5", "Current"), is(equalTo("0.35000")));
+        assertThat(tolerancesPage.getCurrent("CurvedWall:5"), is("0.35"));
     }
 
     @Test
     @TestRail(testCaseId = {"3843", "1299", "710"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
+        String componentName = "PMI_AllTolTypesCatia";
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
         currentUser = testUser1;
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PMI_AllTolTypesCatia.CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
 
         new CidAppLoginPage(driver).login(testUser1)
             .openSettings()
             .goToToleranceTab()
-            .selectCad();
-
-        new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
-
-        explorePage = new ExplorePage(driver);
-        evaluatePage = explorePage.uploadComponentAndOpen(testScenarioName, resourceFile, EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectCad()
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
-        assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
+        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("11"));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        loginPage = evaluatePage.publishScenario(PublishPage.class)
-            .selectPublishButton()
-            .openAdminDropdown()
-            .selectLogOut();
+        evaluatePage = evaluatePage.publishScenario()
+            .publish(EvaluatePage.class)
+            .logout()
+            .login(testUser2)
+            .selectFilter("Recent")
+            .openScenario(componentName, testScenarioName);
 
-        evaluatePage = loginPage.login(testUser2)
-            .selectWorkSpace(WorkspaceEnum.PUBLIC.getWorkspace())
-            .openScenario(testScenarioName, "PMI_AllTolTypesCatia");
+        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("11"));
 
-        assertThat(evaluatePage.getGcdTolerancesCount(), is("11"));
-
-        tolerancePage = evaluatePage.openDesignGuidance()
-            .goToToleranceTab()
+        /*tolerancesPage = evaluatePage.openDesignGuidance()
+            .openTolerancesTab()
             .selectToleranceType(ToleranceEnum.CIRCULARITY.getToleranceName())
             .selectGcd("CurvedWall:4");
 
-        assertThat(tolerancePage.isEditButtonEnabled(), is(false));
+        assertThat(tolerancePage.isEditButtonEnabled(), is(false));*/
     }
 
-    @Test
+    /*@Test
     @TestRail(testCaseId = {"1299"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void toleranceThresholdMaintains() {
@@ -728,35 +699,29 @@ public class ToleranceTests extends TestBase {
 
         new SettingsPage(driver).save(ExplorePage.class);
 
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
-    }
+        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(CAD")));
+    }*/
 
     @Test
     @TestRail(testCaseId = {"1300"})
     @Description("Ensure tolerance preferences are maintained for the user")
     public void tolerancesMaintained() {
 
-        UserCredentials testUser1 = UserUtil.getUser();
-        currentUser = testUser1;
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        currentUser = UserUtil.getUser();
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PMI_AllTolTypesCatia.CATPart");
-
-        new CidAppLoginPage(driver).login(testUser1)
+        loginPage = new CidAppLoginPage(driver);
+        toleranceDefaultsPage = loginPage.login(currentUser)
             .openSettings()
             .goToToleranceTab()
-            .selectCad();
-
-        new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
-
-        toleranceSettingsPage = new PageHeader(driver).openAdminDropdown()
-            .selectLogOut()
-            .login(testUser1)
+            .selectCad()
+            .submit(ExplorePage.class)
+            .logout()
+            .login(currentUser)
+            .selectFilter("Recent")
             .openSettings()
             .goToToleranceTab();
 
-        assertThat(toleranceSettingsPage.isCADSelected("checked"), is("true"));
+        assertThat(toleranceDefaultsPage.isCADSelected("checked"), is("true"));
     }
 
     @Test
@@ -769,25 +734,20 @@ public class ToleranceTests extends TestBase {
         currentUser = testUser1;
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(testUser1)
+        toleranceDefaultsPage = loginPage.login(testUser1)
             .openSettings()
             .goToToleranceTab()
-            .selectCad();
-
-        new SettingsPage(driver).save(ExplorePage.class);
-        assertThat(new APIValue().getToleranceValueFromEndpoint(currentUser.getUsername(), "toleranceMode"), is(equalTo("CAD")));
-
-        explorePage = new ExplorePage(driver);
-        toleranceSettingsPage = explorePage.openAdminDropdown()
-            .selectLogOut()
+            .selectCad()
+            .submit(ExplorePage.class)
+            .logout()
             .login(testUser2)
             .openSettings()
             .goToToleranceTab();
 
-        assertThat(toleranceSettingsPage.isAssumeSelected("checked"), is("true"));
+        assertThat(toleranceDefaultsPage.isAssumeSelected("checked"), is("true"));
     }
 
-    @Test
+    /*@Test
     @TestRail(testCaseId = {"720", "721"})
     @Description("Validate bend angle tolerance is only available for Bar & Tube process group")
     public void bendAngle() {
@@ -819,5 +779,5 @@ public class ToleranceTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getGcdTolerancesCount(), is("0"));
-    }
+    }*/
 }
