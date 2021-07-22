@@ -22,6 +22,12 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
     @FindBy(css = ".select-field.digital-factory-select-field .apriori-select")
     private WebElement machiningDropdown;
 
+    @FindBy(css = ".switch .placeholder-left")
+    private WebElement yesButton;
+
+    @FindBy(xpath = "//span[.='No']")
+    private WebElement noButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
@@ -55,9 +61,9 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
      */
     public SecondaryDFPage usePrimaryDF(String choice) {
         if (choice.equals("Yes")) {
-            pageUtils.waitForElementAndClick(By.cssSelector(".switch .placeholder-left"));
+            pageUtils.waitForElementAndClick(yesButton);
         } else {
-            pageUtils.waitForElementAndClick(By.cssSelector(".switch .placeholder-right"));
+            pageUtils.waitForElementAndClick(noButton);
         }
         return this;
     }
