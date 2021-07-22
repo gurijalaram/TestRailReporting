@@ -333,7 +333,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"730", "709", "713", "714", "722"})
+    @TestRail(testCaseId = {"7834", "7813", "7817", "7818", "7826"})
     @Description("Validate tolerance edits are maintained when user adds a secondary process group")
     public void testMaintainingSecondaryPG() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -390,7 +390,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"723"})
+    @TestRail(testCaseId = {"7827"})
     @Description("Validate tolerance edits when default values set")
     public void specificDefaultTolerances() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -450,7 +450,7 @@ public class ToleranceTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1291"})
+    @TestRail(testCaseId = {"6970"})
     @Description("Verify PMI data is not extracted ")
     public void assumeTolerances() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -470,7 +470,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1286"})
+    @TestRail(testCaseId = {"6965"})
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
 
@@ -529,7 +529,7 @@ public class ToleranceTests extends TestBase {
     }
 
     /*@Test
-    @TestRail(testCaseId = {"1287", "750"})
+    @TestRail(testCaseId = {"6966", "7276"})
     @Description("tolerance Policy Panel functionality in CI Design-JUNK values are prevented")
     public void tolerancePolicyJunk() {
 
@@ -547,7 +547,7 @@ public class ToleranceTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"1294"})
+    @TestRail(testCaseId = {"6973"})
     @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -576,7 +576,7 @@ public class ToleranceTests extends TestBase {
     }
 
     /*@Test
-    @TestRail(testCaseId = {"1289", "728"})
+    @TestRail(testCaseId = {"6968", "7832"})
     @Description("Validate Tolerance Policy updates to System Unit User preferences")
     public void toleranceUnits() {
 
@@ -610,7 +610,7 @@ public class ToleranceTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1296", "1288"})
+    @TestRail(testCaseId = {"6975", "6967"})
     @Description("Validate 'Replace values less than' button")
     public void replaceValuesButton() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -638,7 +638,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3843", "1299", "710"})
+    @TestRail(testCaseId = {"6465", "6978", "7814"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -681,7 +681,7 @@ public class ToleranceTests extends TestBase {
     }
 
     /*@Test
-    @TestRail(testCaseId = {"1299"})
+    @TestRail(testCaseId = {"6978"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void toleranceThresholdMaintains() {
 
@@ -699,7 +699,7 @@ public class ToleranceTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"1300"})
+    @TestRail(testCaseId = {"6979"})
     @Description("Ensure tolerance preferences are maintained for the user")
     public void tolerancesMaintained() {
 
@@ -717,11 +717,11 @@ public class ToleranceTests extends TestBase {
             .openSettings()
             .goToToleranceTab();
 
-        assertThat(toleranceDefaultsPage.isCADSelected("checked"), is("true"));
+        assertThat(toleranceDefaultsPage.isCadSelected(), is(true));
     }
 
     @Test
-    @TestRail(testCaseId = {"1298"})
+    @TestRail(testCaseId = {"6977"})
     @Description("Ensure tolerance policy is for single user.  User 1 preferences should not impact User 2 preferences")
     public void tolerancesSingleUser() {
 
@@ -740,11 +740,11 @@ public class ToleranceTests extends TestBase {
             .openSettings()
             .goToToleranceTab();
 
-        assertThat(toleranceDefaultsPage.isAssumeSelected("checked"), is("true"));
+        assertThat(toleranceDefaultsPage.isAssumeSelected(), is(true));
     }
 
     /*@Test
-    @TestRail(testCaseId = {"720", "721"})
+    @TestRail(testCaseId = {"7824", "7825"})
     @Description("Validate bend angle tolerance is only available for Bar & Tube process group")
     public void bendAngle() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
