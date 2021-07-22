@@ -186,6 +186,22 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
     }
 
     /**
+     * Checks assume tolerance is selected
+     * @return boolean
+     */
+    public boolean isAssumeSelected() {
+        return !systemRadioButton.getAttribute("checked").equals("null");
+    }
+
+    /**
+     * Checks cad is selected
+     * @return boolean
+     */
+    public boolean isCadSelected() {
+        return !cadRadioButton.getAttribute("checked").equals("null");
+    }
+
+    /**
      * Selects the submit button
      *
      * @return generic page object
