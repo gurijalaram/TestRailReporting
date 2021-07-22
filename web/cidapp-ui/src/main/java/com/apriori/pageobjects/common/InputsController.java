@@ -85,7 +85,7 @@ public class InputsController {
      * @param secondaryProcessesPencil - secondary process pencil icon
      * @return new page object
      */
-    public InputsController openMachiningProcesses(WebElement secondaryProcessesPencil) {
+    public InputsController openSecondaryProcesses(WebElement secondaryProcessesPencil) {
         pageUtils.waitForElementAndClick(secondaryProcessesPencil);
         return this;
     }

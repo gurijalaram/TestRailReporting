@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses.MachiningProcessesPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -97,7 +96,7 @@ public class SecondaryProcessTests extends TestBase {
 
         assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
 
-        evaluatePage = secondaryPage.openSecondaryProcesses(MachiningProcessesPage.class)
+        evaluatePage = secondaryPage.openSecondaryProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
             .submit(EvaluateToolbar.class)
             .costScenario();
