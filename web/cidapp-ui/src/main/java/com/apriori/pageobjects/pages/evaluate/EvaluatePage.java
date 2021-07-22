@@ -121,6 +121,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "[id='qa-digital-factory-select-field']")
     private WebElement digitalFactoryList;
 
+    @FindBy(css = "[id='qa-digital-factory-select-field'] .apriori-select")
+    private WebElement digitalFactory;
+
     @FindBy(css = "[id='qa-process-group-select-field']")
     private WebElement processGroupList;
 
@@ -470,6 +473,15 @@ public class EvaluatePage extends EvaluateToolbar {
     public List<String> getListOfDigitalFactory() {
         pageUtils.waitForElementAndClick(digitalFactoryList);
         return inputsController.getListOfDigitalFactory(digitalFactoryList, "Digital Factory");
+    }
+
+    /**
+     * Gets current digital factory
+     *
+     * @return string
+     */
+    public String getDigitalFactory() {
+        return pageUtils.waitForElementToAppear(digitalFactory).getAttribute("textContent");
     }
 
     /**
