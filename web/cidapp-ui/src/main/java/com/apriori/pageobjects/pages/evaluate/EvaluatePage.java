@@ -8,7 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses.MachiningProcessesPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -321,9 +321,9 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public MachiningProcessesPage openSecondaryProcesses() {
-        inputsController.openMachiningProcesses(secondaryProcessesPencil);
-        return new MachiningProcessesPage(driver);
+    public SecondaryProcessesPage openSecondaryProcesses() {
+        inputsController.openSecondaryProcesses(secondaryProcessesPencil);
+        return new SecondaryProcessesPage(driver);
     }
 
     /**
