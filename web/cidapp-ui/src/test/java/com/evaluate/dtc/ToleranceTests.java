@@ -102,7 +102,7 @@ public class ToleranceTests extends TestBase {
 
     /*    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"708", "1607"})
+    @TestRail(testCaseId = {"7812"})
     @Description("Validate a user can remove an applied tolerance")
     public void testRemoveTolerance() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -137,7 +137,7 @@ public class ToleranceTests extends TestBase {
 
 /*    @Category({CustomerSmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"716", "1608"})
+    @TestRail(testCaseId = {"7820"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
     public void testNoJunkTolerances() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -172,7 +172,7 @@ public class ToleranceTests extends TestBase {
 /*
     @Category({CustomerSmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"717", "1608"})
+    @TestRail(testCaseId = {"7821"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
     public void testNoJunkTolerance0() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -206,7 +206,7 @@ public class ToleranceTests extends TestBase {
 */
 
 /*    @Test
-    @TestRail(testCaseId = {"726", "712", "1295", "1297"})
+    @TestRail(testCaseId = {"7830", "7816", "6974", "6976"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -250,7 +250,7 @@ public class ToleranceTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"3833", "1595"})
+    @TestRail(testCaseId = {"6455"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -290,7 +290,7 @@ public class ToleranceTests extends TestBase {
 
     /*@Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"724", "725", "729"})
+    @TestRail(testCaseId = {"7828", "7829", "7833"})
     @Description("Validate applied tolerances are maintained after changing the scenario process group")
     public void testMaintainingToleranceChangePG() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
