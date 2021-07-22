@@ -34,10 +34,10 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     @FindBy(css = ".material-selector .table-body [role='row']")
     private List<WebElement> materialRow;
 
-    @FindBy(xpath = "//button[.='Submit']")
+    @FindBy(css = ".material-selector [type='Submit']")
     private WebElement submitButton;
 
-    @FindBy(xpath = "//button[.='Cancel']")
+    @FindBy(css = ".material-selector [type='button']")
     private WebElement cancelButton;
 
     private WebDriver driver;
