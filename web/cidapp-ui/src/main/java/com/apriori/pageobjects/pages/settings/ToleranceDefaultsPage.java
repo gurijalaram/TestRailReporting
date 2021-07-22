@@ -187,7 +187,9 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
 
     /**
      * Checks assume tolerance is selected
+     *
      * @return boolean
+     * @throws NullPointerException if attribute doesn't exist
      */
     public boolean isAssumeSelected() {
         return !systemRadioButton.getAttribute("checked").equals("null");
@@ -195,7 +197,9 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
 
     /**
      * Checks cad is selected
+     *
      * @return boolean
+     * @throws NullPointerException if attribute doesn't exist
      */
     public boolean isCadSelected() {
         return !cadRadioButton.getAttribute("checked").equals("null");
