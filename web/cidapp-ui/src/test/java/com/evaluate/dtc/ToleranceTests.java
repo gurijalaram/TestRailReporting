@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.APIValue;
+import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -25,6 +26,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.OverridesEnum;
 import io.qameta.allure.Description;
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -47,7 +49,7 @@ public class ToleranceTests extends TestBase {
         super();
     }
 
-/*    @After
+    /*@After
     public void resetAllSettings() {
         if (currentUser != null) {
             new AfterTestUtil().resetAllSettings(currentUser.getUsername());
@@ -77,7 +79,7 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-/*        assertThat(evaluatePage.getDfmRiskIcon(), is("Critical"));
+        /*assertThat(evaluatePage.getDfmRiskIcon(), is("Critical"));
         assertThat(evaluatePage.getDfmRisk(), is("Critical"));
 
         toleranceEditPage = evaluatePage.openDesignGuidance()
@@ -135,7 +137,7 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString(""));
     }*/
 
-/*    @Category({CustomerSmokeTests.class})
+    /*@Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"7820"})
     @Description("Validate JUNK values can not be added in the edit tolerance table")
@@ -169,8 +171,8 @@ public class ToleranceTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }*/
 
-/*
-    @Category({CustomerSmokeTests.class})
+
+    /*@Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"7821"})
     @Description("Validate value 0 can not be added in the edit tolerance table")
@@ -202,10 +204,10 @@ public class ToleranceTests extends TestBase {
             .apply(WarningPage.class);
 
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
-    }
-*/
+    }*/
 
-/*    @Test
+
+    /*@Test
     @TestRail(testCaseId = {"7830", "7816", "6974", "6976"})
     @Description("Validate a tolerance edit of a PMI imported tolerance is maintained when the user switches MATERIAL")
     public void testMaintainingToleranceChangeMaterial() {
