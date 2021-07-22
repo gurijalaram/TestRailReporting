@@ -1,8 +1,14 @@
 package com.apriori.acs.entity.response.getenabledcurrencyrateversions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class CurrencyRateVersionItem {
+@Data
+@NoArgsConstructor
+@JsonRootName("abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")
+public class CurrencyRateVersionItemOne {
     @JsonProperty("BRL")
     private double BRL;
     @JsonProperty("CAD")

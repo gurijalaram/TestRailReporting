@@ -1,7 +1,9 @@
 package com.apriori.acs.entity.response.getunitvariantsettings;
 
 import com.apriori.utils.http.enums.Schema;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 import java.util.ArrayList;

@@ -11,8 +11,13 @@ import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.Get
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.acs.utils.Constants;
 
+import com.apriori.utils.TestRail;
+
+import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.categories.AcsTest;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -25,9 +30,9 @@ public class CreateMissingScenarioTests {
     }
 
     @Test
-    /*@Category()
-    @TestRail(testCaseId = "")
-    @Description("")*/
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "8767")
+    @Description("Test Create Missing Scenario")
     public void testCreateMissingScenario() {
         AcsResources acsResources = new AcsResources();
         CreateMissingScenarioResponse createMissingScenarioResponse = acsResources.createMissingScenario();

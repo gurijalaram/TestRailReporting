@@ -33,7 +33,7 @@ import io.qameta.allure.Issue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.categories.CidAPITest;
+import testsuites.CidAPITest;
 
 import java.util.ArrayList;
 

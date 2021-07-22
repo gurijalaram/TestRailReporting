@@ -11,10 +11,14 @@ import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsRespons
 import com.apriori.acs.entity.response.getsetdisplayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.acs.utils.Constants;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 
+import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.categories.AcsTest;
 
 public class GetSetDisplayUnitsTests {
 
@@ -24,9 +28,9 @@ public class GetSetDisplayUnitsTests {
     }
 
     @Test
-    /*@Category()
-    @TestRail(testCaseId = "")
-    @Description("")*/
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "8769")
+    @Description("Test Get Display Units")
     public void testGetDisplayUnits() {
         AcsResources acsResources = new AcsResources();
         GetDisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
@@ -50,10 +54,9 @@ public class GetSetDisplayUnitsTests {
     }
 
     @Test
-    /*@Category()
-    @TestRail(testCaseId = ""
-    @Description("")
-     */
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "8770")
+    @Description("Test Set Currency Display Unit")
     public void setCurrencyDisplayUnitTest() {
         AcsResources acsResources = new AcsResources();
         GetDisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
@@ -87,16 +90,17 @@ public class GetSetDisplayUnitsTests {
     }
 
     @Test
-    /*@Category()
-    @TestRail(testCaseId = ""
-    @Description("")
-     */
-    public void setLengthMassTimeDisplayUnitTest() {
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "8771")
+    @Description("Test Set Length and Mass Display Unit")
+    public void setLengthAndMassDisplayUnitTest() {
         AcsResources acsResources = new AcsResources();
         GetDisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
-        String lengthToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength().equals("mm") ? "m" : "mm";
-        String massToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass().equals("kg") ? "g" : "kg";
+        String lengthToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength().equals("mm")
+                ? "in" : "mm";
+        String massToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass().equals("kg")
+                ? "lb" : "kg";
 
         SetDisplayUnitsResponse setDisplayUnitsResponse = acsResources
                 .setDisplayUnits(SetDisplayUnitsInputs.builder()
@@ -119,6 +123,9 @@ public class GetSetDisplayUnitsTests {
         assertThat(setDisplayUnitsResponse.getResourceCreated(), is(equalTo("false")));
 
         GetDisplayUnitsResponse getDisplayUnitResponsePostChanges = acsResources.getDisplayUnits();
+        String isMetric = lengthToSet.equals("mm") ? "true" : "false";
+        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMetric(),
+                is(equalTo(isMetric)));
         assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getLength(),
                 is(equalTo(lengthToSet)));
         assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMass(),

@@ -1,14 +1,14 @@
 package com.apriori.acs.utils;
 
-import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
-import com.apriori.acs.entity.response.getenabledcurrencyrateversions.GetEnabledCurrencyRateVersionsResponse;
+import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
+import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
+import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
-import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey
-        .GetScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
+import com.apriori.acs.entity.response.getunitvariantsettings.GetCustomUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
@@ -158,21 +158,41 @@ public class AcsResources {
     }
 
     /**
+     * Gets Custom Unit Variant Settings
+     *
+     * @return GetUnitVariantSettingsResponse instance
+     */
+    public GetCustomUnitVariantSettingsResponse getCustomUnitVariantSettings() {
+        String getCustomUnitVariantSettingsUrl = baseUrl.concat(
+                String.format("ws/workspace/users/%s/custom-unit-variant-settings", Constants.USERNAME));
+
+        headers.put(contentType, applicationJson);
+
+        RequestEntity getCustomUnitVariantSettingsRequestEntity = RequestEntity.init(
+                getCustomUnitVariantSettingsUrl, GetCustomUnitVariantSettingsResponse.class)
+                .setHeaders(headers)
+                .setHeaders(token);
+
+        return (GetCustomUnitVariantSettingsResponse) GenericRequestUtil.get(getCustomUnitVariantSettingsRequestEntity,
+                new RequestAreaApi()).getResponseEntity();
+    }
+
+    /**
      * Gets Enabled Currency Rate Versions
      *
      * @return GetEnabledCurrencyRateVersions instance
      */
-    public GetEnabledCurrencyRateVersionsResponse getEnabledCurrencyRateVersions() {
+    public CurrencyRateVersionResponse getEnabledCurrencyRateVersions() {
         String getEnabledCurrencyRateVersionsUrl = baseUrl.concat("ws/workspace/global-info/enabledCurrency");
 
         headers.put(contentType, applicationJson);
 
         RequestEntity getEnabledCurrencyRateVersionsRequestEntity = RequestEntity.init(
-                getEnabledCurrencyRateVersionsUrl, GetEnabledCurrencyRateVersionsResponse.class)
+                getEnabledCurrencyRateVersionsUrl, CurrencyRateVersionResponse.class)
                 .setHeaders(headers)
                 .setHeaders(token);
 
-        return (GetEnabledCurrencyRateVersionsResponse) GenericRequestUtil
+        return (CurrencyRateVersionResponse) GenericRequestUtil
                 .get(getEnabledCurrencyRateVersionsRequestEntity,
                 new RequestAreaApi()).getResponseEntity();
     }

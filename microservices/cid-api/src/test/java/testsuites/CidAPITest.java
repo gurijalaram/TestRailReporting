@@ -1,4 +1,4 @@
-package testsuites.categories;
+package testsuites;
 
 public interface CidAPITest {
 }
