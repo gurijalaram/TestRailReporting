@@ -36,12 +36,8 @@ import java.io.File;
 public class ToleranceTests extends TestBase {
 
     private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
-    private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
-    private ProductionDefaultsPage productionDefaultPage;
     private UserCredentials currentUser;
-    private SelectionPage selectionPage;
     private TolerancesPage tolerancesPage;
     private ToleranceDefaultsPage toleranceDefaultsPage;
 
@@ -61,7 +57,7 @@ public class ToleranceTests extends TestBase {
     @Test
     @Ignore("Cannot edit tolerances this release")
     @Category({IgnoreTests.class})
-    @TestRail(testCaseId = {"3842", "707", "1607", "1285"})
+    @TestRail(testCaseId = {"6464", "7811", "6964"})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
