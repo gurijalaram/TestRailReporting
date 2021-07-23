@@ -67,11 +67,11 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Hole - Min Diameter", "Simple Hole", "SimpleHole:2");
@@ -114,11 +114,11 @@ public class SheetMetalDTCTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario(3)
             .openDesignGuidance()
             .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Complex Hole", "ComplexHole:14");
@@ -146,11 +146,11 @@ public class SheetMetalDTCTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Bend Issue, Bend - Intersects Form", "Straight Bend", "StraightBend:4");
@@ -188,11 +188,11 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         evaluatePage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getGuidanceResult("Design Warnings"), is("15"));
@@ -267,11 +267,11 @@ public class SheetMetalDTCTests extends TestBase {
         settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("GCDs With Special Finishing", "Reaming", "SimpleHole:2");

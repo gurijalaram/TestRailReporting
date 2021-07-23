@@ -7,21 +7,16 @@
     "response": {
       "type": "object",
       "required": [
-        "annualVolume",
         "batchMode",
         "cadTolerances",
-        "cadToleranceReplacement",
         "minCadToleranceThreshold",
         "multiBodyKeepFreeBodies",
         "multiBodyIgnoreMissingComponents",
         "multiBodyPreserveCad",
-        "processGroup",
-        "productionLife",
         "scenarioName",
         "tolerances",
         "useCadToleranceThreshold",
-        "useVpeForAllProcesses",
-        "vpeName"
+        "useVpeForAllProcesses"
       ],
       "properties": {
         "annualVolume": {
@@ -32,9 +27,6 @@
         },
         "cadTolerances": {
           "type": "boolean"
-        },
-        "cadToleranceReplacement": {
-          "type": "number"
         },
         "minCadToleranceThreshold": {
           "type": "number"

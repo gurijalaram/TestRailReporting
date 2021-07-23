@@ -4,30 +4,21 @@ import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "cds/CustomerAssociationsSchema.json")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+@JsonRootName("response")
 public class CustomerAssociationResponse extends Pagination {
     private List<CustomerAssociationItems> items;
-    private CustomerAssociationResponse response;
-
-    public CustomerAssociationResponse getResponse() {
-        return this.response;
-    }
-
-    public CustomerAssociationResponse setResponse(CustomerAssociationResponse response) {
-        this.response = response;
-        return this;
-    }
-
-    public CustomerAssociationResponse setItems(List<CustomerAssociationItems> items) {
-        this.items = items;
-        return this;
-    }
-
-    public List<CustomerAssociationItems> getItems() {
-        return this.items;
-    }
 }

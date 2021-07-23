@@ -70,11 +70,4 @@ public class CommonConstants {
     public static String getCsvFile() {
         return csvFile = csvFile == null ? System.getProperty("csvFile", "onprem-users.csv") : System.getProperty("csvFile");
     }
-
-    public static String getCisPartIdentity() {
-        if (cisPartIdentity == null) {
-            cisPartIdentity = System.getProperty("cisPartIdentity", PROPERTIES.getProperty("cis.part.identity"));
-        }
-        return cisPartIdentity;
-    }
 }

@@ -139,7 +139,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
                 .addCriteriaWithOption("Component Name", "Equals", reportsPartNumber)
-                .addCriteriaWithOption("VPE", "In", DigitalFactoryEnum.APRIORI_USA.getVpe())
+                .addCriteriaWithOption("VPE", "In", DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 

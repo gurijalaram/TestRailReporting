@@ -1,5 +1,7 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -82,10 +84,10 @@ public class NewScenarioNameTests extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
-        evaluatePage.selectProcessGroup(processGroupEnum.getProcessGroup())
+        evaluatePage.selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
@@ -118,28 +120,28 @@ public class NewScenarioNameTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioA, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .uploadComponentAndOpen(componentName, scenarioB, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
+            .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
             .uploadComponentAndOpen(componentName, scenarioC, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
+            .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
             .publish(EvaluatePage.class)
