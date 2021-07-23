@@ -1,8 +1,17 @@
 {
   "type": "object",
+  "required": [
+    "abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq"
+  ],
   "properties": {
-    "": {
+    "abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq": {
       "type": "object",
+      "required": [
+        "BRL",
+        "CAD",
+        "EUR",
+        "USD"
+      ],
       "properties": {
         "BRL": {
           "type": "number"
@@ -45,8 +54,14 @@
         }
       }
     },
-    "": {
+    "abaairabiriririqiraajraiyrabiriqirbaizqbirjriyzrajzrizyq": {
       "type": "object",
+      "required": [
+        "BRL",
+        "CAD",
+        "EUR",
+        "USD"
+      ],
       "properties": {
         "BRL": {
           "type": "number"

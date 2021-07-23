@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.response.getunitvariantsettings.GetCustomUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.utils.AcsResources;
@@ -38,7 +37,8 @@ public class GetUnitVariantSettingsTests {
 
         assertThat(getUnitVariantSettingsResponse, is(notNullValue()));
 
-        ArrayList<UnitVariantSetting> allItems = getUnitVariantSettingsResponse.getAllUnitVariantSetting();
+        ArrayList<UnitVariantSetting> allItems =
+                getUnitVariantSettingsResponse.getAllUnitVariantSetting();
         assertThat(allItems, is(notNullValue()));
 
         for (UnitVariantSetting item : allItems) {
@@ -55,7 +55,7 @@ public class GetUnitVariantSettingsTests {
     @Description("Test Get Custom Unit Variant Settings")
     public void testGetCustomUnitVariantSettings() {
         AcsResources acsResources = new AcsResources();
-        GetCustomUnitVariantSettingsResponse getCustomUnitVariantSettingsResponse =
+        UnitVariantSetting getCustomUnitVariantSettingsResponse =
                 acsResources.getCustomUnitVariantSettings();
 
         assertThat(getCustomUnitVariantSettingsResponse, is(notNullValue()));

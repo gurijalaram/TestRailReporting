@@ -31,26 +31,6 @@ public class GetEnabledCurrencyRateVersionsTests {
     @Description("Test Get Enabled Currency Rate Versions")
     public void testGetEnabledCurrencyRateVersions() {
         AcsResources acsResources = new AcsResources();
-        CurrencyRateVersionResponse getEnabledCurrencyRateVersionsResponse = acsResources
-                .getEnabledCurrencyRateVersions();
-
-        assertThat(getEnabledCurrencyRateVersionsResponse, is(notNullValue()));
-
-        CurrencyRateVersionItemOne itemOne = getEnabledCurrencyRateVersionsResponse
-                .getAbaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq();
-        CurrencyRateVersionItemTwo itemTwo = getEnabledCurrencyRateVersionsResponse
-                .getAbaairabiriririqiraajraiyrabiriqirbaizqbirjriyzrajzrizyq();
-
-        assertThat(itemOne.getBRL(), is(notNullValue()));
-        assertThat(itemOne.getCAD(), is(notNullValue()));
-        assertThat(itemOne.getCNY(), is(notNullValue()));
-        assertThat(itemOne.getEUR(), is(notNullValue()));
-        assertThat(itemOne.getUSD(), is(notNullValue()));
-
-        assertThat(itemTwo.getBRL(), is(notNullValue()));
-        assertThat(itemTwo.getCAD(), is(notNullValue()));
-        assertThat(itemTwo.getCNY(), is(notNullValue()));
-        assertThat(itemTwo.getEUR(), is(notNullValue()));
-        assertThat(itemTwo.getUSD(), is(notNullValue()));
+        acsResources.getEnabledCurrencyRateVersions();
     }
 }

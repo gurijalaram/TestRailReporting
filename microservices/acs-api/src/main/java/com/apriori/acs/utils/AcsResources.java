@@ -8,8 +8,8 @@ import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.Get
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
-import com.apriori.acs.entity.response.getunitvariantsettings.GetCustomUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
+import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -162,18 +162,18 @@ public class AcsResources {
      *
      * @return GetUnitVariantSettingsResponse instance
      */
-    public GetCustomUnitVariantSettingsResponse getCustomUnitVariantSettings() {
+    public UnitVariantSetting getCustomUnitVariantSettings() {
         String getCustomUnitVariantSettingsUrl = baseUrl.concat(
                 String.format("ws/workspace/users/%s/custom-unit-variant-settings", Constants.USERNAME));
 
         headers.put(contentType, applicationJson);
 
         RequestEntity getCustomUnitVariantSettingsRequestEntity = RequestEntity.init(
-                getCustomUnitVariantSettingsUrl, GetCustomUnitVariantSettingsResponse.class)
+                getCustomUnitVariantSettingsUrl, UnitVariantSetting.class)
                 .setHeaders(headers)
                 .setHeaders(token);
 
-        return (GetCustomUnitVariantSettingsResponse) GenericRequestUtil.get(getCustomUnitVariantSettingsRequestEntity,
+        return (UnitVariantSetting) GenericRequestUtil.get(getCustomUnitVariantSettingsRequestEntity,
                 new RequestAreaApi()).getResponseEntity();
     }
 

@@ -15,7 +15,7 @@ public class Constants {
 
     public static final String DEFAULT_BASE_URL_KEY = "url";
     public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-env-api";
+    public static final String DEFAULT_ENVIRONMENT_VALUE = "qa-21-1";
     private static final File INPUT_STREAM;
     private static final Properties PROPERTIES = new Properties();
     public static String environment;
@@ -30,7 +30,7 @@ public class Constants {
     static {
         environment = System.getProperty(DEFAULT_ENVIRONMENT_KEY) == null ? DEFAULT_ENVIRONMENT_VALUE : System.getProperty(DEFAULT_ENVIRONMENT_KEY);
 
-        INPUT_STREAM = FileResourceUtil.getResourceAsFile("cid-api-" + environment + ".properties");
+        INPUT_STREAM = FileResourceUtil.getResourceAsFile("acs-api-" + environment + ".properties");
 
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
