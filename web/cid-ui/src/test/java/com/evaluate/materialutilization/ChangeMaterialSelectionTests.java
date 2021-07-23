@@ -335,7 +335,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.getMaterialInfo(), is("Steel, Cold Worked, AISI 1020"));
@@ -386,7 +386,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         evaluatePage = loginPage.login(UserUtil.getUser())
             .uploadFileAndOk(scenarioName, resourceFile, EvaluatePage.class)
             .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
+            .selectVPE(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .costScenario();
 
         assertThat(evaluatePage.getMaterialInfo(), is("Steel, Hot Worked, AISI 1010"));

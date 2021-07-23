@@ -190,6 +190,8 @@ public class NewWorkflowPage {
     private WebElement errorNameWithUnsupportedCharacters;
     @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_button-183 > button")
     private WebElement detailCancelButton;
+    @FindBy(css = "#root_pagemashupcontainer-1_navigation-83-popup_checkbox-149")
+    private WebElement checkboxEnabled;
 
     private String ciConnectFieldCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-3";
     private String valueDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-20";
@@ -633,6 +635,8 @@ public class NewWorkflowPage {
             fillWorkflowDescriptionField(description);
         }
 
+        pageUtils.waitForElementAndClick(checkboxEnabled);
+
         if (selectConnector) {
             selectWorkflowConnector();
         }
@@ -640,6 +644,7 @@ public class NewWorkflowPage {
         if (isSetSchedule) {
             setSchedule(schedule);
         }
+
     }
 
     /**
