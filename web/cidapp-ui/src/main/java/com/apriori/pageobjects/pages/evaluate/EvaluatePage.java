@@ -143,6 +143,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-process-group-select-field']//div[@class='text-overflow']")
     private WebElement currentProcessGroup;
 
+    @FindBy(xpath = "//button[.='Back']")
+    private WebElement backFromError;
+
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Secondary']")
     private WebElement secondaryTab;
 
@@ -637,5 +640,26 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.waitForElementAndClick(scenario);
         pageUtils.windowHandler(1);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Gets error message about element was bot found
+     *
+     * @return text of error message
+     */
+    public String getNotFoundMessage() {
+        By message = By.cssSelector("span.message");
+        pageUtils.waitForElementToAppear(message);
+        return driver.findElement(message).getText();
+    }
+
+    /**
+     * Clicks on Back button
+     *
+     * @return generic page object
+     */
+    public <T> T backFromError(Class<T> className) {
+        pageUtils.waitForElementAndClick(backFromError);
+        return PageFactory.initElements(driver, className);
     }
 }

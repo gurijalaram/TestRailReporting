@@ -29,7 +29,7 @@ public class ModalDialogController {
     @FindBy(css = "button[title='Collapse all']")
     private WebElement collapseAllButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Submit']")
+    @FindBy(xpath = "//div[@class='modal-content']//button[@class='btn btn-primary'][.='Submit']")
     private WebElement submitButton;
 
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")

@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.pageobjects.pages.compare.CompareExplorePage;
+import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
 
@@ -57,8 +57,8 @@ public class CompareToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public CompareExplorePage modify() {
+    public ModifyComparisonPage modify() {
         pageUtils.waitForElementAndClick(modifyButton);
-        return new CompareExplorePage(driver);
+        return new ModifyComparisonPage(driver);
     }
 }
