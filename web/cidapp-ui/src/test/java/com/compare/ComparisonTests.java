@@ -595,9 +595,23 @@ public class ComparisonTests extends TestBase {
 
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName2)));
 
-        evaluatePage.clickCompare();
+        comparePage = evaluatePage.clickCompare();
 
-        assertThat(comparePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
+        assertThat(comparePage.isIconDisplayed(componentName2, scenarioName2, StatusIconEnum.PUBLIC), is(true));
+
+        evaluatePage = comparePage.clickExplore()
+                .selectFilter("Recent")
+                .highlightScenario(componentName, scenarioName)
+                .publishScenario()
+                .publish(ExplorePage.class)
+                .clickCompare()
+                .openBasisScenario();
+
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+
+        comparePage = evaluatePage.clickCompare();
+
+        assertThat(comparePage.isIconDisplayed(componentName, scenarioName, StatusIconEnum.PUBLIC), is(true));
     }
 
     @Test

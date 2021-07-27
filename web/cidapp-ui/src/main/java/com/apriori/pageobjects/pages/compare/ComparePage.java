@@ -69,8 +69,10 @@ public class ComparePage extends CompareToolbar {
      * @param icon - the icon
      * @return true/false
      */
-    public boolean isIconDisplayed(StatusIconEnum icon) {
-        return statusIcon.isIconDisplayed(icon);
+    public boolean isIconDisplayed(String componentName, String scenarioName, StatusIconEnum icon) {
+        By iconStatus = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//div[@class='scenario-status-icons']//*[@data-icon='%s']",
+                componentName.toUpperCase().trim(), scenarioName.trim(), icon.getStatusIcon()));
+        return driver.findElement(iconStatus).isDisplayed();
     }
 
     /**
