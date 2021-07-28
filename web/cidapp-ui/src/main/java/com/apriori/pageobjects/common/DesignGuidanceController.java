@@ -45,7 +45,7 @@ public class DesignGuidanceController {
      */
     public String getColumn(String issue, int column) {
         List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[normalize-space()='%s']/..//div[@role='cell']", issue.trim())));
-        return pageUtils.waitForElementToAppear(cells.get(column).findElement(By.cssSelector(".cell-text"))).getAttribute("textContent");
+        return pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(cells.get(column).findElement(By.cssSelector(".cell-text"))), true).getAttribute("textContent");
     }
 
     /**
@@ -55,7 +55,7 @@ public class DesignGuidanceController {
      */
     public String getColumnIcon(String issue, int column) {
         List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[normalize-space()='%s']/..//div[@role='cell']", issue.trim())));
-        return pageUtils.waitForElementToAppear(cells.get(column).findElement(By.cssSelector(".cell-text svg"))).getAttribute("data-icon");
+        return pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(cells.get(column).findElement(By.cssSelector(".cell-text svg"))), true).getAttribute("data-icon");
     }
 
     /**

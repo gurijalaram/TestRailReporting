@@ -4,30 +4,27 @@ import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+@Slf4j
 public class SecondaryPage extends LoadableComponent<SecondaryPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(SecondaryPage.class);
 
     @FindBy(css = "input[name='batchSize']")
     private WebElement batchSizeInput;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
-    private WebElement machiningProcessesPencil;
+    private WebElement secondaryProcessesPencil;
 
-    @FindBy(css = "div[id='qa-secondary-digital-factory-select'] [data-icon='chevron-down']")
-    private WebElement secDigitalFactoryDropdown;
+    @FindBy(css = "div[id='qa-secondary-digital-factory-select'] button")
+    private WebElement secondaryDFPencil;
 
     @FindBy(css = "[id='qa-secondary-digital-factory-select']")
     private WebElement secDigitalFactoryList;
@@ -51,8 +48,9 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
         this.pageUtils = new PageUtils(driver);
         this.inputsController = new InputsController(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        this.get();
     }
 
     @Override
@@ -77,14 +75,13 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     }
 
     /**
-     * Selects the digital factory dropdown
+     * Opens the digital factory dropdown
      *
-     * @param digitalFactory - the secondary digital factory
-     * @return current page object
+     * @return new page object
      */
-    public SecondaryPage selectSecondaryDF(DigitalFactoryEnum digitalFactory) {
-        inputsController.selectDigitalFactory(secDigitalFactoryDropdown, digitalFactory);
-        return this;
+    public SecondaryDFPage openSecondaryDF() {
+        pageUtils.waitForElementAndClick(secondaryDFPencil);
+        return new SecondaryDFPage(driver);
     }
 
     /**
@@ -92,9 +89,9 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      *
      * @return new page object
      */
-    public <T> T openSecondaryProcesses(Class<T> klass) {
-        inputsController.openMachiningProcesses(machiningProcessesPencil);
-        return PageFactory.initElements(driver, klass);
+    public SecondaryProcessesPage openSecondaryProcesses() {
+        inputsController.openSecondaryProcesses(secondaryProcessesPencil);
+        return new SecondaryProcessesPage(driver);
     }
 
     /**
@@ -141,7 +138,6 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      * @return list as string
      */
     public List<String> getListOfSecondaryDigitalFactory() {
-        pageUtils.waitForElementAndClick(secDigitalFactoryList);
         return inputsController.getListOfDigitalFactory(secDigitalFactoryList, "Secondary Digital Factory");
     }
 }

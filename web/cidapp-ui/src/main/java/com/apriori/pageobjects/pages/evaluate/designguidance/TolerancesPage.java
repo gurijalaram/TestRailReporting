@@ -5,6 +5,7 @@ import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ToleranceEnum;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -86,10 +87,10 @@ public class TolerancesPage extends LoadableComponent<TolerancesPage> {
     /**
      * Gets count column
      *
-     * @return string
+     * @return int
      */
-    public int getGcdCount(String issueType) {
-        return Integer.parseInt(designGuidanceController.getColumn(issueType, 1));
+    public int getGcdCount(ToleranceEnum issueType) {
+        return Integer.parseInt(designGuidanceController.getColumn(issueType.getToleranceName(), 1));
     }
 
     /**

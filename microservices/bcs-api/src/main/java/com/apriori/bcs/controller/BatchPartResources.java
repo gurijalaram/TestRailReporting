@@ -22,6 +22,12 @@ import java.util.Map;
 
 public class BatchPartResources extends BcsBase {
 
+    public enum ProcessGroupValue {
+        USE_NULL,
+        USE_EMPTY_STRING,
+        USE_PROCESS_GROUP
+    }
+
     enum EndPoint {
         BATCH_PARTS(String.format(getCisUrl(),"batches/%s/parts")),
         GET_BATCH_PART_REPRESENTATION(String.format(getCisUrl(), "batches/%s/parts/%s")),
@@ -54,9 +60,25 @@ public class BatchPartResources extends BcsBase {
         );
     }
 
-    public static Part createNewBatchPart(NewPartRequest npr, String batchIdentity) {
+    public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity,
+                                                            ProcessGroupValue processGroupValue) {
         String url = String.format(EndPoint.BATCH_PARTS.getEndPoint(),
                 batchIdentity);
+
+        String processGroup;
+        switch (processGroupValue) {
+            case USE_PROCESS_GROUP:
+            default:
+                processGroup = npr.getProcessGroup();
+                break;
+            case USE_NULL:
+                processGroup = null;
+                break;
+            case USE_EMPTY_STRING:
+                processGroup = "";
+                break;
+
+        }
 
         File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(npr.getProcessGroup()),
                 npr.getFilename());
@@ -74,17 +96,22 @@ public class BatchPartResources extends BcsBase {
                         .use("BatchSize", npr.getBatchSize().toString())
                         .use("Description", npr.getDescription())
                         //.use("PinnedRouting", npr.getPinnedRouting())
-                        .use("ProcessGroup", npr.getProcessGroup())
+                        .use("ProcessGroup", processGroup)
                         //.use("ProductionLife", npr.getProductionLife().toString())
                         .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
                         //.use("Udas", npr.getUdas())
-                        //.use("VpeName", npr.getVpeName())
+                        .use("VpeName", npr.getVpeName())
                         .use("MaterialName", npr.getMaterialName())
                         .use("generateWatchpointReport", "true")
                 );
 
 
-        return (Part)GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi()).getResponseEntity();
+        return GenericRequestUtil.postMultipart(requestEntity, new RequestAreaApi());
+    }
+
+    public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity) {
+        return createNewBatchPart(npr, batchIdentity, ProcessGroupValue.USE_PROCESS_GROUP);
+
     }
 
 
