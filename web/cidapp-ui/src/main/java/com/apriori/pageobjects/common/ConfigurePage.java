@@ -27,6 +27,9 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     @FindBy(css = ".apriori-card.medium-card.shuttle-box-list.card")
     private List<WebElement> columnList;
 
+    @FindBy(xpath = "//div[@class='modal-content']//button[@class='btn btn-primary'][.='Submit']")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -147,7 +150,8 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        pageUtils.waitForElementAndClick(submitButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**

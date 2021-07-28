@@ -58,6 +58,7 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementAppear(filterButton);
     }
 
     /**

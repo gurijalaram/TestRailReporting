@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.common.CustomAttributesInputsController;
 import com.apriori.pageobjects.common.InputsController;
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
@@ -143,9 +144,6 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-process-group-select-field']//div[@class='text-overflow']")
     private WebElement currentProcessGroup;
 
-    @FindBy(xpath = "//button[.='Back']")
-    private WebElement backFromError;
-
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Secondary']")
     private WebElement secondaryTab;
 
@@ -157,6 +155,7 @@ public class EvaluatePage extends EvaluateToolbar {
     private InputsController inputsController;
     private CustomAttributesInputsController customAttributesInputsController;
     private StatusIcon statusIcon;
+    private ModalDialogController modalDialogController;
 
     public EvaluatePage(WebDriver driver) {
         super(driver);
@@ -165,6 +164,7 @@ public class EvaluatePage extends EvaluateToolbar {
         this.inputsController = new InputsController(driver);
         this.customAttributesInputsController = new CustomAttributesInputsController(driver);
         this.statusIcon = new StatusIcon(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -643,14 +643,12 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets error message about element was bot found
+     * Gets error message about element was not found
      *
      * @return text of error message
      */
     public String getNotFoundMessage() {
-        By message = By.cssSelector("span.message");
-        pageUtils.waitForElementToAppear(message);
-        return driver.findElement(message).getText();
+        return modalDialogController.getNotFoundMessage();
     }
 
     /**
@@ -659,7 +657,6 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return generic page object
      */
     public <T> T backFromError(Class<T> className) {
-        pageUtils.waitForElementAndClick(backFromError);
-        return PageFactory.initElements(driver, className);
+        return modalDialogController.backFromError(className);
     }
 }

@@ -38,7 +38,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement clearButton;
     @FindBy(css = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
-    @FindBy(xpath = "//div[@class='modal-content']//button[@class='mr-2 btn btn-primary'][.='Submit']")
+    @FindBy(css = ".filter-manager [type='submit']")
     private WebElement submitButton;
 
     private PageUtils pageUtils;

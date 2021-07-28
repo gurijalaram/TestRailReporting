@@ -48,6 +48,9 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = ".basis .img-thumbnail")
     private WebElement basisScenario;
 
+    @FindBy(css = ".comparison-column.draggable .card-header")
+    private List<WebElement> cardHeader;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -135,17 +138,6 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
-     * Checks if sections are collapsed
-     *
-     * @param section - name of the section
-     * @return attribute
-     */
-    public String isCompareInfoNotDisplayed(String section) {
-        By sectionDropdown = By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] [data-icon='chevron-down']", section));
-        return pageUtils.waitForElementToAppear(sectionDropdown).getAttribute("class");
-    }
-
-    /**
      * Gets the card of each section
      *
      * @param section - the section
@@ -205,7 +197,6 @@ public class ComparePage extends CompareToolbar {
      * @return list of scenarios
      */
     public List<String> getScenariosInComparison() {
-        List<WebElement> cardHeader = driver.findElements(By.cssSelector(".comparison-column.draggable .card-header"));
         return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 

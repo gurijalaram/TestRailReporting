@@ -40,6 +40,7 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class ComparisonTests extends TestBase {
+    private final String notFoundMessage = "Oops! Looks like the component or scenario you were looking for could not be found.";
     private CidAppLoginPage loginPage;
     private ComparePage comparePage;
     private ExplorePage explorePage;
@@ -190,11 +191,11 @@ public class ComparisonTests extends TestBase {
                 .collapse("Process")
                 .collapse("Cost Result");
 
-        assertThat(comparePage.isCompareInfoNotDisplayed("Info & Inputs"), containsString("arrow-down"));
-        assertThat(comparePage.isCompareInfoNotDisplayed("Material & Utilization"), containsString("arrow-down"));
-        assertThat(comparePage.isCompareInfoNotDisplayed("Design Guidance"), containsString("arrow-down"));
-        assertThat(comparePage.isCompareInfoNotDisplayed("Process"), containsString("arrow-down"));
-        assertThat(comparePage.isCompareInfoNotDisplayed("Cost Result"), containsString("arrow-down"));
+        assertThat(comparePage.isComparisonInfoDisplayed("Description"), is(false));
+        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass"), is(false));
+        assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk"), is(false));
+        assertThat(comparePage.isComparisonInfoDisplayed("Routing"), is(false));
+        assertThat(comparePage.isComparisonInfoDisplayed("Investment"), is(false));
 
         comparePage.expand("Info & Inputs")
                 .expand("Material & Utilization")
@@ -245,11 +246,11 @@ public class ComparisonTests extends TestBase {
                 .collapse("Process")
                 .collapse("Cost Result");
 
-        assertThat(comparePage.isCompareInfoNotDisplayed("Info & Inputs"), containsString("arrow-down"));
-        assertThat(comparePage.isCompareInfoNotDisplayed("Material & Utilization"), containsString("arrow-down"));
-        assertThat(comparePage.isCompareInfoNotDisplayed("Design Guidance"), containsString("arrow-down"));
-        assertThat(comparePage.isCompareInfoNotDisplayed("Process"), containsString("arrow-down"));
-        assertThat(comparePage.isCompareInfoNotDisplayed("Cost Result"), containsString("arrow-down"));
+        assertThat(comparePage.isComparisonInfoDisplayed("Description"), is(false));
+        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass"), is(false));
+        assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk"), is(false));
+        assertThat(comparePage.isComparisonInfoDisplayed("Routing"), is(false));
+        assertThat(comparePage.isComparisonInfoDisplayed("Investment"), is(false));
 
         comparePage.expand("Info & Inputs")
                 .expand("Material & Utilization")
@@ -508,7 +509,7 @@ public class ComparisonTests extends TestBase {
                 .clickCompare()
                 .openScenario(componentName2, scenarioName2);
 
-        assertThat(evaluatePage.getNotFoundMessage(), is("Oops! Looks like the component or scenario you were looking for could not be found."));
+        assertThat(evaluatePage.getNotFoundMessage(), is(notFoundMessage));
 
         comparePage = evaluatePage.backFromError(ComparePage.class);
 
@@ -554,7 +555,7 @@ public class ComparisonTests extends TestBase {
                 .clickCompare()
                 .openScenario(componentName, scenarioName);
 
-        assertThat(evaluatePage.getNotFoundMessage(), is("Oops! Looks like the component or scenario you were looking for could not be found."));
+        assertThat(evaluatePage.getNotFoundMessage(), is(notFoundMessage));
 
         comparePage = evaluatePage.backFromError(ComparePage.class);
 
