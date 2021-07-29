@@ -1,6 +1,5 @@
 package com.apriori.sds.tests;
 
-import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.Component;
 import com.apriori.sds.entity.response.ComponentsItemsResponse;
@@ -44,10 +43,7 @@ public class ComponentsTest extends SDSTestUtil {
     @TestRail(testCaseId = "7248")
     @Description("Add a new component.")
     public void postComponents() {
-        final Item postComponentResponse = postTestingComponent();
-
-        removeTestingScenario(postComponentResponse.getComponentIdentity(),
-            postComponentResponse.getScenarioIdentity());
+        postTestingComponentAndAddToRemoveList();
     }
 
 

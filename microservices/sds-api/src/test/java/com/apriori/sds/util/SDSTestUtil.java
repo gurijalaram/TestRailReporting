@@ -21,6 +21,7 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.Set;
 
 public abstract class SDSTestUtil extends TestUtil {
 
-    protected static final Set<Item> scenariosToDelete = new HashSet<>();
+    protected static Set<Item> scenariosToDelete = new HashSet<>();
     private static Item testingComponent;
 
     @AfterClass
@@ -38,6 +39,9 @@ public abstract class SDSTestUtil extends TestUtil {
                 removeTestingScenario(component.getComponentIdentity(), component.getScenarioIdentity());
             });
         }
+
+        scenariosToDelete = new HashSet<>();
+        testingComponent = null;
     }
 
     /**
@@ -72,7 +76,7 @@ public abstract class SDSTestUtil extends TestUtil {
      *
      * @return object
      */
-    protected static Item postTestingComponent() {
+    protected static Item postTestingComponentAndAddToRemoveList() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "AGC0-LP-700144754.prt.1";
         ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
@@ -104,7 +108,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     protected static Item getTestingComponent() {
         if (testingComponent == null) {
-            testingComponent = postTestingComponent();
+            testingComponent = postTestingComponentAndAddToRemoveList();
         }
 
         return testingComponent;

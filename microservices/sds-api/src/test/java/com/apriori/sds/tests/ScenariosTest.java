@@ -147,7 +147,7 @@ public class ScenariosTest extends SDSTestUtil {
     public void testUpdateScenario() {
         final String updatedNotes = "Automation Notes";
         final String updatedDescription = "Automation Description";
-        final Item scenarioForUpdate = postTestingComponent();
+        final Item scenarioForUpdate = postTestingComponentAndAddToRemoveList();
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .notes(updatedNotes)
@@ -251,7 +251,7 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = "7246")
     @Description("Delete an existing scenario.")
     public void deleteScenario() {
-        final Item componentToDelete = postTestingComponent();
+        final Item componentToDelete = postTestingComponentAndAddToRemoveList();
 
         removeTestingScenario(componentToDelete.getComponentIdentity(), componentToDelete.getScenarioIdentity());
         scenariosToDelete.remove(componentToDelete);
@@ -348,7 +348,7 @@ public class ScenariosTest extends SDSTestUtil {
 
     private Scenario publishAndGetReadyToWorkScenario() {
         final String publishScenarioName = new GenerateStringUtil().generateScenarioName();
-        final Item testingComponent = postTestingComponent();
+        final Item testingComponent = postTestingComponentAndAddToRemoveList();
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(publishScenarioName)

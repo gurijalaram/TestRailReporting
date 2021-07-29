@@ -90,7 +90,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     private static ScenarioAssociation postAssociationForTestingRollup() {
         RequestEntity request = SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociation.class)
             .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity())
-            .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
+            .body("association", AssociationRequest.builder().scenarioIdentity(getTestingRollUp().getScenarioIdentity())
                 .occurrences(1)
                 .createdBy(getTestingRollUp().getComponentCreatedBy())
                 .build());
