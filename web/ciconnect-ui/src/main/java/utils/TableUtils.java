@@ -59,6 +59,37 @@ public class TableUtils {
     }
 
     /**
+     * Return the index of a workflow
+     *
+     * @param table table to search
+     * @param name workflow name
+     * @return The row number of the specified
+     */
+    public Integer getTableItemIndex(WebElement table, String name) {
+        pageUtils.waitForElementToBeClickable(table);
+        List<WebElement> rows =
+                table.findElements(By.tagName("tr"))
+                        .stream()
+                        .skip(1)
+                        .collect(Collectors.toList());
+
+        if (rows.size() <= 0) {
+            return null;
+        }
+        int idx = 0;
+
+        for (WebElement row : rows) {
+            if (row.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(name)) {
+                return idx;
+            }
+
+            idx++;
+        }
+
+        return -1;
+    }
+
+    /**
      * Returns the number of displayed rows in a table (skipping the header row)
      * @param table
      * @return
@@ -81,6 +112,8 @@ public class TableUtils {
         pageUtils.waitForElementAndClick(row);
         return row;
     }
+
+
 
     /**
      * Select a row by item name
