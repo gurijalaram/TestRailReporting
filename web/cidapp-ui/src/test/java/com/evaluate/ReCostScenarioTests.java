@@ -38,7 +38,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3071")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6101"})
     @Description("Test recosting a cad file - Gear Making")
