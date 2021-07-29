@@ -13,7 +13,10 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/iterations/latest"),
 
     POST_COMPONENTS("components"),
-    POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/cost");
+    POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/cost"),
+
+    //Preferences
+    GET_PREFERENCES("users/current/preferences?pageSize=100");
 
     private final String endpoint;
 
