@@ -194,3 +194,38 @@ When we want to run tests against local env we need to override **env** value `-
 
 If we want to run against Eclipse dev env we also need to change **url** and **ignore ssl check** 
 `-Durl=https://localhost:8543/ -DignoreSslCheck=true`
+
+## How to use assertj in your test class
+1. Import the assertj lib `import org.assertj.core.api.SoftAssertions;`
+2. Create a new object `private SoftAssertions softAssert = new SoftAssertions();`
+3. Compose the assertions eg. `softAssert.assertThat(explorePage.getComponentsFound()).isEqualTo(100); 
+   softAssert.assertThat(explorePage.isScenarioCountPresent()).isTrue();`
+4. The assertAll method must be called to carry out the assertions `softAssert.assertAll();`   
+
+
+## Project properties
+### Get properties 
+To get any project property use `com.apriori.utils.properties.PropertiesContext` - this is global class to work with properties.
+`com.apriori.utils.properties.PropertiesContext` - contains get methods, that allow to get the property value to mapped type
+ - `getStr(String propertyName)` - return property by name mapped to String
+ - `getStr(String propertyName)` - return property by name mapped to Integer
+Property name represent String path of YML file e.g: 
+   to get <br>
+   >`global:` <br>
+   > `prop: example` <br>
+
+`PropertiesContext.getStr("global.prop");`
+
+#### Property based on environment
+To get property based on environment use environment reference by key `${env}` 
+   e.g: `PropertiesContext.getStr("${env}.prop");`
+
+An example of properties usage you can find in `com.apriori.util.test.PropertiesTestPropertiesTest`
+
+### Properties location and template
+All properties are located in `utils/src/main/resources/config.yml`
+
+Properties are separated into two sections:
+- **global** - contains properties for all modules, common properties for microservices, that are not related to the environment
+- **environment** - contains properties for all modules and microservices, that are related to the environment. They always start from environment name.
+   

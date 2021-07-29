@@ -17,10 +17,6 @@ public class CommonConstants {
     public static final String DEFAULT_PASSWORD = "admin";
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
 
-    // TODO z: Uncomment if go with common properties approach
-    //public static final String DEFAULT_ENVIRONMENT_KEY = "env";
-    //public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
-    //public static String environment;
     private static final Properties PROPERTIES = new Properties();
     private static final File COMMON_PROPERTIES_STREAM;
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;

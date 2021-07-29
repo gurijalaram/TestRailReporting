@@ -1,0 +1,77 @@
+# Define the environment
+env: int-core
+
+# Define the global properties not related to environment
+global:
+  schema.base.path: schemas/
+  console.log.level: OFF
+  users.csv.file: cid-qa-users
+  different.users: true
+  service.host: ats.core.qa.apriori.net
+
+  cid:
+    instance-name: cid
+    instnace-location: apriori-cid
+
+  vds:
+    instance-name: vds
+    instnace-location: apriori-vds
+
+  sds:
+    instance-name: sds
+    instnace-location: apriori-sds
+
+
+#  Specific environment configurations
+######################################################## INT-CORE ########################################################
+int-core:
+  secret.key: 65J1ID2B6LDG
+  ap.user.context: eyJpZGVudGl0eSI6IjhHRkRJRzIyOTYyOSIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMzFUMTY6MDdaIiwidXBkYXRlZEF0IjoiMjAyMS0wNi0wN1QxMTo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjhHRkRJRzIyTDMxNSIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMzFUMTY6MDdaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyMTF9LCJjdXN0b21lcklkZW50aXR5IjoiSDMzN0dLRDBMQTBNIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+  current_env: int-core
+
+
+
+  ############################ CID ############################
+  cid:
+    api-url: cid-api
+    user-identity: 21212211
+    different_users: false
+    base_url: int-core.base_url/cid
+    current_env: cid
+
+  ############################ sds ############################
+  sds:
+    api-url: cid-api
+    user-identity: 21212211
+    current_env: sds
+
+
+
+######################################################## QA-CORE ########################################################
+qa-core:
+  secret_key: 65J1ID2B6LDG
+  ap_user_context: eyJpZGVudGl0eSI6IjhHRkRJRzIyOTYyOSIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMzFUMTY6MDdaIiwidXBkYXRlZEF0IjoiMjAyMS0wNi0wN1QxMTo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjhHRkRJRzIyTDMxNSIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMzFUMTY6MDdaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyMTF9LCJjdXN0b21lcklkZW50aXR5IjoiSDMzN0dLRDBMQTBNIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+
+  cid:
+    api-url: cid-api
+    user-identity: 21212211
+
+  vds:
+    api-url: cid-api
+    user-identity: 21212211
+
+
+
+######################################################## QA-21.1 ########################################################
+qa-21.1:
+  secret_key: 65J1ID2B6LDG
+  ap_user_context: eyJpZGVudGl0eSI6IjhHRkRJRzIyOTYyOSIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMzFUMTY6MDdaIiwidXBkYXRlZEF0IjoiMjAyMS0wNi0wN1QxMTo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjhHRkRJRzIyTDMxNSIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMzFUMTY6MDdaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyMTF9LCJjdXN0b21lcklkZW50aXR5IjoiSDMzN0dLRDBMQTBNIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+
+  cid:
+    api-url: cid-api
+    user-identity: 21212211
+
+  sds:
+    api-url: cid-api
+    user-identity: 21212211
+

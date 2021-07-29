@@ -236,6 +236,16 @@ public class WorkflowPage {
     }
 
     /**
+     * Return the workflow row index
+     *
+     * @param workflowName
+     * @return
+     */
+    public Integer getWorkflowIndex(String workflowName) {
+        return tableUtils.getTableItemIndex(workflowList, workflowName);
+    }
+
+    /**
      * Get the workflow list page size
      *
      * @param setMaxSize The current max page size
@@ -415,7 +425,7 @@ public class WorkflowPage {
      * @return Workflow name
      */
     public String getRowValue(Integer rowNumber, Field field) {
-        rowNumber = rowNumber + 1;
+        rowNumber = rowNumber + 2;
         String cssRow = row.replace("{ROWNUMBER}", rowNumber.toString());
         WebElement workflowRow = driver.findElement(By.cssSelector(cssRow));
         List<WebElement> columns = workflowRow.findElements(By.tagName("td"));

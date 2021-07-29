@@ -1,6 +1,7 @@
 package com.apriori.utils.users.service;
 
 import com.apriori.utils.constants.CommonConstants;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class UserCommonService {
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser() {
-        return CommonConstants.getUseDifferentUser().equals("true") ? getNewUser() : getGlobalUser();
+        return PropertiesContext.getStr("global.different.users").equals("true") ? getNewUser() : getGlobalUser();
     }
 
     private static UserCredentials getNewUser() {

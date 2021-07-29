@@ -36,6 +36,9 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     @FindBy(css = "[id='qa-production-defaults-material-catalog-select'] .apriori-select")
     private WebElement materialCatalogDropdown;
 
+    @FindBy(css = "[id='qa-material-modal-select-field'] .modal-select-content")
+    private WebElement materialInput;
+
     @FindBy(css = "[id='qa-material-modal-select-field'] [data-icon='pencil']")
     private WebElement materialPencil;
 
@@ -51,11 +54,13 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
+    private SettingsNavigation settingsNavigation;
 
     public ProductionDefaultsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
+        this.settingsNavigation = new SettingsNavigation(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -70,6 +75,33 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     protected void isLoaded() throws Error {
         assertTrue("Production Defaults tab is not active", productionsTab.getAttribute("class").contains("active"));
         assertTrue("Production Defaults is not displayed", productionDefaults.isDisplayed());
+    }
+
+    /**
+     * Go to tolerances default tab
+     *
+     * @return new page object
+     */
+    public ToleranceDefaultsPage goToToleranceTab() {
+        return settingsNavigation.goToToleranceTab();
+    }
+
+    /**
+     * Go to display default tab
+     *
+     * @return new page object
+     */
+    public DisplayPreferencesPage goToDisplayTab() {
+        return settingsNavigation.goToDisplayTab();
+    }
+
+    /**
+     * Go to selection tab
+     *
+     * @return new page object
+     */
+    public SelectionPage goToSelectionTab() {
+        return settingsNavigation.goToSelectionTab();
     }
 
     /**
@@ -161,6 +193,78 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
         pageUtils.clearInput(batchSizeInput);
         batchSizeInput.sendKeys(batchSize);
         return this;
+    }
+
+    /**
+     * Get scenario name
+     *
+     * @return string
+     */
+    public String getScenarioName() {
+        return pageUtils.waitForElementToAppear(scenarioNameInput).getAttribute("value");
+    }
+
+    /**
+     * Gets the selected process group
+     *
+     * @return process group as String
+     */
+    public String getProcessGroup() {
+        return pageUtils.waitForElementToAppear(processGroupDropdown).getAttribute("textContent");
+    }
+
+    /**
+     * Get digital factory
+     *
+     * @return string
+     */
+    public String getDigitalFactory() {
+        return pageUtils.waitForElementToAppear(digitalFactoryDropdown).getAttribute("textContent");
+    }
+
+    /**
+     * Get material catalog
+     *
+     * @return string
+     */
+    public String getMaterialCatalog() {
+        return pageUtils.waitForElementToAppear(materialCatalogDropdown).getAttribute("textContent");
+    }
+
+    /**
+     * Get material
+     *
+     * @return string
+     */
+    public String getMaterial() {
+        return pageUtils.waitForElementToAppear(materialInput).getAttribute("textContent");
+    }
+
+    /**
+     * Get annual volume
+     *
+     * @return string
+     */
+    public String getAnnualVolume() {
+        return pageUtils.waitForElementToAppear(annualVolumeInput).getAttribute("value");
+    }
+
+    /**
+     * Get years
+     *
+     * @return string
+     */
+    public String getYears() {
+        return pageUtils.waitForElementToAppear(yearsInput).getAttribute("value");
+    }
+
+    /**
+     * Get batch size
+     *
+     * @return string
+     */
+    public String getBatchSize() {
+        return pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value");
     }
 
     /**

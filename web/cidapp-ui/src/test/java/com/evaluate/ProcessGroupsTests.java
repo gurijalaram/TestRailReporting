@@ -54,7 +54,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -79,7 +79,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -105,7 +105,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -131,7 +131,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -155,7 +155,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -180,7 +180,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -205,7 +205,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -230,7 +230,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -257,7 +257,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -282,7 +282,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -307,7 +307,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario(5);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -332,7 +332,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -357,7 +357,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -382,7 +382,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -407,7 +407,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -432,7 +432,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -457,7 +457,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -482,7 +482,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -506,7 +506,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(ROTO_BLOW_MOLDING)
             .openMaterialSelectorTable()
             .selectMaterial("Polyethylene, High Density (HDPE)")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -531,7 +531,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
@@ -558,7 +558,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(equalTo(EvaluateDfmIconEnum.CRITICAL.getIcon())));
@@ -586,7 +586,7 @@ public class ProcessGroupsTests extends TestBase {
             .openMaterialSelectorTable()
             .search("1020")
             .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE), is(true));

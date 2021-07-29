@@ -147,7 +147,6 @@ public class WorkflowFeatures {
     public Map<String, Object> deleteWorklow(String workflowName) {
         Map<String, Object> values = new HashMap();
         workflowPage.refreshPage();
-        workflowPage.sortBy("Last Modified By");
 
         workflowPage.selectWorkflow(workflowName);
         workflowPage.clickDeleteButton();
@@ -205,15 +204,13 @@ public class WorkflowFeatures {
         List<String> workflows = new ArrayList();
         int iteration = 1;
         values = new HashMap<>();
-        values.put("lowerNameIndex", 3);
-        values.put("upperNameIndex", 2);
-        values.put("numericNameIndex", 1);
 
         workflowPage.newWorkflow();
         String lowerName = UIUtils.saltString(Constants.DEFAULT_NAME_LOWER_CASE);
         newWorkflowPage.createNewWorkflow(lowerName, iteration);
         workflowPage.refreshPage();
         workflowPage.refreshWorkflowTable();
+        workflowPage.refreshPage();
         values.put("lowerName", lowerName);
         workflows.add(lowerName);
         iteration++;
@@ -223,6 +220,7 @@ public class WorkflowFeatures {
         newWorkflowPage.createNewWorkflow(numericName, iteration);
         workflowPage.refreshPage();
         workflowPage.refreshWorkflowTable();
+        workflowPage.refreshPage();
         values.put("numericName", numericName);
         workflows.add(numericName);
         iteration++;
@@ -232,9 +230,15 @@ public class WorkflowFeatures {
         newWorkflowPage.createNewWorkflow(upperName, iteration);
         workflowPage.refreshPage();
         workflowPage.refreshWorkflowTable();
+        workflowPage.refreshPage();
         values.put("upperName", upperName);
         workflows.add(upperName);
         workflowPage.refreshPage();
+
+
+        values.put("upperIndex", workflowPage.getWorkflowIndex(upperName));
+        values.put("numericIndex", workflowPage.getWorkflowIndex(numericName));
+        values.put("lowerIndex", workflowPage.getWorkflowIndex(lowerName));
 
         values.put("workflows", workflows);
         return values;
@@ -341,19 +345,18 @@ public class WorkflowFeatures {
 
         //Before click
         workflowPage.refreshPage();
-        workflowName = workflowPage.getFirstWorkflowName();
-        values.put("before-click-name", workflowName);
+        values.put("upper-before-click-index", workflowPage.getWorkflowIndex(upperName));
+        values.put("lower-before-click-index", workflowPage.getWorkflowIndex(lowerName));
 
         // First Click
         workflowPage.clickOnFirstColumn();
-        workflowName = workflowPage.getFirstWorkflowName();
-        values.put("first-click-name", workflowName);
+        values.put("upper-first-click-index", workflowPage.getWorkflowIndex(upperName));
+        values.put("lower-first-click-index", workflowPage.getWorkflowIndex(lowerName));
 
         // Second click
         workflowPage.clickOnFirstColumn();
-        workflowName = workflowPage.getFirstWorkflowName();
-        values.put("second-click-name", workflowName);
-        values.put("workflows", workflowNames);
+        values.put("upper-second-click-index", workflowPage.getWorkflowIndex(upperName));
+        values.put("lower-second-click-index", workflowPage.getWorkflowIndex(lowerName));
 
         List<String> headers = workflowPage.getWorkflowListHeaders();
         values.put("workflowListHeaders", headers);

@@ -3,9 +3,9 @@ package com.apriori.pageobjects.pages.settings;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
+import com.utils.OverridesEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,6 +19,12 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
 
     @FindBy(css = ".tolerance-overrides-form .section-header .left")
     private WebElement sectionHeader;
+
+    @FindBy(css = ".tolerance-overrides-form [type='Submit']")
+    private WebElement submitButton;
+
+    @FindBy(css = ".tolerance-overrides-form [type='button']")
+    private WebElement cancelButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -50,11 +56,23 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return current page object
      */
     public ToleranceOverridesPage inputOverride(OverridesEnum label, String value) {
-        WebElement byOverride = driver.findElement(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
-        pageUtils.waitForElementToAppear(byOverride);
-        pageUtils.clearInput(byOverride);
-        byOverride.sendKeys(value);
+        WebElement override = driver.findElement(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
+        pageUtils.waitForElementToAppear(override);
+        pageUtils.clearInput(override);
+        override.sendKeys(value);
         return this;
+    }
+
+    /**
+     * Gets tolerance override value
+     * eg. assertThat(toleranceOverridesPage.getToleranceOverride(OverridesEnum.TOTAL_RUNOUT), is(equalTo(3.0)));
+     *
+     * @param label - the label
+     * @return double
+     */
+    public double getToleranceOverride(OverridesEnum label) {
+        By byOverride = By.cssSelector(String.format("[name='%s']", label.getOverrides()));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(byOverride).getAttribute("value"));
     }
 
     /**
@@ -63,7 +81,8 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        pageUtils.waitForElementAndClick(submitButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -71,7 +90,8 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      *
      * @return generic page object
      */
-    public EvaluatePage cancel() {
-        return modalDialogController.cancel(EvaluatePage.class);
+    public <T> T cancel(Class<T> klass) {
+        pageUtils.waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(driver, klass);
     }
 }

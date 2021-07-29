@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.settings;
+package com.utils;
 
 public enum OverridesEnum {
     CIRCULARITY("circularity"),

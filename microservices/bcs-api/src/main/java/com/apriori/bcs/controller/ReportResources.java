@@ -47,7 +47,7 @@ public class ReportResources extends BcsBase {
         );
     }
 
-    public static Report createReport(NewReportRequest nrr) {
+    public static <T> ResponseWrapper<T> createReport(NewReportRequest nrr, Integer status, Class klass) {
         String url = String.format(getCisUrl(), endpointReports);
         List<String> partsIdentities = new ArrayList<>();
         partsIdentities.add(Constants.getCisPartIdentity());
@@ -60,12 +60,16 @@ public class ReportResources extends BcsBase {
                 .setScopedIdentity(nrr.getScopedIdentity())
                 .setReportParameters(nrr.getReportParameters());
 
-        return (Report) GenericRequestUtil.post(
-                RequestEntity.init(url, Report.class)
+        return GenericRequestUtil.post(
+                RequestEntity.init(url, klass)
                         .setBody(body)
-                        .setStatusCode(HttpStatus.SC_CREATED),
+                        .setStatusCode(status),
                 new RequestAreaApi()
-        ).getResponseEntity();
+        );
+    }
+
+    public static <T> ResponseWrapper<T> createReport(NewReportRequest nrr) {
+        return createReport(nrr, HttpStatus.SC_CREATED, Report.class);
     }
 
     public static <T> ResponseWrapper<T> getReportTemplates() {
