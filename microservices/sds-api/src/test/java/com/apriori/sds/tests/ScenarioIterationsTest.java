@@ -7,8 +7,8 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
-
 import com.apriori.utils.http2.utils.RequestEntityUtil;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Ignore;
