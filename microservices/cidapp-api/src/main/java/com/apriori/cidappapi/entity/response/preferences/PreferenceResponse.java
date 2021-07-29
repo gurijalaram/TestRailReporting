@@ -2,20 +2,20 @@ package com.apriori.cidappapi.entity.response.preferences;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@JsonRootName("response")
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
 public class PreferenceResponse {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
