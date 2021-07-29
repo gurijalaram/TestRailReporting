@@ -17,11 +17,11 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 
 import java.util.HashSet;
 import java.util.List;
@@ -93,7 +93,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     protected static void removeTestingScenario(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
             .inlineVariables(componentId, scenarioId);
 
         ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
@@ -152,7 +152,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected static Item postComponent(final PostComponentRequest postComponentRequest) {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .body("component", postComponentRequest);
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
@@ -175,7 +175,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected List<CostingTemplate> getCostingTemplates() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
 
         ResponseWrapper<CostingTemplatesItems> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());

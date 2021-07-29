@@ -11,7 +11,6 @@ import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
 import com.apriori.sds.entity.response.ScenarioHoopsImage;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.entity.response.ScenarioManifest;
-import com.apriori.sds.util.SDSRequestEntityUtil;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -19,6 +18,7 @@ import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -47,7 +47,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Get production defaults for a scenario.")
     public void getCostingDefaults() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS, ScenarioCostingDefaultsResponse.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS, ScenarioCostingDefaultsResponse.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -61,7 +61,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getCustomImage() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_CUSTOM_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_CUSTOM_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -75,7 +75,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getWebImage() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_WEB_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_WEB_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -91,7 +91,7 @@ public class ScenariosTest extends SDSTestUtil {
         final Item testingRollUp = postRollUp(new GenerateStringUtil().generateScenarioName(), "AutomationRollup");
 
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class)
                 .inlineVariables(
                     testingRollUp.getComponentIdentity(), testingRollUp.getScenarioIdentity()
                 );
@@ -119,7 +119,7 @@ public class ScenariosTest extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(getComponentId(), getScenarioId())
                 .body("scenario", scenarioRequestBody);
 
@@ -156,7 +156,7 @@ public class ScenariosTest extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.PATCH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.PATCH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(scenarioForUpdate.getComponentIdentity(), scenarioForUpdate.getScenarioIdentity())
                 .body("scenario", scenarioRequestBody);
 
@@ -193,7 +193,7 @@ public class ScenariosTest extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_FORK_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_FORK_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(getComponentId(), publishAndGetReadyToWorkScenario().getIdentity())
                 .body("scenario", scenarioRequestBody);
 
@@ -215,7 +215,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Description("GET a completed watchpoint report for a scenario.")
     public void getWatchPoint() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -237,7 +237,7 @@ public class ScenariosTest extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(getComponentId(), scenario.getIdentity())
                 .body("scenario", scenarioRequestBody);
 
@@ -301,7 +301,7 @@ public class ScenariosTest extends SDSTestUtil {
 
     private Scenario getScenarioByIdentity(final String scenarioIdentity) {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
                 .inlineVariables(
                     getComponentId(), scenarioIdentity
                 );
@@ -314,7 +314,7 @@ public class ScenariosTest extends SDSTestUtil {
 
     private List<Scenario> getScenarios() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
                 .inlineVariables(
                     getComponentId()
                 );
@@ -333,7 +333,7 @@ public class ScenariosTest extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_SCENARIO_BY_COMPONENT_ID, Scenario.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_SCENARIO_BY_COMPONENT_ID, Scenario.class)
                 .inlineVariables(getComponentId())
                 .body("scenario", scenarioRequestBody);
 
@@ -357,7 +357,7 @@ public class ScenariosTest extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(testingComponent.getComponentIdentity(), testingComponent.getScenarioIdentity())
                 .body("scenario", scenarioRequestBody);
 
@@ -387,7 +387,7 @@ public class ScenariosTest extends SDSTestUtil {
 
     private Scenario costScenario() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(getComponentId(), getScenarioId())
                 .body("costingInputs", CostRequest.builder()
                     .annualVolume(5500)

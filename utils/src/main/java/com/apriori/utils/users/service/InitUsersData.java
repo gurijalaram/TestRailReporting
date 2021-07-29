@@ -115,6 +115,6 @@ class InitUsersData {
     }
 
     private static String initPathToFileWithUsers() {
-        return PropertiesContext.getStr("global.users.csv.file");
+        return PropertiesContext.getStr("global.users_csv_file");
     }
 }

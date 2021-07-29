@@ -24,13 +24,13 @@ public class UserCommonService {
 
     /**
      * Return single user
-     * if in {@link CommonConstants#environment}.properties file different.users is false
+     * if different.users is false
      * else each time return unique user
      *
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser() {
-        return PropertiesContext.getStr("global.different.users").equals("true") ? getNewUser() : getGlobalUser();
+        return PropertiesContext.getStr("global.different_users").equals("true") ? getNewUser() : getGlobalUser();
     }
 
     private static UserCredentials getNewUser() {
