@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.StockPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -38,7 +39,6 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3085")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5115"})
     @Description("Validate material name is updated in material and util panel")
@@ -57,24 +57,24 @@ public class MaterialStockTests extends TestBase {
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .openMaterialUtilizationTab();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("F-0005")));
-        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("1.10")));
+        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("1.1")));
 
         materialUtilizationPage.closePanel()
             .openMaterialSelectorTable()
             .selectMaterial("FN-0205")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .openMaterialUtilizationTab();
 
         assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("FN-0205")));
-        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("2.10")));
+        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("2.1")));
     }
 
     /*@Test
@@ -142,7 +142,7 @@ public class MaterialStockTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .goToStockTab();
@@ -155,12 +155,12 @@ public class MaterialStockTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Cold Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .goToStockTab();
 
-        assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("3 in OD. 20 ft lengths")));
+        assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("Round Bar:  3 in  OD.  20 ft lengths")));
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
     }
 }

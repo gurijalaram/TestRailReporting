@@ -60,7 +60,7 @@ public class DTCMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Keyseat Mill Accessibility", "Slot", "Slot:3");
@@ -86,7 +86,7 @@ public class DTCMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Surface", "CurvedSurface:1");
@@ -113,7 +113,7 @@ public class DTCMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Planar Face", "PlanarFace:5");
@@ -140,7 +140,7 @@ public class DTCMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Side Milling L/D", "Curved Wall", "CurvedWall:6");
@@ -166,7 +166,7 @@ public class DTCMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Missing Setups", "Planar Face", "PlanarFace:6");
@@ -192,7 +192,7 @@ public class DTCMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Obstructed Surfaces", "Planar Face", "PlanarFace:9");
@@ -254,7 +254,7 @@ public class DTCMachiningTests extends TestBase {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario(3)
             .openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Wall", "CurvedWall:22");

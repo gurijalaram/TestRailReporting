@@ -86,16 +86,18 @@ public class WorkflowValidator {
      * @param values
      */
     public void validateDefaultWorkflowOrdering(Map<String, Object> values) {
-        String firstWorkflowName = workflowPage.getRowValue((int)values.get("numericNameIndex"),
+        String firstWorkflowName = workflowPage.getRowValue((int)values.get("numericIndex"),
                 WorkflowPage.Field.NAME);
-        String secondWorkflowName = workflowPage.getRowValue((int)values.get("upperNameIndex"),
+        String secondWorkflowName = workflowPage.getRowValue((int)values.get("upperIndex"),
                 WorkflowPage.Field.NAME);
-        String thirdWorkflowName = workflowPage.getRowValue((int)values.get("lowerNameIndex"),
+        String thirdWorkflowName = workflowPage.getRowValue((int)values.get("lowerIndex"),
                 WorkflowPage.Field.NAME);
 
         Assert.assertEquals(values.get("numericName"), firstWorkflowName);
         Assert.assertEquals(values.get("upperName"), secondWorkflowName);
         Assert.assertEquals(values.get("lowerName"), thirdWorkflowName);
+        Assert.assertTrue((int)values.get("numericIndex") < (int)values.get("upperIndex"));
+        Assert.assertTrue((int)values.get("upperIndex") < (int)values.get("lowerIndex"));
     }
 
     /**
@@ -104,12 +106,18 @@ public class WorkflowValidator {
      * @param values
      */
     public void validateWorkflowListSorting(Map<String, Object> values) {
-        Assert.assertEquals("Names not sorted ascedning by default", values.get("lower-name").toString(), values.get("before" +
-                "-click-name").toString());
-        Assert.assertEquals("Names not sorted ascending after first click", values.get("lower-name").toString(), values.get(
-                "first-click-name").toString());
-        Assert.assertEquals("Names not sorted descending after second click", values.get("upper-name").toString(), values.get(
-                "second-click-name").toString());
+        Assert.assertEquals("Names not sorted ascedning by default", (int)values.get("upper-before-click-index"),
+                -1);
+        Assert.assertNotEquals("Names not sorted ascedning by default", (int)values.get("lower-before-click-index"),
+                -1);
+        Assert.assertEquals("Names not sorted ascedning by default", (int)values.get("upper-first-click-index"),
+                -1);
+        Assert.assertNotEquals("Names not sorted ascedning by default", (int)values.get("lower-first-click-index"),
+                -1);
+        Assert.assertEquals("Names not sorted ascedning by default", (int)values.get("lower-second-click-index"),
+                -1);
+        Assert.assertNotEquals("Names not sorted ascedning by default", (int)values.get("upper-second-click-index"),
+                -1);
 
         String[] headers = workflowPage.getExpectedWorkflowHeaders();
         List<String> actualHeaders = (List<String>)values.get("workflowListHeaders");

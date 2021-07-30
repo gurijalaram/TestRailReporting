@@ -5,16 +5,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 
@@ -41,6 +45,7 @@ public class MaterialPMITests extends TestBase {
     }
 
     @Test
+    @Issue("MIC-3342")
     @TestRail(testCaseId = {"6283"})
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
@@ -53,14 +58,15 @@ public class MaterialPMITests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            /*.openSettings()
-            .openProdDefaultTab()
-            .selectProcessGroup(processGroupEnum.getProcessGroup())
-            .selectVPE(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_BRAZIL.getVpe())
-            .selectMaterial("Aluminum, Stock, ANSI 6061");
-        new SettingsPage(driver).save(ExplorePage.class);*/
-
+            .openSettings()
+            .goToProductionTab()
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_BRAZIL)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, Stock, ANSI 6061")
+            .submit(ProductionDefaultsPage.class)
+            .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);

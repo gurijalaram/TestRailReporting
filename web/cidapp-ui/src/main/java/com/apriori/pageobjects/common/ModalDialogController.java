@@ -2,22 +2,21 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class ModalDialogController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ModalDialogController.class);
 
     @FindBy(id = "secondary-process-select-all-btn")
     private WebElement selectAllButton;
 
     @FindBy(id = "secondary-process-clear-all-btn")
-    private WebElement deselectAllbutton;
+    private WebElement deselectAllButton;
 
     @FindBy(id = "secondary-process-reset-btn")
     private WebElement resetButton;
@@ -55,13 +54,16 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
     private WebElement costButton;
 
+    @FindBy(xpath = "//button[.='Back']")
+    private WebElement backFromError;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
     public ModalDialogController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -141,7 +143,7 @@ public class ModalDialogController {
      * @return current page object
      */
     public ModalDialogController deselectAll() {
-        pageUtils.waitForElementAndClick(deselectAllbutton);
+        pageUtils.waitForElementAndClick(deselectAllButton);
         return this;
     }
 
@@ -183,5 +185,26 @@ public class ModalDialogController {
     public <T> T cost(Class<T> klass) {
         pageUtils.waitForElementAppear(costButton);
         return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Gets error message about element was not found
+     *
+     * @return text of error message
+     */
+    public String getNotFoundMessage() {
+        By message = By.cssSelector("span.message");
+        pageUtils.waitForElementToAppear(message);
+        return driver.findElement(message).getText();
+    }
+
+    /**
+     * Clicks on Back button
+     *
+     * @return generic page object
+     */
+    public <T> T backFromError(Class<T> className) {
+        pageUtils.waitForElementAndClick(backFromError);
+        return PageFactory.initElements(driver, className);
     }
 }

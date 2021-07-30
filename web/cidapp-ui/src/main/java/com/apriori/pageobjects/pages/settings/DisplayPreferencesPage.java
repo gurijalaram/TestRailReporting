@@ -271,9 +271,30 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage setSystem(String system) {
-        By theSystem = By.xpath(String.format("//input[@value='%s']", system.toUpperCase()));
-        pageUtils.waitForElementAndClick(theSystem);
+        By bySystem = getSystem(system);
+        pageUtils.waitForElementAndClick(bySystem);
         return this;
+    }
+
+    /**
+     * Checks if system is checked
+     *
+     * @param system - the metric system
+     * @return boolean
+     */
+    public boolean isSystemChecked(String system) {
+        By bySystem = getSystem(system);
+        return !pageUtils.waitForElementToAppear(bySystem).getAttribute("checked").contains("null");
+    }
+
+    /**
+     * Get system By
+     *
+     * @param system - the system
+     * @return by
+     */
+    private By getSystem(String system) {
+        return By.cssSelector(String.format("input[value='%s']", system.toUpperCase()));
     }
 
     /**

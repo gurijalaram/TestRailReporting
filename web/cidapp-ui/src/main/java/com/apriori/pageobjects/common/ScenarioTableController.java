@@ -66,8 +66,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController openScenario(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
         By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@class='table-row ']//div[.='%s']//a", componentName.toUpperCase().trim(), scenarioName.trim()));
-        pageUtils.waitForElementToAppear(scenario);
-        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true).click();
+        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        pageUtils.waitForElementAndClick(scenario);
         return this;
     }
 
@@ -198,7 +198,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return by
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@class='table-row ']//div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        return By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@class='table-row ']//div[@class='scenario-display-name']//div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
     }
 
     /**
@@ -258,6 +258,18 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             String[] scenario = componentScenario.split(",");
             findScenarioCheckbox(scenario[0], scenario[1]).click();
         });
+        return this;
+    }
+
+    /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @param scenarioName - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController selectScenario(String componentName, String scenarioName) {
+        findScenarioCheckbox(componentName, scenarioName).click();
         return this;
     }
 

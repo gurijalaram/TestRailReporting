@@ -15,7 +15,7 @@ public class CostingInput {
     private CustomAttributes customAttributes;
     private ProcessSetupOptions processSetupOptions;
     private SecondaryProcesses secondaryProcesses;
-    private SecondaryVpes secondaryVpes;
+    private SecondaryDigitalFactories secondaryDigitalFactories;
     private Threads threads;
     private Tolerances tolerances;
 
@@ -28,7 +28,7 @@ public class CostingInput {
     public static class SecondaryProcesses {
     }
 
-    public static class SecondaryVpes {
+    public static class SecondaryDigitalFactories {
     }
 
     public static class Threads {

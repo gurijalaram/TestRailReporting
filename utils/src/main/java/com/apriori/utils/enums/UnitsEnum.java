@@ -16,7 +16,7 @@ public enum UnitsEnum {
     MMGM("MMGM"),
     MMGS("MMGS"),
     MMKS("MMKS"),
-    CUSTOM("CUSTOM");
+    CUSTOM("Custom");
 
     private final String units;
 
