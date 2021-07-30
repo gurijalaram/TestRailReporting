@@ -38,6 +38,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement clearButton;
     @FindBy(css = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
+    @FindBy(css = ".filter-manager [type='submit']")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -285,7 +288,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        pageUtils.waitForElementAndClick(submitButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**

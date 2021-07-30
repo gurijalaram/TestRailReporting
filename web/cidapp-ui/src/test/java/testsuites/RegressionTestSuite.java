@@ -3,6 +3,7 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import com.compare.ComparisonTests;
 import com.evaluate.CostAllCadTests;
 import com.evaluate.CostScenarioTests;
 import com.evaluate.DeleteTests;
@@ -77,7 +78,8 @@ import testsuites.suiteinterface.SmokeTests;
     TwoModelMachiningTests.class,
     MaterialPMITests.class,
     SettingsTests.class,
-    ToleranceTests.class
+    ToleranceTests.class,
+    ComparisonTests.class
 })
 public class RegressionTestSuite {
 }

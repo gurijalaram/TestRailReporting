@@ -130,7 +130,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
      * @return new page object
      */
     public ComparePage clickCompare() {
-        pageUtils.waitForElementAndClick(exploreButton);
+        pageUtils.waitForElementAndClick(compareButton);
         return new ComparePage(driver);
     }
 

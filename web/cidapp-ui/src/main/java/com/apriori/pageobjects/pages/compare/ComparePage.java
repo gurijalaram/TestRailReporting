@@ -45,6 +45,12 @@ public class ComparePage extends CompareToolbar {
     @FindBy(xpath = "//p[.='Preparing Comparison']")
     private List<WebElement> comparisonLoader;
 
+    @FindBy(css = ".basis .img-thumbnail")
+    private WebElement basisScenario;
+
+    @FindBy(css = ".comparison-column.draggable .card-header")
+    private List<WebElement> cardHeader;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -66,8 +72,10 @@ public class ComparePage extends CompareToolbar {
      * @param icon - the icon
      * @return true/false
      */
-    public boolean isIconDisplayed(StatusIconEnum icon) {
-        return statusIcon.isIconDisplayed(icon);
+    public boolean isIconDisplayed(String componentName, String scenarioName, StatusIconEnum icon) {
+        By iconStatus = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//div[@class='scenario-status-icons']//*[@data-icon='%s']",
+                componentName.toUpperCase().trim(), scenarioName.trim(), icon.getStatusIcon()));
+        return driver.findElement(iconStatus).isDisplayed();
     }
 
     /**
@@ -119,6 +127,17 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
+     * Checks if info of appropriate section displayed
+     *
+     * @param columnName - name of column from section
+     * @return true/false
+     */
+    public boolean isComparisonInfoDisplayed(String columnName) {
+        By cardInfo = By.xpath(String.format("//div[.='%s']", columnName));
+        return pageUtils.isElementDisplayed(cardInfo);
+    }
+
+    /**
      * Gets the card of each section
      *
      * @param section - the section
@@ -154,7 +173,7 @@ public class ComparePage extends CompareToolbar {
      * @return current object
      */
     public ComparePage dragDropToBasis(String componentName, String scenarioName) {
-        By bySource = By.xpath(String.format("//div[@class='card-header']//div[.='%s / %s']", componentName.trim().toUpperCase(), scenarioName.trim()));
+        By bySource = By.xpath(String.format("//div[@class='card-header']//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']", componentName.trim().toUpperCase(), scenarioName.trim()));
         WebElement byElementSource = pageUtils.waitForElementToAppear(bySource);
 
         pageUtils.dragAndDrop(byElementSource, basisColumn);
@@ -173,12 +192,31 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
+     * Gets list of scenarios included to comparison
+     *
+     * @return list of scenarios
+     */
+    public List<String> getScenariosInComparison() {
+        return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
      * Gets basis
      *
      * @return string
      */
     public String getBasis() {
         return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
+    }
+
+    /**
+     * Opens evaluate page of basis scenario
+     *
+     * @return Evaluate page
+     */
+    public EvaluatePage openBasisScenario() {
+        pageUtils.waitForElementAndClick(basisScenario);
+        return new EvaluatePage(driver);
     }
 
     /**
@@ -213,7 +251,7 @@ public class ComparePage extends CompareToolbar {
      * @return string
      */
     public String getOutput(String componentName, String scenarioName, ComparisonCardEnum card) {
-        return driver.findElement(By.xpath(String.format("//span[.='%s ']/following-sibling::span[.='/ %s']/../../../../..", componentName, scenarioName)))
+        return driver.findElement(By.xpath(String.format("//span[.='%s ']/following-sibling::span[.='/ %s']/../../../../..", componentName.toUpperCase(), scenarioName)))
             .findElements(By.cssSelector(String.format("[id|='qa-%s'] .left .comparison-row", card.getCardHeader()))).get(card.getCardPosition()).getAttribute("textContent");
     }
 
@@ -265,11 +303,11 @@ public class ComparePage extends CompareToolbar {
     private WebElement getDeltaInfo(String componentName, String scenarioName, ComparisonCardEnum card) {
         // TODO: 13/05/2021 cf - the xpath below is the only way i can get back to the parent element. the previous locator was much simpler so i sent a message to Jacob asking for it to be reverted
         return driver.findElements(By.xpath(String.format("//span[.='%s ']/following-sibling::span[.='/ %s']/../../../../..//div[contains(@id,'qa-%s')]//div[@class='content']//div[@class='right']/div",
-            componentName, scenarioName, card.getCardHeader()))).get(card.getCardPosition());
+            componentName.toUpperCase(), scenarioName, card.getCardHeader()))).get(card.getCardPosition());
     }
 
     /**
-     * Opens the comparison
+     * Opens the scenario from comparison
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
