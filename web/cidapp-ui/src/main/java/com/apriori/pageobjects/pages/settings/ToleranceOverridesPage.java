@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.settings;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import com.utils.OverridesEnum;
@@ -20,6 +19,12 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
 
     @FindBy(css = ".tolerance-overrides-form .section-header .left")
     private WebElement sectionHeader;
+
+    @FindBy(css = ".tolerance-overrides-form [type='Submit']")
+    private WebElement submitButton;
+
+    @FindBy(css = ".tolerance-overrides-form [type='button']")
+    private WebElement cancelButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -76,7 +81,8 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        pageUtils.waitForElementAndClick(submitButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -84,7 +90,8 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      *
      * @return generic page object
      */
-    public EvaluatePage cancel() {
-        return modalDialogController.cancel(EvaluatePage.class);
+    public <T> T cancel(Class<T> klass) {
+        pageUtils.waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(driver, klass);
     }
 }

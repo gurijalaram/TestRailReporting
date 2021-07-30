@@ -54,6 +54,9 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
     private WebElement costButton;
 
+    @FindBy(xpath = "//button[.='Back']")
+    private WebElement backFromError;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -185,16 +188,23 @@ public class ModalDialogController {
     }
 
     /**
-     * Switches to new tab
+     * Gets error message about element was not found
      *
-     * @param tabName - the tab name
-     * @param klass   - the class
-     * @param <T>     - the object
-     * @return - generic page object
+     * @return text of error message
      */
-    public <T> T switchTab(String tabName, Class<T> klass) {
-        By byTabName = By.xpath(String.format("//button[contains(text(),'%s')]", tabName));
-        pageUtils.waitForElementAndClick(byTabName);
-        return PageFactory.initElements(driver, klass);
+    public String getNotFoundMessage() {
+        By message = By.cssSelector("span.message");
+        pageUtils.waitForElementToAppear(message);
+        return driver.findElement(message).getText();
+    }
+
+    /**
+     * Clicks on Back button
+     *
+     * @return generic page object
+     */
+    public <T> T backFromError(Class<T> className) {
+        pageUtils.waitForElementAndClick(backFromError);
+        return PageFactory.initElements(driver, className);
     }
 }

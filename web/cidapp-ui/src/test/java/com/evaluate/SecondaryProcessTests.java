@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.secondaryprocesses.MachiningProcessesPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -97,8 +96,9 @@ public class SecondaryProcessTests extends TestBase {
 
         assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
 
-        evaluatePage = secondaryPage.openSecondaryProcesses(MachiningProcessesPage.class)
-            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
+        evaluatePage = secondaryPage.openSecondaryProcesses()
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Testing and Inspection, Xray Inspection")
             .submit(EvaluateToolbar.class)
             .costScenario();
 
@@ -256,7 +256,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes", "Stress Relief")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Stress Relief")
             .submit(EvaluateToolbar.class)
             .costScenario();
 
@@ -284,7 +285,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Anodize, Anodizing Tank, Anodize:Anodize Type I")
             .submit(EvaluateToolbar.class)
             .costScenario();
 
@@ -311,7 +313,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment", "Certification")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Certification")
             .submit(EvaluateToolbar.class)
             .costScenario();
 
@@ -442,7 +445,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment", "Passivation")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
             .submit(EvaluateToolbar.class)
             .costScenario();
 
@@ -505,8 +509,10 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment, Anodize, Anodizing Tank", "Anodize:Anodize Type I")
-            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Anodize, Anodizing Tank, Anodize:Anodize Type I")
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
             .submit(EvaluateToolbar.class)
             .costScenario();
 
@@ -802,7 +808,8 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Xray Inspection")
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Testing and Inspection, Xray Inspection")
             .cancel()
             .costScenario()
             .goToSecondaryTab();
@@ -828,7 +835,8 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment", "Passivation")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
             .submit(EvaluateToolbar.class)
             .costScenario();
 

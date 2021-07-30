@@ -2,7 +2,6 @@ package com.apriori.utils.web.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Proxy;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -55,7 +54,6 @@ public class WebDriverService extends BrowserManager {
                     dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                     dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                     dc.setCapability(ChromeOptions.CAPABILITY, options);
-
                     result = new ChromeDriver(dc);
                     logger.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                     break;
