@@ -26,6 +26,9 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
     @FindBy(css = "button[type='submit']")
     private WebElement submitLogin;
 
+    @FindBy(css = "div.auth0-global-message.auth0-global-message-error span")
+    private WebElement loginErrorMsg;
+
 
 
     private WebDriver driver;
@@ -70,30 +73,77 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
         pageUtils.waitForElementAppear(submitLogin);
     }
 
+    /**
+     * Login to edc
+     *
+     * @param userCredentials - object with users credentials and access level
+     * @return new page object
+     */
     public ElectronicsDataCollectionPage login(final UserCredentials userCredentials) {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new ElectronicsDataCollectionPage(driver);
     }
 
+    /**
+     * Execute actions to login
+     *
+     * @param email    - the email
+     * @param password - the password
+     */
     private void executeLogin(String email, String password) {
         enterEmail(email);
         enterPassword(password);
         submitLogin();
     }
 
+    /**
+     * Enters the email detail
+     *
+     * @param emailAddress - the email address
+     */
     private void enterEmail(String emailAddress) {
         email.click();
         pageUtils.clearInput(email);
         email.sendKeys(emailAddress);
     }
 
+    /**
+     * Enters the password
+     *
+     * @param password - the password
+     */
     private void enterPassword(String password) {
         this.password.click();
         pageUtils.clearInput(this.password);
         this.password.sendKeys(password);
     }
 
+    /**
+     * Single action that login to edc
+     */
     private void submitLogin() {
         submitLogin.click();
+    }
+
+    /**
+     * Failed login to edc
+     *
+     * @param email    - the email
+     * @param password - the password
+     * @return the current page object
+     */
+    public EdcAppLoginPage failedLoginAs(String email, String password) {
+        executeLogin(email, password);
+        pageUtils.waitForElementToAppear(loginErrorMsg);
+        return new EdcAppLoginPage(driver, false);
+    }
+
+    /**
+     * Gets the login error message
+     *
+     * @return login error message
+     */
+    public String getLoginErrorMessage() {
+        return loginErrorMsg.getText();
     }
 }

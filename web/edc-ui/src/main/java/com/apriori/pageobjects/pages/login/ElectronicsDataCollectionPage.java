@@ -27,6 +27,12 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
         PageFactory.initElements(driver, this);
         this.get();
     }
+
+    /**
+     * Gets the Uploaded Bill Of Materials value on the page
+     *
+     * @return String
+     */
     public boolean isUploadedBillOfMaterials(String text) {
         return pageUtils.waitForElementToAppear(uploadedBillOfMaterials).getAttribute("textContent").equalsIgnoreCase(text);
     }
