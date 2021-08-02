@@ -30,6 +30,12 @@ int-core:
   sds:
     api_url: https://sds.core.int.apriori.net/
 
+  vds:
+    api_url: https://vds.core.int.apriori.net/
+    user_identity: 8GFDIG229629
+    customer_identity: 8GFDIG229629
+    secret_key: 65J1ID2B6LDG
+
 
 
 ######################################################## QA-21.1 ########################################################
@@ -40,6 +46,11 @@ qa-21-1:
   sds:
     api_url: https://sds.na-1.qa-21-1.apriori.net/
 
+  vds:
+    api_url: https://vds.na-1.qa-21-1.apriori.net/
+    user_identity: 67J517C9L96A
+    customer_identity: 67J517C9L96A
+    secret_key: LZJM8S47H5S8
 
 
 ######################################################## QA-CID-PERF ########################################################
@@ -49,3 +60,12 @@ qa-cid-perf:
 
   sds:
     api_url: https://sds.na-1.qa-cig-perf.apriori.net/
+
+
+######################################################## QA-CIG-PERF ########################################################
+qa-cig-perf:
+  vds:
+    api_url: https://vds.na-1.qa-cig-perf.apriori.net/
+    user_identity: C339C55A8155
+    customer_identity: C339C55A8155
+    secret_key: WJIM0HV7Z6U1
