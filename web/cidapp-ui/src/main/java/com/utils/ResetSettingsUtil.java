@@ -15,7 +15,7 @@ import com.apriori.utils.users.UserUtil;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AfterUtil {
+public class ResetSettingsUtil {
 
     UserCredentials userCredentials = UserUtil.getUser();
     String token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
