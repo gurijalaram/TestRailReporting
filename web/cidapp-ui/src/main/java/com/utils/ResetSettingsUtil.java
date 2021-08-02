@@ -10,15 +10,12 @@ import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
 
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ResetSettingsUtil {
 
-    UserCredentials userCredentials = UserUtil.getUser();
-    String token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
     private String unitIdentity;
     private String colourIdentity;
     private String proGroupIdentity;
@@ -30,24 +27,26 @@ public class ResetSettingsUtil {
     private String tolModeIdentity;
     private String scenarioIdentity;
 
-    public ResponseWrapper<Object> resetSettings() {
+    public ResponseWrapper<Object> resetSettings(UserCredentials userCredentials) {
+        String token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
+
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
             .token(token);
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTP2Request.build(responseEntity).get();
 
-        Stream<PreferenceResponse> stream = preferencesResponse.getResponseEntity().getItems().stream();
+        List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
 
-        unitIdentity = stream.filter(x -> x.getName().equals("display.unitsGroup")).collect(Collectors.toList()).get(0).getIdentity();
-        colourIdentity = stream.filter(x -> x.getName().equals("display.selectionColor")).collect(Collectors.toList()).get(0).getIdentity();
-        scenarioIdentity = stream.filter(x -> x.getName().equals("production.defaultScenarioName")).collect(Collectors.toList()).get(0).getIdentity();
-        proGroupIdentity = stream.filter(x -> x.getName().equals("production.defaultProcessGroup")).collect(Collectors.toList()).get(0).getIdentity();
-        digFacIdentity = stream.filter(x -> x.getName().equals("production.defaultDigitalFactory")).collect(Collectors.toList()).get(0).getIdentity();
-        matCatalogIdentity = stream.filter(x -> x.getName().equals("production.defaultMaterialCatalogName")).collect(Collectors.toList()).get(0).getIdentity();
-        annVolIdentity = stream.filter(x -> x.getName().equals("production.defaultAnnualVolume")).collect(Collectors.toList()).get(0).getIdentity();
-        prodLifeIdentity = stream.filter(x -> x.getName().equals("production.defaultProductionLife")).collect(Collectors.toList()).get(0).getIdentity();
-        batchIdentity = stream.filter(x -> x.getName().equals("production.defaultBatchSize")).collect(Collectors.toList()).get(0).getIdentity();
-        tolModeIdentity = stream.filter(x -> x.getName().equals("tolerance.toleranceMode")).collect(Collectors.toList()).get(0).getIdentity();
+        unitIdentity = preferencesItems.stream().filter(x -> x.getName().equals("display.unitsGroup")).collect(Collectors.toList()).get(0).getIdentity();
+        colourIdentity = preferencesItems.stream().filter(x -> x.getName().equals("display.selectionColor")).collect(Collectors.toList()).get(0).getIdentity();
+        scenarioIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultScenarioName")).collect(Collectors.toList()).get(0).getIdentity();
+        proGroupIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultProcessGroup")).collect(Collectors.toList()).get(0).getIdentity();
+        digFacIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultDigitalFactory")).collect(Collectors.toList()).get(0).getIdentity();
+        matCatalogIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultMaterialCatalogName")).collect(Collectors.toList()).get(0).getIdentity();
+        annVolIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultAnnualVolume")).collect(Collectors.toList()).get(0).getIdentity();
+        prodLifeIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultProductionLife")).collect(Collectors.toList()).get(0).getIdentity();
+        batchIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultBatchSize")).collect(Collectors.toList()).get(0).getIdentity();
+        tolModeIdentity = preferencesItems.stream().filter(x -> x.getName().equals("tolerance.toleranceMode")).collect(Collectors.toList()).get(0).getIdentity();
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
             .token(token)
