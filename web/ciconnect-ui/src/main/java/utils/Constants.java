@@ -48,11 +48,11 @@ public class Constants {
     public static final String DEFAULT_ROW_RANGE = "Rows1 - 25";
     public static final String NEXT_ROW_RANGE = "Rows26 - 50";
     //Default worflow names
-    public static final String DEFAULT_WORKFLOW_NAME = "- - 0   0   0   Automation Workflow";
-    public static final String DEFAULT_EDITED_WORKFLOW_NAME = "- - 0   0   0   Automation Workflow - Updated";
-    public static final String DEFAULT_NAME_WITH_NUMBER = "- - 0   0   1 Worflow Automation";
-    public static final String DEFAULT_NAME_UPPER_CASE = "- - 0   0    A Upper Workflow Automation";
-    public static final String DEFAULT_NAME_LOWER_CASE = "- - 0   0    a Lower Workflow Automation";
+    public static final String DEFAULT_WORKFLOW_NAME = "0   0   0   0   0   Automation Workflow";
+    public static final String DEFAULT_EDITED_WORKFLOW_NAME = "0   0   0   0   Automation Workflow - Updated";
+    public static final String DEFAULT_NAME_WITH_NUMBER = "0   0   0   0   0   1 Worflow Automation";
+    public static final String DEFAULT_NAME_UPPER_CASE = "0   0   0   0   0   A Upper Workflow Automation";
+    public static final String DEFAULT_NAME_LOWER_CASE = "0   0   0   0   0   a Lower Workflow Automation";
     public static final String ERROR_NAME_WITH_UNSUPPORTED_SPECIAL_CHARS =
         "Name should only contain spaces and the following characters: a-zA-Z0-9-_";
     public static final String DEFAULT_WORKFLOW_DESCRIPTION = "This workflow was created by automation";
