@@ -1,9 +1,10 @@
-package com.utils;
+package com.apriori.cidappapi.utils;
 
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
+import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
