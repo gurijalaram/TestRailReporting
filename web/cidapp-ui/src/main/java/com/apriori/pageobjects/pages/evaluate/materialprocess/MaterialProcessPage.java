@@ -43,6 +43,9 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockTab;
 
+    @FindBy(xpath = "//button[.='Part Nesting']")
+    private WebElement partNestingTab;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -125,5 +128,14 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public HelpDocPage openHelp() {
         return panelController.openHelp();
+    }
+
+    /**
+     * Go to Part Nesting tab
+     * @return new page object
+     */
+    public PartNestingPage openPartNestingTab() {
+        pageUtils.waitForElementAndClick(partNestingTab);
+        return new PartNestingPage(driver);
     }
 }

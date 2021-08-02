@@ -46,6 +46,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Issue("MIC-3286")
     @Category(SmokeTests.class)
     @Description("Validate Source and util tile appears when 2 MM is selected")
     @TestRail(testCaseId = {"7861", "7862", "7863", "7864", "7870"})
@@ -218,6 +219,8 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .selectFilter("Recent")
+            .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario()
@@ -273,6 +276,8 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile2, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .selectFilter("Recent")
+            .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
@@ -282,6 +287,8 @@ public class TwoModelMachiningTests extends TestBase {
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(10.53, 1));
 
         evaluatePage.selectSourcePart()
+            .selectFilter("Recent")
+            .clickSearch(source2PartName)
             .highlightScenario(source2PartName, source2ScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();

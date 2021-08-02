@@ -3,6 +3,7 @@ package com.apriori.pageobjects.common;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,6 +53,9 @@ public class ModalDialogController {
 
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
     private WebElement costButton;
+
+    @FindBy(xpath = "//button[.='Back']")
+    private WebElement backFromError;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -181,5 +185,26 @@ public class ModalDialogController {
     public <T> T cost(Class<T> klass) {
         pageUtils.waitForElementAppear(costButton);
         return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Gets error message about element was not found
+     *
+     * @return text of error message
+     */
+    public String getNotFoundMessage() {
+        By message = By.cssSelector("span.message");
+        pageUtils.waitForElementToAppear(message);
+        return driver.findElement(message).getText();
+    }
+
+    /**
+     * Clicks on Back button
+     *
+     * @return generic page object
+     */
+    public <T> T backFromError(Class<T> className) {
+        pageUtils.waitForElementAndClick(backFromError);
+        return PageFactory.initElements(driver, className);
     }
 }

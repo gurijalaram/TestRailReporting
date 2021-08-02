@@ -54,7 +54,7 @@ public class CostingScenarioTest extends TestUtil {
                 (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
                         FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
 
-        Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity);
+        Part batchPart = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batchIdentity).getResponseEntity();
 
         String partIdentity = batchPart.getIdentity();
 

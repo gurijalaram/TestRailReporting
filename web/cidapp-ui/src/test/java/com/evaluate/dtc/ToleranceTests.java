@@ -459,7 +459,7 @@ public class ToleranceTests extends TestBase {
 
         String componentName = "PMI_AllTolTypesCatia";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + "CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -636,7 +636,7 @@ public class ToleranceTests extends TestBase {
             .openTolerancesTab()
             .selectIssueTypeGcd(ToleranceEnum.CIRCULARITY.getToleranceName(), "CurvedWall:5");
 
-        assertThat(tolerancesPage.getCurrent("CurvedWall:5"), is("0.35"));
+        assertThat(tolerancesPage.getCurrent("CurvedWall:5"), is("0.35mm"));
     }
 
     @Test

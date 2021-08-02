@@ -9,10 +9,13 @@ import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -23,13 +26,8 @@ public class BatchPartResourcesTest extends TestUtil {
     @BeforeClass
     public static void testSetup() {
         batch = BatchResources.createNewBatch();
-
-        NewPartRequest newPartRequest =
-            (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
-                    FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
-        newPartRequest.setFilename("bracket_form.prt");
-
-        part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
+        NewPartRequest newPartRequest = getNewPartRequest();
+        part = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity()).getResponseEntity();
 
     }
 
@@ -40,14 +38,34 @@ public class BatchPartResourcesTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"4280"})
-    @Description("API returns a list of Parts per Batch in the CIS DB")
+    @Description("Add a new part to a batch")
     public void createBatchParts() {
-        NewPartRequest newPartRequest =
-            (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
-                FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
-        newPartRequest.setFilename("bracket_new.prt");
-
+        NewPartRequest newPartRequest = getNewPartRequest();
         BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
+    }
+
+    @Test
+    @Issue("AP-69614")
+    @TestRail(testCaseId = {"8690"})
+    @Description("Attempt to add a new part to a batch using empty string values")
+    public void createBatchPartWithEmptyStringValues() {
+        NewPartRequest newPartRequest_Null = getNewPartRequest();
+        newPartRequest_Null.setMaterialName(null);
+        newPartRequest_Null.setVpeName(null);
+
+        BatchPartResources.createNewBatchPart(newPartRequest_Null, batch.getIdentity(),
+                BatchPartResources.ProcessGroupValue.USE_NULL);
+
+        NewPartRequest newPartRequest_EmptyString = getNewPartRequest();
+        newPartRequest_EmptyString.setMaterialName("");
+        newPartRequest_EmptyString.setVpeName("");
+
+        BatchPartResources.createNewBatchPart(newPartRequest_EmptyString, batch.getIdentity(),
+                BatchPartResources.ProcessGroupValue.USE_EMPTY_STRING);
+
+
+
+
     }
 
     @Test
@@ -78,4 +96,20 @@ public class BatchPartResourcesTest extends TestUtil {
     public void getPartReport() {
         BatchPartResources.getPartReport(batch.getIdentity(), part.getIdentity());
     }
+
+    /**
+     * Generate a newpartrequest
+     *
+     * @return newPartRequest
+     */
+    private static NewPartRequest getNewPartRequest() {
+        NewPartRequest newPartRequest =
+                (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
+                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+        newPartRequest.setFilename("bracket_form.prt");
+
+        return newPartRequest;
+    }
+
+
 }

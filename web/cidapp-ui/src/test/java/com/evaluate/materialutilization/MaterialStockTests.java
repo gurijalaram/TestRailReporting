@@ -39,7 +39,6 @@ public class MaterialStockTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3085")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5115"})
     @Description("Validate material name is updated in material and util panel")

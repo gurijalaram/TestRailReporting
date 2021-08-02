@@ -45,7 +45,7 @@ public class ReportResourcesTest extends TestUtil {
                         FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
         newPartRequest.setFilename("bracket_form.prt");
 
-        part = BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
+        part = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity()).getResponseEntity();
 
         int intervals = Constants.getPollingTimeout();
         int interval = 0;
