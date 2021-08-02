@@ -24,6 +24,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
