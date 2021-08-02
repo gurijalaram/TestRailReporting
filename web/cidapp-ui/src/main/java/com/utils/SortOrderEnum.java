@@ -2,8 +2,8 @@ package com.utils;
 
 public enum SortOrderEnum {
 
-    ASCENDING("sort-down"),
-    DESCENDING("sort-up");
+    DESCENDING("sort-down"),
+    ASCENDING("sort-up");
 
     private final String order;
 

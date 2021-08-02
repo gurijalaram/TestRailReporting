@@ -95,7 +95,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
             try {
                 batchPart = (Part) BatchPartResources.createNewBatchPart(newPartRequest,
                         batch.getIdentity()
-                );
+                ).getResponseEntity();
 
                 synchronized (this) {
                     parts.put(batchPart.getIdentity(), batchPart.getState());
