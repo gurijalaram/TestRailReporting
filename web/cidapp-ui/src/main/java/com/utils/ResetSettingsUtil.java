@@ -27,7 +27,12 @@ public class ResetSettingsUtil {
     private String tolModeIdentity;
     private String scenarioIdentity;
 
-    public ResponseWrapper<Object> resetSettings(UserCredentials userCredentials) {
+    /**
+     * Resets all settings in Cidapp
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public ResponseWrapper<String> resetSettings(UserCredentials userCredentials) {
         String token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
 
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
