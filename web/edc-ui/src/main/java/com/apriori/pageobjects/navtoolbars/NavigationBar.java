@@ -23,6 +23,7 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
         PageFactory.initElements(driver, this);
         this.get();
     }
+
     @Override
     protected void load() {
 

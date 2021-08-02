@@ -13,9 +13,11 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 @Slf4j
-public class LoginTests extends TestBase{
+public class LoginTests extends TestBase {
 
     public LoginTests() {
         super();
@@ -38,9 +40,10 @@ public class LoginTests extends TestBase{
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"8889"})
-    @Description("Test unsuccessful login with incorrect email and correct password")
-    public void testIncorrectEmailAndPassword(){
+    @Description("Test unsuccessful login with incorrect email and incorrect password")
+    public void testIncorrectEmailAndPassword() {
         loginPage = new EdcAppLoginPage(driver);
         loginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), "fakePassword");
 
@@ -48,9 +51,10 @@ public class LoginTests extends TestBase{
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"8890"})
     @Description("Test unsuccessful login with correct email and incorrect password")
-    public void testEmailAndIncorrectPassword(){
+    public void testEmailAndIncorrectPassword() {
         loginPage = new EdcAppLoginPage(driver);
         loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 

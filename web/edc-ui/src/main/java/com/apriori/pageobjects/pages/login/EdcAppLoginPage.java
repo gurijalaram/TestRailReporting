@@ -30,7 +30,6 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
     private WebElement loginErrorMsg;
 
 
-
     private WebDriver driver;
     private PageUtils pageUtils;
 
