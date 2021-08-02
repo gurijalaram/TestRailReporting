@@ -147,8 +147,8 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      */
     public ProductionDefaultsPage selectMaterialCatalog(DigitalFactoryEnum materialCatalog) {
         pageUtils.waitForElementAndClick(materialCatalogDropdown);
-        By byValue = By.xpath(String.format("//div[@id='qa-production-defaults-material-catalog-select']//div[.='%s']//div[@id]", materialCatalog.getDigitalFactory()));
-        pageUtils.waitForElementAndClick(byValue);
+        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-production-defaults-material-catalog-select']//div[.='%s']//div[@id]", materialCatalog.getDigitalFactory()));
+        pageUtils.waitForElementAndClick(byMaterialCatalog);
         return this;
     }
 
