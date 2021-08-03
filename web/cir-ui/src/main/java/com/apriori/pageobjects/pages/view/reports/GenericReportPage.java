@@ -1033,32 +1033,12 @@ public class GenericReportPage extends ReportsPageHeader {
         WebElement dateInputToUse = isEarliestAndToday ? earliestExportDateInput : latestExportDateInput;
         String valueToInput = invalidValue.isEmpty() ? dateToUse : invalidValue;
 
-        dateInputToUse.click();
-
-        pageUtils.waitForElementToAppear(By.xpath("//label[contains(@title, 'Export Date')]/input[contains(@class, 'superfocus subfocus')]"));
         dateInputToUse.clear();
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        dateInputToUse.click();
+        By locator = By.xpath("//input[contains(@class, 'date') and @value='']");
+        pageUtils.waitForElementToAppear(locator);
+        pageUtils.waitForSteadinessOfElement(locator);
         dateInputToUse.sendKeys(valueToInput);
-        String locatorTitleToUse = isEarliestAndToday ? "Earliest " : "Latest ";
-        do {
-            dateInputToUse.sendKeys(valueToInput);
-        } while (!driver.findElement(
-                By.xpath(String.format("//label[contains(@title, '%sExport Date')]//input", locatorTitleToUse)))
-                .getAttribute("value").equals(valueToInput));
-
-        clickUseLatestExportDropdownTwice();
-
-        if (!isEarliestAndToday && !invalidValue.isEmpty()) {
-            invalidValue = invalidValue.contains("65") ? invalidValue.replace("65", "59") : invalidValue;
-            invalidValue = invalidValue.contains("25") ? invalidValue.replace("25", "23") : invalidValue;
-        }
-
-        if (invalidValue.isEmpty()) {
-            waitForCorrectAvailableSelectedCount(
-                    "Single export set selection.", "Available: ", "0");
-            waitForCorrectAvailableSelectedCount(
-                    "Single export set selection.", "Selected: ", "0");
-        }
 
         return this;
     }
