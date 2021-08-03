@@ -140,6 +140,8 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
      */
     public ToleranceDefaultsPage replaceValues(String cadValue, String toleranceValue) {
         pageUtils.waitForElementAndClick(replaceValuesCheckbox);
+        inputCadValue(cadValue)
+            .inputCadTolerance(toleranceValue);
         return this;
     }
 
@@ -150,8 +152,22 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
      * @return current page object
      */
     public ToleranceDefaultsPage inputCadValue(String cadValue) {
+        pageUtils.waitForElementAndClick(minCadInput);
         pageUtils.clearInput(minCadInput);
         minCadInput.sendKeys(cadValue);
+        return this;
+    }
+
+    /**
+     * Input cad tolerance
+     *
+     * @param toleranceValue - the cad tolerance
+     * @return current page object
+     */
+    public ToleranceDefaultsPage inputCadTolerance(String toleranceValue) {
+        pageUtils.waitForElementAndClick(cadToleranceInput);
+        pageUtils.clearInput(cadToleranceInput);
+        cadToleranceInput.sendKeys(toleranceValue);
         return this;
     }
 
@@ -162,18 +178,6 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
      */
     public double getCadValue() {
         return Double.parseDouble(pageUtils.waitForElementToAppear(minCadInput).getAttribute("value"));
-    }
-
-    /**
-     * Input cad tolerance
-     *
-     * @param toleranceValue - the cad tolerance
-     * @return current page object
-     */
-    public ToleranceDefaultsPage inputCadTolerance(String toleranceValue) {
-        pageUtils.clearInput(cadToleranceInput);
-        cadToleranceInput.sendKeys(toleranceValue);
-        return this;
     }
 
     /**
