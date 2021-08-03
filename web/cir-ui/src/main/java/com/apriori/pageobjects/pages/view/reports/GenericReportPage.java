@@ -639,20 +639,11 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage inputAnnualisedOrPercentValue(String annualisedOrPercent, String inputValue) {
         By locator = By.xpath(String.format("//label[contains(@title, '%s')]/input", annualisedOrPercent));
         pageUtils.waitForElementAndClick(locator);
-        pageUtils.waitForElementToAppear(By.xpath(
-                String.format(
-                        "//label[contains(@title, '%s')]/input[contains(@class, 'superfocus subfocus')]",
-                        annualisedOrPercent)
-        ));
         WebElement inputField = driver.findElement(locator);
         pageUtils.clearInput(inputField);
 
         pageUtils.waitForSteadinessOfElement(locator);
         inputField.sendKeys(inputValue);
-
-        do {
-            inputField.sendKeys(inputValue);
-        } while (!inputField.getAttribute("value").equals(inputValue));
 
         return this;
     }
