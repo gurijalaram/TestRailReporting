@@ -9,6 +9,7 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -145,7 +146,9 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectMaterialCatalog(DigitalFactoryEnum materialCatalog) {
-        pageUtils.typeAheadSelect(materialCatalogDropdown, materialCatalog.getDigitalFactory());
+        pageUtils.waitForElementAndClick(materialCatalogDropdown);
+        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-production-defaults-material-catalog-select']//div[.='%s']//div[@id]", materialCatalog.getDigitalFactory()));
+        pageUtils.waitForElementAndClick(byMaterialCatalog);
         return this;
     }
 
