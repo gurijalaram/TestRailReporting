@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.login;
 import com.apriori.pageobjects.navtoolbars.NavigationBar;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,7 +35,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      *
      * @return String
      */
-    public boolean isUploadedBillOfMaterials(String text) {
-        return pageUtils.waitForElementToAppear(uploadedBillOfMaterials).getAttribute("textContent").equalsIgnoreCase(text);
+    public String getUploadedBillOfMaterials() {
+        return pageUtils.waitForElementToAppear(uploadedBillOfMaterials).getAttribute("textContent");
     }
 }

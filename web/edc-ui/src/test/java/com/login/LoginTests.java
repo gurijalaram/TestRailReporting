@@ -1,5 +1,6 @@
 package com.login;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -36,7 +37,7 @@ public class LoginTests extends TestBase {
         loginPage = new EdcAppLoginPage(driver);
         edcPage = loginPage.login(UserUtil.getUser());
 
-        assertThat(edcPage.isUploadedBillOfMaterials("Uploaded Bill of Materials"), is(true));
+        assertThat(edcPage.getUploadedBillOfMaterials(), is(equalTo("Uploaded Bill of Materials")));
     }
 
     @Test
