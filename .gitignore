@@ -9,7 +9,6 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-utils/gradle/wrapper/gradle-wrapper.properties
 utils/gradlew
 utils/gradlew.bat
 
