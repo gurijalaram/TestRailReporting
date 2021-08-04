@@ -45,6 +45,7 @@ public class VPE extends Pagination {
     private String revision;
     private String useType;
     private String vpeType;
+    private String defaultMaterialName;
 
     private ProcessGroupAssociations processGroupAssociations;
 }

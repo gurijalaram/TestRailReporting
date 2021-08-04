@@ -1,56 +1,52 @@
 {
   "type": "object",
   "required": [
-    "allowedValues",
-    "ordinal",
     "identity",
     "customerIdentity",
-    "displayName",
-    "multiSelect",
+    "ordinal",
     "name",
+    "displayName",
+    "type",
     "requiredAttributeType",
-    "type"
+    "multiSelect",
+    "allowedValues"
   ],
   "properties": {
-    "allowedValues": {
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "type": "object"
-          }
-        ]
-      }
-    },
-    "ordinal": {
-      "type": "integer"
-    },
-    "displayName": {
-      "type": "string"
-    },
-    "multiSelect": {
-      "type": "boolean"
-    },
-    "name": {
-      "type": "string"
-    },
-    "requiredAttributeType": {
-      "type": "string"
-    },
-    "type": {
-      "type": "string"
-    },
     "identity": {
       "type": "string"
     },
     "customerIdentity": {
       "type": "string"
     },
+    "ordinal": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "requiredAttributeType": {
+      "type": "string"
+    },
+    "multiSelect": {
+      "type": "boolean"
+    },
     "defaultValue": {
       "type": "string"
     },
     "precision": {
       "type": "integer"
+    },
+    "allowedValues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   }
 }
