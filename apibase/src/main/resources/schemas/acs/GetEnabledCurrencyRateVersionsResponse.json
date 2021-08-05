@@ -7,9 +7,6 @@
     "abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq": {
       "type": "object",
       "required": [
-        "BRL",
-        "CAD",
-        "EUR",
         "USD"
       ],
       "properties": {
@@ -57,9 +54,6 @@
     "abaairabiriririqiraajraiyrabiriqirbaizqbirjriyzrajzrizyq": {
       "type": "object",
       "required": [
-        "BRL",
-        "CAD",
-        "EUR",
         "USD"
       ],
       "properties": {

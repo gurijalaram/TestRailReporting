@@ -1,12 +1,5 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionItemOne;
-import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionItemTwo;
-import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.acs.utils.Constants;
 
