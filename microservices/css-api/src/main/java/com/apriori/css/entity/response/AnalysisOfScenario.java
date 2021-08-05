@@ -50,6 +50,7 @@ public class AnalysisOfScenario {
     private double length;
     private double lifetimeCost;
     private int logisticsCost;
+    private String manualMaterialName;
     private int margin;
     private int marginPercent;
     private double materialCost;
