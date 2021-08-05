@@ -1,5 +1,6 @@
 package com.apriori.css.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 public class AnalysisOfScenario {
     private String identity;
@@ -78,7 +80,11 @@ public class AnalysisOfScenario {
     private double scrapMass;
     private double setupCostPerPart;
     private double sgaCost;
+    private double stockPropertyHeight;
+    private double stockPropertyInsideDia;
     private double stockPropertyLength;
+    private double stockPropertyOutsideDia;
+    private double stockPropertyWallThickness;
     private double stockPropertyThickness;
     private double stockPropertyWidth;
     private int stripNestingPitch;
