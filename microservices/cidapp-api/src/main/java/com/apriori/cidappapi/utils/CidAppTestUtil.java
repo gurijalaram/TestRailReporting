@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 public class CidAppTestUtil {
     private static final Logger logger = LoggerFactory.getLogger(CidAppTestUtil.class);
 
-    private String token;
+    private String token = null;
 
     /**
      * Adds a new component
@@ -46,11 +46,8 @@ public class CidAppTestUtil {
      */
     public Item postCssComponents(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
 
-        token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
-
-        return postCssComponents(componentName, scenarioName, resourceFile, token);
+        return postCssComponents(componentName, scenarioName, resourceFile, getToken(userCredentials));
     }
-
 
     /**
      * Adds a new component
@@ -59,13 +56,16 @@ public class CidAppTestUtil {
      * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    public Item postCssComponents(String componentName, String scenarioName, String resourceFile) {
+    public Item postCssComponents(String componentName, String scenarioName, String resourceFile, UserCredentials userCredentials) {
+        token = getToken(userCredentials);
+
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
                 .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
-                    .use("scenarioName", scenarioName));
+                    .use("scenarioName", scenarioName))
+                .token(token);
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
@@ -103,10 +103,17 @@ public class CidAppTestUtil {
         return itemResponse.get(0);
     }
 
+    /**
+     * Gets css component
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param scenarioState   - the scenario state
+     * @param userCredentials - user credentials
+     * @return
+     */
     public List<Item> getCssComponent(String componentName, String scenarioName, String scenarioState, UserCredentials userCredentials) {
-        token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
-
-        return new UncostedComponents().getCssComponent(componentName, scenarioName, token, scenarioState);
+        return new UncostedComponents().getCssComponent(componentName, scenarioName, getToken(userCredentials), scenarioState);
     }
 
     /**
@@ -184,7 +191,7 @@ public class CidAppTestUtil {
      * @param scenarioIdentity  - the scenario identity
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
@@ -214,6 +221,65 @@ public class CidAppTestUtil {
         } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
         return scenarioRepresentation;
+    }
+
+
+    /**
+     * Get scenario representation of a published part
+     *
+     * @param terminalScenarioState - the terminal state
+     * @param lastAction            - the last action
+     * @param published             - scenario published
+     * @param componentIdentity     - the component id
+     * @param scenarioIdentity      - the scenario id
+     * @param userCredentials       - the user credentials
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(String terminalScenarioState, String lastAction, boolean published, String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+                .inlineVariables(componentIdentity, scenarioIdentity)
+                .token(getToken(userCredentials));
+
+        long START_TIME = System.currentTimeMillis() / 1000;
+        final long POLLING_INTERVAL = 5L;
+        final long MAX_WAIT_TIME = 180L;
+        String scenarioState;
+        String lastActionState;
+        boolean publishedState;
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation;
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        do {
+            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
+            lastActionState = scenarioRepresentation.getResponseEntity().getLastAction();
+            publishedState = scenarioRepresentation.getResponseEntity().getPublished();
+            try {
+                TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
+            } catch (InterruptedException e) {
+                logger.error(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        } while (!scenarioState.equals(terminalScenarioState) && !lastActionState.equals(lastAction) && !publishedState == published && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
+        return scenarioRepresentation;
+    }
+
+    /**
+     * Get token
+     *
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    private String getToken(UserCredentials userCredentials) {
+        return token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
     }
 
     /**
