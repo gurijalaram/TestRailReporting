@@ -73,7 +73,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
@@ -112,7 +112,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         BigDecimal usdSecondFbc;
 
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
@@ -143,7 +143,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
@@ -178,7 +178,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Description("Verify created by input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testCreatedByFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class);
 
@@ -244,7 +244,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Description("Verify Last Modified By input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testLastModifiedByFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class);
 
@@ -291,7 +291,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
@@ -327,7 +327,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), ScenarioComparisonReportPage.class);
 
@@ -352,7 +352,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Description("Verify export date input controls functions correctly")
     public void testExportSetInputControlEarliestDateFilterFunctionality() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
@@ -378,7 +378,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()

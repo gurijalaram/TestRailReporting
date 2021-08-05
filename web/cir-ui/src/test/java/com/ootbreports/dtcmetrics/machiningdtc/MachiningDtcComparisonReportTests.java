@@ -277,7 +277,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
         machiningDtcReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)

@@ -73,7 +73,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     @Description("Validate Projects Rollup drop-down Input Control functionality")
     public void testProjectRollupDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);
@@ -91,7 +91,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     @Description("Validate Project Name drop-down Input Control functionality")
     public void testProjectNameDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);
@@ -118,7 +118,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     @Description("Validate Export Date drop-down Input Control")
     public void testExportDateDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);
@@ -163,7 +163,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);

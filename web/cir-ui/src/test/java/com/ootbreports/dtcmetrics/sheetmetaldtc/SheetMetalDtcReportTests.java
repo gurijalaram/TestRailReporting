@@ -82,7 +82,7 @@ public class SheetMetalDtcReportTests extends TestBase {
                 Constants.DEFAULT_SCENARIO_NAME
         );
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), SheetMetalDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
@@ -241,7 +241,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Report")
     public void testSortOrderAnnualSpend() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)

@@ -64,7 +64,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Report")
     public void testProjectRollupDropdownList() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(
                         ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
@@ -87,7 +87,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
     public void testExportDateFilterFunctionality() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(
                         ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
@@ -108,7 +108,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(
                         ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),

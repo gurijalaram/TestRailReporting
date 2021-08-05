@@ -32,7 +32,7 @@ public class LoginTests extends TestBase {
     @Description("Successful login to CI Report")
     public void testLogin() {
         reportsPageHeader = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe");
+            .login();
 
         assertThat(reportsPageHeader.isCreateDashboardsButtonDisplayed(), is(true));
     }

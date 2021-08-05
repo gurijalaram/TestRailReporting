@@ -123,7 +123,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     public void testDataIntegrityAgainstCID() {
         String reportName = ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName();
         genericReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -227,7 +227,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     @Description("Percent difference threshold filter works - main report")
     public void testPercentDifferenceThresholdFilter() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
                 .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
@@ -275,7 +275,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     @Description("Annualised potential savings threshold filter - main report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
                 .selectExportSetDtcTests(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())

@@ -108,7 +108,7 @@ public class PlasticDtcReportTests extends TestBase {
         BigDecimal usdAnnualSpend;
 
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), PlasticDtcReportPage.class)
             .waitForInputControlsLoad()
@@ -174,7 +174,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -406,7 +406,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Description("Verify minimum annual spend input control correctly filters list of available parts")
     public void testMinimumAnnualSpendFiltersPartList() {
         plasticDtcReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), PlasticDtcReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), PlasticDtcReportPage.class);

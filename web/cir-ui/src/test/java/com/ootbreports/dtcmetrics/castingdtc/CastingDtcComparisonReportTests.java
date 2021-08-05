@@ -163,7 +163,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Comparison Report")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
         castingDtcReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), CastingDtcReportPage.class)
             .waitForInputControlsLoad()

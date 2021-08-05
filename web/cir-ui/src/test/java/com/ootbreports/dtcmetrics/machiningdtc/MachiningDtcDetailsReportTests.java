@@ -261,7 +261,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
         machiningDtcReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
@@ -312,7 +312,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     public void testSortOrderInputControlManufacturingIssues() {
         String exportSet = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(exportSet, GenericReportPage.class)
@@ -333,7 +333,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDesignStandards() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
@@ -352,7 +352,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlTolerances() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
@@ -371,7 +371,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlSlowOperations() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
@@ -390,7 +390,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlAnnualSpend() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
@@ -409,7 +409,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDtcRank() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)

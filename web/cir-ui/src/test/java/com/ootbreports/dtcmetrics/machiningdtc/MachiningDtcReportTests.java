@@ -345,7 +345,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
         machiningDtcReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
@@ -462,7 +462,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Select Parts list is correctly filtered by input control - Export Dates - Machining DTC Report ")
     public void testPartListFilterByInputControlsExportDates() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
             .setExportDateUsingInput(true, "")
@@ -482,7 +482,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Select Parts list is correctly filtered by input control - Export Set - Machining DTC Report")
     public void testPartListFilterByInputControlsExportSets() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
@@ -500,7 +500,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Select Parts list is correctly filtered by input control - Rollup - Machining DTC Report")
     public void testPartListFilterByInputControlsRollup() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class);
@@ -518,7 +518,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Select Parts list is correctly filtered by input control - Min. Annual Spend - Machining DTC Report")
     public void testPartListFilterByInputControlsMinimumAnnualSpend() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class);
@@ -543,7 +543,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("\tVerify Select Parts list is correctly filtered by input control - Process Group - Machining DTC Report")
     public void testPartListFilterByInputControlsProcessGroup() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
@@ -562,7 +562,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Description("Verify Select Parts list is correctly filtered by input control - DTC Score - Machining DTC Report")
     public void testPartListFilterByInputControlsDtcScore() {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class);

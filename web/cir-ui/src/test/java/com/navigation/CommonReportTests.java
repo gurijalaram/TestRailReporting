@@ -55,7 +55,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testReportAvailabilityByNavigation(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToViewRepositoryPage()
             .navigateToReportFolder(reportName)
             .waitForReportToAppear(reportName);
@@ -70,7 +70,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testReportAvailabilityByLibrary(String reportName) {
         libraryPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage();
 
         assertThat(reportName, is(equalTo(libraryPage.getReportName(reportName))));
@@ -83,7 +83,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testReportAvailabilityBySearch(String reportName) {
         reportsPageHeader = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe");
+            .login();
 
         viewSearchResultsPage = reportsPageHeader.searchForReport(reportName);
 
@@ -101,7 +101,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testReportsUserGuideNavigation(String reportName, String exportSetName) throws Exception {
         cirUserGuide = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSet(exportSetName, GenericReportPage.class)
@@ -127,7 +127,7 @@ public class CommonReportTests extends TestBase {
                 ? ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
                 : ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -234,7 +234,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testCastingDtcIssueCounts(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -285,7 +285,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testPlasticDtcIssueCounts(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login("scrowe", "scrowe")
+            .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -338,7 +338,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testExportSetDropdownAssemblyCost(String reportName, String exportSetName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
                 .selectExportSetDropdown(exportSetName)
@@ -364,7 +364,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testAssemblySetDropdownAssemblyCost(String reportName, String assemblyName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
                 .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
@@ -385,7 +385,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testScenarioNameDropdownAssemblyCost(String reportName, String scenarioName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
                 .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
@@ -404,7 +404,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testSubAssemblySelectionAssemblyCost(String reportName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
                 .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
@@ -431,7 +431,7 @@ public class CommonReportTests extends TestBase {
      */
     public void testAssemblyCostDataIntegrity(String reportName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, AssemblyCostReportPage.class)
                 .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
@@ -478,7 +478,7 @@ public class CommonReportTests extends TestBase {
     private void castingSortOrderTestCore(String reportName, String sortOrder) {
         String exportSet = ExportSetEnum.CASTING_DTC.getExportSetName();
         castingDtcReportPage = new ReportsLoginPage(driver)
-                .login("scrowe", "scrowe")
+                .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, CastingDtcReportPage.class)
                 .selectExportSetDtcTests(exportSet)
