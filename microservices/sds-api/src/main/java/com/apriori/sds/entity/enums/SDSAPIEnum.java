@@ -1,7 +1,7 @@
 package com.apriori.sds.entity.enums;
 
-import com.apriori.sds.utils.Constants;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
+import com.apriori.utils.properties.PropertiesContext;
 
 public enum SDSAPIEnum implements ExternalEndpointEnum {
 
@@ -69,7 +69,7 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return Constants.getApiUrl() + String.format(getEndpointString(), variables) + "?key=" + Constants.getSecretKey();
+        return PropertiesContext.getStr("${env}.sds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.getStr("${env}.secret_key");
     }
 
 }
