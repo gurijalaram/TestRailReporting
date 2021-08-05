@@ -79,7 +79,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 Constants.DEFAULT_SCENARIO_NAME
         );
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), SheetMetalDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
@@ -238,7 +238,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Details Report")
     public void testSortOrderManufacturingIssues() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -258,7 +258,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly - Bends- Sheet Metal DTC Details Report")
     public void testSortOrderBends() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -278,7 +278,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly - Tolerances - Sheet Metal DTC Details Report")
     public void testSortOrderTolerances() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -298,7 +298,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly - Machining Time - Sheet Metal DTC Details Report")
     public void testSortOrderMachiningTime() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -318,7 +318,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Details Report")
     public void testSortOrderAnnualSpend() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -338,7 +338,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Sheet Metal DTC Details Report")
     public void testSortOrderDtcRank() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)

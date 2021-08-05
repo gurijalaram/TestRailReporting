@@ -78,7 +78,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
                 Constants.DEFAULT_SCENARIO_NAME
         );
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(), SheetMetalDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)

@@ -101,7 +101,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Details Report")
     public void testDataIntegrityAgainstCID() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(
                         ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
@@ -135,7 +135,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     @Description("Validate details report generates")
     public void testDetailsReportGenerates() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class)
@@ -242,7 +242,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     @Description("Annualised potential savings threshold filter - details report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(
                         ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
@@ -290,7 +290,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     @Description("Percent difference threshold filter works - details report")
     public void testPercentDifferenceThresholdFilter() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(
                         ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),

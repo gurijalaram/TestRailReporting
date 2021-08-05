@@ -234,7 +234,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
         plasticDtcReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), PlasticDtcReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), PlasticDtcReportPage.class)

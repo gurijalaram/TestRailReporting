@@ -61,7 +61,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToReportUserGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -77,7 +77,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
         logout = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToReportLogout();
 
         assertThat(logout.isLoginButtonEnabled(), is(equalTo(true)));
@@ -91,7 +91,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
         reportsPageHeader = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToHomePage();
 
         assertThat(reportsPageHeader.getHomeTitleText(), is(containsString("Home")));
@@ -103,7 +103,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
         library = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage();
 
         assertThat(library.getLibraryTitleText(), is(equalTo("Library")));
@@ -115,7 +115,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
         searchResults = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToViewSearchResultsPage();
 
         assertThat(searchResults.getSearchResultsTitleText(), is(equalTo("repoSearch")));
@@ -127,7 +127,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
         repository = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToViewRepositoryPage();
 
         assertThat(repository.getRepositoryTitleText(), is(equalTo("Repository")));
@@ -139,7 +139,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
         schedules = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToViewSchedulesPage();
 
         assertThat(schedules.getSchedulesTitleText(), is(equalTo("Schedules")));
@@ -151,7 +151,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
         messages = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToViewMessagesPage();
 
         assertThat(messages.getMessagesTitleText(), is(equalTo("Messages:")));
@@ -163,7 +163,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
         users = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToManageUsersPage();
 
         assertThat(users.getUsersTitleText(), is(equalTo("Users")));
@@ -175,7 +175,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
         roles = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToManageRolesPage();
 
         assertThat(roles.getRolesTitleText(), is(equalTo("Roles")));
@@ -187,7 +187,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
         adHocView = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToCreateAdHocViewPage();
 
         assertThat(adHocView.getAdHocViewTitleText(), is(equalTo("New Ad Hoc View")));
@@ -201,7 +201,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
         report = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToCreateReportPage();
 
         assertThat(report.isDialogDisplayed(), is(equalTo(true)));
@@ -214,7 +214,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {
         dashboard = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToCreateDashboardPage();
 
         assertThat(dashboard.getAdHocViewTitleText(), is(equalTo("New Dashboard")));
@@ -226,7 +226,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
         domain = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToCreateDomainPage();
 
         String urlToCheck = domain.getUrlToCheck();
@@ -251,7 +251,7 @@ public class ReportsNavigationTests extends TestBase {
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
         dataSource = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToCreateDataSourcePage();
 
         assertThat(dataSource.getDataSourceTitleText(), is(equalTo("New Data Source")));

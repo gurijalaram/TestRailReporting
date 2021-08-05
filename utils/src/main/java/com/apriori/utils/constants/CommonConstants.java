@@ -14,15 +14,6 @@ public class CommonConstants {
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
-    /**
-     * Get csv file to use
-     *
-     * @return string
-     */
-    public static String getCsvFile() {
-        return csvFile = csvFile == null ? System.getProperty("csvFile", "onprem-users.csv") : System.getProperty("csvFile");
-    }
-
     public static final Level consoleLogLevel = Level.parse(PropertiesContext.getStr("global.console_log_level"));
     public static final String schemaBasePath = PropertiesContext.getStr("global.schema_base_path");
 }

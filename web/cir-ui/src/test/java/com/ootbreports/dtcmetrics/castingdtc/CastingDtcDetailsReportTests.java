@@ -166,7 +166,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Details Report")
     public void testVerifyDetailsReportAvailableAndCorrectData() {
         castingDtcReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportPage.class)
             .waitForInputControlsLoad()

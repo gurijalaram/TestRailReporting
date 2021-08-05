@@ -92,7 +92,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal usdGrandTotal;
 
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -124,7 +124,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal usdGrandTotal;
 
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -170,7 +170,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -213,7 +213,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
                 .waitForInputControlsLoad()
@@ -265,7 +265,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -315,7 +315,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
 
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -364,7 +364,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -415,7 +415,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
 
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -484,7 +484,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -570,7 +570,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -611,7 +611,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
@@ -645,7 +645,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Export Set search function works - Assembly Details Report")
     public void testExportSetSearch() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
@@ -675,7 +675,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Verify Created By Filter Operation")
     public void testCreatedByFilterOperation() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
@@ -748,7 +748,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Verify Last Modified By Filter Operation")
     public void testLastModifiedFilterOperation() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
@@ -809,7 +809,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -854,7 +854,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
@@ -886,7 +886,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -915,7 +915,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
                 .waitForInputControlsLoad()

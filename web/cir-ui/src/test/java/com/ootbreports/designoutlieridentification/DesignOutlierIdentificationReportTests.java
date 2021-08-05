@@ -121,7 +121,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
         designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
                     DesignOutlierIdentificationReportPage.class);
@@ -191,7 +191,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     @Description("Validate the reports correct with user overrides")
     public void testReportFunctionsWithUserCostOverride() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class)

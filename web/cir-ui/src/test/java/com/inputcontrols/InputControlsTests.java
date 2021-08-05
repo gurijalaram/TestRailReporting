@@ -55,7 +55,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetFilterUsingInputField(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
@@ -76,7 +76,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetFilterUsingDatePicker(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
@@ -97,7 +97,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetFilterInvalidCharacters(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .setExportDateUsingInput(true, "?")
@@ -118,7 +118,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testApplyButton(String reportName, String exportSetName, String rollupName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -140,7 +140,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testCancelButton(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -159,7 +159,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testResetButton(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -180,7 +180,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testSaveButton(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -206,7 +206,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testRollupDropdown(String reportName, String rollupName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -225,7 +225,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetSelection(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -259,7 +259,7 @@ public class InputControlsTests extends TestBase {
         BigDecimal usdGrandTotal;
 
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -294,7 +294,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetAvailabilityAndSelection(String reportName, String exportSet, String rollupName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -312,7 +312,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetAvailability(String reportName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
@@ -363,7 +363,7 @@ public class InputControlsTests extends TestBase {
     public void testCostMetricInputControlTargetQuotedCostTrendReports(String reportName, String rollupName,
                                                                        String costMetric) {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, TargetQuotedCostTrendReportPage.class);
 
@@ -421,7 +421,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testMassMetricReportsWithChart(String reportName, String exportSet, String massMetric) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSetDtcTests(exportSet)
@@ -445,7 +445,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testSingleProcessGroup(String reportName, String exportSet, String processGroupName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -517,7 +517,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testProcessGroupInputControlNoSelection(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSetName, GenericReportPage.class)
@@ -537,7 +537,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testDtcScoreInputControlNoSelection(String reportName, String exportSetName) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSetName, GenericReportPage.class)
@@ -608,7 +608,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testListFilterSearch(String reportName, String listName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
@@ -628,7 +628,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testListFilterButtons(String reportName, String exportSet, String listName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
@@ -671,7 +671,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testAssemblyNumberSearchCriteria(String reportName, String assemblySearchInput) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
@@ -692,7 +692,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testDtcChartTooltips(String reportName, String exportSet) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSet(exportSet, GenericReportPage.class)
@@ -720,7 +720,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testInvalidExportSetFilterDateInputs(String reportName, String valueToInvalidate) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class);
 
@@ -822,7 +822,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testExportSetSearch(String reportName, String exportSetName) {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, SheetMetalDtcReportPage.class);
 
@@ -840,7 +840,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testTargetQuotedCostTrendReportHyperlinks(String milestoneName) {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class)
@@ -862,7 +862,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testTargetQuotedCostTrendDataIntegrity(String milestoneName) {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class)
@@ -993,7 +993,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testMinAndMaxMassOrCostFilterJunkValues(String reportName, String costOrMass) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class);
@@ -1032,7 +1032,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testAnnualisedOrPercentError(String reportName, String fieldToUse) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -1050,7 +1050,7 @@ public class InputControlsTests extends TestBase {
      */
     public void testAnnualisedOrPercentDecimalPlaces(String reportName, String fieldToUse) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -1082,7 +1082,7 @@ public class InputControlsTests extends TestBase {
     public void testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(String reportName,
                                                                               String valueToTest) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
@@ -1115,7 +1115,7 @@ public class InputControlsTests extends TestBase {
     private GenericReportPage testMinAndMaxMassOrCostFilterCore(String reportName, String costOrMass, String minValue,
                                                                 String maxValue) {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
@@ -1167,7 +1167,7 @@ public class InputControlsTests extends TestBase {
 
     private void testCostMetricCoreTargetQuotedCostReports(String reportName, String costMetric) {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, TargetQuotedCostTrendReportPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
@@ -1185,7 +1185,7 @@ public class InputControlsTests extends TestBase {
 
     private void testMinimumAnnualSpendCore(String reportName, String exportSet, boolean setMinimumAnnualSpend) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSetDtcTests(exportSet);
@@ -1209,7 +1209,7 @@ public class InputControlsTests extends TestBase {
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSetDtcTests(exportSet)
@@ -1222,7 +1222,7 @@ public class InputControlsTests extends TestBase {
 
     private void partOneOfCheckBothProcessGroupTest(String reportName, String exportSetName, String processGroupName) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
@@ -1250,7 +1250,7 @@ public class InputControlsTests extends TestBase {
 
     private void dtcScoreTestCore(String reportName, String exportSet, String dtcScore) {
         genericReportPage = new ReportsLoginPage(driver)
-            .login()
+            .login("scrowe", "scrowe")
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()

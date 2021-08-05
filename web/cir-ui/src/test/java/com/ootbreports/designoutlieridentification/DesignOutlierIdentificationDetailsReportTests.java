@@ -118,7 +118,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBase {
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
         designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
                         DesignOutlierIdentificationReportPage.class);

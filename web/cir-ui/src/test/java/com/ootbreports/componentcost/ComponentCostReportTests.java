@@ -70,7 +70,7 @@ public class ComponentCostReportTests extends TestBase {
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetSelection() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
@@ -94,7 +94,7 @@ public class ComponentCostReportTests extends TestBase {
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
@@ -124,7 +124,7 @@ public class ComponentCostReportTests extends TestBase {
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
@@ -151,7 +151,7 @@ public class ComponentCostReportTests extends TestBase {
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
@@ -177,7 +177,7 @@ public class ComponentCostReportTests extends TestBase {
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
@@ -205,7 +205,7 @@ public class ComponentCostReportTests extends TestBase {
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
+                .login("scrowe", "scrowe")
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .setLatestExportDateToTodayMinusTwoYears()
