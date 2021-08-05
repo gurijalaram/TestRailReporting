@@ -132,9 +132,6 @@ public class Item {
     public static class AnalysisOfChildren {
     }
 
-    public static class AnalysisOfScenario {
-    }
-
     public static class AnalysisOfScenarioAndChildren {
     }
 
