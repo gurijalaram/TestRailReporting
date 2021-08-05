@@ -2,10 +2,23 @@ plugins {
     id 'java'
 }
 
+group 'com.apriori.qa'
+version '0.0.1-SNAPSHOT'
+
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    project(':apibase').sourceSets.main.resources
+            ]
+        }
+    }
 }
 
 dependencies {
