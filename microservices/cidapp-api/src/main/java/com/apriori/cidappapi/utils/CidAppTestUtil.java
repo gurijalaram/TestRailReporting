@@ -192,8 +192,7 @@ public class CidAppTestUtil {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity)
-                .token(token);
+                .inlineVariables(componentIdentity, scenarioIdentity);
 
         long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 5L;
