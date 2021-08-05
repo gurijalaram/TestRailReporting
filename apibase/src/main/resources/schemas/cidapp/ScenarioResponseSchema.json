@@ -17,11 +17,11 @@
         "scenarioType",
         "scenarioState",
         "lastAction",
-        "ownedBy",
         "locked",
         "published"
       ],
       "optional": [
+        "ownedBy",
         "previousScenarioState",
         "updatedAt",
         "ownedByName",
