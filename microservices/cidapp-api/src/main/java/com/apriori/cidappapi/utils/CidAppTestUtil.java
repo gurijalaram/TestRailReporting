@@ -7,8 +7,8 @@ import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidappapi.entity.response.scenarios.CostResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
@@ -46,7 +46,7 @@ public class CidAppTestUtil {
      */
     public Item postCssComponents(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
 
-        getToken(userCredentials);
+        token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
 
         return postCssComponents(componentName, scenarioName, resourceFile, token);
     }
@@ -104,13 +104,9 @@ public class CidAppTestUtil {
     }
 
     public List<Item> getCssComponent(String componentName, String scenarioName, String scenarioState, UserCredentials userCredentials) {
-        getToken(userCredentials);
+        token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
 
         return new UncostedComponents().getCssComponent(componentName, scenarioName, token, scenarioState);
-    }
-
-    private String getToken(UserCredentials userCredentials) {
-        return token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
     }
 
     /**
@@ -188,17 +184,17 @@ public class CidAppTestUtil {
      * @param scenarioIdentity  - the scenario identity
      * @return response object
      */
-    public ResponseWrapper<CostResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity);
 
         long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 5L;
         final long MAX_WAIT_TIME = 180L;
         String scenarioState;
-        ResponseWrapper<CostResponse> scenarioRepresentation;
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation;
 
         try {
             TimeUnit.SECONDS.sleep(2);
@@ -227,9 +223,9 @@ public class CidAppTestUtil {
      * @param scenarioIdentity  - the scenario identity
      * @return response object
      */
-    public ResponseWrapper<CostResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ScenarioResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity)
                 .body("costingInputs",
                     CostRequest.builder().annualVolume(5500)

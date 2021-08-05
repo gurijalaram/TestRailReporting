@@ -25,7 +25,11 @@
         "previousScenarioState",
         "updatedAt",
         "ownedByName",
-        "createdByName"
+        "createdByName",
+        "systemLocked",
+        "publishedAt",
+        "publishedBy",
+        "publishedByName"
       ],
       "properties": {
         "identity": {
@@ -76,6 +80,18 @@
           "type": "string"
         },
         "createdByName": {
+          "type": "string"
+        },
+        "systemLocked": {
+          "type": "boolean"
+        },
+        "publishedAt": {
+          "type": "string"
+        },
+        "publishedBy": {
+          "type": "string"
+        },
+        "publishedByName": {
           "type": "string"
         }
       }

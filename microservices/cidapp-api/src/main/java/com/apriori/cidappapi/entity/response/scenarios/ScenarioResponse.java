@@ -22,8 +22,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Schema(location = "cidapp/CostResponseSchema.json")
-public class CostResponse {
+@Schema(location = "cidapp/ScenarioResponseSchema.json")
+public class ScenarioResponse {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -43,5 +43,11 @@ public class CostResponse {
     private Boolean published;
     private String ownedByName;
     private String createdByName;
+    private Boolean systemLocked;
     private List<String> permissions;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime publishedAt;
+    private String publishedBy;
+    private String publishedByName;
 }
