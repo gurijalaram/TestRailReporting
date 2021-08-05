@@ -46,7 +46,7 @@ public class CidAppTestUtil {
      */
     public Item postCssComponents(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
 
-        token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
+        getToken(userCredentials);
 
         return postCssComponents(componentName, scenarioName, resourceFile, token);
     }
@@ -101,6 +101,16 @@ public class CidAppTestUtil {
         List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
 
         return itemResponse.get(0);
+    }
+
+    public List<Item> getCssComponent(String componentName, String scenarioName, String scenarioState, UserCredentials userCredentials) {
+        getToken(userCredentials);
+
+        return new UncostedComponents().getCssComponent(componentName, scenarioName, token, scenarioState);
+    }
+
+    private String getToken(UserCredentials userCredentials) {
+        return token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
     }
 
     /**
@@ -183,7 +193,7 @@ public class CidAppTestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity)
-            .token(token);
+                .token(token);
 
         long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 5L;
