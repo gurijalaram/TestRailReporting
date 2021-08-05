@@ -9,8 +9,6 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-utils/gradlew
-utils/gradlew.bat
 
 
 # Generated files
