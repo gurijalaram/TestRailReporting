@@ -4,8 +4,8 @@ import com.apriori.bcs.entity.response.ProcessGroup;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.tests.util.VDSRequestEntityUtil;
 import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
@@ -57,7 +57,7 @@ public class ProcessGroupsTest extends VDSTestUtil {
         List<ProcessGroup> processGroups = getProcessGroupsResponse();
         Assert.assertNotEquals("To get Process Group, response should contain it.", 0, processGroups.size());
 
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUP_BY_IDENTITY, ProcessGroup.class)
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_BY_IDENTITY, ProcessGroup.class)
             .inlineVariables(processGroups.get(0).getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,

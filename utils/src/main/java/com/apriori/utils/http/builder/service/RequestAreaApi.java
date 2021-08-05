@@ -3,7 +3,6 @@ package com.apriori.utils.http.builder.service;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.interfaces.RequestArea;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
 
 public class RequestAreaApi implements RequestArea {
 

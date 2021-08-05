@@ -2,6 +2,7 @@ package com.apriori.utils.users.service;
 
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.CommonConstants;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import org.slf4j.Logger;
@@ -114,6 +115,6 @@ class InitUsersData {
     }
 
     private static String initPathToFileWithUsers() {
-        return CommonConstants.getCsvFile();
+        return PropertiesContext.getStr("global.users_csv_file");
     }
 }
