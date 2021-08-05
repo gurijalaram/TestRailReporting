@@ -12,24 +12,15 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserCredentials;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class ResetSettingsUtil {
 
-    private String unitIdentity;
-    private String colourIdentity;
-    private String proGroupIdentity;
-    private String digFacIdentity;
-    private String matCatalogIdentity;
-    private String annVolIdentity;
-    private String prodLifeIdentity;
-    private String batchIdentity;
-    private String tolModeIdentity;
-    private String scenarioIdentity;
-
     /**
      * Resets all settings in Cidapp
+     *
      * @param userCredentials - the user credentials
      * @return response object
      */
@@ -43,16 +34,20 @@ public class ResetSettingsUtil {
 
         List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
 
-        unitIdentity = preferencesItems.stream().filter(x -> x.getName().equals("display.unitsGroup")).collect(Collectors.toList()).get(0).getIdentity();
-        colourIdentity = preferencesItems.stream().filter(x -> x.getName().equals("display.selectionColor")).collect(Collectors.toList()).get(0).getIdentity();
-        scenarioIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultScenarioName")).collect(Collectors.toList()).get(0).getIdentity();
-        proGroupIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultProcessGroup")).collect(Collectors.toList()).get(0).getIdentity();
-        digFacIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultDigitalFactory")).collect(Collectors.toList()).get(0).getIdentity();
-        matCatalogIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultMaterialCatalogName")).collect(Collectors.toList()).get(0).getIdentity();
-        annVolIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultAnnualVolume")).collect(Collectors.toList()).get(0).getIdentity();
-        prodLifeIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultProductionLife")).collect(Collectors.toList()).get(0).getIdentity();
-        batchIdentity = preferencesItems.stream().filter(x -> x.getName().equals("production.defaultBatchSize")).collect(Collectors.toList()).get(0).getIdentity();
-        tolModeIdentity = preferencesItems.stream().filter(x -> x.getName().equals("tolerance.toleranceMode")).collect(Collectors.toList()).get(0).getIdentity();
+        Map<String, String> mappedResponse = new HashMap<>();
+
+        preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
+
+        String unitIdentity = mappedResponse.get("display.unitsGroup");
+        String colourIdentity = mappedResponse.get("display.selectionColor");
+        String scenarioIdentity = mappedResponse.get("production.defaultScenarioName");
+        String proGroupIdentity = mappedResponse.get("production.defaultProcessGroup");
+        String digFacIdentity = mappedResponse.get("production.defaultDigitalFactory");
+        String matCatalogIdentity = mappedResponse.get("production.defaultMaterialCatalogName");
+        String annVolIdentity = mappedResponse.get("production.defaultAnnualVolume");
+        String prodLifeIdentity = mappedResponse.get("production.defaultProductionLife");
+        String batchIdentity = mappedResponse.get("production.defaultBatchSize");
+        String tolModeIdentity = mappedResponse.get("tolerance.toleranceMode");
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
             .token(token)
@@ -66,7 +61,7 @@ public class ResetSettingsUtil {
                 + "\"" + annVolIdentity + "\":\"" + null + "\","
                 + "\"" + prodLifeIdentity + "\":\"" + null + "\","
                 + "\"" + batchIdentity + "\":\"" + null + "\","
-                + "\"" + tolModeIdentity + "\":\" SYSTEMDEFAULT \""
+                + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\""
                 + "}}");
 
         return HTTP2Request.build(requestEntity).patch();
