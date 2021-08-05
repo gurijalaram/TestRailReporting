@@ -14,7 +14,7 @@ project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 
 final String[] microservicesModules = ["ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api"]
-final String[] webModules = ["cas-ui", "cia-ui", "ciconnect-ui", "cid-ui", "cidapp-ui", "cir-ui"]
+final String[] webModules = ["cas-ui", "cia-ui", "ciconnect-ui", "cid-ui", "cidapp-ui", "cir-ui", "edc-ui"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
@@ -72,6 +72,7 @@ if (configuration != null) {
     include ':web:cidapp-ui'
     include ':web:ciconnect-ui'
     include ':web:cas-ui'
+    include ':web:edc-ui'
 
     project(':web:cia-ui').projectDir = file('../web/cia-ui')
     project(':web:cid-ui').projectDir = file('../web/cid-ui')
@@ -79,6 +80,7 @@ if (configuration != null) {
     project(':web:cidapp-ui').projectDir = file('../web/cidapp-ui')
     project(':web:ciconnect-ui').projectDir = file('../web/ciconnect-ui')
     project(':web:cas-ui').projectDir = file('../web/cas-ui')
+    project(':web:edc-ui').projectDir = file('../web/edc-ui')
 
     if (System.getProperty("all") != null) {
         include(':database')
