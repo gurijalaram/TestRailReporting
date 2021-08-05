@@ -1,16 +1,14 @@
 package com.apriori.vds.tests;
 
-import static org.junit.Assert.assertNotEquals;
-
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.user.group.associations.UserGroupAssociationRequest;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociation;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociationsItems;
-import com.apriori.vds.tests.util.VDSRequestEntityUtil;
 import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
@@ -43,7 +41,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     @Description("GET a specific UserGroupAssociation.")
     public void getUserGroupAssociationByIdentity() {
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SPECIFIC_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SPECIFIC_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
                 .inlineVariables(
                     getGroupIdentity(),
                     this.postUserGroupAssociation().getIdentity()
@@ -76,7 +74,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
         UserGroupAssociation userGroupAssociationBeforeUpdate = this.postUserGroupAssociation();
 
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PATCH_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PATCH_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity(), userGroupAssociationBeforeUpdate.getIdentity())
                 .body(UserGroupAssociationRequest.builder()
                     .customerIdentity(customerId)
@@ -90,7 +88,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     }
 
     private List<UserGroupAssociation> getUserGroupAssociationsResponse() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
             .inlineVariables(getGroupIdentity());
 
         ResponseWrapper<UserGroupAssociationsItems> userGroupAssociationsResponse = HTTP2Request.build(requestEntity).get();
@@ -112,7 +110,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
         }
 
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity())
                 .body(UserGroupAssociationRequest.builder()
                     .customerIdentity(customerId)
@@ -134,7 +132,7 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
 
     private static void deleteUserGroupAssociationById(final String ugaIdentity) {
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
                 .inlineVariables(getGroupIdentity(), ugaIdentity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
     }

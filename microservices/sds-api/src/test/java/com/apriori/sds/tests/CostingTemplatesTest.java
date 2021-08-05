@@ -2,12 +2,12 @@ package com.apriori.sds.tests;
 
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.CostingTemplate;
-import com.apriori.sds.util.SDSRequestEntityUtil;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -27,7 +27,7 @@ public class CostingTemplatesTest extends SDSTestUtil {
     @Description("Get the current representation of a costing template.")
     public void testGetCostingTemplateByIdentity() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
                 .inlineVariables(this.getFirstCostingTemplate().getIdentity());
 
         ResponseWrapper<CostingTemplate> response = HTTP2Request.build(requestEntity).get();

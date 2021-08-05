@@ -17,6 +17,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
@@ -28,7 +29,7 @@ import java.util.Set;
 
 public abstract class SDSTestUtil extends TestUtil {
 
-    protected static final Set<Item> scenariosToDelete = new HashSet<>();
+    protected static Set<Item> scenariosToDelete = new HashSet<>();
     private static Item testingComponent;
 
     @AfterClass
@@ -38,6 +39,9 @@ public abstract class SDSTestUtil extends TestUtil {
                 removeTestingScenario(component.getComponentIdentity(), component.getScenarioIdentity());
             });
         }
+
+        scenariosToDelete = new HashSet<>();
+        testingComponent = null;
     }
 
     /**
@@ -72,7 +76,7 @@ public abstract class SDSTestUtil extends TestUtil {
      *
      * @return object
      */
-    protected static Item postTestingComponent() {
+    protected static Item postTestingComponentAndAddToRemoveList() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "AGC0-LP-700144754.prt.1";
         ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
@@ -89,7 +93,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     protected static void removeTestingScenario(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
             .inlineVariables(componentId, scenarioId);
 
         ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
@@ -104,7 +108,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     protected static Item getTestingComponent() {
         if (testingComponent == null) {
-            testingComponent = postTestingComponent();
+            testingComponent = postTestingComponentAndAddToRemoveList();
         }
 
         return testingComponent;
@@ -148,7 +152,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected static Item postComponent(final PostComponentRequest postComponentRequest) {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .body("component", postComponentRequest);
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
@@ -171,7 +175,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected List<CostingTemplate> getCostingTemplates() {
         final RequestEntity requestEntity =
-            SDSRequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
 
         ResponseWrapper<CostingTemplatesItems> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
