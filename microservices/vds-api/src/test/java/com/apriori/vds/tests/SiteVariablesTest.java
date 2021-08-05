@@ -7,12 +7,12 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariablesItems;
 import com.apriori.vds.tests.util.SiteVariableUtil;
-import com.apriori.vds.tests.util.VDSRequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -40,7 +40,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @Description("Get a site variable for a customer.")
     public void getSiteVariablesByIdentity() {
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SITE_VARIABLE_BY_ID, SiteVariable.class)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SITE_VARIABLE_BY_ID, SiteVariable.class)
                 .inlineVariables(
                     this.getFirstSiteVariable().getIdentity()
                 );
@@ -69,7 +69,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PATCH_SITE_VARIABLES_BY_ID, SiteVariable.class)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PATCH_SITE_VARIABLES_BY_ID, SiteVariable.class)
                 .inlineVariables(siteVariableBeforeUpdate.getIdentity())
                 .body(initUpdateRequestBody(siteVariableBeforeUpdate));
 
@@ -85,7 +85,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariable siteVariable = getFirstSiteVariable();
 
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(initUpdateRequestBody(siteVariable));
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).put();
@@ -95,7 +95,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private static void deleteSiteVariableById(final String identity) {
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
                 .inlineVariables(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
     }
@@ -108,7 +108,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     }
 
     private List<SiteVariable> getSiteVariablesResponse() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class);
 
         ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, siteVariablesResponse.getStatusCode());
@@ -118,7 +118,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private SiteVariable postSiteVariables() {
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.POST_SITE_VARIABLE, SiteVariable.class)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.POST_SITE_VARIABLE, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(new GenerateStringUtil().generateSiteName())
                     .type("DOUBLE")

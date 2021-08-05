@@ -6,6 +6,8 @@ import com.apriori.bcs.entity.response.ProcessGroups;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.access.control.AccessControlGroup;
 import com.apriori.vds.entity.response.access.control.AccessControlGroupItems;
@@ -13,7 +15,6 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
-import com.apriori.vds.utils.Constants;
 
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -21,8 +22,8 @@ import org.junit.Assert;
 import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
-    protected static final String customerId = Constants.getCustomerId();
-    protected static final String userId = Constants.getUserId();
+    protected static final String customerId =  PropertiesContext.getStr("${env}.vds.customer_identity"); //Constants.getCustomerId();
+    protected static final String userId = PropertiesContext.getStr("${env}.vds.user_identity"); // Constants.getUserId();
 
     private static DigitalFactory digitalFactory;
 
@@ -34,7 +35,7 @@ public abstract class VDSTestUtil extends TestUtil {
     private static String materialIdentity;
 
     protected static List<AccessControlGroup> getGroupsResponse() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class);
 
         ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -52,7 +53,7 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTP2Request.build(requestEntity).get();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -67,7 +68,7 @@ public abstract class VDSTestUtil extends TestUtil {
 
     protected static ProcessGroupMaterial getProcessGroupMaterial() {
         RequestEntity requestEntity =
-            VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
                 .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity());
 
         final ResponseWrapper<ProcessGroupMaterialsItems> processGroupMaterialsItems = HTTP2Request.build(requestEntity).get();
@@ -83,7 +84,7 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static List<ProcessGroup> getProcessGroupsResponse() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
 
         ResponseWrapper<ProcessGroups> processGroupsResponse = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupsResponse.getStatusCode());
