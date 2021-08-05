@@ -54,7 +54,7 @@ public class ConfigurationTest extends VDSTestUtil {
                 }
             })
             .customBody(
-                "{ 'customerConfiguration': { 'configurationType': 'ACCESS_CONTROL', 'serializationType': 'COMPRESSED_BINARY', 'customerIdentity' : '8GFDIG229629' }}"
+                "{ \"customerConfiguration\": { \"configurationType\": \"ACCESS_CONTROL\", \"serializationType\": \"COMPRESSED_BINARY\", \"customerIdentity\" : \"8GFDIG229629\" }}"
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED,
