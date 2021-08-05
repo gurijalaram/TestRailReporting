@@ -1,7 +1,7 @@
 package com.apriori.vds.entity.enums;
 
 import com.apriori.utils.http.enums.common.EdcQaAPI;
-import com.apriori.vds.utils.Constants;
+import com.apriori.utils.properties.PropertiesContext;
 
 public enum VDSAPIEnum implements EdcQaAPI {
 
@@ -87,7 +87,7 @@ public enum VDSAPIEnum implements EdcQaAPI {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return Constants.getApiUrl() + String.format(getEndpointString(), variables) + "?key=" + Constants.getSecretKey();
+        return PropertiesContext.getStr("${env}.vds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.getStr("${env}.vds.secret_key");
     }
 
 }
