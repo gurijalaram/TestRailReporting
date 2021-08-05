@@ -4,10 +4,10 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
-import com.apriori.vds.tests.util.VDSRequestEntityUtil;
 import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
@@ -35,7 +35,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @TestRail(testCaseId = {"8031"})
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getDigitalFactoriesByIdentity() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
             .inlineVariables(getDigitalFactoriesResponse().getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -61,7 +61,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @TestRail(testCaseId = {"8033"})
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getVPEsByIdentity() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_VPES_BY_IDENTITY, DigitalFactory.class)
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_VPES_BY_IDENTITY, DigitalFactory.class)
             .inlineVariables(this.getVPEsResponse().getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -70,7 +70,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     }
 
     private DigitalFactory getVPEsResponse() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_VPES, DigitalFactoriesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_VPES, DigitalFactoriesItems.class);
 
         ResponseWrapper<DigitalFactoriesItems> vpEsItemsResponse = HTTP2Request.build(requestEntity).get();
 
