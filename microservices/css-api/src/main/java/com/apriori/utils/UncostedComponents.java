@@ -53,7 +53,7 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getCssComponent(String componentName, String scenarioName, String token, String verifiedState) {
+    public List<Item> getCssComponent(String componentName, String scenarioName, String token, String scenarioState) {
         final int SOCKET_TIMEOUT = 120000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
@@ -83,7 +83,7 @@ public class UncostedComponents {
                         throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                     }
 
-                    if (firstItem.getScenarioState().equals(verifiedState.toUpperCase())) {
+                    if (firstItem.getScenarioState().equals(scenarioState.toUpperCase())) {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
