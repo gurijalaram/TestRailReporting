@@ -23,7 +23,7 @@ public class IterationsControllerTests {
     public void getComponentsIterationsLatest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item postComponentResponse = cidAppTestUtil.postComponents("Casting.prt", scenarioName, "Casting - Die");
+        Item postComponentResponse = cidAppTestUtil.postCssComponents("Casting.prt", scenarioName, "Casting - Die");
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();

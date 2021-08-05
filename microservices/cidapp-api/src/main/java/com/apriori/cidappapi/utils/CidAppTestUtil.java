@@ -44,11 +44,11 @@ public class CidAppTestUtil {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public Item postComponents(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+    public Item postCssComponents(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
 
         token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
 
-        return postComponents(componentName, scenarioName, resourceFile, token);
+        return postCssComponents(componentName, scenarioName, resourceFile, token);
     }
 
 
@@ -59,7 +59,7 @@ public class CidAppTestUtil {
      * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    public Item postComponents(String componentName, String scenarioName, String resourceFile) {
+    public Item postCssComponents(String componentName, String scenarioName, String resourceFile) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
@@ -84,7 +84,7 @@ public class CidAppTestUtil {
      * @param componentName - the part name
      * @return responsewrapper
      */
-    public Item postComponents(String componentName, String scenarioName, File resourceFile, String token) {
+    public Item postCssComponents(String componentName, String scenarioName, File resourceFile, String token) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
@@ -179,9 +179,11 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<CostResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
+
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, CostResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity);
+                .inlineVariables(componentIdentity, scenarioIdentity)
+            .token(token);
 
         long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 5L;

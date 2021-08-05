@@ -108,7 +108,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        Item component = new CidAppTestUtil().postComponents(componentName, scenarioName, resourceFile, userCredentials);
+        Item component = new CidAppTestUtil().postCssComponents(componentName, scenarioName, resourceFile, userCredentials);
         return navigateToScenario(component.getComponentIdentity(), component.getScenarioIdentity());
     }
 
