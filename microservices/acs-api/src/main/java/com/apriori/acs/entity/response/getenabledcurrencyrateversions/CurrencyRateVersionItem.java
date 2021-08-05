@@ -1,10 +1,8 @@
 package com.apriori.acs.entity.response.getenabledcurrencyrateversions;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class CurrencyRateVersionItem {
     public double BRL;
     public double CAD;

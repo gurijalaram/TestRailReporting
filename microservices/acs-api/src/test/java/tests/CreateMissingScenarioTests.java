@@ -2,7 +2,6 @@ package tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -37,14 +36,11 @@ public class CreateMissingScenarioTests {
         AcsResources acsResources = new AcsResources();
         CreateMissingScenarioResponse createMissingScenarioResponse = acsResources.createMissingScenario();
 
-        assertThat(createMissingScenarioResponse, is(notNullValue()));
         assertThat(createMissingScenarioResponse.isResourceCreated(), is(equalTo(true)));
         assertThat(createMissingScenarioResponse.isMissing(), is(equalTo(true)));
 
         GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKeyResponse = acsResources
                 .getScenarioInfoByScenarioIterationKey(createMissingScenarioResponse.getScenarioIterationKey());
-
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse, is(notNullValue()));
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.isInitialized(), is(equalTo(false)));
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.isVirtual(), is(equalTo(true)));
