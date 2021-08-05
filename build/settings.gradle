@@ -13,7 +13,7 @@ include(':apibase')
 project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 
-final String[] microservicesModules = ["ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api"]
+final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api"]
 final String[] webModules = ["cas-ui", "cia-ui", "ciconnect-ui", "cid-ui", "cidapp-ui", "cir-ui", "edc-ui"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
