@@ -95,9 +95,6 @@ public class ModalDialogController {
      * @return generic page object
      */
     public <T> T publish(UserCredentials currentUser, Class<T> klass) {
-//        List<Item> itemResponseWrapper = new CidAppTestUtil().getCssComponent(componentName, scenarioName, "COST_COMPLETE", currentUser);
-//        String scenarioId = itemResponseWrapper.get(0).getScenarioIdentity();
-//        String componentId = itemResponseWrapper.get(0).getComponentIdentity();
         pageUtils.waitForElementAndClick(publishButton);
         new CidAppTestUtil().getPublishedScenarioRepresentation("COST_COMPLETE", "PUBLISH", true, currentUser);
         return PageFactory.initElements(driver, klass);
