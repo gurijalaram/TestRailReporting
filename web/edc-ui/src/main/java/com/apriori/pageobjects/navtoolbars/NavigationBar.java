@@ -37,4 +37,14 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(helpDropdown);
     }
+
+    /**
+     * Selects the help dropdown and go to Help
+     *
+     * @retun new page object
+     */
+    public HelpPage clickHelpDropdown() {
+        pageUtils.waitForElementAndClick(helpDropdown);
+        return new HelpPage(driver);
+    }
 }
