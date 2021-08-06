@@ -21,17 +21,16 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserCredentials;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class CidAppTestUtil {
-    private static final Logger logger = LoggerFactory.getLogger(CidAppTestUtil.class);
 
     private String token = null;
 
@@ -176,7 +175,7 @@ public class CidAppTestUtil {
                 axesEntries = axesEntriesResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size();
                 TimeUnit.MILLISECONDS.sleep(POLLING_INTERVAL);
             } catch (InterruptedException | NullPointerException e) {
-                logger.error(e.getMessage());
+                log.error(e.getMessage());
             }
         } while ((axesEntries == 0) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
@@ -206,7 +205,7 @@ public class CidAppTestUtil {
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
         do {
@@ -215,7 +214,7 @@ public class CidAppTestUtil {
             try {
                 TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
-                logger.error(e.getMessage());
+                log.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
         } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
@@ -223,53 +222,59 @@ public class CidAppTestUtil {
         return scenarioRepresentation;
     }
 
-
     /**
      * Get scenario representation of a published part
      *
      * @param terminalScenarioState - the terminal state
      * @param lastAction            - the last action
      * @param published             - scenario published
-     * @param componentIdentity     - the component id
-     * @param scenarioIdentity      - the scenario id
+     * @param componentId           - the component id
+     * @param scenarioId            - the scenario id
      * @param userCredentials       - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(String terminalScenarioState, String lastAction, boolean published, String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(String terminalScenarioState, String lastAction, boolean published, String componentId, String scenarioId, UserCredentials userCredentials) {
+        final int SOCKET_TIMEOUT = 120000;
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity)
-                .token(getToken(userCredentials));
+                .inlineVariables(componentId, scenarioId)
+                .token(getToken(userCredentials))
+                .socketTimeout(SOCKET_TIMEOUT);
 
-        long START_TIME = System.currentTimeMillis() / 1000;
-        final long POLLING_INTERVAL = 5L;
-        final long MAX_WAIT_TIME = 180L;
-        String scenarioState;
-        String lastActionState;
-        boolean publishedState;
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation;
+        final int POLL_TIME = 2;
+        final int WAIT_TIME = 120;
+        final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
-            TimeUnit.SECONDS.sleep(2);
+            do {
+                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+
+                Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, scenarioRepresentation.getStatusCode()),
+                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
+                final ScenarioResponse scenarioResponse = scenarioRepresentation.getResponseEntity();
+
+                if (scenarioResponse.getScenarioState().equals("PROCESSING_FAILED")) {
+                    throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentId, scenarioId));
+                }
+                if (scenarioResponse.getScenarioState().equals(terminalScenarioState) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
+                    Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
+                    return scenarioRepresentation;
+                }
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
         } catch (InterruptedException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        do {
-            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
-            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
-            lastActionState = scenarioRepresentation.getResponseEntity().getLastAction();
-            publishedState = scenarioRepresentation.getResponseEntity().getPublished();
-            try {
-                TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage());
-                Thread.currentThread().interrupt();
-            }
-        } while (!scenarioState.equals(terminalScenarioState) && !lastActionState.equals(lastAction) && !publishedState == published && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
-
-        return scenarioRepresentation;
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
+                componentId, scenarioId, WAIT_TIME)
+        );
     }
 
     /**
