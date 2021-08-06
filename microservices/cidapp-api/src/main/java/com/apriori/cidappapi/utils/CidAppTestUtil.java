@@ -191,7 +191,7 @@ public class CidAppTestUtil {
      * @param scenarioIdentity  - the scenario identity
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
