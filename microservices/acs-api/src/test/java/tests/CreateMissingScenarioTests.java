@@ -12,6 +12,7 @@ import com.apriori.acs.utils.Constants;
 
 import com.apriori.utils.TestRail;
 
+import com.apriori.utils.properties.PropertiesContext;
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class CreateMissingScenarioTests {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        Constants.getDefaultUrl();
+        PropertiesContext.getStr("${env}.base_url");
     }
 
     @Test

@@ -6,11 +6,11 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.entity.response.upload.FileUploadOutputs;
-import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.json.utils.JsonManager;
 
+import com.apriori.utils.properties.PropertiesContext;
 import io.qameta.allure.Description;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
@@ -28,7 +28,7 @@ public class CidWorkorderAPITests extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        Constants.getDefaultUrl();
+        PropertiesContext.getStr("${env}.cid.api_url");
         JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile("property-store.json").getPath(), PropertyStore.class);
     }

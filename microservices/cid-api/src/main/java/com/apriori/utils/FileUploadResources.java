@@ -50,6 +50,7 @@ import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 
+import com.apriori.utils.properties.PropertiesContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -81,7 +82,7 @@ public class FileUploadResources {
     private final String applicationJson = "application/json";
     private final String textPlain = "text/plain";
     Map<String, String> headers = new HashMap<>();
-    private String baseUrl = System.getProperty("baseUrl");
+    private String baseUrl = PropertiesContext.getStr("${env}.cid.api_url");
     private String sessionUrl = "apriori/cost/session/";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();

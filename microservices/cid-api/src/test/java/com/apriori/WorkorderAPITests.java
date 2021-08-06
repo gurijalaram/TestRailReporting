@@ -19,7 +19,6 @@ import com.apriori.entity.response.upload.GenerateAssemblyImagesOutputs;
 import com.apriori.entity.response.upload.GeneratePartImagesOutputs;
 import com.apriori.entity.response.upload.LoadCadMetadataOutputs;
 import com.apriori.entity.response.upload.ScenarioIterationKey;
-import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;
@@ -28,12 +27,13 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import com.apriori.utils.json.utils.JsonManager;
 
+import com.apriori.utils.properties.PropertiesContext;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.CidAPITest;
+import testsuites.categories.CidAPITest;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ public class WorkorderAPITests {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        Constants.getDefaultUrl();
+        PropertiesContext.getStr("${env}.cid.api_url");
     }
 
     @Test

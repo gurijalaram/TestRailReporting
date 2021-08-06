@@ -16,6 +16,8 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 
+import com.apriori.utils.properties.PropertiesContext;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +40,7 @@ public class AcsResources {
     private final String applicationJson = "application/json";
     private final String textPlain = "text/plain";
     Map<String, String> headers = new HashMap<>();
-    private String baseUrl = System.getProperty("baseUrl");
+    private String baseUrl = PropertiesContext.getStr("${env}.base_url");
     private String sessionUrl = "apriori/cost/session/";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();

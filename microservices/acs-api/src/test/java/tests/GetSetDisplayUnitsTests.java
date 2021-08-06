@@ -2,6 +2,7 @@ package tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -14,6 +15,7 @@ import com.apriori.acs.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 
+import com.apriori.utils.properties.PropertiesContext;
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,7 +26,7 @@ public class GetSetDisplayUnitsTests {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        Constants.getDefaultUrl();
+        PropertiesContext.getStr("${env}.base_url");
     }
 
     @Test
@@ -37,15 +39,15 @@ public class GetSetDisplayUnitsTests {
 
         assertThat(getDisplayUnitsResponse, is(notNullValue()));
 
-        assertThat(getDisplayUnitsResponse.getCurrencyCode(), is(equalTo(CurrencyEnum.USD.getCurrency())));
+        assertThat(getDisplayUnitsResponse.getCurrencyCode(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(getDisplayUnitsResponse.getCurrencyLabel(), is(equalTo(
                 "abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")));
-        assertThat(getDisplayUnitsResponse.getCurrencyExchangeRate(), is(equalTo(1.0)));
+        assertThat(getDisplayUnitsResponse.getCurrencyExchangeRate(), is(not(equalTo(1.0))));
 
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getType(), is(equalTo("simple")));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName(), is(equalTo("CUSTOM")));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric(), is(equalTo("true")));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength(), is(equalTo("mm")));
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric(), is(equalTo("false")));
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength(), is(equalTo("in")));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass(), is(equalTo("kg")));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getTime(), is(equalTo("s")));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getDecimalPlaces(), is(equalTo(2)));
