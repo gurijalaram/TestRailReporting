@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.cidappapi.utils.CidAppTestUtil;
-import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
 
@@ -100,7 +99,7 @@ public class ModalDialogController {
 //        String scenarioId = itemResponseWrapper.get(0).getScenarioIdentity();
 //        String componentId = itemResponseWrapper.get(0).getComponentIdentity();
         pageUtils.waitForElementAndClick(publishButton);
-        new CidAppTestUtil().getPublishedScenarioRepresentation("COST_COMPLETE", "PUBLISH", true, ExploreToolbar.componentId, ExploreToolbar.scenarioId, currentUser);
+        new CidAppTestUtil().getPublishedScenarioRepresentation("COST_COMPLETE", "PUBLISH", true, currentUser);
         return PageFactory.initElements(driver, klass);
     }
 

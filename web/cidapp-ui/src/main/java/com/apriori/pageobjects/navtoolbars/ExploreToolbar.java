@@ -67,8 +67,6 @@ public class ExploreToolbar extends MainNavBar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
-    public static String componentId;
-    public static String scenarioId;
 
     public ExploreToolbar(WebDriver driver) {
         super(driver);
@@ -111,8 +109,6 @@ public class ExploreToolbar extends MainNavBar {
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         Item component = new CidAppTestUtil().postCssComponents(componentName, scenarioName, resourceFile, userCredentials);
-        this.componentId = component.getComponentIdentity();
-        this.scenarioId = component.getScenarioIdentity();
         return navigateToScenario(component.getComponentIdentity(), component.getScenarioIdentity());
     }
 

@@ -33,6 +33,8 @@ import java.util.concurrent.TimeUnit;
 public class CidAppTestUtil {
 
     private String token = null;
+    private String componentId;
+    private String scenarioId;
 
     /**
      * Adds a new component
@@ -99,6 +101,9 @@ public class CidAppTestUtil {
 
         List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
 
+        componentId = itemResponse.get(0).getComponentIdentity();
+        scenarioId = itemResponse.get(0).getScenarioIdentity();
+
         return itemResponse.get(0);
     }
 
@@ -109,7 +114,7 @@ public class CidAppTestUtil {
      * @param scenarioName    - the scenario name
      * @param scenarioState   - the scenario state
      * @param userCredentials - user credentials
-     * @return
+     * @return response object
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, String scenarioState, UserCredentials userCredentials) {
         return new UncostedComponents().getCssComponent(componentName, scenarioName, getToken(userCredentials), scenarioState);
@@ -228,8 +233,6 @@ public class CidAppTestUtil {
      * @param terminalScenarioState - the terminal state
      * @param lastAction            - the last action
      * @param published             - scenario published
-     * @param componentId           - the component id
-     * @param scenarioId            - the scenario id
      * @param userCredentials       - the user credentials
      * @return response object
      */
