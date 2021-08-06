@@ -236,7 +236,7 @@ public class CidAppTestUtil {
      * @param userCredentials       - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(String terminalScenarioState, String lastAction, boolean published, String componentId, String scenarioId, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(String terminalScenarioState, String lastAction, boolean published, UserCredentials userCredentials) {
         final int SOCKET_TIMEOUT = 120000;
 
         RequestEntity requestEntity =
