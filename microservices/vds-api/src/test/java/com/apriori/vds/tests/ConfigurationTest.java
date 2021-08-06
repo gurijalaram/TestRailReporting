@@ -4,10 +4,10 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.configuration.Configuration;
 import com.apriori.vds.entity.response.configuration.ConfigurationsItems;
-import com.apriori.vds.tests.util.VDSRequestEntityUtil;
 import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
@@ -35,7 +35,7 @@ public class ConfigurationTest extends VDSTestUtil {
 
         Assert.assertNotEquals("To get Configuration, response should contain it.", 0, configurationsItems.getItems().size());
 
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_CONFIGURATIONS_BY_IDENTITY, Configuration.class)
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_CONFIGURATIONS_BY_IDENTITY, Configuration.class)
             .inlineVariables(configurationsItems.getItems().get(0).getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -48,13 +48,13 @@ public class ConfigurationTest extends VDSTestUtil {
     @Description("Replaces a CustomerConfiguration for a customer. Creates it if it is missing.")
     @Ignore
     public void putConfiguration() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.PUT_CONFIGURATION, null)
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PUT_CONFIGURATION, null)
             .headers(new HashMap<String, String>() {{
                     put("Content-Type", "application/json");
                 }
             })
             .customBody(
-                "{ 'customerConfiguration': { 'configurationType': 'ACCESS_CONTROL', 'serializationType': 'COMPRESSED_BINARY', 'customerIdentity' : '8GFDIG229629' }}"
+                "{ \"customerConfiguration\": { \"configurationType\": \"ACCESS_CONTROL\", \"serializationType\": \"COMPRESSED_BINARY\", \"customerIdentity\" : \"8GFDIG229629\" }}"
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED,
@@ -63,7 +63,7 @@ public class ConfigurationTest extends VDSTestUtil {
     }
 
     private ConfigurationsItems getConfigurationsItems() {
-        RequestEntity requestEntity = VDSRequestEntityUtil.initWithSharedSecret(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class);
 
         ResponseWrapper<ConfigurationsItems> configurationsItemsResponse = HTTP2Request.build(requestEntity).get();
 
