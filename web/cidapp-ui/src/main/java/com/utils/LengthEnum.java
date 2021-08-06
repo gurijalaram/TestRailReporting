@@ -6,7 +6,7 @@ public enum LengthEnum {
     CENTIMETER("Centimeter"),
     METER("Meter"),
     INCHES("Inch"),
-    FEET("Foot");
+    FOOT("Foot");
 
     private final String length;
 

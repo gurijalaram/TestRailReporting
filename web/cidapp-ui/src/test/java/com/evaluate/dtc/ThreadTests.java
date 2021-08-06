@@ -3,6 +3,7 @@ package com.evaluate.dtc;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
@@ -19,9 +20,10 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.LengthEnum;
 import io.qameta.allure.Description;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CustomerSmokeTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -40,12 +42,12 @@ public class ThreadTests extends TestBase {
         super();
     }
 
-    /*@After
+    @After
     public void resetPreferences() {
         if (currentUser != null) {
             new ResetSettingsUtil().resetSettings(currentUser);
         }
-    }*/
+    }
 
     /*@Test
     @Description("Test to check edit thread button is disabled")
@@ -487,7 +489,6 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getLength("SimpleHole:1"), is("20.00mm"));
     }
 
-    @Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"8268"})
     @Description("Testing compatible thread length for DTC files")
@@ -510,7 +511,6 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getLength("SimpleHole:1"), is("10.00mm"));
     }
 
-    @Category({CustomerSmokeTests.class})
     @Test
     @TestRail(testCaseId = {"8268"})
     @Description("Testing compatible thread length for NX files")
@@ -533,8 +533,8 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getLength("SimpleHole:1"), is("15.00mm"));
     }
 
-    @Category({CustomerSmokeTests.class})
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"8268"})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
