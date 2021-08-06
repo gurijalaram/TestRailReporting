@@ -36,15 +36,14 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class ActionsTests extends TestBase {
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private InfoPage infoPage;
     private PreviewPage previewPage;
     private AssignPage assignPage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public ActionsTests() {
@@ -72,7 +71,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .highlightScenario("M3CapScrew", scenarioName)
             .info()
@@ -110,7 +109,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -159,7 +158,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -270,7 +269,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -305,7 +304,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -343,7 +342,7 @@ public class ActionsTests extends TestBase {
             .selectStatus("New")
             .selectCostMaturity("Low")
             .selectAssignee("Ciene Frith")
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -376,7 +375,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .highlightScenario("BasicScenario_Forging", scenarioName)
             .info()
@@ -416,7 +415,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
@@ -459,7 +458,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -504,7 +503,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -554,7 +553,7 @@ public class ActionsTests extends TestBase {
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
             .selectAssignee("Moya Parker")
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -594,7 +593,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
@@ -639,7 +638,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())

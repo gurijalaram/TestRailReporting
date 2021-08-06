@@ -149,7 +149,7 @@ public class LoginTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .logout()
             .login(UserUtil.getUser())
             .selectFilter("Recent")

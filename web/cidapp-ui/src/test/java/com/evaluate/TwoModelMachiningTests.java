@@ -225,7 +225,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
         assertThat(evaluatePage.getCurrentScenarioName(), is(sourceScenarioName));

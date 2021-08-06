@@ -88,7 +88,7 @@ public class DeleteTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser,EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

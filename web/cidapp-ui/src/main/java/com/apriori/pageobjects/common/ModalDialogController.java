@@ -1,6 +1,9 @@
 package com.apriori.pageobjects.common;
 
+import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -92,8 +95,12 @@ public class ModalDialogController {
      *
      * @return generic page object
      */
-    public <T> T publish(Class<T> klass) {
+    public <T> T publish(UserCredentials currentUser, Class<T> klass) {
+//        List<Item> itemResponseWrapper = new CidAppTestUtil().getCssComponent(componentName, scenarioName, "COST_COMPLETE", currentUser);
+//        String scenarioId = itemResponseWrapper.get(0).getScenarioIdentity();
+//        String componentId = itemResponseWrapper.get(0).getComponentIdentity();
         pageUtils.waitForElementAndClick(publishButton);
+        new CidAppTestUtil().getPublishedScenarioRepresentation("COST_COMPLETE", "PUBLISH", true, ExploreToolbar.componentId, ExploreToolbar.scenarioId, currentUser);
         return PageFactory.initElements(driver, klass);
     }
 

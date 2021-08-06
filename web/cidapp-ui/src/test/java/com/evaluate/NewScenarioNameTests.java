@@ -29,12 +29,11 @@ import java.io.File;
 
 public class NewScenarioNameTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public NewScenarioNameTests() {
@@ -90,7 +89,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -127,7 +126,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .uploadComponentAndOpen(componentName, scenarioB, resourceFile, currentUser)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
@@ -136,7 +135,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .uploadComponentAndOpen(componentName, scenarioC, resourceFile, currentUser)
             .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
@@ -144,7 +143,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

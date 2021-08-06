@@ -33,12 +33,11 @@ import java.io.File;
 
 public class PublishExistingCostedTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public PublishExistingCostedTests() {
@@ -71,7 +70,7 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -82,7 +81,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -116,17 +115,17 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .editScenario()
             .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .lock(EvaluatePage.class)
             .publishScenario()
-            .publish(ExplorePage.class);
+            .publish(currentUser, ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB), is(greaterThan(0)));
     }
@@ -153,14 +152,14 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(EvaluatePage.class);
+            .publish(currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Compaction Pressing / Furnace Sintering"));
     }
@@ -189,14 +188,14 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(currentUser, ExplorePage.class)
             .lock(ExplorePage.class)
             .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
             .changeName(scenarioName2)
-            .publish(EvaluatePage.class);
+            .publish(currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName2)));
     }

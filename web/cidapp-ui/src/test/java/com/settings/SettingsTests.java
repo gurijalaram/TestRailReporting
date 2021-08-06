@@ -13,7 +13,6 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
@@ -21,7 +20,6 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.sun.xml.bind.v2.TODO;
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -104,7 +102,7 @@ public class SettingsTests extends TestBase {
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class);
+            .publish(currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }
@@ -219,7 +217,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        selectionPage = loginPage.login(currentUser)
             .openSettings()
             .goToSelectionTab()
             .selectColour(ColourEnum.PEAR)

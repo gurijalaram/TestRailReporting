@@ -27,11 +27,10 @@ import java.io.File;
 
 public class PublishTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-
     private File resourceFile;
-    UserCredentials currentUser;
 
     public PublishTests() {
         super();
@@ -59,7 +58,7 @@ public class PublishTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
@@ -93,7 +92,7 @@ public class PublishTests extends TestBase {
             .selectStatus("Analysis")
             .selectCostMaturity("Low")
             .selectAssignee("Abe Chaves")
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

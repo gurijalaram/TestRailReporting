@@ -3,15 +3,10 @@ package com.evaluate.dtc;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.utils.APIValue;
-import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
-import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
-import com.apriori.pageobjects.pages.settings.SelectionPage;
 import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -26,7 +21,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.OverridesEnum;
 import io.qameta.allure.Description;
-import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -666,7 +660,7 @@ public class ToleranceTests extends TestBase {
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
         evaluatePage = evaluatePage.publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(currentUser, EvaluatePage.class)
             .logout()
             .login(testUser2)
             .selectFilter("Recent")

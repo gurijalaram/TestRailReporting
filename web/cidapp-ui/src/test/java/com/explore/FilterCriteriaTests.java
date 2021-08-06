@@ -26,11 +26,10 @@ import java.io.File;
 
 public class FilterCriteriaTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public FilterCriteriaTests() {
@@ -166,7 +165,7 @@ public class FilterCriteriaTests extends TestBase {
             .inputNotes("Test Notes")
             .submit(EvaluatePage.class)
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(currentUser, ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -192,7 +191,7 @@ public class FilterCriteriaTests extends TestBase {
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(currentUser,ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -254,7 +253,7 @@ public class FilterCriteriaTests extends TestBase {
             .publishScenario()
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
-            .publish(ExplorePage.class)
+            .publish(currentUser,ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -262,7 +261,7 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class)
             .lock(ExplorePage.class)
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(currentUser,ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName2)
