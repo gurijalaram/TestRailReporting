@@ -150,6 +150,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
     private WebElement customAttributesTab;
 
+    @FindBy(css = (".modal-title"))
+    private WebElement sourceModel;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -658,5 +661,9 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public <T> T backFromError(Class<T> className) {
         return modalDialogController.backFromError(className);
+    }
+
+    public String getSourceModelInvalid() {
+         return pageUtils.waitForElementToAppear(sourceModel).getAttribute("textContent");
     }
 }
