@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.pageobjects.pages.login.ElectronicsDataCollectionPage;
 import com.apriori.utils.PageUtils;
 
@@ -17,6 +18,16 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
 
     @FindBy(css = ".help-dropdown")
     private WebElement helpDropdown;
+
+    @FindBy(css = "[data-icon='info-circle']")
+    private WebElement aboutButton;
+
+    @FindBy(css = ".user-dropdown.dropdown")
+    private WebElement userDropdown;
+    @FindBy(css = "[data-icon='sign-out-alt']")
+    private WebElement logoutButton;
+    @FindBy(css = "[data-icon='user")
+    private WebElement myProfile;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -43,8 +54,27 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
      *
      * @retun new page object
      */
-    public HelpPage clickHelpDropdown() {
-        pageUtils.waitForElementAndClick(helpDropdown);
-        return new HelpPage(driver);
-    }
+        public NavigationBar clickHelpDropdown() {
+                pageUtils.waitForElementAndClick(helpDropdown);
+               return new NavigationBar(driver);
+           }
+
+       public AboutUsPage clickAbout() {
+            pageUtils.waitForElementAndClick(helpDropdown);
+            pageUtils.waitForElementAndClick(aboutButton);
+            return new AboutUsPage(driver);
+       }
+
+        public EdcAppLoginPage logout() {
+            pageUtils.waitForElementAndClick(userDropdown);
+            pageUtils.waitForElementAndClick(logoutButton);
+            return new EdcAppLoginPage(driver);
+        }
+
+        public MyProfilePage clickUserDropdown() {
+            pageUtils.waitForElementAndClick(userDropdown);
+            pageUtils.waitForElementAndClick(myProfile);
+            return new MyProfilePage(driver);
+        }
 }
+

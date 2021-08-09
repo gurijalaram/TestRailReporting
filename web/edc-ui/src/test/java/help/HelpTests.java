@@ -16,7 +16,9 @@ public class HelpTests extends TestBase {
 
         loginPage = new EdcAppLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .clickHelpDropdown().selectHelp();
+//                    .clickHelpDropdown().selectHelp();
+            .clickHelpDropdown()
+           .clickAbout();
     }
 
 
