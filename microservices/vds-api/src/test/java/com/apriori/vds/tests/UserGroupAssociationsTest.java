@@ -100,27 +100,36 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
 
     private UserGroupAssociation postUserGroupAssociation() {
 
-        Optional<UserGroupAssociation> associationToDelete = this.getUserGroupAssociationsResponse()
-            .stream()
-            .filter(association ->
-                association.getUserIdentity().equals(
-                    userId)
-            ).findFirst();
+        UserGroupAssociationRequest requestBody;
 
-        if (associationToDelete.isPresent()) {
-            deleteUserGroupAssociationById(associationToDelete.get().getIdentity());
-            userGroupAssociationsToDelete.remove(associationToDelete.get().getIdentity());
+        List<UserGroupAssociation> userGroupAssociations = this.getUserGroupAssociationsResponse();
+
+
+        if (!userGroupAssociations.isEmpty()) {
+            UserGroupAssociation userGroupAssociation = userGroupAssociations.get(0);
+
+            deleteUserGroupAssociationById(userGroupAssociation.getIdentity());
+            userGroupAssociationsToDelete.remove(userGroupAssociation.getIdentity());
+
+            requestBody = UserGroupAssociationRequest.builder()
+                .customerIdentity(userGroupAssociation.getCustomerIdentity())
+                .userIdentity(userGroupAssociation.getUserIdentity())
+                .createdBy(userGroupAssociation.getUserIdentity())
+                .build();
+
+        } else {
+            requestBody = UserGroupAssociationRequest.builder()
+                .customerIdentity(customerId)
+                .userIdentity(userId)
+                .createdBy(userId)
+                .build();
         }
+
 
         RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity())
-                .body(UserGroupAssociationRequest.builder()
-                    .customerIdentity(customerId)
-                    .userIdentity(userId)
-                    .createdBy(userId)
-                    .build()
-                );
+                .body(requestBody);
 
         ResponseWrapper<UserGroupAssociation> userGroupAssociationResponse = HTTP2Request.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, userGroupAssociationResponse.getStatusCode());
