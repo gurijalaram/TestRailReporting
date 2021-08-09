@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -34,6 +35,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     private EvaluatePage evaluatePage;
     private File resourceFile;
     private MaterialUtilizationPage materialUtilizationPage;
+    private Item cssItem;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -182,8 +184,10 @@ public class ChangeMaterialSelectionTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(STOCK_MACHINING)
             .selectDigitalFactory(APRIORI_USA)
             .costScenario();
@@ -195,7 +199,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)

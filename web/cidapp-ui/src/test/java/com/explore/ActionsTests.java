@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -45,6 +46,7 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private Item cssItem;
 
     public ActionsTests() {
         super();
@@ -63,15 +65,17 @@ public class ActionsTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .highlightScenario("M3CapScrew", scenarioName)
             .info()
@@ -87,7 +91,7 @@ public class ActionsTests extends TestBase {
         assertThat(infoPage.getCostMaturity(), is(equalTo("Low")));
     }
 
-    @Test
+    //@Test
     @Issue("BA-1920")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7197", "7198"})
@@ -101,15 +105,17 @@ public class ActionsTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -149,8 +155,10 @@ public class ActionsTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        previewPage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -158,7 +166,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -261,15 +269,16 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -296,15 +305,17 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        assignPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        assignPage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -331,9 +342,10 @@ public class ActionsTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
@@ -342,7 +354,7 @@ public class ActionsTests extends TestBase {
             .selectStatus("New")
             .selectCostMaturity("Low")
             .selectAssignee("Ciene Frith")
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -366,8 +378,10 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -375,7 +389,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .highlightScenario("BasicScenario_Forging", scenarioName)
             .info()
@@ -406,8 +420,10 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -415,7 +431,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
@@ -450,15 +466,17 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -495,15 +513,17 @@ public class ActionsTests extends TestBase {
         UserCredentials testUser2 = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(testUser1)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, testUser1)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -542,8 +562,10 @@ public class ActionsTests extends TestBase {
 
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("Default")
@@ -553,7 +575,7 @@ public class ActionsTests extends TestBase {
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
             .selectAssignee("Moya Parker")
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -585,15 +607,17 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
@@ -630,15 +654,17 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())

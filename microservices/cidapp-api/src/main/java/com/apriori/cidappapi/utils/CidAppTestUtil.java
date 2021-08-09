@@ -13,6 +13,7 @@ import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -236,12 +237,14 @@ public class CidAppTestUtil {
      * @param userCredentials       - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(String terminalScenarioState, String lastAction, boolean published, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(Item cssItem, ScenarioStateEnum terminalScenarioState, String lastAction, boolean published, UserCredentials userCredentials) {
         final int SOCKET_TIMEOUT = 120000;
+        String componentName = cssItem.getComponentIdentity();
+        String scenarioName = cssItem.getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentId, scenarioId)
+                .inlineVariables(componentName, scenarioName)
                 .token(getToken(userCredentials))
                 .socketTimeout(SOCKET_TIMEOUT);
 
@@ -255,15 +258,15 @@ public class CidAppTestUtil {
 
                 ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
 
-                Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, scenarioRepresentation.getStatusCode()),
+                Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                 final ScenarioResponse scenarioResponse = scenarioRepresentation.getResponseEntity();
 
-                if (scenarioResponse.getScenarioState().equals("PROCESSING_FAILED")) {
-                    throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentId, scenarioId));
+                if (scenarioResponse.getScenarioState().contains("FAILED")) {
+                    throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                 }
-                if (scenarioResponse.getScenarioState().equals(terminalScenarioState) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
+                if (scenarioResponse.getScenarioState().equals(terminalScenarioState.getState()) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
                     Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                     return scenarioRepresentation;

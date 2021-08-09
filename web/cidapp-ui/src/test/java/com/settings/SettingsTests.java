@@ -3,6 +3,7 @@ package com.settings;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -39,6 +40,7 @@ public class SettingsTests extends TestBase {
     private ProductionDefaultsPage productionDefaultPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
+    private Item cssItem;
 
     /*@After
     public void resetAllSettings() {
@@ -94,15 +96,17 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        cssItem = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
+
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class);
+            .publish(cssItem, currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }

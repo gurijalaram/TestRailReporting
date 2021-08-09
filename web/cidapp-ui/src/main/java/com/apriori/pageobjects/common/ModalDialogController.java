@@ -1,8 +1,6 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -94,9 +92,8 @@ public class ModalDialogController {
      *
      * @return generic page object
      */
-    public <T> T publish(UserCredentials currentUser, Class<T> klass) {
+    public <T> T publish(Class<T> klass) {
         pageUtils.waitForElementAndClick(publishButton);
-        new CidAppTestUtil().getPublishedScenarioRepresentation("COST_COMPLETE", "PUBLISH", true, currentUser);
         return PageFactory.initElements(driver, klass);
     }
 

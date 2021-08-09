@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -35,6 +36,10 @@ public class NewScenarioNameTests extends TestBase {
     private EvaluatePage evaluatePage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private Item cssItem;
+    private Item cssItemA;
+    private Item cssItemB;
+    private Item cssItemC;
 
     public NewScenarioNameTests() {
         super();
@@ -78,8 +83,10 @@ public class NewScenarioNameTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser);
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
+
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItem);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
@@ -89,7 +96,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -115,10 +122,11 @@ public class NewScenarioNameTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
 
-
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioA, resourceFile, currentUser)
+        cssItemA = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioA, resourceFile, currentUser);
+
+        cssItemB = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
@@ -126,8 +134,10 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
-            .uploadComponentAndOpen(componentName, scenarioB, resourceFile, currentUser)
+            .publish(cssItemA, currentUser, EvaluatePage.class)
+            .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
+
+        cssItemC = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -135,15 +145,17 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
-            .uploadComponentAndOpen(componentName, scenarioC, resourceFile, currentUser)
+            .publish(cssItemB, currentUser, EvaluatePage.class)
+            .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
+
+        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(currentUser, EvaluatePage.class)
+            .publish(cssItemC, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
