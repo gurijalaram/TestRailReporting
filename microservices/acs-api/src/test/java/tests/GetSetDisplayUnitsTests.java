@@ -11,11 +11,11 @@ import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.utils.AcsResources;
-import com.apriori.acs.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 
 import com.apriori.utils.properties.PropertiesContext;
+
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
