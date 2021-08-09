@@ -1,5 +1,6 @@
 package com.apriori.acs.utils;
 
+import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
 import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
@@ -12,10 +13,9 @@ import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSett
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
-
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,26 +51,20 @@ public class AcsResources {
      * @return CreateMissingScenarioResponse response instance
      */
     public CreateMissingScenarioResponse createMissingScenario() {
-        String createMissingScenarioUrl = baseUrl.concat("ws/workspace/0/scenarios");
+        token.put(contentType, applicationJson);
 
-        headers.put(contentType, applicationJson);
-
-        RequestEntity createMissingScenarioRequestEntity =
-                RequestEntity.init(createMissingScenarioUrl, CreateMissingScenarioResponse.class)
-                .setHeaders(headers)
-                .setHeaders(token)
-                .setBody(CreateMissingScenarioInputs.builder()
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.CREATE_MISSING_SCENARIO, CreateMissingScenarioResponse.class)
+                .headers(token)
+                .body(CreateMissingScenarioInputs.builder()
                         .baseName(Constants.PART_FILE_NAME)
                         .configurationName(Constants.PART_CONFIG_NAME)
                         .modelName(Constants.PART_MODEL_NAME)
                         .scenarioName(new GenerateStringUtil().generateScenarioName())
                         .scenarioType(Constants.PART_COMPONENT_TYPE)
                         .missing(true)
-                        .createdBy(Constants.USERNAME).build()
-                );
+                        .createdBy(Constants.USERNAME).build());
 
-        return (CreateMissingScenarioResponse) GenericRequestUtil.post(createMissingScenarioRequestEntity,
-                new RequestAreaApi()).getResponseEntity();
+        return (CreateMissingScenarioResponse) HTTP2Request.build(requestEntity).post().getResponseEntity();
     }
 
 
@@ -90,13 +84,14 @@ public class AcsResources {
 
         headers.put(contentType, applicationJson);
 
-        RequestEntity getScenarioInfoByScenarioIterationKeyRequestEntity =
+        /*RequestEntity getScenarioInfoByScenarioIterationKeyRequestEntity =
                 RequestEntity.init(createMissingScenarioUrl, GetScenarioInfoByScenarioIterationKeyResponse.class)
                         .setHeaders(headers)
                         .setHeaders(token);
 
         return (GetScenarioInfoByScenarioIterationKeyResponse) GenericRequestUtil
-                .get(getScenarioInfoByScenarioIterationKeyRequestEntity, new RequestAreaApi()).getResponseEntity();
+                .get(getScenarioInfoByScenarioIterationKeyRequestEntity, new RequestAreaApi()).getResponseEntity();*/
+        return new GetScenarioInfoByScenarioIterationKeyResponse();
     }
 
     /**
@@ -105,18 +100,12 @@ public class AcsResources {
      * @return GetDisplayUnitsResponse
      */
     public GetDisplayUnitsResponse getDisplayUnits() {
-        String getDisplayUnitsUrl = baseUrl.concat(
-                String.format("ws/workspace/users/%s/display-units", Constants.USERNAME));
+        token.put(contentType, applicationJson);
 
-        headers.put(contentType, applicationJson);
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_DISPLAY_UNITS, GetDisplayUnitsResponse.class)
+                .headers(token);
 
-        RequestEntity getDisplayUnitsRequestEntity = RequestEntity.init(
-                getDisplayUnitsUrl, GetDisplayUnitsResponse.class)
-                .setHeaders(headers)
-                .setHeaders(token);
-
-        return (GetDisplayUnitsResponse) GenericRequestUtil.get(getDisplayUnitsRequestEntity, new RequestAreaApi())
-                .getResponseEntity();
+        return (GetDisplayUnitsResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -125,19 +114,13 @@ public class AcsResources {
      * @return Set Display Units response instance
      */
     public SetDisplayUnitsResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
-        String setDisplayUnitsUrl = baseUrl.concat(
-                String.format("ws/workspace/users/%s/display-units", Constants.USERNAME));
+        token.put(contentType, applicationJson);
 
-        headers.put(contentType, applicationJson);
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.SET_DISPLAY_UNITS, SetDisplayUnitsResponse.class)
+                .headers(token)
+                .body(setDisplayUnitsInputs);
 
-        RequestEntity setDisplayUnitsRequestEntity = RequestEntity.init(
-                setDisplayUnitsUrl, SetDisplayUnitsResponse.class)
-                .setHeaders(headers)
-                .setHeaders(token)
-                .setBody(setDisplayUnitsInputs);
-
-        return (SetDisplayUnitsResponse) GenericRequestUtil.post(setDisplayUnitsRequestEntity, new RequestAreaApi())
-                .getResponseEntity();
+        return (SetDisplayUnitsResponse) HTTP2Request.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -146,17 +129,13 @@ public class AcsResources {
      * @return GetUnitVariantSettingsResponse instance
      */
     public GetUnitVariantSettingsResponse getUnitVariantSettings() {
-        String getUnitVariantSettingUrl = baseUrl.concat("ws/workspace/global-info/unitVariantSettings");
+        token.put(contentType, applicationJson);
 
-        headers.put(contentType, applicationJson);
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_UNIT_VARIANT_SETTINGS, GetUnitVariantSettingsResponse.class)
+                .headers(token);
 
-        RequestEntity getUnitVariantSettingsRequestEntity = RequestEntity.init(
-                getUnitVariantSettingUrl, GetUnitVariantSettingsResponse.class)
-                .setHeaders(headers)
-                .setHeaders(token);
-
-        return (GetUnitVariantSettingsResponse) GenericRequestUtil.get(getUnitVariantSettingsRequestEntity,
-                new RequestAreaApi()).getResponseEntity();
+        return (GetUnitVariantSettingsResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -165,18 +144,13 @@ public class AcsResources {
      * @return GetUnitVariantSettingsResponse instance
      */
     public UnitVariantSetting getCustomUnitVariantSettings() {
-        String getCustomUnitVariantSettingsUrl = baseUrl.concat(
-                String.format("ws/workspace/users/%s/custom-unit-variant-settings", Constants.USERNAME));
+        token.put(contentType, applicationJson);
 
-        headers.put(contentType, applicationJson);
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_CUSTOM_UNIT_VARIANT_SETTINGS, UnitVariantSetting.class)
+                .headers(token);
 
-        RequestEntity getCustomUnitVariantSettingsRequestEntity = RequestEntity.init(
-                getCustomUnitVariantSettingsUrl, UnitVariantSetting.class)
-                .setHeaders(headers)
-                .setHeaders(token);
-
-        return (UnitVariantSetting) GenericRequestUtil.get(getCustomUnitVariantSettingsRequestEntity,
-                new RequestAreaApi()).getResponseEntity();
+        return (UnitVariantSetting) HTTP2Request.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -185,17 +159,12 @@ public class AcsResources {
      * @return GetEnabledCurrencyRateVersions instance
      */
     public CurrencyRateVersionResponse getEnabledCurrencyRateVersions() {
-        String getEnabledCurrencyRateVersionsUrl = baseUrl.concat("ws/workspace/global-info/enabledCurrency");
+        token.put(contentType, applicationJson);
 
-        headers.put(contentType, applicationJson);
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_ENABLED_CURRENCY_RATE_VERSIONS, CurrencyRateVersionResponse.class)
+                .headers(token);
 
-        RequestEntity getEnabledCurrencyRateVersionsRequestEntity = RequestEntity.init(
-                getEnabledCurrencyRateVersionsUrl, CurrencyRateVersionResponse.class)
-                .setHeaders(headers)
-                .setHeaders(token);
-
-        return (CurrencyRateVersionResponse) GenericRequestUtil
-                .get(getEnabledCurrencyRateVersionsRequestEntity,
-                new RequestAreaApi()).getResponseEntity();
+        return (CurrencyRateVersionResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
     }
 }

@@ -13,20 +13,12 @@ import com.apriori.acs.utils.AcsResources;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 
-import com.apriori.utils.properties.PropertiesContext;
-
 import io.qameta.allure.Description;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
 public class GetSetDisplayUnitsTests {
-
-    @BeforeClass
-    public static void getAuthorizationToken() {
-        PropertiesContext.getStr("${env}.base_url");
-    }
 
     @Test
     @Category(AcsTest.class)
@@ -45,9 +37,9 @@ public class GetSetDisplayUnitsTests {
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName(), is(equalTo("CUSTOM")));
 
         if (getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric().equals("false")) {
-            getDisplayUnitsAssertions(getDisplayUnitsResponse, "in", "lb", "s");
+            getDisplayUnitsAssertions(getDisplayUnitsResponse, "in", "lb");
         } else {
-            getDisplayUnitsAssertions(getDisplayUnitsResponse, "mm", "kg", "s");
+            getDisplayUnitsAssertions(getDisplayUnitsResponse, "mm", "kg");
         }
 
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getDecimalPlaces(), is(equalTo(2)));
@@ -134,10 +126,9 @@ public class GetSetDisplayUnitsTests {
                 is(equalTo(massToSet)));
     }
 
-    private void getDisplayUnitsAssertions(GetDisplayUnitsResponse getDisplayUnitsResponse, String length, String mass,
-                                           String time) {
+    private void getDisplayUnitsAssertions(GetDisplayUnitsResponse getDisplayUnitsResponse, String length, String mass) {
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength(), is(equalTo(length)));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass(), is(equalTo(mass)));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getTime(), is(equalTo(time)));
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getTime(), is(equalTo("s")));
     }
 }

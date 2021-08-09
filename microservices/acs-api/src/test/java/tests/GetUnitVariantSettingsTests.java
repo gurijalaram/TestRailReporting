@@ -22,11 +22,6 @@ import java.util.ArrayList;
 
 public class GetUnitVariantSettingsTests {
 
-    @BeforeClass
-    public static void getAuthorizationToken() {
-        PropertiesContext.getStr("${env}.base_url");
-    }
-
     @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "8772")
