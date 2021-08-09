@@ -3,6 +3,8 @@ package com.settings;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.apibase.utils.AfterTestUtil;
+import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -25,6 +27,7 @@ import com.sun.xml.bind.v2.TODO;
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -42,12 +45,12 @@ public class SettingsTests extends TestBase {
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
 
-    /*@After
+    @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+            new ResetSettingsUtil().resetSettings(currentUser);
         }
-    }*/
+    }
 
     @Category({SmokeTests.class})
     @Test
