@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.apibase.utils.AfterTestUtil;
+import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
@@ -24,6 +25,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.DecimalPlaceEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -42,10 +44,10 @@ public class DecimalPlaceTests extends TestBase {
         super();
     }
 
-    //@After
+    @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+            new ResetSettingsUtil().resetSettings(currentUser);
         }
     }
 

@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.apibase.utils.AfterTestUtil;
+import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -18,6 +19,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -39,10 +41,10 @@ public class SheetMetalDTCTests extends TestBase {
         super();
     }
 
-    //@After
-    public void resetSettings() {
+    @After
+    public void resetAllSettings() {
         if (currentUser != null) {
-            new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+            new ResetSettingsUtil().resetSettings(currentUser);
         }
     }
 

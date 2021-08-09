@@ -3,7 +3,7 @@ package com.evaluate.materialutilization;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.apibase.utils.AfterTestUtil;
+import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -40,7 +40,7 @@ public class MaterialPMITests extends TestBase {
     @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+            new ResetSettingsUtil().resetSettings(currentUser);
         }
     }
 
