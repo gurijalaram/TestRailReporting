@@ -2,7 +2,6 @@ package tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -39,17 +38,18 @@ public class GetSetDisplayUnitsTests {
 
         assertThat(getDisplayUnitsResponse, is(notNullValue()));
 
-        assertThat(getDisplayUnitsResponse.getCurrencyCode(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(getDisplayUnitsResponse.getCurrencyLabel(), is(equalTo(
                 "abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")));
-        assertThat(getDisplayUnitsResponse.getCurrencyExchangeRate(), is(not(equalTo(1.0))));
 
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getType(), is(equalTo("simple")));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName(), is(equalTo("CUSTOM")));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric(), is(equalTo("false")));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength(), is(equalTo("in")));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass(), is(equalTo("kg")));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getTime(), is(equalTo("s")));
+
+        if (getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric().equals("false")) {
+            getDisplayUnitsAssertions(getDisplayUnitsResponse, "in", "lb", "s");
+        } else {
+            getDisplayUnitsAssertions(getDisplayUnitsResponse, "mm", "kg", "s");
+        }
+
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getDecimalPlaces(), is(equalTo(2)));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isSystem(), is(equalTo(false)));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isCustom(), is(equalTo(true)));
@@ -132,5 +132,12 @@ public class GetSetDisplayUnitsTests {
                 is(equalTo(lengthToSet)));
         assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMass(),
                 is(equalTo(massToSet)));
+    }
+
+    private void getDisplayUnitsAssertions(GetDisplayUnitsResponse getDisplayUnitsResponse, String length, String mass,
+                                           String time) {
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength(), is(equalTo(length)));
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass(), is(equalTo(mass)));
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getTime(), is(equalTo(time)));
     }
 }
