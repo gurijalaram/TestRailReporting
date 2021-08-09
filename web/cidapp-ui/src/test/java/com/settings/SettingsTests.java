@@ -3,9 +3,8 @@ package com.settings;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.css.entity.response.Item;
-import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.cidappapi.utils.ResetSettingsUtil;
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
