@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -98,15 +99,17 @@ public class UserGroupAssociationsTest extends VDSTestUtil {
     }
 
     private UserGroupAssociation postUserGroupAssociation() {
-        List<UserGroupAssociation> exampleOfUserGroupAssociation = this.getUserGroupAssociationsResponse();
 
-        if (!exampleOfUserGroupAssociation.isEmpty()) {
-            exampleOfUserGroupAssociation.forEach(
-                ug -> {
-                    deleteUserGroupAssociationById(ug.getIdentity());
-                    userGroupAssociationsToDelete.remove(ug.getIdentity());
-                }
-            );
+        Optional<UserGroupAssociation> associationToDelete = this.getUserGroupAssociationsResponse()
+            .stream()
+            .filter(association ->
+                association.getUserIdentity().equals(
+                    userId)
+            ).findFirst();
+
+        if (associationToDelete.isPresent()) {
+            deleteUserGroupAssociationById(associationToDelete.get().getIdentity());
+            userGroupAssociationsToDelete.remove(associationToDelete.get().getIdentity());
         }
 
         RequestEntity requestEntity =
