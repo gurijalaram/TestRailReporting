@@ -14,6 +14,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 /**
  * @author cfrith
  */
@@ -63,6 +66,12 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     @FindBy(css = ".process-setup-option-form-group [type='number']")
     private WebElement overrideInput;
+
+    @FindBy(css = ".highcharts-xaxis-labels text")
+    private List<WebElement> xAxisLabel;
+
+    @FindBy(css = ".highcharts-series-group rect")
+    private List<WebElement> chart;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -213,7 +222,16 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
         return this;
     }
 
-
+    /**
+     * Selects the bar chart
+     * @param axisLabel - the label on the x axis
+     * @return current page object
+     */
+    public MaterialProcessPage selectBarChart(String axisLabel) {
+        int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
+        chart.forEach(x -> pageUtils.waitForElementAndClick(chart.get(position)));
+        return this;
+    }
 
     /**
      * Closes current panel
