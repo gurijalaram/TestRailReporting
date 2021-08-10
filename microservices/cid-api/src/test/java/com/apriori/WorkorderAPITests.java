@@ -27,11 +27,8 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import com.apriori.utils.json.utils.JsonManager;
 
-import com.apriori.utils.properties.PropertiesContext;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.CidAPITest;
@@ -39,11 +36,6 @@ import testsuites.categories.CidAPITest;
 import java.util.ArrayList;
 
 public class WorkorderAPITests {
-
-    @BeforeClass
-    public static void getAuthorizationToken() {
-        PropertiesContext.getStr("${env}.cid.api_url");
-    }
 
     @Test
     @Issue("AP-69600")

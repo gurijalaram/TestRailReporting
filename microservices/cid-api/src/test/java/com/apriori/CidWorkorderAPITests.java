@@ -10,8 +10,6 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.json.utils.JsonManager;
 
-import com.apriori.utils.properties.PropertiesContext;
-
 import io.qameta.allure.Description;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
@@ -29,7 +27,6 @@ public class CidWorkorderAPITests extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        PropertiesContext.getStr("${env}.cid.api_url");
         JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile("property-store.json").getPath(), PropertyStore.class);
     }

@@ -1,5 +1,5 @@
 # Define the environment
-env: int-core
+env: qa-cid-perf
 
 # Define the global properties not related to environment
 global:
@@ -42,6 +42,7 @@ int-core:
 qa-21-1:
   secret_key: LZJM8S47H5S8
   ap_user_context: eyJpZGVudGl0eSI6Ijk2NzJCN0hFTDc4TCIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDItMDJUMTM6MzVaIiwidXBkYXRlZEF0IjoiMjAyMS0wNi0xMVQwODowMloiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6Ijk2NzJCN0hFN0c5RiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDItMDJUMTM6MzVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyMjR9LCJjdXN0b21lcklkZW50aXR5IjoiNjdKNTE3QzlMOTZBIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+  base_url: https://na-1.apriori-internal.int.apriori.net/
 
   sds:
     api_url: https://sds.na-1.qa-21-1.apriori.net/
@@ -57,6 +58,7 @@ qa-21-1:
 qa-cid-perf:
   secret_key: WJIM0HV7Z6U1
   ap_user_context: eyJpZGVudGl0eSI6Ijk2NzJCN0hFTDc4TCIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDItMDJUMTM6MzVaIiwidXBkYXRlZEF0IjoiMjAyMS0wNi0xMVQwODowMloiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6Ijk2NzJCN0hFN0c5RiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDItMDJUMTM6MzVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyMjR9LCJjdXN0b21lcklkZW50aXR5IjoiNjdKNTE3QzlMOTZBIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
 
   sds:
     api_url: https://sds.na-1.qa-cig-perf.apriori.net/
