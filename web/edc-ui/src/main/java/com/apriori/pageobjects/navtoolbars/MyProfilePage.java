@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.pageobjects.pages.login.ElectronicsDataCollectionPage;
+import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -11,15 +11,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NavigationBar extends LoadableComponent<NavigationBar> {
+public class MyProfilePage extends LoadableComponent<MyProfilePage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ElectronicsDataCollectionPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyProfilePage.class);
 
-    @FindBy(css = ".help-dropdown")
-    private WebElement helpDropdown;
-
-    @FindBy(css = "[data-icon='info-circle']")
-    private WebElement aboutButton;
 
     @FindBy(css = ".user-dropdown.dropdown")
     private WebElement userDropdown;
@@ -27,13 +22,13 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
     @FindBy(css = "[data-icon='sign-out-alt']")
     private WebElement logoutButton;
 
-    @FindBy(css = "[data-icon='user")
-    private WebElement myProfile;
+    @FindBy(css = ".active-account")
+    private WebElement activeAccount;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
-    public NavigationBar(WebDriver driver) {
+    public MyProfilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -43,20 +38,21 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
 
     @Override
     protected void load() {
+
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(helpDropdown);
+        pageUtils.waitForElementToAppear(activeAccount);
     }
 
     /**
-     * Selects the User dropdown
+     * Selects the User dropdown and go to Logout
      *
      * @retun new page object
      */
-    public MyProfilePage clickUserDropdown() {
-        pageUtils.waitForElementAndClick(userDropdown);
-        return new MyProfilePage(driver);
+    public EdcAppLoginPage logout() {
+        pageUtils.waitForElementAndClick(logoutButton);
+        return new EdcAppLoginPage(driver);
     }
 }
