@@ -40,11 +40,20 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//button[.='Material Utilization']")
     private WebElement materialUtilizationTab;
 
+    @FindBy(xpath = "//button[.='Process']")
+    private WebElement processResultTab;
+
+    @FindBy(xpath = "//button[.='Options']")
+    private WebElement optionsTab;
+
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockTab;
 
     @FindBy(xpath = "//button[.='Part Nesting']")
     private WebElement partNestingTab;
+
+    @FindBy(css = ".process-routing-chart-column .apriori-select")
+    private WebElement processDropdown;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -71,31 +80,71 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
+     * Selects the process dropdown
+     *
+     * @param filter - the filter
+     * @return current page object
+     */
+    public MaterialProcessPage selectDropdown(String filter) {
+        pageUtils.typeAheadSelect(processDropdown, filter);
+        return this;
+    }
+
+    /**
      * Gets total result
      *
      * @param label - the label
      * @return double
      */
     public double getTotalResult(String label) {
-        By costResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        By costResult = getBy(label);
         return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
     }
 
     /**
-     * Checks the specified total is displayed
+     * Selects the process tab
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectProcessTab() {
+        pageUtils.waitForElementAndClick(processResultTab);
+        return this;
+    }
+
+    /**
+     * Selects the options tab
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectOptionsTab() {
+        pageUtils.waitForElementAndClick(optionsTab);
+        return this;
+    }
+
+    /**
+     * Get process result
      *
      * @param label - the label
-     * @param value - the value
-     * @return true/false
+     * @return string
      */
-    public boolean isTotalResultDisplayed(String label, String value) {
-        By costResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.waitForElementToAppear(costResult);
-        return driver.findElement(costResult).isDisplayed();
+    public String getProcessResult(String label) {
+        By processResult = getBy(label);
+        return pageUtils.waitForElementToAppear(processResult).getAttribute("textContent");
+    }
+
+    /**
+     * Gets by label
+     *
+     * @param label - the label
+     * @return by
+     */
+    private By getBy(String label) {
+        return By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
     }
 
     /**
      * Opens material utilization tab
+     *
      * @return new page object
      */
     public MaterialUtilizationPage openMaterialUtilizationTab() {
@@ -105,11 +154,22 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     /**
      * Go to stock tab
+     *
      * @return new page object
      */
     public StockPage goToStockTab() {
         pageUtils.waitForElementAndClick(stockTab);
         return new StockPage(driver);
+    }
+
+    /**
+     * Go to Part Nesting tab
+     *
+     * @return new page object
+     */
+    public PartNestingPage openPartNestingTab() {
+        pageUtils.waitForElementAndClick(partNestingTab);
+        return new PartNestingPage(driver);
     }
 
     /**
@@ -128,14 +188,5 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public HelpDocPage openHelp() {
         return panelController.openHelp();
-    }
-
-    /**
-     * Go to Part Nesting tab
-     * @return new page object
-     */
-    public PartNestingPage openPartNestingTab() {
-        pageUtils.waitForElementAndClick(partNestingTab);
-        return new PartNestingPage(driver);
     }
 }
