@@ -32,7 +32,7 @@ int-core:
   vds:
     api_url: https://vds.core.int.apriori.net/
     user_identity: 8GFDIG229629
-    customer_identity: 8GFDIG229629
+    customer_identity: H337GKD0LA0M
     secret_key: 65J1ID2B6LDG
 
 
