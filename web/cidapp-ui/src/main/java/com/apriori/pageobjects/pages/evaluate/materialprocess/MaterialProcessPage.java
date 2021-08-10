@@ -55,6 +55,15 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = ".process-routing-chart-column .apriori-select")
     private WebElement processDropdown;
 
+    @FindBy(css = "[value='defaultBatchSetupTime']")
+    private WebElement defaultValueButton;
+
+    @FindBy(css = "[value='userDefinedBatchSetupTime']")
+    private WebElement overrideButton;
+
+    @FindBy(css = ".process-setup-option-form-group [type='number']")
+    private WebElement overrideInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -160,6 +169,38 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     public StockPage goToStockTab() {
         pageUtils.waitForElementAndClick(stockTab);
         return new StockPage(driver);
+    }
+
+    /**
+     * Selects default value radio button
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectDefaultValue() {
+        pageUtils.waitForElementAndClick(defaultValueButton);
+        return this;
+    }
+
+    /**
+     * Selects override radio button
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectOverride() {
+        pageUtils.waitForElementAndClick(overrideButton);
+        return this;
+    }
+
+    /**
+     * Inputs override value
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputOverride(String value) {
+        pageUtils.clearInput(overrideInput);
+        overrideInput.sendKeys(value);
+        return this;
     }
 
     /**
