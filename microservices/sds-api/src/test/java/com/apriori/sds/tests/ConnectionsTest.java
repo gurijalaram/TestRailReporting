@@ -10,8 +10,8 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
-
 import com.apriori.utils.properties.PropertiesContext;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
@@ -64,9 +64,9 @@ public class ConnectionsTest extends SDSTestUtil {
     @TestRail(testCaseId = {"8627"})
     @Description("Delete - a Connection to an Installation.")
     public void testDeleteConnections() {
-            deleteConnection(this.postConnection()
-                .getIdentity()
-            );
+        deleteConnection(this.postConnection()
+            .getIdentity()
+        );
     }
 
     @Test
@@ -90,8 +90,8 @@ public class ConnectionsTest extends SDSTestUtil {
         final List<Connection> connections = this.getConnections();
         ConnectionRequest connectionRequest;
 
-        if(!connections.isEmpty()) {
-            final Connection connection  = connections.get(0);
+        if (!connections.isEmpty()) {
+            final Connection connection = connections.get(0);
             deleteConnection(connection.getIdentity());
 
             connectionRequest = this.initCustomConnectionRequest(connection);
@@ -101,7 +101,7 @@ public class ConnectionsTest extends SDSTestUtil {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_CONNECTIONS, Connection.class)
-                .body("connection",connectionRequest);
+                .body("connection", connectionRequest);
 
         ResponseWrapper<Connection> response = HTTP2Request.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
