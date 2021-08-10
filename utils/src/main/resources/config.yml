@@ -5,7 +5,7 @@ env: int-core
 global:
   schema_base_path: schemas/
   console_log_level: "OFF"
-  users_csv_file: cid-qa-users
+  users_csv_file: common-users.csv
   different_users: true
   service_host: ats.core.qa.apriori.net
 
@@ -19,7 +19,6 @@ local:
   ############################ sds ############################
   sds:
     api_url: http://localhost:8811/
-
 
 
 ######################################################## INT-CORE ########################################################
