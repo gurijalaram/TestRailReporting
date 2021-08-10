@@ -15,35 +15,41 @@ import com.apriori.utils.properties.PropertiesContext;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// TODO z: ignored due to https://jira.apriori.com/browse/BA-1943
+//  shouldn't be un-ignored
+@Ignore
 public class ConnectionsTest extends SDSTestUtil {
 
     private static Set<String> connectionsToDelete = new HashSet<>();
 
 
-    @AfterClass
-    public static void clearTestingData() {
-        if (!connectionsToDelete.isEmpty()) {
-            connectionsToDelete.forEach(ConnectionsTest::deleteConnection);
-        }
-
-        connectionsToDelete = new HashSet<>();
-    }
+    //    @AfterClass
+    //    public static void clearTestingData() {
+    //        if (!connectionsToDelete.isEmpty()) {
+    //            connectionsToDelete.forEach(ConnectionsTest::deleteConnection);
+    //        }
+    //
+    //        connectionsToDelete = new HashSet<>();
+    //        postConnection();
+    //    }
 
 
     @Test
     @TestRail(testCaseId = {"6936"})
     @Description("Find connections for a customer matching a specified query.")
+    @Ignore
     public void testGetConnections() {
-        this.getConnections();
+        getConnections();
     }
 
-    private List<Connection> getConnections() {
+    private static List<Connection> getConnections() {
         final RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_CONNECTIONS, ConnectionsItemsResponse.class);
 
@@ -56,15 +62,17 @@ public class ConnectionsTest extends SDSTestUtil {
     @Test
     @TestRail(testCaseId = {"8625"})
     @Description("Add a Connection to the ST Installation")
+    @Ignore
     public void testPostConnections() {
-        this.postConnection();
+        postConnection();
     }
 
     @Test
     @TestRail(testCaseId = {"8627"})
     @Description("Delete - a Connection to an Installation.")
+    @Ignore
     public void testDeleteConnections() {
-        deleteConnection(this.postConnection()
+        deleteConnection(postConnection()
             .getIdentity()
         );
     }
@@ -72,6 +80,7 @@ public class ConnectionsTest extends SDSTestUtil {
     @Test
     @TestRail(testCaseId = {"8626"})
     @Description("Update - a Connection to an Installation.")
+    @Ignore
     public void testPatchConnections() {
         ConnectionRequest connectionRequest = ConnectionRequest.builder()
             .deploymentIdentity("H337GKD0LA0N")
@@ -86,17 +95,17 @@ public class ConnectionsTest extends SDSTestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
-    private Connection postConnection() {
-        final List<Connection> connections = this.getConnections();
+    private static Connection postConnection() {
+        final List<Connection> connections = getConnections();
         ConnectionRequest connectionRequest;
 
         if (!connections.isEmpty()) {
             final Connection connection = connections.get(0);
             deleteConnection(connection.getIdentity());
 
-            connectionRequest = this.initCustomConnectionRequest(connection);
+            connectionRequest = initCustomConnectionRequest(connection);
         } else {
-            connectionRequest = this.initDefaultConnectionRequest();
+            connectionRequest = initDefaultConnectionRequest();
         }
 
         final RequestEntity requestEntity =
@@ -111,7 +120,7 @@ public class ConnectionsTest extends SDSTestUtil {
         return response.getResponseEntity();
     }
 
-    private ConnectionRequest initCustomConnectionRequest(Connection connection) {
+    private static ConnectionRequest initCustomConnectionRequest(Connection connection) {
         return ConnectionRequest.builder()
             .customerIdentity(connection.getCustomerIdentity())
             .deploymentIdentity(connection.getDeploymentIdentity())
@@ -119,7 +128,7 @@ public class ConnectionsTest extends SDSTestUtil {
             .build();
     }
 
-    private ConnectionRequest initDefaultConnectionRequest() {
+    private static ConnectionRequest initDefaultConnectionRequest() {
         return ConnectionRequest.builder()
             .customerIdentity(PropertiesContext.getStr("${env}.customer_identity"))
             .deploymentIdentity("H337GKD0LA0N")
