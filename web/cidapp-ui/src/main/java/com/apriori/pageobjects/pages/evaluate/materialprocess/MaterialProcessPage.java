@@ -89,6 +89,26 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
+     * Go to Part Nesting tab
+     *
+     * @return new page object
+     */
+    public PartNestingPage openPartNestingTab() {
+        pageUtils.waitForElementAndClick(partNestingTab);
+        return new PartNestingPage(driver);
+    }
+
+    /**
+     * Opens material utilization tab
+     *
+     * @return new page object
+     */
+    public MaterialUtilizationPage openMaterialUtilizationTab() {
+        pageUtils.waitForElementAndClick(materialUtilizationTab);
+        return new MaterialUtilizationPage(driver);
+    }
+
+    /**
      * Selects the process dropdown
      *
      * @param filter - the filter
@@ -152,16 +172,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
-     * Opens material utilization tab
-     *
-     * @return new page object
-     */
-    public MaterialUtilizationPage openMaterialUtilizationTab() {
-        pageUtils.waitForElementAndClick(materialUtilizationTab);
-        return new MaterialUtilizationPage(driver);
-    }
-
-    /**
      * Go to stock tab
      *
      * @return new page object
@@ -203,15 +213,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
         return this;
     }
 
-    /**
-     * Go to Part Nesting tab
-     *
-     * @return new page object
-     */
-    public PartNestingPage openPartNestingTab() {
-        pageUtils.waitForElementAndClick(partNestingTab);
-        return new PartNestingPage(driver);
-    }
+
 
     /**
      * Closes current panel
