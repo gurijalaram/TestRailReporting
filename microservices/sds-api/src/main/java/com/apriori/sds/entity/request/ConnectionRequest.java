@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AssociationRequest {
-    private Integer occurrences;
-    private String scenarioIdentity;
-    private String createdBy;
+public class ConnectionRequest {
+    private String customerIdentity;
+    private String deploymentIdentity;
+    private String installationIdentity;
 }
