@@ -113,7 +113,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(secondaryPage.getSecondaryProcesses(), hasItems("Xray", " Packaging"));
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"5142", "5149"})
     @Description("Test secondary process Carburize")
     public void secondaryProcessCarburize() {
@@ -125,30 +125,31 @@ public class SecondaryProcessTests extends TestBase {
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carburize")
-            .submit()
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden, Carburize")
+            .submit(EvaluatePage.class)
             .costScenario();
+
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Carburize"));
 
-        processSetupOptionsPage = evaluatePage.openProcessDetails()
-            .selectProcessChart("Carburize")
-            .selectOptions()
-            .setCaseOverrideInput("0.46")
-            .setMaskedFeaturesInput("1")
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectBarChart("Carburize")
+            .selectOptionsTab()
+            .inputOverride("0.46")
+            .inputMaskedFeatures("1")
             .closePanel()
             .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Carburize")
-            .selectOptions();
+            .openMaterialProcess()
+            .selectBarChart("Carburize")
+            .selectOptionsTab();
 
-        assertThat(processSetupOptionsPage.getCaseOverride(), is("0.46"));
-        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
-    }*/
+        assertThat(materialProcessPage.getOverride(), is("0.46"));
+        assertThat(materialProcessPage.getMaskedFeatures(), is("1"));
+    }
 
     /*@Test
     @TestRail(testCaseId = {"5151"})

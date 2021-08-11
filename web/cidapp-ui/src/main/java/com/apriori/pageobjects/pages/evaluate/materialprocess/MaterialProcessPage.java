@@ -71,6 +71,15 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = ".highcharts-series-group rect")
     private List<WebElement> chart;
 
+    @FindBy(css = "[value='defaultNoMasking']")
+    private WebElement maskingButton;
+
+    @FindBy(xpath = "//h6[.='Masking']/..//input[@value='userOverride']")
+    private WebElement maskingFeaturesButton;
+
+    @FindBy(xpath = "//h6[.='Masking']/..//input[@type='number']")
+    private WebElement maskingInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -191,6 +200,17 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
+     * Selects the bar chart
+     * @param axisLabel - the label on the x axis
+     * @return current page object
+     */
+    public MaterialProcessPage selectBarChart(String axisLabel) {
+        int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
+        chart.forEach(x -> pageUtils.waitForElementAndClick(chart.get(position)));
+        return this;
+    }
+
+    /**
      * Selects default value radio button
      *
      * @return current page object
@@ -222,14 +242,42 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
-     * Selects the bar chart
-     * @param axisLabel - the label on the x axis
+     * Select masking
+     *
      * @return current page object
      */
-    public MaterialProcessPage selectBarChart(String axisLabel) {
-        int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
-        chart.forEach(x -> pageUtils.waitForElementAndClick(chart.get(position)));
+    public MaterialProcessPage selectMasking() {
+        processOptionsController.selectMasking(maskingButton);
         return this;
+    }
+
+    /**
+     * Select masked features
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectMaskedFeatures() {
+        processOptionsController.selectMaskedFeatures(maskingFeaturesButton);
+        return this;
+    }
+
+    /**
+     * Select masked input
+     *
+     * @param value        - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputMaskedFeatures(String value) {
+       processOptionsController.inputMaskedFeatures(maskingInput, value);
+       return this;
+    }
+
+    /**
+     * Gets masking input
+     * @return string
+     */
+    public String getMaskedFeatures() {
+        return processOptionsController.getMaskedFeatures(maskingInput);
     }
 
     /**
