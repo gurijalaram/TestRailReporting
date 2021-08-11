@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.SourceModelInvalidPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -16,7 +18,7 @@ import org.junit.Test;
 
 public class SourceModelInvalidPageTests extends TestBase {
 
-    private EvaluatePage evaluatePage;
+    private SourceModelInvalidPage sourceModelInvalidPage;
 
     public SourceModelInvalidPageTests(){
         super();
@@ -27,30 +29,33 @@ public class SourceModelInvalidPageTests extends TestBase {
     public void testInvalidCostModelPart(){
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.TWO_MODEL_MACHINING;
 
-        String componentName = "5436411";
-        String scenarioName = "GatlingAutoScenario_6dc7ee1e-2223-46fe-a187-3f27f556c74d";
+        String componentName = "TRANSFER DIE DEMO 1";
+        String scenarioName = "Transfer1";
+        String sourceModel = "TRANSFER DIE DEMO 2";
+        String scenarioModel = "Transfer2";
         String presetFilter = "Private";
 
         UserCredentials currentUser = UserUtil.getUser();
         CidAppLoginPage loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .selectFilter(presetFilter)
-            .openScenario(componentName, scenarioName)
-            .selectProcessGroup(processGroupEnum)
-            .selectSourcePart()
-            .clickSearch(componentName).highlightScenario(componentName, scenarioName).submit(EvaluatePage.class);
-
-        assertThat(evaluatePage.getSourceModelInvalid(), is(equalTo("Source Model Invalid")));
-
-        evaluatePage.clickExplore()
-            .selectFilter(presetFilter)
+        sourceModelInvalidPage = loginPage.login(currentUser)
+            .filter()
+            .add()
+            .inputName("Not Costed")
+            .addCriteriaWithOption("State", "In", "Not Costed").submit(ExplorePage.class)
             .openScenario(componentName, scenarioName)
             .selectProcessGroup(processGroupEnum)
             .selectSourcePart()
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
-            .submit(EvaluatePage.class);
+            .submit(SourceModelInvalidPage.class);
 
+        assertThat(sourceModelInvalidPage.getSourceModelInvalid(), is(equalTo("Source Model Invalid")));
 
+        sourceModelInvalidPage.clickIgnore()
+            .selectSourcePart()
+            .clickSearch(sourceModel)
+            .highlightScenario(sourceModel, scenarioModel)
+            .submit(SourceModelInvalidPage.class)
+            .clickFixSource();
     }
 }
