@@ -34,22 +34,33 @@ public class SourceModelInvalidPage extends LoadableComponent<SourceModelInvalid
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
+
     @Override
     protected void load() {
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(ignoreButton);
+        pageUtils.waitForElementToAppear(fixSourceButton);
     }
 
+    /**
+     * Click Ignore button
+     *
+     * @return new page object
+     */
     public EvaluatePage clickIgnore() {
         pageUtils.waitForElementAndClick(ignoreButton);
         return new EvaluatePage(driver);
     }
 
-    public String getSourceModelInvalid() {
+    /**
+     * Get Source Model text on the page
+     *
+     * @return String
+     */
+    public String getSourceModelInvalidMsg() {
         return pageUtils.waitForElementToAppear(sourceModel).getAttribute("textContent");
     }
 
@@ -63,6 +74,11 @@ public class SourceModelInvalidPage extends LoadableComponent<SourceModelInvalid
         return new ExplorePage(driver);
     }
 
+    /**
+     * Click Fix Source button
+     *
+     * @return new page object
+     */
     public EvaluatePage clickFixSource() {
         pageUtils.waitForElementAndClick(fixSourceButton);
         return new EvaluatePage(driver);

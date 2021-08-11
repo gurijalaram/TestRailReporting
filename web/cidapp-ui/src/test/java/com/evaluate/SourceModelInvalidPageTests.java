@@ -19,21 +19,22 @@ import org.junit.Test;
 public class SourceModelInvalidPageTests extends TestBase {
 
     private SourceModelInvalidPage sourceModelInvalidPage;
+    private EvaluatePage evaluatePage;
 
-    public SourceModelInvalidPageTests(){
+    public SourceModelInvalidPageTests() {
         super();
     }
 
     @Test
     @Description("Source Model Invalid Test")
-    public void testInvalidCostModelPart(){
+    public void testInvalidCostModelPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.TWO_MODEL_MACHINING;
 
         String componentName = "TRANSFER DIE DEMO 1";
         String scenarioName = "Transfer1";
         String sourceModel = "TRANSFER DIE DEMO 2";
         String scenarioModel = "Transfer2";
-        String presetFilter = "Private";
+        String pageTitle = "TRANSFER DIE DEMO 1 | Transfer1 | Evaluate - Cost Insight Design";
 
         UserCredentials currentUser = UserUtil.getUser();
         CidAppLoginPage loginPage = new CidAppLoginPage(driver);
@@ -49,13 +50,17 @@ public class SourceModelInvalidPageTests extends TestBase {
             .highlightScenario(componentName, scenarioName)
             .submit(SourceModelInvalidPage.class);
 
-        assertThat(sourceModelInvalidPage.getSourceModelInvalid(), is(equalTo("Source Model Invalid")));
+        assertThat(sourceModelInvalidPage.getSourceModelInvalidMsg(), is(equalTo("Source Model Invalid")));
 
-        sourceModelInvalidPage.clickIgnore()
+        evaluatePage = sourceModelInvalidPage.clickIgnore()
             .selectSourcePart()
             .clickSearch(sourceModel)
             .highlightScenario(sourceModel, scenarioModel)
             .submit(SourceModelInvalidPage.class)
             .clickFixSource();
+
+        assertThat(evaluatePage.validateNewTabTitle(pageTitle), is(true));
+
+        evaluatePage = evaluatePage.closeNewlyOpenedTab();
     }
 }

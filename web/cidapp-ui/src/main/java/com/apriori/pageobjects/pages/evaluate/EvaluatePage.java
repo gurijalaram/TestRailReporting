@@ -150,9 +150,6 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
     private WebElement customAttributesTab;
 
-    @FindBy(css = (".modal-title"))
-    private WebElement sourceModel;
-
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -663,7 +660,23 @@ public class EvaluatePage extends EvaluateToolbar {
         return modalDialogController.backFromError(className);
     }
 
-    public String getSourceModelInvalid() {
-         return pageUtils.waitForElementToAppear(sourceModel).getAttribute("textContent");
+    /**
+     * Validates the new tab page title
+     *
+     * @return boolean
+     */
+    public boolean validateNewTabTitle(String pageTitle) {
+        return driver.getTitle().contains(pageTitle);
+    }
+
+    /**
+     * Close The newly opened tab
+     *
+     * @return page object
+     */
+    public EvaluatePage closeNewlyOpenedTab() {
+        pageUtils.windowHandler(1).close();
+        pageUtils.windowHandler(0);
+        return new EvaluatePage(driver);
     }
 }
