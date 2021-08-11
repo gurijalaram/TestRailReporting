@@ -9,6 +9,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -39,6 +40,7 @@ public class SecondaryProcessTests extends TestBase {
 
     private File resourceFile;
     private UserCredentials currentUser;
+    private SecondaryProcessesPage secondaryProcessPage;
 
     public SecondaryProcessTests() {
         super();
@@ -151,7 +153,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(materialProcessPage.getMaskedFeatures(), is("1"));
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"5151"})
     @Description("Test secondary process Atmosphere Oil Harden")
     public void secondaryProcessAtmosphereOilHarden() {
@@ -161,23 +163,23 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        processSetupOptionsPage = loginPage.login(currentUser)
+        secondaryProcessPage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
-            .setMaskedFeaturesInput("2");
-
-        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden, Atmosphere Oil Harden")
+            .selectMaskedFeatures()
+            .inputMaskedFeatures("2")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden");
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden, Atmosphere Oil Harden");
 
-        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("2"));
-    }*/
+        assertThat(secondaryProcessPage.getMaskedFeatures(), is("2"));
+    }
 
     /*@Test
     @TestRail(testCaseId = {"5157"})
