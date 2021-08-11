@@ -48,6 +48,9 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
 
     // CONNECTIONS
     GET_CONNECTIONS("connections"),
+    POST_CONNECTIONS("connections"),
+    DELETE_CONNECTIONS_BY_ID("connections/%s"),
+    PATCH_CONNECTIONS_BY_ID("connections/%s"),
 
     // COMPONENTS
     GET_COMPONENTS("components"),

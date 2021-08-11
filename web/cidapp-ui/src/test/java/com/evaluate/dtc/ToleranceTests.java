@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.utils.APIValue;
 import com.apriori.apibase.utils.AfterTestUtil;
+import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -49,12 +50,12 @@ public class ToleranceTests extends TestBase {
         super();
     }
 
-    /*@After
+    @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new AfterTestUtil().resetAllSettings(currentUser.getUsername());
+            new ResetSettingsUtil().resetSettings(currentUser);
         }
-    }*/
+    }
 
     @Test
     @Ignore("Cannot edit tolerances this release")
