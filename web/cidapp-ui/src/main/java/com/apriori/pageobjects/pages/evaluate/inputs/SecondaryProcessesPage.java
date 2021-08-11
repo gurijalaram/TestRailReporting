@@ -36,6 +36,15 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".description .content")
     private WebElement description;
 
+    @FindBy(css = ".process-selector-details [value='default']")
+    private WebElement defaultValueButton;
+
+    @FindBy(css = ".process-selector-details [value='user']")
+    private WebElement overrideButton;
+
+    @FindBy(css = ".process-setup-option-form-group [type='number']")
+    private WebElement overrideInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -151,6 +160,66 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
+     * Get list of selected items
+     *
+     * @return list of string
+     */
+    public List<String> getSelectedPreviewList() {
+        return Arrays.stream(selectedPreviewItems.getText().split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Get number of selected processes
+     *
+     * @return
+     */
+    public int getNoOfSelected() {
+        By amounts = By.cssSelector("div[class='selected-amount'] span");
+        String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
+        return Integer.parseInt(amount[0].trim());
+    }
+
+    /**
+     * Gets description
+     *
+     * @return string
+     */
+    public String getDescription() {
+        return pageUtils.waitForElementToAppear(description).getAttribute("textContent");
+    }
+
+    /**
+     * Selects default value radio button
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectDefaultValue() {
+        processOptionsController.selectDefaultValue(defaultValueButton);
+        return this;
+    }
+
+    /**
+     * Selects override radio button
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectOverride() {
+        processOptionsController.selectOverride(overrideButton);
+        return this;
+    }
+
+    /**
+     * Inputs override value
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputOverride(String value) {
+        processOptionsController.inputOverride(overrideInput, value);
+        return this;
+    }
+
+    /**
      * Enter search input
      *
      * @param searchTerm - search term
@@ -200,36 +269,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     public SecondaryProcessesPage reset() {
         modalDialogController.reset();
         return this;
-    }
-
-
-    /**
-     * Get list of selected items
-     *
-     * @return list of string
-     */
-    public List<String> getSelectedPreviewList() {
-        return Arrays.stream(selectedPreviewItems.getText().split("\n")).collect(Collectors.toList());
-    }
-
-    /**
-     * Get number of selected processes
-     *
-     * @return
-     */
-    public int getNoOfSelected() {
-        By amounts = By.cssSelector("div[class='selected-amount'] span");
-        String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
-        return Integer.parseInt(amount[0].trim());
-    }
-
-    /**
-     * Gets description
-     *
-     * @return string
-     */
-    public String getDescription() {
-        return pageUtils.waitForElementToAppear(description).getAttribute("textContent");
     }
 
     /**

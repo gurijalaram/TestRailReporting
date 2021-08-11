@@ -5,14 +5,13 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -21,9 +20,8 @@ import java.util.stream.IntStream;
  * @author cfrith
  */
 
+@Slf4j
 public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(MaterialProcessPage.class);
 
     @FindBy(css = ".tab.active [data-icon='clock']")
     private WebElement processesTabActive;
@@ -76,12 +74,14 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
+    private ProcessOptionsController processOptionsController;
 
     public MaterialProcessPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        this.processOptionsController = new ProcessOptionsController(driver);
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -196,7 +196,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectDefaultValue() {
-        pageUtils.waitForElementAndClick(defaultValueButton);
+        processOptionsController.selectDefaultValue(defaultValueButton);
         return this;
     }
 
@@ -206,7 +206,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectOverride() {
-        pageUtils.waitForElementAndClick(overrideButton);
+        processOptionsController.selectOverride(overrideButton);
         return this;
     }
 
@@ -217,8 +217,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputOverride(String value) {
-        pageUtils.clearInput(overrideInput);
-        overrideInput.sendKeys(value);
+        processOptionsController.inputOverride(overrideInput, value);
         return this;
     }
 
@@ -231,6 +230,14 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
         int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
         chart.forEach(x -> pageUtils.waitForElementAndClick(chart.get(position)));
         return this;
+    }
+
+    /**
+     * Gets override input
+     * @return string
+     */
+    public String getOverride() {
+        return processOptionsController.getOverride(overrideInput);
     }
 
     /**

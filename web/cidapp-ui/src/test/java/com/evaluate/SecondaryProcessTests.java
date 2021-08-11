@@ -1,18 +1,20 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.users.UserCredentials;
@@ -33,6 +35,7 @@ public class SecondaryProcessTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SecondaryPage secondaryPage;
+    private MaterialProcessPage materialProcessPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -41,7 +44,7 @@ public class SecondaryProcessTests extends TestBase {
         super();
     }
 
-    /*@Test
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5140", "5115", "5132"})
     @Description("Test secondary process leak test - edit wall thickness PSO and validate the process chart")
@@ -52,25 +55,26 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        processSetupOptionsPage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .goToSecondaryTab()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
-            .selectOverrideButton()
-            .setPartThickness("0.21");
-
-        evaluatePage = new SecondaryProcessPage(driver).apply()
+            .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection, Hydrostatic Leak Testing")
+            .selectOverride()
+            .inputOverride("0.21")
+            .submit(EvaluatePage.class)
             .costScenario();
+
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Hydrostatic Leak Testing"));
 
-        processSetupOptionsPage = evaluatePage.openProcessDetails()
-            .selectProcessChart("Hydrostatic Leak Testing")
-            .selectOptions();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectBarChart("Hydrostatic Leak Testing")
+            .selectOptionsTab();
 
-        assertThat(processSetupOptionsPage.getPartThickness(), is("0.21"));
-    }*/
+        assertThat(materialProcessPage.getOverride(), is("0.21"));
+    }
 
     @Test
     @Category(IgnoreTests.class)
