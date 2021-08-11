@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 
 @Data
-@Schema(location = "cid/GetAdminInfoSchema.json")
+@Schema(location = "GetAdminInfoSchema.json")
 public class GetAdminInfoResponse {
     private String lastModifiedBy;
     private String lastSavedTime;

@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(location = "cid/GetCadMetadataResponse.json")
+@Schema(location = "GetCadMetadataResponse.json")
 public class GetCadMetadataResponse {
     private String fileMetadataIdentity;
     private String cadType;

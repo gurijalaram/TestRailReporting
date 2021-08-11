@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "cds/CredentialsSchema.json")
+@Schema(location = "CredentialsSchema.json")
 public class CredentialsItems {
     private CredentialsItems response;
     private String identity;

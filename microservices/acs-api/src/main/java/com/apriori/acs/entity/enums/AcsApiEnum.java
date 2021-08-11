@@ -11,7 +11,8 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     GET_UNIT_VARIANT_SETTINGS("ws/workspace/global-info/unitVariantSettings"),
     GET_CUSTOM_UNIT_VARIANT_SETTINGS(String.format("ws/workspace/users/%s/custom-unit-variant-settings", Constants.USERNAME)),
     GET_ENABLED_CURRENCY_RATE_VERSIONS("ws/workspace/global-info/enabledCurrency"),
-    CREATE_MISSING_SCENARIO("ws/workspace/0/scenarios");
+    CREATE_MISSING_SCENARIO("ws/workspace/0/scenarios"),
+    GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY("ws/workspace/0/scenarios/%s/%s/%s/iterations/%s/scenario-info");
 
     private final String endpoint;
 

@@ -13,6 +13,8 @@ import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSett
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.http.builder.dao.GenericRequestUtil;
+import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
@@ -75,23 +77,21 @@ public class AcsResources {
      */
     public GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKey(
             ScenarioIterationKey scenarioIterationKey) {
-        String createMissingScenarioUrl = baseUrl.concat(
-                String.format("ws/workspace/0/scenarios/%s/%s/%s/iterations/%s/scenario-info",
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY,
+                        GetScenarioInfoByScenarioIterationKeyResponse.class)
+                .headers(token)
+                .inlineVariables(
                         scenarioIterationKey.getScenarioKey().getTypeName(),
                         scenarioIterationKey.getScenarioKey().getMasterName(),
                         scenarioIterationKey.getScenarioKey().getStateName(),
-                        scenarioIterationKey.getIteration()));
+                        scenarioIterationKey.getIteration().toString()
+                );
 
-        headers.put(contentType, applicationJson);
-
-        /*RequestEntity getScenarioInfoByScenarioIterationKeyRequestEntity =
-                RequestEntity.init(createMissingScenarioUrl, GetScenarioInfoByScenarioIterationKeyResponse.class)
-                        .setHeaders(headers)
-                        .setHeaders(token);
-
-        return (GetScenarioInfoByScenarioIterationKeyResponse) GenericRequestUtil
-                .get(getScenarioInfoByScenarioIterationKeyRequestEntity, new RequestAreaApi()).getResponseEntity();*/
-        return new GetScenarioInfoByScenarioIterationKeyResponse();
+        return (GetScenarioInfoByScenarioIterationKeyResponse) HTTP2Request
+                .build(requestEntity).get().getResponseEntity();
     }
 
     /**

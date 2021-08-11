@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 
 @Data
-@Schema(location = "acs/CreateMissingScenarioResponse.json")
+@Schema(location = "CreateMissingScenarioResponse.json")
 public class CreateMissingScenarioResponse {
     private ScenarioIterationKey scenarioIterationKey;
     private boolean resourceCreated;

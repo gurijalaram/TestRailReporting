@@ -2,7 +2,7 @@ package com.apriori.entity.response.cost.iterations;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "cid/CostIterationResponseShort.json")
+@Schema(location = "CostIterationResponseShort.json")
 public class CostIteration {
     private IterationScenario scenarioIterationKey;
     private IterationScenarioKey scenarioKey;

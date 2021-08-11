@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "bcs/CisVPESchema.json")
+@Schema(location = "CisVPESchema.json")
 public class VPE extends Pagination {
     private String name;
     private Number batchesPerYear;

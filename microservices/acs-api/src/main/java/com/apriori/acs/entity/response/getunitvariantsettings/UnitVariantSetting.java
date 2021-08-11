@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Schema(location = "acs/GetCustomUnitVariantSettingsResponse.json")
+@Schema(location = "GetCustomUnitVariantSettingsResponse.json")
 public class UnitVariantSetting {
     @JsonProperty("@type")
     private String type;

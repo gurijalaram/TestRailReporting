@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-@Schema(location = "acs/GetUnitVariantSettingsResponse.json")
+@Schema(location = "GetUnitVariantSettingsResponse.json")
 public class GetUnitVariantSettingsResponse {
     @JsonProperty("CGM")
     private UnitVariantSetting CGM;

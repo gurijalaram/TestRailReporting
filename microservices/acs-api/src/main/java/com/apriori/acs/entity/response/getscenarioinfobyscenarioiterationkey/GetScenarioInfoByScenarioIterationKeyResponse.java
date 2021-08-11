@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 
 @Data
-@Schema(location = "acs/GetScenarioInfoByScenarioIterationKeyResponse.json")
+@Schema(location = "GetScenarioInfoByScenarioIterationKeyResponse.json")
 public class GetScenarioInfoByScenarioIterationKeyResponse {
     private boolean initialized;
     private boolean missing;

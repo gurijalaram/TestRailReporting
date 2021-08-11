@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/LicensesSchema.json")
+@Schema(location = "LicensesSchema.json")
 public class Licenses extends Pagination {
     private List<LicenseResponse> items;
     private Licenses response;
