@@ -181,7 +181,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(secondaryProcessPage.getMaskedFeatures(), is("2"));
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"5157"})
     @Description("Test secondary process Standard Anneal")
     public void secondaryProcessStandardAnneal() {
@@ -191,27 +191,28 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        processSetupOptionsPage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectVPE(VPEEnum.APRIORI_USA.getVpe())
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal")
-            .selectNumMaskedFeaturesButton()
-            .setMaskedFeaturesInput("1");
-
-        evaluatePage = new SecondaryProcessPage(driver).apply()
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal, Standard Anneal")
+            .selectMaskedFeatures()
+            .inputMaskedFeatures("1")
+            .submit(EvaluatePage.class)
             .costScenario();
+
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Standard Anneal"));
 
-        processSetupOptionsPage = evaluatePage.openProcessDetails()
-            .selectProcessChart("Standard Anneal")
-            .selectOptions();
-        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
-    }*/
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectBarChart("Standard Anneal")
+            .selectOptionsTab();
+
+        assertThat(materialProcessPage.getMaskedFeatures(), is("1"));
+    }
 
     /*@Test
     @TestRail(testCaseId = {"5161"})
