@@ -45,9 +45,9 @@ import com.apriori.entity.response.upload.WorkorderCommands;
 import com.apriori.entity.response.upload.WorkorderDetailsResponse;
 import com.apriori.entity.response.upload.WorkorderRequest;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
