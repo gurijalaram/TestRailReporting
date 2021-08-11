@@ -1,6 +1,7 @@
 package com.pageobjects.pages.login;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import com.pageobjects.pages.explore.ExplorePage;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public class CidLoginPage extends LoadableComponent<CidLoginPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CidLoginPage.class);
-    private static String loginPageUrl = Constants.getDefaultUrl();
+    private static String loginPageUrl = PropertiesContext.getStr("{env}.base_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
