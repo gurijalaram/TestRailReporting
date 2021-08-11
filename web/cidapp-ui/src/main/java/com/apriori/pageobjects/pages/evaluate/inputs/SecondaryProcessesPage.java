@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.ProcessOptionsController;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +33,19 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".selected-preview .pill-box")
     private WebElement selectedPreviewItems;
 
+    @FindBy(css = ".description .content")
+    private WebElement description;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
+    private ProcessOptionsController processOptionsController;
 
     public SecondaryProcessesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
+        this.processOptionsController = new ProcessOptionsController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -215,6 +221,15 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
         By amounts = By.cssSelector("div[class='selected-amount'] span");
         String[] amount = pageUtils.waitForElementToAppear(amounts).getText().split("of");
         return Integer.parseInt(amount[0].trim());
+    }
+
+    /**
+     * Gets description
+     *
+     * @return string
+     */
+    public String getDescription() {
+        return pageUtils.waitForElementToAppear(description).getAttribute("textContent");
     }
 
     /**
