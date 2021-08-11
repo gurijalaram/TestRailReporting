@@ -22,6 +22,7 @@ import com.evaluate.dtc.DTCCastingTests;
 import com.evaluate.dtc.DTCMachiningTests;
 import com.evaluate.dtc.DTCPlasticMouldingTests;
 import com.evaluate.dtc.SheetMetalDTCTests;
+import com.evaluate.dtc.ThreadTests;
 import com.evaluate.dtc.ToleranceTests;
 import com.evaluate.materialutilization.ChangeMaterialSelectionTests;
 import com.evaluate.materialutilization.MaterialStockTests;
@@ -77,7 +78,8 @@ import testsuites.suiteinterface.SmokeTests;
     TwoModelMachiningTests.class,
     SettingsTests.class,
     ToleranceTests.class,
-    ComparisonTests.class
+    ComparisonTests.class,
+    ThreadTests.class
 })
 public class CIDSmokeTestSuite {
 }
