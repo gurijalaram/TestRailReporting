@@ -18,7 +18,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     ApFilesTest.class,
     ComponentsTest.class,
-    ConnectionsTest.class,
     CostingTemplatesTest.class,
     IterationsTest.class,
     ScenarioAssociationsTest.class,
