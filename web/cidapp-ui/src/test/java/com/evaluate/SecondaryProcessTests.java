@@ -214,7 +214,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(materialProcessPage.getMaskedFeatures(), is("1"));
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"5161"})
     @Description("Test secondary process Vacuum Temper")
     public void secondaryProcessVacuumTemper() {
@@ -224,24 +224,23 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        processSetupOptionsPage = loginPage.login(currentUser)
+        secondaryProcessPage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper")
-            .setMaskedFeaturesInput("3");
-
-        secondaryProcessPage = new SecondaryProcessPage(driver);
-        processSetupOptionsPage = secondaryProcessPage.apply()
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper, Vacuum Temper")
+            .selectMaskedFeatures()
+            .inputMaskedFeatures("3")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper");
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper, Vacuum Temper");
 
-        assertThat(processSetupOptionsPage.getMaskedFeatures(), is("3"));
-    }*/
+        assertThat(secondaryProcessPage.getMaskedFeatures(), is("3"));
+    }
 
     @Test
     @Category(IgnoreTests.class)
