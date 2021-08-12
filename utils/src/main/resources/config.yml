@@ -59,12 +59,12 @@ qa-cid-perf:
 
   ats:
     api_url: https://ats.na-1.qa-cid-perf.apriori.net
-    ats_token_username: qa-automation-01
-    ats_token_email: qa-automation-01@apriori.com
-    ats_token_issuer: 2021 R1
-    ats_token_subject: 4127
-    ats_auth_application: CID
-    ats_auth_targetCloudContext: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
+    token_username: qa-automation-01
+    token_email: qa-automation-01@apriori.com
+    token_issuer: 2021 R1
+    token_subject: 4127
+    auth_application: CID
+    auth_targetCloudContext: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
