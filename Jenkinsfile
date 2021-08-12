@@ -10,19 +10,27 @@ def csvFile
 def folder = "web"
 
 pipeline {
+/*
+Configure the following parameters on your Jenkins jobs directly.  You only need to include those relevant to your job/app.
+This should reduce the need for multiple jenkinsfiles
+Those marked with a * are required or the job will not run
     parameters {
-        string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
-        choice(name: 'TARGET_MODULE', choices: ['cid-ui', 'apitests', 'ciconnect-ui', 'cas-ui', 'cir-ui', 'cia-ui', 'cidapp-ui', 'edc-ui'], description: 'What target module to run?')
-        choice(name: 'TARGET_ENV', choices: ['qa-21-1', 'qa-20-1', 'int-core'], description: 'What is the target environment?')
-        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'RegressionTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'EDCSmokeTestSuite', 'Other'], description: 'What is the test tests.suite?')
+        * choice(name: 'MODULE_TYPE', choices: ['web', 'microservices'], description: 'What module type to run?')
+        * choice(name: 'MODULE', choices: ['edc-ui', 'cid-ui', 'apitests', 'ciconnect-ui', 'cas-ui', 'cir-ui', 'cia-ui', 'cidapp-ui'], description: 'What target module to run?')
+        * choice(name: 'TARGET_ENV', choices: ['qa-21-1', 'qa-20-1', 'int-core'], description: 'What is the target environment?')
+        * choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
+
+        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'RegressionTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue: 'test name', description: 'What is the test/tests.suite to execute')
+
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
         string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
-        choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
+
+        string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
     }
-
+*/
     agent {
         label "automation"
     }
@@ -49,18 +57,26 @@ pipeline {
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
+                    folder = params.MODULE_TYPE
+                    if (!folder && "${JOB_NAME}".contains("-UI")) {
+                        folder = "web"
+                    }
+                    else if (!folder && "${JOB_NAME}".contains("-API")) {
+                        folder = "microservices"
+                    }
+
                     url = params.TARGET_URL
-                    if (url != "none") {
+                    if (url && url != "none") {
                         javaOpts = javaOpts + " -Durl=${params.TARGET_URL}"
                     }
 
                     threadCount = params.THREAD_COUNT
-                    if (threadCount.isInteger() && threadCount.toInteger() > 0) {
+                    if (threadCount && threadCount.isInteger() && threadCount.toInteger() > 0) {
                         javaOpts = javaOpts + " -DthreadCounts=${threadCount}"
                     }
 
                     browser = params.BROWSER
-                    if (browser != "none") {
+                    if (browser && browser != "none") {
                         javaOpts = javaOpts + " -Dbrowser=${browser}"
                     }
 
@@ -68,13 +84,13 @@ pipeline {
                         javaOpts = javaOpts + " -Dheadless=true"
                     }
 
-                    testSuite = "testsuites." + params.TEST_SUITE
+                    testSuite = params.TEST_SUITE
                     if (params.TEST_SUITE == "Other") {
                         testSuite = params.OTHER_TEST
                     }
 
                     csvFile = params.CSV_FILE
-                    if (csvFile != "none") {
+                    if (csvFile && csvFile != "none") {
                         javaOpts = javaOpts + " -DcsvFile=${params.CSV_FILE}"
                     }
 
@@ -87,7 +103,7 @@ pipeline {
                 echo "Building.."
                 sh """
                     docker build \
-                        --build-arg MODULE=${TARGET_MODULE} \
+                        --build-arg MODULE=${MODULE} \
                         --build-arg TEST_MODE=${TEST_MODE} \
                         --build-arg FOLDER=${folder} \
                         --no-cache \
