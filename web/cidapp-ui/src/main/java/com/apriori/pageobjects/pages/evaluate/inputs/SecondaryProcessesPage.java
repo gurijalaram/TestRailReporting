@@ -37,22 +37,40 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     private WebElement description;
 
     @FindBy(css = ".process-selector-details [value='default']")
-    private WebElement defaultValueButton;
+    private WebElement opDefaultButton;
 
     @FindBy(css = ".process-selector-details [value='user']")
-    private WebElement overrideButton;
+    private WebElement opOverrideButton;
 
-    @FindBy(css = ".process-setup-option-form-group [type='number']")
-    private WebElement overrideInput;
+    @FindBy(css = ".process-selector-details [type='number']")
+    private WebElement opOverrideInput;
 
-    @FindBy(css = "[value='defaultNoMasking']")
-    private WebElement maskingButton;
+    @FindBy(css = ".process-selector-details [value='defaultNoMasking']")
+    private WebElement maskedDefault;
 
     @FindBy(css = ".process-selector-details [value='userOverride']")
-    private WebElement maskingFeaturesButton;
+    private WebElement maskedUser;
 
-    @FindBy(xpath = ".process-selector-details [type='number']")
-    private WebElement maskingInput;
+    @FindBy(css = ".process-selector-details [type='number']")
+    private WebElement maskedInput;
+
+//    @FindBy(css = ".process-selector-details [value='default']")
+//    private WebElement defaultValueButton;
+//
+//    @FindBy(css = ".process-selector-details [value='user']")
+//    private WebElement overrideButton;
+//
+//    @FindBy(css = ".process-setup-option-form-group [type='number']")
+//    private WebElement overrideInput;
+//
+//    @FindBy(css = "[value='defaultNoMasking']")
+//    private WebElement maskingButton;
+//
+//    @FindBy(css = ".process-selector-details [value='userOverride']")
+//    private WebElement maskingFeaturesButton;
+//
+//    @FindBy(xpath = ".process-selector-details [type='number']")
+//    private WebElement maskingInput;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -168,6 +186,16 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
         return this;
     }
 
+//    /**
+//     * Selects default value radio button
+//     *
+//     * @return current page object
+//     */
+//    public SecondaryProcessesPage selectDefault(String label) {
+//        processOptionsController.selectDefaultValue(label);
+//        return this;
+//    }
+
     /**
      * Get list of selected items
      *
@@ -198,74 +226,118 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
-     * Selects default value radio button
+     * Selects options default
      *
      * @return current page object
      */
-    public SecondaryProcessesPage selectDefaultValue() {
-        processOptionsController.selectDefaultValue(defaultValueButton);
+    public SecondaryProcessesPage selectOptionsDefault() {
+        pageUtils.waitForElementAndClick(opDefaultButton);
         return this;
     }
 
     /**
-     * Selects override radio button
+     * Inputs option override
      *
+     * @param value -the value
      * @return current page object
      */
-    public SecondaryProcessesPage selectOverride() {
-        processOptionsController.selectOverride(overrideButton);
+    public SecondaryProcessesPage inputOptionsOverride(String value) {
+        pageUtils.waitForElementAndClick(opOverrideButton);
+        pageUtils.clearInput(opOverrideInput);
+        opOverrideInput.sendKeys(value);
         return this;
     }
 
     /**
-     * Inputs override value
+     * Get options
      *
-     * @param value - the value
-     * @return current page object
-     */
-    public SecondaryProcessesPage inputOverride(String value) {
-        processOptionsController.inputOverride(overrideInput, value);
-        return this;
-    }
-
-    /**
-     * Select masking
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesPage selectMasking() {
-        processOptionsController.selectMasking(maskingButton);
-        return this;
-    }
-
-    /**
-     * Select masked features
-     *
-     * @return current page object
-     */
-    public SecondaryProcessesPage selectMaskedFeatures() {
-        processOptionsController.selectMaskedFeatures(maskingFeaturesButton);
-        return this;
-    }
-
-    /**
-     * Select masked input
-     *
-     * @param value        - the value
-     * @return current page object
-     */
-    public SecondaryProcessesPage inputMaskedFeatures(String value) {
-        processOptionsController.inputMaskedFeatures(maskingInput, value);
-        return this;
-    }
-
-    /**
-     * Gets masking input
      * @return string
      */
-    public String getMaskedFeatures() {
-        return processOptionsController.getMaskedFeatures(maskingInput);
+    public double getOptions() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(opOverrideInput).getAttribute("textContent"));
     }
+
+    /**
+     * Selects masked feature
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectMasked() {
+        pageUtils.waitForElementAndClick(maskedDefault);
+        return this;
+    }
+
+    /**
+     * Inputs masked feature
+     *
+     * @param value -the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputMaskedOverride(String value) {
+        pageUtils.waitForElementAndClick(maskedUser);
+        pageUtils.clearInput(maskedInput);
+        maskedInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Get masked feature
+     *
+     * @return string
+     */
+    public double getMasking() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedInput).getAttribute("textContent"));
+    }
+
+//    /**
+//     * Inputs override value
+//     *
+//     * @param value - the value
+//     * @return current page object
+//     */
+//    public SecondaryProcessesPage inputOverride(String label, String value) {
+//        processOptionsController.inputOverride(label, value);
+//        return this;
+//    }
+//
+//    /**
+//     * Select masking
+//     *
+//     * @return current page object
+//     */
+//    public SecondaryProcessesPage selectMasking() {
+//        processOptionsController.selectMasking(maskingButton);
+//        return this;
+//    }
+//
+//    /**
+//     * Select masked features
+//     *
+//     * @return current page object
+//     */
+//    public SecondaryProcessesPage selectMaskedFeatures() {
+//        processOptionsController.selectMaskedFeatures(maskingFeaturesButton);
+//        return this;
+//    }
+//
+//    /**
+//     * Select masked input
+//     *
+//     * @param value        - the value
+//     * @return current page object
+//     */
+//    public SecondaryProcessesPage inputMaskedFeatures(String value) {
+//        processOptionsController.inputMaskedFeatures(maskingInput, value);
+//        return this;
+//    }
+//
+//    /**
+//     * Gets masking input
+//     * @return string
+//     */
+//    public String getMaskedFeatures() {
+//        return processOptionsController.getMaskedFeatures(maskingInput);
+//    }
 
     /**
      * Enter search input

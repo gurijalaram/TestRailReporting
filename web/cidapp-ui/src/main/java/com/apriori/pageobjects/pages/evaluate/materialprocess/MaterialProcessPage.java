@@ -71,11 +71,29 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = ".highcharts-series-group rect")
     private List<WebElement> chart;
 
-    @FindBy(css = "[value='defaultNoMasking']")
-    private WebElement maskingButton;
+    @FindBy(xpath = "//h6[.='Average Wall Thickness']/..//input[@value='default']")
+    private WebElement averageThicknessDefault;
+
+    @FindBy(xpath = "//h6[.='Average Wall Thickness']/..//input[@value='user']")
+    private WebElement averageThicknessUser;
+
+    @FindBy(xpath = "//h6[.='Average Wall Thickness']/..//input[@type='number']")
+    private WebElement averageThickInput;
+
+    @FindBy(xpath = "//h6[.='Case Depth Selection']/..//input[@value='default']")
+    private WebElement caseDepthDefault;
+
+    @FindBy(xpath = "//h6[.='Case Depth Selection']/..//input[@value='user']")
+    private WebElement caseDepthUser;
+
+    @FindBy(xpath = "//h6[.='Case Depth Selection']/..//input[@type='number']")
+    private WebElement caseDepthInput;
+
+    @FindBy(xpath = "//h6[.='Masking']/..//input[@value='defaultNoMasking']")
+    private WebElement maskingDefault;
 
     @FindBy(xpath = "//h6[.='Masking']/..//input[@value='userOverride']")
-    private WebElement maskingFeaturesButton;
+    private WebElement maskingUser;
 
     @FindBy(xpath = "//h6[.='Masking']/..//input[@type='number']")
     private WebElement maskingInput;
@@ -201,6 +219,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     /**
      * Selects the bar chart
+     *
      * @param axisLabel - the label on the x axis
      * @return current page object
      */
@@ -211,34 +230,67 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
-     * Selects default value radio button
+     * Selects material default
      *
      * @return current page object
      */
-    public MaterialProcessPage selectDefaultValue() {
-        processOptionsController.selectDefaultValue(defaultValueButton);
+    public MaterialProcessPage selectAverageWallThickness() {
+        pageUtils.waitForElementAndClick(averageThicknessDefault);
         return this;
     }
 
     /**
-     * Selects override radio button
-     *
-     * @return current page object
-     */
-    public MaterialProcessPage selectOverride() {
-        processOptionsController.selectOverride(overrideButton);
-        return this;
-    }
-
-    /**
-     * Inputs override value
+     * Input material override
      *
      * @param value - the value
      * @return current page object
      */
-    public MaterialProcessPage inputOverride(String value) {
-        processOptionsController.inputOverride(overrideInput, value);
+    public MaterialProcessPage inputAverageWallThickness(String value) {
+        pageUtils.waitForElementAndClick(averageThicknessUser);
+        pageUtils.clearInput(averageThickInput);
+        averageThickInput.sendKeys(value);
         return this;
+    }
+
+    /**
+     * Gets average wall thickness
+     *
+     * @return string
+     */
+    public String getAverageWallThickness() {
+        return pageUtils.waitForElementToAppear(averageThickInput).getAttribute("value");
+    }
+
+    /**
+     * Select case depth
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectCaseDepth() {
+        pageUtils.waitForElementAndClick(caseDepthDefault);
+        return this;
+    }
+
+    /**
+     * Inputs case depth
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputCaseDepth(String value) {
+        pageUtils.waitForElementAndClick(caseDepthUser);
+        pageUtils.clearInput(caseDepthInput);
+        caseDepthInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Gets case depth
+     *
+     * @return string
+     */
+    public double getCaseDepth() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(caseDepthInput).getAttribute("value"));
     }
 
     /**
@@ -247,46 +299,98 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectMasking() {
-        processOptionsController.selectMasking(maskingButton);
+        pageUtils.waitForElementAndClick(maskingDefault);
         return this;
     }
 
     /**
-     * Select masked features
+     * Inputs masking
      *
+     * @param value - the value
      * @return current page object
      */
-    public MaterialProcessPage selectMaskedFeatures() {
-        processOptionsController.selectMaskedFeatures(maskingFeaturesButton);
+    public MaterialProcessPage inputMasking(String value) {
+        pageUtils.waitForElementAndClick(maskingUser);
+        pageUtils.clearInput(maskingUser);
+        maskingUser.sendKeys(value);
         return this;
     }
 
     /**
-     * Select masked input
+     * Gets case depth
      *
-     * @param value        - the value
-     * @return current page object
-     */
-    public MaterialProcessPage inputMaskedFeatures(String value) {
-       processOptionsController.inputMaskedFeatures(maskingInput, value);
-       return this;
-    }
-
-    /**
-     * Gets masking input
      * @return string
      */
-    public String getMaskedFeatures() {
-        return processOptionsController.getMaskedFeatures(maskingInput);
+    public double getMasking() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(maskingInput).getAttribute("value"));
     }
-
-    /**
-     * Gets override input
-     * @return string
-     */
-    public String getOverride() {
-        return processOptionsController.getOverride(overrideInput);
-    }
+//    /**
+//     * Selects default value radio button
+//     *
+//     * @return current page object
+//     */
+//    public MaterialProcessPage selectDefaultValue(String label) {
+//        processOptionsController.selectDefaultValue(label);
+//        return this;
+//    }
+//
+//    /**
+//     * Inputs override value
+//     *
+//     * @param value - the value
+//     * @return current page object
+//     */
+//    public MaterialProcessPage inputOverride(String label, String value) {
+//        processOptionsController.inputOverride(label, value);
+//        return this;
+//    }
+//
+//    /**
+//     * Select masking
+//     *
+//     * @return current page object
+//     */
+//    public MaterialProcessPage selectMasking() {
+//        processOptionsController.selectMasking(maskingButton);
+//        return this;
+//    }
+//
+//    /**
+//     * Select masked features
+//     *
+//     * @return current page object
+//     */
+//    public MaterialProcessPage selectMaskedFeatures() {
+//        processOptionsController.selectMaskedFeatures(maskingFeaturesButton);
+//        return this;
+//    }
+//
+//    /**
+//     * Select masked input
+//     *
+//     * @param value        - the value
+//     * @return current page object
+//     */
+//    public MaterialProcessPage inputMaskedFeatures(String value) {
+//       processOptionsController.inputMaskedFeatures(maskingInput, value);
+//       return this;
+//    }
+//
+//    /**
+//     * Gets masking input
+//     * @return string
+//     */
+//    public String getMaskedFeatures() {
+//        return processOptionsController.getMaskedFeatures(maskingInput);
+//    }
+//
+//    /**
+//     * Gets override input
+//     * @return string
+//     */
+//    public String getOverride() {
+//        return processOptionsController.getOverride(overrideInput);
+//    }
 
     /**
      * Closes current panel

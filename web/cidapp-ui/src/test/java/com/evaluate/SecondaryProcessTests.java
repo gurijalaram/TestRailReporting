@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -64,8 +65,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToSecondaryTab()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection, Hydrostatic Leak Testing")
-            .selectOverride()
-            .inputOverride("0.21")
+            .inputOptionsOverride("0.21")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -75,7 +75,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Hydrostatic Leak Testing")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverride(), is("0.21"));
+        assertThat(materialProcessPage.getAverageWallThickness(), is("0.21"));
     }
 
     @Test
@@ -141,16 +141,16 @@ public class SecondaryProcessTests extends TestBase {
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Carburize")
             .selectOptionsTab()
-            .inputOverride("0.46")
-            .inputMaskedFeatures("1")
+            .inputCaseDepth("0.46")
+            .inputMasking("1")
             .closePanel()
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Carburize")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverride(), is("0.46"));
-        assertThat(materialProcessPage.getMaskedFeatures(), is("1"));
+        assertThat(materialProcessPage.getCaseDepth(), is(equalTo(0.46)));
+        assertThat(materialProcessPage.getMasking(), is(equalTo(1)));
     }
 
     @Test
@@ -171,14 +171,13 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden, Atmosphere Oil Harden")
-            .selectMaskedFeatures()
-            .inputMaskedFeatures("2")
+            .inputMaskedOverride("2")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden, Atmosphere Oil Harden");
 
-        assertThat(secondaryProcessPage.getMaskedFeatures(), is("2"));
+        assertThat(secondaryProcessPage.getMasking(), is("2"));
     }
 
     @Test
@@ -200,8 +199,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal, Standard Anneal")
-            .selectMaskedFeatures()
-            .inputMaskedFeatures("1")
+            .inputMaskedOverride("1")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -211,7 +209,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Standard Anneal")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getMaskedFeatures(), is("1"));
+        assertThat(materialProcessPage.getMasking(), is("1"));
     }
 
     @Test
@@ -232,14 +230,13 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper, Vacuum Temper")
-            .selectMaskedFeatures()
-            .inputMaskedFeatures("3")
+            .inputMaskedOverride("3")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper, Vacuum Temper");
 
-        assertThat(secondaryProcessPage.getMaskedFeatures(), is("3"));
+        assertThat(secondaryProcessPage.getMasking(), is("3"));
     }
 
     @Test
