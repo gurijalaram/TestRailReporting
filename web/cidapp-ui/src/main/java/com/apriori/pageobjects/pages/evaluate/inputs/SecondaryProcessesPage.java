@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.materialprocess.ProcessOptionsController;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -54,34 +53,14 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [type='number']")
     private WebElement maskedInput;
 
-//    @FindBy(css = ".process-selector-details [value='default']")
-//    private WebElement defaultValueButton;
-//
-//    @FindBy(css = ".process-selector-details [value='user']")
-//    private WebElement overrideButton;
-//
-//    @FindBy(css = ".process-setup-option-form-group [type='number']")
-//    private WebElement overrideInput;
-//
-//    @FindBy(css = "[value='defaultNoMasking']")
-//    private WebElement maskingButton;
-//
-//    @FindBy(css = ".process-selector-details [value='userOverride']")
-//    private WebElement maskingFeaturesButton;
-//
-//    @FindBy(xpath = ".process-selector-details [type='number']")
-//    private WebElement maskingInput;
-
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
-    private ProcessOptionsController processOptionsController;
 
     public SecondaryProcessesPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        this.processOptionsController = new ProcessOptionsController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -186,16 +165,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
         return this;
     }
 
-//    /**
-//     * Selects default value radio button
-//     *
-//     * @return current page object
-//     */
-//    public SecondaryProcessesPage selectDefault(String label) {
-//        processOptionsController.selectDefaultValue(label);
-//        return this;
-//    }
-
     /**
      * Get list of selected items
      *
@@ -288,56 +257,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     public double getMasking() {
         return Double.parseDouble(pageUtils.waitForElementToAppear(maskedInput).getAttribute("textContent"));
     }
-
-//    /**
-//     * Inputs override value
-//     *
-//     * @param value - the value
-//     * @return current page object
-//     */
-//    public SecondaryProcessesPage inputOverride(String label, String value) {
-//        processOptionsController.inputOverride(label, value);
-//        return this;
-//    }
-//
-//    /**
-//     * Select masking
-//     *
-//     * @return current page object
-//     */
-//    public SecondaryProcessesPage selectMasking() {
-//        processOptionsController.selectMasking(maskingButton);
-//        return this;
-//    }
-//
-//    /**
-//     * Select masked features
-//     *
-//     * @return current page object
-//     */
-//    public SecondaryProcessesPage selectMaskedFeatures() {
-//        processOptionsController.selectMaskedFeatures(maskingFeaturesButton);
-//        return this;
-//    }
-//
-//    /**
-//     * Select masked input
-//     *
-//     * @param value        - the value
-//     * @return current page object
-//     */
-//    public SecondaryProcessesPage inputMaskedFeatures(String value) {
-//        processOptionsController.inputMaskedFeatures(maskingInput, value);
-//        return this;
-//    }
-//
-//    /**
-//     * Gets masking input
-//     * @return string
-//     */
-//    public String getMaskedFeatures() {
-//        return processOptionsController.getMaskedFeatures(maskingInput);
-//    }
 
     /**
      * Enter search input

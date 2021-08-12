@@ -101,13 +101,11 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
-    private ProcessOptionsController processOptionsController;
 
     public MaterialProcessPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
-        this.processOptionsController = new ProcessOptionsController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -324,73 +322,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     public double getMasking() {
         return Double.parseDouble(pageUtils.waitForElementToAppear(maskingInput).getAttribute("value"));
     }
-//    /**
-//     * Selects default value radio button
-//     *
-//     * @return current page object
-//     */
-//    public MaterialProcessPage selectDefaultValue(String label) {
-//        processOptionsController.selectDefaultValue(label);
-//        return this;
-//    }
-//
-//    /**
-//     * Inputs override value
-//     *
-//     * @param value - the value
-//     * @return current page object
-//     */
-//    public MaterialProcessPage inputOverride(String label, String value) {
-//        processOptionsController.inputOverride(label, value);
-//        return this;
-//    }
-//
-//    /**
-//     * Select masking
-//     *
-//     * @return current page object
-//     */
-//    public MaterialProcessPage selectMasking() {
-//        processOptionsController.selectMasking(maskingButton);
-//        return this;
-//    }
-//
-//    /**
-//     * Select masked features
-//     *
-//     * @return current page object
-//     */
-//    public MaterialProcessPage selectMaskedFeatures() {
-//        processOptionsController.selectMaskedFeatures(maskingFeaturesButton);
-//        return this;
-//    }
-//
-//    /**
-//     * Select masked input
-//     *
-//     * @param value        - the value
-//     * @return current page object
-//     */
-//    public MaterialProcessPage inputMaskedFeatures(String value) {
-//       processOptionsController.inputMaskedFeatures(maskingInput, value);
-//       return this;
-//    }
-//
-//    /**
-//     * Gets masking input
-//     * @return string
-//     */
-//    public String getMaskedFeatures() {
-//        return processOptionsController.getMaskedFeatures(maskingInput);
-//    }
-//
-//    /**
-//     * Gets override input
-//     * @return string
-//     */
-//    public String getOverride() {
-//        return processOptionsController.getOverride(overrideInput);
-//    }
 
     /**
      * Closes current panel
