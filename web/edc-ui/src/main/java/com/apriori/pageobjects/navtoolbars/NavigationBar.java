@@ -24,8 +24,10 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
 
     @FindBy(css = ".user-dropdown.dropdown")
     private WebElement userDropdown;
+
     @FindBy(css = "[data-icon='sign-out-alt']")
     private WebElement logoutButton;
+
     @FindBy(css = "[data-icon='user")
     private WebElement myProfile;
 
@@ -53,10 +55,11 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
      * Selects the help dropdown and go to Help
      *
      * @retun new page object
+     * @return
      */
-        public NavigationBar clickHelpDropdown() {
+        public HelpPage clickHelpDropdown() {
                 pageUtils.waitForElementAndClick(helpDropdown);
-               return new NavigationBar(driver);
+               return new HelpPage(driver);
            }
 
        public AboutUsPage clickAbout() {
