@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.login;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import com.utils.Constants;
@@ -21,7 +22,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CidAppLoginPage.class);
 
-    private static String loginPageUrl = Constants.getDefaultUrl();
+    private static String loginPageUrl = PropertiesContext.getStr("${env}.cidapp.ui_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
