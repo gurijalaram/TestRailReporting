@@ -2,6 +2,7 @@ package com.apriori.cidappapi.entity.enums;
 
 import com.apriori.cidappapi.utils.Constants;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
+import com.apriori.utils.properties.PropertiesContext;
 
 public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
@@ -33,7 +34,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return String.format(Constants.getApiUrl(), String.format(getEndpointString(), variables));
+        return String.format((PropertiesContext.getStr("${env}.cidapp_api.api_url")).concat("/%s"), String.format(getEndpointString(), variables));
     }
 }
 
