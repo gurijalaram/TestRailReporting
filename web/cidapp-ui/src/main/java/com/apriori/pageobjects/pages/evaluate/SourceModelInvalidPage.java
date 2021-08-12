@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +18,11 @@ public class SourceModelInvalidPage extends LoadableComponent<SourceModelInvalid
     @FindBy(css = (".modal-title"))
     private WebElement sourceModel;
 
-    @FindBy(xpath = "//button[.='Explore']")
-    private WebElement exploreButton;
-
     @FindBy(xpath = "//button[.='Fix Source']")
     private WebElement fixSourceButton;
+
+    @FindBy(css = ".close")
+    private WebElement xButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -65,22 +64,22 @@ public class SourceModelInvalidPage extends LoadableComponent<SourceModelInvalid
     }
 
     /**
-     * Navigates to the explore page
-     *
-     * @return new page object
-     */
-    public ExplorePage clickExplore() {
-        pageUtils.waitForElementAndClick(exploreButton);
-        return new ExplorePage(driver);
-    }
-
-    /**
      * Click Fix Source button
      *
      * @return new page object
      */
     public EvaluatePage clickFixSource() {
         pageUtils.waitForElementAndClick(fixSourceButton);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Click on the X button
+     *
+     * @return new page object
+     */
+    public EvaluatePage closeSMInvalidPanel() {
+        pageUtils.waitForElementAndClick(xButton);
         return new EvaluatePage(driver);
     }
 }
