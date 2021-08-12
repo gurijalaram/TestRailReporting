@@ -10,6 +10,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -24,10 +25,10 @@ public class ResetAutomationUsers {
     private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
 
     String url = String.format(
-            "%s/users/%s/password?key=%s",
-            Constants.getAtsServiceHost(),
-            Constants.getAutomationUsername(),
-            Constants.getSecretKey()
+        "%s/users/%s/password?key=%s",
+        PropertiesContext.getStr("${env}.ats.api_url"),
+        PropertiesContext.getStr("${env}.ats.automation_username"),
+        PropertiesContext.getStr("${env}.secret_key")
     );
 
     /**
@@ -43,7 +44,7 @@ public class ResetAutomationUsers {
 
             RequestEntity requestEntity = RequestEntity.init(String.format(url, userIndex), null)
                 .setUrlEncodingEnabled(false)
-                .setBody(new ResetAutoUsers().setPassword(Constants.getAutomationPassword()));
+                .setBody(new ResetAutoUsers().setPassword(PropertiesContext.getStr("${env}.ats.automation_password")));
 
             ResponseWrapper<String> resetAutoUsersResponse = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
 

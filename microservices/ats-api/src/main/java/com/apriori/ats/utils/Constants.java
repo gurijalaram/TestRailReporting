@@ -52,7 +52,7 @@ public class Constants {
      * Get default url
      *
      * @return string
-     */
+     *//*
     public static String getDefaultUrl() {
         baseUrl = System.getProperty(DEFAULT_BASE_URL_KEY) == null ? PROPERTIES.getProperty("url.default") : System.getProperty(DEFAULT_BASE_URL_KEY);
         System.setProperty("baseUrl", baseUrl);
@@ -60,94 +60,94 @@ public class Constants {
         return baseUrl;
     }
 
-    /**
+*//*    *//**//**
      * Get service host
      *
      * @return string
-     */
+     *//**//*
     public static String getAtsServiceHost() {
         atsServiceHost = System.getProperty("atsServiceHost") == null ? PROPERTIES.getProperty("ats.service.host") : System.getProperty("atsServiceHost");
         return atsServiceHost;
-    }
+    }*//*
 
-    /**
+*//*    *//**//**
      * Get token username
      *
      * @return string
-     */
+     *//**//*
     public static String getAtsTokenUsername() {
         return atsTokenUsername = System.getProperty("atsTokenUsername") == null ? PROPERTIES.getProperty("ats.token.username") : System.getProperty("atsTokenUsername");
-    }
+    }*//*
 
-    /**
+   *//* *//**//**
      * Get token email
      *
      * @return string
-     */
+     *//**//*
     public static String getAtsTokenEmail() {
         return atsTokenEmail = System.getProperty("atsTokenEmail") == null ? PROPERTIES.getProperty("ats.token.email") : System.getProperty("atsTokenEmail");
     }
-
-    /**
+*//*
+ *//*   *//**//**
      * Get token issuer
      *
      * @return string
-     */
+     *//**//*
     public static String getAtsTokenIssuer() {
         return atsTokenIssuer = System.getProperty("atsTokenIssuer") == null ? PROPERTIES.getProperty("ats.token.issuer") : System.getProperty("atsTokenIssuer");
-    }
+    }*//*
 
-    /**
+    *//**
      * Get token subject
      *
      * @return string
-     */
+     *//*
     public static String getAtsTokenSubject() {
         return atsTokenSubject = System.getProperty("atsTokenSubject") == null ? PROPERTIES.getProperty("ats.token.subject") : System.getProperty("atsTokenSubject");
     }
 
-    /**
+    *//**
      * Get auth application
      *
      * @return string
-     */
+     *//*
     public static String getAtsAuthApplication() {
         return atsAuthApplication = System.getProperty("atsAuthApplication") == null ? PROPERTIES.getProperty("ats.auth.application") : System.getProperty("atsAuthApplication");
     }
 
-    /**
+*//*    *//**//**
      * Get auth target cloud context
      *
      * @return string
-     */
+     *//**//*
     public static String getAtsAuthTargetCloudContext() {
         return atsAuthTargetCloudContext = System.getProperty("atsAuthTargetCloudContext") == null ? PROPERTIES.getProperty("ats.auth.targetCloudContext") : System.getProperty("atsAuthTargetCloudContext");
-    }
+    }*//*
 
-    /**
+    *//**
      * Get secret key
      *
      * @return string
-     */
+     *//*
     public static String getSecretKey() {
         return secretKey = System.getProperty("atsSecretKey") == null ? PROPERTIES.getProperty("ats.secret.key") : System.getProperty("atsSecretKey");
     }
 
-    /**
+    *//**
      * Get automation username prefix
      *
      * @return string
-     */
+     *//*
     public static String getAutomationUsername() {
         return PROPERTIES.getProperty("automation.username");
     }
 
-    /**
+    *//**
      * Get automation password
      *
      * @return string
-     */
+     *//*
     public static String getAutomationPassword() {
         return PROPERTIES.getProperty("automation.password");
-    }
+    }*/
 }

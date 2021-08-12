@@ -6,6 +6,7 @@ import com.apriori.apibase.services.ats.objects.TokenRequest;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +16,12 @@ import org.apache.http.HttpStatus;
 public class JwtTokenUtil {
 
     private String currentToken;
-    private String username = Constants.getAtsTokenUsername();
-    private String email = Constants.getAtsTokenEmail();
-    private String apiUrl = Constants.getAtsServiceHost();
-    private String secretKey = Constants.getSecretKey();
-    private String issuer = Constants.getAtsTokenIssuer();
-    private String subject = Constants.getAtsTokenSubject();
+    private String username = PropertiesContext.getStr("${env}.ats.ats_token_username");
+    private String email = PropertiesContext.getStr("${env}.ats.ats_token_email");
+    private String apiUrl = PropertiesContext.getStr("${env}.ats.api_url");
+    private String secretKey = PropertiesContext.getStr("${env}.secret_key");
+    private String issuer = PropertiesContext.getStr("${env}.ats.ats_token_issuer");
+    private String subject = PropertiesContext.getStr("${env}.ats.ats_token_subject");
 
     public JwtTokenUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername().split("@")[0];
