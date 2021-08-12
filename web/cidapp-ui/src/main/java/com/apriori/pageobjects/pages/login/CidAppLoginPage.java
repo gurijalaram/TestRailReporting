@@ -22,7 +22,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CidAppLoginPage.class);
 
-    private static String loginPageUrl = PropertiesContext.getStr("${env}.cidapp.cidapp_ui_url");
+    private static String loginPageUrl = PropertiesContext.getStr("${env}.cidapp.ui_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;

@@ -16,12 +16,12 @@ import org.apache.http.HttpStatus;
 public class JwtTokenUtil {
 
     private String currentToken;
-    private String username = PropertiesContext.getStr("${env}.ats.ats_token_username");
-    private String email = PropertiesContext.getStr("${env}.ats.ats_token_email");
+    private String username = PropertiesContext.getStr("${env}.ats.token_username");
+    private String email = PropertiesContext.getStr("${env}.ats.token_email");
     private String apiUrl = PropertiesContext.getStr("${env}.ats.api_url");
     private String secretKey = PropertiesContext.getStr("${env}.secret_key");
-    private String issuer = PropertiesContext.getStr("${env}.ats.ats_token_issuer");
-    private String subject = PropertiesContext.getStr("${env}.ats.ats_token_subject");
+    private String issuer = PropertiesContext.getStr("${env}.ats.token_issuer");
+    private String subject = PropertiesContext.getStr("${env}.ats.token_subject");
 
     public JwtTokenUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername().split("@")[0];

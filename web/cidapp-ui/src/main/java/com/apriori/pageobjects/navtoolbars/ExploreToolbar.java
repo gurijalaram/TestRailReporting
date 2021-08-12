@@ -121,7 +121,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return a new page object
      */
     public EvaluatePage navigateToScenario(String componentId, String scenarioId) {
-        driver.navigate().to(PropertiesContext.getStr("${env}.cidapp.cidapp_ui_url").concat(String.format("components/%s/scenarios/%s", componentId, scenarioId)));
+        driver.navigate().to(PropertiesContext.getStr("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", componentId, scenarioId)));
         return new EvaluatePage(driver);
     }
 
