@@ -107,9 +107,27 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * Go to stock tab
      * @return new page object
      */
-    public StockPage goToStockTab() {
+    public StockPage openStockTab() {
         pageUtils.waitForElementAndClick(stockTab);
         return new StockPage(driver);
+    }
+
+    /**
+     * Go to Part Nesting tab
+     * @return new page object
+     */
+    public PartNestingPage openPartNestingTab() {
+        pageUtils.waitForElementAndClick(partNestingTab);
+        return new PartNestingPage(driver);
+    }
+
+    /**
+     * Checks if tab is displayed
+     * @return true/false
+     */
+    public boolean isPartNestingTabDisplayed() {
+        By byTab = By.xpath("//button[.='Part Nesting']");
+        return pageUtils.isElementPresent(byTab);
     }
 
     /**
@@ -128,14 +146,5 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public HelpDocPage openHelp() {
         return panelController.openHelp();
-    }
-
-    /**
-     * Go to Part Nesting tab
-     * @return new page object
-     */
-    public PartNestingPage openPartNestingTab() {
-        pageUtils.waitForElementAndClick(partNestingTab);
-        return new PartNestingPage(driver);
     }
 }
