@@ -3,7 +3,6 @@ package tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.entity.response.AuthorizationResponse;
 import com.apriori.ats.utils.AuthorizeUserUtil;
-import com.apriori.ats.utils.Constants;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.properties.PropertiesContext;

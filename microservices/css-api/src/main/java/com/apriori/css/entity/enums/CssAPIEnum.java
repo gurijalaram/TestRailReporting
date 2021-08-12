@@ -1,6 +1,5 @@
 package com.apriori.css.entity.enums;
 
-import com.apriori.utils.Constants;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
