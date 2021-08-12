@@ -1,4 +1,4 @@
-package logout;
+package com.logout;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

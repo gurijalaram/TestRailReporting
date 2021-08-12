@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.navtoolbars.myuser;
 
-import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -11,50 +10,37 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class MyUserPage extends LoadableComponent<MyUserPage> {
+public class MyProfilePage extends LoadableComponent<MyProfilePage> {
 
-    @FindBy(css = "[data-icon='sign-out-alt']")
-    private WebElement logoutButton;
-
-    @FindBy(css = "[data-icon='user']")
+    @FindBy(css = "div[class='panel'] .panel-title")
     private WebElement myProfile;
-
-    @FindBy(css = ".active-account")
-    private WebElement activeAccount;
 
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
-    public MyUserPage(WebDriver driver) {
+    public MyProfilePage(WebDriver driver){
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
-
     @Override
     protected void load() {
-
+        pageUtils.waitForElementToAppear(myProfile);
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(activeAccount);
+
     }
 
     /**
-     * Selects the User dropdown and go to Logout
+     * Get Current url
      *
-     * @retun new page object
+     * @return String
      */
-    public EdcAppLoginPage logout() {
-        pageUtils.waitForElementAndClick(logoutButton);
-        return new EdcAppLoginPage(driver);
-    }
-
-    public MyProfilePage clickMyProfile() {
-        pageUtils.waitForElementAndClick(myProfile);
-        return new MyProfilePage(driver);
+    public String getUserProfileUrl() {
+       return driver.getCurrentUrl();
     }
 }
