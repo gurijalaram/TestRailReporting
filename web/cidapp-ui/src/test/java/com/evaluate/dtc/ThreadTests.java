@@ -49,6 +49,7 @@ public class ThreadTests extends TestBase {
         }
     }
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @Description("Test to check edit thread button is disabled")
     public void threadButtonDisabled() {
@@ -131,6 +132,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getThreaded("SimpleHole:1"), is("check"));
     }
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @TestRail(testCaseId = {"29"})
     @Description("Test to set dropdown value to no")
@@ -156,6 +158,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadingStatus("No"), is(true));
     }*/
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @TestRail(testCaseId = {"3847"})
     @Description("Test to set dropdown value to yes")
@@ -187,6 +190,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("0.64"), is(true));
     }*/
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @Description("Testing warning message displayed when thread length is removed")
     public void costedThreadLengthRemoved() {
@@ -216,6 +220,7 @@ public class ThreadTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }*/
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @TestRail(testCaseId = {"32", "33"})
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
@@ -245,6 +250,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.isThreadLength("0.26"), is(true));
     }*/
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @TestRail(testCaseId = {"32", "34"})
     @Description("Testing that adding text values in the thread length shows a warning message")
@@ -270,6 +276,7 @@ public class ThreadTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }*/
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @Description("Testing that adding no value in the thread shows a warning message")
     public void junkValueTest() {
@@ -294,6 +301,7 @@ public class ThreadTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }*/
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @TestRail(testCaseId = {"35"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
@@ -319,6 +327,7 @@ public class ThreadTests extends TestBase {
         assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }*/
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"30"})
@@ -556,6 +565,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getLength("SimpleHole:13"), is("4.06mm"));
     }
 
+    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @TestRail(testCaseId = {"64"})
     @Description("Validate thread filter behaves correctly in Investigation tab.")
@@ -593,5 +603,4 @@ public class ThreadTests extends TestBase {
 
         assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("Manual", "7.00"));
     }*/
-
 }
