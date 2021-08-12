@@ -1,23 +1,17 @@
-package com.apriori.pageobjects.navtoolbars;
+package com.apriori.pageobjects.navtoolbars.myuser;
 
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class MyProfilePage extends LoadableComponent<MyProfilePage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(MyProfilePage.class);
-
-
-    @FindBy(css = ".user-dropdown.dropdown")
-    private WebElement userDropdown;
+@Slf4j
+public class MyUserPage extends LoadableComponent<MyUserPage> {
 
     @FindBy(css = "[data-icon='sign-out-alt']")
     private WebElement logoutButton;
@@ -28,10 +22,10 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage> {
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
-    public MyProfilePage(WebDriver driver) {
+    public MyUserPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
