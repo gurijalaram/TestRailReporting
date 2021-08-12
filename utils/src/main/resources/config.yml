@@ -78,7 +78,7 @@ qa-cid-perf:
     cidapp_ui_url: https://cid.na-1.qa-cid-perf.apriori.net/
 
   cas:
-    cas_api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
+    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
 
   fms:
     api_url: https://fms.na-1.qa-cid-perf.apriori.net/
