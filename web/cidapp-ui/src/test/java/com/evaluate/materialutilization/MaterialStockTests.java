@@ -19,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -145,7 +144,7 @@ public class MaterialStockTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
-            .goToStockTab();
+            .openStockTab();
 
         assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("ROUND_BAR")));
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("Yes")));
@@ -158,7 +157,7 @@ public class MaterialStockTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
-            .goToStockTab();
+            .openStockTab();
 
         assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("Round Bar:  3 in  OD.  20 ft lengths")));
         assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
