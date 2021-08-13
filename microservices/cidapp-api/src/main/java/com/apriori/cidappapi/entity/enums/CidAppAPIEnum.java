@@ -33,7 +33,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return String.format((PropertiesContext.get("${env}.cidapp_api.api_url")).concat("/%s"), String.format(getEndpointString(), variables));
+        return String.format((PropertiesContext.get("${env}.cidapp.api_url")).concat("%s"), String.format(getEndpointString(), variables));
     }
 }
 
