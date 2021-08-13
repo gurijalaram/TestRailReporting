@@ -528,7 +528,9 @@ public class SecondaryProcessTests extends TestBase {
     @Description("secondary process automatically added by aPriori")
     public void cannotDeselectSP() {
 
-        resourceFile = FileResourceUtil.getResourceAsFile("DTCCastingIssues.catpart");
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getResourceAsFile(componentName + ".catpart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -538,7 +540,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario()
             .openSecondaryProcesses()
