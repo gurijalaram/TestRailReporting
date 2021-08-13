@@ -16,6 +16,7 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -663,10 +664,10 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Validates the new tab page title
      *
-     * @return boolean
+     * @return String
      */
-    public boolean validateNewTabTitle(String pageTitle) {
-        return driver.getTitle().contains(pageTitle);
+    public String validateNewTabTitle() {
+        return driver.getTitle();
     }
 
     /**
