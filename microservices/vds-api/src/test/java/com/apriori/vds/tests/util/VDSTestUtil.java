@@ -22,8 +22,8 @@ import org.junit.Assert;
 import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
-    protected static final String customerId =  PropertiesContext.getStr("${env}.customer_identity");
-    protected static final String userId = PropertiesContext.getStr("${env}.user_identity");
+    protected static final String customerId =  PropertiesContext.get("${env}.customer_identity");
+    protected static final String userId = PropertiesContext.get("${env}.user_identity");
 
     private static DigitalFactory digitalFactory;
 

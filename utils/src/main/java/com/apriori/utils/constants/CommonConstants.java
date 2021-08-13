@@ -14,6 +14,6 @@ public class CommonConstants {
     public static final String DEFAULT_ACCESS_LEVEL = "admin";
     public static String RUN_ID = DEFAULT_PROJECT_ID_VALUE;
 
-    public static final Level consoleLogLevel = Level.parse(PropertiesContext.getStr("global.console_log_level"));
-    public static final String schemaBasePath = PropertiesContext.getStr("global.schema_base_path");
+    public static final Level consoleLogLevel = Level.parse(PropertiesContext.get("global.console_log_level"));
+    public static final String schemaBasePath = PropertiesContext.get("global.schema_base_path");
 }

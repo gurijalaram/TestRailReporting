@@ -87,7 +87,7 @@ public enum VDSAPIEnum implements EdcQaAPI {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.getStr("${env}.vds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.getStr("${env}.secret_key");
+        return PropertiesContext.get("${env}.vds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
     }
 
 }
