@@ -68,13 +68,10 @@ qa-cid-perf:
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
-  cidapp:
-    ui_url: https://cid.na-1.qa-cid-perf.apriori.net/
-
   cds:
     api_url: https://cds.na-1.qa-cid-perf.apriori.net/
 
-  cidapp_api:
+  cidapp:
     api_url: https://cid-api.na-1.qa-cid-perf.apriori.net
     ui_url: https://cid.na-1.qa-cid-perf.apriori.net/
 
