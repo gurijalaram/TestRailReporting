@@ -42,7 +42,7 @@ public class AcsResources {
     private final String applicationJson = "application/json";
     private final String textPlain = "text/plain";
     Map<String, String> headers = new HashMap<>();
-    private String baseUrl = PropertiesContext.getStr("${env}.base_url");
+    private String baseUrl = PropertiesContext.get("${env}.base_url");
     private String sessionUrl = "apriori/cost/session/";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();

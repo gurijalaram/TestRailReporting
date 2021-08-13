@@ -84,7 +84,7 @@ public class FileUploadResources {
     private final String applicationJson = "application/json";
     private final String textPlain = "text/plain";
     Map<String, String> headers = new HashMap<>();
-    private String baseUrl = PropertiesContext.getStr("${env}.cid.api_url");
+    private String baseUrl = PropertiesContext.get("${env}.cid.api_url");
     private String sessionUrl = "apriori/cost/session/";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();

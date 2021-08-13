@@ -15,7 +15,7 @@ public class APIAuthentication {
 
     private String accessToken = null;
     private int timeToLive = 0;
-    private String baseUrl = PropertiesContext.getStr("${env}.base_url");
+    private String baseUrl = PropertiesContext.get("${env}.base_url");
 
     /**
      * Fetch Authorization header for user
