@@ -207,18 +207,18 @@ If we want to run against Eclipse dev env we also need to change **url** and **i
 ### Get properties 
 To get any project property use `com.apriori.utils.properties.PropertiesContext` - this is global class to work with properties.
 `com.apriori.utils.properties.PropertiesContext` - contains get methods, that allow to get the property value to mapped type
- - `getStr(String propertyName)` - return property by name mapped to String
- - `getStr(String propertyName)` - return property by name mapped to Integer
+ - `get(String propertyName)` - return property by name mapped to String
+
 Property name represent String path of YML file e.g: 
    to get <br>
    >`global:` <br>
    > `prop: example` <br>
 
-`PropertiesContext.getStr("global.prop");`
+`PropertiesContext.get("global.prop");`
 
 #### Property based on environment
 To get property based on environment use environment reference by key `${env}` 
-   e.g: `PropertiesContext.getStr("${env}.prop");`
+   e.g: `PropertiesContext.get("${env}.prop");`
 
 An example of properties usage you can find in `com.apriori.util.test.PropertiesTestPropertiesTest`
 

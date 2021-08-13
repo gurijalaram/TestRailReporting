@@ -38,7 +38,7 @@ public class RequestEntityUtil {
 
     public static RequestEntity initWithApUserContext(EndpointEnum endpoint, Class<?> returnType) {
         return initBuilder(endpoint, returnType)
-            .header("ap-user-context", PropertiesContext.getStr("${env}.ap_user_context"))
+            .header("ap-user-context", PropertiesContext.get("${env}.ap_user_context"))
             .build();
     }
 }
