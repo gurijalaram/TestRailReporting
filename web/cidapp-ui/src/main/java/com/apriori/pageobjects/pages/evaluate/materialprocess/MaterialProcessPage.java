@@ -104,6 +104,9 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@value='none']")
     private WebElement noMasking;
 
+    @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@type='number']")
+    private WebElement maskedFeatureInput;
+
     @FindBy(xpath = "//h6[.='Painted Batch Size']/..//input[@type='number']")
     private WebElement batchSizeInput;
 
@@ -337,6 +340,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     /**
      * Gets fraction of component painted
+     *
      * @return double
      */
     public double getFractionPainted() {
@@ -345,6 +349,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     /**
      * Checks if masking is selected
+     *
      * @return true/false
      */
     public boolean isNoMaskingSelected() {
@@ -352,7 +357,17 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
+     * Gets masked feature
+     *
+     * @return double
+     */
+    public double getMaskedFeature() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedFeatureInput).getAttribute("value"));
+    }
+
+    /**
      * Gets painted batch size
+     *
      * @return double
      */
     public double getPaintedBatchSize() {
@@ -361,6 +376,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     /**
      * Gets number of components per paint cart
+     *
      * @return double
      */
     public double getComponentsPaintCart() {

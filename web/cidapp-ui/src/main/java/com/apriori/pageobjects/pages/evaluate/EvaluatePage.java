@@ -334,6 +334,14 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Checks if secondary process pencil is enabled
+     * @return boolean
+     */
+    public boolean isSecondaryProcessButtonEnabled() {
+        return pageUtils.waitForElementToAppear(secondaryProcessesPencil).isEnabled();
+    }
+
+    /**
      * Gets the process routing details
      *
      * @return string

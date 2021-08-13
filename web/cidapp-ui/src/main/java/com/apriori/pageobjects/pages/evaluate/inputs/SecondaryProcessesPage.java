@@ -175,13 +175,42 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
         assertTrue("Correct tab was not selected", driver.findElement(byTabName).getAttribute("class").contains("active"));
     }
 
+//    /**
+//     * Selects the secondary types dropdowns in the process tree
+//     *
+//     * @param processTypes - the secondary process type
+//     * @return current page object
+//     */
+//    public SecondaryProcessesPage selectSecondaryProcess(String processTypes) {
+//        Arrays.stream(Stream.of(processTypes)
+//            .map(processType -> processType.split(","))
+//            .collect(Collectors.toList())
+//            .get(0))
+//            .forEach(process -> {
+//                By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span", process.trim()));
+//                pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(secondaryProcess), true);
+//
+//                // TODO: 22/07/2021 cn - find a more efficient way of doing this
+//                By dropdown = By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim()));
+//                if (pageUtils.isElementPresent(dropdown)) {
+//                    pageUtils.waitForElementAndClick(dropdown);
+//                }
+//
+//                By label = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
+//                if (pageUtils.isElementPresent(label)) {
+//                    pageUtils.waitForElementAndClick(label);
+//                }
+//            });
+//        return this;
+//    }
+
     /**
-     * Selects the secondary types dropdowns in the process tree
+     * Expands the secondary process tree
      *
-     * @param processTypes - the secondary process type
+     * @param processTypes - the secondary process types
      * @return current page object
      */
-    public SecondaryProcessesPage selectSecondaryProcess(String processTypes) {
+    public SecondaryProcessesPage expandSecondaryProcessTree(String processTypes) {
         Arrays.stream(Stream.of(processTypes)
             .map(processType -> processType.split(","))
             .collect(Collectors.toList())
@@ -190,19 +219,48 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
                 By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span", process.trim()));
                 pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(secondaryProcess), true);
 
-                // TODO: 22/07/2021 cn - find a more efficient way of doing this
-                By dropdown = By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim()));
+                By dropdown = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
                 if (pageUtils.isElementPresent(dropdown)) {
                     pageUtils.waitForElementAndClick(dropdown);
                 }
-
-                By label = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
-                if (pageUtils.isElementPresent(label)) {
-                    pageUtils.waitForElementAndClick(label);
-                }
-                pageUtils.waitForElementAndClick(driver.findElement(By.xpath(String.format("//span[.='%s']/ancestor::span//span[@role='link']", process.trim()))));
             });
         return this;
+    }
+
+    /**
+     * Selects the secondary process types in the process tree
+     *
+     * @param processTypes - the secondary process types
+     * @param process      - the process
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectSecondaryProcess(String processTypes, String process) {
+        expandSecondaryProcessTree(processTypes);
+        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span[@role]", process.trim()));
+        pageUtils.waitForElementAndClick(byProcess);
+        return this;
+    }
+
+    /**
+     * Selects the secondary process types in the process tree
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectSecondaryProcess(String process) {
+        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span[@role]", process.trim()));
+        pageUtils.waitForElementAndClick(byProcess);
+        return this;
+    }
+
+    /**
+     * Select the secondary process checkbox
+     *
+     * @param process - the process
+     * @return string
+     */
+    public String getCheckboxStatus(String process) {
+        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//button//input", process.trim()));
+        return pageUtils.waitForElementToAppear(byProcess).getAttribute("checked");
     }
 
     /**
@@ -388,7 +446,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @param value - the value
      * @return current page object
      */
-    public SecondaryProcessesPage inputBatchSizeDefault(String value) {
+    public SecondaryProcessesPage inputBatchSizeOverride(String value) {
         pageUtils.waitForElementAndClick(batchSizeUser);
         pageUtils.clearInput(batchSizeInput);
         batchSizeInput.sendKeys(value);
