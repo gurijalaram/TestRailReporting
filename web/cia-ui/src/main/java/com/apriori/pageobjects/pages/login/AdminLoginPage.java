@@ -19,7 +19,7 @@ import utils.Constants;
 public class AdminLoginPage extends AdminHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminLoginPage.class);
-    private static String loginPageURL = PropertiesContext.getStr("${env}.admin");
+    private static String loginPageURL = PropertiesContext.get("${env}.admin");
 
     @FindBy(css = "input[name='username']")
     private WebElement emailInput;

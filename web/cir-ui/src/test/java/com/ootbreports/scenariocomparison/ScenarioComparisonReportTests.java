@@ -195,7 +195,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
 
-        String expectedLastModifiedCount = PropertiesContext.getStr("{env}").equals("cir-qa") ? "2" : "1";
+        String expectedLastModifiedCount = PropertiesContext.get("{env}").equals("cir-qa") ? "2" : "1";
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
         String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
@@ -259,7 +259,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
 
-        String expectedScenarioNameCount = PropertiesContext.getStr("{env}").equals("cir-qa") ? "2" : "1";
+        String expectedScenarioNameCount = PropertiesContext.get("{env}").equals("cir-qa") ? "2" : "1";
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", expectedScenarioNameCount);
         String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
