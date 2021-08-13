@@ -30,7 +30,6 @@ public class LoginTests extends TestBase {
     private ElectronicsDataCollectionPage edcPage;
 
     @Test
-    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"8886"})
     @Description("Test successful login")
     public void testLogin() {
@@ -61,8 +60,5 @@ public class LoginTests extends TestBase {
         loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
-
-        // To counter the incorrect login blocking the active username
-        edcPage = loginPage.login(UserUtil.getUser());
     }
 }

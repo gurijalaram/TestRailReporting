@@ -12,7 +12,6 @@ import testsuites.suiteinterface.SmokeTests;
 @ProjectRunID("610")
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SmokeTests.class)
-@Categories.ExcludeCategory(IgnoreTests.class)
 @Suite.SuiteClasses({
     LoginTests.class
 })
