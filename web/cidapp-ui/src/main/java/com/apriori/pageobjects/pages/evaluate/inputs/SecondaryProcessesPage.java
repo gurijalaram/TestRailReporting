@@ -175,35 +175,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
         assertTrue("Correct tab was not selected", driver.findElement(byTabName).getAttribute("class").contains("active"));
     }
 
-//    /**
-//     * Selects the secondary types dropdowns in the process tree
-//     *
-//     * @param processTypes - the secondary process type
-//     * @return current page object
-//     */
-//    public SecondaryProcessesPage selectSecondaryProcess(String processTypes) {
-//        Arrays.stream(Stream.of(processTypes)
-//            .map(processType -> processType.split(","))
-//            .collect(Collectors.toList())
-//            .get(0))
-//            .forEach(process -> {
-//                By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span", process.trim()));
-//                pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(secondaryProcess), true);
-//
-//                // TODO: 22/07/2021 cn - find a more efficient way of doing this
-//                By dropdown = By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim()));
-//                if (pageUtils.isElementPresent(dropdown)) {
-//                    pageUtils.waitForElementAndClick(dropdown);
-//                }
-//
-//                By label = By.xpath(String.format("//span[.='%s']/ancestor::span//button", process.trim()));
-//                if (pageUtils.isElementPresent(label)) {
-//                    pageUtils.waitForElementAndClick(label);
-//                }
-//            });
-//        return this;
-//    }
-
     /**
      * Expands the secondary process tree
      *
