@@ -98,6 +98,18 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[.='Masking']/..//input[@type='number']")
     private WebElement maskingInput;
 
+    @FindBy(xpath = "//h6[.='What Fraction of Component is Painted?']/..//input[@type='number']")
+    private WebElement fractionInput;
+
+    @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@value='none']")
+    private WebElement noMasking;
+
+    @FindBy(xpath = "//h6[.='Painted Batch Size']/..//input[@type='number']")
+    private WebElement batchSizeInput;
+
+    @FindBy(xpath = "//h6[.='Number of Components Per Paint Cart']/..//input[@type='number']")
+    private WebElement compPaintCartInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -317,10 +329,42 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     /**
      * Gets case depth
      *
-     * @return string
+     * @return double
      */
     public double getMasking() {
         return Double.parseDouble(pageUtils.waitForElementToAppear(maskingInput).getAttribute("value"));
+    }
+
+    /**
+     * Gets fraction of component painted
+     * @return double
+     */
+    public double getFractionPainted() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(fractionInput).getAttribute("value"));
+    }
+
+    /**
+     * Checks if masking is selected
+     * @return true/false
+     */
+    public boolean isNoMaskingSelected() {
+        return !pageUtils.waitForElementToAppear(noMasking).getAttribute("checked").equals("null");
+    }
+
+    /**
+     * Gets painted batch size
+     * @return double
+     */
+    public double getPaintedBatchSize() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value"));
+    }
+
+    /**
+     * Gets number of components per paint cart
+     * @return double
+     */
+    public double getComponentsPaintCart() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(compPaintCartInput).getAttribute("value"));
     }
 
     /**

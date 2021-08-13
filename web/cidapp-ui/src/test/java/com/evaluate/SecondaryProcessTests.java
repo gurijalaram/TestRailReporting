@@ -171,7 +171,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden, Atmosphere Oil Harden")
-            .inputMaskedOverride("2")
+            .inputMaskingOverride("2")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
@@ -199,7 +199,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal, Standard Anneal")
-            .inputMaskedOverride("1")
+            .inputMaskingOverride("1")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -230,7 +230,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
             .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper, Vacuum Temper")
-            .inputMaskedOverride("3")
+            .inputMaskingOverride("3")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
@@ -373,19 +373,19 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcesses()
             .selectSecondaryProcess("Surface Treatment, Paint, Powder Coat Cart")
             .inputFractionOverride("0.30")
-            .selectNoMaskingButton()
-            .setSpecifyPainted("414")
-            .setSpecifiedInput("2")
-            .submit()
+            .selectNoMasking()
+            .inputCompPaintCart("414")
+            .inputBatchSizeDefault("2")
+            .submit(EvaluatePage.class)
             .costScenario()
-            .openProcessDetails()
-            .selectProcessChart("Powder Coat Cart")
-            .selectOptions();
+            .openMaterialProcess()
+            .selectBarChart("Powder Coat Cart")
+            .selectOptionsTab();
 
-        assertThat(materialProcessPage.getFractionPainted(), is("0.30"));
-        assertThat(materialProcessPage.isNoMaskingSelected("checked"), is("true"));
-        assertThat(materialProcessPage.getSpecifyPainted(), is("414"));
-        assertThat(materialProcessPage.getSpecified(), is("2"));
+        assertThat(materialProcessPage.getFractionPainted(), is(0.30));
+        assertThat(materialProcessPage.isNoMaskingSelected(), is(true));
+        assertThat(materialProcessPage.getComponentsPaintCart(), is("414"));
+        assertThat(materialProcessPage.getPaintedBatchSize(), is("2"));
     }
 
     /*@Test
