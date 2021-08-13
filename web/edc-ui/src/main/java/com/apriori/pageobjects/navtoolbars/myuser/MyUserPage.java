@@ -22,6 +22,9 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
     @FindBy(css = ".active-account")
     private WebElement activeAccount;
 
+    @FindBy(css = "[data-icon='gavel']")
+    private WebElement termsOfUse;
+
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
@@ -56,5 +59,10 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
     public MyProfilePage clickMyProfile() {
         pageUtils.waitForElementAndClick(myProfile);
         return new MyProfilePage(driver);
+    }
+
+    public TermsOfUsePage selectTermsOfUse() {
+        pageUtils.waitForElementAndClick(termsOfUse);
+        return new TermsOfUsePage(driver);
     }
 }
