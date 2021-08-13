@@ -1,6 +1,7 @@
 package com.myuser;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.navtoolbars.myuser.MyProfilePage;
@@ -28,5 +29,6 @@ public class MyProfileTests extends TestBase {
             .clickMyProfile();
 
         assertThat(myProfilePage.getUserProfileUrl(), containsString("user-profile"));
+        assertThat(myProfilePage.verifyTextFieldEnable(), not(true));
     }
 }

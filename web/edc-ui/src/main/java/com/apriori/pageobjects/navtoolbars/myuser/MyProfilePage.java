@@ -15,24 +15,27 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage> {
     @FindBy(css = "div[class='panel'] .panel-title")
     private WebElement myProfile;
 
+    @FindBy(id = "name")
+    private WebElement username;
+
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
-    public MyProfilePage(WebDriver driver){
+    public MyProfilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
+
     @Override
     protected void load() {
-        pageUtils.waitForElementToAppear(myProfile);
     }
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(myProfile);
     }
 
     /**
@@ -41,6 +44,15 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage> {
      * @return String
      */
     public String getUserProfileUrl() {
-       return driver.getCurrentUrl();
+        return driver.getCurrentUrl();
+    }
+
+    /**
+     * Check text field is read only
+     *
+     * @return boolean
+     */
+    public boolean verifyTextFieldEnable() {
+        return pageUtils.waitForElementToAppear(username).isEnabled();
     }
 }
