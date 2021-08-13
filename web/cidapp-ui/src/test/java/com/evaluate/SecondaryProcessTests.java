@@ -325,7 +325,6 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Certification"));
     }
 
-    /*
     @Test
     @TestRail(testCaseId = {"5132"})
     @Description("Test secondary process Paint")
@@ -338,24 +337,24 @@ public class SecondaryProcessTests extends TestBase {
 
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
-            .submit()
+            .selectSecondaryProcess("Surface Treatment, Paint, Powder Coat Cart")
+            .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
 
-        processRoutingPage = evaluatePage.openProcessDetails()
-            .selectProcessChart("Powder Coat Cart");
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectBarChart("Powder Coat Cart");
 
-        assertThat(processRoutingPage.getProcessPercentage(), hasItem("38 (77%)"));
-    }*/
+        assertThat(materialProcessPage.getProcessPercentage(), hasItem("38 (77%)"));
+    }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"5141", "5142", "5143"})
     @Description("Test secondary process powder coat cart PSO")
     public void psoPowderCoatCart() {
@@ -365,31 +364,29 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        processSetupOptionsPage = loginPage.login(currentUser)
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
-            .submit()
+            .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
-            .selectFractionButton()
-            .setFractionPainted("0.30")
+            .selectSecondaryProcess("Surface Treatment, Paint, Powder Coat Cart")
+            .inputFractionOverride("0.30")
             .selectNoMaskingButton()
             .setSpecifyPainted("414")
-            .setSpecifiedInput("2");
-
-        processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
+            .setSpecifiedInput("2")
+            .submit()
             .costScenario()
             .openProcessDetails()
             .selectProcessChart("Powder Coat Cart")
             .selectOptions();
 
-        assertThat(processSetupOptionsPage.getFractionPainted(), is("0.30"));
-        assertThat(processSetupOptionsPage.isNoMaskingSelected("checked"), is("true"));
-        assertThat(processSetupOptionsPage.getSpecifyPainted(), is("414"));
-        assertThat(processSetupOptionsPage.getSpecified(), is("2"));
-    }*/
+        assertThat(materialProcessPage.getFractionPainted(), is("0.30"));
+        assertThat(materialProcessPage.isNoMaskingSelected("checked"), is("true"));
+        assertThat(materialProcessPage.getSpecifyPainted(), is("414"));
+        assertThat(materialProcessPage.getSpecified(), is("2"));
+    }
 
     /*@Test
     @TestRail(testCaseId = {"5144", "5145", "5146", "5147"})
@@ -550,7 +547,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(secondaryProcessPage.getCheckboxStatus("Trim"), containsString("disabled"));
     }*/
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"5150"})
     @Description("Test secondary process Carbonitride")
     public void secondaryProcessCarbonitride() {
@@ -560,15 +557,15 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        processSetupOptionsPage = loginPage.login(currentUser)
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectHighlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride")
+            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden, Carbonitride")
             .setMaskedFeaturesInput("1");
 
         processSetupOptionsPage = new SecondaryProcessPage(driver).apply()
@@ -577,7 +574,7 @@ public class SecondaryProcessTests extends TestBase {
             .highlightSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride");
 
         assertThat(processSetupOptionsPage.getMaskedFeatures(), is("1"));
-    }*/
+    }
 
     /*@Test
     @TestRail(testCaseId = {"5152"})

@@ -53,6 +53,45 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [type='number']")
     private WebElement maskedInput;
 
+    @FindBy(css = ".process-selector-details [@value='wholePart']")
+    private WebElement fractionDefault;
+
+    @FindBy(xpath = "//h6[.='What Fraction of Component is Painted?']/..//input[@value='user']")
+    private WebElement fractionUser;
+
+    @FindBy(css = ".process-selector-details [@type='number']")
+    private WebElement fractionInput;
+
+    @FindBy(css = ".process-selector-details [value='threadedHoles']")
+    private WebElement maskedFeaturesDefault;
+
+    @FindBy(css = ".process-selector-details [value='none']")
+    private WebElement noMasking;
+
+    @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@value='user']")
+    private WebElement maskedFeatureUser;
+
+    @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@type='number']")
+    private WebElement maskedFeatureInput;
+
+    @FindBy(css = ".process-selector-details [value='productionBatchSize']")
+    private WebElement batchSizeDefault;
+
+    @FindBy(xpath = "//h6[.='Painted Batch Size']/..//input[@value='user']")
+    private WebElement batchSizeUser;
+
+    @FindBy(xpath = "//h6[.='Painted Batch Size']/..//input[@type='number']")
+    private WebElement batchSizeInput;
+
+    @FindBy(css = ".process-selector-details [value='auto']")
+    private WebElement compPaintPartDefault;
+
+    @FindBy(xpath = "//h6[.='Number of Components Per Paint Cart']/..//input[@value='user']")
+    private WebElement paintCartUser;
+
+    @FindBy(xpath = "//h6[.='Number of Components Per Paint Cart']/..//input[@type='number']")
+    private WebElement paintCartInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -161,6 +200,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
                 if (pageUtils.isElementPresent(label)) {
                     pageUtils.waitForElementAndClick(label);
                 }
+                pageUtils.waitForElementAndClick(driver.findElement(By.xpath(String.format("//span[.='%s']/ancestor::span//span[@role='link']", process.trim()))));
             });
         return this;
     }
@@ -231,7 +271,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public SecondaryProcessesPage selectMasked() {
+    public SecondaryProcessesPage selectMasking() {
         pageUtils.waitForElementAndClick(maskedDefault);
         return this;
     }
@@ -242,7 +282,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @param value -the value
      * @return current page object
      */
-    public SecondaryProcessesPage inputMaskedOverride(String value) {
+    public SecondaryProcessesPage inputMaskingOverride(String value) {
         pageUtils.waitForElementAndClick(maskedUser);
         pageUtils.clearInput(maskedInput);
         maskedInput.sendKeys(value);
@@ -256,6 +296,144 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public double getMasking() {
         return Double.parseDouble(pageUtils.waitForElementToAppear(maskedInput).getAttribute("textContent"));
+    }
+
+    /**
+     * Selects fraction painted
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectFractionPainted() {
+        pageUtils.waitForElementAndClick(fractionDefault);
+        return this;
+    }
+
+    /**
+     * Inputs masked feature
+     *
+     * @param value -the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputFractionOverride(String value) {
+        pageUtils.waitForElementAndClick(fractionUser);
+        pageUtils.clearInput(fractionInput);
+        fractionInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Get masked feature
+     *
+     * @return string
+     */
+    public double getFractionPainted() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(fractionInput).getAttribute("textContent"));
+    }
+
+    /**
+     * Selects masked features
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectMaskedFeatures() {
+        pageUtils.waitForElementAndClick(maskedFeaturesDefault);
+        return this;
+    }
+
+    /**
+     * Selects no masking
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectNoMasking() {
+        pageUtils.waitForElementAndClick(noMasking);
+        return this;
+    }
+
+    /**
+     * Input masked feature
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputMaskedFeatures(String value) {
+        pageUtils.waitForElementAndClick(maskedFeatureUser);
+        pageUtils.clearInput(maskedFeatureInput);
+        maskedFeatureInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Gets masked feature
+     *
+     * @return double
+     */
+    public double getMaskedFeatures() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedFeatureInput).getAttribute("textContent"));
+    }
+
+    /**
+     * Selects batch size
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectBatchSizeDefault() {
+        pageUtils.waitForElementAndClick(batchSizeDefault);
+        return this;
+    }
+
+    /**
+     * Inputs batch size
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputBatchSizeDefault(String value) {
+        pageUtils.waitForElementAndClick(batchSizeUser);
+        pageUtils.clearInput(batchSizeInput);
+        batchSizeInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Gets batch size
+     *
+     * @return double
+     */
+    public double getBatchSize() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("textContent"));
+    }
+
+    /**
+     * Select components per paint cart
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectCompPaintCart() {
+        pageUtils.waitForElementAndClick(compPaintPartDefault);
+        return this;
+    }
+
+    /**
+     * Inputs component per paint cart
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputCompPaintCart(String value) {
+        pageUtils.waitForElementAndClick(paintCartUser);
+        pageUtils.clearInput(paintCartInput);
+        paintCartInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Gets component per paint cart
+     *
+     * @return double
+     */
+    public double getComponentsPaintCart() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(paintCartInput).getAttribute("textContent"));
     }
 
     /**
