@@ -4,6 +4,7 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.login.LoginTests;
+import help.HelpTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -15,7 +16,8 @@ import testsuites.suiteinterface.SmokeTests;
 @Categories.IncludeCategory(SmokeTests.class)
 @Categories.ExcludeCategory(IgnoreTests.class)
 @Suite.SuiteClasses({
-    LoginTests.class
+    LoginTests.class,
+    HelpTests.class
 })
 public class EDCSmokeTestSuite {
 }
