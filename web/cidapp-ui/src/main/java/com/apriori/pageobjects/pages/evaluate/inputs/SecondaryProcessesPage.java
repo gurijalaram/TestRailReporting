@@ -256,11 +256,11 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * Select the secondary process checkbox
      *
      * @param process - the process
-     * @return string
+     * @return true/false
      */
-    public String getCheckboxStatus(String process) {
-        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//button//input", process.trim()));
-        return pageUtils.waitForElementToAppear(byProcess).getAttribute("checked");
+    public boolean isCheckboxSelected(String process) {
+        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//label//input", process.trim()));
+        return driver.findElement(byProcess).getAttribute("checked").equals("true");
     }
 
     /**

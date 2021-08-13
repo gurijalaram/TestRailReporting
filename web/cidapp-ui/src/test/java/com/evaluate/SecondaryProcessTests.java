@@ -543,10 +543,11 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario()
+            .goToSecondaryTab()
             .openSecondaryProcesses()
             .expandSecondaryProcessTree("High Pressure Die Cast, Trim");
 
-        assertThat(secondaryProcessPage.getCheckboxStatus("Trim"), containsString("disabled"));
+        assertThat(secondaryProcessPage.isCheckboxSelected("Trim"), is(true));
     }
 
     @Test
