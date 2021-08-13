@@ -666,7 +666,7 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return String
      */
-    public String validateNewTabTitle() {
+    public String getTabTitle() {
         return driver.getTitle();
     }
 
