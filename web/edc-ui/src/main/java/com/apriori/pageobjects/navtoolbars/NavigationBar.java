@@ -62,19 +62,33 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
                return new HelpPage(driver);
            }
 
-       public AboutUsPage clickAbout() {
+    /**
+     * Select About button
+     *
+     * @return new page object
+     */
+    public AboutUsPage clickAbout() {
             pageUtils.waitForElementAndClick(helpDropdown);
             pageUtils.waitForElementAndClick(aboutButton);
             return new AboutUsPage(driver);
        }
 
-        public EdcAppLoginPage logout() {
+    /**
+     * Select Logout button
+     *
+     * @return new page object
+     */
+    public EdcAppLoginPage logout() {
             pageUtils.waitForElementAndClick(userDropdown);
             pageUtils.waitForElementAndClick(logoutButton);
             return new EdcAppLoginPage(driver);
         }
 
-        public MyProfilePage clickUserDropdown() {
+    /**
+     * Click on the User dropdown
+     * @return
+     */
+    public MyProfilePage clickUserDropdown() {
             pageUtils.waitForElementAndClick(userDropdown);
             pageUtils.waitForElementAndClick(myProfile);
             return new MyProfilePage(driver);

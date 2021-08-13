@@ -25,10 +25,10 @@ public class HelpTests extends TestBase {
             .clickHelpDropdown()
            .selectAbout()
             .switchTab()
-            .agreeTermsAndCondition();
-//            .closeOnlineHelpChat();
+            .agreeTermsAndCondition()
+            .closeOnlineHelpChat();
 
-        assertThat(aboutUsPage.getAboutUsPageTitle(), containsString("Product Cost Management Experts"));
+//        assertThat(aboutUsPage.getAboutUsPageTitle(), containsString("Product Cost Management Experts"));
     }
 }
 

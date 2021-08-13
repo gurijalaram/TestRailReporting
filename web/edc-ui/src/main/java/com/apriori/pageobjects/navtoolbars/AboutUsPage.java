@@ -3,6 +3,7 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -62,14 +63,11 @@ public class AboutUsPage extends LoadableComponent<AboutUsPage> {
     }
 
     public AboutUsPage closeOnlineHelpChat() {
-//        driver.switchTo().frame(0);
-//        pageUtils.waitForElementAndClick(closeChatBox);
-
-        driver.switchTo().frame(0);
-//        pageUtils.mouseMove(moveMouseElement);
-        pageUtils.waitForElementAndClick(closeChatBox);
+//        pageUtils.waitFor(30000);
+        String script = "return document.querySelectorAll('button')[2].click();";
+        JavascriptExecutor js =  (JavascriptExecutor) driver;
+        js.executeScript(script);
         return this;
-
     }
 
     public AboutUsPage switchTab() {
