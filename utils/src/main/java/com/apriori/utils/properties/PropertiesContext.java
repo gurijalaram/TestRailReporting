@@ -19,6 +19,16 @@ public class PropertiesContext {
         propertiesContext = loadProperties();
     }
 
+    /**
+     * Get property from config.yml file.
+     * @param propertyName
+     * @return
+     */
+    public static String get(final String propertyName) {
+        return System.getProperty(propertyName,
+            getFromPropertyContext(propertyName));
+    }
+
     @SneakyThrows
     private static JsonNode loadProperties() {
         return new ObjectMapper(new YAMLFactory()).readTree(
@@ -26,20 +36,6 @@ public class PropertiesContext {
                 FileResourceUtil.getResourceAsFile("config.yml")
             )
         );
-    }
-
-    public static String getStr(final String propertyName) {
-        return get(propertyName);
-    }
-
-    public static Integer getInt(final String propertyName) {
-        return Integer.valueOf(get(propertyName));
-    }
-
-
-    private static String get(final String propertyName) {
-        return System.getProperty(propertyName,
-            getFromPropertyContext(propertyName));
     }
 
     private static String getFromPropertyContext(String propertyName) {

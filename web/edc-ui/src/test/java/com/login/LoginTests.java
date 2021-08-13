@@ -30,6 +30,7 @@ public class LoginTests extends TestBase {
     private ElectronicsDataCollectionPage edcPage;
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"8886"})
     @Description("Test successful login")
     public void testLogin() {

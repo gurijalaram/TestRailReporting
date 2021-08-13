@@ -14,7 +14,6 @@ import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -130,7 +129,7 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static ConnectionRequest initDefaultConnectionRequest() {
         return ConnectionRequest.builder()
-            .customerIdentity(PropertiesContext.getStr("${env}.customer_identity"))
+            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .deploymentIdentity("H337GKD0LA0N")
             .installationIdentity("5DF1B4HI67C6")
             .build();
