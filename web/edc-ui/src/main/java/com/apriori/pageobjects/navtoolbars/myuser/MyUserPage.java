@@ -1,6 +1,6 @@
-package com.apriori.pageobjects.navtoolbars;
+package com.apriori.pageobjects.navtoolbars.myuser;
 
-import com.apriori.pageobjects.navtoolbars.myuser.MyUserPage;
+import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -11,19 +11,18 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class NavigationBar extends LoadableComponent<NavigationBar> {
+public class MyUserPage extends LoadableComponent<MyUserPage> {
 
+    @FindBy(css = "[data-icon='sign-out-alt']")
+    private WebElement logoutButton;
 
-    @FindBy(css = ".help-dropdown")
-    private WebElement helpDropdown;
+    @FindBy(css = ".active-account")
+    private WebElement activeAccount;
 
-    @FindBy(css = ".user-dropdown.dropdown")
-    private WebElement userDropdown;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
-    public NavigationBar(WebDriver driver) {
+    public MyUserPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -33,20 +32,21 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
 
     @Override
     protected void load() {
+
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(helpDropdown);
+        pageUtils.waitForElementToAppear(activeAccount);
     }
 
     /**
-     * Selects the User dropdown
+     * Selects the User dropdown and go to Logout
      *
      * @retun new page object
      */
-    public MyUserPage clickUserDropdown() {
-        pageUtils.waitForElementAndClick(userDropdown);
-        return new MyUserPage(driver);
+    public EdcAppLoginPage logout() {
+        pageUtils.waitForElementAndClick(logoutButton);
+        return new EdcAppLoginPage(driver);
     }
 }

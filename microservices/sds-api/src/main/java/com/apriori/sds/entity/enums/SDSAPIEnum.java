@@ -48,6 +48,9 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
 
     // CONNECTIONS
     GET_CONNECTIONS("connections"),
+    POST_CONNECTIONS("connections"),
+    DELETE_CONNECTIONS_BY_ID("connections/%s"),
+    PATCH_CONNECTIONS_BY_ID("connections/%s"),
 
     // COMPONENTS
     GET_COMPONENTS("components"),
@@ -69,7 +72,7 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.getStr("${env}.sds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.getStr("${env}.secret_key");
+        return PropertiesContext.get("${env}.sds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
     }
 
 }

@@ -158,6 +158,15 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
+     * Checks if tab is displayed
+     * @return true/false
+     */
+    public boolean isPartNestingTabDisplayed() {
+        By byTab = By.xpath("//button[.='Part Nesting']");
+        return pageUtils.isElementPresent(byTab);
+    }
+
+    /**
      * Selects the process dropdown
      *
      * @param filter - the filter
@@ -225,7 +234,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      *
      * @return new page object
      */
-    public StockPage goToStockTab() {
+    public StockPage openStockTab() {
         pageUtils.waitForElementAndClick(stockTab);
         return new StockPage(driver);
     }
