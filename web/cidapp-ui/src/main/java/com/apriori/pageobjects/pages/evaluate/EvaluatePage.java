@@ -16,6 +16,7 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -658,5 +659,25 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public <T> T backFromError(Class<T> className) {
         return modalDialogController.backFromError(className);
+    }
+
+    /**
+     * Validates the new tab page title
+     *
+     * @return String
+     */
+    public String getTabTitle() {
+        return driver.getTitle();
+    }
+
+    /**
+     * Close The newly opened tab
+     *
+     * @return page object
+     */
+    public EvaluatePage closeNewlyOpenedTab() {
+        pageUtils.windowHandler(1).close();
+        pageUtils.windowHandler(0);
+        return new EvaluatePage(driver);
     }
 }
