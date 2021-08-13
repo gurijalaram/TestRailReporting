@@ -1,20 +1,19 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
-import com.apriori.pageobjects.pages.login.ElectronicsDataCollectionPage;
+import com.apriori.pageobjects.navtoolbars.myuser.MyUserPage;
+
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class NavigationBar extends LoadableComponent<NavigationBar> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ElectronicsDataCollectionPage.class);
 
     @FindBy(css = ".help-dropdown")
     private WebElement helpDropdown;
@@ -37,7 +36,7 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
     public NavigationBar(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -74,24 +73,13 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
        }
 
     /**
-     * Select Logout button
-     *
-     * @return new page object
-     */
-    public EdcAppLoginPage logout() {
-            pageUtils.waitForElementAndClick(userDropdown);
-            pageUtils.waitForElementAndClick(logoutButton);
-            return new EdcAppLoginPage(driver);
-        }
-
-    /**
      * Click on the User dropdown
      * @return
      */
-    public MyProfilePage clickUserDropdown() {
+    public MyUserPage clickUserDropdown() {
             pageUtils.waitForElementAndClick(userDropdown);
             pageUtils.waitForElementAndClick(myProfile);
-            return new MyProfilePage(driver);
+            return new MyUserPage(driver);
         }
 }
 
