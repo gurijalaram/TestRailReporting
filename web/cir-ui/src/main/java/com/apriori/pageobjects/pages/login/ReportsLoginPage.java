@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.login;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class ReportsLoginPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
-    private static final String loginPageURL = Constants.getDefaultUrl();
+    private static final String loginPageURL = PropertiesContext.getStr("${env}.reports");
 
     @FindBy(css = "input[name='j_username']")
     private WebElement email;

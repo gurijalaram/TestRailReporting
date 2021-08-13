@@ -1,11 +1,11 @@
 # Define the environment
-env: int-core
+env: onprem
 
 # Define the global properties not related to environment
 global:
   schema_base_path: schemas/
   console_log_level: "OFF"
-  users_csv_file: common-users.csv
+  users_csv_file: onprem-users.csv
   different_users: true
   service_host: ats.core.qa.apriori.net
 
@@ -66,3 +66,8 @@ qa-cig-perf:
 
   vds:
     api_url: https://vds.na-1.qa-cig-perf.apriori.net/
+
+onprem:
+  base_url: https://conqbaci01/
+  admin: ${onprem.base_url}apriori/login
+  reports: ${onprem.base_url}jasperserver-pro/login.html

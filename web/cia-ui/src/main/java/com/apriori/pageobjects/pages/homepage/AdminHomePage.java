@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.homepage;
 import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.properties.PropertiesContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -68,7 +69,7 @@ public class AdminHomePage extends PageHeader {
      * @return String
      */
     public String getUrlToCheck() {
-        return Constants.getBaseUrl();
+        return PropertiesContext.getStr("{env}.base_url");
     }
 
     /**
