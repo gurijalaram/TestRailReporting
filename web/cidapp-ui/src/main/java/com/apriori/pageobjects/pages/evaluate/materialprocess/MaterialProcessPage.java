@@ -294,7 +294,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage inputAverageWallThickness(String value) {
         pageUtils.waitForElementAndClick(averageThicknessUser);
-        pageUtils.clearInput(averageThickInput);
+        pageUtils.clear(averageThickInput);
         averageThickInput.sendKeys(value);
         return this;
     }
@@ -326,7 +326,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage inputCaseDepth(String value) {
         pageUtils.waitForElementAndClick(caseDepthUser);
-        pageUtils.clearInput(caseDepthInput);
+        pageUtils.clear(caseDepthInput);
         caseDepthInput.sendKeys(value);
         return this;
     }
@@ -358,7 +358,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage inputMasking(String value) {
         pageUtils.waitForElementAndClick(maskingUser);
-        pageUtils.clearInput(maskingUser);
+        pageUtils.clear(maskingUser);
         maskingUser.sendKeys(value);
         return this;
     }
@@ -435,7 +435,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage inputCompLoadBar(String value) {
         pageUtils.waitForElementAndClick(compLoadBarUser);
-        compLoadBarInput.clear();
+        pageUtils.clear(compLoadBarInput);
         compLoadBarInput.sendKeys(value);
         return this;
     }

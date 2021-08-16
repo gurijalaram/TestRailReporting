@@ -217,36 +217,24 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     /**
      * Selects the secondary process types in the process tree
      *
-     * @param processTypes - the secondary process types
-     * @param process      - the process
-     * @return current page object
-     */
-    public SecondaryProcessesPage selectSecondaryProcess(String processTypes, String process) {
-        expandSecondaryProcessTree(processTypes);
-        checkSecondaryProcessBox(process);
-        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span[@role]", process.trim()));
-        pageUtils.waitForElementAndClick(byProcess);
-        return this;
-    }
-
-    /**
-     * Selects the secondary process types in the process tree
-     *
+     * @param process - the process
      * @return current page object
      */
     public SecondaryProcessesPage selectSecondaryProcess(String process) {
-        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span[@role]", process.trim()));
+        highlightSecondaryProcess(process);
+        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim()));
         pageUtils.waitForElementAndClick(byProcess);
         return this;
     }
 
     /**
      * Select secondary process checkbox
+     *
      * @param process - the process
      * @return current page object
      */
-    public SecondaryProcessesPage checkSecondaryProcessBox(String process) {
-        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim()));
+    public SecondaryProcessesPage highlightSecondaryProcess(String process) {
+        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span[@role]", process.trim()));
         pageUtils.waitForElementAndClick(byProcess);
         return this;
     }
@@ -309,7 +297,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputOptionsOverride(String value) {
         pageUtils.waitForElementAndClick(opOverrideButton);
-        opOverrideInput.clear();
+        pageUtils.clear(opOverrideInput);
         opOverrideInput.sendKeys(value);
         return this;
     }
@@ -320,7 +308,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return string
      */
     public double getOptions() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(opOverrideInput).getAttribute("textContent"));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(opOverrideInput).getAttribute("value"));
     }
 
     /**
@@ -352,7 +340,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return string
      */
     public double getMasking() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedInput).getAttribute("textContent"));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedInput).getAttribute("value"));
     }
 
     /**
@@ -384,7 +372,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return string
      */
     public double getFractionPainted() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(fractionInput).getAttribute("textContent"));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(fractionInput).getAttribute("value"));
     }
 
     /**
@@ -405,7 +393,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputMasking(String value) {
         pageUtils.waitForElementAndClick(maskingUser);
-        pageUtils.clearInput(maskedInput);
+        pageUtils.clear(maskedInput);
         maskedInput.sendKeys(value);
         return this;
     }
@@ -428,7 +416,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputMaskedFeatures(String value) {
         pageUtils.waitForElementAndClick(maskedFeatureUser);
-        maskedFeatureInput.clear();
+        pageUtils.clear(maskedFeatureInput);
         maskedFeatureInput.sendKeys(value);
         return this;
     }
@@ -439,7 +427,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return double
      */
     public double getMaskedFeatures() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedFeatureInput).getAttribute("textContent"));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedFeatureInput).getAttribute("value"));
     }
 
     /**
@@ -471,7 +459,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return double
      */
     public double getBatchSize() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("textContent"));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value"));
     }
 
     /**
@@ -492,7 +480,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputCompPaintCart(String value) {
         pageUtils.waitForElementAndClick(paintCartUser);
-        paintCartInput.clear();
+        pageUtils.clear(paintCartInput);
         paintCartInput.sendKeys(value);
         return this;
     }
@@ -503,7 +491,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return double
      */
     public double getComponentsPaintCart() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(paintCartInput).getAttribute("textContent"));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(paintCartInput).getAttribute("value"));
     }
 
     /**
@@ -524,7 +512,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputCompLoadBar(String value) {
         pageUtils.waitForElementAndClick(compLoadBarUser);
-        compLoadBarInput.clear();
+        pageUtils.clear(compLoadBarInput);
         compLoadBarInput.sendKeys(value);
         return this;
     }
@@ -535,7 +523,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return double
      */
     public double getComponentsLoadBar() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(compLoadBarInput).getAttribute("textContent"));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(compLoadBarInput).getAttribute("value"));
     }
 
     /**
@@ -545,7 +533,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage search(String searchTerm) {
-        pageUtils.waitForElementAppear(searchInput).clear();
+        pageUtils.clear(searchInput);
         searchInput.sendKeys(searchTerm);
         return this;
     }
