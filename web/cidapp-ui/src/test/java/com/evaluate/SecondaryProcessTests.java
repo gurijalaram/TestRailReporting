@@ -61,6 +61,7 @@ public class SecondaryProcessTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
@@ -68,7 +69,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToSecondaryTab()
             .openSecondaryProcesses()
             .goToOtherSecProcessesTab()
-            .expandSecondaryProcessTree("Other Secondary Processes, Testing and Inspection")
+            .expandSecondaryProcessTree("Testing and Inspection")
             .selectSecondaryProcess("Hydrostatic Leak Testing")
             .inputOptionsOverride("0.21")
             .submit(EvaluatePage.class)
@@ -132,6 +133,7 @@ public class SecondaryProcessTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
@@ -174,6 +176,7 @@ public class SecondaryProcessTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
@@ -208,6 +211,7 @@ public class SecondaryProcessTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
@@ -244,6 +248,7 @@ public class SecondaryProcessTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
@@ -579,14 +584,14 @@ public class SecondaryProcessTests extends TestBase {
     @TestRail(testCaseId = {"5131"})
     @Description("secondary process automatically added by aPriori")
     public void cannotDeselectSP() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getResourceAsFile(componentName + ".catpart");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
             .openSettings()
             .goToToleranceTab()
@@ -662,7 +667,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
             .selectSecondaryProcess("Vacuum Air Harden")
-            .inputMaskedFeatures("2")
+            .inputMasking("2")
             .submit(EvaluatePage.class)
             .costScenario()
             .goToSecondaryTab()
@@ -671,7 +676,7 @@ public class SecondaryProcessTests extends TestBase {
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
             .highlightSecondaryProcess("Vacuum Air Harden");
 
-        assertThat(secondaryProcessPage.getMaskedFeatures(), is(2.0));
+        assertThat(secondaryProcessPage.getMasking(), is(2.0));
     }
 
     @Test
@@ -731,7 +736,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
             .selectSecondaryProcess("Spring Steel Harden")
-            .inputMaskedFeatures("3")
+            .inputMasking("3")
             .submit(EvaluatePage.class)
             .costScenario()
             .goToSecondaryTab()
@@ -740,7 +745,7 @@ public class SecondaryProcessTests extends TestBase {
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
             .highlightSecondaryProcess("Spring Steel Harden");
 
-        assertThat(secondaryProcessPage.getMaskedFeatures(), is(3.0));
+        assertThat(secondaryProcessPage.getMasking(), is(3.0));
     }
 
     @Test
@@ -764,7 +769,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
             .selectSecondaryProcess("Stainless Steel Harden")
-            .inputMaskedFeatures("1")
+            .inputMasking("1")
             .submit(EvaluatePage.class)
             .costScenario()
             .goToSecondaryTab()
@@ -773,7 +778,7 @@ public class SecondaryProcessTests extends TestBase {
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
             .highlightSecondaryProcess("Stainless Steel Harden");
 
-        assertThat(secondaryProcessPage.getMaskedFeatures(), is(1.0));
+        assertThat(secondaryProcessPage.getMasking(), is(1.0));
     }
 
     @Test
@@ -797,7 +802,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
             .selectSecondaryProcess("High Speed Steel Harden")
-            .inputMaskedFeatures("3")
+            .inputMasking("3")
             .submit(EvaluatePage.class)
             .costScenario()
             .goToSecondaryTab()
@@ -806,7 +811,7 @@ public class SecondaryProcessTests extends TestBase {
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
             .highlightSecondaryProcess("High Speed Steel Harden");
 
-        assertThat(secondaryProcessPage.getMaskedFeatures(), is(3.0));
+        assertThat(secondaryProcessPage.getMasking(), is(3.0));
     }
 
     @Test
@@ -830,7 +835,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
             .selectSecondaryProcess("Low Temp Vacuum Anneal")
-            .inputMaskedFeatures("4")
+            .inputMasking("4")
             .submit(EvaluatePage.class)
             .costScenario()
             .goToSecondaryTab()
@@ -839,7 +844,7 @@ public class SecondaryProcessTests extends TestBase {
             .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
             .highlightSecondaryProcess("Low Temp Vacuum Anneal");
 
-        assertThat(secondaryProcessPage.getMaskedFeatures(), is(4.0));
+        assertThat(secondaryProcessPage.getMasking(), is(4.0));
     }
 
     @Test
@@ -864,7 +869,7 @@ public class SecondaryProcessTests extends TestBase {
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
             .selectSecondaryProcess("High Temp Vacuum Anneal")
-            .inputMaskedFeatures("2")
+            .inputMasking("2")
             .submit(EvaluatePage.class)
             .costScenario()
             .goToSecondaryTab()
@@ -873,7 +878,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectSecondaryProcess("Heat Treat Processes, Anneal")
             .highlightSecondaryProcess("High Temp Vacuum Anneal");
 
-        assertThat(secondaryProcessPage.getMaskedFeatures(), is(2.0));
+        assertThat(secondaryProcessPage.getMasking(), is(2.0));
     }
 
     @Test
