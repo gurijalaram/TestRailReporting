@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "fms/FmsFilesSchema.json")
+@Schema(location = "FmsFilesSchema.json")
 public class FileResponses extends Pagination {
     private List<FileResponse> items;
     private FileResponses response;

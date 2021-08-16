@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/IdentityProviderSchema.json")
+@Schema(location = "IdentityProviderSchema.json")
 public class IdentityProviderItems {
     private String identity;
     private String createdBy;

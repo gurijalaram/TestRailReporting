@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "CGM": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "CGS": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "FPM": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "FPS": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "IOM": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "IOS": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "IPM": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "IPS": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "MGM": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "MGS": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "MKM": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "MKS": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "MMGM": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "MMGS": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    },
+    "MMKS": {
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
+    }
+  },
+  "required": [
+    "CGM",
+    "CGS",
+    "FPM",
+    "FPS",
+    "IOM",
+    "IOS",
+    "IPM",
+    "IPS",
+    "MGM",
+    "MGS",
+    "MKM",
+    "MKS",
+    "MMGM",
+    "MMGS",
+    "MMKS"
+  ]
+}

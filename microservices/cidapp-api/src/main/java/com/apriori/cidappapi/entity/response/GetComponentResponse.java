@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cidapp/GetComponentsResponse.json")
+@Schema(location = "GetComponentsResponse.json")
 public class GetComponentResponse extends Pagination {
     private GetComponentResponse response;
     private List<GetComponentItems> items;

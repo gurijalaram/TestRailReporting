@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/BatchItemSchema.json")
+@Schema(location = "BatchItemSchema.json")
 public class BatchItem {
     private BatchItem response;
     private String identity;

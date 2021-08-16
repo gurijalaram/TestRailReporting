@@ -55,7 +55,10 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
     // COMPONENTS
     GET_COMPONENTS("components"),
     POST_COMPONENTS("components"),
-    GET_COMPONENT_SINGLE_BY_IDENTITY("components/%s");
+    GET_COMPONENT_SINGLE_BY_IDENTITY("components/%s"),
+
+    // SECONDARY PROCESS
+    GET_SECONDARY_PROCESS_BY_COMPONENT_SCENARIO_IDS_VPE_PG_NAMES("components/%s/scenarios/%s/vpes/%s/process-groups/%s/secondary-processes");
 
 
     private final String endpoint;
@@ -72,7 +75,7 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.getStr("${env}.sds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.getStr("${env}.secret_key");
+        return PropertiesContext.get("${env}.sds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
     }
 
 }

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/SingleIdpSchema.json")
+@Schema(location = "SingleIdpSchema.json")
 public class SingleIdp {
     private SingleIdp response;
     private String identity;

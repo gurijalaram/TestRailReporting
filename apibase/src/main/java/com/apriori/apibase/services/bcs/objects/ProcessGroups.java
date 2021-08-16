@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "bcs/CisProcessGroupsSchema.json")
+@Schema(location = "CisProcessGroupsSchema.json")
 public class ProcessGroups extends Pagination {
     private List<ProcessGroup> items;
     private ProcessGroups response;
