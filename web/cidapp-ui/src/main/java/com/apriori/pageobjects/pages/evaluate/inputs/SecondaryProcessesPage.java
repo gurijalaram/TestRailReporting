@@ -71,16 +71,16 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@value='user']")
     private WebElement maskedFeatureUser;
 
-    @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@type='number']")
     private WebElement maskedFeatureInput;
 
     @FindBy(css = ".process-selector-details [value='productionBatchSize']")
     private WebElement batchSizeDefault;
 
-    @FindBy(xpath = "//h6[.='Painted Batch Size']/..//input[@value='user']")
+    @FindBy(xpath = "//h6[contains(text(),'Painted Batch Size')]/..//input[@value='user']")
     private WebElement batchSizeUser;
 
-    @FindBy(xpath = "//h6[.='Painted Batch Size']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Painted Batch Size')]/..//input[@type='number']")
     private WebElement batchSizeInput;
 
     @FindBy(css = ".process-selector-details [value='auto']")
