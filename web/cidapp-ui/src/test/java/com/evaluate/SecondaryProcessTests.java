@@ -67,6 +67,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .goToSecondaryTab()
             .openSecondaryProcesses()
+            .goToOtherSecProcessesTab()
             .selectSecondaryProcess("Other Secondary Processes, Testing and Inspection", "Hydrostatic Leak Testing")
             .inputOptionsOverride("0.21")
             .submit(EvaluatePage.class)
@@ -136,7 +137,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carburize")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Surface Harden", "Carburize")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -175,7 +177,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Atmosphere Oil Harden")
             .inputMaskingOverride("2")
             .submit(EvaluatePage.class)
             .costScenario()
@@ -204,7 +207,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Standard Anneal")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Anneal", "Standard Anneal")
             .inputMaskingOverride("1")
             .submit(EvaluatePage.class)
             .costScenario();
@@ -236,7 +240,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Vacuum Temper")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Temper", "Vacuum Temper")
             .inputMaskingOverride("3")
             .submit(EvaluatePage.class)
             .costScenario()
@@ -351,7 +356,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Paint", "Powder Coat Cart")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -383,7 +389,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment, Paint", "Powder Coat Cart")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Paint", "Powder Coat Cart")
             .inputFractionOverride("0.30")
             .selectNoMasking()
             .inputCompPaintCart("414")
@@ -484,7 +491,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment", "Passivation")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
             .selectSecondaryProcess("Other Secondary Processes", "Packaging")
             .submit(EvaluatePage.class)
             .costScenario();
@@ -583,12 +591,14 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Surface Harden", "Carbonitride")
             .inputMaskedFeatures("1")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Surface Harden", "Carbonitride");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Surface Harden", "Carbonitride");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is("1"));
     }
@@ -613,12 +623,14 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Vacuum Air Harden")
             .inputMaskedFeatures("2")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Vacuum Air Harden");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is(2));
     }
@@ -643,12 +655,14 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper")
             .inputMaskedFeatures("1")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Vacuum Air Harden with High Temper");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is(1));
     }
@@ -670,12 +684,14 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Spring Steel Harden")
             .inputMaskedFeatures("3")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Spring Steel Harden");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Spring Steel Harden");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is(3));
     }
@@ -697,12 +713,14 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Stainless Steel Harden")
             .inputMaskedFeatures("1")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "Stainless Steel Harden");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "Stainless Steel Harden");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is(1));
     }
@@ -724,12 +742,14 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "High Speed Steel Harden")
             .inputMaskedFeatures("3")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Through Harden", "High Speed Steel Harden");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Through Harden", "High Speed Steel Harden");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is(3));
     }
@@ -751,12 +771,14 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal")
             .inputMaskedFeatures("4")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Anneal", "Low Temp Vacuum Anneal");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is(4));
     }
@@ -779,12 +801,14 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Anneal", "High Temp Vacuum Anneal")
             .inputMaskedFeatures("2")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Anneal", "High Temp Vacuum Anneal");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Anneal", "High Temp Vacuum Anneal");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is(2));
     }
@@ -806,12 +830,14 @@ public class SecondaryProcessTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Temper", "Standard Temper")
             .inputMaskedFeatures("1")
             .submit(EvaluatePage.class)
             .costScenario()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Heat Treatment, Heat Treat Processes, Temper", "Standard Temper");
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes, Temper", "Standard Temper");
 
         assertThat(secondaryProcessPage.getMaskedFeatures(), is(1));
     }
@@ -884,8 +910,10 @@ public class SecondaryProcessTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment", "Passivation")
-            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
             .reset()
             .submit(EvaluatePage.class)
             .costScenario();
@@ -894,8 +922,10 @@ public class SecondaryProcessTests extends TestBase {
 
         evaluatePage.goToSecondaryTab()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment", "Passivation")
-            .selectSecondaryProcess("Other Secondary Processes", "Packaging")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
             .deselectAll()
             .submit(EvaluatePage.class)
             .costScenario();
