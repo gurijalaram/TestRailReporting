@@ -11,17 +11,21 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(location = "SecondaryProcessResponse.json")
 @Data
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SecondaryProcess {
-    private String customerIdentity;
-    private String componentType;
-    private String createdBy;
-    private String identity;
-    private String componentName;
+    private List<Object> children;
+    private String displayName;
+    private String processGroupName;
+    private String plantName;
+    private String included;
+    private String name;
+    private String optional;
+    private String overriden;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
