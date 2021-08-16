@@ -28,6 +28,7 @@ public class Item {
     private String customerIdentity;
     private String componentIdentity;
     private String componentName;
+    private String componentDisplayName;
     private String componentType;
     private String componentFilename;
     @JsonSerialize(using = ToStringSerializer.class)

@@ -145,4 +145,13 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
     public String getLoginErrorMessage() {
         return loginErrorMsg.getText();
     }
+
+    /**
+     * Gets the page title
+     *
+     * @return boolean
+     */
+    public boolean verifyPageTitle(String pageTitle) {
+        return driver.getTitle().equalsIgnoreCase(pageTitle);
+    }
 }
